@@ -46,9 +46,9 @@ def under_seeded_cells(df: pd.DataFrame, min_seeds: int = 2) -> list[dict[str, A
 def seed_noise_report(df: pd.DataFrame, target: float, k: float = GateConfig().noise_band_k) -> dict[str, Any]:
     """Estimate target-budget seed noise and report under-seeded cells.
 
-    Variance is pooled across target cells with at least two seeds. If no target
-    cell has two seeds, the noise band is infinite so significant crossovers are
-    not fabricated from unestimated noise.
+    Variance is pooled across all cells with at least two seeds. If no cell has
+    two seeds, the noise band is unestimated and significant crossovers are not
+    fabricated from unestimated noise.
     """
 
     validate(df)
@@ -57,13 +57,15 @@ def seed_noise_report(df: pd.DataFrame, target: float, k: float = GateConfig().n
         raise ValueError(f"no rows found at target budget {target}")
     variances: list[float] = []
     counts: list[int] = []
+    all_under_seeded: list[dict[str, Any]] = []
     target_under_seeded: list[dict[str, Any]] = []
-    for (intervention, compute), group in target_df.groupby(["intervention", "compute"], sort=True):
+    for (intervention, compute), group in df.groupby(["intervention", "compute"], sort=True):
         n = int(group["seed"].nunique())
         if n < 2:
-            target_under_seeded.append(
-                {"intervention": str(intervention), "compute": float(compute), "seed_count": n}
-            )
+            cell = {"intervention": str(intervention), "compute": float(compute), "seed_count": n}
+            all_under_seeded.append(cell)
+            if np.isclose(float(compute), float(target)):
+                target_under_seeded.append(cell)
             continue
         variances.append(float(group["bpb"].var(ddof=1)))
         counts.append(n)
@@ -73,7 +75,7 @@ def seed_noise_report(df: pd.DataFrame, target: float, k: float = GateConfig().n
             "noise_band_estimated": False,
             "pooled_variance": None,
             "adequately_seeded_cells": 0,
-            "under_seeded_cells": under_seeded_cells(df),
+            "under_seeded_cells": all_under_seeded,
             "target_under_seeded_cells": target_under_seeded,
         }
     pooled_var = float(np.mean(variances))
@@ -83,7 +85,7 @@ def seed_noise_report(df: pd.DataFrame, target: float, k: float = GateConfig().n
         "noise_band_estimated": True,
         "pooled_variance": pooled_var,
         "adequately_seeded_cells": len(variances),
-        "under_seeded_cells": under_seeded_cells(df),
+        "under_seeded_cells": all_under_seeded,
         "target_under_seeded_cells": target_under_seeded,
     }
 
@@ -115,10 +117,10 @@ def _with_extra_metrics(metrics: dict[str, float]) -> dict[str, float]:
     return out
 
 
-def _summarize_distribution(point: float, values: list[float]) -> dict[str, float]:
+def _summarize_distribution(point: float, values: list[float]) -> dict[str, float | None]:
     arr = np.asarray(values, dtype=float)
     if len(arr) == 0:
-        return {"point": float(point), "lo": float("nan"), "hi": float("nan")}
+        return {"point": float(point), "lo": None, "hi": None}
     lo, hi = np.percentile(arr, [2.5, 97.5])
     return {"point": float(point), "lo": float(lo), "hi": float(hi)}
 
@@ -136,6 +138,8 @@ def audit_with_ci(
     validate(df)
     if n_boot <= 0:
         raise ValueError("n_boot must be positive")
+    if not rankers:
+        raise ValueError("at least one ranker is required")
     fit_budgets = normalize_budgets(budgets, target=target)
     truth = truth_ranking(df, target)
     point_metrics: dict[str, dict[str, float]] = {}

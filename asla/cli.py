@@ -78,6 +78,15 @@ def _print_interval_report(results: dict[str, object]) -> None:
             )
 
 
+def _crossover_root_message(df: pd.DataFrame, a: str, b: str, budgets: tuple[float, ...], fit_form: str) -> str:
+    """Return a human-readable crossover-budget message for the selected fit form."""
+
+    if fit_form != "compute_power_law":
+        return "naive compute-power-law crossover budget not reported for this fit form"
+    root = fitted_crossover_for_pair(df, a, b, budgets)
+    return "fit is blind" if root is None else f"fitted crossover budget={root:.3f}"
+
+
 def _demo(args: argparse.Namespace) -> int:
     cfg, n_boot, n_trials = _runtime_config(args)
     rng = np.random.default_rng(args.seed)
@@ -114,8 +123,7 @@ def _demo(args: argparse.Namespace) -> int:
     print("Detected crossovers:")
     if crossovers:
         for a, b, gap in crossovers:
-            root = fitted_crossover_for_pair(df, a, b, cfg.budgets.fit)
-            root_msg = "fit is blind" if root is None else f"fitted crossover budget={root:.3f}"
+            root_msg = _crossover_root_message(df, a, b, cfg.budgets.fit, args.fit_form)
             print(f"- {a} vs {b}: true_gap={gap:.6f}; {root_msg}")
     else:
         print("- none")

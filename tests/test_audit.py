@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import pytest
 
 from asla.analysis.audit import audit_with_ci
 from asla.analysis.rankers import projection_ranker, single_scale_ranker
@@ -25,6 +26,13 @@ def test_audit_with_ci_reports_intervals_and_under_seeded_cells():
     assert result["rankers"]["projection_ranker"]["mis_selection_rate"]["lo"] <= 0.0
 
 
+def test_audit_with_ci_requires_at_least_one_ranker():
+    cfg = AuditConfig()
+    df = negative_controls_only(np.random.default_rng(1), cfg)
+    with pytest.raises(ValueError, match="at least one ranker"):
+        audit_with_ci(df, cfg.budgets.fit, cfg.budgets.target, {}, n_boot=5, rng=np.random.default_rng(2))
+
+
 def test_noise_report_marks_band_unestimated_when_all_target_cells_have_one_seed():
     cfg = AuditConfig()
     df = negative_controls_only(np.random.default_rng(1), cfg)
@@ -39,6 +47,23 @@ def test_noise_report_marks_band_unestimated_when_all_target_cells_have_one_seed
     )
     assert result["noise"]["noise_band"] is None
     assert result["noise"]["noise_band_estimated"] is False
+    assert result["noise"]["target_under_seeded_cells"]
+
+
+def test_noise_report_uses_non_target_cells_when_target_is_under_seeded():
+    cfg = AuditConfig()
+    df = negative_controls_only(np.random.default_rng(1), cfg)
+    target_one_seed = df[~((df["compute"] == cfg.budgets.target) & (df["seed"] > 0))].copy()
+    result = audit_with_ci(
+        target_one_seed,
+        cfg.budgets.fit,
+        cfg.budgets.target,
+        {"single_scale_ranker": single_scale_ranker},
+        n_boot=5,
+        rng=np.random.default_rng(4),
+    )
+    assert result["noise"]["noise_band_estimated"] is True
+    assert result["noise"]["noise_band"] is not None
     assert result["noise"]["target_under_seeded_cells"]
 
 
