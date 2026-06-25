@@ -35,8 +35,18 @@ class GateConfig:
     """Uncertainty-gate configuration."""
 
     tau: float = 1.0
-    n_boot: int = 120
+    n_boot: int = 1000
     noise_band_k: float = 2.0
+
+
+@dataclass(frozen=True)
+class CountConfig:
+    """Bootstrap and Monte Carlo counts for paper-grade and fast runs."""
+
+    n_boot: int = 1000
+    n_trials: int = 500
+    fast_n_boot: int = 80
+    fast_n_trials: int = 30
 
 
 @dataclass(frozen=True)
@@ -55,6 +65,6 @@ class AuditConfig:
     budgets: BudgetLadder = BudgetLadder()
     seeds: SeedConfig = SeedConfig()
     gate: GateConfig = GateConfig()
+    counts: CountConfig = CountConfig()
     paths: Paths = Paths()
     synthetic_noise: float = 0.003
-

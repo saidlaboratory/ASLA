@@ -15,7 +15,7 @@ REQUIRED_COLUMNS = (
     "seed",
     "bpb",
 )
-OPTIONAL_COLUMNS = ("downstream",)
+OPTIONAL_COLUMNS = ("downstream", "params_n", "tokens_d")
 
 
 class SchemaError(ValueError):
@@ -59,6 +59,10 @@ def validate(df: pd.DataFrame) -> None:
         errors.append("column 'bpb' must be numeric")
     if "downstream" in df.columns and not ptypes.is_numeric_dtype(df["downstream"]):
         errors.append("optional column 'downstream' must be numeric when present")
+    if "params_n" in df.columns and not ptypes.is_numeric_dtype(df["params_n"]):
+        errors.append("optional column 'params_n' must be numeric when present")
+    if "tokens_d" in df.columns and not ptypes.is_numeric_dtype(df["tokens_d"]):
+        errors.append("optional column 'tokens_d' must be numeric when present")
 
     for col in REQUIRED_COLUMNS:
         if col in df.columns and df[col].isna().any():
@@ -81,6 +85,12 @@ def validate(df: pd.DataFrame) -> None:
         values = pd.to_numeric(df["downstream"], errors="coerce").dropna()
         if not np.isfinite(values.to_numpy(dtype=float, na_value=np.nan)).all():
             errors.append("optional column 'downstream' must contain finite numbers when present")
+    for col in ("params_n", "tokens_d"):
+        if col in df.columns and ptypes.is_numeric_dtype(df[col]):
+            values = pd.to_numeric(df[col], errors="coerce").dropna()
+            numeric = values.to_numpy(dtype=float, na_value=np.nan)
+            if (not np.isfinite(numeric).all()) or (numeric <= 0).any():
+                errors.append(f"optional column '{col}' must contain finite positive numbers when present")
 
     if errors:
         raise SchemaError(_format_errors(errors))

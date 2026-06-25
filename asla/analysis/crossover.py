@@ -8,6 +8,7 @@ from typing import Iterable, List, Tuple
 import numpy as np
 import pandas as pd
 
+from asla.analysis.audit import seed_noise_report
 from asla.analysis.fits import fit_all, project_ranking, truth_ranking
 from asla.config import GateConfig
 from asla.data.schema import validate
@@ -17,21 +18,7 @@ from asla.models import FitError, bpb_power_law, fit_power_law
 def seed_noise_band(df: pd.DataFrame, target: float, k: float = GateConfig().noise_band_k) -> float:
     """Return ``k`` times the pooled standard error of target-budget means."""
 
-    validate(df)
-    target_df = df[np.isclose(df["compute"].astype(float), float(target))]
-    if target_df.empty:
-        raise ValueError(f"no rows found at target budget {target}")
-    variances: list[float] = []
-    counts: list[int] = []
-    for _, group in target_df.groupby("intervention", sort=True):
-        if len(group) > 1:
-            variances.append(float(group["bpb"].var(ddof=1)))
-            counts.append(len(group))
-    if not variances:
-        return 0.0
-    pooled_var = float(np.mean(variances))
-    mean_n = float(np.mean(counts))
-    return float(k * np.sqrt(pooled_var / mean_n))
+    return float(seed_noise_report(df, target, k=k)["noise_band"])
 
 
 def detect_crossovers(
@@ -56,8 +43,8 @@ def detect_crossovers(
     return found
 
 
-def crossover_budget(params_a: tuple[float, float, float], params_b: tuple[float, float, float]) -> float | None:
-    """Return the fitted curve intersection budget, or ``None`` when absent."""
+def naive_crossover_budget(params_a: tuple[float, float, float], params_b: tuple[float, float, float]) -> float | None:
+    """Return the intersection of two fitted power-law curves, or ``None`` when absent."""
 
     grid = np.logspace(-3, 6, 4000)
     diff = np.asarray(bpb_power_law(grid, *params_a) - bpb_power_law(grid, *params_b), dtype=float)
@@ -75,6 +62,22 @@ def crossover_budget(params_a: tuple[float, float, float], params_b: tuple[float
         return float(grid[i])
     root_log = x1 - y1 * (x2 - x1) / (y2 - y1)
     return float(np.exp(root_log))
+
+
+def crossover_budget(params_a: tuple[float, float, float], params_b: tuple[float, float, float]) -> float | None:
+    """Backward-compatible alias for :func:`naive_crossover_budget`."""
+
+    return naive_crossover_budget(params_a, params_b)
+
+
+def mechanism_crossover_budget(*args: object, **kwargs: object) -> float:
+    """Stub for the future muP-derived mechanism crossover-budget predictor.
+
+    This later-phase predictor is intentionally not implemented here and must
+    not fabricate a number.
+    """
+
+    raise NotImplementedError("mechanism_crossover_budget is a future muP-based predictor and is not implemented")
 
 
 def crossover_budget_ci(
@@ -103,7 +106,7 @@ def crossover_budget_ci(
             except FitError:
                 continue
         if a in params and b in params:
-            root = crossover_budget(params[a], params[b])
+            root = naive_crossover_budget(params[a], params[b])
             if root is not None:
                 roots.append(root)
     if not roots:
@@ -122,5 +125,4 @@ def fitted_crossover_for_pair(
     """Fit two interventions and return their fitted crossover budget if any."""
 
     params = fit_all(df[df["intervention"].isin([a, b])], budgets)
-    return crossover_budget(params[a], params[b])
-
+    return naive_crossover_budget(params[a], params[b])

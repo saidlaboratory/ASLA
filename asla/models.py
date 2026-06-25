@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Tuple
+from typing import Literal, Tuple
 
 import numpy as np
 from scipy.optimize import curve_fit
@@ -11,6 +11,9 @@ from scipy.optimize import curve_fit
 
 class FitError(RuntimeError):
     """Raised when fitting a scaling law fails."""
+
+
+FitForm = Literal["compute_power_law", "chinchilla"]
 
 
 @dataclass(frozen=True)
@@ -33,6 +36,20 @@ def bpb_saturating(C: np.ndarray | float, floor: float, drop: float, c_half: flo
     """Compute a saturating BPB curve used only by synthetic misspecification tests."""
 
     return floor + drop / (1.0 + np.asarray(C, dtype=float) / c_half)
+
+
+def bpb_chinchilla(
+    N: np.ndarray | float,
+    D: np.ndarray | float,
+    E: float,
+    A: float,
+    a: float,
+    B: float,
+    b: float,
+) -> np.ndarray | float:
+    """Compute ``E + A * N**(-a) + B * D**(-b)`` for two-axis controlled grids."""
+
+    return E + A * np.asarray(N, dtype=float) ** (-a) + B * np.asarray(D, dtype=float) ** (-b)
 
 
 def fit_power_law(compute: np.ndarray, bpb: np.ndarray) -> Tuple[float, float, float]:
@@ -75,6 +92,50 @@ def fit_power_law(compute: np.ndarray, bpb: np.ndarray) -> Tuple[float, float, f
         raise FitError(f"power-law fit failed: {exc}") from exc
     if not np.all(np.isfinite(params)):
         raise FitError("power-law fit produced non-finite parameters")
+    return tuple(float(p) for p in params)  # type: ignore[return-value]
+
+
+def fit_chinchilla(params_n: np.ndarray, tokens_d: np.ndarray, bpb: np.ndarray) -> Tuple[float, float, float, float, float]:
+    """Fit ``E + A * N**(-a) + B * D**(-b)`` and return ``(E, A, a, B, b)``."""
+
+    n = np.asarray(params_n, dtype=float)
+    d = np.asarray(tokens_d, dtype=float)
+    y = np.asarray(bpb, dtype=float)
+    if not (len(n) == len(d) == len(y)):
+        raise FitError("params_n, tokens_d, and bpb must have the same length")
+    if len(n) == 0:
+        raise FitError("fit_chinchilla requires at least one row")
+    if not np.isfinite(n).all() or not np.isfinite(d).all() or not np.isfinite(y).all():
+        raise FitError("params_n, tokens_d, and BPB values must be finite")
+    if np.any(n <= 0) or np.any(d <= 0):
+        raise FitError("params_n and tokens_d values must be positive")
+    if len(np.unique(n)) < 3 or len(np.unique(d)) < 3:
+        raise FitError("fit_chinchilla requires at least 3 distinct params_n and tokens_d values")
+    y_min = float(np.min(y))
+    if not np.isfinite(y_min) or y_min <= 0:
+        raise FitError("BPB values must be finite and positive")
+
+    def _model(xdata: tuple[np.ndarray, np.ndarray], E: float, A: float, a: float, B: float, b: float) -> np.ndarray:
+        n_values, d_values = xdata
+        return np.asarray(bpb_chinchilla(n_values, d_values, E, A, a, B, b), dtype=float)
+
+    e0 = max(0.0, min(y_min * 0.8, y_min - 1e-6))
+    residual = max(0.02, float(np.max(y) - e0))
+    p0 = (e0, min(5.0, residual / 2.0), 0.3, min(5.0, residual / 2.0), 0.3)
+    bounds = ([0.0, 0.0, 0.05, 0.0, 0.05], [y_min, 5.0, 2.0, 5.0, 2.0])
+    try:
+        params, _ = curve_fit(
+            _model,
+            (n, d),
+            y,
+            p0=p0,
+            bounds=bounds,
+            maxfev=100000,
+        )
+    except Exception as exc:  # pragma: no cover - exact scipy exception varies
+        raise FitError(f"chinchilla fit failed: {exc}") from exc
+    if not np.all(np.isfinite(params)):
+        raise FitError("chinchilla fit produced non-finite parameters")
     return tuple(float(p) for p in params)  # type: ignore[return-value]
 
 

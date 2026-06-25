@@ -48,8 +48,9 @@ def _coerce_harvested_rows(rows: list[dict[str, object]]) -> tuple[pd.DataFrame,
     df["compute"] = pd.to_numeric(df["compute"], errors="coerce")
     df["seed"] = pd.to_numeric(df["seed"], errors="coerce")
     df["bpb"] = pd.to_numeric(df["bpb"], errors="coerce")
-    if "downstream" in df.columns:
-        df["downstream"] = pd.to_numeric(df["downstream"], errors="coerce")
+    for optional in ("downstream", "params_n", "tokens_d"):
+        if optional in df.columns:
+            df[optional] = pd.to_numeric(df[optional], errors="coerce")
 
     before = len(df)
     df = df.dropna(subset=list(REQUIRED_COLUMNS)).copy()

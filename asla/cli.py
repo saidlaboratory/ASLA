@@ -4,15 +4,18 @@ from __future__ import annotations
 
 import argparse
 import json
+from dataclasses import replace
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 
+from asla.analysis.audit import audit_with_ci
 from asla.analysis.crossover import detect_crossovers, fitted_crossover_for_pair
 from asla.analysis.fits import normalize_budgets, project_ranking, truth_ranking
 from asla.analysis.gate import decision_report, monte_carlo
 from asla.analysis.metrics import decision_metrics
+from asla.analysis.rankers import make_projection_ranker, single_scale_ranker
 from asla.config import AuditConfig
 from asla.data.harvest import discover, harvest
 from asla.data.io import load_runs
@@ -36,8 +39,47 @@ def _positive_int(value: str) -> int:
     return parsed
 
 
-def _demo(args: argparse.Namespace) -> int:
+def _runtime_config(args: argparse.Namespace) -> tuple[AuditConfig, int, int]:
+    """Return config plus bootstrap/trial counts for CLI execution."""
+
     cfg = AuditConfig()
+    n_boot = cfg.counts.fast_n_boot if getattr(args, "fast", False) else cfg.counts.n_boot
+    n_trials = cfg.counts.fast_n_trials if getattr(args, "fast", False) else cfg.counts.n_trials
+    if getattr(args, "n_boot", None) is not None:
+        n_boot = int(args.n_boot)
+    if getattr(args, "trials", None) is not None:
+        n_trials = int(args.trials)
+    cfg = replace(cfg, gate=replace(cfg.gate, n_boot=n_boot))
+    return cfg, n_boot, n_trials
+
+
+def _default_rankers(fit_form: str) -> dict[str, object]:
+    return {
+        "projection_ranker": make_projection_ranker(fit_form),  # type: ignore[arg-type]
+        "single_scale_ranker": single_scale_ranker,
+    }
+
+
+def _print_interval_report(results: dict[str, object]) -> None:
+    rankers = results["rankers"]
+    assert isinstance(rankers, dict)
+    print("Ranker metrics with 95% bootstrap intervals:")
+    for ranker_name, metrics in rankers.items():
+        print(f"{ranker_name}:")
+        assert isinstance(metrics, dict)
+        for metric_name in ("mis_selection_rate", "mean_regret", "top1_acc", "pairwise_acc"):
+            if metric_name not in metrics:
+                continue
+            interval = metrics[metric_name]
+            assert isinstance(interval, dict)
+            print(
+                f"  {metric_name}: {interval['point']:.6f} "
+                f"[{interval['lo']:.6f}, {interval['hi']:.6f}]"
+            )
+
+
+def _demo(args: argparse.Namespace) -> int:
+    cfg, n_boot, n_trials = _runtime_config(args)
     rng = np.random.default_rng(args.seed)
     df = SCENARIOS[args.scenario](rng, cfg)
     projected = project_ranking(df, cfg.budgets.fit, cfg.budgets.target)
@@ -56,6 +98,10 @@ def _demo(args: argparse.Namespace) -> int:
     print(json.dumps(metrics, indent=2, sort_keys=True))
     print("Decision metrics vs noiseless synthetic truth:")
     print(json.dumps(metrics_vs_noiseless, indent=2, sort_keys=True))
+    rankers = _default_rankers(args.fit_form)
+    ci_results = audit_with_ci(df, cfg.budgets.fit, cfg.budgets.target, rankers, n_boot, np.random.default_rng(args.seed + 10))
+    ci_results["fit_form"] = args.fit_form
+    _print_interval_report(ci_results)
     projected_winner = str(projected.index[0])
     true_winner = str(truth.index[0])
     if projected_winner != true_winner:
@@ -78,7 +124,7 @@ def _demo(args: argparse.Namespace) -> int:
     neg_cross = detect_crossovers(neg, cfg.budgets.fit, cfg.budgets.target)
     print(f"Negative-control crossovers detected: {len(neg_cross)}")
 
-    mc = monte_carlo(SCENARIOS[args.scenario], cfg, n_trials=args.trials, rng=np.random.default_rng(args.seed + 2))
+    mc = monte_carlo(SCENARIOS[args.scenario], cfg, n_trials=n_trials, rng=np.random.default_rng(args.seed + 2))
     print("Monte Carlo gate comparison:")
     print(json.dumps(mc, indent=2, sort_keys=True))
     return 0
@@ -96,19 +142,21 @@ def _validate(args: argparse.Namespace) -> int:
 
 
 def _audit(args: argparse.Namespace) -> int:
+    cfg, n_boot, _ = _runtime_config(args)
     df = load_runs(args.runs)
     computes = sorted(df["compute"].astype(float).unique())
     budgets = normalize_budgets(tuple(c for c in computes if c < args.target), target=args.target)
     if len(budgets) < 3:
         raise SystemExit(f"need at least 3 distinct pre-target fitting budgets; found {len(budgets)}")
-    projected = project_ranking(df, budgets, args.target)
-    truth = truth_ranking(df, args.target)
-    metrics = decision_report(df, budgets, args.target, k=min(3, len(projected)))
+    rankers = _default_rankers(args.fit_form)
+    audit = audit_with_ci(df, budgets, args.target, rankers, n_boot, np.random.default_rng(args.seed))
+    audit["fit_form"] = args.fit_form
     crossovers = detect_crossovers(df, budgets, args.target)
     result = {
-        "projected": projected.to_dict(),
-        "truth": truth.to_dict(),
-        "metrics": metrics,
+        "fit_form": args.fit_form,
+        "rankers": audit["rankers"],
+        "under_seeded_cells": audit["under_seeded_cells"],
+        "noise": audit["noise"],
         "crossovers": crossovers,
     }
     if args.out:
@@ -145,7 +193,10 @@ def build_parser() -> argparse.ArgumentParser:
     demo = sub.add_parser("demo")
     demo.add_argument("--scenario", choices=["clean_crossover", "saturation_crossover", "noise_close_call"], default="clean_crossover")
     demo.add_argument("--seed", type=int, default=1729)
-    demo.add_argument("--trials", type=_positive_int, default=30)
+    demo.add_argument("--fit-form", choices=["compute_power_law", "chinchilla"], default="compute_power_law")
+    demo.add_argument("--n-boot", type=_positive_int)
+    demo.add_argument("--trials", type=_positive_int)
+    demo.add_argument("--fast", action="store_true")
     demo.set_defaults(func=_demo)
 
     val = sub.add_parser("validate")
@@ -156,6 +207,10 @@ def build_parser() -> argparse.ArgumentParser:
     audit.add_argument("--runs", required=True)
     audit.add_argument("--target", type=float, required=True)
     audit.add_argument("--out")
+    audit.add_argument("--seed", type=int, default=1729)
+    audit.add_argument("--fit-form", choices=["compute_power_law", "chinchilla"], default="compute_power_law")
+    audit.add_argument("--n-boot", type=_positive_int)
+    audit.add_argument("--fast", action="store_true")
     audit.set_defaults(func=_audit)
 
     harv = sub.add_parser("harvest")
