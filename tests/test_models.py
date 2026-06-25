@@ -1,6 +1,7 @@
 import numpy as np
+import pytest
 
-from asla.models import bpb_power_law, bootstrap_projection, fit_power_law
+from asla.models import FitError, bpb_power_law, bootstrap_projection, fit_power_law
 
 
 def test_fit_power_law_recovers_clean_parameters():
@@ -27,3 +28,16 @@ def test_bootstrap_projection_interval_contains_truth_often():
         contains += int(lo <= truth <= hi)
     assert contains / trials >= 0.65
 
+
+def test_fit_power_law_rejects_nonfinite_inputs():
+    compute = np.array([1.0, 2.0, 4.0])
+    bpb = np.array([1.2, np.nan, 1.0])
+    with pytest.raises(FitError, match="finite"):
+        fit_power_law(compute, bpb)
+
+
+def test_bootstrap_projection_rejects_nonpositive_bootstrap_count():
+    compute = np.array([1.0, 2.0, 4.0])
+    bpb = np.array([1.2, 1.1, 1.0])
+    with pytest.raises(FitError, match="n_boot"):
+        bootstrap_projection(compute, bpb, 8.0, 0, np.random.default_rng(1))

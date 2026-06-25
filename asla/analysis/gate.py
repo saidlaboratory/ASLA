@@ -7,7 +7,7 @@ from typing import Callable, Iterable
 import numpy as np
 import pandas as pd
 
-from asla.analysis.fits import project_ranking, projection_with_uncertainty, truth_ranking
+from asla.analysis.fits import normalize_budgets, project_ranking, projection_with_uncertainty, truth_ranking
 from asla.analysis.metrics import decision_metrics
 from asla.config import AuditConfig
 from asla.data.schema import validate
@@ -25,7 +25,8 @@ def largest_single_run_pick(df: pd.DataFrame, budgets: Iterable[float], target: 
     """Pick by mean BPB at the largest fitting budget."""
 
     validate(df)
-    largest = float(max(budgets))
+    fit_budgets = normalize_budgets(budgets, target=target)
+    largest = float(max(fit_budgets))
     rows = df[np.isclose(df["compute"].astype(float), largest)]
     if rows.empty:
         raise ValueError(f"no rows found at largest fitting budget {largest}")

@@ -13,6 +13,7 @@ from asla.config import Paths
 from asla.data.schema import validate
 
 SPLIT_COLUMN = "__asla_split"
+Split = dict[str, object]
 
 
 def make_split(
@@ -20,7 +21,7 @@ def make_split(
     by: Iterable[str] = ("class", "scale"),
     seed: int = 1729,
     path: str | Path = Paths().split_path,
-) -> dict[str, list[int]]:
+) -> Split:
     """Create or load a persisted deterministic train/test split."""
 
     validate(df)
@@ -48,7 +49,7 @@ def make_split(
         "train": sorted(all_idx - test_idx),
         "test": sorted(test_idx),
         "by": sorted(by_set),
-        "seed": [int(seed)],
+        "seed": int(seed),
     }
     split_path.parent.mkdir(parents=True, exist_ok=True)
     with split_path.open("w", encoding="utf-8") as fh:
@@ -56,19 +57,19 @@ def make_split(
     return split
 
 
-def train_rows(df: pd.DataFrame, split: dict[str, list[int]]) -> pd.DataFrame:
+def train_rows(df: pd.DataFrame, split: Split) -> pd.DataFrame:
     """Return train rows marked for guard checks."""
 
-    rows = df.loc[split["train"]].copy()
+    rows = df.loc[list(split["train"])].copy()
     rows[SPLIT_COLUMN] = "train"
     rows.attrs["split_role"] = "train"
     return rows
 
 
-def test_rows(df: pd.DataFrame, split: dict[str, list[int]]) -> pd.DataFrame:
+def test_rows(df: pd.DataFrame, split: Split) -> pd.DataFrame:
     """Return test rows marked for guard checks."""
 
-    rows = df.loc[split["test"]].copy()
+    rows = df.loc[list(split["test"])].copy()
     rows[SPLIT_COLUMN] = "test"
     rows.attrs["split_role"] = "test"
     return rows

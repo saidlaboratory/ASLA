@@ -15,7 +15,7 @@ from asla.analysis.gate import decision_report, monte_carlo
 from asla.analysis.metrics import decision_metrics
 from asla.config import AuditConfig
 from asla.data.harvest import discover, harvest
-from asla.data.io import load_runs, save_runs
+from asla.data.io import load_runs
 from asla.data.schema import SchemaError, validate
 from asla.data.synthetic import SCENARIOS, negative_controls_only, true_ranking as synthetic_true_ranking
 from asla.figures import make_figures

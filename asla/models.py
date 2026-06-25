@@ -44,9 +44,12 @@ def fit_power_law(compute: np.ndarray, bpb: np.ndarray) -> Tuple[float, float, f
 
     x = np.asarray(compute, dtype=float)
     y = np.asarray(bpb, dtype=float)
-    mask = np.isfinite(x) & np.isfinite(y)
-    x = x[mask]
-    y = y[mask]
+    if len(x) != len(y):
+        raise FitError(f"compute and bpb must have the same length, got {len(x)} and {len(y)}")
+    if len(x) == 0:
+        raise FitError("fit_power_law requires at least one row")
+    if not np.isfinite(x).all() or not np.isfinite(y).all():
+        raise FitError("compute and BPB values must be finite")
     if len(np.unique(x)) < 3:
         raise FitError("fit_power_law requires at least 3 distinct compute values")
     if np.any(x <= 0):
@@ -91,6 +94,8 @@ def bootstrap_projection(
 
     x = np.asarray(compute, dtype=float)
     y = np.asarray(bpb, dtype=float)
+    if n_boot <= 0:
+        raise FitError("n_boot must be positive")
     params = fit_power_law(x, y)
     point = float(bpb_power_law(target, *params))
     projections: list[float] = []
