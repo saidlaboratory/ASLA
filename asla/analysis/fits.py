@@ -98,6 +98,9 @@ def project_ranking(
             group = target_df[target_df["intervention"].astype(str) == name]
             if group.empty:
                 raise ValueError(f"no target Chinchilla inputs found for intervention {name!r}")
+            target_inputs = group[["params_n", "tokens_d"]].to_numpy(dtype=float)
+            if (not np.isfinite(target_inputs).all()) or (target_inputs <= 0).any():
+                raise ValueError(f"target Chinchilla inputs for intervention {name!r} must be finite positive values")
             n_target = float(group["params_n"].mean())
             d_target = float(group["tokens_d"].mean())
             values[name] = float(bpb_chinchilla(n_target, d_target, *par))

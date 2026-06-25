@@ -11,6 +11,7 @@ import pandas as pd
 from asla.analysis.crossover import detect_crossovers, fitted_crossover_for_pair
 from asla.analysis.fits import project_ranking, truth_ranking
 from asla.analysis.gate import gate_pick, plain_projection_pick
+from asla.config import AuditConfig
 from asla.data.schema import validate
 
 LOGGER = logging.getLogger(__name__)
@@ -26,6 +27,7 @@ def make_figures(df: pd.DataFrame, out_dir: str | Path) -> None:
 
     import matplotlib.pyplot as plt
 
+    cfg = AuditConfig()
     validate(df)
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
@@ -73,7 +75,7 @@ def make_figures(df: pd.DataFrame, out_dir: str | Path) -> None:
             continue
         rng = np.random.default_rng(123)
         plain = plain_projection_pick(df, fit_budgets, target)
-        gate = gate_pick(df, fit_budgets, target, intermediate, tau=1.0, n_boot=40, rng=rng)
+        gate = gate_pick(df, fit_budgets, target, intermediate, tau=cfg.gate.tau, n_boot=cfg.gate.n_boot, rng=rng)
         xs.append(float(intermediate))
         regret_plain.append(float(truth_series.loc[plain] - truth_series.min()))
         regret_gate.append(float(truth_series.loc[gate] - truth_series.min()))
@@ -104,4 +106,3 @@ def make_figures(df: pd.DataFrame, out_dir: str | Path) -> None:
     ax.set_ylabel("crossover pair participation")
     _save(fig, out, "crossover_frequency_by_class")
     plt.close(fig)
-

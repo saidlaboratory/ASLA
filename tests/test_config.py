@@ -1,5 +1,8 @@
 from asla.cli import _runtime_config, build_parser
-from asla.config import AuditConfig
+from asla.analysis.gate import monte_carlo
+from asla.config import AuditConfig, CountConfig, GateConfig
+from asla.data.synthetic import negative_controls_only
+import numpy as np
 
 
 def test_default_counts_are_paper_grade():
@@ -16,3 +19,11 @@ def test_fast_flag_uses_small_counts():
     assert n_boot == cfg.counts.fast_n_boot
     assert n_trials == cfg.counts.fast_n_trials
 
+
+def test_monte_carlo_uses_config_trial_default():
+    cfg = AuditConfig(
+        counts=CountConfig(n_trials=2, n_boot=10, fast_n_trials=1, fast_n_boot=5),
+        gate=GateConfig(n_boot=12),
+    )
+    result = monte_carlo(negative_controls_only, cfg, rng=np.random.default_rng(1))
+    assert set(result) == {"plain", "largest", "gate"}

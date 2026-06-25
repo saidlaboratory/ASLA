@@ -25,6 +25,23 @@ def test_audit_with_ci_reports_intervals_and_under_seeded_cells():
     assert result["rankers"]["projection_ranker"]["mis_selection_rate"]["lo"] <= 0.0
 
 
+def test_noise_report_marks_band_unestimated_when_all_target_cells_have_one_seed():
+    cfg = AuditConfig()
+    df = negative_controls_only(np.random.default_rng(1), cfg)
+    one_seed = df[df["seed"] == 0].copy()
+    result = audit_with_ci(
+        one_seed,
+        cfg.budgets.fit,
+        cfg.budgets.target,
+        {"single_scale_ranker": single_scale_ranker},
+        n_boot=5,
+        rng=np.random.default_rng(3),
+    )
+    assert result["noise"]["noise_band"] is None
+    assert result["noise"]["noise_band_estimated"] is False
+    assert result["noise"]["target_under_seeded_cells"]
+
+
 def test_audit_ci_contains_known_zero_misselection_rate():
     cfg = AuditConfig()
     contains = 0

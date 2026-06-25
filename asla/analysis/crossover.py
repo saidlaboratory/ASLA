@@ -12,23 +12,25 @@ from asla.analysis.audit import seed_noise_report
 from asla.analysis.fits import fit_all, project_ranking, truth_ranking
 from asla.config import GateConfig
 from asla.data.schema import validate
-from asla.models import FitError, bpb_power_law, fit_power_law
+from asla.models import FitError, FitForm, bpb_power_law, fit_power_law
 
 
 def seed_noise_band(df: pd.DataFrame, target: float, k: float = GateConfig().noise_band_k) -> float:
     """Return ``k`` times the pooled standard error of target-budget means."""
 
-    return float(seed_noise_report(df, target, k=k)["noise_band"])
+    band = seed_noise_report(df, target, k=k)["noise_band"]
+    return float("inf") if band is None else float(band)
 
 
 def detect_crossovers(
     df: pd.DataFrame,
     budgets: Iterable[float],
     target: float,
+    fit_form: FitForm = "compute_power_law",
 ) -> List[Tuple[str, str, float]]:
     """Detect significant pairs whose projected and true target orders disagree."""
 
-    projected = project_ranking(df, budgets, target)
+    projected = project_ranking(df, budgets, target, fit_form=fit_form)
     truth = truth_ranking(df, target)
     band = seed_noise_band(df, target)
     names = sorted(set(projected.index.astype(str)) & set(truth.index.astype(str)))

@@ -69,7 +69,8 @@ def seed_noise_report(df: pd.DataFrame, target: float, k: float = GateConfig().n
         counts.append(n)
     if not variances:
         return {
-            "noise_band": float("inf"),
+            "noise_band": None,
+            "noise_band_estimated": False,
             "pooled_variance": None,
             "adequately_seeded_cells": 0,
             "under_seeded_cells": under_seeded_cells(df),
@@ -79,6 +80,7 @@ def seed_noise_report(df: pd.DataFrame, target: float, k: float = GateConfig().n
     mean_n = float(np.mean(counts))
     return {
         "noise_band": float(k * np.sqrt(pooled_var / mean_n)),
+        "noise_band_estimated": True,
         "pooled_variance": pooled_var,
         "adequately_seeded_cells": len(variances),
         "under_seeded_cells": under_seeded_cells(df),
@@ -166,4 +168,3 @@ def audit_with_ci(
         "noise": noise,
         "under_seeded_cells": noise["under_seeded_cells"],
     }
-

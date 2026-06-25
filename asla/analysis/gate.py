@@ -78,18 +78,19 @@ def _evaluation_truth(df: pd.DataFrame, target: float) -> pd.Series:
 def monte_carlo(
     scenario_fn: Callable[[np.random.Generator, AuditConfig | None], pd.DataFrame],
     config: AuditConfig | None = None,
-    n_trials: int = 50,
+    n_trials: int | None = None,
     rng: np.random.Generator | None = None,
 ) -> dict[str, dict[str, float]]:
     """Evaluate plain projection, largest-budget, and gate decisions over trials."""
 
-    if n_trials <= 0:
-        raise ValueError("n_trials must be positive")
     cfg = config or AuditConfig()
+    trials = cfg.counts.n_trials if n_trials is None else n_trials
+    if trials <= 0:
+        raise ValueError("n_trials must be positive")
     root_rng = rng or np.random.default_rng(cfg.seeds.seed)
     regret = {"plain": [], "largest": [], "gate": []}
     wrong = {"plain": [], "largest": [], "gate": []}
-    for _ in range(n_trials):
+    for _ in range(trials):
         data_rng = np.random.default_rng(int(root_rng.integers(0, 2**32 - 1)))
         gate_rng = np.random.default_rng(int(root_rng.integers(0, 2**32 - 1)))
         df = scenario_fn(data_rng, cfg)

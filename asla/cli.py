@@ -13,7 +13,7 @@ import pandas as pd
 from asla.analysis.audit import audit_with_ci
 from asla.analysis.crossover import detect_crossovers, fitted_crossover_for_pair
 from asla.analysis.fits import normalize_budgets, project_ranking, truth_ranking
-from asla.analysis.gate import decision_report, monte_carlo
+from asla.analysis.gate import monte_carlo
 from asla.analysis.metrics import decision_metrics
 from asla.analysis.rankers import make_projection_ranker, single_scale_ranker
 from asla.config import AuditConfig
@@ -82,10 +82,10 @@ def _demo(args: argparse.Namespace) -> int:
     cfg, n_boot, n_trials = _runtime_config(args)
     rng = np.random.default_rng(args.seed)
     df = SCENARIOS[args.scenario](rng, cfg)
-    projected = project_ranking(df, cfg.budgets.fit, cfg.budgets.target)
+    projected = project_ranking(df, cfg.budgets.fit, cfg.budgets.target, fit_form=args.fit_form)
     measured_truth = truth_ranking(df, cfg.budgets.target)
     truth = synthetic_true_ranking(df, cfg.budgets.target)
-    metrics = decision_report(df, cfg.budgets.fit, cfg.budgets.target, k=2)
+    metrics = decision_report_against_truth(projected, measured_truth, k=2)
     metrics_vs_noiseless = decision_report_against_truth(projected, truth, k=2)
     print(f"Scenario: {args.scenario}")
     print("Projected ranking at target:")
@@ -110,7 +110,7 @@ def _demo(args: argparse.Namespace) -> int:
     else:
         print(f"Winner is correct: {projected_winner}; regret=0.000000")
 
-    crossovers = detect_crossovers(df, cfg.budgets.fit, cfg.budgets.target)
+    crossovers = detect_crossovers(df, cfg.budgets.fit, cfg.budgets.target, fit_form=args.fit_form)
     print("Detected crossovers:")
     if crossovers:
         for a, b, gap in crossovers:
@@ -121,7 +121,7 @@ def _demo(args: argparse.Namespace) -> int:
         print("- none")
 
     neg = negative_controls_only(np.random.default_rng(args.seed + 1), cfg)
-    neg_cross = detect_crossovers(neg, cfg.budgets.fit, cfg.budgets.target)
+    neg_cross = detect_crossovers(neg, cfg.budgets.fit, cfg.budgets.target, fit_form=args.fit_form)
     print(f"Negative-control crossovers detected: {len(neg_cross)}")
 
     mc = monte_carlo(SCENARIOS[args.scenario], cfg, n_trials=n_trials, rng=np.random.default_rng(args.seed + 2))
@@ -151,7 +151,7 @@ def _audit(args: argparse.Namespace) -> int:
     rankers = _default_rankers(args.fit_form)
     audit = audit_with_ci(df, budgets, args.target, rankers, n_boot, np.random.default_rng(args.seed))
     audit["fit_form"] = args.fit_form
-    crossovers = detect_crossovers(df, budgets, args.target)
+    crossovers = detect_crossovers(df, budgets, args.target, fit_form=args.fit_form)
     result = {
         "fit_form": args.fit_form,
         "rankers": audit["rankers"],
