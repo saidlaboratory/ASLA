@@ -1,4 +1,5 @@
 import pandas as pd
+import pytest
 
 from asla.analysis.metrics import decision_metrics
 
@@ -25,3 +26,16 @@ def test_hand_computed_metrics():
     assert m["pairwise_acc"] == 2 / 3
     assert m["regret"] == 0.0
 
+
+def test_metrics_reject_invalid_k():
+    projected = pd.Series({"a": 1.0, "b": 2.0})
+    truth = pd.Series({"a": 1.0, "b": 2.0})
+    with pytest.raises(ValueError, match="k must be positive"):
+        decision_metrics(projected, truth, k=0)
+
+
+def test_metrics_reject_mismatched_interventions():
+    projected = pd.Series({"a": 1.0, "b": 2.0})
+    truth = pd.Series({"a": 1.0, "c": 2.0})
+    with pytest.raises(ValueError, match="identical interventions"):
+        decision_metrics(projected, truth, k=1)

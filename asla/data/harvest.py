@@ -25,6 +25,48 @@ def _run_value(run: object, key: str) -> object:
     return None
 
 
+def _missing(value: object) -> bool:
+    """Return whether a harvested scalar should count as missing."""
+
+    if value is None:
+        return True
+    try:
+        return bool(pd.isna(value))
+    except ValueError:
+        return False
+
+
+def _coerce_harvested_rows(rows: list[dict[str, object]]) -> tuple[pd.DataFrame, int]:
+    """Coerce harvested rows to schema dtypes and drop missing required fields."""
+
+    df = pd.DataFrame(rows)
+    if df.empty:
+        return df, 0
+
+    df["intervention"] = df["intervention"].astype("string")
+    df["intervention_class"] = df["intervention_class"].astype("string")
+    df["compute"] = pd.to_numeric(df["compute"], errors="coerce")
+    df["seed"] = pd.to_numeric(df["seed"], errors="coerce")
+    df["bpb"] = pd.to_numeric(df["bpb"], errors="coerce")
+    if "downstream" in df.columns:
+        df["downstream"] = pd.to_numeric(df["downstream"], errors="coerce")
+
+    before = len(df)
+    df = df.dropna(subset=list(REQUIRED_COLUMNS)).copy()
+    dropped = before - len(df)
+    if df.empty:
+        return df, dropped
+    df["intervention"] = df["intervention"].astype(str)
+    df["intervention_class"] = df["intervention_class"].astype(str)
+    df["compute"] = df["compute"].astype(float)
+    if not (df["seed"] % 1 == 0).all():
+        bad = df.loc[df["seed"] % 1 != 0, "seed"].tolist()
+        raise ValueError(f"seed values must be integer-like after coercion; bad values: {bad[:5]}")
+    df["seed"] = df["seed"].astype(int)
+    df["bpb"] = df["bpb"].astype(float)
+    return df, dropped
+
+
 def discover(entity_project: str) -> None:
     """Print config and summary keys for one finished W&B run."""
 
@@ -55,25 +97,19 @@ def harvest(entity_project: str, field_map: Mapping[str, str], out_path: str | P
     dropped = 0
     for run in api.runs(entity_project, filters={"state": "finished"}):
         row = {schema_key: _run_value(run, source_key) for schema_key, source_key in field_map.items()}
-        if any(row.get(col) is None for col in REQUIRED_COLUMNS):
+        if any(_missing(row.get(col)) for col in REQUIRED_COLUMNS):
             dropped += 1
             continue
         rows.append(row)
 
-    df = pd.DataFrame(rows)
+    df, coerced_dropped = _coerce_harvested_rows(rows)
+    dropped += coerced_dropped
     if df.empty:
         LOGGER.warning(
             "zero rows survived harvesting; this is a real finding that runs do not log the required fields"
         )
         print("Zero rows survived harvesting; the runs do not log what is needed.")
         return df
-    df["intervention"] = df["intervention"].astype(str)
-    df["intervention_class"] = df["intervention_class"].astype(str)
-    df["compute"] = df["compute"].astype(float)
-    df["seed"] = df["seed"].astype(int)
-    df["bpb"] = df["bpb"].astype(float)
-    if "downstream" in df.columns:
-        df["downstream"] = pd.to_numeric(df["downstream"], errors="coerce")
     validate(df)
     save_runs(df, out_path)
     summary = df.groupby(["intervention", "compute"], sort=True)["seed"].nunique()
@@ -83,4 +119,3 @@ def harvest(entity_project: str, field_map: Mapping[str, str], out_path: str | P
     print("Seeds per cell:")
     print(summary.to_string())
     return df
-

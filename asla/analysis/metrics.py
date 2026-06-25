@@ -35,9 +35,20 @@ def decision_metrics(projected: pd.Series, truth: pd.Series, k: int) -> Dict[str
         ``top1_acc=0`` and ``regret=0.5``.
     """
 
-    common = sorted(set(projected.index.astype(str)) & set(truth.index.astype(str)))
+    if k <= 0:
+        raise ValueError("k must be positive")
+    projected_names = set(projected.index.astype(str))
+    truth_names = set(truth.index.astype(str))
+    common = sorted(projected_names & truth_names)
     if not common:
         raise ValueError("projected and truth rankings have no interventions in common")
+    if projected_names != truth_names:
+        missing_from_projected = sorted(truth_names - projected_names)
+        missing_from_truth = sorted(projected_names - truth_names)
+        raise ValueError(
+            "projected and truth rankings must contain identical interventions; "
+            f"missing_from_projected={missing_from_projected}, missing_from_truth={missing_from_truth}"
+        )
     projected = projected.rename(index=str).loc[common]
     truth = truth.rename(index=str).loc[common]
     p_order = _ordered_index(projected)
@@ -70,4 +81,3 @@ def decision_metrics(projected: pd.Series, truth: pd.Series, k: int) -> Dict[str
         "spearman": float(0.0 if np.isnan(spear) else spear),
         "regret": regret,
     }
-

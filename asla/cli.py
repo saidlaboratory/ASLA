@@ -27,6 +27,15 @@ def decision_report_against_truth(projected: pd.Series, truth: pd.Series, k: int
     return decision_metrics(projected, truth, k=k)
 
 
+def _positive_int(value: str) -> int:
+    """Parse a positive integer CLI argument."""
+
+    parsed = int(value)
+    if parsed <= 0:
+        raise argparse.ArgumentTypeError("must be a positive integer")
+    return parsed
+
+
 def _demo(args: argparse.Namespace) -> int:
     cfg = AuditConfig()
     rng = np.random.default_rng(args.seed)
@@ -136,7 +145,7 @@ def build_parser() -> argparse.ArgumentParser:
     demo = sub.add_parser("demo")
     demo.add_argument("--scenario", choices=["clean_crossover", "saturation_crossover", "noise_close_call"], default="clean_crossover")
     demo.add_argument("--seed", type=int, default=1729)
-    demo.add_argument("--trials", type=int, default=30)
+    demo.add_argument("--trials", type=_positive_int, default=30)
     demo.set_defaults(func=_demo)
 
     val = sub.add_parser("validate")

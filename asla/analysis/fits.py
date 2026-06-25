@@ -39,6 +39,11 @@ def fit_all(df: pd.DataFrame, budgets: Iterable[float]) -> Dict[str, Tuple[float
     fit_df = df[_budget_mask(df["compute"], fit_budgets)]
     if fit_df.empty:
         raise ValueError(f"no rows found for fitting budgets {fit_budgets}")
+    all_interventions = set(df["intervention"].astype(str).unique())
+    fit_interventions = set(fit_df["intervention"].astype(str).unique())
+    missing = sorted(all_interventions - fit_interventions)
+    if missing:
+        raise ValueError(f"no fitting rows found for interventions: {missing}")
     params: Dict[str, Tuple[float, float, float]] = {}
     for intervention, group in fit_df.groupby("intervention", sort=True):
         params[str(intervention)] = fit_power_law(
@@ -64,6 +69,11 @@ def truth_ranking(df: pd.DataFrame, target: float) -> pd.Series:
     target_df = df[np.isclose(df["compute"].astype(float), float(target))]
     if target_df.empty:
         raise ValueError(f"no rows found at target budget {target}")
+    all_interventions = set(df["intervention"].astype(str).unique())
+    target_interventions = set(target_df["intervention"].astype(str).unique())
+    missing = sorted(all_interventions - target_interventions)
+    if missing:
+        raise ValueError(f"no target rows found for interventions: {missing}")
     values = target_df.groupby("intervention", sort=True)["bpb"].mean()
     return values.sort_values(kind="mergesort")
 
