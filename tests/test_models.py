@@ -1,0 +1,29 @@
+import numpy as np
+
+from asla.models import bpb_power_law, bootstrap_projection, fit_power_law
+
+
+def test_fit_power_law_recovers_clean_parameters():
+    params = (0.82, 0.55, 0.37)
+    compute = np.array([1.0, 2.0, 4.0, 8.0, 16.0, 32.0, 64.0])
+    bpb = bpb_power_law(compute, *params)
+    fitted = fit_power_law(compute, bpb)
+    assert np.allclose(fitted, params, rtol=0.03, atol=0.015)
+
+
+def test_bootstrap_projection_interval_contains_truth_often():
+    rng = np.random.default_rng(123)
+    params = (0.86, 0.42, 0.40)
+    target = 64.0
+    contains = 0
+    trials = 25
+    compute_base = np.repeat(np.array([1.0, 2.0, 4.0, 8.0, 16.0]), 5)
+    truth = float(bpb_power_law(target, *params))
+    for _ in range(trials):
+        bpb = bpb_power_law(compute_base, *params) + rng.normal(0.0, 0.004, size=len(compute_base))
+        point, std, lo, hi = bootstrap_projection(compute_base, bpb, target, 80, rng)
+        assert std >= 0.0
+        assert lo <= point <= hi or lo <= truth <= hi
+        contains += int(lo <= truth <= hi)
+    assert contains / trials >= 0.65
+

@@ -1,0 +1,124 @@
+"""Projection baselines and the uncertainty gate."""
+
+from __future__ import annotations
+
+from typing import Callable, Iterable
+
+import numpy as np
+import pandas as pd
+
+from asla.analysis.fits import project_ranking, projection_with_uncertainty, truth_ranking
+from asla.analysis.metrics import decision_metrics
+from asla.config import AuditConfig
+from asla.data.schema import validate
+from asla.data.synthetic import true_ranking as synthetic_true_ranking
+
+
+def plain_projection_pick(df: pd.DataFrame, budgets: Iterable[float], target: float) -> str:
+    """Pick the intervention with the lowest projected target BPB."""
+
+    ranking = project_ranking(df, budgets, target)
+    return str(ranking.index[0])
+
+
+def largest_single_run_pick(df: pd.DataFrame, budgets: Iterable[float], target: float) -> str:
+    """Pick by mean BPB at the largest fitting budget."""
+
+    validate(df)
+    largest = float(max(budgets))
+    rows = df[np.isclose(df["compute"].astype(float), largest)]
+    if rows.empty:
+        raise ValueError(f"no rows found at largest fitting budget {largest}")
+    means = rows.groupby("intervention", sort=True)["bpb"].mean().sort_values(kind="mergesort")
+    return str(means.index[0])
+
+
+def gate_pick(
+    df: pd.DataFrame,
+    budgets: Iterable[float],
+    target: float,
+    intermediate_budget: float,
+    tau: float,
+    n_boot: int,
+    rng: np.random.Generator,
+) -> str:
+    """Apply the projection uncertainty gate and return the selected intervention."""
+
+    validate(df)
+    ranking = project_ranking(df, budgets, target)
+    if len(ranking) < 2:
+        return str(ranking.index[0])
+    top1, top2 = str(ranking.index[0]), str(ranking.index[1])
+    p1 = projection_with_uncertainty(df[df["intervention"] == top1], budgets, target, n_boot, rng)
+    p2 = projection_with_uncertainty(df[df["intervention"] == top2], budgets, target, n_boot, rng)
+    denom = float(np.sqrt(p1[1] ** 2 + p2[1] ** 2))
+    gap = float(ranking.iloc[1] - ranking.iloc[0])
+    g = np.inf if denom == 0.0 and gap > 0 else gap / denom if denom > 0 else 0.0
+    if g >= tau:
+        return top1
+    extended = tuple(sorted(set((*tuple(float(b) for b in budgets), float(intermediate_budget)))))
+    extended_df = df[df["intervention"].isin([top1, top2])]
+    return plain_projection_pick(extended_df, extended, target)
+
+
+def _regret_for_pick(pick: str, truth: pd.Series) -> float:
+    return float(truth.loc[pick] - truth.min())
+
+
+def _evaluation_truth(df: pd.DataFrame, target: float) -> pd.Series:
+    """Use noiseless synthetic truth when available, otherwise measured target means."""
+
+    try:
+        return synthetic_true_ranking(df, target)
+    except ValueError:
+        return truth_ranking(df, target)
+
+
+def monte_carlo(
+    scenario_fn: Callable[[np.random.Generator, AuditConfig | None], pd.DataFrame],
+    config: AuditConfig | None = None,
+    n_trials: int = 50,
+    rng: np.random.Generator | None = None,
+) -> dict[str, dict[str, float]]:
+    """Evaluate plain projection, largest-budget, and gate decisions over trials."""
+
+    if n_trials <= 0:
+        raise ValueError("n_trials must be positive")
+    cfg = config or AuditConfig()
+    root_rng = rng or np.random.default_rng(cfg.seeds.seed)
+    regret = {"plain": [], "largest": [], "gate": []}
+    wrong = {"plain": [], "largest": [], "gate": []}
+    for _ in range(n_trials):
+        data_rng = np.random.default_rng(int(root_rng.integers(0, 2**32 - 1)))
+        gate_rng = np.random.default_rng(int(root_rng.integers(0, 2**32 - 1)))
+        df = scenario_fn(data_rng, cfg)
+        truth = _evaluation_truth(df, cfg.budgets.target)
+        true_best = str(truth.index[0])
+        plain = plain_projection_pick(df, cfg.budgets.fit, cfg.budgets.target)
+        largest = largest_single_run_pick(df, cfg.budgets.fit, cfg.budgets.target)
+        gate = gate_pick(
+            df,
+            cfg.budgets.fit,
+            cfg.budgets.target,
+            cfg.budgets.intermediate,
+            cfg.gate.tau,
+            cfg.gate.n_boot,
+            gate_rng,
+        )
+        for name, pick in (("plain", plain), ("largest", largest), ("gate", gate)):
+            regret[name].append(_regret_for_pick(pick, truth))
+            wrong[name].append(float(pick != true_best))
+
+    out: dict[str, dict[str, float]] = {}
+    for name in ("plain", "largest", "gate"):
+        out[name] = {
+            "mean_regret": float(np.mean(regret[name])),
+            "wrong_pick_rate": float(np.mean(wrong[name])),
+        }
+    return out
+
+
+def decision_report(df: pd.DataFrame, budgets: Iterable[float], target: float, k: int = 2) -> dict[str, float]:
+    """Return decision metrics for projected versus measured target rankings."""
+
+    return decision_metrics(project_ranking(df, budgets, target), truth_ranking(df, target), k=k)
