@@ -15,7 +15,7 @@ from asla.analysis.crossover import detect_crossovers, fitted_crossover_for_pair
 from asla.analysis.fits import normalize_budgets, project_ranking, truth_ranking
 from asla.analysis.gate import monte_carlo
 from asla.analysis.metrics import decision_metrics
-from asla.analysis.rankers import make_projection_ranker, single_scale_ranker
+from asla.analysis.rankers import Ranker, make_projection_ranker, single_scale_ranker
 from asla.config import AuditConfig
 from asla.data.harvest import discover, harvest
 from asla.data.io import load_runs
@@ -53,11 +53,20 @@ def _runtime_config(args: argparse.Namespace) -> tuple[AuditConfig, int, int]:
     return cfg, n_boot, n_trials
 
 
-def _default_rankers(fit_form: str) -> dict[str, object]:
+def _default_rankers(fit_form: str) -> dict[str, Ranker]:
     return {
         "projection_ranker": make_projection_ranker(fit_form),  # type: ignore[arg-type]
         "single_scale_ranker": single_scale_ranker,
     }
+
+
+def _assert_fit_form_available(df: pd.DataFrame, fit_form: str) -> None:
+    """Raise a clean CLI error when a fit form's required columns are absent."""
+
+    if fit_form == "chinchilla":
+        missing = [col for col in ("params_n", "tokens_d") if col not in df.columns]
+        if missing:
+            raise SystemExit(f"fit-form chinchilla requires columns: {missing}")
 
 
 def _print_interval_report(results: dict[str, object]) -> None:
@@ -91,6 +100,7 @@ def _demo(args: argparse.Namespace) -> int:
     cfg, n_boot, n_trials = _runtime_config(args)
     rng = np.random.default_rng(args.seed)
     df = SCENARIOS[args.scenario](rng, cfg)
+    _assert_fit_form_available(df, args.fit_form)
     projected = project_ranking(df, cfg.budgets.fit, cfg.budgets.target, fit_form=args.fit_form)
     measured_truth = truth_ranking(df, cfg.budgets.target)
     truth = synthetic_true_ranking(df, cfg.budgets.target)
@@ -152,6 +162,7 @@ def _validate(args: argparse.Namespace) -> int:
 def _audit(args: argparse.Namespace) -> int:
     cfg, n_boot, _ = _runtime_config(args)
     df = load_runs(args.runs)
+    _assert_fit_form_available(df, args.fit_form)
     computes = sorted(df["compute"].astype(float).unique())
     budgets = normalize_budgets(tuple(c for c in computes if c < args.target), target=args.target)
     if len(budgets) < 3:
