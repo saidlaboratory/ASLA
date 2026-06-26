@@ -28,6 +28,21 @@ For each row in `data/run_manifest.csv`, run one training/eval job using:
 - `compute`
 - `seed`
 
+The safest route is to adapt the scaffold in `hpc/`:
+
+```bash
+# Render one command without launching training.
+python scripts/run_one_manifest_row.py \
+  --manifest data/run_manifest.csv \
+  --row 1 \
+  --index-base 1 \
+  --command-template-file hpc/train_command.template \
+  --output-dir results/hpc
+```
+
+Then adapt `hpc/train_command.template` and `hpc/slurm_array_template.sh` for
+your cluster. See `hpc/ADAPTATION_CHECKLIST.md`.
+
 When the job finishes, record:
 
 - `status=completed`
@@ -41,6 +56,11 @@ data.
 After all rows are complete:
 
 ```bash
+python scripts/collect_results.py \
+  --manifest data/run_manifest.csv \
+  --results-dir results/hpc \
+  --out data/run_manifest.csv
+
 python scripts/finalize_run_manifest.py \
   --manifest data/run_manifest.csv \
   --out-csv data/runs_template.csv \

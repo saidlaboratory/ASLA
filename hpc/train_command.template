@@ -1,0 +1,1 @@
+echo "replace hpc/train_command.template with your real training command for {run_id} {intervention} {compute_g} {seed_int}"

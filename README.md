@@ -93,6 +93,32 @@ asla audit --runs runs.parquet --target TARGET_COMPUTE --fast --out runs_audit.j
 The finalizer refuses pending rows and blank BPB values, so incomplete manifests
 cannot silently become audit data.
 
+The optional HPC scaffold is in `hpc/`:
+
+- `hpc/train_command.template`: replace with your real training command.
+- `hpc/slurm_array_template.sh`: SLURM array template, dry-run by default.
+- `hpc/ADAPTATION_CHECKLIST.md`: step-by-step cluster adaptation guide.
+
+Dry-run one manifest row:
+
+```bash
+python scripts/run_one_manifest_row.py \
+  --manifest data/run_manifest.csv \
+  --row 1 \
+  --index-base 1 \
+  --command-template-file hpc/train_command.template \
+  --output-dir results/hpc
+```
+
+Collect per-run `result.json` files after HPC jobs finish:
+
+```bash
+python scripts/collect_results.py \
+  --manifest data/run_manifest.csv \
+  --results-dir results/hpc \
+  --out data/run_manifest.csv
+```
+
 ## Harvest W&B Runs
 
 ASLA never guesses W&B field names. First inspect a finished run:

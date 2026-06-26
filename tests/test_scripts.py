@@ -2,9 +2,11 @@ import pandas as pd
 import pytest
 
 from scripts.check_runs_coverage import coverage_report
+from scripts.collect_results import collect_results
 from scripts.finalize_run_manifest import manifest_to_runs
 from scripts.make_run_manifest import _read_budgets, _read_interventions, make_manifest
 from scripts.prepare_runs_table import _coerce_runs
+from scripts.run_one_manifest_row import build_command, select_row
 
 
 def test_make_run_manifest_creates_expected_grid():
@@ -183,3 +185,60 @@ def test_manifest_plan_rejects_fit_budget_at_or_above_target(tmp_path):
     )
     with pytest.raises(SystemExit, match="below"):
         _read_budgets(str(path))
+
+
+def test_run_one_manifest_row_renders_command():
+    manifest = pd.DataFrame(
+        {
+            "run_id": ["baseline__c1__s0"],
+            "intervention": ["baseline"],
+            "compute": [1.0],
+            "seed": [0],
+            "role": ["fit"],
+        }
+    )
+    row = select_row(manifest, row=1, index_base=1)
+
+    command = build_command(
+        row,
+        "python train.py --recipe {intervention} --compute {compute_g} --seed {seed_int} --out {output_dir}/{run_id}",
+        "results/hpc",
+        row_index=1,
+    )
+
+    assert command == "python train.py --recipe baseline --compute 1 --seed 0 --out results/hpc/baseline__c1__s0"
+
+
+def test_run_one_manifest_row_requires_core_placeholders():
+    row = pd.Series({"run_id": "a", "intervention": "a", "compute": 1.0, "seed": 0})
+
+    with pytest.raises(ValueError, match="placeholders"):
+        build_command(row, "python train.py --recipe {intervention}", "results/hpc", row_index=1)
+
+
+def test_collect_results_merges_json_and_refuses_overwrite(tmp_path):
+    manifest = pd.DataFrame(
+        {
+            "run_id": ["a__c1__s0", "a__c1__s1"],
+            "intervention": ["a", "a"],
+            "intervention_class": ["recipe", "recipe"],
+            "compute": [1.0, 1.0],
+            "seed": [0, 1],
+            "status": ["pending", "pending"],
+            "bpb": [pd.NA, pd.NA],
+        }
+    )
+    result_dir = tmp_path / "results" / "a__c1__s0"
+    result_dir.mkdir(parents=True)
+    (result_dir / "result.json").write_text('{"bpb": 1.23, "status": "completed", "notes": "ok"}', encoding="utf-8")
+
+    updated, collected, missing = collect_results(manifest, tmp_path / "results")
+
+    assert collected == ["a__c1__s0"]
+    assert missing == ["a__c1__s1"]
+    assert updated.loc[0, "status"] == "completed"
+    assert updated.loc[0, "bpb"] == 1.23
+    assert updated.loc[0, "notes"] == "ok"
+
+    with pytest.raises(ValueError, match="overwrite"):
+        collect_results(updated, tmp_path / "results")
