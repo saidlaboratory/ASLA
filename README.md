@@ -2,8 +2,8 @@
 
 ASLA audits whether small-compute scaling-law projections select the same
 training intervention that measured target-budget runs would select. The initial
-package runs offline on deterministic synthetic scenarios or on existing
-Weights & Biases runs harvested into a canonical parquet table.
+package runs offline on deterministic synthetic scenarios or on existing run
+tables converted into a canonical parquet table. W&B harvesting is optional.
 
 ## Install
 
@@ -61,6 +61,37 @@ asla figures --runs runs.parquet --out results/figures
 Use `--fit-form compute_power_law` for leaderboard audits. Use
 `--fit-form chinchilla` for controlled grids with `params_n` and `tokens_d`;
 the command fails loudly if those columns are missing.
+
+## No-W&B Data Collection
+
+On a laptop, create an HPC checklist:
+
+```bash
+python scripts/make_run_manifest.py \
+  --interventions data/interventions_template.csv \
+  --budgets data/budgets_template.csv \
+  --seeds 3 \
+  --out data/run_manifest.csv
+```
+
+Edit `data/interventions_template.csv` and `data/budgets_template.csv` before
+using the manifest for real training. The generated manifest is not audit data;
+it is a checklist for runs that still need measured BPB values.
+
+After the runs finish and the BPB values are filled into a CSV:
+
+```bash
+python scripts/finalize_run_manifest.py \
+  --manifest data/run_manifest.csv \
+  --out-csv data/runs_template.csv \
+  --out-parquet runs.parquet
+python scripts/check_runs_coverage.py --csv data/runs_template.csv --target TARGET_COMPUTE
+asla validate --runs runs.parquet
+asla audit --runs runs.parquet --target TARGET_COMPUTE --fast --out runs_audit.json
+```
+
+The finalizer refuses pending rows and blank BPB values, so incomplete manifests
+cannot silently become audit data.
 
 ## Harvest W&B Runs
 

@@ -1,0 +1,10 @@
+{
+  "intervention": "config.recipe_name",
+  "intervention_class": "config.recipe_class",
+  "compute": "summary.train_flops",
+  "seed": "config.seed",
+  "bpb": "summary.eval/c4_en_bpb",
+  "downstream": "summary.eval/downstream",
+  "params_n": "config.params_n",
+  "tokens_d": "config.tokens_d"
+}

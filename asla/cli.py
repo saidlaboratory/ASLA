@@ -172,6 +172,15 @@ def _audit(args: argparse.Namespace) -> int:
     audit["fit_form"] = args.fit_form
     crossovers = detect_crossovers(df, budgets, args.target, fit_form=args.fit_form)
     result = {
+        "audit_metadata": {
+            "budgets": [float(budget) for budget in budgets],
+            "fast": bool(args.fast),
+            "fit_form": args.fit_form,
+            "n_boot": int(n_boot),
+            "rankers": sorted(rankers.keys()),
+            "rng_seed": int(args.seed),
+            "target": float(args.target),
+        },
         "fit_form": args.fit_form,
         "rankers": audit["rankers"],
         "under_seeded_cells": audit["under_seeded_cells"],

@@ -1,0 +1,185 @@
+import pandas as pd
+import pytest
+
+from scripts.check_runs_coverage import coverage_report
+from scripts.finalize_run_manifest import manifest_to_runs
+from scripts.make_run_manifest import _read_budgets, _read_interventions, make_manifest
+from scripts.prepare_runs_table import _coerce_runs
+
+
+def test_make_run_manifest_creates_expected_grid():
+    interventions = pd.DataFrame(
+        {
+            "intervention": ["baseline", "candidate"],
+            "intervention_class": ["recipe", "recipe"],
+        }
+    )
+    budgets = pd.DataFrame(
+        {
+            "compute": [1.0, 2.0, 4.0, 64.0],
+            "role": ["fit", "fit", "fit", "target"],
+        }
+    )
+
+    manifest = make_manifest(interventions, budgets, seeds=3)
+
+    assert len(manifest) == 24
+    assert set(manifest["status"]) == {"pending"}
+    assert manifest["run_id"].is_unique
+    assert set(manifest["role"]) == {"fit", "target"}
+
+
+def test_coverage_report_flags_underpowered_table():
+    rows = []
+    for intervention in ["a", "b"]:
+        for compute in [1.0, 2.0, 4.0, 64.0]:
+            rows.append(
+                {
+                    "intervention": intervention,
+                    "intervention_class": "recipe",
+                    "compute": compute,
+                    "seed": 0,
+                    "bpb": 1.0,
+                }
+            )
+    df = pd.DataFrame(rows)
+
+    problems, counts = coverage_report(df, target=64.0, min_seeds=3)
+
+    assert len(counts) == 8
+    assert any("need at least 3 interventions" in problem for problem in problems)
+    assert any("under-seeded cell" in problem for problem in problems)
+
+
+def test_manifest_to_runs_rejects_pending_rows_without_bpb():
+    manifest = pd.DataFrame(
+        {
+            "run_id": ["a__c1__s0"],
+            "intervention": ["a"],
+            "intervention_class": ["recipe"],
+            "compute": [1.0],
+            "seed": [0],
+            "status": ["pending"],
+            "bpb": [""],
+        }
+    )
+
+    try:
+        manifest_to_runs(manifest)
+    except ValueError as exc:
+        assert "not complete" in str(exc)
+    else:
+        raise AssertionError("pending row was accepted")
+
+
+def test_manifest_to_runs_exports_canonical_columns():
+    manifest = pd.DataFrame(
+        {
+            "run_id": ["a__c1__s0"],
+            "intervention": ["a"],
+            "intervention_class": ["recipe"],
+            "compute": [1.0],
+            "role": ["fit"],
+            "seed": [0],
+            "status": ["completed"],
+            "bpb": [1.2],
+            "notes": ["ok"],
+        }
+    )
+
+    runs = manifest_to_runs(manifest)
+
+    assert runs.columns.tolist() == [
+        "intervention",
+        "intervention_class",
+        "compute",
+        "seed",
+        "bpb",
+        "downstream",
+        "params_n",
+        "tokens_d",
+    ]
+    assert runs.loc[0, "bpb"] == 1.2
+
+
+def test_manifest_to_runs_requires_status_column():
+    manifest = pd.DataFrame(
+        {
+            "intervention": ["a"],
+            "intervention_class": ["recipe"],
+            "compute": [1.0],
+            "seed": [0],
+            "bpb": [1.2],
+        }
+    )
+
+    with pytest.raises(ValueError, match="status"):
+        manifest_to_runs(manifest)
+
+
+def test_prepare_runs_table_drops_noncanonical_columns():
+    df = pd.DataFrame(
+        {
+            "run_id": ["a__c1__s0"],
+            "intervention": ["a"],
+            "intervention_class": ["recipe"],
+            "compute": ["1.0"],
+            "seed": ["0"],
+            "status": ["completed"],
+            "bpb": ["1.2"],
+        }
+    )
+
+    runs = _coerce_runs(df)
+
+    assert runs.columns.tolist() == [
+        "intervention",
+        "intervention_class",
+        "compute",
+        "seed",
+        "bpb",
+        "downstream",
+        "params_n",
+        "tokens_d",
+    ]
+    assert "status" not in runs.columns
+    assert "run_id" not in runs.columns
+
+
+def test_manifest_plan_rejects_duplicate_interventions(tmp_path):
+    path = tmp_path / "interventions.csv"
+    path.write_text(
+        "intervention,intervention_class\n"
+        "baseline,recipe\n"
+        "baseline,recipe\n",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(SystemExit, match="unique"):
+        _read_interventions(str(path))
+
+
+def test_manifest_plan_rejects_fit_budget_at_or_above_target(tmp_path):
+    path = tmp_path / "budgets.csv"
+    path.write_text(
+        "compute,role\n"
+        "1,fit\n"
+        "2,fit\n"
+        "4,fit\n"
+        "4,target\n",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(SystemExit, match="unique"):
+        _read_budgets(str(path))
+
+    path.write_text(
+        "compute,role\n"
+        "1,fit\n"
+        "2,fit\n"
+        "4,fit\n"
+        "3,target\n",
+        encoding="utf-8",
+    )
+    with pytest.raises(SystemExit, match="below"):
+        _read_budgets(str(path))

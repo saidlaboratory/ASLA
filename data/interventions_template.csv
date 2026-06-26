@@ -1,0 +1,4 @@
+intervention,intervention_class,notes
+baseline_adamw,optimizer,current default AdamW training recipe
+adamw_lower_lr,optimizer,same as baseline except lower peak learning rate
+adamw_longer_warmup,schedule,same as baseline except longer warmup schedule

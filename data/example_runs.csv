@@ -1,0 +1,9 @@
+intervention,intervention_class,compute,seed,bpb,downstream,params_n,tokens_d
+adamw,optimizer,1,0,1.230,,,
+adamw,optimizer,2,0,1.110,,,
+adamw,optimizer,4,0,1.020,,,
+adamw,optimizer,64,0,0.940,,,
+sgd,optimizer,1,0,1.300,,,
+sgd,optimizer,2,0,1.180,,,
+sgd,optimizer,4,0,1.070,,,
+sgd,optimizer,64,0,0.970,,,

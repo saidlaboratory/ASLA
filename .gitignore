@@ -1,0 +1,8 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Generated local audit artifacts.
+runs.parquet
+runs_audit.json
+results/

@@ -1,0 +1,66 @@
+# No-W&B HPC Checklist
+
+This project does not need W&B. Use `data/run_manifest.csv` as the source of
+truth for the runs you need to execute.
+
+## 1. On Your Mac
+
+Confirm the planned grid:
+
+```bash
+python scripts/make_run_manifest.py --seeds 3 --out data/run_manifest.csv
+```
+
+Current default plan:
+
+- `baseline_adamw`
+- `adamw_lower_lr`
+- `adamw_longer_warmup`
+- fit budgets: `1`, `2`, `4`
+- target budget: `16`
+- seeds: `0`, `1`, `2`
+
+## 2. On HPC
+
+For each row in `data/run_manifest.csv`, run one training/eval job using:
+
+- `intervention`
+- `compute`
+- `seed`
+
+When the job finishes, record:
+
+- `status=completed`
+- `bpb=<measured C4-EN bits-per-byte>`
+
+Do not fill `bpb` with a placeholder. A row without measured BPB is not audit
+data.
+
+## 3. Back On Your Mac
+
+After all rows are complete:
+
+```bash
+python scripts/finalize_run_manifest.py \
+  --manifest data/run_manifest.csv \
+  --out-csv data/runs_template.csv \
+  --out-parquet runs.parquet
+
+python scripts/check_runs_coverage.py --csv data/runs_template.csv --target 16
+asla validate --runs runs.parquet
+asla audit --runs runs.parquet --target 16 --fast --out runs_audit.json
+```
+
+If the fast audit passes, run the full audit:
+
+```bash
+asla audit --runs runs.parquet --target 16 --out results/audit.json
+```
+
+## Safety Rules
+
+- Keep `status=pending` until the run is actually done.
+- Fill `bpb` only with measured evaluation results.
+- Use the same compute scale for every row.
+- Do not mix target rows into fitting budgets manually; ASLA uses `--target 16`
+  to hold the target out.
