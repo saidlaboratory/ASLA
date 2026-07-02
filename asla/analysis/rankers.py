@@ -7,11 +7,18 @@ from typing import Callable
 import numpy as np
 import pandas as pd
 
+from asla.analysis.ensemble import ensemble_rank
 from asla.analysis.fits import normalize_budgets, project_ranking
 from asla.analysis.gate import gate_pick
 from asla.models import FitForm
 
 Ranker = Callable[[pd.DataFrame, tuple[float, ...], float], pd.Series]
+
+
+def ensemble_ranker(df: pd.DataFrame, budgets: tuple[float, ...], target: float) -> pd.Series:
+    """Rank interventions by misspecification-aware ensemble projection."""
+
+    return ensemble_rank(df, budgets, target)
 
 
 def projection_ranker(

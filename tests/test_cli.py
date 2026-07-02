@@ -58,4 +58,4 @@ def test_audit_output_includes_reproducibility_metadata(tmp_path, capsys):
     assert payload["audit_metadata"]["budgets"] == [1.0, 2.0, 4.0, 8.0, 16.0]
     assert payload["audit_metadata"]["n_boot"] == 3
     assert payload["audit_metadata"]["rng_seed"] == 99
-    assert payload["audit_metadata"]["rankers"] == ["projection_ranker", "single_scale_ranker"]
+    assert payload["audit_metadata"]["rankers"] == ["ensemble_ranker", "projection_ranker", "single_scale_ranker"]

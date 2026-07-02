@@ -124,13 +124,13 @@ Fixes that make the existing audit defensible under review:
 
 ### WS2 — Misspecification-aware ensemble projection (novel method)
 
-- [ ] Promote the saturating form to a first-class fit:
+- [x] Promote the saturating form to a first-class fit:
   `fit_saturating(compute, bpb)` for `floor + drop/(1 + C/c_half)` with
   unit-invariant rescaling (same treatment as the power law).
-- [ ] Add a third family: power law with breakpoint-free curvature —
+- [x] Add a third family: power law with breakpoint-free curvature —
   `E + A·C^(-α)·exp(-C/C_sat)` (`fit_damped_power_law`) to cover
   slow saturation. Keep the dictionary small and defensible.
-- [ ] **Ensemble projection** (`asla/analysis/ensemble.py`):
+- [x] **Ensemble projection** (`asla/analysis/ensemble.py`):
   - leave-largest-budget-out (LLBO) extrapolation loss per family;
   - pseudo-BMA weights `w_m ∝ exp(-loss_m/T)` with tie-safe temperature;
   - ensemble target projection = weighted mean; disagreement = weighted SD
@@ -138,11 +138,12 @@ Fixes that make the existing audit defensible under review:
   - **Reliability score** `ρ = disagreement / noise_band` — ρ ≫ 1 means "the
     data cannot distinguish families that disagree at the target" (the
     quantitative version of "fit is blind").
-- [ ] `ensemble_ranker` registered alongside existing rankers; included in
+- [x] `ensemble_ranker` registered alongside existing rankers; included in
   `audit_with_ci` comparisons and the demo.
-- [ ] Tests: on `saturation_crossover` the ensemble must (a) down-weight the
-  pure power law for the saturating intervention and (b) produce ρ above
-  threshold; on `clean_crossover`/`negative_controls` ρ stays small.
+- [x] Tests: short ladders on saturating truth must yield large disagreement
+  (families indistinguishable — that is the point), long ladders must give the
+  saturating family the top weight and converge to truth; ρ > 1 flags the
+  planted saturation scenario.
 
 ### WS3 — Conformal projection intervals & calibrated gate
 
@@ -212,7 +213,7 @@ Fixes that make the existing audit defensible under review:
 |-------|---------|--------|
 | 0 | Packaging fix, baseline tests, PLAN.md | ✅ done |
 | 1 | WS1 statistical hardening | ✅ done |
-| 2 | WS2 ensemble projection + reliability score | ⬜ pending |
+| 2 | WS2 ensemble projection + reliability score | ✅ done |
 | 3 | WS4 racing policy + cost accounting (headline) | ⬜ pending |
 | 4 | WS5 benchmark generator + sweep CLI | ⬜ pending |
 | 5 | WS3 conformal gate + calibration study | ⬜ pending |

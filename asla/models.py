@@ -64,9 +64,26 @@ def bpb_power_law(C: np.ndarray | float, E: float, A: float, alpha: float) -> np
 
 
 def bpb_saturating(C: np.ndarray | float, floor: float, drop: float, c_half: float) -> np.ndarray | float:
-    """Compute a saturating BPB curve used only by synthetic misspecification tests."""
+    """Compute the saturating BPB curve ``floor + drop / (1 + C/c_half)``."""
 
     return floor + drop / (1.0 + np.asarray(C, dtype=float) / c_half)
+
+
+def bpb_damped_power_law(
+    C: np.ndarray | float,
+    E: float,
+    A: float,
+    alpha: float,
+    c_sat: float,
+) -> np.ndarray | float:
+    """Compute ``E + A * C**(-alpha) * exp(-C/c_sat)``, a power law with soft saturation.
+
+    As ``c_sat`` grows this nests the plain power law; small ``c_sat`` bends
+    the curve toward its floor faster than any pure power law.
+    """
+
+    c = np.asarray(C, dtype=float)
+    return E + A * c ** (-alpha) * np.exp(-c / c_sat)
 
 
 def bpb_chinchilla(
@@ -152,6 +169,92 @@ def fit_power_law(compute: np.ndarray, bpb: np.ndarray, sigma: np.ndarray | None
     if not np.isfinite(A):
         raise FitError("power-law fit produced non-finite parameters after unit conversion")
     return (E, A, alpha)
+
+
+def _validate_curve_inputs(compute: np.ndarray, bpb: np.ndarray, min_distinct: int, fn_name: str) -> tuple[np.ndarray, np.ndarray]:
+    """Shared input validation for one-axis compute curve fits."""
+
+    x = np.asarray(compute, dtype=float)
+    y = np.asarray(bpb, dtype=float)
+    if len(x) != len(y):
+        raise FitError(f"compute and bpb must have the same length, got {len(x)} and {len(y)}")
+    if len(x) == 0:
+        raise FitError(f"{fn_name} requires at least one row")
+    if not np.isfinite(x).all() or not np.isfinite(y).all():
+        raise FitError("compute and BPB values must be finite")
+    if len(np.unique(x)) < min_distinct:
+        raise FitError(f"{fn_name} requires at least {min_distinct} distinct compute values")
+    if np.any(x <= 0):
+        raise FitError("compute values must be positive")
+    y_min = float(np.min(y))
+    if not np.isfinite(y_min) or y_min <= 0:
+        raise FitError("BPB values must be finite and positive")
+    return x, y
+
+
+def fit_saturating(compute: np.ndarray, bpb: np.ndarray, sigma: np.ndarray | None = None) -> Tuple[float, float, float]:
+    """Fit ``floor + drop/(1 + C/c_half)`` and return ``(floor, drop, c_half)``.
+
+    Compute is rescaled by its smallest value so bounds are unit-invariant;
+    ``c_half`` is returned in the caller's raw compute units.
+    """
+
+    x, y = _validate_curve_inputs(compute, bpb, min_distinct=3, fn_name="fit_saturating")
+    s = _check_sigma(sigma, len(x))
+    y_min = float(np.min(y))
+    x_ref = float(np.min(x))
+    x_scaled = x / x_ref
+    span = max(float(np.max(y) - y_min), 1e-6)
+    p0 = (max(0.0, y_min - span * 0.1), span, 1.0)
+    bounds = ([0.0, 0.0, 1e-4], [y_min, 5.0, 1e8])
+    try:
+        params, _ = curve_fit(bpb_saturating, x_scaled, y, p0=p0, bounds=bounds, sigma=s, maxfev=50000)
+    except Exception as exc:  # pragma: no cover - exact scipy exception varies
+        raise FitError(f"saturating fit failed: {exc}") from exc
+    if not np.all(np.isfinite(params)):
+        raise FitError("saturating fit produced non-finite parameters")
+    floor, drop, c_half_scaled = (float(p) for p in params)
+    c_half = c_half_scaled * x_ref
+    if not np.isfinite(c_half):
+        raise FitError("saturating fit produced non-finite parameters after unit conversion")
+    return (floor, drop, c_half)
+
+
+def fit_damped_power_law(
+    compute: np.ndarray,
+    bpb: np.ndarray,
+    sigma: np.ndarray | None = None,
+) -> Tuple[float, float, float, float]:
+    """Fit ``E + A * C**(-alpha) * exp(-C/c_sat)`` and return ``(E, A, alpha, c_sat)``.
+
+    Four distinct compute budgets are required because the family has four
+    parameters. Compute is rescaled by its smallest value; ``A`` and ``c_sat``
+    are returned in raw units.
+    """
+
+    x, y = _validate_curve_inputs(compute, bpb, min_distinct=4, fn_name="fit_damped_power_law")
+    s = _check_sigma(sigma, len(x))
+    y_min = float(np.min(y))
+    x_ref = float(np.min(x))
+    x_scaled = x / x_ref
+    x_span = float(np.max(x_scaled))
+    e0 = max(0.0, min(y_min * 0.9, y_min - 1e-6))
+    a0 = min(5.0, max(0.01, float(np.max(y) - e0)))
+    # c_sat starts far beyond the data so the optimizer begins near the plain power law.
+    p0 = (e0, a0, 0.3, x_span * 100.0)
+    bounds = ([0.0, 0.0, 0.05, x_span * 0.1], [y_min, 5.0, 2.0, x_span * 1e6])
+    try:
+        params, _ = curve_fit(bpb_damped_power_law, x_scaled, y, p0=p0, bounds=bounds, sigma=s, maxfev=100000)
+    except Exception as exc:  # pragma: no cover - exact scipy exception varies
+        raise FitError(f"damped power-law fit failed: {exc}") from exc
+    if not np.all(np.isfinite(params)):
+        raise FitError("damped power-law fit produced non-finite parameters")
+    E, A_scaled, alpha, c_sat_scaled = (float(p) for p in params)
+    A = A_scaled * x_ref**alpha
+    c_sat = c_sat_scaled * x_ref
+    if not np.isfinite(A) or not np.isfinite(c_sat):
+        raise FitError("damped power-law fit produced non-finite parameters after unit conversion")
+    return (E, A, alpha, c_sat)
 
 
 def fit_power_law_diagnostics(

@@ -14,8 +14,9 @@ from asla.analysis.audit import audit_with_ci
 from asla.analysis.crossover import detect_crossovers, detect_crossovers_fdr, fitted_crossover_for_pair
 from asla.analysis.fits import normalize_budgets, project_ranking, truth_ranking
 from asla.analysis.gate import monte_carlo
+from asla.analysis.ensemble import ensemble_report
 from asla.analysis.metrics import decision_metrics
-from asla.analysis.rankers import Ranker, make_projection_ranker, single_scale_ranker
+from asla.analysis.rankers import Ranker, ensemble_ranker, make_projection_ranker, single_scale_ranker
 from asla.config import AuditConfig
 from asla.data.harvest import discover, harvest
 from asla.data.io import load_runs
@@ -53,11 +54,16 @@ def _runtime_config(args: argparse.Namespace) -> tuple[AuditConfig, int, int]:
     return cfg, n_boot, n_trials
 
 
-def _default_rankers(fit_form: str, weighted: bool = False) -> dict[str, Ranker]:
-    return {
+def _default_rankers(fit_form: str, weighted: bool = False, n_fit_budgets: int | None = None) -> dict[str, Ranker]:
+    rankers: dict[str, Ranker] = {
         "projection_ranker": make_projection_ranker(fit_form, weighted=weighted),  # type: ignore[arg-type]
         "single_scale_ranker": single_scale_ranker,
     }
+    # The ensemble needs leave-largest-budget-out refits, so at least four
+    # distinct fitting budgets; it is also compute-axis only.
+    if fit_form == "compute_power_law" and (n_fit_budgets is None or n_fit_budgets >= 4):
+        rankers["ensemble_ranker"] = ensemble_ranker
+    return rankers
 
 
 def _assert_fit_form_available(df: pd.DataFrame, fit_form: str) -> None:
@@ -129,6 +135,19 @@ def _demo(args: argparse.Namespace) -> int:
     else:
         print(f"Winner is correct: {projected_winner}; regret=0.000000")
 
+    if args.fit_form == "compute_power_law" and len(cfg.budgets.fit) >= 4:
+        noise_report = ci_results["noise"]
+        assert isinstance(noise_report, dict)
+        ens = ensemble_report(df, cfg.budgets.fit, cfg.budgets.target, noise_band=noise_report["noise_band"])
+        print("Ensemble extrapolation reliability (family disagreement / target noise band):")
+        for name, entry in ens.items():
+            rho = entry["reliability"]
+            rho_str = "unestimated" if rho is None else f"{float(rho):.2f}"
+            families = entry["families"]
+            assert isinstance(families, dict)
+            weights = ", ".join(f"{fam}={info['weight']:.2f}" for fam, info in families.items())
+            print(f"- {name}: rho={rho_str}; weights: {weights}")
+
     crossovers = detect_crossovers(df, cfg.budgets.fit, cfg.budgets.target, fit_form=args.fit_form)
     print("Detected crossovers:")
     if crossovers:
@@ -167,11 +186,14 @@ def _audit(args: argparse.Namespace) -> int:
     budgets = normalize_budgets(tuple(c for c in computes if c < args.target), target=args.target)
     if len(budgets) < 3:
         raise SystemExit(f"need at least 3 distinct pre-target fitting budgets; found {len(budgets)}")
-    rankers = _default_rankers(args.fit_form, weighted=bool(args.weighted))
+    rankers = _default_rankers(args.fit_form, weighted=bool(args.weighted), n_fit_budgets=len(budgets))
     audit = audit_with_ci(df, budgets, args.target, rankers, n_boot, np.random.default_rng(args.seed))
     audit["fit_form"] = args.fit_form
     crossovers = detect_crossovers(df, budgets, args.target, fit_form=args.fit_form)
     crossovers_fdr = detect_crossovers_fdr(df, budgets, args.target, q=args.crossover_q, fit_form=args.fit_form)
+    ensemble: dict[str, object] | None = None
+    if args.fit_form == "compute_power_law" and len(budgets) >= 4:
+        ensemble = ensemble_report(df, budgets, args.target, noise_band=audit["noise"]["noise_band"])
     result = {
         "audit_metadata": {
             "budgets": [float(budget) for budget in budgets],
@@ -193,6 +215,7 @@ def _audit(args: argparse.Namespace) -> int:
         "fit_diagnostics": audit["fit_diagnostics"],
         "crossovers": crossovers,
         "crossovers_fdr": crossovers_fdr,
+        "ensemble": ensemble,
     }
     if args.out:
         Path(args.out).parent.mkdir(parents=True, exist_ok=True)
