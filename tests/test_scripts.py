@@ -285,6 +285,26 @@ def test_site_train_template_uses_entrypoint_contract():
     assert "--result-json results/hpc/baseline__c1__s0/result.json" in command
 
 
+def test_site_command_template_uses_real_train_env_contract():
+    template = open("hpc/site_command.template", encoding="utf-8").read()
+    command = render_site_command(
+        template,
+        {
+            "intervention": "baseline",
+            "compute": "1",
+            "compute_g": "1",
+            "seed": "0",
+            "seed_int": 0,
+            "output_dir": "results/hpc/baseline__c1__s0",
+            "metrics_json": "results/hpc/baseline__c1__s0/metrics.json",
+        },
+    )
+
+    assert "ASLA_REAL_TRAIN_EVAL" in command
+    assert "--recipe baseline" in command
+    assert "--metrics-json results/hpc/baseline__c1__s0/metrics.json" in command
+
+
 def test_train_and_eval_writes_result_from_metrics(tmp_path):
     metrics = tmp_path / "metrics.json"
     result = tmp_path / "result.json"

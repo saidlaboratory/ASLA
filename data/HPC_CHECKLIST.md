@@ -40,20 +40,20 @@ python scripts/run_one_manifest_row.py \
   --output-dir results/hpc
 ```
 
-Then set `ASLA_SITE_COMMAND_TEMPLATE` to your real training/eval command
-template and adapt `hpc/slurm_array_template.sh` for your cluster. See
-`hpc/ADAPTATION_CHECKLIST.md`.
+Then set `ASLA_SITE_COMMAND_TEMPLATE=hpc/site_command.template`, set
+`ASLA_REAL_TRAIN_EVAL` to your real training/eval script, and adapt
+`hpc/slurm_array_template.sh` for your cluster. See `hpc/ADAPTATION_CHECKLIST.md`.
 
 The SLURM template defaults to dry-run. Submit it first without execution:
 
 ```bash
-sbatch --export=ALL,ASLA_SITE_COMMAND_TEMPLATE=/path/to/site_command.template hpc/slurm_array_template.sh
+sbatch --export=ALL,ASLA_SITE_COMMAND_TEMPLATE=hpc/site_command.template,ASLA_REAL_TRAIN_EVAL=/path/to/your_train_and_eval.py hpc/slurm_array_template.sh
 ```
 
 Only after inspecting `logs/` and `results/hpc/*/command.txt`, submit with:
 
 ```bash
-sbatch --export=ALL,ASLA_EXECUTE=1,ASLA_SITE_COMMAND_TEMPLATE=/path/to/site_command.template hpc/slurm_array_template.sh
+sbatch --export=ALL,ASLA_EXECUTE=1,ASLA_SITE_COMMAND_TEMPLATE=hpc/site_command.template,ASLA_REAL_TRAIN_EVAL=/path/to/your_train_and_eval.py hpc/slurm_array_template.sh
 ```
 
 When the job finishes, record:

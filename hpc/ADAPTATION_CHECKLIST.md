@@ -6,10 +6,11 @@ you provide a real command and pass `--execute`.
 ## 1. Define The Site Training Command
 
 Do not edit `hpc/train_command.template` unless you are changing the wrapper.
-For normal use, set `ASLA_SITE_COMMAND_TEMPLATE` to a command template file for
-your real training/eval code. The default `hpc/site_train_command.template`
-calls `hpc/train_and_eval.py`, which runs that site command and converts its
-measured metrics JSON into ASLA's canonical `result.json`.
+For normal use, set `ASLA_SITE_COMMAND_TEMPLATE=hpc/site_command.template` and
+set `ASLA_REAL_TRAIN_EVAL` to your real training/eval Python script. The default
+`hpc/site_train_command.template` calls `hpc/train_and_eval.py`, which runs that
+site command and converts its measured metrics JSON into ASLA's canonical
+`result.json`.
 
 The site command template may use these placeholders:
 
@@ -31,7 +32,7 @@ python /path/to/your_train_and_eval.py \
   --metrics-json {metrics_json}
 ```
 
-See `hpc/site_command.template.example`.
+See `hpc/site_command.template` and `hpc/site_command.template.example`.
 
 Your training command should write measured metrics to:
 
@@ -54,7 +55,8 @@ considered successful.
 Example dry-run with a specific entrypoint:
 
 ```bash
-ASLA_SITE_COMMAND_TEMPLATE=/path/to/site_command.template \
+ASLA_SITE_COMMAND_TEMPLATE=hpc/site_command.template \
+ASLA_REAL_TRAIN_EVAL=/path/to/your_train_and_eval.py \
 python scripts/run_one_manifest_row.py \
   --manifest data/run_manifest.csv \
   --row 1 \
@@ -84,7 +86,7 @@ This prints the rendered command and saves it to
 Submit the template as-is first. It does not execute the rendered command.
 
 ```bash
-sbatch --export=ALL,ASLA_SITE_COMMAND_TEMPLATE=/path/to/site_command.template,ASLA_MODULES="YOUR_MODULES",ASLA_CONDA_ENV=YOUR_ENV hpc/slurm_array_template.sh
+sbatch --export=ALL,ASLA_SITE_COMMAND_TEMPLATE=hpc/site_command.template,ASLA_REAL_TRAIN_EVAL=/path/to/your_train_and_eval.py,ASLA_MODULES="YOUR_MODULES",ASLA_CONDA_ENV=YOUR_ENV hpc/slurm_array_template.sh
 ```
 
 Inspect `logs/` and `results/hpc/*/command.txt`.
@@ -102,7 +104,7 @@ After the dry-run commands look correct and `hpc/site_train_command.template`
 calls your real trainer, submit with `ASLA_EXECUTE=1`:
 
 ```bash
-sbatch --export=ALL,ASLA_EXECUTE=1,ASLA_SITE_COMMAND_TEMPLATE=/path/to/site_command.template,ASLA_MODULES="YOUR_MODULES",ASLA_CONDA_ENV=YOUR_ENV hpc/slurm_array_template.sh
+sbatch --export=ALL,ASLA_EXECUTE=1,ASLA_SITE_COMMAND_TEMPLATE=hpc/site_command.template,ASLA_REAL_TRAIN_EVAL=/path/to/your_train_and_eval.py,ASLA_MODULES="YOUR_MODULES",ASLA_CONDA_ENV=YOUR_ENV hpc/slurm_array_template.sh
 ```
 
 ## 5. Collect Results
