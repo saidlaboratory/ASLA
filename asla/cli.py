@@ -18,6 +18,7 @@ from asla.analysis.ensemble import ensemble_report
 from asla.analysis.metrics import decision_metrics
 from asla.analysis.rankers import Ranker, ensemble_ranker, make_projection_ranker, single_scale_ranker
 from asla.config import AuditConfig
+from asla.data.benchmark import FAMILIES as BENCHMARK_FAMILIES, benchmark_grid, evaluate_configs
 from asla.data.harvest import discover, harvest
 from asla.data.io import load_runs
 from asla.data.schema import SchemaError, validate
@@ -235,6 +236,79 @@ def _harvest(args: argparse.Namespace) -> int:
     return 0
 
 
+def _benchmark_heatmaps(table: pd.DataFrame, out_dir: Path) -> None:
+    """Write wrong-pick-rate heat maps per rule for crossover families."""
+
+    try:
+        import matplotlib.pyplot as plt
+    except ImportError:
+        print("matplotlib not installed; skipping benchmark heat maps")
+        return
+    for family in sorted(set(table["family"]) & {"late_crossover", "saturating"}):
+        subset = table[table["family"] == family]
+        for rule in sorted(subset["rule"].unique()):
+            pivot = (
+                subset[subset["rule"] == rule]
+                .pivot_table(index="gap_to_noise", columns="crossover_position", values="wrong_pick_rate", aggfunc="mean")
+                .sort_index()
+            )
+            if pivot.empty:
+                continue
+            fig, ax = plt.subplots()
+            im = ax.imshow(pivot.to_numpy(), origin="lower", aspect="auto", vmin=0.0, vmax=1.0, cmap="viridis")
+            ax.set_xticks(range(len(pivot.columns)), [f"{c:+.2f}" for c in pivot.columns])
+            ax.set_yticks(range(len(pivot.index)), [f"{g:g}" for g in pivot.index])
+            ax.set_xlabel("crossover position log10(Cx / Cmax_fit)")
+            ax.set_ylabel("target gap / seed noise")
+            ax.set_title(f"wrong-pick rate: {rule} on {family}")
+            fig.colorbar(im, ax=ax)
+            name = f"benchmark_heatmap_{family}_{rule}"
+            for ext in ("png", "pdf"):
+                fig.savefig(out_dir / f"{name}.{ext}", bbox_inches="tight", dpi=160)
+            plt.close(fig)
+    print(f"wrote benchmark heat maps to {out_dir}")
+
+
+def _benchmark(args: argparse.Namespace) -> int:
+    n_trials = 10 if args.fast else args.trials
+    n_boot = 40 if args.fast else args.n_boot
+    configs = benchmark_grid(families=tuple(args.families), seeds=tuple(range(args.problem_seeds)))
+    if not configs:
+        raise SystemExit("benchmark grid is empty; check --families")
+    print(f"evaluating {len(configs)} benchmark problems x 4 rules ({n_trials} trials each)")
+    table = evaluate_configs(configs, n_trials=n_trials, n_boot=n_boot, seed=args.seed, beta=args.beta)
+    out = Path(args.out)
+    out.mkdir(parents=True, exist_ok=True)
+    table.to_parquet(out / "benchmark_results.parquet", index=False)
+    table.to_csv(out / "benchmark_results.csv", index=False)
+    summary = (
+        table.groupby(["family", "rule"])[["mean_regret", "wrong_pick_rate", "mean_compute"]]
+        .mean()
+        .round(6)
+        .reset_index()
+        .to_dict(orient="records")
+    )
+    (out / "benchmark_summary.json").write_text(
+        json.dumps(
+            {
+                "n_problems": len(configs),
+                "n_trials": int(n_trials),
+                "n_boot": int(n_boot),
+                "rng_seed": int(args.seed),
+                "beta": float(args.beta),
+                "per_family_rule_means": summary,
+            },
+            indent=2,
+            sort_keys=True,
+        ),
+        encoding="utf-8",
+    )
+    _benchmark_heatmaps(table, out)
+    print(json.dumps(summary, indent=2))
+    print(f"wrote benchmark results to {out}")
+    return 0
+
+
 def _figures(args: argparse.Namespace) -> int:
     df = load_runs(args.runs)
     make_figures(df, args.out, target=args.target)
@@ -279,6 +353,17 @@ def build_parser() -> argparse.ArgumentParser:
     harv.add_argument("--field-map")
     harv.add_argument("--out", default="runs.parquet")
     harv.set_defaults(func=_harvest)
+
+    bench = sub.add_parser("benchmark")
+    bench.add_argument("--out", default="results/benchmark")
+    bench.add_argument("--families", nargs="+", choices=list(BENCHMARK_FAMILIES), default=list(BENCHMARK_FAMILIES))
+    bench.add_argument("--trials", type=_positive_int, default=100)
+    bench.add_argument("--n-boot", type=_positive_int, default=300)
+    bench.add_argument("--problem-seeds", type=_positive_int, default=1, help="Curve-sampling seeds per knob setting.")
+    bench.add_argument("--seed", type=int, default=1729)
+    bench.add_argument("--beta", type=float, default=1.0, help="Race interval-width multiplier.")
+    bench.add_argument("--fast", action="store_true")
+    bench.set_defaults(func=_benchmark)
 
     figs = sub.add_parser("figures")
     figs.add_argument("--runs", required=True)

@@ -182,17 +182,17 @@ Fixes that make the existing audit defensible under review:
 
 ### WS5 — ASLA-Bench: parameterized benchmark generator
 
-- [ ] `asla/data/benchmark.py`: scenario *families* sampled by difficulty
+- [x] `asla/data/benchmark.py`: scenario *families* sampled by difficulty
   knobs: `gap_to_noise` (target gap ÷ seed noise), `crossover_position`
   (crossover budget ÷ max fit budget, on log scale), `saturation_strength`,
   `n_interventions`, ladder geometry, seeds per cell. Every generated frame
   carries `ScenarioTruth` so noiseless regret is always available.
-- [ ] Difficulty sweep API: `benchmark_grid(...)` yields (config, generator)
+- [x] Difficulty sweep API: `benchmark_grid(...)` yields (config, generator)
   pairs; `asla benchmark` CLI runs a rule set across the grid and writes a
   tidy results parquet + summary JSON.
-- [ ] Reference results + figures: wrong-pick-rate heat maps over
+- [x] Reference results + figures: wrong-pick-rate heat maps over
   (gap_to_noise × crossover_position) per rule (`benchmark_heatmap`).
-- [ ] Tests: generator determinism (same seed → same frame), knob monotonicity
+- [x] Tests: generator determinism (same seed → same frame), knob monotonicity
   smoke checks (harder knob settings → no easier measured difficulty on
   average over a small grid).
 
@@ -216,7 +216,7 @@ Fixes that make the existing audit defensible under review:
 | 1 | WS1 statistical hardening | ✅ done |
 | 2 | WS2 ensemble projection + reliability score | ✅ done |
 | 3 | WS4 racing policy + cost accounting (headline) | ✅ done |
-| 4 | WS5 benchmark generator + sweep CLI | ⬜ pending |
+| 4 | WS5 benchmark generator + sweep CLI | ✅ done |
 | 5 | WS3 conformal gate + calibration study | ⬜ pending |
 | 6 | WS6 reporting/docs/CI polish | ⬜ pending |
 
