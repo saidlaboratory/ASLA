@@ -40,8 +40,21 @@ python scripts/run_one_manifest_row.py \
   --output-dir results/hpc
 ```
 
-Then adapt `hpc/train_command.template` and `hpc/slurm_array_template.sh` for
-your cluster. See `hpc/ADAPTATION_CHECKLIST.md`.
+Then adapt `hpc/site_train_command.template` and
+`hpc/slurm_array_template.sh` for your cluster. See
+`hpc/ADAPTATION_CHECKLIST.md`.
+
+The SLURM template defaults to dry-run. Submit it first without execution:
+
+```bash
+sbatch hpc/slurm_array_template.sh
+```
+
+Only after inspecting `logs/` and `results/hpc/*/command.txt`, submit with:
+
+```bash
+sbatch --export=ALL,ASLA_EXECUTE=1 hpc/slurm_array_template.sh
+```
 
 When the job finishes, record:
 

@@ -1,0 +1,1 @@
+python -c "raise SystemExit('replace hpc/site_train_command.template with your real training/eval command; it must write {result_path}')"

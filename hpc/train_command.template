@@ -1,1 +1,1 @@
-echo "replace hpc/train_command.template with your real training command for {run_id} {intervention} {compute_g} {seed_int}"
+python hpc/run_training_job.py --run-id {run_id} --intervention {intervention} --compute {compute_g} --seed {seed_int} --output-dir {output_dir}/{run_id} --site-command-template hpc/site_train_command.template

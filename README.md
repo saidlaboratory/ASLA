@@ -100,7 +100,8 @@ cannot silently become audit data.
 
 The optional HPC scaffold is in `hpc/`:
 
-- `hpc/train_command.template`: replace with your real training command.
+- `hpc/train_command.template`: wrapper command used by the row runner.
+- `hpc/site_train_command.template`: replace with your real training/eval command.
 - `hpc/slurm_array_template.sh`: SLURM array template, dry-run by default.
 - `hpc/ADAPTATION_CHECKLIST.md`: step-by-step cluster adaptation guide.
 

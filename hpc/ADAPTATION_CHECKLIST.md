@@ -3,35 +3,36 @@
 The scaffold is intentionally conservative. It does not train anything until
 you provide a real command and pass `--execute`.
 
-## 1. Define The Command
+## 1. Define The Site Training Command
 
-Edit `hpc/train_command.template`. It must include these placeholders:
+Do not edit `hpc/train_command.template` unless you are changing the wrapper.
+For normal use, edit `hpc/site_train_command.template`. It must launch your real
+training/eval code and write the result file requested by `{result_path}`.
+
+The site command template may use these placeholders:
 
 - `{run_id}`
 - `{intervention}`
 - either `{compute}` or `{compute_g}`
 - either `{seed}` or `{seed_int}`
-
-Useful optional placeholders:
-
-- `{role}`
 - `{output_dir}`
-- `{row_index}`
+- `{result_path}`
 
 Example shape:
 
 ```bash
 python train.py \
   --recipe {intervention} \
-  --compute {compute_g} \
-  --seed {seed_int} \
-  --output-dir {output_dir}/{run_id}
+  --compute {compute} \
+  --seed {seed} \
+  --output-dir {output_dir} \
+  --result-json {result_path}
 ```
 
 Your training command should write:
 
 ```text
-results/hpc/<run_id>/result.json
+{result_path}
 ```
 
 with at least:
@@ -44,6 +45,7 @@ with at least:
 ```
 
 Optional keys are `downstream`, `params_n`, `tokens_d`, and `notes`.
+The adapter validates this file before the job is considered successful.
 
 ## 2. Dry Run
 
@@ -66,15 +68,26 @@ This prints the rendered command and saves it to
 Submit the template as-is first. It does not execute the rendered command.
 
 ```bash
-sbatch hpc/slurm_array_template.sh
+sbatch --export=ALL,ASLA_MODULES="YOUR_MODULES",ASLA_CONDA_ENV=YOUR_ENV hpc/slurm_array_template.sh
 ```
 
 Inspect `logs/` and `results/hpc/*/command.txt`.
 
+If your cluster does not use modules or conda, omit `ASLA_MODULES` and
+`ASLA_CONDA_ENV`:
+
+```bash
+sbatch hpc/slurm_array_template.sh
+```
+
 ## 4. Execute
 
-After the dry-run commands look correct, add `--execute` to the
-`python scripts/run_one_manifest_row.py` call in your SLURM script.
+After the dry-run commands look correct and `hpc/site_train_command.template`
+calls your real trainer, submit with `ASLA_EXECUTE=1`:
+
+```bash
+sbatch --export=ALL,ASLA_EXECUTE=1,ASLA_MODULES="YOUR_MODULES",ASLA_CONDA_ENV=YOUR_ENV hpc/slurm_array_template.sh
+```
 
 ## 5. Collect Results
 

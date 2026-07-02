@@ -1,3 +1,5 @@
+import subprocess
+
 import pandas as pd
 import pytest
 
@@ -7,6 +9,7 @@ from scripts.finalize_run_manifest import manifest_to_runs
 from scripts.make_run_manifest import _read_budgets, _read_interventions, make_manifest
 from scripts.prepare_runs_table import _coerce_runs
 from scripts.run_one_manifest_row import build_command, select_row
+from hpc.run_training_job import render_site_command, validate_result_json
 
 
 def test_make_run_manifest_creates_expected_grid():
@@ -242,3 +245,37 @@ def test_collect_results_merges_json_and_refuses_overwrite(tmp_path):
 
     with pytest.raises(ValueError, match="overwrite"):
         collect_results(updated, tmp_path / "results")
+
+
+def test_hpc_training_adapter_renders_and_validates_result(tmp_path):
+    command = render_site_command(
+        "python train.py --recipe {intervention} --result {result_path}",
+        {"intervention": "baseline", "result_path": "results/run/result.json"},
+    )
+    assert command == "python train.py --recipe baseline --result results/run/result.json"
+
+    result_path = tmp_path / "result.json"
+    result_path.write_text('{"bpb": 1.234, "status": "completed"}', encoding="utf-8")
+    payload = validate_result_json(result_path)
+    assert payload["bpb"] == 1.234
+
+
+def test_hpc_training_adapter_rejects_bad_result(tmp_path):
+    missing = tmp_path / "missing.json"
+    with pytest.raises(ValueError, match="did not write"):
+        validate_result_json(missing)
+
+    bad = tmp_path / "bad.json"
+    bad.write_text('{"bpb": "nan", "status": "completed"}', encoding="utf-8")
+    with pytest.raises(ValueError, match="non-finite"):
+        validate_result_json(bad)
+
+
+def test_slurm_template_is_syntax_checked_and_dry_by_default():
+    completed = subprocess.run(["bash", "-n", "hpc/slurm_array_template.sh"], check=False)
+    assert completed.returncode == 0
+    text = open("hpc/slurm_array_template.sh", encoding="utf-8").read()
+    initial_args = text.split("RUN_ARGS=(")[1].split(")")[0]
+    assert "--execute" not in initial_args
+    assert "RUN_ARGS+=(--execute)" in text
+    assert "##SBATCH --gres=gpu:1" in text
