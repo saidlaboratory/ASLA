@@ -6,8 +6,10 @@ you provide a real command and pass `--execute`.
 ## 1. Define The Site Training Command
 
 Do not edit `hpc/train_command.template` unless you are changing the wrapper.
-For normal use, edit `hpc/site_train_command.template`. It must launch your real
-training/eval code and write the result file requested by `{result_path}`.
+For normal use, set `ASLA_SITE_COMMAND_TEMPLATE` to a command template file for
+your real training/eval code. The default `hpc/site_train_command.template`
+calls `hpc/train_and_eval.py`, which runs that site command and converts its
+measured metrics JSON into ASLA's canonical `result.json`.
 
 The site command template may use these placeholders:
 
@@ -18,34 +20,48 @@ The site command template may use these placeholders:
 - `{output_dir}`
 - `{result_path}`
 
-Example shape:
+Your site command template should have this shape:
 
 ```bash
-python train.py \
+python /path/to/your_train_and_eval.py \
   --recipe {intervention} \
   --compute {compute} \
   --seed {seed} \
   --output-dir {output_dir} \
-  --result-json {result_path}
+  --metrics-json {metrics_json}
 ```
 
-Your training command should write:
+See `hpc/site_command.template.example`.
+
+Your training command should write measured metrics to:
 
 ```text
-{result_path}
+{metrics_json}
 ```
 
 with at least:
 
 ```json
 {
-  "bpb": 1.234,
-  "status": "completed"
+  "bpb": 1.234
 }
 ```
 
 Optional keys are `downstream`, `params_n`, `tokens_d`, and `notes`.
-The adapter validates this file before the job is considered successful.
+The ASLA adapter writes and validates `{result_path}` before the job is
+considered successful.
+
+Example dry-run with a specific entrypoint:
+
+```bash
+ASLA_SITE_COMMAND_TEMPLATE=/path/to/site_command.template \
+python scripts/run_one_manifest_row.py \
+  --manifest data/run_manifest.csv \
+  --row 1 \
+  --index-base 1 \
+  --command-template-file hpc/train_command.template \
+  --output-dir results/hpc
+```
 
 ## 2. Dry Run
 
@@ -68,7 +84,7 @@ This prints the rendered command and saves it to
 Submit the template as-is first. It does not execute the rendered command.
 
 ```bash
-sbatch --export=ALL,ASLA_MODULES="YOUR_MODULES",ASLA_CONDA_ENV=YOUR_ENV hpc/slurm_array_template.sh
+sbatch --export=ALL,ASLA_SITE_COMMAND_TEMPLATE=/path/to/site_command.template,ASLA_MODULES="YOUR_MODULES",ASLA_CONDA_ENV=YOUR_ENV hpc/slurm_array_template.sh
 ```
 
 Inspect `logs/` and `results/hpc/*/command.txt`.
@@ -86,7 +102,7 @@ After the dry-run commands look correct and `hpc/site_train_command.template`
 calls your real trainer, submit with `ASLA_EXECUTE=1`:
 
 ```bash
-sbatch --export=ALL,ASLA_EXECUTE=1,ASLA_MODULES="YOUR_MODULES",ASLA_CONDA_ENV=YOUR_ENV hpc/slurm_array_template.sh
+sbatch --export=ALL,ASLA_EXECUTE=1,ASLA_SITE_COMMAND_TEMPLATE=/path/to/site_command.template,ASLA_MODULES="YOUR_MODULES",ASLA_CONDA_ENV=YOUR_ENV hpc/slurm_array_template.sh
 ```
 
 ## 5. Collect Results

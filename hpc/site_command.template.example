@@ -1,0 +1,6 @@
+python /path/to/your_train_and_eval.py \
+  --recipe {intervention} \
+  --compute {compute_g} \
+  --seed {seed_int} \
+  --output-dir {output_dir} \
+  --metrics-json {metrics_json}

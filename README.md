@@ -101,7 +101,7 @@ cannot silently become audit data.
 The optional HPC scaffold is in `hpc/`:
 
 - `hpc/train_command.template`: wrapper command used by the row runner.
-- `hpc/site_train_command.template`: replace with your real training/eval command.
+- `hpc/site_train_command.template`: calls `hpc/train_and_eval.py`, which uses `ASLA_SITE_COMMAND_TEMPLATE`.
 - `hpc/slurm_array_template.sh`: SLURM array template, dry-run by default.
 - `hpc/ADAPTATION_CHECKLIST.md`: step-by-step cluster adaptation guide.
 

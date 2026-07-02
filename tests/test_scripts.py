@@ -1,8 +1,10 @@
 import subprocess
+import sys
 
 import pandas as pd
 import pytest
 
+from hpc.train_and_eval import result_from_metrics
 from scripts.check_runs_coverage import coverage_report
 from scripts.collect_results import collect_results
 from scripts.finalize_run_manifest import manifest_to_runs
@@ -258,6 +260,78 @@ def test_hpc_training_adapter_renders_and_validates_result(tmp_path):
     result_path.write_text('{"bpb": 1.234, "status": "completed"}', encoding="utf-8")
     payload = validate_result_json(result_path)
     assert payload["bpb"] == 1.234
+
+
+def test_site_train_template_uses_entrypoint_contract():
+    template = open("hpc/site_train_command.template", encoding="utf-8").read()
+    command = render_site_command(
+        template,
+        {
+            "run_id": "baseline__c1__s0",
+            "intervention": "baseline",
+            "compute": "1",
+            "compute_g": "1",
+            "seed": "0",
+            "seed_int": 0,
+            "output_dir": "results/hpc/baseline__c1__s0",
+            "result_path": "results/hpc/baseline__c1__s0/result.json",
+        },
+    )
+
+    assert "hpc/train_and_eval.py" in command
+    assert "ASLA_SITE_COMMAND_TEMPLATE" in command
+    assert "--run-id baseline__c1__s0" in command
+    assert "--intervention baseline" in command
+    assert "--result-json results/hpc/baseline__c1__s0/result.json" in command
+
+
+def test_train_and_eval_writes_result_from_metrics(tmp_path):
+    metrics = tmp_path / "metrics.json"
+    result = tmp_path / "result.json"
+    metrics.write_text('{"bpb": 1.456, "downstream": 0.25}', encoding="utf-8")
+
+    payload = result_from_metrics(metrics, result)
+
+    assert payload["bpb"] == 1.456
+    assert result.exists()
+    validate_result_json(result)
+
+
+def test_train_and_eval_cli_runs_site_command(tmp_path):
+    template = tmp_path / "site_command.template"
+    template.write_text(
+        f"{sys.executable} -c \"import pathlib; pathlib.Path('{{metrics_json}}').write_text('{{{{\\\"bpb\\\": 1.789}}}}')\"",
+        encoding="utf-8",
+    )
+    result = tmp_path / "out" / "result.json"
+
+    completed = subprocess.run(
+        [
+            sys.executable,
+            "hpc/train_and_eval.py",
+            "--run-id",
+            "run0",
+            "--intervention",
+            "baseline",
+            "--compute",
+            "1",
+            "--seed",
+            "0",
+            "--output-dir",
+            str(tmp_path / "out"),
+            "--result-json",
+            str(result),
+            "--command-template-file",
+            str(template),
+        ],
+        check=False,
+        text=True,
+        capture_output=True,
+    )
+
+    assert completed.returncode == 0, completed.stderr
+    payload = validate_result_json(result)
+    assert payload["bpb"] == 1.789
 
 
 def test_hpc_training_adapter_rejects_bad_result(tmp_path):
