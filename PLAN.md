@@ -160,20 +160,21 @@ Fixes that make the existing audit defensible under review:
 
 ### WS4 — Cost-aware sequential selection (headline method)
 
-- [ ] **Cost accounting**: total compute spent by a selection procedure =
+- [x] **Cost accounting**: total compute spent by a selection procedure =
   Σ (runs launched × budget). All rules report `compute_spent` alongside the
   pick, enabling equal-cost comparisons (`asla/analysis/racing.py`).
-- [ ] **Racing policy** (`race_pick`): start all interventions at the lowest
+- [x] **Racing policy** (`race_pick`): start all interventions at the lowest
   rungs; at each rung, fit each survivor on its accumulated rungs, project to
   target with uncertainty, eliminate interventions whose LCB exceeds the
   leader's UCB (configurable interval source: bootstrap or conformal);
   advance survivors to the next rung; stop at ladder end or single survivor.
-- [ ] **Monte Carlo comparison** extended: plain / largest-single / gate /
+- [x] **Monte Carlo comparison** extended: plain / largest-single / gate /
   racing evaluated on wrong-pick rate, regret, and compute spent;
-  `monte_carlo` returns all four rules with cost columns.
-- [ ] **Pareto frontier figure**: regret vs. compute-spent across rules and
+  `monte_carlo_selection` returns all four rules with cost columns
+  (legacy `monte_carlo` kept).
+- [x] **Pareto frontier figure**: regret vs. compute-spent across rules and
   τ/α sweeps (`scripts/run_pareto_study.py`, figure `pareto_regret_cost`).
-- [ ] **Theory note** (`docs/THEORY.md`): detectability lemma — for two
+- [x] **Theory note** (`docs/THEORY.md`): detectability lemma — for two
   power-law curves crossing beyond the fit range, a lower bound on the number
   of seeds/budget span needed for any projection rule to order them correctly
   with probability ≥ 1-δ; plus the elimination-correctness argument for the
@@ -214,7 +215,7 @@ Fixes that make the existing audit defensible under review:
 | 0 | Packaging fix, baseline tests, PLAN.md | ✅ done |
 | 1 | WS1 statistical hardening | ✅ done |
 | 2 | WS2 ensemble projection + reliability score | ✅ done |
-| 3 | WS4 racing policy + cost accounting (headline) | ⬜ pending |
+| 3 | WS4 racing policy + cost accounting (headline) | ✅ done |
 | 4 | WS5 benchmark generator + sweep CLI | ⬜ pending |
 | 5 | WS3 conformal gate + calibration study | ⬜ pending |
 | 6 | WS6 reporting/docs/CI polish | ⬜ pending |

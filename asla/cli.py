@@ -13,7 +13,7 @@ import pandas as pd
 from asla.analysis.audit import audit_with_ci
 from asla.analysis.crossover import detect_crossovers, detect_crossovers_fdr, fitted_crossover_for_pair
 from asla.analysis.fits import normalize_budgets, project_ranking, truth_ranking
-from asla.analysis.gate import monte_carlo
+from asla.analysis.racing import monte_carlo_selection
 from asla.analysis.ensemble import ensemble_report
 from asla.analysis.metrics import decision_metrics
 from asla.analysis.rankers import Ranker, ensemble_ranker, make_projection_ranker, single_scale_ranker
@@ -161,8 +161,8 @@ def _demo(args: argparse.Namespace) -> int:
     neg_cross = detect_crossovers(neg, cfg.budgets.fit, cfg.budgets.target, fit_form=args.fit_form)
     print(f"Negative-control crossovers detected: {len(neg_cross)}")
 
-    mc = monte_carlo(SCENARIOS[args.scenario], cfg, n_trials=n_trials, rng=np.random.default_rng(args.seed + 2))
-    print("Monte Carlo gate comparison:")
+    mc = monte_carlo_selection(SCENARIOS[args.scenario], cfg, n_trials=n_trials, rng=np.random.default_rng(args.seed + 2))
+    print("Monte Carlo selection-rule comparison (plain / largest / gate / race):")
     print(json.dumps(mc, indent=2, sort_keys=True))
     return 0
 

@@ -34,6 +34,47 @@ def largest_single_run_pick(df: pd.DataFrame, budgets: Iterable[float], target: 
     return str(means.index[0])
 
 
+def gate_pick_detailed(
+    df: pd.DataFrame,
+    budgets: Iterable[float],
+    target: float,
+    intermediate_budget: float,
+    tau: float,
+    n_boot: int,
+    rng: np.random.Generator,
+) -> dict[str, object]:
+    """Apply the uncertainty gate and return the pick with its decision path.
+
+    The result maps ``pick`` to the selected intervention, ``escalated`` to
+    whether the intermediate budget was consulted, and ``top_pair`` to the two
+    interventions the gate compared (``None`` with a single intervention).
+    """
+
+    validate(df)
+    ranking = project_ranking(df, budgets, target)
+    if len(ranking) < 2:
+        return {"pick": str(ranking.index[0]), "escalated": False, "top_pair": None}
+    top1, top2 = str(ranking.index[0]), str(ranking.index[1])
+    p1 = projection_with_uncertainty(df[df["intervention"] == top1], budgets, target, n_boot, rng)
+    p2 = projection_with_uncertainty(df[df["intervention"] == top2], budgets, target, n_boot, rng)
+    denom = float(np.sqrt(p1[1] ** 2 + p2[1] ** 2))
+    gap = float(ranking.iloc[1] - ranking.iloc[0])
+    g = np.inf if denom == 0.0 and gap > 0 else gap / denom if denom > 0 else 0.0
+    if g >= tau:
+        return {"pick": top1, "escalated": False, "top_pair": (top1, top2)}
+    extended = tuple(sorted(set((*tuple(float(b) for b in budgets), float(intermediate_budget)))))
+    extended_df = df[df["intervention"].isin([top1, top2])]
+    at_intermediate = extended_df[np.isclose(extended_df["compute"].astype(float), float(intermediate_budget))]
+    missing = sorted({top1, top2} - set(at_intermediate["intervention"].astype(str)))
+    if missing:
+        raise ValueError(
+            f"gate escalation needs runs at intermediate budget {intermediate_budget} "
+            f"for interventions {missing}; none were found"
+        )
+    pick = plain_projection_pick(extended_df, extended, target)
+    return {"pick": pick, "escalated": True, "top_pair": (top1, top2)}
+
+
 def gate_pick(
     df: pd.DataFrame,
     budgets: Iterable[float],
@@ -45,41 +86,23 @@ def gate_pick(
 ) -> str:
     """Apply the projection uncertainty gate and return the selected intervention."""
 
-    validate(df)
-    ranking = project_ranking(df, budgets, target)
-    if len(ranking) < 2:
-        return str(ranking.index[0])
-    top1, top2 = str(ranking.index[0]), str(ranking.index[1])
-    p1 = projection_with_uncertainty(df[df["intervention"] == top1], budgets, target, n_boot, rng)
-    p2 = projection_with_uncertainty(df[df["intervention"] == top2], budgets, target, n_boot, rng)
-    denom = float(np.sqrt(p1[1] ** 2 + p2[1] ** 2))
-    gap = float(ranking.iloc[1] - ranking.iloc[0])
-    g = np.inf if denom == 0.0 and gap > 0 else gap / denom if denom > 0 else 0.0
-    if g >= tau:
-        return top1
-    extended = tuple(sorted(set((*tuple(float(b) for b in budgets), float(intermediate_budget)))))
-    extended_df = df[df["intervention"].isin([top1, top2])]
-    at_intermediate = extended_df[np.isclose(extended_df["compute"].astype(float), float(intermediate_budget))]
-    missing = sorted({top1, top2} - set(at_intermediate["intervention"].astype(str)))
-    if missing:
-        raise ValueError(
-            f"gate escalation needs runs at intermediate budget {intermediate_budget} "
-            f"for interventions {missing}; none were found"
-        )
-    return plain_projection_pick(extended_df, extended, target)
+    return str(gate_pick_detailed(df, budgets, target, intermediate_budget, tau, n_boot, rng)["pick"])
 
 
 def _regret_for_pick(pick: str, truth: pd.Series) -> float:
     return float(truth.loc[pick] - truth.min())
 
 
-def _evaluation_truth(df: pd.DataFrame, target: float) -> pd.Series:
+def evaluation_truth(df: pd.DataFrame, target: float) -> pd.Series:
     """Use noiseless synthetic truth when available, otherwise measured target means."""
 
     try:
         return synthetic_true_ranking(df, target)
     except ValueError:
         return truth_ranking(df, target)
+
+
+_evaluation_truth = evaluation_truth
 
 
 def monte_carlo(
