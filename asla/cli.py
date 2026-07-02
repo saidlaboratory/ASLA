@@ -11,7 +11,7 @@ import numpy as np
 import pandas as pd
 
 from asla.analysis.audit import audit_with_ci
-from asla.analysis.crossover import detect_crossovers, fitted_crossover_for_pair
+from asla.analysis.crossover import detect_crossovers, detect_crossovers_fdr, fitted_crossover_for_pair
 from asla.analysis.fits import normalize_budgets, project_ranking, truth_ranking
 from asla.analysis.gate import monte_carlo
 from asla.analysis.metrics import decision_metrics
@@ -53,9 +53,9 @@ def _runtime_config(args: argparse.Namespace) -> tuple[AuditConfig, int, int]:
     return cfg, n_boot, n_trials
 
 
-def _default_rankers(fit_form: str) -> dict[str, Ranker]:
+def _default_rankers(fit_form: str, weighted: bool = False) -> dict[str, Ranker]:
     return {
-        "projection_ranker": make_projection_ranker(fit_form),  # type: ignore[arg-type]
+        "projection_ranker": make_projection_ranker(fit_form, weighted=weighted),  # type: ignore[arg-type]
         "single_scale_ranker": single_scale_ranker,
     }
 
@@ -167,25 +167,32 @@ def _audit(args: argparse.Namespace) -> int:
     budgets = normalize_budgets(tuple(c for c in computes if c < args.target), target=args.target)
     if len(budgets) < 3:
         raise SystemExit(f"need at least 3 distinct pre-target fitting budgets; found {len(budgets)}")
-    rankers = _default_rankers(args.fit_form)
+    rankers = _default_rankers(args.fit_form, weighted=bool(args.weighted))
     audit = audit_with_ci(df, budgets, args.target, rankers, n_boot, np.random.default_rng(args.seed))
     audit["fit_form"] = args.fit_form
     crossovers = detect_crossovers(df, budgets, args.target, fit_form=args.fit_form)
+    crossovers_fdr = detect_crossovers_fdr(df, budgets, args.target, q=args.crossover_q, fit_form=args.fit_form)
     result = {
         "audit_metadata": {
             "budgets": [float(budget) for budget in budgets],
+            "crossover_q": float(args.crossover_q),
             "fast": bool(args.fast),
             "fit_form": args.fit_form,
             "n_boot": int(n_boot),
             "rankers": sorted(rankers.keys()),
             "rng_seed": int(args.seed),
             "target": float(args.target),
+            "weighted": bool(args.weighted),
         },
         "fit_form": args.fit_form,
         "rankers": audit["rankers"],
         "under_seeded_cells": audit["under_seeded_cells"],
         "noise": audit["noise"],
+        "truth": audit["truth"],
+        "truth_ties": audit["truth_ties"],
+        "fit_diagnostics": audit["fit_diagnostics"],
         "crossovers": crossovers,
+        "crossovers_fdr": crossovers_fdr,
     }
     if args.out:
         Path(args.out).parent.mkdir(parents=True, exist_ok=True)
@@ -239,6 +246,8 @@ def build_parser() -> argparse.ArgumentParser:
     audit.add_argument("--fit-form", choices=["compute_power_law", "chinchilla"], default="compute_power_law")
     audit.add_argument("--n-boot", type=_positive_int)
     audit.add_argument("--fast", action="store_true")
+    audit.add_argument("--weighted", action="store_true", help="Weight fits by per-cell seed standard errors.")
+    audit.add_argument("--crossover-q", type=float, default=0.05, help="Benjamini-Hochberg FDR level for crossover tests.")
     audit.set_defaults(func=_audit)
 
     harv = sub.add_parser("harvest")

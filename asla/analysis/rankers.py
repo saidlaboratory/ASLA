@@ -19,19 +19,20 @@ def projection_ranker(
     budgets: tuple[float, ...],
     target: float,
     fit_form: FitForm = "compute_power_law",
+    weighted: bool = False,
 ) -> pd.Series:
     """Rank interventions by scaling-law projection at the target budget."""
 
-    return project_ranking(df, budgets, target, fit_form=fit_form)
+    return project_ranking(df, budgets, target, fit_form=fit_form, weighted=weighted)
 
 
-def make_projection_ranker(fit_form: FitForm = "compute_power_law") -> Ranker:
-    """Return a projection ranker bound to a fit form."""
+def make_projection_ranker(fit_form: FitForm = "compute_power_law", weighted: bool = False) -> Ranker:
+    """Return a projection ranker bound to a fit form and weighting choice."""
 
     def _ranker(df: pd.DataFrame, budgets: tuple[float, ...], target: float) -> pd.Series:
-        return projection_ranker(df, budgets, target, fit_form=fit_form)
+        return projection_ranker(df, budgets, target, fit_form=fit_form, weighted=weighted)
 
-    _ranker.__name__ = f"projection_ranker_{fit_form}"
+    _ranker.__name__ = f"projection_ranker_{fit_form}" + ("_weighted" if weighted else "")
     return _ranker
 
 
@@ -50,11 +51,18 @@ def make_gate_ranker(
     intermediate_budget: float,
     tau: float,
     n_boot: int,
-    rng: np.random.Generator,
+    seed: int,
 ) -> Ranker:
-    """Return a ranker whose winner is selected by the uncertainty gate."""
+    """Return a ranker whose winner is selected by the uncertainty gate.
+
+    A fresh generator is derived from ``seed`` on every call so the ranker is
+    deterministic regardless of how many times or in what order it runs —
+    sharing one mutating generator across rankers and bootstrap replicates
+    would make results depend on call order.
+    """
 
     def _ranker(df: pd.DataFrame, budgets: tuple[float, ...], target: float) -> pd.Series:
+        rng = np.random.default_rng(int(seed))
         pick = gate_pick(df, budgets, target, intermediate_budget, tau, n_boot, rng)
         projection = project_ranking(df, budgets, target)
         if pick not in projection.index:

@@ -26,6 +26,37 @@ class Projection:
     hi: float
 
 
+@dataclass(frozen=True)
+class FitDiagnostics:
+    """Goodness-of-fit summary for a fitted scaling law."""
+
+    r_squared: float
+    rmse: float
+    max_abs_residual: float
+    n_points: int
+    dof: int
+
+
+def fit_diagnostics(y: np.ndarray, y_pred: np.ndarray, n_params: int) -> FitDiagnostics:
+    """Summarize residuals of a fit; ``r_squared`` is 1 for a perfect constant fit."""
+
+    y = np.asarray(y, dtype=float)
+    y_pred = np.asarray(y_pred, dtype=float)
+    if len(y) != len(y_pred):
+        raise ValueError(f"y and y_pred must have the same length, got {len(y)} and {len(y_pred)}")
+    residuals = y - y_pred
+    ss_res = float(np.sum(residuals**2))
+    ss_tot = float(np.sum((y - np.mean(y)) ** 2))
+    r_squared = 1.0 if ss_tot == 0.0 and ss_res == 0.0 else (0.0 if ss_tot == 0.0 else 1.0 - ss_res / ss_tot)
+    return FitDiagnostics(
+        r_squared=float(r_squared),
+        rmse=float(np.sqrt(ss_res / len(y))) if len(y) else float("nan"),
+        max_abs_residual=float(np.max(np.abs(residuals))) if len(y) else float("nan"),
+        n_points=int(len(y)),
+        dof=int(len(y) - n_params),
+    )
+
+
 def bpb_power_law(C: np.ndarray | float, E: float, A: float, alpha: float) -> np.ndarray | float:
     """Compute ``E + A * C**(-alpha)`` for BPB scaling-law projections."""
 
@@ -52,7 +83,20 @@ def bpb_chinchilla(
     return E + A * np.asarray(N, dtype=float) ** (-a) + B * np.asarray(D, dtype=float) ** (-b)
 
 
-def fit_power_law(compute: np.ndarray, bpb: np.ndarray) -> Tuple[float, float, float]:
+def _check_sigma(sigma: np.ndarray | None, n: int) -> np.ndarray | None:
+    """Validate optional per-point standard errors for weighted fitting."""
+
+    if sigma is None:
+        return None
+    s = np.asarray(sigma, dtype=float)
+    if len(s) != n:
+        raise FitError(f"sigma must have the same length as the data, got {len(s)} and {n}")
+    if not np.isfinite(s).all() or np.any(s <= 0):
+        raise FitError("sigma values must be finite and positive")
+    return s
+
+
+def fit_power_law(compute: np.ndarray, bpb: np.ndarray, sigma: np.ndarray | None = None) -> Tuple[float, float, float]:
     """Fit the BPB power law and return ``(E, A, alpha)``.
 
     At least three distinct compute budgets are required. ``FitError`` is
@@ -61,6 +105,9 @@ def fit_power_law(compute: np.ndarray, bpb: np.ndarray) -> Tuple[float, float, f
     Compute is rescaled internally by its smallest value so the optimizer
     bounds are unit-invariant: raw FLOP counts and O(1) relative units fit
     equally well. Returned parameters are in the caller's raw compute units.
+
+    ``sigma`` gives per-point standard errors for weighted least squares,
+    e.g. seed-count-aware cell standard errors.
     """
 
     x = np.asarray(compute, dtype=float)
@@ -78,6 +125,7 @@ def fit_power_law(compute: np.ndarray, bpb: np.ndarray) -> Tuple[float, float, f
     y_min = float(np.min(y))
     if not np.isfinite(y_min) or y_min <= 0:
         raise FitError("BPB values must be finite and positive")
+    s = _check_sigma(sigma, len(x))
 
     x_ref = float(np.min(x))
     x_scaled = x / x_ref
@@ -92,6 +140,7 @@ def fit_power_law(compute: np.ndarray, bpb: np.ndarray) -> Tuple[float, float, f
             y,
             p0=p0,
             bounds=bounds,
+            sigma=s,
             maxfev=50000,
         )
     except Exception as exc:  # pragma: no cover - exact scipy exception varies
@@ -105,7 +154,24 @@ def fit_power_law(compute: np.ndarray, bpb: np.ndarray) -> Tuple[float, float, f
     return (E, A, alpha)
 
 
-def fit_chinchilla(params_n: np.ndarray, tokens_d: np.ndarray, bpb: np.ndarray) -> Tuple[float, float, float, float, float]:
+def fit_power_law_diagnostics(
+    compute: np.ndarray,
+    bpb: np.ndarray,
+    sigma: np.ndarray | None = None,
+) -> tuple[Tuple[float, float, float], FitDiagnostics]:
+    """Fit the BPB power law and return parameters with residual diagnostics."""
+
+    params = fit_power_law(compute, bpb, sigma=sigma)
+    y_pred = np.asarray(bpb_power_law(np.asarray(compute, dtype=float), *params), dtype=float)
+    return params, fit_diagnostics(np.asarray(bpb, dtype=float), y_pred, n_params=3)
+
+
+def fit_chinchilla(
+    params_n: np.ndarray,
+    tokens_d: np.ndarray,
+    bpb: np.ndarray,
+    sigma: np.ndarray | None = None,
+) -> Tuple[float, float, float, float, float]:
     """Fit ``E + A * N**(-a) + B * D**(-b)`` and return ``(E, A, a, B, b)``.
 
     ``params_n`` and ``tokens_d`` are rescaled internally by their smallest
@@ -129,6 +195,7 @@ def fit_chinchilla(params_n: np.ndarray, tokens_d: np.ndarray, bpb: np.ndarray) 
     y_min = float(np.min(y))
     if not np.isfinite(y_min) or y_min <= 0:
         raise FitError("BPB values must be finite and positive")
+    s = _check_sigma(sigma, len(n))
 
     def _model(xdata: tuple[np.ndarray, np.ndarray], E: float, A: float, a: float, B: float, b: float) -> np.ndarray:
         n_values, d_values = xdata
@@ -147,6 +214,7 @@ def fit_chinchilla(params_n: np.ndarray, tokens_d: np.ndarray, bpb: np.ndarray) 
             y,
             p0=p0,
             bounds=bounds,
+            sigma=s,
             maxfev=100000,
         )
     except Exception as exc:  # pragma: no cover - exact scipy exception varies

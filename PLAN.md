@@ -103,22 +103,22 @@ Plus one artifact contribution:
 
 Fixes that make the existing audit defensible under review:
 
-- [ ] **Multiple-comparison correction in `detect_crossovers`**: replaced the
+- [x] **Multiple-comparison correction in `detect_crossovers`**: replaced the
   single pooled noise band with per-pair Welch t-tests at the target +
   Benjamini–Hochberg FDR control (default q=0.05) via
   `detect_crossovers_fdr`; legacy band path kept for
   backward compatibility.
-- [ ] **Heteroscedastic fitting**: `fit_power_law`/`fit_chinchilla` accept
-  per-point `sigma` (seed-count-aware SEs) and audit fits weight
-  cell means by `sd/√n_seeds`; falls back cleanly when seeds are missing
+- [x] **Heteroscedastic fitting**: `fit_power_law`/`fit_chinchilla` accept
+  per-point `sigma` (seed-count-aware SEs) and `asla audit --weighted` fits
+  cell means weighted by `sd/√n_seeds`; falls back cleanly when seeds are missing
   (`cell_means_and_sigma`, `fit_all(weighted=True)`).
-- [ ] **Fit diagnostics**: `FitDiagnostics` (R², RMSE, max |residual|,
+- [x] **Fit diagnostics**: `FitDiagnostics` (R², RMSE, max |residual|,
   n_points, dof) surfaced via `fit_power_law_diagnostics` and in audit
   reports (`fit_diagnostics` block).
-- [ ] **Gate ranker reproducibility**: `make_gate_ranker` takes a seed and
+- [x] **Gate ranker reproducibility**: `make_gate_ranker` takes a seed and
   spawns a fresh child RNG per call instead of mutating a shared generator
   across rankers/bootstrap replicates.
-- [ ] **Truth-ranking uncertainty**: `truth_ranking_with_se` reports the seed
+- [x] **Truth-ranking uncertainty**: `truth_ranking_with_se` reports the seed
   SE of each target mean and flags statistically tied top groups; audit
   output includes `truth_ties`.
 
@@ -212,11 +212,11 @@ Fixes that make the existing audit defensible under review:
 |-------|---------|--------|
 | 0 | Packaging fix, baseline tests, PLAN.md | ✅ done |
 | 1 | WS1 statistical hardening | ✅ done |
-| 2 | WS2 ensemble projection + reliability score | ✅ done |
-| 3 | WS4 racing policy + cost accounting (headline) | ✅ done |
-| 4 | WS5 benchmark generator + sweep CLI | ✅ done |
-| 5 | WS3 conformal gate + calibration study | ✅ done |
-| 6 | WS6 reporting/docs/CI polish | ✅ done |
+| 2 | WS2 ensemble projection + reliability score | ⬜ pending |
+| 3 | WS4 racing policy + cost accounting (headline) | ⬜ pending |
+| 4 | WS5 benchmark generator + sweep CLI | ⬜ pending |
+| 5 | WS3 conformal gate + calibration study | ⬜ pending |
+| 6 | WS6 reporting/docs/CI polish | ⬜ pending |
 
 Rationale for the order: WS1 makes existing claims defensible (reviewers will
 check the stats first); WS2 and WS4 are the paper's methods and need the most
