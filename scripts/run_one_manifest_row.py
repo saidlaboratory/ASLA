@@ -10,7 +10,6 @@ from string import Formatter
 
 import pandas as pd
 
-
 REQUIRED_PLACEHOLDERS = {"run_id", "intervention"}
 
 

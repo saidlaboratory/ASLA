@@ -7,7 +7,6 @@ from pathlib import Path
 
 import pandas as pd
 
-
 REQUIRED_INTERVENTION_COLUMNS = ("intervention", "intervention_class")
 REQUIRED_BUDGET_COLUMNS = ("compute", "role")
 

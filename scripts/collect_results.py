@@ -10,7 +10,6 @@ from typing import Any
 import numpy as np
 import pandas as pd
 
-
 RESULT_COLUMNS = ("bpb", "downstream", "params_n", "tokens_d", "notes")
 
 

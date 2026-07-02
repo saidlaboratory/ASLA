@@ -152,6 +152,8 @@ def test_audit_ci_regret_interval_tends_to_narrow_with_more_seeds():
         n_boot=40,
         rng=np.random.default_rng(6),
     )
-    low_width = low["rankers"]["single_scale_ranker"]["mean_regret"]["hi"] - low["rankers"]["single_scale_ranker"]["mean_regret"]["lo"]
-    high_width = high["rankers"]["single_scale_ranker"]["mean_regret"]["hi"] - high["rankers"]["single_scale_ranker"]["mean_regret"]["lo"]
+    low_regret = low["rankers"]["single_scale_ranker"]["mean_regret"]
+    high_regret = high["rankers"]["single_scale_ranker"]["mean_regret"]
+    low_width = low_regret["hi"] - low_regret["lo"]
+    high_width = high_regret["hi"] - high_regret["lo"]
     assert high_width <= low_width

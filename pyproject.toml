@@ -24,6 +24,20 @@ all = ["matplotlib", "wandb", "pytest"]
 [project.scripts]
 asla = "asla.cli:main"
 
+[tool.setuptools.packages.find]
+include = ["asla*"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
+
+[tool.ruff]
+line-length = 125
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+ignore = ["E731"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["asla"]

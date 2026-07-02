@@ -3,16 +3,24 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
+from dataclasses import asdict
 from typing import Any
 
 import numpy as np
 import pandas as pd
 
-from asla.analysis.fits import normalize_budgets, truth_ranking
+from asla.analysis.fits import (
+    fit_diagnostics_all,
+    normalize_budgets,
+    truth_ranking,
+    truth_ranking_with_se,
+    truth_ties_with_winner,
+)
 from asla.analysis.metrics import decision_metrics
 from asla.analysis.rankers import Ranker
 from asla.config import GateConfig
 from asla.data.schema import validate
+from asla.models import FitError
 
 
 def cell_seed_counts(df: pd.DataFrame) -> pd.DataFrame:
@@ -181,8 +189,26 @@ def audit_with_ci(
         }
 
     noise = seed_noise_report(df, target)
+
+    truth_table = truth_ranking_with_se(df, target)
+    truth_report = {
+        name: {
+            "mean": float(row["mean"]),
+            "se": None if not np.isfinite(row["se"]) else float(row["se"]),
+            "n_seeds": int(row["n_seeds"]),
+        }
+        for name, row in truth_table.iterrows()
+    }
+    try:
+        diagnostics = {name: asdict(diag) for name, diag in fit_diagnostics_all(df, fit_budgets).items()}
+    except FitError:
+        diagnostics = {}
+
     return {
         "rankers": ranker_results,
         "noise": noise,
         "under_seeded_cells": noise["under_seeded_cells"],
+        "truth": truth_report,
+        "truth_ties": truth_ties_with_winner(df, target),
+        "fit_diagnostics": diagnostics,
     }

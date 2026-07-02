@@ -10,7 +10,6 @@ import pandas as pd
 from asla.data.io import save_runs
 from asla.data.schema import OPTIONAL_COLUMNS, REQUIRED_COLUMNS, validate
 
-
 DONE_STATUSES = {"complete", "completed", "done"}
 CANONICAL_COLUMNS = (*REQUIRED_COLUMNS, *OPTIONAL_COLUMNS)
 

@@ -1,8 +1,9 @@
-from asla.cli import _runtime_config, build_parser
+import numpy as np
+
 from asla.analysis.gate import monte_carlo
+from asla.cli import _runtime_config, build_parser
 from asla.config import AuditConfig, CountConfig, GateConfig
 from asla.data.synthetic import negative_controls_only
-import numpy as np
 
 
 def test_default_counts_are_paper_grade():

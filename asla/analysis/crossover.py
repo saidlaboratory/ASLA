@@ -3,10 +3,11 @@
 from __future__ import annotations
 
 import itertools
-from typing import Iterable, List, Tuple
+from typing import Any, Iterable, List, Tuple
 
 import numpy as np
 import pandas as pd
+from scipy.stats import ttest_ind
 
 from asla.analysis.audit import seed_noise_report
 from asla.analysis.fits import fit_all, project_ranking, truth_ranking
@@ -43,6 +44,97 @@ def detect_crossovers(
         if np.sign(projected_gap) != np.sign(true_gap):
             found.append((a, b, true_gap))
     return found
+
+
+def benjamini_hochberg(p_values: Iterable[float], q: float = 0.05) -> list[bool]:
+    """Return per-hypothesis rejections under Benjamini–Hochberg FDR control.
+
+    Non-finite p-values are never rejected and do not count toward the number
+    of tested hypotheses.
+    """
+
+    if not (0.0 < q < 1.0):
+        raise ValueError(f"q must be in (0, 1), got {q}")
+    p = np.asarray(list(p_values), dtype=float)
+    reject = np.zeros(len(p), dtype=bool)
+    tested = np.where(np.isfinite(p))[0]
+    m = len(tested)
+    if m == 0:
+        return reject.tolist()
+    order = tested[np.argsort(p[tested], kind="mergesort")]
+    below = np.where(p[order] <= (np.arange(1, m + 1) / m) * q)[0]
+    if len(below):
+        reject[order[: int(below[-1]) + 1]] = True
+    return reject.tolist()
+
+
+def pairwise_target_tests(df: pd.DataFrame, target: float) -> list[dict[str, Any]]:
+    """Welch-test every intervention pair's seed-level BPB at the target budget.
+
+    Pairs where either side has fewer than two seeds get ``p_value=None`` —
+    the difference is untestable, not significant.
+    """
+
+    validate(df)
+    target_df = df[np.isclose(df["compute"].astype(float), float(target))]
+    if target_df.empty:
+        raise ValueError(f"no rows found at target budget {target}")
+    groups = {
+        str(name): group["bpb"].to_numpy(dtype=float)
+        for name, group in target_df.groupby("intervention", sort=True)
+    }
+    seeds = {
+        str(name): int(group["seed"].nunique())
+        for name, group in target_df.groupby("intervention", sort=True)
+    }
+    results: list[dict[str, Any]] = []
+    for a, b in itertools.combinations(sorted(groups), 2):
+        gap = float(np.mean(groups[a]) - np.mean(groups[b]))
+        if seeds[a] < 2 or seeds[b] < 2:
+            p_value: float | None = None
+        else:
+            p_value = float(ttest_ind(groups[a], groups[b], equal_var=False).pvalue)
+        results.append({"a": a, "b": b, "true_gap": gap, "p_value": p_value})
+    return results
+
+
+def detect_crossovers_fdr(
+    df: pd.DataFrame,
+    budgets: Iterable[float],
+    target: float,
+    q: float = 0.05,
+    fit_form: FitForm = "compute_power_law",
+) -> list[dict[str, Any]]:
+    """Detect order disagreements with per-pair Welch tests under BH FDR control.
+
+    A pair is reported when the projected and measured target orders disagree.
+    ``significant`` is true only when the measured gap survives
+    Benjamini–Hochberg at level ``q`` across all order-disagreeing pairs;
+    untestable pairs (single-seed cells) carry ``p_value=None`` and are always
+    reported as not significant.
+    """
+
+    projected = project_ranking(df, budgets, target, fit_form=fit_form)
+    truth = truth_ranking(df, target)
+    names = set(projected.index.astype(str)) & set(truth.index.astype(str))
+    tests = pairwise_target_tests(df, target)
+    disagreeing = []
+    for row in tests:
+        a, b = row["a"], row["b"]
+        if a not in names or b not in names:
+            continue
+        projected_gap = float(projected.loc[a] - projected.loc[b])
+        if projected_gap == 0.0 or row["true_gap"] == 0.0:
+            continue
+        if np.sign(projected_gap) != np.sign(row["true_gap"]):
+            disagreeing.append(dict(row))
+    rejects = benjamini_hochberg(
+        [row["p_value"] if row["p_value"] is not None else float("nan") for row in disagreeing],
+        q=q,
+    )
+    for row, significant in zip(disagreeing, rejects):
+        row["significant"] = bool(significant)
+    return disagreeing
 
 
 def naive_crossover_budget(

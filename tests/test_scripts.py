@@ -4,6 +4,7 @@ import sys
 import pandas as pd
 import pytest
 
+from hpc.run_training_job import render_site_command, validate_result_json
 from hpc.train_and_eval import result_from_metrics
 from scripts.check_runs_coverage import coverage_report
 from scripts.collect_results import collect_results
@@ -11,7 +12,6 @@ from scripts.finalize_run_manifest import manifest_to_runs
 from scripts.make_run_manifest import _read_budgets, _read_interventions, make_manifest
 from scripts.prepare_runs_table import _coerce_runs
 from scripts.run_one_manifest_row import build_command, select_row
-from hpc.run_training_job import render_site_command, validate_result_json
 
 
 def test_make_run_manifest_creates_expected_grid():

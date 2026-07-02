@@ -1,9 +1,45 @@
 # ASLA: Algorithm-Selection Leaderboard Audit
 
-ASLA audits whether small-compute scaling-law projections select the same
-training intervention that measured target-budget runs would select. The initial
-package runs offline on deterministic synthetic scenarios or on existing run
-tables converted into a canonical parquet table. W&B harvesting is optional.
+Small-compute scaling-law extrapolation is routinely used as a *decision
+procedure*: fit each training intervention on cheap runs, project to the
+target budget, ship the projected winner. ASLA audits that procedure. It
+treats intervention selection as a fixed-budget decision problem and
+measures, with known or measured ground truth, when extrapolation-based
+selection fails — noise close-calls, functional-form misspecification, and
+crossovers that happen after the largest fitting budget — and what better
+decision rules buy.
+
+Everything runs offline on deterministic synthetic scenarios, on the
+ASLA-Bench problem generator, or on your own run tables converted to a
+canonical parquet schema. W&B harvesting is optional.
+
+## What ASLA provides
+
+- **Decision-level audit** (`asla audit`): top-1 accuracy, regret, pairwise
+  accuracy, rank correlations for each decision rule, with cell-wise seed
+  bootstrap confidence intervals; seed-noise bands; under-seeded-cell
+  warnings; statistical ties at the target (`truth_ties`); per-intervention
+  fit diagnostics (R², RMSE, dof).
+- **FDR-controlled crossover detection**: per-pair Welch tests at the target
+  with Benjamini–Hochberg correction (`crossovers_fdr`); single-seed pairs
+  are reported as untestable rather than significant.
+- **Misspecification-aware ensemble projection**: power-law, saturating, and
+  damped-power-law fits weighted by leave-largest-budget-out extrapolation
+  loss, with an **extrapolation reliability score** ρ = cross-family
+  disagreement ÷ seed-noise band. ρ ≫ 1 is the quantitative version of
+  "the fit is blind here".
+- **Cost-aware sequential selection (racing)**: advance interventions up the
+  budget ladder, eliminating by projected-interval dominance; every decision
+  rule reports `compute_spent`, so rules are compared on the compute–regret
+  Pareto frontier, not a single operating point.
+- **Conformal projection intervals** and a deterministic conformal gate, plus
+  an empirical calibration study of bootstrap vs. conformal coverage.
+- **ASLA-Bench** (`asla benchmark`): parameterized problem families
+  (close-call, late-crossover, saturating) with interpretable difficulty
+  knobs and known ground truth. See [docs/BENCHMARK.md](docs/BENCHMARK.md).
+- **Markdown reports** (`asla report` or `asla audit --report`).
+- Theory notes — a detectability lower bound and racing correctness — in
+  [docs/THEORY.md](docs/THEORY.md).
 
 ## Install
 
@@ -25,21 +61,17 @@ asla demo --scenario noise_close_call
 ```
 
 Default demo and audit runs use paper-grade counts (`n_boot=1000`,
-`n_trials=500`). For a quick local smoke test:
+`n_trials=500`). For a quick local smoke test add `--fast`.
 
-```bash
-asla demo --scenario saturation_crossover --fast
-asla demo --scenario noise_close_call --fast
-```
+The saturation demo reports a wrong projected winner, positive regret, a
+detected crossover, an explicit `fit is blind` message, and large ensemble
+reliability scores ρ for the saturating pair. The noise close-call demo shows
+the gate and the race reducing mean regret and wrong-pick rate versus plain
+projection, with compute costs alongside. Demo and audit reports compare the
+scaling-law projection ranker, the ensemble ranker, and the
+largest-single-scale baseline with bootstrap confidence intervals.
 
-The saturation demo should report a wrong projected winner, positive regret, a
-detected crossover, and an explicit `fit is blind` message for the saturating
-pair. The noise close-call demo should show the gate reducing mean regret and
-wrong-pick rate versus plain projection. Demo and audit reports compare the
-scaling-law projection ranker against the largest-single-scale baseline with
-bootstrap confidence intervals.
-
-## Validate and Audit Real Runs
+## Validate and audit real runs
 
 Canonical run columns:
 
@@ -54,20 +86,34 @@ Canonical run columns:
 
 ```bash
 asla validate --runs runs.parquet
-asla audit --runs runs.parquet --target 64 --out results/audit.json
+asla audit --runs runs.parquet --target 64 --out results/audit.json --report
 asla figures --runs runs.parquet --out results/figures
 ```
 
-Use `--fit-form compute_power_law` for leaderboard audits. Use
-`--fit-form chinchilla` for controlled grids with `params_n` and `tokens_d`;
-the command fails loudly if those columns are missing.
+Useful audit flags:
+
+- `--weighted` — weight fits by per-cell seed standard errors.
+- `--crossover-q` — BH-FDR level for crossover significance (default 0.05).
+- `--report` — write a markdown report next to `--out`.
+- `--fit-form compute_power_law` (leaderboard audits) or `--fit-form
+  chinchilla` (controlled grids with `params_n`/`tokens_d`; fails loudly if
+  those columns are missing).
 
 Fits are unit-invariant: `compute`, `params_n`, and `tokens_d` may be raw
-counts (FLOPs, parameters, tokens) or consistent relative units. Inputs are
-rescaled internally before optimization, so bounds never depend on the unit
-convention.
+counts (FLOPs, parameters, tokens) or consistent relative units.
 
-## No-W&B Data Collection
+## Benchmark and paper experiments
+
+```bash
+asla benchmark --fast --out results/benchmark        # difficulty sweep, 4 rules
+python scripts/run_pareto_study.py --fast            # compute-regret frontier
+python scripts/run_calibration_study.py --fast       # interval coverage
+python scripts/run_paper_experiments.py --fast       # everything, one command
+```
+
+Drop `--fast` for paper-grade counts. See [docs/BENCHMARK.md](docs/BENCHMARK.md).
+
+## No-W&B data collection
 
 On a laptop, create an HPC checklist:
 
@@ -126,7 +172,7 @@ python scripts/collect_results.py \
   --out data/run_manifest.csv
 ```
 
-## Harvest W&B Runs
+## Harvest W&B runs
 
 ASLA never guesses W&B field names. First inspect a finished run:
 
@@ -152,8 +198,11 @@ Harvest:
 asla harvest --entity-project ENTITY/PROJECT --field-map field_map.json --out runs.parquet
 ```
 
-## Tests
+## Development
 
 ```bash
-pytest
+pytest        # test suite
+ruff check .  # lint (also run in CI)
 ```
+
+The enhancement roadmap and its status live in [PLAN.md](PLAN.md).
