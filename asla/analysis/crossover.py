@@ -45,10 +45,23 @@ def detect_crossovers(
     return found
 
 
-def naive_crossover_budget(params_a: tuple[float, float, float], params_b: tuple[float, float, float]) -> float | None:
-    """Return the intersection of two fitted power-law curves, or ``None`` when absent."""
+def naive_crossover_budget(
+    params_a: tuple[float, float, float],
+    params_b: tuple[float, float, float],
+    search_range: tuple[float, float] = (1e-9, 1e30),
+) -> float | None:
+    """Return the intersection of two fitted power-law curves, or ``None`` when absent.
 
-    grid = np.logspace(-3, 6, 4000)
+    ``search_range`` spans compute in raw units; the default covers both O(1)
+    relative units and raw FLOP counts. The difference of two three-parameter
+    power laws has at most two sign changes, so a dense log grid is reliable.
+    """
+
+    lo, hi = float(search_range[0]), float(search_range[1])
+    if not (0 < lo < hi) or not np.isfinite(hi):
+        raise ValueError(f"search_range must be finite positive bounds with lo < hi, got {search_range}")
+    n_decades = np.log10(hi) - np.log10(lo)
+    grid = np.logspace(np.log10(lo), np.log10(hi), max(4000, int(300 * n_decades)))
     diff = np.asarray(bpb_power_law(grid, *params_a) - bpb_power_law(grid, *params_b), dtype=float)
     exact = np.where(np.isclose(diff, 0.0, atol=1e-10))[0]
     if len(exact):
@@ -90,11 +103,18 @@ def crossover_budget_ci(
     n_boot: int,
     rng: np.random.Generator,
 ) -> tuple[float, float, float] | None:
-    """Bootstrap the fitted crossover budget for two interventions."""
+    """Bootstrap the fitted crossover budget for two interventions.
+
+    Returns ``(median, lo, hi)`` over successful resamples, or ``None`` when
+    too few resamples produced both fits and a crossover to summarize honestly.
+    """
 
     validate(df)
+    if n_boot <= 0:
+        raise ValueError("n_boot must be positive")
     budget_values = np.asarray(tuple(budgets), dtype=float)
     roots: list[float] = []
+    fit_successes = 0
     for _ in range(n_boot):
         params: dict[str, tuple[float, float, float]] = {}
         for name in (a, b):
@@ -108,10 +128,12 @@ def crossover_budget_ci(
             except FitError:
                 continue
         if a in params and b in params:
+            fit_successes += 1
             root = naive_crossover_budget(params[a], params[b])
             if root is not None:
                 roots.append(root)
-    if not roots:
+    min_successes = max(10, int(np.ceil(0.25 * n_boot)))
+    if fit_successes < min_successes or len(roots) < min_successes:
         return None
     arr = np.asarray(roots, dtype=float)
     lo, med, hi = np.percentile(arr, [5.0, 50.0, 95.0])

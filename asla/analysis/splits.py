@@ -16,6 +16,21 @@ SPLIT_COLUMN = "__asla_split"
 Split = dict[str, object]
 
 
+def _check_split_matches(df: pd.DataFrame, split: Split, path: Path) -> None:
+    """Raise when a persisted split does not partition the current table's rows."""
+
+    train = set(int(i) for i in split.get("train", []))
+    test = set(int(i) for i in split.get("test", []))
+    current = set(int(i) for i in df.index.tolist())
+    if train & test:
+        raise ValueError(f"persisted split at {path} has overlapping train and test indices")
+    if (train | test) != current:
+        raise ValueError(
+            f"persisted split at {path} does not match the current runs table; "
+            "delete it or point at the split created for this table"
+        )
+
+
 def make_split(
     df: pd.DataFrame,
     by: Iterable[str] = ("class", "scale"),
@@ -28,7 +43,9 @@ def make_split(
     split_path = Path(path)
     if split_path.exists():
         with split_path.open("r", encoding="utf-8") as fh:
-            return json.load(fh)
+            split = json.load(fh)
+        _check_split_matches(df, split, split_path)
+        return split
 
     rng = np.random.default_rng(seed)
     test_idx: set[int] = set()

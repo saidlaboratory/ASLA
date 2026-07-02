@@ -22,8 +22,12 @@ def _save(fig: object, out_dir: Path, name: str) -> None:
         fig.savefig(out_dir / f"{name}.{ext}", bbox_inches="tight", dpi=160)
 
 
-def make_figures(df: pd.DataFrame, out_dir: str | Path) -> None:
-    """Create audit figures and save each as PNG and PDF."""
+def make_figures(df: pd.DataFrame, out_dir: str | Path, target: float | None = None) -> None:
+    """Create audit figures and save each as PNG and PDF.
+
+    ``target`` defaults to the largest compute budget in the table; pass it
+    explicitly when the table extends beyond the audit's target budget.
+    """
 
     import matplotlib.pyplot as plt
 
@@ -31,12 +35,17 @@ def make_figures(df: pd.DataFrame, out_dir: str | Path) -> None:
     validate(df)
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
-    computes = sorted(df["compute"].astype(float).unique())
+    all_computes = sorted(df["compute"].astype(float).unique())
+    if target is None:
+        target = all_computes[-1]
+    elif not any(np.isclose(c, float(target)) for c in all_computes):
+        raise ValueError(f"target budget {target} is not present in the runs table")
+    target = float(target)
+    computes = [c for c in all_computes if c < target or np.isclose(c, target)]
     if len(computes) < 4:
-        LOGGER.warning("skipping projection figures: need at least four compute budgets")
+        LOGGER.warning("skipping projection figures: need at least four compute budgets at or below the target")
         return
-    target = computes[-1]
-    budgets = tuple(computes[:-1])
+    budgets = tuple(c for c in computes if not np.isclose(c, target))
 
     fig, ax = plt.subplots()
     for name, group in df.groupby("intervention", sort=True):

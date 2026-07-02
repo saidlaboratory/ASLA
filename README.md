@@ -62,6 +62,11 @@ Use `--fit-form compute_power_law` for leaderboard audits. Use
 `--fit-form chinchilla` for controlled grids with `params_n` and `tokens_d`;
 the command fails loudly if those columns are missing.
 
+Fits are unit-invariant: `compute`, `params_n`, and `tokens_d` may be raw
+counts (FLOPs, parameters, tokens) or consistent relative units. Inputs are
+rescaled internally before optimization, so bounds never depend on the unit
+convention.
+
 ## No-W&B Data Collection
 
 On a laptop, create an HPC checklist:

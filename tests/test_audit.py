@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from asla.analysis.audit import audit_with_ci
+from asla.analysis.audit import audit_with_ci, seed_noise_report
 from asla.analysis.rankers import projection_ranker, single_scale_ranker
 from asla.config import AuditConfig
 from asla.data.synthetic import negative_controls_only
@@ -48,6 +48,28 @@ def test_noise_report_marks_band_unestimated_when_all_target_cells_have_one_seed
     assert result["noise"]["noise_band"] is None
     assert result["noise"]["noise_band_estimated"] is False
     assert result["noise"]["target_under_seeded_cells"]
+
+
+def test_noise_band_pools_only_target_cells_when_available():
+    rng = np.random.default_rng(0)
+    rows = []
+    for intervention, offset in (("a", 0.0), ("b", 0.02)):
+        for compute, sd in ((1.0, 0.3), (2.0, 0.3), (4.0, 0.3), (8.0, 0.001)):
+            for seed in range(3):
+                rows.append(
+                    {
+                        "intervention": intervention,
+                        "intervention_class": "x",
+                        "compute": compute,
+                        "seed": seed,
+                        "bpb": 1.5 - 0.1 * np.log2(compute) + offset + rng.normal(0.0, sd),
+                    }
+                )
+    df = pd.DataFrame(rows)
+    report = seed_noise_report(df, target=8.0)
+    assert report["noise_band_source"] == "target_cells"
+    assert report["adequately_seeded_cells"] == 2
+    assert report["noise_band"] < 0.05
 
 
 def test_noise_report_uses_non_target_cells_when_target_is_under_seeded():

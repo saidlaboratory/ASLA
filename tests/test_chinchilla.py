@@ -16,6 +16,19 @@ def test_fit_chinchilla_recovers_known_parameters():
     assert np.allclose(fitted, params, rtol=0.15, atol=0.06)
 
 
+def test_fit_chinchilla_is_unit_invariant_at_realistic_scale():
+    a, b = 0.40, 0.35
+    params = (0.80, 0.30 * (1e8) ** a, a, 0.25 * (1e9) ** b, b)
+    n_values, d_values = np.meshgrid(np.array([1e8, 2e8, 4e8, 8e8]), np.array([1e9, 3e9, 9e9, 2.7e10]))
+    n = n_values.ravel()
+    d = d_values.ravel()
+    y = bpb_chinchilla(n, d, *params)
+    fitted = fit_chinchilla(n, d, y)
+    truth = float(bpb_chinchilla(1e9, 1e11, *params))
+    projected = float(bpb_chinchilla(1e9, 1e11, *fitted))
+    assert abs(projected - truth) < 1e-3
+
+
 def test_chinchilla_projection_requires_columns():
     df = pd.DataFrame(
         {

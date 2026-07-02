@@ -207,7 +207,7 @@ def _harvest(args: argparse.Namespace) -> int:
 
 def _figures(args: argparse.Namespace) -> int:
     df = load_runs(args.runs)
-    make_figures(df, args.out)
+    make_figures(df, args.out, target=args.target)
     print(f"wrote figures to {args.out}")
     return 0
 
@@ -251,6 +251,7 @@ def build_parser() -> argparse.ArgumentParser:
     figs = sub.add_parser("figures")
     figs.add_argument("--runs", required=True)
     figs.add_argument("--out", required=True)
+    figs.add_argument("--target", type=float, help="Target budget; defaults to the largest compute in the table.")
     figs.set_defaults(func=_figures)
     return parser
 

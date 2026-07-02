@@ -57,6 +57,10 @@ def fit_power_law(compute: np.ndarray, bpb: np.ndarray) -> Tuple[float, float, f
 
     At least three distinct compute budgets are required. ``FitError`` is
     raised with context for invalid inputs or optimizer failures.
+
+    Compute is rescaled internally by its smallest value so the optimizer
+    bounds are unit-invariant: raw FLOP counts and O(1) relative units fit
+    equally well. Returned parameters are in the caller's raw compute units.
     """
 
     x = np.asarray(compute, dtype=float)
@@ -75,6 +79,8 @@ def fit_power_law(compute: np.ndarray, bpb: np.ndarray) -> Tuple[float, float, f
     if not np.isfinite(y_min) or y_min <= 0:
         raise FitError("BPB values must be finite and positive")
 
+    x_ref = float(np.min(x))
+    x_scaled = x / x_ref
     e0 = max(0.0, min(y_min * 0.9, y_min - 1e-6))
     a0 = min(5.0, max(0.01, float(np.max(y) - e0)))
     p0 = (e0, a0, 0.3)
@@ -82,7 +88,7 @@ def fit_power_law(compute: np.ndarray, bpb: np.ndarray) -> Tuple[float, float, f
     try:
         params, _ = curve_fit(
             bpb_power_law,
-            x,
+            x_scaled,
             y,
             p0=p0,
             bounds=bounds,
@@ -92,11 +98,20 @@ def fit_power_law(compute: np.ndarray, bpb: np.ndarray) -> Tuple[float, float, f
         raise FitError(f"power-law fit failed: {exc}") from exc
     if not np.all(np.isfinite(params)):
         raise FitError("power-law fit produced non-finite parameters")
-    return tuple(float(p) for p in params)  # type: ignore[return-value]
+    E, A_scaled, alpha = (float(p) for p in params)
+    A = A_scaled * x_ref**alpha
+    if not np.isfinite(A):
+        raise FitError("power-law fit produced non-finite parameters after unit conversion")
+    return (E, A, alpha)
 
 
 def fit_chinchilla(params_n: np.ndarray, tokens_d: np.ndarray, bpb: np.ndarray) -> Tuple[float, float, float, float, float]:
-    """Fit ``E + A * N**(-a) + B * D**(-b)`` and return ``(E, A, a, B, b)``."""
+    """Fit ``E + A * N**(-a) + B * D**(-b)`` and return ``(E, A, a, B, b)``.
+
+    ``params_n`` and ``tokens_d`` are rescaled internally by their smallest
+    values so the optimizer bounds are unit-invariant; returned parameters are
+    in the caller's raw units.
+    """
 
     n = np.asarray(params_n, dtype=float)
     d = np.asarray(tokens_d, dtype=float)
@@ -119,6 +134,8 @@ def fit_chinchilla(params_n: np.ndarray, tokens_d: np.ndarray, bpb: np.ndarray) 
         n_values, d_values = xdata
         return np.asarray(bpb_chinchilla(n_values, d_values, E, A, a, B, b), dtype=float)
 
+    n_ref = float(np.min(n))
+    d_ref = float(np.min(d))
     e0 = max(0.0, min(y_min * 0.8, y_min - 1e-6))
     residual = max(0.02, float(np.max(y) - e0))
     p0 = (e0, min(5.0, residual / 2.0), 0.3, min(5.0, residual / 2.0), 0.3)
@@ -126,7 +143,7 @@ def fit_chinchilla(params_n: np.ndarray, tokens_d: np.ndarray, bpb: np.ndarray) 
     try:
         params, _ = curve_fit(
             _model,
-            (n, d),
+            (n / n_ref, d / d_ref),
             y,
             p0=p0,
             bounds=bounds,
@@ -136,7 +153,12 @@ def fit_chinchilla(params_n: np.ndarray, tokens_d: np.ndarray, bpb: np.ndarray) 
         raise FitError(f"chinchilla fit failed: {exc}") from exc
     if not np.all(np.isfinite(params)):
         raise FitError("chinchilla fit produced non-finite parameters")
-    return tuple(float(p) for p in params)  # type: ignore[return-value]
+    E, A_scaled, a, B_scaled, b = (float(p) for p in params)
+    A = A_scaled * n_ref**a
+    B = B_scaled * d_ref**b
+    if not np.isfinite(A) or not np.isfinite(B):
+        raise FitError("chinchilla fit produced non-finite parameters after unit conversion")
+    return (E, A, a, B, b)
 
 
 def bootstrap_projection(

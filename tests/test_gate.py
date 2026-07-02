@@ -1,8 +1,25 @@
 import numpy as np
+import pytest
 
-from asla.analysis.gate import monte_carlo
+from asla.analysis.gate import gate_pick, monte_carlo
 from asla.config import AuditConfig, GateConfig
 from asla.data.synthetic import noise_close_call, saturation_crossover
+
+
+def test_gate_escalation_fails_loudly_without_intermediate_rows():
+    cfg = AuditConfig()
+    df = noise_close_call(np.random.default_rng(3), cfg)
+    no_intermediate = df[~np.isclose(df["compute"].astype(float), cfg.budgets.intermediate)]
+    with pytest.raises(ValueError, match="intermediate budget"):
+        gate_pick(
+            no_intermediate,
+            cfg.budgets.fit,
+            cfg.budgets.target,
+            cfg.budgets.intermediate,
+            tau=1e9,
+            n_boot=40,
+            rng=np.random.default_rng(4),
+        )
 
 
 def test_gate_beats_plain_in_noise_close_call():

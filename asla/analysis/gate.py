@@ -59,6 +59,13 @@ def gate_pick(
         return top1
     extended = tuple(sorted(set((*tuple(float(b) for b in budgets), float(intermediate_budget)))))
     extended_df = df[df["intervention"].isin([top1, top2])]
+    at_intermediate = extended_df[np.isclose(extended_df["compute"].astype(float), float(intermediate_budget))]
+    missing = sorted({top1, top2} - set(at_intermediate["intervention"].astype(str)))
+    if missing:
+        raise ValueError(
+            f"gate escalation needs runs at intermediate budget {intermediate_budget} "
+            f"for interventions {missing}; none were found"
+        )
     return plain_projection_pick(extended_df, extended, target)
 
 

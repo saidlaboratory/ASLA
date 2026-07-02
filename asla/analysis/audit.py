@@ -46,33 +46,46 @@ def under_seeded_cells(df: pd.DataFrame, min_seeds: int = 2) -> list[dict[str, A
 def seed_noise_report(df: pd.DataFrame, target: float, k: float = GateConfig().noise_band_k) -> dict[str, Any]:
     """Estimate target-budget seed noise and report under-seeded cells.
 
-    Variance is pooled across all cells with at least two seeds. If no cell has
-    two seeds, the noise band is unestimated and significant crossovers are not
-    fabricated from unestimated noise.
+    Variance is pooled across target-budget cells with at least two seeds.
+    When no target cell has two seeds, pooling falls back to all adequately
+    seeded cells and ``noise_band_source`` reports the fallback. If no cell at
+    all has two seeds, the noise band is unestimated and significant
+    crossovers are not fabricated from unestimated noise.
     """
 
     validate(df)
     target_df = df[np.isclose(df["compute"].astype(float), float(target))]
     if target_df.empty:
         raise ValueError(f"no rows found at target budget {target}")
-    variances: list[float] = []
-    counts: list[int] = []
+    all_variances: list[float] = []
+    all_counts: list[int] = []
+    target_variances: list[float] = []
+    target_counts: list[int] = []
     all_under_seeded: list[dict[str, Any]] = []
     target_under_seeded: list[dict[str, Any]] = []
     for (intervention, compute), group in df.groupby(["intervention", "compute"], sort=True):
         n = int(group["seed"].nunique())
+        is_target = bool(np.isclose(float(compute), float(target)))
         if n < 2:
             cell = {"intervention": str(intervention), "compute": float(compute), "seed_count": n}
             all_under_seeded.append(cell)
-            if np.isclose(float(compute), float(target)):
+            if is_target:
                 target_under_seeded.append(cell)
             continue
-        variances.append(float(group["bpb"].var(ddof=1)))
-        counts.append(n)
-    if not variances:
+        all_variances.append(float(group["bpb"].var(ddof=1)))
+        all_counts.append(n)
+        if is_target:
+            target_variances.append(all_variances[-1])
+            target_counts.append(n)
+    if target_variances:
+        variances, counts, source = target_variances, target_counts, "target_cells"
+    elif all_variances:
+        variances, counts, source = all_variances, all_counts, "all_cells"
+    else:
         return {
             "noise_band": None,
             "noise_band_estimated": False,
+            "noise_band_source": None,
             "pooled_variance": None,
             "adequately_seeded_cells": 0,
             "under_seeded_cells": all_under_seeded,
@@ -83,6 +96,7 @@ def seed_noise_report(df: pd.DataFrame, target: float, k: float = GateConfig().n
     return {
         "noise_band": float(k * np.sqrt(pooled_var / mean_n)),
         "noise_band_estimated": True,
+        "noise_band_source": source,
         "pooled_variance": pooled_var,
         "adequately_seeded_cells": len(variances),
         "under_seeded_cells": all_under_seeded,
