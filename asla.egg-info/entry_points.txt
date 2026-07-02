@@ -1,0 +1,2 @@
+[console_scripts]
+asla = asla.cli:main

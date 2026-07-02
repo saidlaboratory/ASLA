@@ -24,6 +24,9 @@ all = ["matplotlib", "wandb", "pytest"]
 [project.scripts]
 asla = "asla.cli:main"
 
+[tool.setuptools.packages.find]
+include = ["asla*"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
