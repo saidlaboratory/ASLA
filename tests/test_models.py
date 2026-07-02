@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from asla.models import FitError, bpb_power_law, bootstrap_projection, fit_power_law
+from asla.models import FitError, bootstrap_projection, bpb_power_law, fit_power_law
 
 
 def test_fit_power_law_recovers_clean_parameters():

@@ -1,9 +1,8 @@
 import json
 
 import numpy as np
-import pytest
-
 import pandas as pd
+import pytest
 
 from asla.cli import _assert_fit_form_available, _crossover_root_message, build_parser
 from asla.data.io import save_runs
@@ -59,3 +58,43 @@ def test_audit_output_includes_reproducibility_metadata(tmp_path, capsys):
     assert payload["audit_metadata"]["n_boot"] == 3
     assert payload["audit_metadata"]["rng_seed"] == 99
     assert payload["audit_metadata"]["rankers"] == ["ensemble_ranker", "projection_ranker", "single_scale_ranker"]
+
+
+def test_report_renders_markdown_from_audit_json(tmp_path):
+    df = negative_controls_only(np.random.default_rng(1), None)
+    runs = tmp_path / "runs.parquet"
+    save_runs(df, runs)
+    out = tmp_path / "audit.json"
+    parser = build_parser()
+    args = parser.parse_args(
+        ["audit", "--runs", str(runs), "--target", "64", "--fast", "--n-boot", "3", "--out", str(out), "--report"]
+    )
+    assert args.func(args) == 0
+    report_path = out.with_suffix(".md")
+    assert report_path.exists()
+    text = report_path.read_text(encoding="utf-8")
+    assert "# ASLA audit report" in text
+    assert "Measured target ranking" in text
+    assert "Extrapolation reliability" in text
+
+    # Standalone report command over the same JSON.
+    report2 = tmp_path / "standalone.md"
+    args = parser.parse_args(["report", "--audit", str(out), "--out", str(report2)])
+    assert args.func(args) == 0
+    assert report2.read_text(encoding="utf-8") == text
+
+
+def test_report_orders_truth_by_mean(tmp_path):
+    import json as _json
+
+    from asla.report import render_report
+
+    payload = {
+        "truth": {
+            "alpha_worst": {"mean": 1.2, "se": 0.01, "n_seeds": 2},
+            "zeta_best": {"mean": 0.9, "se": 0.01, "n_seeds": 2},
+        },
+        "truth_ties": [],
+    }
+    text = render_report(_json.loads(_json.dumps(payload, sort_keys=True)))
+    assert text.index("zeta_best") < text.index("alpha_worst")

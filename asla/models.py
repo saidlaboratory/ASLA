@@ -171,7 +171,9 @@ def fit_power_law(compute: np.ndarray, bpb: np.ndarray, sigma: np.ndarray | None
     return (E, A, alpha)
 
 
-def _validate_curve_inputs(compute: np.ndarray, bpb: np.ndarray, min_distinct: int, fn_name: str) -> tuple[np.ndarray, np.ndarray]:
+def _validate_curve_inputs(
+    compute: np.ndarray, bpb: np.ndarray, min_distinct: int, fn_name: str
+) -> tuple[np.ndarray, np.ndarray]:
     """Shared input validation for one-axis compute curve fits."""
 
     x = np.asarray(compute, dtype=float)

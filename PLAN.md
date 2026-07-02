@@ -96,8 +96,8 @@ Plus one artifact contribution:
   `scripts/`+`asla/` as multiple top-level packages). Added explicit
   `[tool.setuptools.packages.find] include = ["asla*"]`.
 - [x] Baseline test suite green (71 passed).
-- [ ] Add `ruff` config + CI workflow (GitHub Actions: install, ruff, pytest).
-- [ ] Add `CITATION.cff` and expand README with the decision-problem framing.
+- [x] Add `ruff` config + CI workflow (GitHub Actions: install, ruff, pytest).
+- [x] Add `CITATION.cff` and expand README with the decision-problem framing.
 
 ### WS1 — Statistical core hardening
 
@@ -198,14 +198,15 @@ Fixes that make the existing audit defensible under review:
 
 ### WS6 — Reporting, docs, DX
 
-- [ ] `asla report`: single-command markdown report (fits table, diagnostics,
+- [x] `asla report`: single-command markdown report (fits table, diagnostics,
   reliability scores, crossovers with FDR q-values, gate/racing decisions,
   embedded figure references) written next to the audit JSON.
-- [ ] Figures upgrades: fit curves extended past data with CI bands and
-  measured target points overlaid; ensemble disagreement band figure.
-- [ ] Docs: `docs/THEORY.md` (WS4), `docs/BENCHMARK.md` (WS5 usage),
+- [x] Figures upgrades: fitted curves extended past the ladder (dashed) with
+  measured target means overlaid; new ensemble-disagreement figure showing
+  per-family target projections against the measured noise band.
+- [x] Docs: `docs/THEORY.md` (WS4), `docs/BENCHMARK.md` (WS5 usage),
   README rewrite around the decision-problem framing.
-- [ ] `scripts/run_paper_experiments.py`: one entry point that regenerates
+- [x] `scripts/run_paper_experiments.py`: one entry point that regenerates
   every number/figure the paper needs (respects `--fast`).
 
 ## 4. Execution order & status
@@ -218,7 +219,7 @@ Fixes that make the existing audit defensible under review:
 | 3 | WS4 racing policy + cost accounting (headline) | ✅ done |
 | 4 | WS5 benchmark generator + sweep CLI | ✅ done |
 | 5 | WS3 conformal gate + calibration study | ✅ done |
-| 6 | WS6 reporting/docs/CI polish | ⬜ pending |
+| 6 | WS6 reporting/docs/CI polish | ✅ done |
 
 Rationale for the order: WS1 makes existing claims defensible (reviewers will
 check the stats first); WS2 and WS4 are the paper's methods and need the most

@@ -12,18 +12,21 @@ import pandas as pd
 
 from asla.analysis.audit import audit_with_ci
 from asla.analysis.crossover import detect_crossovers, detect_crossovers_fdr, fitted_crossover_for_pair
-from asla.analysis.fits import normalize_budgets, project_ranking, truth_ranking
-from asla.analysis.racing import monte_carlo_selection
 from asla.analysis.ensemble import ensemble_report
+from asla.analysis.fits import normalize_budgets, project_ranking, truth_ranking
 from asla.analysis.metrics import decision_metrics
+from asla.analysis.racing import monte_carlo_selection
 from asla.analysis.rankers import Ranker, ensemble_ranker, make_projection_ranker, single_scale_ranker
 from asla.config import AuditConfig
-from asla.data.benchmark import FAMILIES as BENCHMARK_FAMILIES, benchmark_grid, evaluate_configs
+from asla.data.benchmark import FAMILIES as BENCHMARK_FAMILIES
+from asla.data.benchmark import benchmark_grid, evaluate_configs
 from asla.data.harvest import discover, harvest
 from asla.data.io import load_runs
 from asla.data.schema import SchemaError, validate
-from asla.data.synthetic import SCENARIOS, negative_controls_only, true_ranking as synthetic_true_ranking
+from asla.data.synthetic import SCENARIOS, negative_controls_only
+from asla.data.synthetic import true_ranking as synthetic_true_ranking
 from asla.figures import make_figures
+from asla.report import write_report
 
 
 def decision_report_against_truth(projected: pd.Series, truth: pd.Series, k: int) -> dict[str, float]:
@@ -125,7 +128,8 @@ def _demo(args: argparse.Namespace) -> int:
     print("Decision metrics vs noiseless synthetic truth:")
     print(json.dumps(metrics_vs_noiseless, indent=2, sort_keys=True))
     rankers = _default_rankers(args.fit_form)
-    ci_results = audit_with_ci(df, cfg.budgets.fit, cfg.budgets.target, rankers, n_boot, np.random.default_rng(args.seed + 10))
+    ci_rng = np.random.default_rng(args.seed + 10)
+    ci_results = audit_with_ci(df, cfg.budgets.fit, cfg.budgets.target, rankers, n_boot, ci_rng)
     ci_results["fit_form"] = args.fit_form
     _print_interval_report(ci_results)
     projected_winner = str(projected.index[0])
@@ -221,7 +225,18 @@ def _audit(args: argparse.Namespace) -> int:
     if args.out:
         Path(args.out).parent.mkdir(parents=True, exist_ok=True)
         Path(args.out).write_text(json.dumps(result, indent=2, sort_keys=True), encoding="utf-8")
+        if args.report:
+            report_path = Path(args.out).with_suffix(".md")
+            write_report(args.out, report_path)
+            print(f"wrote report to {report_path}")
     print(json.dumps(result, indent=2, sort_keys=True))
+    return 0
+
+
+def _report(args: argparse.Namespace) -> int:
+    out = args.out or str(Path(args.audit).with_suffix(".md"))
+    path = write_report(args.audit, out)
+    print(f"wrote report to {path}")
     return 0
 
 
@@ -323,7 +338,11 @@ def build_parser() -> argparse.ArgumentParser:
     sub = parser.add_subparsers(dest="cmd", required=True)
 
     demo = sub.add_parser("demo")
-    demo.add_argument("--scenario", choices=["clean_crossover", "saturation_crossover", "noise_close_call"], default="clean_crossover")
+    demo.add_argument(
+        "--scenario",
+        choices=["clean_crossover", "saturation_crossover", "noise_close_call"],
+        default="clean_crossover",
+    )
     demo.add_argument("--seed", type=int, default=1729)
     demo.add_argument("--fit-form", choices=["compute_power_law", "chinchilla"], default="compute_power_law")
     demo.add_argument("--n-boot", type=_positive_int)
@@ -345,7 +364,13 @@ def build_parser() -> argparse.ArgumentParser:
     audit.add_argument("--fast", action="store_true")
     audit.add_argument("--weighted", action="store_true", help="Weight fits by per-cell seed standard errors.")
     audit.add_argument("--crossover-q", type=float, default=0.05, help="Benjamini-Hochberg FDR level for crossover tests.")
+    audit.add_argument("--report", action="store_true", help="Also write a markdown report next to --out.")
     audit.set_defaults(func=_audit)
+
+    rep = sub.add_parser("report")
+    rep.add_argument("--audit", required=True, help="Path to an audit JSON produced by 'asla audit --out'.")
+    rep.add_argument("--out", help="Markdown output path; defaults to the audit path with .md suffix.")
+    rep.set_defaults(func=_report)
 
     harv = sub.add_parser("harvest")
     harv.add_argument("--discover", action="store_true")
@@ -359,7 +384,9 @@ def build_parser() -> argparse.ArgumentParser:
     bench.add_argument("--families", nargs="+", choices=list(BENCHMARK_FAMILIES), default=list(BENCHMARK_FAMILIES))
     bench.add_argument("--trials", type=_positive_int, default=100)
     bench.add_argument("--n-boot", type=_positive_int, default=300)
-    bench.add_argument("--problem-seeds", type=_positive_int, default=1, help="Curve-sampling seeds per knob setting.")
+    bench.add_argument(
+        "--problem-seeds", type=_positive_int, default=1, help="Curve-sampling seeds per knob setting."
+    )
     bench.add_argument("--seed", type=int, default=1729)
     bench.add_argument("--beta", type=float, default=1.0, help="Race interval-width multiplier.")
     bench.add_argument("--fast", action="store_true")

@@ -16,7 +16,6 @@ from typing import Any
 
 import numpy as np
 
-
 REQUIRED_RESULT_KEYS = ("bpb", "status")
 
 

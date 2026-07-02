@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict, Iterable, Tuple
+from typing import Dict, Iterable
 
 import numpy as np
 import pandas as pd
@@ -12,9 +12,9 @@ from asla.data.schema import validate
 from asla.models import (
     FitDiagnostics,
     FitForm,
+    bootstrap_projection,
     bpb_chinchilla,
     bpb_power_law,
-    bootstrap_projection,
     fit_chinchilla,
     fit_diagnostics,
     fit_power_law,

@@ -3,12 +3,11 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
+from dataclasses import asdict
 from typing import Any
 
 import numpy as np
 import pandas as pd
-
-from dataclasses import asdict
 
 from asla.analysis.fits import (
     fit_diagnostics_all,

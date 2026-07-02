@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "If you use ASLA in your research, please cite it."
+title: "ASLA: Algorithm-Selection Leaderboard Audit"
+type: software
+authors:
+  - name: "SAID Laboratory"
+abstract: >-
+  ASLA audits whether small-compute scaling-law projections select the same
+  training intervention that measured target-budget runs would select. It
+  provides decision-level metrics with bootstrap confidence intervals,
+  FDR-controlled crossover detection, misspecification-aware ensemble
+  projections with an extrapolation reliability score, cost-aware sequential
+  selection (racing), conformal projection intervals, and a parameterized
+  benchmark (ASLA-Bench) with known ground truth.
+repository-code: "https://github.com/esaran1/algorithm-selection-audit"

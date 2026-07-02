@@ -44,7 +44,9 @@ def test_benjamini_hochberg_ignores_untestable():
 def test_pairwise_target_tests_marks_single_seed_untestable():
     rows = []
     for seed in range(3):
-        rows.append({"intervention": "a", "intervention_class": "x", "compute": 64.0, "seed": seed, "bpb": 1.0 + 0.001 * seed})
+        rows.append(
+            {"intervention": "a", "intervention_class": "x", "compute": 64.0, "seed": seed, "bpb": 1.0 + 0.001 * seed}
+        )
     rows.append({"intervention": "b", "intervention_class": "x", "compute": 64.0, "seed": 0, "bpb": 1.2})
     df = _frame(rows)
     tests = pairwise_target_tests(df, 64.0)
