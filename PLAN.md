@@ -147,14 +147,14 @@ Fixes that make the existing audit defensible under review:
 
 ### WS3 — Conformal projection intervals & calibrated gate
 
-- [ ] Leave-one-budget-out conformal residuals per intervention: refit without
+- [x] Leave-one-budget-out conformal residuals per intervention: refit without
   each budget, collect scaled extrapolation residuals, use their quantile to
   wrap the target projection in a distribution-free interval
   (`conformal_projection_interval`).
-- [ ] **Conformal gate**: escalate to the intermediate budget iff the top-2
+- [x] **Conformal gate**: escalate to the intermediate budget iff the top-2
   conformal intervals overlap (`conformal_gate_pick`); same escalation
   contract as the bootstrap gate.
-- [ ] Calibration study in the benchmark (WS5): empirical coverage of
+- [x] Calibration study in the benchmark (WS5): empirical coverage of
   bootstrap vs. conformal intervals vs. nominal level across scenario
   families (`scripts/run_calibration_study.py`).
 
@@ -217,7 +217,7 @@ Fixes that make the existing audit defensible under review:
 | 2 | WS2 ensemble projection + reliability score | ✅ done |
 | 3 | WS4 racing policy + cost accounting (headline) | ✅ done |
 | 4 | WS5 benchmark generator + sweep CLI | ✅ done |
-| 5 | WS3 conformal gate + calibration study | ⬜ pending |
+| 5 | WS3 conformal gate + calibration study | ✅ done |
 | 6 | WS6 reporting/docs/CI polish | ⬜ pending |
 
 Rationale for the order: WS1 makes existing claims defensible (reviewers will

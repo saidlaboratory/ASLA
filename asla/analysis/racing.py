@@ -20,6 +20,7 @@ from dataclasses import dataclass, field
 import numpy as np
 import pandas as pd
 
+from asla.analysis.conformal import conformal_projection_interval
 from asla.analysis.fits import normalize_budgets, projection_with_uncertainty
 from asla.analysis.gate import evaluation_truth, gate_pick_detailed, largest_single_run_pick, plain_projection_pick
 from asla.config import AuditConfig
@@ -127,6 +128,8 @@ def race_pick(
     rng: np.random.Generator,
     beta: float = 1.0,
     start_rungs: int = 3,
+    interval_source: str = "bootstrap",
+    alpha: float = 0.1,
 ) -> SelectionResult:
     """Race interventions up the ladder, eliminating by projected-interval dominance.
 
@@ -140,6 +143,11 @@ def race_pick(
     conservative. Survivors whose bootstrap fails at a rung are carried, not
     eliminated — lack of evidence is not evidence of being worse.
 
+    ``interval_source`` selects bootstrap percentile intervals (default) or
+    leave-one-budget-out conformal intervals (``"conformal"``, level
+    ``1 - alpha``); conformal elimination starts one rung later because it
+    needs four distinct budgets.
+
     Compute is charged for every cell a survivor advances into; the pick is
     the surviving intervention with the lowest final projection.
     """
@@ -147,6 +155,8 @@ def race_pick(
     validate(df)
     if beta <= 0:
         raise ValueError(f"beta must be positive, got {beta}")
+    if interval_source not in ("bootstrap", "conformal"):
+        raise ValueError(f"unknown interval_source: {interval_source!r}")
     ladder = normalize_budgets(budgets, target=target)
     if len(ladder) < max(3, start_rungs):
         raise ValueError(f"racing requires at least {max(3, start_rungs)} rungs, got {len(ladder)}")
@@ -163,12 +173,27 @@ def race_pick(
             records.append(RungRecord(budget=float(rung), survivors=tuple(survivors), eliminated=()))
             continue
         run_budgets = ladder[: i + 1]
+        if interval_source == "conformal" and len(run_budgets) < 4:
+            records.append(RungRecord(budget=float(rung), survivors=tuple(survivors), eliminated=()))
+            continue
         intervals: dict[str, tuple[float, float, float]] = {}
         for iv in survivors:
             try:
-                point, _, lo, hi = projection_with_uncertainty(
-                    df[df["intervention"] == iv], run_budgets, target, n_boot, rng
-                )
+                if interval_source == "conformal":
+                    iv_df = df[df["intervention"] == iv]
+                    budget_values = np.asarray(run_budgets, dtype=float)
+                    mask = iv_df["compute"].astype(float).apply(lambda c: bool(np.any(np.isclose(c, budget_values))))
+                    rows = iv_df[mask]
+                    point, lo, hi = conformal_projection_interval(
+                        rows["compute"].to_numpy(dtype=float),
+                        rows["bpb"].to_numpy(dtype=float),
+                        target,
+                        alpha=alpha,
+                    )
+                else:
+                    point, _, lo, hi = projection_with_uncertainty(
+                        df[df["intervention"] == iv], run_budgets, target, n_boot, rng
+                    )
             except FitError:
                 continue
             lo_b = point - beta * (point - lo)
