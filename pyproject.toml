@@ -7,25 +7,33 @@ name = "asla"
 version = "0.1.0"
 description = "Algorithm-selection audit for scaling-law leaderboard decisions"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.10,<3.14"
+classifiers = [
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+]
 dependencies = [
-  "numpy",
-  "scipy",
-  "pandas",
-  "pyarrow",
+  "numpy>=1.23",
+  "scipy>=1.9",
+  "pandas>=1.5",
+  "pyarrow>=10",
 ]
 
 [project.optional-dependencies]
-figures = ["matplotlib"]
-wandb = ["wandb"]
-test = ["pytest"]
-all = ["matplotlib", "wandb", "pytest"]
+figures = ["matplotlib>=3.6"]
+wandb = ["wandb>=0.15"]
+test = ["pytest>=7"]
+all = ["matplotlib>=3.6", "wandb>=0.15", "pytest>=7"]
 
 [project.scripts]
 asla = "asla.cli:main"
 
 [tool.setuptools.packages.find]
-include = ["asla*"]
+include = ["asla", "asla.*"]
+exclude = ["*.egg-info", "*.egg-info.*", "build", "build.*"]
+namespaces = false
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
