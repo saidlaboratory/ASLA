@@ -37,6 +37,19 @@ def render_report(result: dict[str, Any]) -> str:
             lines.append(f"- **{key}**: {_fmt(meta[key])}")
         lines.append("")
 
+    estimand = result.get("estimand", {})
+    if estimand:
+        lines += ["## Estimand", ""]
+        for key in ("name", "replication_unit", "replication_count", "point_interpretation", "uncertainty_scope"):
+            if key in estimand:
+                lines.append(f"- **{key}**: {_fmt(estimand[key])}")
+        assumptions = estimand.get("assumptions", [])
+        if assumptions:
+            lines.append("- **assumptions**:")
+            for assumption in assumptions:
+                lines.append(f"  - {assumption}")
+        lines.append("")
+
     truth = result.get("truth", {})
     ties = result.get("truth_ties", [])
     if truth:
@@ -75,6 +88,13 @@ def render_report(result: dict[str, Any]) -> str:
             ]
             lines.append(f"| {name} | " + " | ".join(cells) + " |")
         lines.append("")
+        availability = result.get("ranker_metric_availability", {})
+        for name, entry in availability.items():
+            omitted = entry.get("omitted", {})
+            if omitted:
+                lines.append(f"- **{name} omitted metrics**: " + ", ".join(sorted(omitted)))
+        if availability:
+            lines.append("")
 
     ensemble = result.get("ensemble")
     if ensemble:

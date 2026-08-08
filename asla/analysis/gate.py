@@ -51,18 +51,36 @@ def gate_pick_detailed(
     """
 
     validate(df)
-    ranking = project_ranking(df, budgets, target)
+    fit_budgets = normalize_budgets(budgets, target=target)
+    if not np.isfinite(intermediate_budget) or intermediate_budget <= max(fit_budgets):
+        raise ValueError("intermediate_budget must be finite and strictly above every fitting budget")
+    if intermediate_budget >= target or np.isclose(intermediate_budget, target):
+        raise ValueError("intermediate_budget must be strictly below the target budget")
+    if tau < 0 or not np.isfinite(tau):
+        raise ValueError("tau must be finite and non-negative")
+    if n_boot <= 0:
+        raise ValueError("n_boot must be positive")
+    ranking = project_ranking(df, fit_budgets, target)
     if len(ranking) < 2:
         return {"pick": str(ranking.index[0]), "escalated": False, "top_pair": None}
     top1, top2 = str(ranking.index[0]), str(ranking.index[1])
-    p1 = projection_with_uncertainty(df[df["intervention"] == top1], budgets, target, n_boot, rng)
-    p2 = projection_with_uncertainty(df[df["intervention"] == top2], budgets, target, n_boot, rng)
+    p1 = projection_with_uncertainty(df[df["intervention"] == top1], fit_budgets, target, n_boot, rng)
+    p2 = projection_with_uncertainty(df[df["intervention"] == top2], fit_budgets, target, n_boot, rng)
     denom = float(np.sqrt(p1[1] ** 2 + p2[1] ** 2))
     gap = float(ranking.iloc[1] - ranking.iloc[0])
-    g = np.inf if denom == 0.0 and gap > 0 else gap / denom if denom > 0 else 0.0
+    contender_fit_rows = df[
+        df["intervention"].astype(str).isin([top1, top2])
+        & df["compute"].astype(float).apply(
+            lambda value: any(np.isclose(value, float(budget)) for budget in fit_budgets)
+        )
+    ]
+    under_seeded = bool(
+        (contender_fit_rows.groupby(["intervention", "compute"])["seed"].nunique() < 2).any()
+    )
+    g = 0.0 if under_seeded else np.inf if denom == 0.0 and gap > 0 else gap / denom if denom > 0 else 0.0
     if g >= tau:
         return {"pick": top1, "escalated": False, "top_pair": (top1, top2)}
-    extended = tuple(sorted(set((*tuple(float(b) for b in budgets), float(intermediate_budget)))))
+    extended = tuple(sorted((*fit_budgets, float(intermediate_budget))))
     extended_df = df[df["intervention"].isin([top1, top2])]
     at_intermediate = extended_df[np.isclose(extended_df["compute"].astype(float), float(intermediate_budget))]
     missing = sorted({top1, top2} - set(at_intermediate["intervention"].astype(str)))

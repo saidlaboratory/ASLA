@@ -56,8 +56,8 @@ pip install -e ".[figures,wandb]"
 ## Demo
 
 ```bash
-asla demo --scenario saturation_crossover
-asla demo --scenario noise_close_call
+asla demo --scenario saturation_crossover --estimand single_design_seed_sensitivity
+asla demo --scenario noise_close_call --estimand pairwise_decisions
 ```
 
 Default demo and audit runs use paper-grade counts (`n_boot=1000`,
@@ -86,15 +86,26 @@ Canonical run columns:
 
 ```bash
 asla validate --runs runs.parquet
-asla audit --runs runs.parquet --target 64 --out results/audit.json --report
-asla figures --runs runs.parquet --out results/figures
+asla audit --runs runs.parquet --target 64 --budgets 1 2 4 8 --intermediate-budget 16 --estimand pairwise_decisions --out results/audit.json --report
+asla figures --runs runs.parquet --target 64 --budgets 1 2 4 8 --out results/figures
 ```
+
+`--estimand` is required. Choose `single_design_seed_sensitivity` for one
+complete-candidate-set decision or `pairwise_decisions` for the finite-table
+average over every unordered intervention pair. Their assumptions and licensed
+claims are documented in [NOTES_ESTIMAND.md](NOTES_ESTIMAND.md); the software
+does not select a paper headline. Pass fitting budgets explicitly for paper
+results. A reserved `--intermediate-budget` is excluded from fitting and makes
+the top-1-only gate available.
 
 Useful audit flags:
 
 - `--weighted` — weight fits by per-cell seed standard errors.
 - `--crossover-q` — BH-FDR level for crossover significance (default 0.05).
 - `--report` — write a markdown report next to `--out`.
+- `--budgets` — explicit projection-fitting budgets.
+- `--intermediate-budget` — held-out gate exploration budget, never fit by the
+  baseline projection.
 - `--fit-form compute_power_law` (leaderboard audits) or `--fit-form
   chinchilla` (controlled grids with `params_n`/`tokens_d`; fails loudly if
   those columns are missing).
@@ -108,7 +119,7 @@ counts (FLOPs, parameters, tokens) or consistent relative units.
 asla benchmark --fast --out results/benchmark        # difficulty sweep, 4 rules
 python scripts/run_pareto_study.py --fast            # compute-regret frontier
 python scripts/run_calibration_study.py --fast       # interval coverage
-python scripts/run_paper_experiments.py --fast       # everything, one command
+python scripts/run_paper_experiments.py --estimand pairwise_decisions --fast  # explicit human-selected estimand
 ```
 
 Drop `--fast` for paper-grade counts. See [docs/BENCHMARK.md](docs/BENCHMARK.md).
@@ -138,7 +149,7 @@ python scripts/finalize_run_manifest.py \
   --out-parquet runs.parquet
 python scripts/check_runs_coverage.py --csv data/runs_template.csv --target TARGET_COMPUTE
 asla validate --runs runs.parquet
-asla audit --runs runs.parquet --target TARGET_COMPUTE --fast --out runs_audit.json
+asla audit --runs runs.parquet --target TARGET_COMPUTE --budgets FIT_BUDGETS --intermediate-budget INTERMEDIATE_COMPUTE --estimand ESTIMAND --fast --out runs_audit.json
 ```
 
 The finalizer refuses pending rows and blank BPB values, so incomplete manifests
@@ -172,6 +183,13 @@ python scripts/collect_results.py \
   --out data/run_manifest.csv
 ```
 
+Run `python scripts/hpc_preflight.py` before submission. It verifies that the
+SLURM array covers every manifest row exactly once and smoke-tests only the
+plumbing in a temporary directory. Result JSON must contain `run_id`,
+`intervention`, `compute`, `seed`, finite positive measured `bpb`, and completed
+status. Collection rejects identity mismatches. Existing metrics/results are
+never reused; a deliberate reviewed retry requires `ASLA_OVERWRITE_OUTPUT=1`.
+
 ## Harvest W&B runs
 
 ASLA never guesses W&B field names. First inspect a finished run:
@@ -184,13 +202,17 @@ Then provide an explicit JSON field map from schema column to logged W&B key:
 
 ```json
 {
-  "intervention": "intervention",
-  "intervention_class": "intervention_class",
-  "compute": "compute",
-  "seed": "seed",
-  "bpb": "eval/c4_en_bpb"
+  "intervention": "config.recipe_name",
+  "intervention_class": "config.recipe_class",
+  "compute": "summary.train_flops",
+  "seed": "config.seed",
+  "bpb": "summary.eval/c4_en_bpb"
 }
 ```
+
+`config.` and `summary.` prefixes select the W&B store explicitly and support
+nested dotted paths. An unprefixed key is accepted only when it resolves in
+exactly one store; ambiguity is an error.
 
 Harvest:
 

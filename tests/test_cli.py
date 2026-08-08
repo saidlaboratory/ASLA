@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from asla.cli import _assert_fit_form_available, _crossover_root_message, build_parser
+from asla.cli import _assert_fit_form_available, _crossover_root_message, _resolve_audit_budgets, build_parser
 from asla.data.io import save_runs
 from asla.data.synthetic import negative_controls_only
 
@@ -12,7 +12,15 @@ from asla.data.synthetic import negative_controls_only
 def test_demo_trials_must_be_positive():
     parser = build_parser()
     with pytest.raises(SystemExit):
-        parser.parse_args(["demo", "--trials", "0"])
+        parser.parse_args(["demo", "--estimand", "single_design_seed_sensitivity", "--trials", "0"])
+
+
+def test_paper_facing_commands_require_an_explicit_estimand():
+    parser = build_parser()
+    with pytest.raises(SystemExit):
+        parser.parse_args(["demo", "--fast"])
+    with pytest.raises(SystemExit):
+        parser.parse_args(["audit", "--runs", "runs.parquet", "--target", "64"])
 
 
 def test_crossover_root_message_does_not_fake_chinchilla_budget():
@@ -39,6 +47,8 @@ def test_audit_output_includes_reproducibility_metadata(tmp_path, capsys):
             str(runs),
             "--target",
             "64",
+            "--estimand",
+            "single_design_seed_sensitivity",
             "--fast",
             "--n-boot",
             "3",
@@ -58,6 +68,17 @@ def test_audit_output_includes_reproducibility_metadata(tmp_path, capsys):
     assert payload["audit_metadata"]["n_boot"] == 3
     assert payload["audit_metadata"]["rng_seed"] == 99
     assert payload["audit_metadata"]["rankers"] == ["ensemble_ranker", "projection_ranker", "single_scale_ranker"]
+    assert payload["audit_metadata"]["package_version"] == "0.1.0"
+    assert len(payload["audit_metadata"]["input_sha256"]) == 64
+    assert payload["audit_metadata"]["budget_roles"]["target"] == 64.0
+    assert payload["estimand"]["name"] == "single_design_seed_sensitivity"
+    assert payload["bootstrap_diagnostics"]
+    assert payload["ranker_availability"]["gate_ranker"]["included"] is False
+
+
+def test_intermediate_budget_is_excluded_from_projection_fit():
+    df = negative_controls_only(np.random.default_rng(1), None)
+    assert _resolve_audit_budgets(df, 64.0, None, 16.0) == (1.0, 2.0, 4.0, 8.0)
 
 
 def test_report_renders_markdown_from_audit_json(tmp_path):
@@ -67,7 +88,21 @@ def test_report_renders_markdown_from_audit_json(tmp_path):
     out = tmp_path / "audit.json"
     parser = build_parser()
     args = parser.parse_args(
-        ["audit", "--runs", str(runs), "--target", "64", "--fast", "--n-boot", "3", "--out", str(out), "--report"]
+        [
+            "audit",
+            "--runs",
+            str(runs),
+            "--target",
+            "64",
+            "--estimand",
+            "single_design_seed_sensitivity",
+            "--fast",
+            "--n-boot",
+            "3",
+            "--out",
+            str(out),
+            "--report",
+        ]
     )
     assert args.func(args) == 0
     report_path = out.with_suffix(".md")

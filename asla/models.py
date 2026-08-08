@@ -291,12 +291,21 @@ def fit_chinchilla(
         raise FitError("params_n, tokens_d, and bpb must have the same length")
     if len(n) == 0:
         raise FitError("fit_chinchilla requires at least one row")
+    design_points = np.unique(np.column_stack((n, d)), axis=0)
+    if len(design_points) < 5:
+        raise FitError("fit_chinchilla requires at least 5 distinct (params_n, tokens_d) designs")
     if not np.isfinite(n).all() or not np.isfinite(d).all() or not np.isfinite(y).all():
         raise FitError("params_n, tokens_d, and BPB values must be finite")
     if np.any(n <= 0) or np.any(d <= 0):
         raise FitError("params_n and tokens_d values must be positive")
     if len(np.unique(n)) < 3 or len(np.unique(d)) < 3:
         raise FitError("fit_chinchilla requires at least 3 distinct params_n and tokens_d values")
+    log_design = np.column_stack((np.ones(len(n)), np.log(n), np.log(d)))
+    if np.linalg.matrix_rank(log_design) < 3:
+        raise FitError(
+            "fit_chinchilla requires independently varied params_n and tokens_d; "
+            "their logged values are perfectly collinear"
+        )
     y_min = float(np.min(y))
     if not np.isfinite(y_min) or y_min <= 0:
         raise FitError("BPB values must be finite and positive")
@@ -343,7 +352,9 @@ def bootstrap_projection(
 ) -> Tuple[float, float, float, float]:
     """Bootstrap a target-budget projection.
 
-    Rows are resampled nonparametrically. Failed resamples are skipped. Returns
+    Rows are resampled within compute cells so every observed fitting scale is
+    preserved. Failed resamples are counted against a minimum fit-success
+    threshold. Returns
     ``(point, std, lo, hi)`` where ``lo`` and ``hi`` are the 5th and 95th
     percentiles of successful bootstrap projections.
     """
@@ -355,10 +366,12 @@ def bootstrap_projection(
     params = fit_power_law(x, y)
     point = float(bpb_power_law(target, *params))
     projections: list[float] = []
-    n = len(x)
-    min_successes = max(10, int(np.ceil(0.25 * n_boot)))
+    if len(x) != len(y):
+        raise FitError(f"compute and bpb must have the same length, got {len(x)} and {len(y)}")
+    groups = [np.flatnonzero(np.isclose(x, value)) for value in np.unique(x)]
+    min_successes = min(n_boot, max(10, int(np.ceil(0.25 * n_boot))))
     for _ in range(n_boot):
-        idx = rng.integers(0, n, size=n)
+        idx = np.concatenate([rng.choice(group, size=len(group), replace=True) for group in groups])
         try:
             boot_params = fit_power_law(x[idx], y[idx])
         except FitError:
@@ -367,7 +380,7 @@ def bootstrap_projection(
 
     if len(projections) < min_successes:
         raise FitError(
-            f"too few bootstrap resamples fit successfully: {len(projections)}/{n_boot} "
+            f"too few stratified bootstrap resamples fit successfully: {len(projections)}/{n_boot} "
             f"(minimum {min_successes})"
         )
     arr = np.asarray(projections, dtype=float)

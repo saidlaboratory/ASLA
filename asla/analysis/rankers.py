@@ -60,7 +60,7 @@ def make_gate_ranker(
     n_boot: int,
     seed: int,
 ) -> Ranker:
-    """Return a ranker whose winner is selected by the uncertainty gate.
+    """Return a top-1-only policy whose winner is selected by the uncertainty gate.
 
     A fresh generator is derived from ``seed`` on every call so the ranker is
     deterministic regardless of how many times or in what order it runs —
@@ -74,9 +74,8 @@ def make_gate_ranker(
         projection = project_ranking(df, budgets, target)
         if pick not in projection.index:
             raise ValueError(f"gate picked unknown intervention {pick!r}")
-        ordered = projection.copy()
-        ordered.loc[pick] = float(ordered.min()) - 1e-12
-        return ordered.sort_values(kind="mergesort")
+        return pd.Series({pick: float(projection.loc[pick])})
 
     _ranker.__name__ = "gate_ranker"
+    _ranker.asla_ranking_scope = "top1_only"  # type: ignore[attr-defined]
     return _ranker

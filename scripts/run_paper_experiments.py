@@ -15,10 +15,12 @@ Example:
 from __future__ import annotations
 
 import argparse
-import json
 import subprocess
 import sys
 from pathlib import Path
+
+from asla.analysis.audit import ESTIMANDS
+from asla.cli import _write_json_atomically
 
 
 def _run(cmd: list[str]) -> None:
@@ -30,6 +32,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", default="results/paper")
     parser.add_argument("--seed", type=int, default=1729)
+    parser.add_argument("--estimand", choices=ESTIMANDS, required=True)
     parser.add_argument("--fast", action="store_true")
     args = parser.parse_args()
     out = Path(args.out)
@@ -55,13 +58,14 @@ print("wrote scenario tables to {scenario_dir}")
         _run(
             py
             + ["-m", "asla.cli", "audit", "--runs", str(scenario_dir / f"{scenario}.parquet"), "--target", "64",
+               "--budgets", "1", "2", "4", "8", "--intermediate-budget", "16", "--estimand", args.estimand,
                "--seed", str(args.seed), "--report", "--out", str(scenario_dir / f"{scenario}_audit.json")]
             + fast
         )
         _run(
             py
             + ["-m", "asla.cli", "figures", "--runs", str(scenario_dir / f"{scenario}.parquet"), "--target", "64",
-               "--out", str(scenario_dir / f"{scenario}_figures")]
+               "--budgets", "1", "2", "4", "8", "--out", str(scenario_dir / f"{scenario}_figures")]
         )
 
     # 2. Benchmark sweep.
@@ -76,9 +80,10 @@ print("wrote scenario tables to {scenario_dir}")
     manifest = {
         "fast": bool(args.fast),
         "seed": int(args.seed),
+        "estimand": args.estimand,
         "outputs": sorted(str(p.relative_to(out)) for p in out.rglob("*") if p.is_file()),
     }
-    (out / "MANIFEST.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+    _write_json_atomically(manifest, out / "MANIFEST.json")
     print(f"\nall paper artifacts under {out}")
     return 0
 

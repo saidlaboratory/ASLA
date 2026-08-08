@@ -66,3 +66,35 @@ def test_bootstrap_projection_rejects_nonpositive_bootstrap_count():
     bpb = np.array([1.2, 1.1, 1.0])
     with pytest.raises(FitError, match="n_boot"):
         bootstrap_projection(compute, bpb, 8.0, 0, np.random.default_rng(1))
+
+
+def test_projection_bootstrap_preserves_every_compute_cell(monkeypatch):
+    seen = []
+
+    def fake_fit(compute, bpb, sigma=None):
+        seen.append(set(np.asarray(compute, dtype=float)))
+        return (0.8, 0.4, 0.5)
+
+    monkeypatch.setattr("asla.models.fit_power_law", fake_fit)
+    compute = np.repeat(np.array([1.0, 2.0, 4.0]), [2, 3, 4])
+    bpb = np.linspace(1.4, 1.0, len(compute))
+    bootstrap_projection(compute, bpb, 8.0, 5, np.random.default_rng(2))
+    assert len(seen) == 6  # point fit plus five bootstrap fits
+    assert all(scales == {1.0, 2.0, 4.0} for scales in seen)
+
+
+def test_projection_bootstrap_reports_insufficient_fit_success(monkeypatch):
+    calls = 0
+
+    def fail_after_point(compute, bpb, sigma=None):
+        nonlocal calls
+        calls += 1
+        if calls > 1:
+            raise FitError("adversarial bootstrap failure")
+        return (0.8, 0.4, 0.5)
+
+    monkeypatch.setattr("asla.models.fit_power_law", fail_after_point)
+    compute = np.repeat(np.array([1.0, 2.0, 4.0]), 2)
+    bpb = np.linspace(1.4, 1.0, len(compute))
+    with pytest.raises(FitError, match="too few stratified bootstrap resamples"):
+        bootstrap_projection(compute, bpb, 8.0, 5, np.random.default_rng(2))

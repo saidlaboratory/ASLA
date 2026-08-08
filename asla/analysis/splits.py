@@ -2,9 +2,12 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
+import os
+import tempfile
 from pathlib import Path
-from typing import Iterable
+from typing import Iterable, TypedDict, cast
 
 import numpy as np
 import pandas as pd
@@ -13,7 +16,27 @@ from asla.config import Paths
 from asla.data.schema import validate
 
 SPLIT_COLUMN = "__asla_split"
-Split = dict[str, object]
+
+class Split(TypedDict):
+    """Serialized train/test split with dataset identity and held-out groups."""
+
+    train: list[int]
+    test: list[int]
+    by: list[str]
+    seed: int
+    heldout_classes: list[str]
+    heldout_scales: list[float]
+    table_fingerprint: str
+
+
+def _table_fingerprint(df: pd.DataFrame) -> str:
+    """Return a stable fingerprint of table content, order, indices, and dtypes."""
+
+    digest = hashlib.sha256()
+    digest.update("\x1f".join(str(column) for column in df.columns).encode("utf-8"))
+    digest.update("\x1f".join(str(dtype) for dtype in df.dtypes).encode("utf-8"))
+    digest.update(pd.util.hash_pandas_object(df, index=True, categorize=True).to_numpy().tobytes())
+    return digest.hexdigest()
 
 
 def _check_split_matches(df: pd.DataFrame, split: Split, path: Path) -> None:
@@ -27,6 +50,17 @@ def _check_split_matches(df: pd.DataFrame, split: Split, path: Path) -> None:
     if (train | test) != current:
         raise ValueError(
             f"persisted split at {path} does not match the current runs table; "
+            "delete it or point at the split created for this table"
+        )
+    expected_fingerprint = split.get("table_fingerprint")
+    if expected_fingerprint is None:
+        raise ValueError(
+            f"persisted split at {path} predates dataset fingerprinting; "
+            "delete it and create a split for the current table"
+        )
+    if expected_fingerprint != _table_fingerprint(df):
+        raise ValueError(
+            f"persisted split at {path} does not match the current runs table contents; "
             "delete it or point at the split created for this table"
         )
 
@@ -43,34 +77,67 @@ def make_split(
     split_path = Path(path)
     if split_path.exists():
         with split_path.open("r", encoding="utf-8") as fh:
-            split = json.load(fh)
+            split = cast(Split, json.load(fh))
         _check_split_matches(df, split, split_path)
         return split
 
     rng = np.random.default_rng(seed)
     test_idx: set[int] = set()
     by_set = set(by)
+    unknown = sorted(by_set - {"class", "scale"})
+    if unknown:
+        raise ValueError(f"unknown split dimensions: {unknown}; expected 'class' and/or 'scale'")
+    if not by_set:
+        raise ValueError("at least one split dimension is required")
+    heldout_classes: list[str] = []
+    heldout_scales: list[float] = []
     if "class" in by_set:
         classes = sorted(df["intervention_class"].astype(str).unique())
-        n_holdout = max(1, len(classes) // 4)
-        heldout = set(rng.choice(classes, size=n_holdout, replace=False).tolist())
-        test_idx.update(df.index[df["intervention_class"].astype(str).isin(heldout)].astype(int).tolist())
+        if len(classes) > 1:
+            n_holdout = min(len(classes) - 1, max(1, len(classes) // 4))
+            heldout = set(rng.choice(classes, size=n_holdout, replace=False).tolist())
+            heldout_classes = sorted(str(value) for value in heldout)
+            test_idx.update(df.index[df["intervention_class"].astype(str).isin(heldout)].astype(int).tolist())
     if "scale" in by_set:
         computes = np.asarray(sorted(df["compute"].astype(float).unique()), dtype=float)
         if len(computes) > 1:
             scale = float(rng.choice(computes[1:], size=1)[0])
+            heldout_scales = [scale]
             test_idx.update(df.index[np.isclose(df["compute"].astype(float), scale)].astype(int).tolist())
 
     all_idx = set(int(i) for i in df.index.tolist())
-    split = {
+    if not test_idx:
+        raise ValueError("split dimensions did not produce any held-out test rows")
+    if test_idx == all_idx:
+        raise ValueError("split dimensions held out every row; at least one training row is required")
+    split: Split = {
         "train": sorted(all_idx - test_idx),
         "test": sorted(test_idx),
         "by": sorted(by_set),
         "seed": int(seed),
+        "heldout_classes": heldout_classes,
+        "heldout_scales": heldout_scales,
+        "table_fingerprint": _table_fingerprint(df),
     }
     split_path.parent.mkdir(parents=True, exist_ok=True)
-    with split_path.open("w", encoding="utf-8") as fh:
-        json.dump(split, fh, indent=2, sort_keys=True)
+    temporary_path: Path | None = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="w",
+            encoding="utf-8",
+            dir=split_path.parent,
+            prefix=f".{split_path.name}.",
+            delete=False,
+        ) as temporary:
+            temporary_path = Path(temporary.name)
+            json.dump(split, temporary, indent=2, sort_keys=True)
+            temporary.write("\n")
+            temporary.flush()
+            os.fsync(temporary.fileno())
+        temporary_path.replace(split_path)
+    finally:
+        if temporary_path is not None and temporary_path.exists():
+            temporary_path.unlink()
     return split
 
 

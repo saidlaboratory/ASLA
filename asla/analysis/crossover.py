@@ -3,21 +3,22 @@
 from __future__ import annotations
 
 import itertools
-from typing import Any, Iterable, List, Tuple
+from typing import Any, Iterable, List, Tuple, cast
 
 import numpy as np
 import pandas as pd
+from scipy.optimize import brentq
 from scipy.stats import ttest_ind
 
-from asla.analysis.audit import seed_noise_report
+from asla.analysis.audit import resample_runs_by_cell, seed_noise_report
 from asla.analysis.fits import fit_all, project_ranking, truth_ranking
 from asla.config import GateConfig
 from asla.data.schema import validate
-from asla.models import FitError, FitForm, bpb_power_law, fit_power_law
+from asla.models import FitError, FitForm, bpb_power_law
 
 
 def seed_noise_band(df: pd.DataFrame, target: float, k: float = GateConfig().noise_band_k) -> float:
-    """Return ``k`` times the pooled standard error of target-budget means."""
+    """Return ``k`` times the pooled representative target-mean standard error."""
 
     band = seed_noise_report(df, target, k=k)["noise_band"]
     return float("inf") if band is None else float(band)
@@ -155,19 +156,29 @@ def naive_crossover_budget(
     n_decades = np.log10(hi) - np.log10(lo)
     grid = np.logspace(np.log10(lo), np.log10(hi), max(4000, int(300 * n_decades)))
     diff = np.asarray(bpb_power_law(grid, *params_a) - bpb_power_law(grid, *params_b), dtype=float)
-    exact = np.where(np.isclose(diff, 0.0, atol=1e-10))[0]
-    if len(exact):
-        return float(grid[int(exact[0])])
-    signs = np.sign(diff)
-    idxs = np.where(signs[:-1] * signs[1:] < 0)[0]
-    if len(idxs) == 0:
+    if not np.isfinite(diff).all():
+        raise ValueError("fitted curves produced non-finite values in the crossover search range")
+    nonzero = np.flatnonzero(diff != 0.0)
+    if len(nonzero) < 2:
         return None
-    i = int(idxs[0])
-    x1, x2 = np.log(grid[i]), np.log(grid[i + 1])
-    y1, y2 = diff[i], diff[i + 1]
-    if y2 == y1:
-        return float(grid[i])
-    root_log = x1 - y1 * (x2 - x1) / (y2 - y1)
+    bracket = next(
+        (
+            (int(left), int(right))
+            for left, right in zip(nonzero[:-1], nonzero[1:])
+            if np.signbit(diff[left]) != np.signbit(diff[right])
+        ),
+        None,
+    )
+    if bracket is None:
+        return None
+    left_idx, right_idx = bracket
+    x1, x2 = np.log(grid[left_idx]), np.log(grid[right_idx])
+
+    def _difference_at_log_compute(log_compute: float) -> float:
+        compute = float(np.exp(log_compute))
+        return float(bpb_power_law(compute, *params_a) - bpb_power_law(compute, *params_b))
+
+    root_log = brentq(_difference_at_log_compute, x1, x2)
     return float(np.exp(root_log))
 
 
@@ -194,42 +205,60 @@ def crossover_budget_ci(
     budgets: Iterable[float],
     n_boot: int,
     rng: np.random.Generator,
-) -> tuple[float, float, float] | None:
-    """Bootstrap the fitted crossover budget for two interventions.
+) -> dict[str, float | int | str | None]:
+    """Bootstrap a fitted crossover while preserving every compute cell.
 
-    Returns ``(median, lo, hi)`` over successful resamples, or ``None`` when
-    too few resamples produced both fits and a crossover to summarize honestly.
+    The crossing fraction uses every requested draw as its denominator. The
+    interval is conditional on a crossing being found and is omitted when too
+    few roots exist; fit failures and non-crossing draws remain visible.
     """
 
     validate(df)
     if n_boot <= 0:
         raise ValueError("n_boot must be positive")
     budget_values = np.asarray(tuple(budgets), dtype=float)
+    pair_df = df[
+        df["intervention"].astype(str).isin([a, b])
+        & df["compute"].astype(float).apply(lambda value: bool(np.any(np.isclose(value, budget_values))))
+    ]
+    missing = sorted({a, b} - set(pair_df["intervention"].astype(str)))
+    if missing:
+        raise ValueError(f"no fitting rows found for crossover interventions: {missing}")
     roots: list[float] = []
     fit_successes = 0
     for _ in range(n_boot):
-        params: dict[str, tuple[float, float, float]] = {}
-        for name in (a, b):
-            group = df[(df["intervention"] == name) & df["compute"].apply(lambda c: np.any(np.isclose(c, budget_values)))]
-            if group.empty:
-                continue
-            idx = rng.integers(0, len(group), size=len(group))
-            sample = group.iloc[idx]
-            try:
-                params[name] = fit_power_law(sample["compute"].to_numpy(float), sample["bpb"].to_numpy(float))
-            except FitError:
-                continue
-        if a in params and b in params:
-            fit_successes += 1
-            root = naive_crossover_budget(params[a], params[b])
-            if root is not None:
-                roots.append(root)
-    min_successes = max(10, int(np.ceil(0.25 * n_boot)))
-    if fit_successes < min_successes or len(roots) < min_successes:
-        return None
-    arr = np.asarray(roots, dtype=float)
-    lo, med, hi = np.percentile(arr, [5.0, 50.0, 95.0])
-    return float(med), float(lo), float(hi)
+        sample = resample_runs_by_cell(pair_df, rng)
+        try:
+            params = fit_all(sample, budget_values)
+        except (FitError, ValueError):
+            continue
+        fit_successes += 1
+        params_a = cast(tuple[float, float, float], params[a])
+        params_b = cast(tuple[float, float, float], params[b])
+        root = naive_crossover_budget(params_a, params_b)
+        if root is not None:
+            roots.append(root)
+    min_roots = min(n_boot, max(10, int(np.ceil(0.25 * n_boot))))
+    report: dict[str, float | int | str | None] = {
+        "median": None,
+        "lo": None,
+        "hi": None,
+        "confidence_level": 0.90,
+        "interval_method": "percentile bootstrap conditional on a crossing being found",
+        "minimum_roots_for_interval": int(min_roots),
+        "crossing_found_fraction": float(len(roots) / n_boot),
+        "crossings_found": int(len(roots)),
+        "non_crossing_draws": int(fit_successes - len(roots)),
+        "fit_success_fraction": float(fit_successes / n_boot),
+        "fit_successes": int(fit_successes),
+        "fit_failures": int(n_boot - fit_successes),
+        "n_boot": int(n_boot),
+    }
+    if len(roots) >= min_roots:
+        arr = np.asarray(roots, dtype=float)
+        lo, med, hi = np.percentile(arr, [5.0, 50.0, 95.0])
+        report.update({"median": float(med), "lo": float(lo), "hi": float(hi)})
+    return report
 
 
 def fitted_crossover_for_pair(
@@ -241,4 +270,6 @@ def fitted_crossover_for_pair(
     """Fit two interventions and return their fitted crossover budget if any."""
 
     params = fit_all(df[df["intervention"].isin([a, b])], budgets)
-    return naive_crossover_budget(params[a], params[b])
+    params_a = cast(tuple[float, float, float], params[a])
+    params_b = cast(tuple[float, float, float], params[b])
+    return naive_crossover_budget(params_a, params_b)

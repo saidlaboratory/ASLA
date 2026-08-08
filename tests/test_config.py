@@ -14,7 +14,7 @@ def test_default_counts_are_paper_grade():
 
 def test_fast_flag_uses_small_counts():
     parser = build_parser()
-    args = parser.parse_args(["demo", "--fast"])
+    args = parser.parse_args(["demo", "--estimand", "single_design_seed_sensitivity", "--fast"])
     _, n_boot, n_trials = _runtime_config(args)
     cfg = AuditConfig()
     assert n_boot == cfg.counts.fast_n_boot

@@ -3,20 +3,25 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
+import os
+import tempfile
 from dataclasses import replace
+from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 
-from asla.analysis.audit import audit_with_ci
+from asla import __version__
+from asla.analysis.audit import ESTIMANDS, audit_with_ci
 from asla.analysis.crossover import detect_crossovers, detect_crossovers_fdr, fitted_crossover_for_pair
 from asla.analysis.ensemble import ensemble_report
 from asla.analysis.fits import normalize_budgets, project_ranking, truth_ranking
 from asla.analysis.metrics import decision_metrics
 from asla.analysis.racing import monte_carlo_selection
-from asla.analysis.rankers import Ranker, ensemble_ranker, make_projection_ranker, single_scale_ranker
+from asla.analysis.rankers import Ranker, ensemble_ranker, make_gate_ranker, make_projection_ranker, single_scale_ranker
 from asla.config import AuditConfig
 from asla.data.benchmark import FAMILIES as BENCHMARK_FAMILIES
 from asla.data.benchmark import benchmark_grid, evaluate_configs
@@ -41,6 +46,15 @@ def _positive_int(value: str) -> int:
     parsed = int(value)
     if parsed <= 0:
         raise argparse.ArgumentTypeError("must be a positive integer")
+    return parsed
+
+
+def _nonnegative_float(value: str) -> float:
+    """Parse a finite non-negative floating-point CLI argument."""
+
+    parsed = float(value)
+    if not np.isfinite(parsed) or parsed < 0:
+        raise argparse.ArgumentTypeError("must be a finite non-negative number")
     return parsed
 
 
@@ -70,6 +84,116 @@ def _default_rankers(fit_form: str, weighted: bool = False, n_fit_budgets: int |
     return rankers
 
 
+def _package_version() -> str:
+    """Return the installed ASLA version for result provenance."""
+
+    try:
+        installed = version("asla")
+    except PackageNotFoundError:
+        return __version__
+    return str(installed) if installed else __version__
+
+
+def _sha256_file(path: str | Path) -> str:
+    """Return the SHA-256 digest of an input file."""
+
+    digest = hashlib.sha256()
+    with Path(path).open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _write_json_atomically(payload: object, path: str | Path) -> None:
+    """Write deterministic JSON through a same-directory atomic replace."""
+
+    destination = Path(path)
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    temporary_path: Path | None = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="w",
+            encoding="utf-8",
+            dir=destination.parent,
+            prefix=f".{destination.name}.",
+            delete=False,
+        ) as temporary:
+            temporary_path = Path(temporary.name)
+            temporary.write(json.dumps(payload, indent=2, sort_keys=True) + "\n")
+            temporary.flush()
+            os.fsync(temporary.fileno())
+        temporary_path.replace(destination)
+    finally:
+        if temporary_path is not None and temporary_path.exists():
+            temporary_path.unlink()
+
+
+def _write_table_atomically(table: pd.DataFrame, path: str | Path, *, parquet: bool) -> None:
+    """Write a result table atomically as Parquet or CSV."""
+
+    destination = Path(path)
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    temporary_path: Path | None = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            dir=destination.parent,
+            prefix=f".{destination.name}.",
+            suffix=destination.suffix,
+            delete=False,
+        ) as temporary:
+            temporary_path = Path(temporary.name)
+        if parquet:
+            table.to_parquet(temporary_path, index=False)
+        else:
+            with temporary_path.open("w", encoding="utf-8", newline="") as handle:
+                table.to_csv(handle, index=False)
+                handle.flush()
+                os.fsync(handle.fileno())
+        if parquet:
+            with temporary_path.open("rb") as handle:
+                os.fsync(handle.fileno())
+        temporary_path.replace(destination)
+    finally:
+        if temporary_path is not None and temporary_path.exists():
+            temporary_path.unlink()
+
+
+def _resolve_audit_budgets(
+    df: pd.DataFrame,
+    target: float,
+    requested: list[float] | None,
+    intermediate_budget: float | None,
+) -> tuple[float, ...]:
+    """Resolve fitting budgets while keeping an exploration budget held out."""
+
+    computes = tuple(sorted(float(value) for value in df["compute"].unique()))
+    if not np.isfinite(target) or target <= 0:
+        raise SystemExit("target budget must be finite and positive")
+    if not any(np.isclose(value, target) for value in computes):
+        raise SystemExit(f"target budget {target:g} is not present in the runs table")
+    if intermediate_budget is not None:
+        if not any(np.isclose(value, intermediate_budget) for value in computes):
+            raise SystemExit(f"intermediate budget {intermediate_budget:g} is not present in the runs table")
+        if intermediate_budget >= target or np.isclose(intermediate_budget, target):
+            raise SystemExit("intermediate budget must be strictly below the target budget")
+    if requested is not None and intermediate_budget is not None and any(
+        np.isclose(value, intermediate_budget) for value in requested
+    ):
+        raise SystemExit("--budgets must not include the reserved --intermediate-budget")
+    candidates = list(requested) if requested is not None else [value for value in computes if value < target]
+    if intermediate_budget is not None:
+        candidates = [value for value in candidates if not np.isclose(value, intermediate_budget)]
+    missing = [value for value in candidates if not any(np.isclose(value, observed) for observed in computes)]
+    if missing:
+        raise SystemExit(f"requested fitting budgets are absent from the runs table: {missing}")
+    budgets = normalize_budgets(candidates, target=target)
+    if len(budgets) < 3:
+        raise SystemExit(f"need at least 3 distinct fitting budgets; found {len(budgets)}")
+    if intermediate_budget is not None and any(budget >= intermediate_budget for budget in budgets):
+        raise SystemExit("all fitting budgets must be strictly below the reserved intermediate budget")
+    return budgets
+
+
 def _assert_fit_form_available(df: pd.DataFrame, fit_form: str) -> None:
     """Raise a clean CLI error when a fit form's required columns are absent."""
 
@@ -81,8 +205,12 @@ def _assert_fit_form_available(df: pd.DataFrame, fit_form: str) -> None:
 
 def _print_interval_report(results: dict[str, object]) -> None:
     rankers = results["rankers"]
+    estimand = results["estimand"]
+    availability = results["ranker_metric_availability"]
     assert isinstance(rankers, dict)
-    print("Ranker metrics with 95% bootstrap intervals:")
+    assert isinstance(estimand, dict)
+    assert isinstance(availability, dict)
+    print(f"Ranker metrics for estimand {estimand['name']} with 95% seed-bootstrap intervals:")
     for ranker_name, metrics in rankers.items():
         print(f"{ranker_name}:")
         assert isinstance(metrics, dict)
@@ -95,6 +223,11 @@ def _print_interval_report(results: dict[str, object]) -> None:
                 f"  {metric_name}: {interval['point']:.6f} "
                 f"[{interval['lo']:.6f}, {interval['hi']:.6f}]"
             )
+        entry = availability[ranker_name]
+        assert isinstance(entry, dict)
+        omitted = entry.get("omitted", {})
+        if omitted:
+            print(f"  omitted for this ranker: {', '.join(sorted(omitted))}")
 
 
 def _crossover_root_message(df: pd.DataFrame, a: str, b: str, budgets: tuple[float, ...], fit_form: str) -> str:
@@ -129,7 +262,16 @@ def _demo(args: argparse.Namespace) -> int:
     print(json.dumps(metrics_vs_noiseless, indent=2, sort_keys=True))
     rankers = _default_rankers(args.fit_form)
     ci_rng = np.random.default_rng(args.seed + 10)
-    ci_results = audit_with_ci(df, cfg.budgets.fit, cfg.budgets.target, rankers, n_boot, ci_rng)
+    ci_results = audit_with_ci(
+        df,
+        cfg.budgets.fit,
+        cfg.budgets.target,
+        rankers,
+        n_boot,
+        ci_rng,
+        estimand=args.estimand,
+        fit_form=args.fit_form,
+    )
     ci_results["fit_form"] = args.fit_form
     _print_interval_report(ci_results)
     projected_winner = str(projected.index[0])
@@ -187,12 +329,52 @@ def _audit(args: argparse.Namespace) -> int:
     cfg, n_boot, _ = _runtime_config(args)
     df = load_runs(args.runs)
     _assert_fit_form_available(df, args.fit_form)
-    computes = sorted(df["compute"].astype(float).unique())
-    budgets = normalize_budgets(tuple(c for c in computes if c < args.target), target=args.target)
-    if len(budgets) < 3:
-        raise SystemExit(f"need at least 3 distinct pre-target fitting budgets; found {len(budgets)}")
+    budgets = _resolve_audit_budgets(df, args.target, args.budgets, args.intermediate_budget)
     rankers = _default_rankers(args.fit_form, weighted=bool(args.weighted), n_fit_budgets=len(budgets))
-    audit = audit_with_ci(df, budgets, args.target, rankers, n_boot, np.random.default_rng(args.seed))
+    ranker_availability: dict[str, dict[str, object]] = {
+        name: {"included": True} for name in rankers
+    }
+    if "ensemble_ranker" not in rankers:
+        ranker_availability["ensemble_ranker"] = {
+            "included": False,
+            "reason": "requires compute_power_law mode and at least four fitting budgets",
+        }
+    if args.intermediate_budget is None:
+        ranker_availability["gate_ranker"] = {
+            "included": False,
+            "reason": "provide --intermediate-budget to evaluate gate escalation without fitting-budget leakage",
+        }
+    elif args.fit_form != "compute_power_law":
+        ranker_availability["gate_ranker"] = {
+            "included": False,
+            "reason": "gate uncertainty is currently implemented only for compute_power_law",
+        }
+    else:
+        gate_n_boot = int(args.gate_n_boot or n_boot)
+        rankers["gate_ranker"] = make_gate_ranker(
+            intermediate_budget=float(args.intermediate_budget),
+            tau=float(args.gate_tau),
+            n_boot=gate_n_boot,
+            seed=int(args.seed + 1),
+        )
+        ranker_availability["gate_ranker"] = {
+            "included": True,
+            "ranking_scope": "top1_only",
+            "intermediate_budget": float(args.intermediate_budget),
+            "tau": float(args.gate_tau),
+            "inner_n_boot": gate_n_boot,
+        }
+    audit = audit_with_ci(
+        df,
+        budgets,
+        args.target,
+        rankers,
+        n_boot,
+        np.random.default_rng(args.seed),
+        estimand=args.estimand,
+        fit_form=args.fit_form,
+        weighted=bool(args.weighted),
+    )
     audit["fit_form"] = args.fit_form
     crossovers = detect_crossovers(df, budgets, args.target, fit_form=args.fit_form)
     crossovers_fdr = detect_crossovers_fdr(df, budgets, args.target, q=args.crossover_q, fit_form=args.fit_form)
@@ -202,10 +384,19 @@ def _audit(args: argparse.Namespace) -> int:
     result = {
         "audit_metadata": {
             "budgets": [float(budget) for budget in budgets],
+            "budget_roles": {
+                "fit": [float(budget) for budget in budgets],
+                "intermediate": None if args.intermediate_budget is None else float(args.intermediate_budget),
+                "target": float(args.target),
+            },
+            "budget_selection": "explicit" if args.budgets is not None else "inferred_all_pre_target",
             "crossover_q": float(args.crossover_q),
             "fast": bool(args.fast),
             "fit_form": args.fit_form,
             "n_boot": int(n_boot),
+            "input_path": str(Path(args.runs)),
+            "input_sha256": _sha256_file(args.runs),
+            "package_version": _package_version(),
             "rankers": sorted(rankers.keys()),
             "rng_seed": int(args.seed),
             "target": float(args.target),
@@ -213,18 +404,22 @@ def _audit(args: argparse.Namespace) -> int:
         },
         "fit_form": args.fit_form,
         "rankers": audit["rankers"],
+        "bootstrap_diagnostics": audit["bootstrap_diagnostics"],
+        "ranker_metric_availability": audit["ranker_metric_availability"],
+        "ranker_availability": ranker_availability,
+        "estimand": audit["estimand"],
         "under_seeded_cells": audit["under_seeded_cells"],
         "noise": audit["noise"],
         "truth": audit["truth"],
         "truth_ties": audit["truth_ties"],
         "fit_diagnostics": audit["fit_diagnostics"],
+        "analysis_availability": audit["analysis_availability"],
         "crossovers": crossovers,
         "crossovers_fdr": crossovers_fdr,
         "ensemble": ensemble,
     }
     if args.out:
-        Path(args.out).parent.mkdir(parents=True, exist_ok=True)
-        Path(args.out).write_text(json.dumps(result, indent=2, sort_keys=True), encoding="utf-8")
+        _write_json_atomically(result, args.out)
         if args.report:
             report_path = Path(args.out).with_suffix(".md")
             write_report(args.out, report_path)
@@ -294,8 +489,8 @@ def _benchmark(args: argparse.Namespace) -> int:
     table = evaluate_configs(configs, n_trials=n_trials, n_boot=n_boot, seed=args.seed, beta=args.beta)
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
-    table.to_parquet(out / "benchmark_results.parquet", index=False)
-    table.to_csv(out / "benchmark_results.csv", index=False)
+    _write_table_atomically(table, out / "benchmark_results.parquet", parquet=True)
+    _write_table_atomically(table, out / "benchmark_results.csv", parquet=False)
     summary = (
         table.groupby(["family", "rule"])[["mean_regret", "wrong_pick_rate", "mean_compute"]]
         .mean()
@@ -303,20 +498,16 @@ def _benchmark(args: argparse.Namespace) -> int:
         .reset_index()
         .to_dict(orient="records")
     )
-    (out / "benchmark_summary.json").write_text(
-        json.dumps(
-            {
-                "n_problems": len(configs),
-                "n_trials": int(n_trials),
-                "n_boot": int(n_boot),
-                "rng_seed": int(args.seed),
-                "beta": float(args.beta),
-                "per_family_rule_means": summary,
-            },
-            indent=2,
-            sort_keys=True,
-        ),
-        encoding="utf-8",
+    _write_json_atomically(
+        {
+            "n_problems": len(configs),
+            "n_trials": int(n_trials),
+            "n_boot": int(n_boot),
+            "rng_seed": int(args.seed),
+            "beta": float(args.beta),
+            "per_family_rule_means": summary,
+        },
+        out / "benchmark_summary.json",
     )
     _benchmark_heatmaps(table, out)
     print(json.dumps(summary, indent=2))
@@ -325,8 +516,31 @@ def _benchmark(args: argparse.Namespace) -> int:
 
 
 def _figures(args: argparse.Namespace) -> int:
+    _, n_boot, _ = _runtime_config(args)
     df = load_runs(args.runs)
-    make_figures(df, args.out, target=args.target)
+    _assert_fit_form_available(df, args.fit_form)
+    resolved_target = float(df["compute"].max()) if args.target is None else float(args.target)
+    make_figures(
+        df,
+        args.out,
+        target=resolved_target,
+        fit_form=args.fit_form,
+        budgets=args.budgets,
+        n_boot=n_boot,
+    )
+    _write_json_atomically(
+        {
+            "budgets": None if args.budgets is None else [float(value) for value in args.budgets],
+            "fit_form": args.fit_form,
+            "input_path": str(Path(args.runs)),
+            "input_sha256": _sha256_file(args.runs),
+            "n_boot": int(n_boot),
+            "package_version": _package_version(),
+            "rng_seed": 123,
+            "target": resolved_target,
+        },
+        Path(args.out) / "figure_metadata.json",
+    )
     print(f"wrote figures to {args.out}")
     return 0
 
@@ -345,6 +559,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     demo.add_argument("--seed", type=int, default=1729)
     demo.add_argument("--fit-form", choices=["compute_power_law", "chinchilla"], default="compute_power_law")
+    demo.add_argument("--estimand", choices=ESTIMANDS, required=True)
     demo.add_argument("--n-boot", type=_positive_int)
     demo.add_argument("--trials", type=_positive_int)
     demo.add_argument("--fast", action="store_true")
@@ -357,9 +572,19 @@ def build_parser() -> argparse.ArgumentParser:
     audit = sub.add_parser("audit")
     audit.add_argument("--runs", required=True)
     audit.add_argument("--target", type=float, required=True)
+    audit.add_argument(
+        "--budgets",
+        type=float,
+        nargs="+",
+        help="Explicit fitting budgets; defaults to all pre-target budgets except --intermediate-budget.",
+    )
+    audit.add_argument("--intermediate-budget", type=float, help="Held-out exploration budget used only by the gate.")
+    audit.add_argument("--gate-tau", type=_nonnegative_float, default=AuditConfig().gate.tau)
+    audit.add_argument("--gate-n-boot", type=_positive_int, help="Inner bootstrap count for gate uncertainty.")
     audit.add_argument("--out")
     audit.add_argument("--seed", type=int, default=1729)
     audit.add_argument("--fit-form", choices=["compute_power_law", "chinchilla"], default="compute_power_law")
+    audit.add_argument("--estimand", choices=ESTIMANDS, required=True)
     audit.add_argument("--n-boot", type=_positive_int)
     audit.add_argument("--fast", action="store_true")
     audit.add_argument("--weighted", action="store_true", help="Weight fits by per-cell seed standard errors.")
@@ -396,6 +621,10 @@ def build_parser() -> argparse.ArgumentParser:
     figs.add_argument("--runs", required=True)
     figs.add_argument("--out", required=True)
     figs.add_argument("--target", type=float, help="Target budget; defaults to the largest compute in the table.")
+    figs.add_argument("--budgets", type=float, nargs="+", help="Explicit fitting budgets.")
+    figs.add_argument("--fit-form", choices=["compute_power_law", "chinchilla"], default="compute_power_law")
+    figs.add_argument("--n-boot", type=_positive_int)
+    figs.add_argument("--fast", action="store_true")
     figs.set_defaults(func=_figures)
     return parser
 

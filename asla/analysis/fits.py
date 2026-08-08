@@ -152,11 +152,12 @@ def fit_diagnostics_all(
     df: pd.DataFrame,
     budgets: Iterable[float],
     fit_form: FitForm = "compute_power_law",
+    weighted: bool = False,
 ) -> Dict[str, FitDiagnostics]:
     """Return residual diagnostics of each intervention's fit on the fitting budgets."""
 
     fit_budgets = normalize_budgets(budgets)
-    params = fit_all(df, fit_budgets, fit_form=fit_form)
+    params = fit_all(df, fit_budgets, fit_form=fit_form, weighted=weighted)
     fit_df = df[_budget_mask(df["compute"], fit_budgets)]
     diagnostics: Dict[str, FitDiagnostics] = {}
     for intervention, group in fit_df.groupby("intervention", sort=True):
@@ -205,8 +206,14 @@ def project_ranking(
             target_inputs = group[["params_n", "tokens_d"]].to_numpy(dtype=float)
             if (not np.isfinite(target_inputs).all()) or (target_inputs <= 0).any():
                 raise ValueError(f"target Chinchilla inputs for intervention {name!r} must be finite positive values")
-            n_target = float(group["params_n"].mean())
-            d_target = float(group["tokens_d"].mean())
+            target_designs = group[["params_n", "tokens_d"]].drop_duplicates()
+            if len(target_designs) != 1:
+                raise ValueError(
+                    f"target Chinchilla inputs for intervention {name!r} must be identical across seeds; "
+                    f"found {len(target_designs)} designs"
+                )
+            n_target = float(target_designs["params_n"].iloc[0])
+            d_target = float(target_designs["tokens_d"].iloc[0])
             values[name] = float(bpb_chinchilla(n_target, d_target, *par))
     else:
         raise ValueError(f"unknown fit_form: {fit_form}")

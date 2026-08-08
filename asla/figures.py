@@ -3,21 +3,24 @@
 from __future__ import annotations
 
 import logging
+from collections.abc import Iterable
 from pathlib import Path
+from typing import Any
 
 import numpy as np
 import pandas as pd
 
 from asla.analysis.crossover import detect_crossovers, fitted_crossover_for_pair
-from asla.analysis.fits import project_ranking, truth_ranking
+from asla.analysis.fits import normalize_budgets, project_ranking, truth_ranking
 from asla.analysis.gate import gate_pick, plain_projection_pick
 from asla.config import AuditConfig
 from asla.data.schema import validate
+from asla.models import FitForm
 
 LOGGER = logging.getLogger(__name__)
 
 
-def _save(fig: object, out_dir: Path, name: str) -> None:
+def _save(fig: Any, out_dir: Path, name: str) -> None:
     for ext in ("png", "pdf"):
         fig.savefig(out_dir / f"{name}.{ext}", bbox_inches="tight", dpi=160)
 
@@ -63,7 +66,14 @@ def _ensemble_disagreement_figure(
     plt.close(fig)
 
 
-def make_figures(df: pd.DataFrame, out_dir: str | Path, target: float | None = None) -> None:
+def make_figures(
+    df: pd.DataFrame,
+    out_dir: str | Path,
+    target: float | None = None,
+    fit_form: FitForm = "compute_power_law",
+    budgets: Iterable[float] | None = None,
+    n_boot: int | None = None,
+) -> None:
     """Create audit figures and save each as PNG and PDF.
 
     ``target`` defaults to the largest compute budget in the table; pass it
@@ -73,6 +83,9 @@ def make_figures(df: pd.DataFrame, out_dir: str | Path, target: float | None = N
     import matplotlib.pyplot as plt
 
     cfg = AuditConfig()
+    gate_n_boot = cfg.gate.n_boot if n_boot is None else int(n_boot)
+    if gate_n_boot <= 0:
+        raise ValueError("n_boot must be positive")
     validate(df)
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
@@ -86,22 +99,25 @@ def make_figures(df: pd.DataFrame, out_dir: str | Path, target: float | None = N
     if len(computes) < 4:
         LOGGER.warning("skipping projection figures: need at least four compute budgets at or below the target")
         return
-    budgets = tuple(c for c in computes if not np.isclose(c, target))
+    fit_budgets = normalize_budgets(
+        tuple(c for c in computes if not np.isclose(c, target)) if budgets is None else budgets,
+        target=target,
+    )
 
     from asla.analysis.fits import fit_all
     from asla.models import FitError, bpb_power_law
 
     try:
-        fitted_params = fit_all(df, budgets)
+        fitted_params = fit_all(df, fit_budgets, fit_form=fit_form)
     except (FitError, ValueError):
         fitted_params = {}
     fig, ax = plt.subplots()
-    extrapolation_grid = np.logspace(np.log10(min(budgets)), np.log10(target), 200)
+    extrapolation_grid = np.logspace(np.log10(min(fit_budgets)), np.log10(target), 200)
     for name, group in df.groupby("intervention", sort=True):
         means = group.groupby("compute")["bpb"].mean().sort_index()
         (line,) = ax.plot(means.index, means.values, marker="o", linestyle="none", label=str(name))
         params = fitted_params.get(str(name))
-        if params is not None:
+        if params is not None and fit_form == "compute_power_law":
             ax.plot(
                 extrapolation_grid,
                 bpb_power_law(extrapolation_grid, *params),
@@ -119,11 +135,12 @@ def make_figures(df: pd.DataFrame, out_dir: str | Path, target: float | None = N
                 color=line.get_color(),
                 zorder=5,
             )
-    for a, b, _ in detect_crossovers(df, budgets, target):
-        root = fitted_crossover_for_pair(df, a, b, budgets)
-        if root is not None:
-            ax.axvline(root, linestyle="--", alpha=0.4)
-    ax.axvline(float(max(budgets)), color="gray", linestyle=":", alpha=0.6)
+    for a, b, _ in detect_crossovers(df, fit_budgets, target, fit_form=fit_form):
+        if fit_form == "compute_power_law":
+            root = fitted_crossover_for_pair(df, a, b, fit_budgets)
+            if root is not None:
+                ax.axvline(root, linestyle="--", alpha=0.4)
+    ax.axvline(float(max(fit_budgets)), color="gray", linestyle=":", alpha=0.6)
     ax.set_xscale("log")
     ax.set_xlabel("compute (dashed: fitted extrapolation; star: measured target mean)")
     ax.set_ylabel("BPB")
@@ -131,9 +148,12 @@ def make_figures(df: pd.DataFrame, out_dir: str | Path, target: float | None = N
     _save(fig, out, "scaling_curves")
     plt.close(fig)
 
-    _ensemble_disagreement_figure(df, budgets, target, out, plt)
+    if fit_form == "compute_power_law":
+        _ensemble_disagreement_figure(df, fit_budgets, target, out, plt)
+    else:
+        LOGGER.warning("skipping ensemble disagreement figure for fit_form=%s", fit_form)
 
-    projected = project_ranking(df, budgets, target)
+    projected = project_ranking(df, fit_budgets, target, fit_form=fit_form)
     truth = truth_ranking(df, target)
     common = projected.index.intersection(truth.index)
     fig, ax = plt.subplots()
@@ -145,44 +165,65 @@ def make_figures(df: pd.DataFrame, out_dir: str | Path, target: float | None = N
     _save(fig, out, "projected_vs_true")
     plt.close(fig)
 
-    regret_plain: list[float] = []
-    regret_gate: list[float] = []
-    xs: list[float] = []
-    truth_series = truth_ranking(df, target)
-    for intermediate in computes[1:-1]:
-        fit_budgets = tuple(c for c in computes if c < intermediate)
-        if len(fit_budgets) < 3:
-            continue
-        rng = np.random.default_rng(123)
-        plain = plain_projection_pick(df, fit_budgets, target)
-        gate = gate_pick(df, fit_budgets, target, intermediate, tau=cfg.gate.tau, n_boot=cfg.gate.n_boot, rng=rng)
-        xs.append(float(intermediate))
-        regret_plain.append(float(truth_series.loc[plain] - truth_series.min()))
-        regret_gate.append(float(truth_series.loc[gate] - truth_series.min()))
-    if xs:
-        fig, ax = plt.subplots()
-        ax.plot(xs, regret_plain, marker="o", label="plain")
-        ax.plot(xs, regret_gate, marker="o", label="gate")
-        ax.set_xscale("log")
-        ax.set_xlabel("exploration compute")
-        ax.set_ylabel("regret")
-        ax.legend()
-        _save(fig, out, "regret_vs_exploration")
-        plt.close(fig)
+    if fit_form == "compute_power_law":
+        regret_plain: list[float] = []
+        regret_gate: list[float] = []
+        xs: list[float] = []
+        truth_series = truth_ranking(df, target)
+        for intermediate in computes[1:-1]:
+            exploration_fit_budgets = tuple(c for c in computes if c < intermediate)
+            if len(exploration_fit_budgets) < 3:
+                continue
+            rng = np.random.default_rng(123)
+            plain = plain_projection_pick(df, exploration_fit_budgets, target)
+            gate = gate_pick(
+                df,
+                exploration_fit_budgets,
+                target,
+                intermediate,
+                tau=cfg.gate.tau,
+                n_boot=gate_n_boot,
+                rng=rng,
+            )
+            xs.append(float(intermediate))
+            regret_plain.append(float(truth_series.loc[plain] - truth_series.min()))
+            regret_gate.append(float(truth_series.loc[gate] - truth_series.min()))
+        if xs:
+            fig, ax = plt.subplots()
+            ax.plot(xs, regret_plain, marker="o", label="plain")
+            ax.plot(xs, regret_gate, marker="o", label="gate")
+            ax.set_xscale("log")
+            ax.set_xlabel("exploration compute")
+            ax.set_ylabel("regret")
+            ax.legend()
+            _save(fig, out, "regret_vs_exploration")
+            plt.close(fig)
+    else:
+        LOGGER.warning("skipping gate regret figure for fit_form=%s", fit_form)
 
     if "intervention_class" not in df.columns:
         LOGGER.warning("skipping crossover frequency: missing intervention_class")
         return
-    cross = detect_crossovers(df, budgets, target)
+    cross = detect_crossovers(df, fit_budgets, target, fit_form=fit_form)
     counts = df[["intervention", "intervention_class"]].drop_duplicates().set_index("intervention")
     class_counts: dict[str, int] = {}
     for a, b, _ in cross:
         for name in (a, b):
             cls = str(counts.loc[name, "intervention_class"])
             class_counts[cls] = class_counts.get(cls, 0) + 1
+    class_sizes = counts["intervention_class"].astype(str).value_counts().to_dict()
+    total_interventions = len(counts)
+    class_frequency = {
+        name: float(class_counts.get(name, 0) / (size * (total_interventions - 1)))
+        if total_interventions > 1
+        else 0.0
+        for name, size in class_sizes.items()
+    }
     fig, ax = plt.subplots()
-    if class_counts:
-        ax.bar(class_counts.keys(), class_counts.values())
-    ax.set_ylabel("crossover pair participation")
+    if class_frequency:
+        names = sorted(class_frequency)
+        ax.bar(names, [class_frequency[name] for name in names])
+    ax.set_ylabel("crossover pair-participation rate")
+    ax.set_ylim(0.0, 1.0)
     _save(fig, out, "crossover_frequency_by_class")
     plt.close(fig)
