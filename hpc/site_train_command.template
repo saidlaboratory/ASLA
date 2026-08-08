@@ -1,8 +1,8 @@
 python hpc/train_and_eval.py \
-  --run-id {run_id} \
-  --intervention {intervention} \
-  --compute {compute_g} \
-  --seed {seed_int} \
-  --output-dir {output_dir} \
-  --result-json {result_path} \
-  --command-template-file "${{ASLA_SITE_COMMAND_TEMPLATE:?set ASLA_SITE_COMMAND_TEMPLATE to your site command template file}}"
+  --run-id {run_id_q} \
+  --intervention {intervention_q} \
+  --compute {compute_g_q} \
+  --seed {seed_int_q} \
+  --output-dir {output_dir_q} \
+  --result-json {result_path_q} \
+  --command-template-file "${{ASLA_SITE_COMMAND_TEMPLATE:?set ASLA_SITE_COMMAND_TEMPLATE to your site command template file}}" {overwrite_flag}

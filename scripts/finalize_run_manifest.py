@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from asla.data.io import save_runs
+from asla.data.io import save_runs, save_runs_csv
 from asla.data.schema import OPTIONAL_COLUMNS, REQUIRED_COLUMNS, validate
 
 DONE_STATUSES = {"complete", "completed", "done"}
@@ -85,8 +85,7 @@ def main() -> int:
     except ValueError as exc:
         raise SystemExit(str(exc)) from exc
     csv_path = Path(args.out_csv)
-    csv_path.parent.mkdir(parents=True, exist_ok=True)
-    runs.to_csv(csv_path, index=False)
+    save_runs_csv(runs, csv_path)
     save_runs(runs, args.out_parquet)
     print(f"wrote {len(runs)} completed runs to {csv_path}")
     print(f"wrote parquet table to {Path(args.out_parquet)}")

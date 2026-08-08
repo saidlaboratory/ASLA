@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #SBATCH --job-name=asla-grid
-#SBATCH --array=1-36%12
+#SBATCH --array=1-45%12
 #SBATCH --time=04:00:00
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=32G
@@ -68,6 +68,9 @@ RUN_ARGS=(
 #   sbatch --export=ALL,ASLA_EXECUTE=1 hpc/slurm_array_template.sh
 if [[ "${ASLA_EXECUTE:-0}" == "1" ]]; then
   RUN_ARGS+=(--execute)
+fi
+if [[ "${ASLA_OVERWRITE_OUTPUT:-0}" == "1" ]]; then
+  RUN_ARGS+=(--overwrite-output)
 fi
 
 python scripts/run_one_manifest_row.py "${RUN_ARGS[@]}"

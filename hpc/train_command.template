@@ -1,1 +1,1 @@
-python hpc/run_training_job.py --run-id {run_id} --intervention {intervention} --compute {compute_g} --seed {seed_int} --output-dir {output_dir}/{run_id} --site-command-template hpc/site_train_command.template
+python hpc/run_training_job.py --run-id {run_id_q} --intervention {intervention_q} --compute {compute_g_q} --seed {seed_int_q} --output-dir {run_dir_q} --site-command-template hpc/site_train_command.template {overwrite_flag}

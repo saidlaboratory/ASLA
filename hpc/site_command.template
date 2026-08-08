@@ -1,6 +1,6 @@
 python "${{ASLA_REAL_TRAIN_EVAL:?set ASLA_REAL_TRAIN_EVAL to your real training/eval script}}" \
-  --recipe {intervention} \
-  --compute {compute_g} \
-  --seed {seed_int} \
-  --output-dir {output_dir} \
-  --metrics-json {metrics_json}
+  --recipe {intervention_q} \
+  --compute {compute_g_q} \
+  --seed {seed_int_q} \
+  --output-dir {output_dir_q} \
+  --metrics-json {metrics_json_q}

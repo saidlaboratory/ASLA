@@ -10,7 +10,9 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import subprocess
+import tempfile
 from pathlib import Path
 from typing import Any
 
@@ -35,7 +37,12 @@ def _lookup_metric(payload: dict[str, Any], key: str) -> Any:
     return current
 
 
-def result_from_metrics(metrics_path: str | Path, result_path: str | Path, bpb_key: str = "bpb") -> dict[str, Any]:
+def result_from_metrics(
+    metrics_path: str | Path,
+    result_path: str | Path,
+    bpb_key: str = "bpb",
+    identity: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     """Write canonical ASLA result JSON from a measured metrics JSON file."""
 
     metrics_file = Path(metrics_path)
@@ -46,18 +53,48 @@ def result_from_metrics(metrics_path: str | Path, result_path: str | Path, bpb_k
         bpb = float(_lookup_metric(metrics, bpb_key))
     except KeyError as exc:
         raise ValueError(f"{metrics_file} is missing BPB key {bpb_key!r}") from exc
-    if not np.isfinite(bpb):
-        raise ValueError(f"{metrics_file} has non-finite BPB at {bpb_key!r}: {bpb!r}")
+    if not np.isfinite(bpb) or bpb <= 0:
+        raise ValueError(f"{metrics_file} has invalid or non-finite BPB at {bpb_key!r}: {bpb!r}")
 
     result: dict[str, Any] = {"bpb": bpb, "status": "completed"}
-    for key in ("downstream", "params_n", "tokens_d", "notes"):
-        if key in metrics:
-            result[key] = metrics[key]
+    if identity is not None:
+        result.update(
+            {
+                "run_id": str(identity["run_id"]),
+                "intervention": str(identity["intervention"]),
+                "compute": float(identity["compute"]),
+                "seed": int(identity["seed"]),
+            }
+        )
+    for key in ("downstream", "params_n", "tokens_d"):
+        if key in metrics and metrics[key] not in (None, ""):
+            value = float(metrics[key])
+            if not np.isfinite(value) or (key in {"params_n", "tokens_d"} and value <= 0):
+                raise ValueError(f"{metrics_file} has invalid {key}: {metrics[key]!r}")
+            result[key] = value
+    if "notes" in metrics:
+        result["notes"] = str(metrics["notes"])
 
     out = Path(result_path)
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    validate_result_json(out)
+    temporary_path: Path | None = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="w",
+            encoding="utf-8",
+            dir=out.parent,
+            prefix=f".{out.name}.",
+            delete=False,
+        ) as temporary:
+            temporary_path = Path(temporary.name)
+            temporary.write(json.dumps(result, indent=2, sort_keys=True) + "\n")
+            temporary.flush()
+            os.fsync(temporary.fileno())
+        temporary_path.replace(out)
+    finally:
+        if temporary_path is not None and temporary_path.exists():
+            temporary_path.unlink()
+    validate_result_json(out, identity, require_identity=identity is not None)
     return result
 
 
@@ -82,8 +119,14 @@ def main() -> int:
     output_dir.mkdir(parents=True, exist_ok=True)
     result_path = Path(args.result_json)
     metrics_path = Path(args.metrics_json) if args.metrics_json else output_dir / "metrics.json"
-    if result_path.exists() and not args.overwrite_result:
-        raise SystemExit(f"refusing to overwrite existing result JSON: {result_path}")
+    if metrics_path.resolve() == result_path.resolve():
+        raise SystemExit("metrics JSON and result JSON must be different files")
+    existing_outputs = [path for path in (result_path, metrics_path) if path.exists()]
+    if existing_outputs and not args.overwrite_result:
+        raise SystemExit(f"refusing to reuse existing output files: {[str(path) for path in existing_outputs]}")
+    if args.overwrite_result:
+        for path in existing_outputs:
+            path.unlink()
 
     values = {
         "run_id": args.run_id,
@@ -97,6 +140,7 @@ def main() -> int:
         "result_json": str(result_path),
         "result_path": str(result_path),
     }
+    identity = {key: values[key] for key in ("run_id", "intervention", "compute", "seed")}
     template = Path(args.command_template_file).read_text(encoding="utf-8").strip()
     if not template:
         raise SystemExit(f"command template is empty: {args.command_template_file}")
@@ -117,9 +161,9 @@ def main() -> int:
         raise SystemExit(completed.returncode)
 
     if result_path.exists():
-        validate_result_json(result_path)
+        validate_result_json(result_path, identity, require_identity=True)
     else:
-        result_from_metrics(metrics_path, result_path, bpb_key=args.bpb_key)
+        result_from_metrics(metrics_path, result_path, bpb_key=args.bpb_key, identity=identity)
     print(f"wrote result JSON: {result_path}")
     return 0
 

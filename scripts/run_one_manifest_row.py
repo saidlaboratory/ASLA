@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import argparse
 import os
+import re
+import shlex
 import subprocess
 from pathlib import Path
 from string import Formatter
@@ -11,6 +13,7 @@ from string import Formatter
 import pandas as pd
 
 REQUIRED_PLACEHOLDERS = {"run_id", "intervention"}
+SAFE_RUN_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.+-]*$")
 
 
 def _template_fields(template: str) -> set[str]:
@@ -40,7 +43,13 @@ def select_row(manifest: pd.DataFrame, row: int, index_base: int) -> pd.Series:
     return manifest.iloc[idx]
 
 
-def build_command(row: pd.Series, template: str, output_dir: str | Path, row_index: int) -> str:
+def build_command(
+    row: pd.Series,
+    template: str,
+    output_dir: str | Path,
+    row_index: int,
+    overwrite_output: bool = False,
+) -> str:
     """Render a training command for a manifest row.
 
     Available placeholders are manifest columns plus ``output_dir`` and
@@ -49,20 +58,29 @@ def build_command(row: pd.Series, template: str, output_dir: str | Path, row_ind
     """
 
     fields = _template_fields(template)
-    missing = sorted(REQUIRED_PLACEHOLDERS - fields)
-    if "compute" not in fields and "compute_g" not in fields:
+    def _uses(name: str) -> bool:
+        return name in fields or f"{name}_q" in fields
+
+    missing = sorted(name for name in REQUIRED_PLACEHOLDERS if not _uses(name))
+    if not _uses("compute") and not _uses("compute_g"):
         missing.append("compute or compute_g")
-    if "seed" not in fields and "seed_int" not in fields:
+    if not _uses("seed") and not _uses("seed_int"):
         missing.append("seed or seed_int")
     if missing:
         raise ValueError(f"command template must include placeholders: {missing}")
 
     values = {key: "" if pd.isna(value) else value for key, value in row.to_dict().items()}
+    run_id = str(values["run_id"])
+    if SAFE_RUN_ID.fullmatch(run_id) is None:
+        raise ValueError(f"unsafe run_id in manifest: {run_id!r}")
     values["output_dir"] = str(output_dir)
+    values["run_dir"] = str(Path(output_dir) / run_id)
     values["row_index"] = int(row_index)
     values["compute_g"] = f"{float(values['compute']):g}"
     values["seed_int"] = int(values["seed"])
-    return template.format(**values)
+    values["overwrite_flag"] = "--overwrite-output" if overwrite_output else ""
+    values.update({f"{name}_q": shlex.quote(str(value)) for name, value in tuple(values.items())})
+    return template.format(**values).strip()
 
 
 def main() -> int:
@@ -77,6 +95,11 @@ def main() -> int:
     parser.add_argument("--output-dir", default="results/hpc")
     parser.add_argument("--execute", action="store_true", help="Actually launch the rendered command.")
     parser.add_argument("--cwd", help="Working directory for the launched command.")
+    parser.add_argument(
+        "--overwrite-output",
+        action="store_true",
+        help="Allow adapters to replace stale per-run metrics/results for a deliberate retry.",
+    )
     args = parser.parse_args()
 
     manifest = pd.read_csv(args.manifest)
@@ -90,7 +113,9 @@ def main() -> int:
     try:
         template = load_template(args)
         row = select_row(manifest, row_arg, args.index_base)
-        command = build_command(row, template, args.output_dir, row_arg)
+        if "run_id" not in manifest.columns or manifest["run_id"].astype(str).duplicated().any():
+            raise ValueError("manifest run_id values must exist and be unique")
+        command = build_command(row, template, args.output_dir, row_arg, overwrite_output=args.overwrite_output)
     except (KeyError, ValueError, IndexError) as exc:
         raise SystemExit(str(exc)) from exc
 

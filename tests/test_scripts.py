@@ -9,6 +9,7 @@ from hpc.train_and_eval import result_from_metrics
 from scripts.check_runs_coverage import coverage_report
 from scripts.collect_results import collect_results
 from scripts.finalize_run_manifest import manifest_to_runs
+from scripts.hpc_preflight import validate_manifest_array
 from scripts.make_run_manifest import _read_budgets, _read_interventions, make_manifest
 from scripts.prepare_runs_table import _coerce_runs
 from scripts.run_one_manifest_row import build_command, select_row
@@ -221,6 +222,35 @@ def test_run_one_manifest_row_requires_core_placeholders():
         build_command(row, "python train.py --recipe {intervention}", "results/hpc", row_index=1)
 
 
+def test_command_values_are_shell_quoted_and_unsafe_run_ids_are_rejected():
+    row = pd.Series(
+        {
+            "run_id": "safe-run",
+            "intervention": "candidate; printf unsafe",
+            "compute": 1.0,
+            "seed": 0,
+        }
+    )
+    command = build_command(
+        row,
+        "python train.py --run-id {run_id_q} --recipe {intervention_q} "
+        "--compute {compute_g_q} --seed {seed_int_q} --out {run_dir_q}",
+        "results with spaces",
+        row_index=1,
+    )
+    assert "'candidate; printf unsafe'" in command
+    assert "'results with spaces/safe-run'" in command
+    unsafe = row.copy()
+    unsafe["run_id"] = "../outside"
+    with pytest.raises(ValueError, match="unsafe run_id"):
+        build_command(
+            unsafe,
+            "python x.py {run_id_q} {intervention_q} {compute_g_q} {seed_int_q}",
+            ".",
+            1,
+        )
+
+
 def test_collect_results_merges_json_and_refuses_overwrite(tmp_path):
     manifest = pd.DataFrame(
         {
@@ -235,7 +265,11 @@ def test_collect_results_merges_json_and_refuses_overwrite(tmp_path):
     )
     result_dir = tmp_path / "results" / "a__c1__s0"
     result_dir.mkdir(parents=True)
-    (result_dir / "result.json").write_text('{"bpb": 1.23, "status": "completed", "notes": "ok"}', encoding="utf-8")
+    (result_dir / "result.json").write_text(
+        '{"bpb": 1.23, "status": "completed", "run_id": "a__c1__s0", '
+        '"intervention": "a", "compute": 1.0, "seed": 0, "notes": "ok"}',
+        encoding="utf-8",
+    )
 
     updated, collected, missing = collect_results(manifest, tmp_path / "results")
 
@@ -247,6 +281,28 @@ def test_collect_results_merges_json_and_refuses_overwrite(tmp_path):
 
     with pytest.raises(ValueError, match="overwrite"):
         collect_results(updated, tmp_path / "results")
+
+
+def test_collect_results_rejects_result_manifest_identity_mismatch(tmp_path):
+    manifest = pd.DataFrame(
+        {
+            "run_id": ["a__c1__s0"],
+            "intervention": ["a"],
+            "compute": [1.0],
+            "seed": [0],
+            "status": ["pending"],
+            "bpb": [pd.NA],
+        }
+    )
+    result_dir = tmp_path / "results" / "a__c1__s0"
+    result_dir.mkdir(parents=True)
+    (result_dir / "result.json").write_text(
+        '{"bpb": 1.2, "status": "completed", "run_id": "wrong", '
+        '"intervention": "a", "compute": 1.0, "seed": 0}',
+        encoding="utf-8",
+    )
+    with pytest.raises(ValueError, match="does not match"):
+        collect_results(manifest, tmp_path / "results")
 
 
 def test_hpc_training_adapter_renders_and_validates_result(tmp_path):
@@ -352,6 +408,78 @@ def test_train_and_eval_cli_runs_site_command(tmp_path):
     assert completed.returncode == 0, completed.stderr
     payload = validate_result_json(result)
     assert payload["bpb"] == 1.789
+    assert payload["run_id"] == "run0"
+
+
+def test_train_and_eval_refuses_stale_metrics(tmp_path):
+    template = tmp_path / "site_command.template"
+    template.write_text("true", encoding="utf-8")
+    output = tmp_path / "out"
+    output.mkdir()
+    (output / "metrics.json").write_text('{"bpb": 9.999}', encoding="utf-8")
+    completed = subprocess.run(
+        [
+            sys.executable,
+            "hpc/train_and_eval.py",
+            "--run-id",
+            "run0",
+            "--intervention",
+            "baseline",
+            "--compute",
+            "1",
+            "--seed",
+            "0",
+            "--output-dir",
+            str(output),
+            "--result-json",
+            str(output / "result.json"),
+            "--command-template-file",
+            str(template),
+        ],
+        check=False,
+        text=True,
+        capture_output=True,
+    )
+    assert completed.returncode != 0
+    assert "existing output" in completed.stderr
+    assert not (output / "result.json").exists()
+
+
+def test_training_adapter_dry_run_retry_preserves_existing_result(tmp_path):
+    template = tmp_path / "site_command.template"
+    template.write_text("true", encoding="utf-8")
+    output = tmp_path / "out"
+    output.mkdir()
+    result = output / "result.json"
+    original = '{"bpb": 1.25, "status": "completed"}\n'
+    result.write_text(original, encoding="utf-8")
+
+    completed = subprocess.run(
+        [
+            sys.executable,
+            "hpc/run_training_job.py",
+            "--run-id",
+            "run0",
+            "--intervention",
+            "baseline",
+            "--compute",
+            "1",
+            "--seed",
+            "0",
+            "--output-dir",
+            str(output),
+            "--site-command-template",
+            str(template),
+            "--overwrite-output",
+            "--dry-run",
+        ],
+        check=False,
+        text=True,
+        capture_output=True,
+    )
+
+    assert completed.returncode == 0, completed.stderr
+    assert result.read_text(encoding="utf-8") == original
 
 
 def test_hpc_training_adapter_rejects_bad_result(tmp_path):
@@ -373,3 +501,17 @@ def test_slurm_template_is_syntax_checked_and_dry_by_default():
     assert "--execute" not in initial_args
     assert "RUN_ARGS+=(--execute)" in text
     assert "##SBATCH --gres=gpu:1" in text
+
+
+def test_hpc_preflight_rejects_slurm_array_manifest_mismatch(tmp_path):
+    manifest = tmp_path / "manifest.csv"
+    manifest.write_text(
+        "run_id,intervention,compute,seed,status\n"
+        "a0,a,1,0,pending\n"
+        "a1,a,1,1,pending\n",
+        encoding="utf-8",
+    )
+    slurm = tmp_path / "job.sh"
+    slurm.write_text("#!/bin/bash\n#SBATCH --array=1-3\n", encoding="utf-8")
+    with pytest.raises(ValueError, match="must be 1-2"):
+        validate_manifest_array(manifest, slurm)

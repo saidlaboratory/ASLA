@@ -43,6 +43,8 @@ def validate(df: pd.DataFrame) -> None:
     """
 
     errors: list[str] = []
+    if df.empty:
+        errors.append("runs table must contain at least one row")
     missing = [col for col in REQUIRED_COLUMNS if col not in df.columns]
     if missing:
         errors.append(f"missing required columns: {missing}")
@@ -72,6 +74,9 @@ def validate(df: pd.DataFrame) -> None:
             bad = df[col].dropna().map(lambda value: not isinstance(value, str))
             if bool(bad.any()):
                 errors.append(f"column '{col}' must contain only strings")
+            blank = df[col].dropna().astype(str).str.strip().eq("")
+            if bool(blank.any()):
+                errors.append(f"column '{col}' must not contain blank strings")
     if "compute" in df.columns and ptypes.is_numeric_dtype(df["compute"]):
         values = pd.to_numeric(df["compute"], errors="coerce")
         numeric = values.to_numpy(dtype=float, na_value=np.nan)
@@ -79,8 +84,12 @@ def validate(df: pd.DataFrame) -> None:
             errors.append("column 'compute' must contain finite positive numbers")
     if "bpb" in df.columns and ptypes.is_numeric_dtype(df["bpb"]):
         values = pd.to_numeric(df["bpb"], errors="coerce")
-        if not np.isfinite(values.to_numpy(dtype=float, na_value=np.nan)).all():
-            errors.append("column 'bpb' must contain finite numbers")
+        numeric = values.to_numpy(dtype=float, na_value=np.nan)
+        if (not np.isfinite(numeric).all()) or (numeric <= 0).any():
+            errors.append("column 'bpb' must contain finite positive numbers")
+    if "seed" in df.columns and ptypes.is_integer_dtype(df["seed"]):
+        if (df["seed"].to_numpy(dtype=np.int64) < 0).any():
+            errors.append("column 'seed' must contain non-negative integers")
     if "downstream" in df.columns and ptypes.is_numeric_dtype(df["downstream"]):
         values = pd.to_numeric(df["downstream"], errors="coerce").dropna()
         if not np.isfinite(values.to_numpy(dtype=float, na_value=np.nan)).all():
@@ -91,6 +100,21 @@ def validate(df: pd.DataFrame) -> None:
             numeric = values.to_numpy(dtype=float, na_value=np.nan)
             if (not np.isfinite(numeric).all()) or (numeric <= 0).any():
                 errors.append(f"optional column '{col}' must contain finite positive numbers when present")
+
+    identity_columns = ["intervention", "compute", "seed"]
+    if all(col in df.columns for col in identity_columns):
+        duplicates = df.duplicated(identity_columns, keep=False)
+        if bool(duplicates.any()):
+            examples = df.loc[duplicates, identity_columns].head(5).to_dict("records")
+            errors.append(
+                "columns ('intervention', 'compute', 'seed') must uniquely identify runs; "
+                f"duplicate examples: {examples}"
+            )
+    if all(col in df.columns for col in ("intervention", "intervention_class")):
+        class_counts = df.groupby("intervention", dropna=False)["intervention_class"].nunique(dropna=False)
+        inconsistent = sorted(str(name) for name in class_counts[class_counts > 1].index)
+        if inconsistent:
+            errors.append(f"each intervention must have exactly one intervention_class; inconsistent: {inconsistent}")
 
     if errors:
         raise SchemaError(_format_errors(errors))

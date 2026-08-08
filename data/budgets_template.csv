@@ -2,4 +2,5 @@ compute,role,notes
 1,fit,relative compute unit; smallest cheap run
 2,fit,relative compute unit; second cheap run
 4,fit,relative compute unit; largest cheap fitting run
+8,intermediate,relative compute unit; reserved gate exploration run
 16,target,relative compute unit; held-out target run

@@ -13,15 +13,46 @@ from asla.data.io import save_runs
 from asla.data.schema import REQUIRED_COLUMNS, validate
 
 LOGGER = logging.getLogger(__name__)
+_MISSING = object()
+
+
+def _mapping_value(mapping: object, key: str) -> object:
+    """Resolve an exact or dotted nested key from a W&B mapping-like store."""
+
+    if not isinstance(mapping, Mapping):
+        return _MISSING
+    if key in mapping:
+        return mapping[key]
+    current: object = mapping
+    for part in key.split("."):
+        if not isinstance(current, Mapping) or part not in current:
+            return _MISSING
+        current = current[part]
+    return current
 
 
 def _run_value(run: object, key: str) -> object:
+    """Read an explicitly sourced W&B field without guessing between stores."""
+
     config = getattr(run, "config", {}) or {}
     summary = getattr(run, "summary", {}) or {}
-    if key in config:
-        return config[key]
-    if key in summary:
-        return summary[key]
+    if key.startswith("config."):
+        value = _mapping_value(config, key.removeprefix("config."))
+        return None if value is _MISSING else value
+    if key.startswith("summary."):
+        value = _mapping_value(summary, key.removeprefix("summary."))
+        return None if value is _MISSING else value
+    config_value = _mapping_value(config, key)
+    summary_value = _mapping_value(summary, key)
+    if config_value is not _MISSING and summary_value is not _MISSING:
+        raise ValueError(
+            f"W&B field {key!r} exists in both config and summary; "
+            "use an explicit 'config.' or 'summary.' prefix in the field map"
+        )
+    if config_value is not _MISSING:
+        return config_value
+    if summary_value is not _MISSING:
+        return summary_value
     return None
 
 

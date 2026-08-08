@@ -33,6 +33,7 @@ Minimum useful audit design:
 
 - At least 3 interventions.
 - At least 3 fitting budgets below the target for every intervention.
+- At most one intermediate budget reserved for gate escalation.
 - Target-budget rows for every intervention.
 - Ideally 3 or more seeds in every intervention/budget cell.
 
@@ -41,7 +42,7 @@ Build and check the table:
 ```bash
 python scripts/prepare_runs_table.py --csv data/runs_template.csv --out runs.parquet
 asla validate --runs runs.parquet
-asla audit --runs runs.parquet --target YOUR_TARGET_COMPUTE --fast --out runs_audit.json
+asla audit --runs runs.parquet --target YOUR_TARGET_COMPUTE --budgets YOUR_FIT_BUDGETS --intermediate-budget YOUR_INTERMEDIATE_COMPUTE --estimand YOUR_ESTIMAND --fast --out runs_audit.json
 ```
 
 Use the exact `compute` value from the held-out target rows as
@@ -59,8 +60,10 @@ to compare.
 
 2. Edit `budgets_template.csv`.
 
-Replace `1`, `2`, `4`, and `64` with your real compute budgets. Keep exactly
-one row marked `target`; the others should be marked `fit`.
+Replace `1`, `2`, `4`, `8`, and `16` with your real compute budgets. Keep
+exactly one row marked `target`, at least three rows marked `fit`, and at most
+one row marked `intermediate`. The intermediate budget stays out of projection
+fitting.
 
 3. Generate a run manifest.
 
@@ -86,9 +89,9 @@ python scripts/finalize_run_manifest.py \
   --manifest data/run_manifest.csv \
   --out-csv data/runs_template.csv \
   --out-parquet runs.parquet
-python scripts/check_runs_coverage.py --csv data/runs_template.csv --target YOUR_TARGET_COMPUTE
+python scripts/check_runs_coverage.py --csv data/runs_template.csv --target YOUR_TARGET_COMPUTE --fit-budgets YOUR_FIT_BUDGETS --intermediate-budget YOUR_INTERMEDIATE_COMPUTE
 asla validate --runs runs.parquet
-asla audit --runs runs.parquet --target YOUR_TARGET_COMPUTE --fast --out runs_audit.json
+asla audit --runs runs.parquet --target YOUR_TARGET_COMPUTE --budgets YOUR_FIT_BUDGETS --intermediate-budget YOUR_INTERMEDIATE_COMPUTE --estimand YOUR_ESTIMAND --fast --out runs_audit.json
 ```
 
 The finalizer refuses pending rows and blank BPB values.

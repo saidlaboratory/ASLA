@@ -17,6 +17,7 @@ Current default plan:
 - `adamw_lower_lr`
 - `adamw_longer_warmup`
 - fit budgets: `1`, `2`, `4`
+- reserved intermediate budget: `8`
 - target budget: `16`
 - seeds: `0`, `1`, `2`
 
@@ -79,15 +80,15 @@ python scripts/finalize_run_manifest.py \
   --out-csv data/runs_template.csv \
   --out-parquet runs.parquet
 
-python scripts/check_runs_coverage.py --csv data/runs_template.csv --target 16
+python scripts/check_runs_coverage.py --csv data/runs_template.csv --target 16 --fit-budgets 1 2 4 --intermediate-budget 8
 asla validate --runs runs.parquet
-asla audit --runs runs.parquet --target 16 --fast --out runs_audit.json
+asla audit --runs runs.parquet --target 16 --budgets 1 2 4 --intermediate-budget 8 --estimand pairwise_decisions --fast --out runs_audit.json
 ```
 
 If the fast audit passes, run the full audit:
 
 ```bash
-asla audit --runs runs.parquet --target 16 --out results/audit.json
+asla audit --runs runs.parquet --target 16 --budgets 1 2 4 --intermediate-budget 8 --estimand pairwise_decisions --out results/audit.json
 ```
 
 ## Safety Rules
@@ -95,5 +96,5 @@ asla audit --runs runs.parquet --target 16 --out results/audit.json
 - Keep `status=pending` until the run is actually done.
 - Fill `bpb` only with measured evaluation results.
 - Use the same compute scale for every row.
-- Do not mix target rows into fitting budgets manually; ASLA uses `--target 16`
-  to hold the target out.
+- Pass fitting budgets explicitly. Keep compute `8` reserved for the gate and
+  compute `16` reserved for target truth.
