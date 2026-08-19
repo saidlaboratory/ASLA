@@ -4,6 +4,7 @@ from pathlib import Path
 import numpy as np
 import pytest
 
+from asla.analysis.fits import project_ranking
 from asla.cli import build_parser
 from asla.config import AuditConfig
 from asla.data.io import save_runs
@@ -67,4 +68,27 @@ def test_figures_cli_writes_provenance_metadata(tmp_path: Path) -> None:
     assert metadata["budgets"] == list(cfg.budgets.fit)
     assert metadata["n_boot"] == 5
     assert metadata["package_version"] == "0.1.0"
+    assert metadata["intermediate_budget"] is None
     assert len(metadata["input_sha256"]) == 64
+
+
+def test_make_figures_holds_out_intermediate_budget(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    cfg = AuditConfig()
+    df = negative_controls_only(np.random.default_rng(7), cfg)
+    seen: dict[str, tuple[float, ...]] = {}
+    original = project_ranking
+
+    def _capture(data, budgets, target, fit_form="compute_power_law"):
+        seen["budgets"] = tuple(float(value) for value in budgets)
+        return original(data, budgets, target, fit_form=fit_form)
+
+    monkeypatch.setattr("asla.figures.project_ranking", _capture)
+    make_figures(
+        df,
+        tmp_path,
+        target=cfg.budgets.target,
+        fit_form="compute_power_law",
+        intermediate_budget=cfg.budgets.intermediate,
+        n_boot=10,
+    )
+    assert seen["budgets"] == cfg.budgets.fit

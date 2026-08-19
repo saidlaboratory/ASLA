@@ -81,6 +81,41 @@ def test_intermediate_budget_is_excluded_from_projection_fit():
     assert _resolve_audit_budgets(df, 64.0, None, 16.0) == (1.0, 2.0, 4.0, 8.0)
 
 
+def test_explicit_audit_budget_must_exist():
+    df = negative_controls_only(np.random.default_rng(1), None)
+    with pytest.raises(SystemExit, match="absent"):
+        _resolve_audit_budgets(df, 64.0, [1.0, 2.0, 3.0], None)
+
+
+def test_audit_includes_gate_only_with_explicit_intermediate_budget(tmp_path, capsys):
+    df = negative_controls_only(np.random.default_rng(2), None)
+    runs = tmp_path / "runs.parquet"
+    save_runs(df, runs)
+    parser = build_parser()
+    args = parser.parse_args(
+        [
+            "audit",
+            "--runs",
+            str(runs),
+            "--target",
+            "64",
+            "--intermediate-budget",
+            "16",
+            "--estimand",
+            "single_design_seed_sensitivity",
+            "--n-boot",
+            "2",
+            "--gate-n-boot",
+            "2",
+        ]
+    )
+    assert args.func(args) == 0
+    payload = json.loads(capsys.readouterr().out)
+    assert payload["audit_metadata"]["budgets"] == [1.0, 2.0, 4.0, 8.0]
+    assert payload["ranker_availability"]["gate_ranker"]["included"] is True
+    assert "gate_ranker" in payload["rankers"]
+
+
 def test_report_renders_markdown_from_audit_json(tmp_path):
     df = negative_controls_only(np.random.default_rng(1), None)
     runs = tmp_path / "runs.parquet"

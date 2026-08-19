@@ -18,7 +18,7 @@ from asla import __version__
 from asla.analysis.audit import ESTIMANDS, audit_with_ci
 from asla.analysis.crossover import detect_crossovers, detect_crossovers_fdr, fitted_crossover_for_pair
 from asla.analysis.ensemble import ensemble_report
-from asla.analysis.fits import normalize_budgets, project_ranking, truth_ranking
+from asla.analysis.fits import project_ranking, resolve_fit_budgets, truth_ranking
 from asla.analysis.metrics import decision_metrics
 from asla.analysis.racing import monte_carlo_selection
 from asla.analysis.rankers import Ranker, ensemble_ranker, make_gate_ranker, make_projection_ranker, single_scale_ranker
@@ -166,32 +166,10 @@ def _resolve_audit_budgets(
 ) -> tuple[float, ...]:
     """Resolve fitting budgets while keeping an exploration budget held out."""
 
-    computes = tuple(sorted(float(value) for value in df["compute"].unique()))
-    if not np.isfinite(target) or target <= 0:
-        raise SystemExit("target budget must be finite and positive")
-    if not any(np.isclose(value, target) for value in computes):
-        raise SystemExit(f"target budget {target:g} is not present in the runs table")
-    if intermediate_budget is not None:
-        if not any(np.isclose(value, intermediate_budget) for value in computes):
-            raise SystemExit(f"intermediate budget {intermediate_budget:g} is not present in the runs table")
-        if intermediate_budget >= target or np.isclose(intermediate_budget, target):
-            raise SystemExit("intermediate budget must be strictly below the target budget")
-    if requested is not None and intermediate_budget is not None and any(
-        np.isclose(value, intermediate_budget) for value in requested
-    ):
-        raise SystemExit("--budgets must not include the reserved --intermediate-budget")
-    candidates = list(requested) if requested is not None else [value for value in computes if value < target]
-    if intermediate_budget is not None:
-        candidates = [value for value in candidates if not np.isclose(value, intermediate_budget)]
-    missing = [value for value in candidates if not any(np.isclose(value, observed) for observed in computes)]
-    if missing:
-        raise SystemExit(f"requested fitting budgets are absent from the runs table: {missing}")
-    budgets = normalize_budgets(candidates, target=target)
-    if len(budgets) < 3:
-        raise SystemExit(f"need at least 3 distinct fitting budgets; found {len(budgets)}")
-    if intermediate_budget is not None and any(budget >= intermediate_budget for budget in budgets):
-        raise SystemExit("all fitting budgets must be strictly below the reserved intermediate budget")
-    return budgets
+    try:
+        return resolve_fit_budgets(df, target, requested, intermediate_budget)
+    except ValueError as exc:
+        raise SystemExit(str(exc)) from exc
 
 
 def _assert_fit_form_available(df: pd.DataFrame, fit_form: str) -> None:
@@ -289,7 +267,7 @@ def _demo(args: argparse.Namespace) -> int:
         print("Ensemble extrapolation reliability (family disagreement / target noise band):")
         for name, entry in ens.items():
             rho = entry["reliability"]
-            rho_str = "unestimated" if rho is None else f"{float(rho):.2f}"
+            rho_str = "unestimated" if rho is None else f"{float(rho):.2f}"  # type: ignore[arg-type]
             families = entry["families"]
             assert isinstance(families, dict)
             weights = ", ".join(f"{fam}={info['weight']:.2f}" for fam, info in families.items())
@@ -378,7 +356,7 @@ def _audit(args: argparse.Namespace) -> int:
     audit["fit_form"] = args.fit_form
     crossovers = detect_crossovers(df, budgets, args.target, fit_form=args.fit_form)
     crossovers_fdr = detect_crossovers_fdr(df, budgets, args.target, q=args.crossover_q, fit_form=args.fit_form)
-    ensemble: dict[str, object] | None = None
+    ensemble: dict[str, dict[str, object]] | None = None
     if args.fit_form == "compute_power_law" and len(budgets) >= 4:
         ensemble = ensemble_report(df, budgets, args.target, noise_band=audit["noise"]["noise_band"])
     result = {
@@ -526,6 +504,7 @@ def _figures(args: argparse.Namespace) -> int:
         target=resolved_target,
         fit_form=args.fit_form,
         budgets=args.budgets,
+        intermediate_budget=args.intermediate_budget,
         n_boot=n_boot,
     )
     _write_json_atomically(
@@ -534,6 +513,7 @@ def _figures(args: argparse.Namespace) -> int:
             "fit_form": args.fit_form,
             "input_path": str(Path(args.runs)),
             "input_sha256": _sha256_file(args.runs),
+            "intermediate_budget": None if args.intermediate_budget is None else float(args.intermediate_budget),
             "n_boot": int(n_boot),
             "package_version": _package_version(),
             "rng_seed": 123,
@@ -622,6 +602,11 @@ def build_parser() -> argparse.ArgumentParser:
     figs.add_argument("--out", required=True)
     figs.add_argument("--target", type=float, help="Target budget; defaults to the largest compute in the table.")
     figs.add_argument("--budgets", type=float, nargs="+", help="Explicit fitting budgets.")
+    figs.add_argument(
+        "--intermediate-budget",
+        type=float,
+        help="Held-out exploration budget excluded from projection ranking figures.",
+    )
     figs.add_argument("--fit-form", choices=["compute_power_law", "chinchilla"], default="compute_power_law")
     figs.add_argument("--n-boot", type=_positive_int)
     figs.add_argument("--fast", action="store_true")

@@ -256,8 +256,8 @@ def crossover_budget_ci(
     }
     if len(roots) >= min_roots:
         arr = np.asarray(roots, dtype=float)
-        lo, med, hi = np.percentile(arr, [5.0, 50.0, 95.0])
-        report.update({"median": float(med), "lo": float(lo), "hi": float(hi)})
+        bounds = np.asarray(np.percentile(arr, [5.0, 50.0, 95.0]), dtype=float)
+        report.update({"median": float(bounds[1]), "lo": float(bounds[0]), "hi": float(bounds[2])})
     return report
 
 

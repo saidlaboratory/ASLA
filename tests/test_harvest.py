@@ -1,8 +1,11 @@
+import json
+import sys
+from pathlib import Path
 from types import SimpleNamespace
 
 import pytest
 
-from asla.data.harvest import _coerce_harvested_rows, _run_value
+from asla.data.harvest import _coerce_harvested_rows, _run_value, harvest
 from asla.data.schema import validate
 
 
@@ -62,3 +65,39 @@ def test_run_value_rejects_unprefixed_ambiguity_including_nested_paths():
     )
     with pytest.raises(ValueError, match="both config and summary"):
         _run_value(run, "model.name")
+
+
+def test_example_field_map_harvests_prefixed_values_offline(tmp_path, monkeypatch):
+    run = SimpleNamespace(
+        config={
+            "recipe_name": "adamw",
+            "recipe_class": "optimizer",
+            "seed": 3,
+            "params_n": 125_000_000,
+            "tokens_d": 2_000_000_000,
+        },
+        summary={
+            "train_flops": 1.5e18,
+            "eval/c4_en_bpb": 1.125,
+            "eval/downstream": 0.42,
+        },
+    )
+
+    class FakeApi:
+        def runs(self, entity_project, filters):
+            assert entity_project == "entity/project"
+            assert filters == {"state": "finished"}
+            return [run]
+
+    monkeypatch.setitem(sys.modules, "wandb", SimpleNamespace(Api=FakeApi))
+    field_map_path = Path(__file__).resolve().parents[1] / "field_map.example.json"
+    field_map = json.loads(field_map_path.read_text(encoding="utf-8"))
+    out = tmp_path / "runs.parquet"
+
+    df = harvest("entity/project", field_map, out)
+
+    assert out.is_file()
+    assert len(df) == 1
+    assert df.iloc[0]["intervention"] == "adamw"
+    assert df.iloc[0]["compute"] == pytest.approx(1.5e18)
+    assert df.iloc[0]["bpb"] == pytest.approx(1.125)

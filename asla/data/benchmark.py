@@ -28,7 +28,7 @@ is one reproducible *problem* and trials are noise resamples.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Callable, Dict, Iterable, Sequence
+from typing import Callable, Dict, Iterable, Sequence, cast
 
 import numpy as np
 import pandas as pd
@@ -176,9 +176,8 @@ def make_scenario(config: BenchmarkConfig) -> Callable[[np.random.Generator, Aud
     winner = _winner_curve(param_rng)
 
     if config.family == "close_call":
-        rival: TruthFn
         rival_params = _rival_power_law(winner, delta, None, target, param_rng)
-        rival = lambda C, p=rival_params: bpb_power_law(C, *p)  # noqa: E731
+        rival = cast(TruthFn, lambda C, p=rival_params: bpb_power_law(C, *p))  # noqa: E731
     else:
         if config.crossover_position is None:
             raise ValueError(f"family {config.family!r} requires crossover_position")
@@ -187,21 +186,21 @@ def make_scenario(config: BenchmarkConfig) -> Callable[[np.random.Generator, Aud
             raise ValueError("crossover_position places the crossing at or beyond the target")
         if config.family == "late_crossover":
             rival_params = _rival_power_law(winner, delta, c_cross, target, param_rng)
-            rival = lambda C, p=rival_params: bpb_power_law(C, *p)  # noqa: E731
+            rival = cast(TruthFn, lambda C, p=rival_params: bpb_power_law(C, *p))  # noqa: E731
         else:
             c_geo = float(np.sqrt(float(min(ladder.fit)) * c_max_fit))
             c_half = c_geo * float(config.saturation_strength)
             rival_params = _rival_saturating(winner, delta, c_cross, target, c_half)
-            rival = lambda C, p=rival_params: bpb_saturating(C, *p)  # noqa: E731
+            rival = cast(TruthFn, lambda C, p=rival_params: bpb_saturating(C, *p))  # noqa: E731
 
     functions: Dict[str, TruthFn] = {
-        "winner": lambda C, p=winner: bpb_power_law(C, *p),
+        "winner": cast(TruthFn, lambda C, p=winner: bpb_power_law(C, *p)),
         "rival": rival,
     }
     classes = {"winner": "candidate", "rival": "candidate"}
     for i, params in enumerate(_filler_curves(winner, delta, target, config.n_interventions - 2, param_rng)):
         name = f"filler_{i}"
-        functions[name] = lambda C, p=params: bpb_power_law(C, *p)
+        functions[name] = cast(TruthFn, lambda C, p=params: bpb_power_law(C, *p))
         classes[name] = "control"
 
     def scenario(rng: np.random.Generator, cfg: AuditConfig | None = None) -> pd.DataFrame:

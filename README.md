@@ -44,13 +44,21 @@ canonical parquet schema. W&B harvesting is optional.
 ## Install
 
 ```bash
-pip install -e ".[test]"
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -e ".[test,figures,dev]"
+command -v asla
 ```
+
+Keep the virtual environment active while using the CLI. `command -v asla`
+should point inside this repository's `.venv`. On some Macs a bare `asla`
+resolves to PlatformIO, not this package.
 
 Optional extras:
 
 ```bash
-pip install -e ".[figures,wandb]"
+python -m pip install -e ".[figures,wandb]"
 ```
 
 ## Demo
@@ -87,7 +95,7 @@ Canonical run columns:
 ```bash
 asla validate --runs runs.parquet
 asla audit --runs runs.parquet --target 64 --budgets 1 2 4 8 --intermediate-budget 16 --estimand pairwise_decisions --out results/audit.json --report
-asla figures --runs runs.parquet --target 64 --budgets 1 2 4 8 --out results/figures
+asla figures --runs runs.parquet --target 64 --budgets 1 2 4 8 --intermediate-budget 16 --out results/figures
 ```
 
 `--estimand` is required. Choose `single_design_seed_sensitivity` for one
@@ -225,6 +233,8 @@ asla harvest --entity-project ENTITY/PROJECT --field-map field_map.json --out ru
 ```bash
 pytest        # test suite
 ruff check .  # lint (also run in CI)
+mypy asla     # type check (also run in CI)
 ```
 
 The enhancement roadmap and its status live in [PLAN.md](PLAN.md).
+CI runs `ruff`, `mypy asla`, and `pytest` on Python 3.10 and 3.12.

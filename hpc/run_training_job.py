@@ -59,11 +59,19 @@ def validate_result_json(
     result_path = Path(path)
     if not result_path.exists():
         raise ValueError(f"training command did not write required result file: {result_path}")
-    payload = json.loads(result_path.read_text(encoding="utf-8"))
+    try:
+        payload = json.loads(result_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ValueError(f"could not read result JSON {result_path}: {exc}") from exc
+    if not isinstance(payload, dict):
+        raise ValueError(f"{result_path} must contain a JSON object")
     missing = [key for key in REQUIRED_RESULT_KEYS if key not in payload]
     if missing:
         raise ValueError(f"{result_path} is missing required keys: {missing}")
-    bpb = float(payload["bpb"])
+    try:
+        bpb = float(payload["bpb"])
+    except (TypeError, ValueError) as exc:
+        raise ValueError(f"{result_path} has non-numeric bpb: {payload['bpb']!r}") from exc
     if not np.isfinite(bpb) or bpb <= 0:
         raise ValueError(f"{result_path} has invalid or non-finite bpb: {payload['bpb']!r}")
     status = str(payload["status"]).lower().strip()

@@ -34,6 +34,47 @@ def normalize_budgets(budgets: Iterable[float], *, target: float | None = None) 
     return values
 
 
+def resolve_fit_budgets(
+    df: pd.DataFrame,
+    target: float,
+    requested: Iterable[float] | None = None,
+    intermediate_budget: float | None = None,
+) -> tuple[float, ...]:
+    """Resolve fitting budgets while keeping a reserved exploration budget held out."""
+
+    validate(df)
+    if not np.isfinite(target) or target <= 0:
+        raise ValueError("target must be a finite positive number")
+    computes = tuple(sorted(float(value) for value in df["compute"].unique()))
+    if not any(np.isclose(value, target) for value in computes):
+        raise ValueError(f"target budget {target:g} is not present in the runs table")
+    if intermediate_budget is not None:
+        if not np.isfinite(intermediate_budget) or intermediate_budget <= 0:
+            raise ValueError("intermediate budget must be a finite positive number")
+        if not any(np.isclose(value, intermediate_budget) for value in computes):
+            raise ValueError(f"intermediate budget {intermediate_budget:g} is not present in the runs table")
+        if intermediate_budget >= target or np.isclose(intermediate_budget, target):
+            raise ValueError("intermediate budget must be strictly below the target budget")
+
+    requested_values = None if requested is None else [float(value) for value in requested]
+    if requested_values is not None and intermediate_budget is not None and any(
+        np.isclose(value, intermediate_budget) for value in requested_values
+    ):
+        raise ValueError("fitting budgets must not include the reserved intermediate budget")
+    candidates = requested_values if requested_values is not None else [value for value in computes if value < target]
+    if intermediate_budget is not None:
+        candidates = [value for value in candidates if not np.isclose(value, intermediate_budget)]
+    missing = [value for value in candidates if not any(np.isclose(value, observed) for observed in computes)]
+    if missing:
+        raise ValueError(f"requested fitting budgets are absent from the runs table: {missing}")
+    budgets = normalize_budgets(candidates, target=target)
+    if len(budgets) < 3:
+        raise ValueError(f"need at least 3 distinct fitting budgets; found {len(budgets)}")
+    if intermediate_budget is not None and any(budget >= intermediate_budget for budget in budgets):
+        raise ValueError("all fitting budgets must be strictly below the reserved intermediate budget")
+    return budgets
+
+
 def _budget_mask(series: pd.Series, budgets: Iterable[float]) -> pd.Series:
     values = np.asarray(normalize_budgets(budgets), dtype=float)
     return series.astype(float).apply(lambda x: bool(np.any(np.isclose(x, values))))

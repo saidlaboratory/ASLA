@@ -5,13 +5,13 @@ from __future__ import annotations
 import logging
 from collections.abc import Iterable
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 import numpy as np
 import pandas as pd
 
 from asla.analysis.crossover import detect_crossovers, fitted_crossover_for_pair
-from asla.analysis.fits import normalize_budgets, project_ranking, truth_ranking
+from asla.analysis.fits import project_ranking, resolve_fit_budgets, truth_ranking
 from asla.analysis.gate import gate_pick, plain_projection_pick
 from asla.config import AuditConfig
 from asla.data.schema import validate
@@ -26,7 +26,7 @@ def _save(fig: Any, out_dir: Path, name: str) -> None:
 
 
 def _ensemble_disagreement_figure(
-    df: pd.DataFrame, budgets: tuple[float, ...], target: float, out: Path, plt: object
+    df: pd.DataFrame, budgets: tuple[float, ...], target: float, out: Path, plt: Any
 ) -> None:
     """Plot per-family target projections against the measured target band."""
 
@@ -50,7 +50,8 @@ def _ensemble_disagreement_figure(
     seen_families: set[str] = set()
     for i, name in enumerate(names):
         entry = report[name]
-        for family, info in entry["families"].items():
+        families = cast(dict[str, dict[str, Any]], entry["families"])
+        for family, info in families.items():
             label = family if family not in seen_families else None
             seen_families.add(family)
             ax.scatter([i], [info["projection"]], marker=markers.get(family, "x"), color="C0", alpha=0.8, label=label)
@@ -72,12 +73,14 @@ def make_figures(
     target: float | None = None,
     fit_form: FitForm = "compute_power_law",
     budgets: Iterable[float] | None = None,
+    intermediate_budget: float | None = None,
     n_boot: int | None = None,
 ) -> None:
     """Create audit figures and save each as PNG and PDF.
 
     ``target`` defaults to the largest compute budget in the table; pass it
     explicitly when the table extends beyond the audit's target budget.
+    ``intermediate_budget`` is held out of projection fits, matching ``asla audit``.
     """
 
     import matplotlib.pyplot as plt
@@ -99,10 +102,12 @@ def make_figures(
     if len(computes) < 4:
         LOGGER.warning("skipping projection figures: need at least four compute budgets at or below the target")
         return
-    fit_budgets = normalize_budgets(
-        tuple(c for c in computes if not np.isclose(c, target)) if budgets is None else budgets,
-        target=target,
-    )
+    fit_budgets = resolve_fit_budgets(df, target, budgets, intermediate_budget)
+    if intermediate_budget is None:
+        LOGGER.warning(
+            "no intermediate budget specified; projection figures use all pre-target budgets %s",
+            fit_budgets,
+        )
 
     from asla.analysis.fits import fit_all
     from asla.models import FitError, bpb_power_law

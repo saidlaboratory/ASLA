@@ -14,6 +14,18 @@ def test_naive_predictor_returns_none_on_saturating_pair():
     assert naive_crossover_budget(params["saturating_early"], params["late_power"]) is None
 
 
+def test_naive_predictor_does_not_mistake_shared_asymptote_for_crossing():
+    a = (0.9, 0.2, 0.5)
+    b = (0.9, 0.3, 0.5)
+    assert naive_crossover_budget(a, b) is None
+
+
+def test_naive_predictor_recovers_genuine_crossing_budget():
+    a = (0.8, 0.4, 0.5)
+    b = (0.9, 0.2, 0.5)
+    assert naive_crossover_budget(a, b) == pytest.approx(4.0, rel=1e-8)
+
+
 def test_mechanism_predictor_is_explicit_stub():
     with pytest.raises(NotImplementedError):
         mechanism_crossover_budget()

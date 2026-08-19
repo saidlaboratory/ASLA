@@ -136,8 +136,8 @@ def monte_carlo(
     if trials <= 0:
         raise ValueError("n_trials must be positive")
     root_rng = rng or np.random.default_rng(cfg.seeds.seed)
-    regret = {"plain": [], "largest": [], "gate": []}
-    wrong = {"plain": [], "largest": [], "gate": []}
+    regret: dict[str, list[float]] = {"plain": [], "largest": [], "gate": []}
+    wrong: dict[str, list[float]] = {"plain": [], "largest": [], "gate": []}
     for _ in range(trials):
         data_rng = np.random.default_rng(int(root_rng.integers(0, 2**32 - 1)))
         gate_rng = np.random.default_rng(int(root_rng.integers(0, 2**32 - 1)))

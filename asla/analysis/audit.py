@@ -260,11 +260,11 @@ def _summarize_distribution(point: float, values: list[float]) -> dict[str, floa
             "method": "percentile bootstrap",
             "n_boot": 0,
         }
-    lo, hi = np.percentile(arr, [2.5, 97.5])
+    bounds = np.asarray(np.percentile(arr, [2.5, 97.5]), dtype=float)
     return {
         "point": float(point),
-        "lo": float(lo),
-        "hi": float(hi),
+        "lo": float(bounds[0]),
+        "hi": float(bounds[1]),
         "confidence_level": 0.95,
         "method": "percentile bootstrap",
         "n_boot": int(len(arr)),
@@ -361,6 +361,7 @@ def audit_with_ci(
         }
         for name, row in truth_table.iterrows()
     }
+    diagnostics_availability: dict[str, object]
     try:
         diagnostics = {
             name: asdict(diag)

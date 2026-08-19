@@ -77,9 +77,9 @@ def make_split(
     split_path = Path(path)
     if split_path.exists():
         with split_path.open("r", encoding="utf-8") as fh:
-            split = cast(Split, json.load(fh))
-        _check_split_matches(df, split, split_path)
-        return split
+            loaded = cast(Split, json.load(fh))
+        _check_split_matches(df, loaded, split_path)
+        return loaded
 
     rng = np.random.default_rng(seed)
     test_idx: set[int] = set()
@@ -159,7 +159,7 @@ def test_rows(df: pd.DataFrame, split: Split) -> pd.DataFrame:
     return rows
 
 
-test_rows.__test__ = False
+setattr(test_rows, "__test__", False)
 
 
 def assert_not_test(rows: pd.DataFrame) -> None:

@@ -48,11 +48,18 @@ def result_from_metrics(
     metrics_file = Path(metrics_path)
     if not metrics_file.exists():
         raise ValueError(f"metrics JSON was not written: {metrics_file}")
-    metrics = json.loads(metrics_file.read_text(encoding="utf-8"))
+    try:
+        metrics = json.loads(metrics_file.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ValueError(f"could not read metrics JSON {metrics_file}: {exc}") from exc
+    if not isinstance(metrics, dict):
+        raise ValueError(f"{metrics_file} must contain a JSON object")
     try:
         bpb = float(_lookup_metric(metrics, bpb_key))
     except KeyError as exc:
         raise ValueError(f"{metrics_file} is missing BPB key {bpb_key!r}") from exc
+    except (TypeError, ValueError) as exc:
+        raise ValueError(f"{metrics_file} has non-numeric BPB at {bpb_key!r}") from exc
     if not np.isfinite(bpb) or bpb <= 0:
         raise ValueError(f"{metrics_file} has invalid or non-finite BPB at {bpb_key!r}: {bpb!r}")
 

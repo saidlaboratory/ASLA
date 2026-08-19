@@ -1,5 +1,6 @@
 import subprocess
 import sys
+from pathlib import Path
 
 import pandas as pd
 import pytest
@@ -9,7 +10,7 @@ from hpc.train_and_eval import result_from_metrics
 from scripts.check_runs_coverage import coverage_report
 from scripts.collect_results import collect_results
 from scripts.finalize_run_manifest import manifest_to_runs
-from scripts.hpc_preflight import validate_manifest_array
+from scripts.hpc_preflight import _write_mock_trainer, validate_manifest_array
 from scripts.make_run_manifest import _read_budgets, _read_interventions, make_manifest
 from scripts.prepare_runs_table import _coerce_runs
 from scripts.run_one_manifest_row import build_command, select_row
@@ -373,6 +374,24 @@ def test_train_and_eval_writes_result_from_metrics(tmp_path):
     validate_result_json(result)
 
 
+def test_result_json_requires_an_object_and_numeric_bpb(tmp_path):
+    result = tmp_path / "result.json"
+    result.write_text("[]", encoding="utf-8")
+    with pytest.raises(ValueError, match="JSON object"):
+        validate_result_json(result)
+
+    result.write_text('{"bpb": {}, "status": "completed"}', encoding="utf-8")
+    with pytest.raises(ValueError, match="non-numeric bpb"):
+        validate_result_json(result)
+
+
+def test_metrics_json_requires_an_object(tmp_path):
+    metrics = tmp_path / "metrics.json"
+    metrics.write_text("[]", encoding="utf-8")
+    with pytest.raises(ValueError, match="JSON object"):
+        result_from_metrics(metrics, tmp_path / "result.json")
+
+
 def test_train_and_eval_cli_runs_site_command(tmp_path):
     template = tmp_path / "site_command.template"
     template.write_text(
@@ -496,11 +515,40 @@ def test_hpc_training_adapter_rejects_bad_result(tmp_path):
 def test_slurm_template_is_syntax_checked_and_dry_by_default():
     completed = subprocess.run(["bash", "-n", "hpc/slurm_array_template.sh"], check=False)
     assert completed.returncode == 0
-    text = open("hpc/slurm_array_template.sh", encoding="utf-8").read()
+    text = Path("hpc/slurm_array_template.sh").read_text(encoding="utf-8")
     initial_args = text.split("RUN_ARGS=(")[1].split(")")[0]
     assert "--execute" not in initial_args
     assert "RUN_ARGS+=(--execute)" in text
     assert "##SBATCH --gres=gpu:1" in text
+
+
+def test_hpc_preflight_mock_trainer_writes_metrics(tmp_path):
+    trainer = tmp_path / "mock_train_eval.py"
+    metrics = tmp_path / "metrics.json"
+    _write_mock_trainer(trainer)
+
+    completed = subprocess.run(
+        [
+            sys.executable,
+            str(trainer),
+            "--recipe",
+            "baseline",
+            "--compute",
+            "1",
+            "--seed",
+            "0",
+            "--output-dir",
+            str(tmp_path / "out"),
+            "--metrics-json",
+            str(metrics),
+        ],
+        check=False,
+        text=True,
+        capture_output=True,
+    )
+
+    assert completed.returncode == 0, completed.stderr
+    assert '"bpb": 1.234' in metrics.read_text(encoding="utf-8")
 
 
 def test_hpc_preflight_rejects_slurm_array_manifest_mismatch(tmp_path):

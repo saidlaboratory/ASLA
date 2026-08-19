@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from asla.analysis.fits import project_ranking, truth_ranking
+from asla.analysis.fits import project_ranking, resolve_fit_budgets, truth_ranking
 from asla.analysis.gate import largest_single_run_pick
 from asla.config import AuditConfig
 from asla.data.synthetic import negative_controls_only
@@ -35,3 +35,17 @@ def test_truth_ranking_rejects_intervention_without_target_rows():
     bad = df[~((df["intervention"] == "control_a") & (df["compute"] == cfg.budgets.target))]
     with pytest.raises(ValueError, match="no target rows"):
         truth_ranking(bad, cfg.budgets.target)
+
+
+def test_resolve_fit_budgets_holds_out_intermediate():
+    cfg = AuditConfig()
+    df = negative_controls_only(np.random.default_rng(4), cfg)
+    budgets = resolve_fit_budgets(df, cfg.budgets.target, None, cfg.budgets.intermediate)
+    assert budgets == cfg.budgets.fit
+    with pytest.raises(ValueError, match="must not include the reserved intermediate"):
+        resolve_fit_budgets(
+            df,
+            cfg.budgets.target,
+            (*cfg.budgets.fit, cfg.budgets.intermediate),
+            cfg.budgets.intermediate,
+        )

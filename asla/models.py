@@ -13,6 +13,16 @@ class FitError(RuntimeError):
     """Raised when fitting a scaling law fails."""
 
 
+def percentile_values(arr: np.ndarray, quantiles: list[float]) -> np.ndarray:
+    """Return percentiles as a 1-d array; never unpack ``np.percentile`` directly.
+
+    Numpy stubs may type ``np.percentile`` as a scalar, so ``lo, hi = np.percentile(...)``
+    fails mypy. Index the array instead.
+    """
+
+    return np.asarray(np.percentile(arr, quantiles), dtype=float)
+
+
 FitForm = Literal["compute_power_law", "chinchilla"]
 
 
@@ -385,5 +395,5 @@ def bootstrap_projection(
         )
     arr = np.asarray(projections, dtype=float)
     std = float(np.std(arr, ddof=1)) if len(arr) > 1 else 0.0
-    lo, hi = np.percentile(arr, [5.0, 95.0])
-    return point, std, float(lo), float(hi)
+    bounds = percentile_values(arr, [5.0, 95.0])
+    return point, std, float(bounds[0]), float(bounds[1])

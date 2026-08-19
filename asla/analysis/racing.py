@@ -115,7 +115,10 @@ def gate_result(
     cost = ladder_cost(df, interventions, fit_budgets)
     decision = gate_pick_detailed(df, fit_budgets, target, intermediate_budget, tau, n_boot, rng)
     if decision["escalated"]:
-        top1, top2 = decision["top_pair"]  # type: ignore[misc]
+        top_pair = decision["top_pair"]
+        if not isinstance(top_pair, tuple) or len(top_pair) != 2:
+            raise ValueError("gate escalation did not return a comparable top pair")
+        top1, top2 = str(top_pair[0]), str(top_pair[1])
         cost += cell_cost(df, top1, intermediate_budget) + cell_cost(df, top2, intermediate_budget)
     return SelectionResult(pick=str(decision["pick"]), compute_spent=cost)
 

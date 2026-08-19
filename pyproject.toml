@@ -7,8 +7,10 @@ name = "asla"
 version = "0.1.0"
 description = "Algorithm-selection audit for scaling-law leaderboard decisions"
 readme = "README.md"
+license = { file = "LICENSE" }
 requires-python = ">=3.10,<3.14"
 classifiers = [
+  "License :: OSI Approved :: MIT License",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
@@ -25,19 +27,25 @@ dependencies = [
 figures = ["matplotlib>=3.6"]
 wandb = ["wandb>=0.15"]
 test = ["pytest>=7"]
-all = ["matplotlib>=3.6", "wandb>=0.15", "pytest>=7"]
+dev = ["mypy>=1.8", "ruff>=0.6"]
+all = ["matplotlib>=3.6", "wandb>=0.15", "pytest>=7", "mypy>=1.8", "ruff>=0.6"]
 
 [project.scripts]
 asla = "asla.cli:main"
 
 [tool.setuptools.packages.find]
-include = ["asla", "asla.*"]
-exclude = ["*.egg-info", "*.egg-info.*", "build", "build.*"]
+include = ["asla*"]
 namespaces = false
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
+
+[tool.mypy]
+python_version = "3.12"
+ignore_missing_imports = true
+check_untyped_defs = true
+warn_unused_ignores = true
 
 [tool.ruff]
 line-length = 125

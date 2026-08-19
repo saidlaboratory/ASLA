@@ -10,3 +10,5 @@ runs.parquet
 runs_audit.json
 results/
 .venv/
+logs/*.out
+logs/*.err
