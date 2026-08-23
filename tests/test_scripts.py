@@ -711,3 +711,35 @@ def test_first_audit_derived_analyses():
     assert noise[0]["pooled_within_cell_sd"] == pytest.approx(0.02) and noise[0]["seeds_per_cell"] == 3
     power = module.power_analysis(conv, noise)
     assert power["rows"][0]["seeds_to_resolve_range"] >= 2
+
+
+def test_compute_ask_arithmetic_and_exclusion():
+    import importlib
+
+    import pandas as pd
+
+    module = importlib.import_module("scripts.run_first_audit")
+    n = 1_207_959_552
+    tables = {}
+    power_rows = []
+    for ratio, gap_ident in ((1, True), (4, True), (8, False)):
+        tokens = ratio * 20 * n
+        tables[f"size_ladder_{ratio}xC"] = pd.DataFrame(
+            [
+                {"intervention": opt, "intervention_class": "optimizer", "compute": 6 * n * tokens, "seed": 0,
+                 "bpb": 2.7, "scale_label": "1.2b", "chinchilla_ratio": ratio, "tokens_d": tokens}
+                for opt in ("AdamW", "Muon", "NAdamW", "SOAP")
+            ]
+        )
+        power_rows.append(
+            {"table": f"size_ladder_{ratio}xC", "level": "1.2b", "seeds_to_resolve_range_bonferroni": 2,
+             "seeds_to_resolve_smallest_gap": 9 if gap_ident else 10**6, "smallest_gap_identifiable": gap_ident}
+        )
+    ask = module.compute_ask({"rows": power_rows}, tables, peak_flops_per_second=1e15, mfu=0.5)
+    per_run_1x = 6 * n * 20 * n / (1e15 * 0.5) / 3600
+    assert ask["rows"][0]["gpu_hours_per_run"] == pytest.approx(per_run_1x)
+    assert ask["recommended"]["ratios"] == [1, 4] and ask["recommended"]["seeds_per_optimizer"] == 9
+    assert ask["recommended"]["runs"] == 9 * 4 * 2
+    assert ask["recommended"]["gpu_hours"] == pytest.approx(9 * 4 * per_run_1x * (1 + 4))
+    assert ask["excluded"]["ratios"] == [8]
+    assert ask["full_grid_reference"]["runs"] == 6 * 4 * 3

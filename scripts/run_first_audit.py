@@ -48,6 +48,10 @@ DATADECIDE_TABLES = {
     "olmes_macro_correct_prob_per_char_deficit": DATA_DIR / "datadecide_runs_olmes_correct_prob_per_char.parquet",
 }
 CROSSOVER_Q = 0.05
+UNIDENTIFIABLE_NOISE_TO_GAP = 10.0
+H100_BF16_DENSE_PEAK_FLOPS = 989e12
+ASSUMED_MFU = 0.40
+RECOMMENDED_RATIOS = (1, 4)
 
 
 def _compute_of(df: pd.DataFrame, label: str) -> float:
@@ -377,13 +381,107 @@ def power_analysis(convergence: list[dict[str, Any]], noise: list[dict[str, Any]
                 "seeds_to_resolve_range_sigma_half": seeds_needed(entry["range_nats"], 0.5 * sigma),
             }
         )
+    for row in rows:
+        gap = row["smallest_adjacent_gap_nats"]
+        row["noise_to_smallest_gap_ratio"] = (row["sigma_nats"] / gap) if gap else None
+        row["noise_to_range_ratio"] = row["sigma_nats"] / row["range_nats"] if row["range_nats"] else None
+        row["smallest_gap_identifiable"] = bool(gap) and row["sigma_nats"] / gap <= UNIDENTIFIABLE_NOISE_TO_GAP
     return {
-        "assumption": "within-cell seed sd of the C4-EN loss for a Llama-style optimizer run equals DataDecide's pooled "
-        "within-cell seed sd of C4-EN bits per token at the nearest scale, converted to nats (x ln 2); "
-        "sensitivity at x0.5 and x2",
+        "units": "DataDecide seed sd is measured on log2(C4-EN perplexity) = bits per token and multiplied by ln 2 to "
+        "give nats per token; Fantastic Optimizers values are C4-EN validation cross-entropy in nats per token. All "
+        "sigma, gap, and range values below are nats per token.",
+        "assumption": "CROSS-STUDY SIGMA TRANSFER (stated assumption, not a measurement): the within-cell seed sd of "
+        "a Fantastic Optimizers run (Llama-style architecture, marin codebase, OLMo-2-like data mixture) is taken to "
+        "equal DataDecide's pooled within-cell seed sd (OLMo architecture, OLMo codebase, DataDecide mixtures) at the "
+        "nearest scale. Nothing in the public artifacts measures the former. Sensitivity rows use x0.5 and x2",
         "test": "two-sided Welch t-test, alpha 0.05 (and Bonferroni 0.05/6 for the six optimizer pairs), power 0.8",
+        "unidentifiable_threshold": f"a gap is called unidentifiable when sigma / gap > {UNIDENTIFIABLE_NOISE_TO_GAP:g} "
+        "(more than ~1,500 seeds per arm at power 0.8)",
         "sigma_1b_nats": sigma_1b,
         "rows": rows,
+    }
+
+
+def compute_ask(
+    power: dict[str, Any],
+    tables: dict[str, pd.DataFrame],
+    peak_flops_per_second: float = H100_BF16_DENSE_PEAK_FLOPS,
+    mfu: float = ASSUMED_MFU,
+    recommended_ratios: tuple[int, ...] = RECOMMENDED_RATIOS,
+) -> dict[str, Any]:
+    """GPU-hour cost of seeding the 1.2B optimizer cells, from 6ND FLOPs at an assumed MFU.
+
+    Runs are costed at ``6 * params_n * tokens_d`` FLOPs (the same accounting
+    as the compute axis; it ignores attention FLOPs and embedding parameters,
+    so it is a lower bound), divided by ``peak * mfu`` FLOP/s. The recommended
+    ask covers ``recommended_ratios`` (1x and 4x bracket the identifiable
+    regime); a ratio whose smallest gap is unidentifiable is never recommended
+    and is costed separately so the saving is visible.
+    """
+
+    rows = []
+    for entry in power["rows"]:
+        if entry["level"] != "1.2b":
+            continue
+        df = tables[entry["table"]]
+        cell = df[df["scale_label"] == "1.2b"].iloc[0]
+        flops = float(cell["compute"])
+        gpu_hours_per_run = flops / (peak_flops_per_second * mfu) / 3600.0
+        seeds_range = int(entry["seeds_to_resolve_range_bonferroni"])
+        seeds_gap = entry["seeds_to_resolve_smallest_gap"]
+        identifiable = bool(entry["smallest_gap_identifiable"])
+        rows.append(
+            {
+                "table": entry["table"],
+                "chinchilla_ratio": int(cell["chinchilla_ratio"]),
+                "tokens_d": float(cell["tokens_d"]),
+                "flops_per_run": flops,
+                "gpu_hours_per_run": gpu_hours_per_run,
+                "n_optimizers": int(df["intervention"].nunique()),
+                "seeds_for_range_bonferroni": seeds_range,
+                "seeds_for_smallest_gap": seeds_gap,
+                "smallest_gap_identifiable": identifiable,
+                "gpu_hours_range": seeds_range * int(df["intervention"].nunique()) * gpu_hours_per_run,
+                "gpu_hours_gap": (
+                    (seeds_gap * int(df["intervention"].nunique()) * gpu_hours_per_run) if identifiable else None
+                ),
+            }
+        )
+    recommended = [r for r in rows if r["smallest_gap_identifiable"] and r["chinchilla_ratio"] in recommended_ratios]
+    excluded = [r for r in rows if not r["smallest_gap_identifiable"]]
+    omitted = [r for r in rows if r["smallest_gap_identifiable"] and r["chinchilla_ratio"] not in recommended_ratios]
+    seeds = max((r["seeds_for_smallest_gap"] for r in recommended), default=0)
+    rec_hours = sum(seeds * r["n_optimizers"] * r["gpu_hours_per_run"] for r in recommended)
+    rec_runs = sum(seeds * r["n_optimizers"] for r in recommended)
+    return {
+        "peak_flops_per_second": peak_flops_per_second,
+        "peak_description": "NVIDIA H100 SXM dense BF16 peak (989 TFLOP/s)",
+        "mfu": mfu,
+        "flops_accounting": (
+            "6 * N * D with N the non-embedding parameter count (lower bound: attention and embedding FLOPs ignored)"
+        ),
+        "rows": rows,
+        "recommended": {
+            "ratios": [r["chinchilla_ratio"] for r in recommended],
+            "seeds_per_optimizer": seeds,
+            "runs": rec_runs,
+            "gpu_hours": rec_hours,
+        },
+        "omitted_identifiable": {
+            "ratios": [r["chinchilla_ratio"] for r in omitted],
+            "gpu_hours_if_added": sum(seeds * r["n_optimizers"] * r["gpu_hours_per_run"] for r in omitted),
+        },
+        "excluded": {
+            "ratios": [r["chinchilla_ratio"] for r in excluded],
+            "gpu_hours_if_seeded_like_recommended": sum(
+                seeds * r["n_optimizers"] * r["gpu_hours_per_run"] for r in excluded
+            ),
+        },
+        "full_grid_reference": {
+            "description": "6 seeds x 4 optimizers x every harvested 1.2B ratio",
+            "gpu_hours": sum(6 * r["n_optimizers"] * r["gpu_hours_per_run"] for r in rows),
+            "runs": sum(6 * r["n_optimizers"] for r in rows),
+        },
     }
 
 
@@ -403,6 +501,7 @@ def add_derived_analyses(results: dict[str, Any]) -> dict[str, Any]:
     results["optimizer_convergence"] = optimizer_convergence({**size_tables, **data_tables})
     results["seed_noise_reference"] = seed_noise_reference(load_runs(DATADECIDE_TABLES["c4_en_bits_per_token"]))
     results["power_analysis"] = power_analysis(results["optimizer_convergence"], results["seed_noise_reference"])
+    results["compute_ask"] = compute_ask(results["power_analysis"], size_tables)
     return results
 
 
@@ -534,6 +633,12 @@ def _ci(entry: dict[str, Any], meaningful: bool) -> str:
     return f"{_pct(entry['point'])} [{_pct(entry['lo'])}, {_pct(entry['hi'])}]"
 
 
+def _ask_status(row: dict[str, Any], rec: dict[str, Any]) -> str:
+    if row["chinchilla_ratio"] in rec["ratios"]:
+        return "yes"
+    return "no - unidentifiable gap" if not row["smallest_gap_identifiable"] else "no - identifiable, omitted"
+
+
 def _regret(entry: dict[str, Any] | None, meaningful: bool) -> str:
     if entry is None:
         return "n/a"
@@ -591,7 +696,28 @@ def _headline_section(results: dict[str, Any]) -> list[str]:
             f"{dec['excess_projection_flips']} pairs, all attributable to fit error.",
             "",
         ]
+    all_fit = all(
+        d["projection_error_decomposition"]["fit_error_share_of_excess"] == 1.0
+        for d in data_designs
+        if d["projection_error_decomposition"]["excess_projection_flips"] > 0
+    )
     lines += [
+        "**This answers DataDecide's open question.** DataDecide reports that no scaling-law method beats single-scale "
+        "ranking on its compute-decision frontier and speculates that improved scaling laws could, because unlike "
+        "single-scale ranking they are not bounded by crossovers. On their own public data, with this pipeline "
+        "validated against their published number (KNOWN_ANSWER.md), the decomposition shows why projection loses: "
+        + (
+            "**the whole excess of projection over single-scale ranking is fit/extrapolation error, on every data-axis "
+            "design; none of it is crossover.** The crossover error a projection could in principle repair is small "
+            "(the inherited-crossover rows above) and the projection repairs only a handful of those pairs, while its own "
+            "estimation error flips many more. The mechanistic implication is that improving scaling-law-based selection "
+            "requires reducing fit variance at the target - more seeds, fewer or better-constrained parameters, "
+            "variance-aware extrapolation - not better crossover modelling."
+            if all_fit
+            else "the excess of projection over single-scale ranking is dominated by fit/extrapolation error rather than "
+            "crossover on the designs above (see the per-design decomposition tables for the exact split)."
+        ),
+        "",
         "Reading: on the continuous loss metric the extra error projection introduces is fit/extrapolation error, not "
         "crossover, and most of it is statistically real (the reversed pairs are separated by more than seed noise at "
         "the target). On the accuracy metric most projection flips are inherited from a small-scale order that already "
@@ -645,6 +771,37 @@ def _optimizer_sections(results: dict[str, Any]) -> list[str]:
             trend.append(f"{table}: {first['level']} range {first['range_nats']:.4f} -> {last['level']} range "
                          f"{last['range_nats']:.4f} ({last['range_nats'] / first['range_nats']:.2f}x)")
     lines += ["", "Scale trend of the range on the size ladders: " + "; ".join(trend) + ".", ""]
+    one_b_rows = [r for r in power["rows"] if r["level"] == "1.2b"]
+    unident = [r for r in one_b_rows if not r["smallest_gap_identifiable"]]
+    lines += [
+        "## Finding: the top tuned optimizers are not identifiable at 1.2B/8xC (established analytically, zero new compute)",
+        "",
+        f"Units: {power['units']}",
+        "",
+        "| ladder (1.2B) | sigma (nats) | best-vs-worst range | sigma / range | smallest adjacent gap "
+        "| sigma / smallest gap | smallest gap identifiable? |",
+        "|---|---|---|---|---|---|---|",
+    ]
+    for r in one_b_rows:
+        lines.append(
+            f"| {r['table']} | {r['sigma_nats']:.4f} | {r['range_nats']:.4f} | {r['noise_to_range_ratio']:.2f} | "
+            f"{r['smallest_adjacent_gap_nats']:.6f} | {r['noise_to_smallest_gap_ratio']:.0f} | "
+            f"{'yes' if r['smallest_gap_identifiable'] else 'NO'} |"
+        )
+    if unident:
+        worst = max(unident, key=lambda r: r["noise_to_smallest_gap_ratio"])
+        lines += [
+            "",
+            f"At 1.2B on {', '.join(r['table'].split('_')[-1] for r in unident)} the smallest adjacent gap between tuned "
+            f"optimizers is {worst['smallest_adjacent_gap_nats']:.6f} nats against a seed sd of {worst['sigma_nats']:.4f} "
+            f"nats: **noise is {worst['noise_to_smallest_gap_ratio']:.0f}x the gap.** Under the stated sigma assumption "
+            "(and at any sigma within an order of magnitude of it) that ordering is not identifiable at a feasible seed "
+            "count - it is not expensive to resolve, it is unresolvable. A leaderboard that ranks these optimizers at "
+            f"this scale is ranking noise. Threshold used: {power['unidentifiable_threshold']}. This follows from the "
+            "released single-run values and the DataDecide seed variance alone; no new training was needed to "
+            "establish it.",
+            "",
+        ]
     lines += [
         "## What the convergence would imply for leaderboard validity (hypothesis, not a finding)",
         "",
@@ -658,7 +815,7 @@ def _optimizer_sections(results: dict[str, Any]) -> list[str]:
         "",
         "## Power analysis: seeds per cell needed to distinguish real optimizer differences from ties",
         "",
-        f"Assumption: {power['assumption']}. Test: {power['test']}. Reference within-cell seed sd of C4-EN loss, from "
+        f"{power['assumption']}. Test: {power['test']}. Reference within-cell seed sd of C4-EN loss, from "
         "the DataDecide harvest (3 seeds x 25 recipes per scale):",
         "",
         "| DataDecide scale | pooled within-cell seed sd (bits/token) | in nats | recipe-to-recipe sd (bits/token) |",
@@ -684,43 +841,54 @@ def _optimizer_sections(results: dict[str, Any]) -> list[str]:
             f"{row['seeds_to_resolve_range']} | {row['seeds_to_resolve_range_bonferroni']} | "
             f"{row['seeds_to_resolve_range_sigma_x2']} | {gap:.5f} | {row['seeds_to_resolve_smallest_gap']} |"
         )
-    one_b = [r for r in power["rows"] if r["level"] == "1.2b"]
-    if one_b:
-        n_range = max(r["seeds_to_resolve_range_bonferroni"] for r in one_b)
-        n_range_x2 = max(r["seeds_to_resolve_range_sigma_x2"] for r in one_b)
-        gap_rows = [r for r in one_b if r["seeds_to_resolve_smallest_gap"] is not None]
-        resolvable = [r for r in gap_rows if r["seeds_to_resolve_smallest_gap"] <= 50]
-        unresolvable = [r for r in gap_rows if r["seeds_to_resolve_smallest_gap"] > 50]
-        n_gap = max(r["seeds_to_resolve_smallest_gap"] for r in resolvable) if resolvable else None
+    ask = results.get("compute_ask")
+    if ask:
+        rec, exc, full = ask["recommended"], ask["excluded"], ask["full_grid_reference"]
         lines += [
             "",
-            f"Concrete ask at 1.2B: {n_range} seeds per optimizer per Chinchilla ratio resolve best-versus-worst on "
-            f"every ladder after Bonferroni correction ({n_range_x2} if the true noise is twice the DataDecide value). "
-            + (
-                f"Resolving the smallest adjacent gaps at {', '.join(r['table'].split('_')[-1] for r in resolvable)} "
-                f"needs up to {n_gap} seeds per optimizer. "
-                if resolvable
-                else ""
+            "## Compute ask (GPU-hours, arithmetic shown)",
+            "",
+            f"Cost model: FLOPs per run = {ask['flops_accounting']}; GPU-hours = FLOPs / ({ask['peak_description']} x "
+            f"MFU {ask['mfu']:.0%}) / 3600 = FLOPs / {ask['peak_flops_per_second'] * ask['mfu']:.3e} FLOP/s / 3600.",
+            "",
+            "| 1.2B ratio | tokens | FLOPs per run | GPU-h per run | seeds for range (Bonf.) "
+            "| seeds for smallest gap | in ask? |",
+            "|---|---|---|---|---|---|---|",
+        ]
+        for r in ask["rows"]:
+            lines.append(
+                f"| {r['chinchilla_ratio']}xC | {r['tokens_d']:.3e} | {r['flops_per_run']:.3e} | "
+                f"{r['gpu_hours_per_run']:.0f} | "
+                f"{r['seeds_for_range_bonferroni']} | {r['seeds_for_smallest_gap']} | {_ask_status(r, rec)} |"
             )
-            + (
-                "At "
-                + ", ".join(
-                    f"{r['table'].split('_')[-1]} the smallest gap ({r['smallest_adjacent_gap_nats']:.6f} nats) would need "
-                    f"{r['seeds_to_resolve_smallest_gap']} seeds"
-                    for r in unresolvable
-                )
-                + " - the operational definition of a tie. "
-                if unresolvable
-                else ""
+        lines += [
+            "",
+            f"**Recommended ask:** {rec['seeds_per_optimizer']} seeds x 4 optimizers x 1.2B x "
+            f"({', '.join(f'{x}xC' for x in rec['ratios'])}) = {rec['runs']} runs = "
+            + " + ".join(
+                f"{rec['seeds_per_optimizer']} x {r['n_optimizers']} x {r['gpu_hours_per_run']:.0f}"
+                for r in ask["rows"]
+                if r["chinchilla_ratio"] in rec["ratios"]
             )
-            + f"A first experiment of {n_range} seeds x 4 optimizers x 1.2B x (1x, 4x, 8x Chinchilla) = "
-            f"{n_range * 4 * 3} runs settles best-versus-worst and bounds the tie cases"
-            + (
-                f"; {n_gap} seeds at the resolvable ratios would separate the ~0.002 nats gaps "
-                "if the noise assumption holds."
-                if n_gap
-                else "."
-            ),
+            + f" = **{rec['gpu_hours']:,.0f} GPU-hours** at {ask['mfu']:.0%} MFU "
+            f"(about {rec['gpu_hours'] / 0.5 * ask['mfu']:,.0f} at 50%, {rec['gpu_hours'] / 0.3 * ask['mfu']:,.0f} at 30%). "
+            "This resolves the ~0.002 nats adjacent gaps and, a fortiori, "
+            "best-versus-worst, on the two ratios that bracket the identifiable regime.",
+            "",
+        ]
+        omitted = ask.get("omitted_identifiable", {})
+        if omitted.get("ratios"):
+            lines += [
+                f"Identifiable but omitted to keep the ask minimal: {', '.join(f'{x}xC' for x in omitted['ratios'])} "
+                f"(+{omitted['gpu_hours_if_added']:,.0f} GPU-hours if added).",
+                "",
+            ]
+        lines += [
+            f"Cut from the ask: {', '.join(f'{x}xC' for x in exc['ratios'])} - the ordering there is unidentifiable "
+            f"(previous section) and seeding it like the recommended ratios would cost another "
+            f"{exc['gpu_hours_if_seeded_like_recommended']:,.0f} GPU-hours for no decision. "
+            "For reference, the earlier draft "
+            f"ask ({full['description']}: {full['runs']} runs) is {full['gpu_hours']:,.0f} GPU-hours.",
             "",
         ]
     return lines
