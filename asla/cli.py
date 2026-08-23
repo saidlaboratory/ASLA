@@ -19,6 +19,7 @@ from asla.analysis.audit import ESTIMANDS, audit_with_ci
 from asla.analysis.crossover import detect_crossovers, detect_crossovers_fdr, fitted_crossover_for_pair
 from asla.analysis.ensemble import ensemble_report
 from asla.analysis.fits import project_ranking, resolve_fit_budgets, truth_ranking
+from asla.analysis.known_answer import PUBLISHED_SINGLE_SCALE_150M, known_answer_report
 from asla.analysis.metrics import decision_metrics
 from asla.analysis.racing import monte_carlo_selection
 from asla.analysis.rankers import Ranker, ensemble_ranker, make_gate_ranker, make_projection_ranker, single_scale_ranker
@@ -28,6 +29,7 @@ from asla.data.benchmark import benchmark_grid, evaluate_configs
 from asla.data.harvest import discover, harvest
 from asla.data.io import load_runs
 from asla.data.schema import SchemaError, validate
+from asla.data.sources import datadecide, fantastic_optimizers, signal_and_noise
 from asla.data.synthetic import SCENARIOS, negative_controls_only
 from asla.data.synthetic import true_ranking as synthetic_true_ranking
 from asla.figures import make_figures
@@ -424,6 +426,56 @@ def _harvest(args: argparse.Namespace) -> int:
     return 0
 
 
+def _harvest_datadecide(args: argparse.Namespace) -> int:
+    datadecide.harvest(args.out, metric=args.metric, cache_dir=args.cache_dir)
+    return 0
+
+
+def _harvest_fantastic_optimizers(args: argparse.Namespace) -> int:
+    fantastic_optimizers.harvest(args.out_dir, cache_dir=args.cache_dir)
+    return 0
+
+
+def _harvest_signal_and_noise(args: argparse.Namespace) -> int:
+    signal_and_noise.harvest(args.out, cache_dir=args.cache_dir)
+    return 0
+
+
+def _validate_known_answer(args: argparse.Namespace) -> int:
+    """Check single-scale pairwise decision accuracy on DataDecide against the published ~80%."""
+
+    if args.runs:
+        df = load_runs(args.runs)
+    else:
+        datadecide.ensure_artifacts(args.cache_dir)
+        df = datadecide.build_runs_table(datadecide.load_eval_macro(args.cache_dir), None, metric="olmes_macro_error")
+    report = known_answer_report(df)
+    published = PUBLISHED_SINGLE_SCALE_150M
+    print(f"Known answer: {published['source']}")
+    print(f"Published value ~{published['value']:.2f}; acceptance band {published['band']}")
+    print(f"{'scale':>6} {'%target C':>10} {'seed_mean':>10} {'per_seed':>9} {'sd':>7}")
+    for entry in report["per_scale"]:
+        sd = "n/a" if entry["per_seed_sd"] is None else f"{entry['per_seed_sd']:.3f}"
+        print(
+            f"{entry['scale_label']:>6} {entry['percent_of_target_compute']:>10.3f} "
+            f"{entry['seed_mean']:>10.3f} {entry['per_seed']:>9.3f} {sd:>7}"
+        )
+    for protocol, check in report["checks"].items():
+        status = "within band" if check["within_band"] else "OUTSIDE band"
+        print(
+            f"{report['focal_scale']} {protocol}: computed {check['computed']:.3f}, published ~{check['published']:.2f}, "
+            f"gap {check['gap']:+.3f} -> {status}"
+        )
+    if args.out:
+        _write_json_atomically(report, args.out)
+        print(f"wrote {args.out}")
+    if not report["reproduced"]:
+        print("KNOWN-ANSWER CHECK FAILED: the pipeline does not reproduce the published decision accuracy.")
+        return 1
+    print("known-answer check passed")
+    return 0
+
+
 def _benchmark_heatmaps(table: pd.DataFrame, out_dir: Path) -> None:
     """Write wrong-pick-rate heat maps per rule for crossover families."""
 
@@ -583,6 +635,32 @@ def build_parser() -> argparse.ArgumentParser:
     harv.add_argument("--field-map")
     harv.add_argument("--out", default="runs.parquet")
     harv.set_defaults(func=_harvest)
+
+    hdd = sub.add_parser("harvest-datadecide", help="Harvest public DataDecide evaluation tables (no weights).")
+    hdd.add_argument("--out", default="data/datadecide_runs.parquet")
+    hdd.add_argument("--metric", choices=sorted(datadecide.METRICS), default=datadecide.DEFAULT_METRIC)
+    hdd.add_argument("--cache-dir", default=str(datadecide.DEFAULT_CACHE_DIR))
+    hdd.set_defaults(func=_harvest_datadecide)
+
+    hfo = sub.add_parser("harvest-fantastic-optimizers", help="Harvest released Fantastic Optimizers result tables.")
+    hfo.add_argument("--out-dir", default="data")
+    hfo.add_argument("--cache-dir", default=str(fantastic_optimizers.DEFAULT_CACHE_DIR))
+    hfo.set_defaults(func=_harvest_fantastic_optimizers)
+
+    hsn = sub.add_parser(
+        "harvest-signal-and-noise", help="Harvest Signal-and-Noise C4-EN bits-per-byte for DataDecide models."
+    )
+    hsn.add_argument("--out", default="data/signal_and_noise_datadecide_c4_bpb.parquet")
+    hsn.add_argument("--cache-dir", default=str(signal_and_noise.DEFAULT_CACHE_DIR))
+    hsn.set_defaults(func=_harvest_signal_and_noise)
+
+    vka = sub.add_parser("validate-known-answer", help="Reproduce DataDecide's published single-scale decision accuracy.")
+    vka.add_argument(
+        "--runs", help="Harvested DataDecide table with metric olmes_macro_error; built from cache when omitted."
+    )
+    vka.add_argument("--cache-dir", default=str(datadecide.DEFAULT_CACHE_DIR))
+    vka.add_argument("--out", help="Write the full known-answer report as JSON.")
+    vka.set_defaults(func=_validate_known_answer)
 
     bench = sub.add_parser("benchmark")
     bench.add_argument("--out", default="results/benchmark")

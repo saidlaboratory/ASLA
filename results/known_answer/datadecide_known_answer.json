@@ -1,0 +1,138 @@
+{
+  "checks": {
+    "per_seed": {
+      "computed": 0.8033333333333333,
+      "gap": 0.0033333333333332993,
+      "published": 0.8,
+      "within_band": true
+    },
+    "seed_mean": {
+      "computed": 0.83,
+      "gap": 0.029999999999999916,
+      "published": 0.8,
+      "within_band": true
+    }
+  },
+  "focal_scale": "150M",
+  "metric_name": "olmes_macro_error",
+  "per_scale": [
+    {
+      "compute": 8430221996851200.0,
+      "per_seed": 0.3788888888888889,
+      "per_seed_sd": 0.04857220665420977,
+      "percent_of_target_compute": 0.0011937276308216242,
+      "scale_label": "4M",
+      "seed_mean": 0.31333333333333335
+    },
+    {
+      "compute": 2.170083624144077e+16,
+      "per_seed": 0.4566666666666667,
+      "per_seed_sd": 0.08192137151629673,
+      "percent_of_target_compute": 0.0030728595098704335,
+      "scale_label": "6M",
+      "seed_mean": 0.44333333333333336
+    },
+    {
+      "compute": 4.377678106853376e+16,
+      "per_seed": 0.5644444444444444,
+      "per_seed_sd": 0.07128451081042415,
+      "percent_of_target_compute": 0.00619883476015894,
+      "scale_label": "8M",
+      "seed_mean": 0.57
+    },
+    {
+      "compute": 5.88506060071895e+16,
+      "per_seed": 0.5933333333333334,
+      "per_seed_sd": 0.09333333333333332,
+      "percent_of_target_compute": 0.00833330302661295,
+      "scale_label": "10M",
+      "seed_mean": 0.5766666666666667
+    },
+    {
+      "compute": 1.1309068320768e+17,
+      "per_seed": 0.57,
+      "per_seed_sd": 0.05607534613753574,
+      "percent_of_target_compute": 0.016013750691728734,
+      "scale_label": "14M",
+      "seed_mean": 0.59
+    },
+    {
+      "compute": 1.5375666115510272e+17,
+      "per_seed": 0.6366666666666666,
+      "per_seed_sd": 0.04807401700618649,
+      "percent_of_target_compute": 0.02177209270553966,
+      "scale_label": "16M",
+      "seed_mean": 0.7166666666666667
+    },
+    {
+      "compute": 2.1908574798505574e+17,
+      "per_seed": 0.6455555555555555,
+      "per_seed_sd": 0.0978850421743868,
+      "percent_of_target_compute": 0.031022754915193036,
+      "scale_label": "20M",
+      "seed_mean": 0.74
+    },
+    {
+      "compute": 1.955459382959407e+18,
+      "per_seed": 0.7144444444444445,
+      "per_seed_sd": 0.005091750772173152,
+      "percent_of_target_compute": 0.2768949497723707,
+      "scale_label": "60M",
+      "seed_mean": 0.7666666666666667
+    },
+    {
+      "compute": 5.758063377068851e+18,
+      "per_seed": 0.7855555555555557,
+      "per_seed_sd": 0.030245905752924917,
+      "percent_of_target_compute": 0.8153473723226418,
+      "scale_label": "90M",
+      "seed_mean": 0.8033333333333333
+    },
+    {
+      "compute": 1.3439040749568e+19,
+      "per_seed": 0.8033333333333333,
+      "per_seed_sd": 0.029627314724385286,
+      "percent_of_target_compute": 1.9029812359021125,
+      "scale_label": "150M",
+      "seed_mean": 0.83
+    },
+    {
+      "compute": 5.66196613152768e+19,
+      "per_seed": 0.8233333333333334,
+      "per_seed_sd": 0.01201850425154663,
+      "percent_of_target_compute": 8.017399089259253,
+      "scale_label": "300M",
+      "seed_mean": 0.86
+    },
+    {
+      "compute": 1.2658135214850048e+20,
+      "per_seed": 0.8155555555555556,
+      "per_seed_sd": 0.03006166501881932,
+      "percent_of_target_compute": 17.924042529706384,
+      "scale_label": "750M",
+      "seed_mean": 0.86
+    },
+    {
+      "compute": 1.4955135853658112e+20,
+      "per_seed": 0.8466666666666667,
+      "per_seed_sd": 0.013333333333333308,
+      "percent_of_target_compute": 21.176617766259202,
+      "scale_label": "530M",
+      "seed_mean": 0.8833333333333333
+    }
+  ],
+  "published": {
+    "band": [
+      0.75,
+      0.85
+    ],
+    "metric": "olmes_macro_error",
+    "precision": "approximate; the paper reports the value rounded and graphically, not as a table entry",
+    "scale_label": "150M",
+    "source": "Magnusson et al. 2025 (arXiv:2504.11393), abstract and Figure 1: '~80% of comparisons correct' for ranking 150M models to predict 1B pairwise winners on OLMES ACCURACY",
+    "value": 0.8
+  },
+  "reproduced": true,
+  "target_compute": 7.06209840434774e+20,
+  "target_label": "1B"
+}

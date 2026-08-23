@@ -563,3 +563,92 @@ def test_hpc_preflight_rejects_slurm_array_manifest_mismatch(tmp_path):
     slurm.write_text("#!/bin/bash\n#SBATCH --array=1-3\n", encoding="utf-8")
     with pytest.raises(ValueError, match="must be 1-2"):
         validate_manifest_array(manifest, slurm)
+
+
+def test_first_audit_run_design_and_report_on_synthetic_table(tmp_path):
+    import importlib
+
+    import numpy as np
+    import pandas as pd
+
+    module = importlib.import_module("scripts.run_first_audit")
+    rows = []
+    rng = np.random.default_rng(0)
+    for i, name in enumerate(("a", "b", "c")):
+        for label, compute in (("1", 1.0), ("2", 2.0), ("4", 4.0), ("8", 8.0), ("16", 16.0), ("64", 64.0)):
+            for seed in range(3):
+                rows.append(
+                    {
+                        "intervention": name,
+                        "intervention_class": "data",
+                        "compute": compute,
+                        "seed": seed,
+                        "bpb": 1.0 + 0.05 * i + 0.5 * compute**-0.5 + rng.normal(0, 1e-3),
+                        "metric_name": "synthetic",
+                        "scale_label": label,
+                    }
+                )
+    df = pd.DataFrame(rows)
+    entry = module.run_design(
+        df,
+        name="synthetic",
+        axis="data",
+        budgets=(1.0, 2.0, 4.0, 8.0),
+        target=64.0,
+        intermediate=16.0,
+        n_boot_pairwise=1,
+        n_boot_single=1,
+        n_boot_ensemble=1,
+        gate_n_boot=2,
+        seed=0,
+        include_ensemble=True,
+    )
+    assert entry["n_pairs"] == 3 and entry["seed_bootstrap_meaningful"]
+    assert set(entry["pairwise_decisions"]["rankers"]) == {"projection_ranker", "single_scale_ranker", "ensemble_ranker"}
+    assert "gate_ranker" in entry["single_design_seed_sensitivity"]["rankers"]
+    assert entry["crossovers"]["projection_vs_target"]["n_flipped_pairs"] == 0
+    results = {
+        "fast": True, "counts": {"pairwise": 1, "single": 1}, "seed": 0, "inputs": {"x": "0" * 64}, "designs": [entry]
+    }
+    text = module.render_report(results)
+    assert "synthetic" in text and "flipped pairs" in text and "sha256" in text
+
+
+def test_signal_and_noise_check_helpers_on_synthetic_tables():
+    import importlib
+
+    import pandas as pd
+
+    module = importlib.import_module("scripts.run_signal_and_noise_check")
+    rows_sn, rows_dd = [], []
+    for i, name in enumerate(("A", "B", "C", "D")):
+        for label, compute in (("1", 1.0), ("2", 2.0), ("4", 4.0), ("8", 8.0)):
+            sn_value = 1.0 + 0.1 * i + 1.0 / compute
+            rows_sn.append(
+                {"intervention": name, "intervention_class": "data", "compute": compute, "seed": 0, "bpb": sn_value,
+                 "metric_name": "bpb_sn", "scale_label": label}
+            )
+            for seed in range(2):
+                # DataDecide table disagrees with S&N about the order of A and B at the largest scale only
+                dd_value = sn_value + (0.5 if (name == "A" and compute == 8.0) else 0.0) + 0.001 * seed
+                rows_dd.append(
+                    {"intervention": name, "intervention_class": "data", "compute": compute, "seed": seed,
+                     "bpb": dd_value, "metric_name": "bpt_dd", "scale_label": label}
+                )
+    sn, dd = pd.DataFrame(rows_sn), pd.DataFrame(rows_dd)
+    agreement = module.metric_agreement(sn, dd)
+    by_scale = {row["scale_label"]: row for row in agreement}
+    assert by_scale["1"]["pairwise_agreement"] == 1.0 and by_scale["1"]["same_winner"] is True
+    # the perturbed A row at the largest scale changes both the order and the winner in the DataDecide table
+    assert by_scale["8"]["pairwise_agreement"] < 1.0 and by_scale["8"]["same_winner"] is False
+    dup = module.duplicate_check(sn, "A", "B")
+    assert dup["any_identical"] is False and set(dup["abs_diff"]) == {"1", "2", "4", "8"}
+    profile = module.flip_profile(sn, target_label="8")
+    assert [row["scale_label"] for row in profile] == ["1", "2", "4"] and all(row["n_flips"] == 0 for row in profile)
+    check = module.projection_check(sn, target_label="8")
+    assert check["fit_budget_labels"] == ["1", "2", "4"] and check["true_winner"] == "A"
+    text = module.render(
+        {"inputs": {"x": "0" * 64}, "metric_agreement": agreement, "duplicate_check": dup, "flip_profile": profile,
+         "projection_check": check}
+    )
+    assert "Signal-and-Noise" in text and "sha256" in text

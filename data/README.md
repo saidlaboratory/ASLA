@@ -28,6 +28,23 @@ Optional columns:
 - `downstream`: downstream evaluation score.
 - `params_n`: parameter count, required only for `--fit-form chinchilla`.
 - `tokens_d`: training token count, required only for `--fit-form chinchilla`.
+- `metric_name`: what `bpb` holds when a source has no bits-per-byte metric
+  (must be a single value per table).
+- `tuning_quality`: nullable note on how hyperparameters were tuned at scale.
+
+## Harvested public tables
+
+- `datadecide_runs.parquet` (C4-EN bits per token), `datadecide_runs_olmes_macro_error.parquet`,
+  `datadecide_runs_olmes_correct_prob_per_char.parquet`: 25 recipes x 14 scales x 3 seeds
+  from `allenai/DataDecide-*` (`asla harvest-datadecide`). Extra columns: `scale_label`,
+  `step`, `tokens_per_param`, `seed_label`. 750M is off the 5xC trajectory; exclude it explicitly.
+- `fantastic_optimizers_*.parquet`: single-seed ladders from the released Fantastic
+  Optimizers `result.json` files (`asla harvest-fantastic-optimizers`); `fantastic_optimizers_cells.csv`
+  is the raw grid (not a runs table). See the module docstrings under `asla/data/sources/`.
+- `signal_and_noise_datadecide_c4_bpb.parquet`: Paloma C4-EN bits per byte for the final
+  checkpoint of 25 recipes x 9 scales from `allenai/signal-and-noise` (`asla harvest-signal-and-noise`);
+  one evaluated run per cell.
+- `raw/` holds the downloaded artifacts and is git-ignored.
 
 Minimum useful audit design:
 

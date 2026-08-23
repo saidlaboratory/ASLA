@@ -1,0 +1,173 @@
+{
+  "duplicate_check": {
+    "a": "Dolma1.7",
+    "abs_diff": {
+      "150M": 0.010740423930767684,
+      "1B": 0.013586754304018789,
+      "20M": 0.008391352394558016,
+      "300M": 0.010686337413228442,
+      "4M": 0.0009167772987634937,
+      "530M": 0.01264523176875787,
+      "60M": 0.008433513726488151,
+      "750M": 0.013256910133721878,
+      "90M": 0.007618947662302977
+    },
+    "any_identical": false,
+    "b": "Dolma1.6++",
+    "scales": [
+      "150M",
+      "1B",
+      "20M",
+      "300M",
+      "4M",
+      "530M",
+      "60M",
+      "750M",
+      "90M"
+    ]
+  },
+  "flip_profile": [
+    {
+      "compute_ratio_to_target": 1.193727630821624e-05,
+      "flip_rate": 0.08999999999999997,
+      "n_flips": 27,
+      "n_pairs": 300,
+      "scale_label": "4M"
+    },
+    {
+      "compute_ratio_to_target": 0.00031022754915193036,
+      "flip_rate": 0.09666666666666668,
+      "n_flips": 29,
+      "n_pairs": 300,
+      "scale_label": "20M"
+    },
+    {
+      "compute_ratio_to_target": 0.0027689494977237075,
+      "flip_rate": 0.05666666666666664,
+      "n_flips": 17,
+      "n_pairs": 300,
+      "scale_label": "60M"
+    },
+    {
+      "compute_ratio_to_target": 0.008153473723226418,
+      "flip_rate": 0.030000000000000027,
+      "n_flips": 9,
+      "n_pairs": 300,
+      "scale_label": "90M"
+    },
+    {
+      "compute_ratio_to_target": 0.019363214671551176,
+      "flip_rate": 0.020000000000000018,
+      "n_flips": 6,
+      "n_pairs": 300,
+      "scale_label": "150M"
+    },
+    {
+      "compute_ratio_to_target": 0.08157614491109187,
+      "flip_rate": 0.013333333333333308,
+      "n_flips": 4,
+      "n_pairs": 300,
+      "scale_label": "300M"
+    },
+    {
+      "compute_ratio_to_target": 0.23877307985191304,
+      "flip_rate": 0.013333333333333308,
+      "n_flips": 4,
+      "n_pairs": 300,
+      "scale_label": "530M"
+    },
+    {
+      "compute_ratio_to_target": 0.43419883444628543,
+      "flip_rate": 0.00666666666666671,
+      "n_flips": 2,
+      "n_pairs": 300,
+      "scale_label": "750M"
+    }
+  ],
+  "inputs": {
+    "data/datadecide_runs.parquet": "f61f9c58bb87309521ae62ff1b2585749d763ab110a3fd67998bbdd240e0767b",
+    "data/signal_and_noise_datadecide_c4_bpb.parquet": "c0eccd7d4b90dd2c3641e7b343ee4cc24a0c1c7abfd2381181f8e30ec5ffb2ea"
+  },
+  "metric_agreement": [
+    {
+      "kendall_tau": 0.8666666666666665,
+      "n_recipes": 25,
+      "pairwise_agreement": 0.9333333333333333,
+      "same_winner": true,
+      "scale_label": "4M"
+    },
+    {
+      "kendall_tau": 0.8733333333333332,
+      "n_recipes": 25,
+      "pairwise_agreement": 0.9366666666666666,
+      "same_winner": true,
+      "scale_label": "20M"
+    },
+    {
+      "kendall_tau": 0.9333333333333331,
+      "n_recipes": 25,
+      "pairwise_agreement": 0.9666666666666667,
+      "same_winner": true,
+      "scale_label": "60M"
+    },
+    {
+      "kendall_tau": 0.973333333333333,
+      "n_recipes": 25,
+      "pairwise_agreement": 0.9866666666666667,
+      "same_winner": true,
+      "scale_label": "90M"
+    },
+    {
+      "kendall_tau": 0.9666666666666665,
+      "n_recipes": 25,
+      "pairwise_agreement": 0.9833333333333333,
+      "same_winner": true,
+      "scale_label": "150M"
+    },
+    {
+      "kendall_tau": 0.973333333333333,
+      "n_recipes": 25,
+      "pairwise_agreement": 0.9866666666666667,
+      "same_winner": true,
+      "scale_label": "300M"
+    },
+    {
+      "kendall_tau": 0.9933333333333332,
+      "n_recipes": 25,
+      "pairwise_agreement": 0.9966666666666667,
+      "same_winner": true,
+      "scale_label": "530M"
+    },
+    {
+      "kendall_tau": 0.973333333333333,
+      "n_recipes": 25,
+      "pairwise_agreement": 0.9866666666666667,
+      "same_winner": true,
+      "scale_label": "750M"
+    },
+    {
+      "kendall_tau": 0.9866666666666666,
+      "n_recipes": 25,
+      "pairwise_agreement": 0.9933333333333333,
+      "same_winner": true,
+      "scale_label": "1B"
+    }
+  ],
+  "projection_check": {
+    "fit_budget_labels": [
+      "4M",
+      "20M",
+      "60M",
+      "90M",
+      "150M",
+      "300M",
+      "530M",
+      "750M"
+    ],
+    "pairwise_acc": 0.9833333333333333,
+    "projected_winner": "C4",
+    "regret": 0.0,
+    "top1_acc": 1.0,
+    "true_winner": "C4"
+  }
+}

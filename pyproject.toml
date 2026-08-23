@@ -26,9 +26,10 @@ dependencies = [
 [project.optional-dependencies]
 figures = ["matplotlib>=3.6"]
 wandb = ["wandb>=0.15"]
+harvest = ["huggingface_hub>=0.20"]
 test = ["pytest>=7"]
 dev = ["mypy>=1.8", "ruff>=0.6"]
-all = ["matplotlib>=3.6", "wandb>=0.15", "pytest>=7", "mypy>=1.8", "ruff>=0.6"]
+all = ["matplotlib>=3.6", "wandb>=0.15", "huggingface_hub>=0.20", "pytest>=7", "mypy>=1.8", "ruff>=0.6"]
 
 [project.scripts]
 asla = "asla.cli:main"

@@ -11,7 +11,7 @@ from scipy.optimize import brentq
 from scipy.stats import ttest_ind
 
 from asla.analysis.audit import resample_runs_by_cell, seed_noise_report
-from asla.analysis.fits import fit_all, project_ranking, truth_ranking
+from asla.analysis.fits import fit_all, normalize_budgets, project_ranking, truth_ranking
 from asla.config import GateConfig
 from asla.data.schema import validate
 from asla.models import FitError, FitForm, bpb_power_law
@@ -99,36 +99,35 @@ def pairwise_target_tests(df: pd.DataFrame, target: float) -> list[dict[str, Any
     return results
 
 
-def detect_crossovers_fdr(
+def detect_order_flips_fdr(
     df: pd.DataFrame,
-    budgets: Iterable[float],
+    predicted: pd.Series,
     target: float,
     q: float = 0.05,
-    fit_form: FitForm = "compute_power_law",
 ) -> list[dict[str, Any]]:
-    """Detect order disagreements with per-pair Welch tests under BH FDR control.
+    """Report pairs whose predicted order disagrees with the measured target order.
 
-    A pair is reported when the projected and measured target orders disagree.
-    ``significant`` is true only when the measured gap survives
-    Benjamini–Hochberg at level ``q`` across all order-disagreeing pairs;
-    untestable pairs (single-seed cells) carry ``p_value=None`` and are always
-    reported as not significant.
+    ``predicted`` is any lower-is-better score per intervention (a scaling-law
+    projection, a single-scale mean, ...). ``significant`` is true only when the
+    measured target gap survives Benjamini-Hochberg at level ``q`` across all
+    disagreeing pairs; untestable pairs (single-seed cells) carry
+    ``p_value=None`` and are always reported as not significant.
     """
 
-    projected = project_ranking(df, budgets, target, fit_form=fit_form)
     truth = truth_ranking(df, target)
-    names = set(projected.index.astype(str)) & set(truth.index.astype(str))
+    names = set(predicted.index.astype(str)) & set(truth.index.astype(str))
+    predicted = predicted.rename(index=str)
     tests = pairwise_target_tests(df, target)
     disagreeing = []
     for row in tests:
         a, b = row["a"], row["b"]
         if a not in names or b not in names:
             continue
-        projected_gap = float(projected.loc[a] - projected.loc[b])
-        if projected_gap == 0.0 or row["true_gap"] == 0.0:
+        predicted_gap = float(predicted.loc[a] - predicted.loc[b])
+        if predicted_gap == 0.0 or row["true_gap"] == 0.0:
             continue
-        if np.sign(projected_gap) != np.sign(row["true_gap"]):
-            disagreeing.append(dict(row))
+        if np.sign(predicted_gap) != np.sign(row["true_gap"]):
+            disagreeing.append({**row, "predicted_gap": predicted_gap})
     rejects = benjamini_hochberg(
         [row["p_value"] if row["p_value"] is not None else float("nan") for row in disagreeing],
         q=q,
@@ -136,6 +135,45 @@ def detect_crossovers_fdr(
     for row, significant in zip(disagreeing, rejects):
         row["significant"] = bool(significant)
     return disagreeing
+
+
+def detect_crossovers_fdr(
+    df: pd.DataFrame,
+    budgets: Iterable[float],
+    target: float,
+    q: float = 0.05,
+    fit_form: FitForm = "compute_power_law",
+) -> list[dict[str, Any]]:
+    """Detect projection-versus-truth order disagreements with per-pair Welch tests under BH FDR control.
+
+    See :func:`detect_order_flips_fdr`; the predicted score here is the
+    scaling-law projection at the target.
+    """
+
+    projected = project_ranking(df, budgets, target, fit_form=fit_form)
+    return detect_order_flips_fdr(df, projected, target, q=q)
+
+
+def detect_single_scale_flips_fdr(
+    df: pd.DataFrame,
+    budgets: Iterable[float],
+    target: float,
+    q: float = 0.05,
+) -> list[dict[str, Any]]:
+    """Order flips between the seed-mean ranking at the largest fitting budget and the target.
+
+    This is the crossover notion of single-scale ranking (DataDecide's
+    baseline): a pair whose winner at the largest small budget is not the
+    measured winner at the target, tested against seed noise at the target.
+    """
+
+    fit_budgets = normalize_budgets(budgets, target=target)
+    largest = float(max(fit_budgets))
+    rows = df[np.isclose(df["compute"].astype(float), largest)]
+    if rows.empty:
+        raise ValueError(f"no rows found at largest fitting budget {largest}")
+    predicted = rows.groupby("intervention", sort=True)["bpb"].mean()
+    return detect_order_flips_fdr(df, predicted, target, q=q)
 
 
 def naive_crossover_budget(

@@ -110,3 +110,30 @@ def test_crossover_bootstrap_reports_selection_probability_without_conditioning_
     assert absent["crossing_found_fraction"] == absent["crossings_found"] / absent["n_boot"]
     assert absent["fit_failures"] + absent["fit_successes"] == absent["n_boot"]
     assert absent["non_crossing_draws"] == absent["fit_successes"] - absent["crossings_found"]
+
+
+def test_single_scale_flips_use_largest_fit_budget_and_seed_tests():
+    from asla.analysis.crossover import detect_order_flips_fdr, detect_single_scale_flips_fdr
+
+    rows = []
+    # a beats b at budget 4 but loses at the target 8 with a clear seed-separated gap
+    for seed in range(4):
+        for name, small, large in (("a", 1.0, 2.0), ("b", 1.5, 1.0), ("c", 3.0, 3.0)):
+            for compute, value in ((1.0, small + 1.0), (2.0, small + 0.5), (4.0, small), (8.0, large)):
+                rows.append(
+                    {
+                        "intervention": name,
+                        "intervention_class": "x",
+                        "compute": compute,
+                        "seed": seed,
+                        "bpb": value + 0.01 * seed,
+                    }
+                )
+    df = pd.DataFrame(rows)
+    flips = detect_single_scale_flips_fdr(df, (1.0, 2.0, 4.0), 8.0)
+    assert [(f["a"], f["b"]) for f in flips] == [("a", "b")]
+    assert flips[0]["significant"] is True
+    assert flips[0]["predicted_gap"] < 0 < flips[0]["true_gap"]
+    single_seed = df[df["seed"] == 0]
+    untestable = detect_order_flips_fdr(single_seed, pd.Series({"a": 1.0, "b": 1.5, "c": 3.0}), 8.0)
+    assert untestable[0]["p_value"] is None and untestable[0]["significant"] is False

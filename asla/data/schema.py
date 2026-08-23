@@ -15,7 +15,13 @@ REQUIRED_COLUMNS = (
     "seed",
     "bpb",
 )
-OPTIONAL_COLUMNS = ("downstream", "params_n", "tokens_d")
+OPTIONAL_COLUMNS = ("downstream", "params_n", "tokens_d", "metric_name", "tuning_quality")
+NUMERIC_OPTIONAL_COLUMNS = ("downstream", "params_n", "tokens_d")
+# ``metric_name`` records which continuous metric the ``bpb`` column carries when a
+# harvested source does not report C4-EN bits per byte (e.g. DataDecide OLMES
+# error rate, C4-EN bits per token, or a C4-EN validation loss). ``tuning_quality``
+# records what is known about how each run's hyperparameters were tuned at its
+# scale; it is nullable because most public artifacts do not report it.
 
 
 class SchemaError(ValueError):
@@ -36,7 +42,9 @@ def validate(df: pd.DataFrame) -> None:
     Required columns are ``intervention`` and ``intervention_class`` as strings,
     ``compute`` and ``bpb`` as numeric values, and ``seed`` as integers.
     ``downstream`` is optional and, when present, must be numeric or nullable
-    numeric.
+    numeric. ``metric_name`` is optional but, when present, must be a single
+    non-null string for the whole table so an audit always knows what it ranks
+    on. ``tuning_quality`` is optional and nullable.
 
     Raises:
         SchemaError: with all missing or invalid columns listed.
@@ -69,6 +77,20 @@ def validate(df: pd.DataFrame) -> None:
     for col in REQUIRED_COLUMNS:
         if col in df.columns and df[col].isna().any():
             errors.append(f"column '{col}' must not contain null values")
+    for col in ("metric_name", "tuning_quality"):
+        if col in df.columns:
+            present = df[col].dropna()
+            if not present.empty and not _is_string_like(present):
+                errors.append(f"optional column '{col}' must be string-like when present")
+            elif bool(present.map(lambda value: not isinstance(value, str)).any()):
+                errors.append(f"optional column '{col}' must contain only strings or nulls")
+    if "metric_name" in df.columns and df["metric_name"].isna().any():
+        errors.append("optional column 'metric_name' must not contain null values when present")
+    if "metric_name" in df.columns and df["metric_name"].dropna().astype(str).nunique() > 1:
+        errors.append(
+            "optional column 'metric_name' must carry exactly one metric per runs table; "
+            f"found {sorted(df['metric_name'].dropna().astype(str).unique().tolist())}"
+        )
     for col in ("intervention", "intervention_class"):
         if col in df.columns and _is_string_like(df[col]):
             bad = df[col].dropna().map(lambda value: not isinstance(value, str))

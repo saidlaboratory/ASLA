@@ -8,7 +8,14 @@ dist/
 # Generated local audit artifacts.
 runs.parquet
 runs_audit.json
-results/
+results/*
+!results/first_audit/
+!results/signal_and_noise/
+!results/known_answer/
 .venv/
 logs/*.out
 logs/*.err
+logs/*.log
+
+# Raw public artifacts pulled by asla harvest-* (re-downloadable; never commit).
+data/raw/

@@ -101,3 +101,24 @@ def test_validate_rejects_invalid_optional_numeric_values(column, values, match)
     df[column] = values
     with pytest.raises(SchemaError, match=match):
         validate(df)
+
+
+def test_metric_name_must_be_single_non_null_string():
+    df = pd.concat([good_df(), good_df().assign(intervention=["b"])], ignore_index=True)
+    df["metric_name"] = ["c4_en_bits_per_token", "olmes_macro_error"]
+    with pytest.raises(SchemaError, match="exactly one metric"):
+        validate(df)
+    df["metric_name"] = ["c4_en_bits_per_token", None]
+    with pytest.raises(SchemaError, match="must not contain null"):
+        validate(df)
+    df["metric_name"] = "c4_en_bits_per_token"
+    validate(df)
+
+
+def test_tuning_quality_is_nullable_but_must_be_strings():
+    df = good_df()
+    df["tuning_quality"] = [None]
+    validate(df)
+    df["tuning_quality"] = [3]
+    with pytest.raises(SchemaError, match="tuning_quality"):
+        validate(df)

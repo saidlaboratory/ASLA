@@ -91,6 +91,10 @@ Canonical run columns:
 - optional `downstream` float
 - optional `params_n` float for Chinchilla two-axis fits
 - optional `tokens_d` float for Chinchilla two-axis fits
+- optional `metric_name` string (one value per table) naming what `bpb` holds
+  when it is not C4-EN bits per byte
+- optional nullable `tuning_quality` string recording how hyperparameters were
+  tuned at that run's scale
 
 ```bash
 asla validate --runs runs.parquet
@@ -131,6 +135,30 @@ python scripts/run_paper_experiments.py --estimand pairwise_decisions --fast  # 
 ```
 
 Drop `--fast` for paper-grade counts. See [docs/BENCHMARK.md](docs/BENCHMARK.md).
+
+## Public data: DataDecide and Fantastic Optimizers
+
+The first real measurements use released evaluation tables (never model
+weights). Sizes are checked through the HuggingFace API before download.
+
+```bash
+python -m pip install -e ".[harvest]"
+asla harvest-datadecide --metric c4_en_bits_per_token --out data/datadecide_runs.parquet
+asla harvest-datadecide --metric olmes_macro_error --out data/datadecide_runs_olmes_macro_error.parquet
+asla harvest-fantastic-optimizers --out-dir data
+asla harvest-signal-and-noise --out data/signal_and_noise_datadecide_c4_bpb.parquet
+asla validate-known-answer --runs data/datadecide_runs_olmes_macro_error.parquet
+python scripts/run_first_audit.py            # writes results/first_audit/ and FIRST_AUDIT.md
+python scripts/run_signal_and_noise_check.py # writes results/signal_and_noise/ and SIGNAL_AND_NOISE.md
+```
+
+Harvested tables carry `metric_name` (what `bpb` holds: DataDecide has no
+bits-per-byte metric, so rows are labelled `c4_en_bits_per_token`,
+`olmes_macro_error`, ...) and a nullable `tuning_quality`. Raw artifacts are
+cached under `data/raw/` (git-ignored). See
+[KNOWN_ANSWER.md](KNOWN_ANSWER.md), [FIRST_AUDIT.md](FIRST_AUDIT.md),
+[NOTES_TUNING_CONFOUND.md](NOTES_TUNING_CONFOUND.md),
+[SIGNAL_AND_NOISE.md](SIGNAL_AND_NOISE.md), and [RELATED_WORK.md](RELATED_WORK.md).
 
 ## No-W&B data collection
 

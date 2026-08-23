@@ -8,9 +8,9 @@ from pathlib import Path
 import pandas as pd
 
 from asla.data.io import save_runs
-from asla.data.schema import OPTIONAL_COLUMNS, REQUIRED_COLUMNS
+from asla.data.schema import NUMERIC_OPTIONAL_COLUMNS, REQUIRED_COLUMNS
 
-CANONICAL_COLUMNS = (*REQUIRED_COLUMNS, *OPTIONAL_COLUMNS)
+CANONICAL_COLUMNS = (*REQUIRED_COLUMNS, *NUMERIC_OPTIONAL_COLUMNS)
 
 
 def _coerce_runs(df: pd.DataFrame) -> pd.DataFrame:
@@ -32,7 +32,7 @@ def _coerce_runs(df: pd.DataFrame) -> pd.DataFrame:
     out["seed"] = seed.astype(int)
     out["bpb"] = pd.to_numeric(out["bpb"], errors="raise").astype(float)
 
-    for col in OPTIONAL_COLUMNS:
+    for col in NUMERIC_OPTIONAL_COLUMNS:
         if col in out.columns:
             out[col] = pd.to_numeric(out[col], errors="coerce")
         else:

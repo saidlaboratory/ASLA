@@ -235,3 +235,27 @@ add-on but the paper survives without it; WS6 last since it packages results.
   any run tables the lab collects with the existing tooling.
 - Downstream-metric (non-BPB) selection — schema supports `downstream`; a
   short discussion section, not a workstream.
+
+## 4. Phase 1 on public data (2026-08-23)
+
+Status of the first real measurement, all on released evaluation tables (no
+training compute, no weights downloaded):
+
+- [x] `asla harvest-datadecide` — 25 recipes x 14 scales x 3 seeds, three
+  explicit metrics (`metric_name` column); 750M flagged off-trajectory.
+- [x] `asla validate-known-answer` + `tests/test_known_answer_datadecide.py` —
+  reproduces DataDecide's ~80% single-scale decision accuracy at 150M
+  (0.803 under their per-seed protocol, 0.830 under our seed-mean ranker). See
+  KNOWN_ANSWER.md.
+- [x] `asla harvest-fantastic-optimizers` — 150 released `result.json` cells;
+  single run per cell (no seeds), four optimizers reach 1.2B.
+- [x] `scripts/run_first_audit.py` -> FIRST_AUDIT.md — data-axis audit with
+  seed-bootstrap CIs and FDR-tested crossovers; optimizer-axis point estimates
+  with untestable flips; class contrast; tuning stratification.
+- [x] `tuning_quality` schema column + `asla.analysis.tuning` +
+  NOTES_TUNING_CONFOUND.md (Lourie et al. threat).
+- [x] RELATED_WORK.md.
+- [x] `asla harvest-signal-and-noise` -> SIGNAL_AND_NOISE.md — true C4-EN
+  bits per byte for the DataDecide grid as an independent cross-check.
+- [ ] Seeds on the optimizer axis (W&B project or own runs) — the one thing
+  that would let optimizer-axis crossovers be tested for significance.

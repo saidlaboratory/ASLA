@@ -8,10 +8,10 @@ from pathlib import Path
 import pandas as pd
 
 from asla.data.io import save_runs, save_runs_csv
-from asla.data.schema import OPTIONAL_COLUMNS, REQUIRED_COLUMNS, validate
+from asla.data.schema import NUMERIC_OPTIONAL_COLUMNS, REQUIRED_COLUMNS, validate
 
 DONE_STATUSES = {"complete", "completed", "done"}
-CANONICAL_COLUMNS = (*REQUIRED_COLUMNS, *OPTIONAL_COLUMNS)
+CANONICAL_COLUMNS = (*REQUIRED_COLUMNS, *NUMERIC_OPTIONAL_COLUMNS)
 
 
 def _missing_message(df: pd.DataFrame, mask: pd.Series, label: str) -> str:
@@ -61,7 +61,7 @@ def manifest_to_runs(manifest: pd.DataFrame) -> pd.DataFrame:
     out["intervention"] = out["intervention"].astype(str)
     out["intervention_class"] = out["intervention_class"].astype(str)
 
-    for col in OPTIONAL_COLUMNS:
+    for col in NUMERIC_OPTIONAL_COLUMNS:
         if col not in out.columns:
             out[col] = pd.Series([pd.NA] * len(out), dtype="Float64")
 
