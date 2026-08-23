@@ -15,6 +15,7 @@ Usage::
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 import time
 from pathlib import Path
@@ -226,15 +227,203 @@ def tuning_stratification() -> dict[str, Any]:
     return out
 
 
+def decompose_projection_error(design: dict[str, Any]) -> dict[str, Any]:
+    """Split projection order flips into crossover-inherited and fit-error flips.
+
+    A projection flip on a pair is *crossover-inherited* when the largest-fit-
+    budget order on that pair also disagrees with the target (the small-scale
+    data already ordered the pair wrongly, so any rule reading the small scales
+    inherits it). Otherwise the small-scale order was right and the projection
+    reversed it on its own: *fit / extrapolation error*. Both parts are further
+    split by whether the measured target gap is FDR-significant.
+    """
+
+    cx = design["crossovers"]
+    proj = {(f["a"], f["b"]): f for f in cx["projection_vs_target"]["pairs"]}
+    single = {(f["a"], f["b"]): f for f in cx["largest_fit_budget_vs_target"]["pairs"]}
+    inherited = {k: v for k, v in proj.items() if k in single}
+    fit_error = {k: v for k, v in proj.items() if k not in single}
+    single_only = {k: v for k, v in single.items() if k not in proj}
+    n_pairs = design["n_pairs"]
+
+    def _block(items: dict[tuple[str, str], dict[str, Any]]) -> dict[str, Any]:
+        return {
+            "n": len(items),
+            "rate": len(items) / n_pairs,
+            "n_significant": int(sum(bool(f.get("significant")) for f in items.values())),
+            "pairs": [
+                {"a": a, "b": b, "true_gap": f["true_gap"], "significant": f.get("significant")}
+                for (a, b), f in items.items()
+            ],
+        }
+
+    excess = len(proj) - len(single)
+    return {
+        "n_pairs": n_pairs,
+        "projection_flips": len(proj),
+        "single_scale_flips": len(single),
+        "excess_projection_flips": excess,
+        "crossover_inherited": _block(inherited),
+        "fit_error": _block(fit_error),
+        "single_scale_only": _block(single_only),
+        "fit_error_share_of_projection_flips": (len(fit_error) / len(proj)) if proj else None,
+        "fit_error_share_of_excess": (len(fit_error) - len(single_only)) / excess if excess > 0 else None,
+    }
+
+
+def optimizer_convergence(tables: dict[str, pd.DataFrame]) -> list[dict[str, Any]]:
+    """Spread of tuned optimizer losses per scale on every optimizer ladder (effect-size view)."""
+
+    out = []
+    for name, df in tables.items():
+        key = "chinchilla_ratio" if name.startswith("data_ladder") else "scale_label"
+        for level, group in df.groupby(key, sort=False):
+            values = group.groupby("intervention")["bpb"].mean().sort_values()
+            gaps = np.diff(values.to_numpy())
+            out.append(
+                {
+                    "table": name,
+                    "level": str(level),
+                    "compute": float(group["compute"].iloc[0]),
+                    "n_optimizers": int(len(values)),
+                    "best": str(values.index[0]),
+                    "range_nats": float(values.max() - values.min()),
+                    "sd_nats": float(values.std(ddof=1)),
+                    "smallest_adjacent_gap_nats": float(gaps.min()) if len(gaps) else None,
+                    "largest_adjacent_gap_nats": float(gaps.max()) if len(gaps) else None,
+                    "order": [str(v) for v in values.index],
+                }
+            )
+    return sorted(out, key=lambda r: (r["table"], r["compute"]))
+
+
+def seed_noise_reference(df: pd.DataFrame, scales: tuple[str, ...] = ("150M", "300M", "530M", "1B")) -> list[dict[str, Any]]:
+    """Pooled within-cell seed standard deviation of a DataDecide metric at selected scales."""
+
+    out = []
+    for label in scales:
+        rows = df[df["scale_label"] == label]
+        if rows.empty:
+            continue
+        cells = rows.groupby("intervention")["bpb"]
+        sds = cells.std(ddof=1).dropna()
+        dof = cells.count() - 1
+        pooled = float(np.sqrt(np.average(sds.to_numpy() ** 2, weights=dof.loc[sds.index].to_numpy())))
+        out.append(
+            {
+                "scale_label": label,
+                "metric_name": str(df["metric_name"].iloc[0]),
+                "n_recipes": int(len(sds)),
+                "seeds_per_cell": int(cells.count().min()),
+                "pooled_within_cell_sd": pooled,
+                "pooled_within_cell_sd_nats": pooled * float(np.log(2)),
+                "recipe_spread_sd": float(cells.mean().std(ddof=1)),
+            }
+        )
+    return out
+
+
+def seeds_needed(delta: float, sigma: float, alpha: float = 0.05, power: float = 0.8) -> int | None:
+    """Seeds per arm for a two-sided Welch test to detect a mean gap ``delta`` at within-cell sd ``sigma``.
+
+    Solves n = 2 * (t_{alpha/2, 2n-2} + t_{power, 2n-2})^2 * sigma^2 / delta^2 by
+    fixed-point iteration from the normal approximation. Returns ``None`` when
+    ``delta`` is zero.
+    """
+
+    from scipy.stats import norm
+    from scipy.stats import t as t_dist
+
+    if delta <= 0 or sigma <= 0:
+        return None
+    n = 2.0 * (norm.ppf(1 - alpha / 2) + norm.ppf(power)) ** 2 * (sigma / delta) ** 2
+    n = max(n, 2.0)
+    for _ in range(50):
+        dof = max(2.0 * n - 2.0, 1.0)
+        n_new = 2.0 * (t_dist.ppf(1 - alpha / 2, dof) + t_dist.ppf(power, dof)) ** 2 * (sigma / delta) ** 2
+        n_new = max(n_new, 2.0)
+        if abs(n_new - n) < 1e-6:
+            n = n_new
+            break
+        n = n_new
+    return int(np.ceil(n))
+
+
+def power_analysis(convergence: list[dict[str, Any]], noise: list[dict[str, Any]], n_pairs: int = 6) -> dict[str, Any]:
+    """Seeds per cell needed to resolve the observed optimizer gaps at DataDecide-like seed noise."""
+
+    reference = {row["scale_label"]: row for row in noise}
+    sigma_1b = reference["1B"]["pooled_within_cell_sd_nats"] if "1B" in reference else None
+    rows = []
+    for entry in convergence:
+        if not entry["table"].startswith("size_ladder"):
+            continue
+        sigma_label = {"130m": "150M", "300m": "300M", "520m": "530M", "1.2b": "1B"}.get(entry["level"], "1B")
+        sigma = reference.get(sigma_label, reference.get("1B", {})).get("pooled_within_cell_sd_nats")
+        if sigma is None:
+            continue
+        rows.append(
+            {
+                "table": entry["table"],
+                "level": entry["level"],
+                "sigma_source_scale": sigma_label,
+                "sigma_nats": sigma,
+                "range_nats": entry["range_nats"],
+                "smallest_adjacent_gap_nats": entry["smallest_adjacent_gap_nats"],
+                "seeds_to_resolve_range": seeds_needed(entry["range_nats"], sigma),
+                "seeds_to_resolve_smallest_gap": seeds_needed(entry["smallest_adjacent_gap_nats"] or 0.0, sigma),
+                "seeds_to_resolve_range_bonferroni": seeds_needed(entry["range_nats"], sigma, alpha=0.05 / n_pairs),
+                "seeds_to_resolve_range_sigma_x2": seeds_needed(entry["range_nats"], 2 * sigma),
+                "seeds_to_resolve_range_sigma_half": seeds_needed(entry["range_nats"], 0.5 * sigma),
+            }
+        )
+    return {
+        "assumption": "within-cell seed sd of the C4-EN loss for a Llama-style optimizer run equals DataDecide's pooled "
+        "within-cell seed sd of C4-EN bits per token at the nearest scale, converted to nats (x ln 2); "
+        "sensitivity at x0.5 and x2",
+        "test": "two-sided Welch t-test, alpha 0.05 (and Bonferroni 0.05/6 for the six optimizer pairs), power 0.8",
+        "sigma_1b_nats": sigma_1b,
+        "rows": rows,
+    }
+
+
+def add_derived_analyses(results: dict[str, Any]) -> dict[str, Any]:
+    """Attach decomposition, convergence, seed-noise reference, and power rows to an audit result."""
+
+    for design in results["designs"]:
+        design["projection_error_decomposition"] = decompose_projection_error(design)
+    size_tables = {
+        f"size_ladder_{ratio}xC": load_runs(DATA_DIR / f"fantastic_optimizers_size_ladder_{ratio}xC.parquet")
+        for ratio in (1, 2, 4, 8)
+    }
+    data_tables = {
+        f"data_ladder_{size}": load_runs(DATA_DIR / f"fantastic_optimizers_data_ladder_{size}.parquet")
+        for size in ("130m", "300m")
+    }
+    results["optimizer_convergence"] = optimizer_convergence({**size_tables, **data_tables})
+    results["seed_noise_reference"] = seed_noise_reference(load_runs(DATADECIDE_TABLES["c4_en_bits_per_token"]))
+    results["power_analysis"] = power_analysis(results["optimizer_convergence"], results["seed_noise_reference"])
+    return results
+
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--out", default="results/first_audit")
     parser.add_argument("--fast", action="store_true")
     parser.add_argument("--seed", type=int, default=1729)
     parser.add_argument("--report", default="FIRST_AUDIT.md")
+    parser.add_argument("--render-only", action="store_true", help="Re-render the report from an existing JSON.")
     args = parser.parse_args(argv)
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
+    if args.render_only:
+        results = json.loads((out / "first_audit.json").read_text(encoding="utf-8"))
+        add_derived_analyses(results)
+        _write_json_atomically(results, out / "first_audit.json")
+        Path(args.report).write_text(render_report(results), encoding="utf-8")
+        print(f"re-rendered {args.report} from {out / 'first_audit.json'}")
+        return 0
     counts = (
         {"pairwise": 2, "single": 3, "ensemble": 2, "gate": 5}
         if args.fast
@@ -328,6 +517,7 @@ def main(argv: list[str] | None = None) -> int:
         results["designs"].append(entry)
     results["optimizer_axis_flip_profile"] = optimizer_axis_flip_profile(size_tables, "1.2b")
     results["tuning_stratification"] = tuning_stratification()
+    add_derived_analyses(results)
     _write_json_atomically(results, out / "first_audit.json")
     Path(args.report).write_text(render_report(results), encoding="utf-8")
     print(f"wrote {out / 'first_audit.json'} and {args.report}")
@@ -363,6 +553,179 @@ def _pairs_text(pairs: list[dict[str, Any]]) -> str:
     return "; ".join(f"{f['a']} vs {f['b']} (target gap {f['true_gap']:+.4f})" for f in pairs)
 
 
+def _design(results: dict[str, Any], name: str) -> dict[str, Any] | None:
+    return next((d for d in results["designs"] if d["name"] == name), None)
+
+
+def _headline_section(results: dict[str, Any]) -> list[str]:
+    c4 = _design(results, "datadecide/c4_en_bits_per_token/full_ladder_4M-300M_gate530M")
+    olmes = _design(results, "datadecide/olmes_macro_error/full_ladder_4M-300M_gate530M")
+    if c4 is None or olmes is None or "projection_error_decomposition" not in c4:
+        return []
+    data_designs = [d for d in results["designs"] if d["axis"] == "data"]
+    single_rates = [d["crossovers"]["largest_fit_budget_vs_target"]["flip_rate"] for d in data_designs]
+    single_sig = [d["crossovers"]["largest_fit_budget_vs_target"]["n_significant"] for d in data_designs]
+    lines = ["## Headline: what projection adds to single-scale error on the data axis (H1)", ""]
+    for d, label in ((c4, "C4-EN bits/token"), (olmes, "OLMES macro accuracy")):
+        pw = d["pairwise_decisions"]["rankers"]
+        meaningful = d["seed_bootstrap_meaningful"]
+        dec = d["projection_error_decomposition"]
+        cx = d["crossovers"]
+        proj_rate = _ci(pw["projection_ranker"]["mis_selection_rate"], meaningful)
+        single_rate = _ci(pw["single_scale_ranker"]["mis_selection_rate"], meaningful)
+        fit = dec["fit_error"]
+        inh = dec["crossover_inherited"]
+        rep = dec["single_scale_only"]
+        lines += [
+            f"**{label}** ({d['n_pairs']} pairs, fit budgets {d['budget_labels'][0]}-{d['budget_labels'][-1]}, target 1B): "
+            f"pairwise mis-selection is {proj_rate} for the scaling-law projection versus {single_rate} for ranking the "
+            f"largest fit budget. The projection flips {cx['projection_vs_target']['n_flipped_pairs']} pairs "
+            f"({cx['projection_vs_target']['n_significant']} with an FDR-significant target gap); single-scale ranking "
+            f"flips {cx['largest_fit_budget_vs_target']['n_flipped_pairs']} "
+            f"({cx['largest_fit_budget_vs_target']['n_significant']} significant). Of the projection's flips, "
+            f"**{fit['n']} ({_pct(dec['fit_error_share_of_projection_flips'])}) are pairs the largest fit budget already "
+            f"ordered correctly and the fit reversed** - fit/extrapolation error, {fit['n_significant']} of them on "
+            f"significantly separated pairs - while {inh['n']} are inherited from a small-scale order that was itself "
+            f"wrong (the crossover-type error a projection cannot avoid; {inh['n_significant']} significant). The "
+            f"projection repaired {rep['n']} single-scale flips. Net excess over single-scale: "
+            f"{dec['excess_projection_flips']} pairs, all attributable to fit error.",
+            "",
+        ]
+    lines += [
+        "Reading: on the continuous loss metric the extra error projection introduces is fit/extrapolation error, not "
+        "crossover, and most of it is statistically real (the reversed pairs are separated by more than seed noise at "
+        "the target). On the accuracy metric most projection flips are inherited from a small-scale order that already "
+        "disagreed with the target, and the majority of those inherited flips are not significant - i.e. they are "
+        "small-scale evaluation noise on near-tied pairs rather than crossovers; the fit-error component is again the "
+        "part that survives significance testing.",
+        "",
+        "**Negative-control framing.** H2 predicted the data axis to be scale-stable. It is: single-scale ranking "
+        f"flips {_pct(min(single_rates))}-{_pct(max(single_rates))} of pairs depending on metric and design, and the "
+        f"significant crossover count is {min(single_sig)}-{max(single_sig)} of 300 pairs. This is a confirmed "
+        "prediction, not a null result; it is the baseline against which crossover-prone classes must be "
+        "compared.",
+        "",
+    ]
+    return lines
+
+
+def _optimizer_sections(results: dict[str, Any]) -> list[str]:
+    conv = results.get("optimizer_convergence")
+    power = results.get("power_analysis")
+    noise = results.get("seed_noise_reference")
+    if not conv or not power or not noise:
+        return []
+    lines = [
+        "",
+        "## Optimizer axis: two separate limitations",
+        "",
+        "**(a) No seed replicates.** Every Fantastic Optimizers cell is one run. No optimizer-axis flip can be tested "
+        "against run-to-run noise, no bootstrap interval is meaningful, and the FDR machinery reports every pair as "
+        "untestable. This is resolvable only with new runs (seeds per cell); see the power analysis below for how many.",
+        "",
+        "**(b) Convergence of tuned optimizers at scale.** Independently of seeds, the spread among the four tuned "
+        "optimizers shrinks with model size on every ladder, so the flips observed at 1.2B are between values that "
+        "differ by less than any plausible seed noise. Seeding would turn these into measured ties, not into "
+        "crossovers. Effect size (C4-EN validation loss, nats/token, tuned runs):",
+        "",
+        "| ladder | level | optimizers | range (max-min) | sd across optimizers | smallest adjacent gap | best |",
+        "|---|---|---|---|---|---|---|",
+    ]
+    for row in conv:
+        lines.append(
+            f"| {row['table']} | {row['level']} | {row['n_optimizers']} | {row['range_nats']:.4f} | {row['sd_nats']:.4f} | "
+            f"{row['smallest_adjacent_gap_nats']:.5f} | {row['best']} |"
+        )
+    size_rows = [r for r in conv if r["table"].startswith("size_ladder")]
+    trend = []
+    for table in sorted({r["table"] for r in size_rows}):
+        rows = [r for r in size_rows if r["table"] == table]
+        first, last = rows[0], rows[-1]
+        if first["range_nats"] > 0:
+            trend.append(f"{table}: {first['level']} range {first['range_nats']:.4f} -> {last['level']} range "
+                         f"{last['range_nats']:.4f} ({last['range_nats'] / first['range_nats']:.2f}x)")
+    lines += ["", "Scale trend of the range on the size ladders: " + "; ".join(trend) + ".", ""]
+    lines += [
+        "## What the convergence would imply for leaderboard validity (hypothesis, not a finding)",
+        "",
+        "If well-tuned optimizers are statistically indistinguishable at the target scale, a leaderboard that ranks "
+        "them there is ranking seed noise, and any small-scale projection that 'predicts' that ranking is predicting "
+        "noise. The public data cannot establish this: the spreads above are single-run values and the seed noise of "
+        "these runs is unmeasured. It is the hypothesis the next experiment should test. Data needed: seed replicates "
+        "of the tuned configurations for the four optimizers at 520M and 1.2B (the two largest sizes), at the "
+        "Chinchilla ratios where the observed gaps are smallest (4x and 8x), with enough seeds to resolve gaps of the "
+        "order of the observed adjacent gaps (~0.002 nats at 1x-4x; effectively zero at 8x) - quantified next.",
+        "",
+        "## Power analysis: seeds per cell needed to distinguish real optimizer differences from ties",
+        "",
+        f"Assumption: {power['assumption']}. Test: {power['test']}. Reference within-cell seed sd of C4-EN loss, from "
+        "the DataDecide harvest (3 seeds x 25 recipes per scale):",
+        "",
+        "| DataDecide scale | pooled within-cell seed sd (bits/token) | in nats | recipe-to-recipe sd (bits/token) |",
+        "|---|---|---|---|",
+    ]
+    for row in noise:
+        lines.append(
+            f"| {row['scale_label']} | {row['pooled_within_cell_sd']:.4f} | {row['pooled_within_cell_sd_nats']:.4f} | "
+            f"{row['recipe_spread_sd']:.3f} |"
+        )
+    lines += [
+        "",
+        "Seeds per optimizer (per arm) to detect the observed gap with power 0.8:",
+        "",
+        "| ladder | level | sigma (nats) | best-vs-worst range | seeds for range | seeds for range, Bonferroni 6 pairs "
+        "| seeds for range, sigma x2 | smallest adjacent gap | seeds for smallest gap |",
+        "|---|---|---|---|---|---|---|---|---|",
+    ]
+    for row in power["rows"]:
+        gap = row["smallest_adjacent_gap_nats"]
+        lines.append(
+            f"| {row['table']} | {row['level']} | {row['sigma_nats']:.4f} | {row['range_nats']:.4f} | "
+            f"{row['seeds_to_resolve_range']} | {row['seeds_to_resolve_range_bonferroni']} | "
+            f"{row['seeds_to_resolve_range_sigma_x2']} | {gap:.5f} | {row['seeds_to_resolve_smallest_gap']} |"
+        )
+    one_b = [r for r in power["rows"] if r["level"] == "1.2b"]
+    if one_b:
+        n_range = max(r["seeds_to_resolve_range_bonferroni"] for r in one_b)
+        n_range_x2 = max(r["seeds_to_resolve_range_sigma_x2"] for r in one_b)
+        gap_rows = [r for r in one_b if r["seeds_to_resolve_smallest_gap"] is not None]
+        resolvable = [r for r in gap_rows if r["seeds_to_resolve_smallest_gap"] <= 50]
+        unresolvable = [r for r in gap_rows if r["seeds_to_resolve_smallest_gap"] > 50]
+        n_gap = max(r["seeds_to_resolve_smallest_gap"] for r in resolvable) if resolvable else None
+        lines += [
+            "",
+            f"Concrete ask at 1.2B: {n_range} seeds per optimizer per Chinchilla ratio resolve best-versus-worst on "
+            f"every ladder after Bonferroni correction ({n_range_x2} if the true noise is twice the DataDecide value). "
+            + (
+                f"Resolving the smallest adjacent gaps at {', '.join(r['table'].split('_')[-1] for r in resolvable)} "
+                f"needs up to {n_gap} seeds per optimizer. "
+                if resolvable
+                else ""
+            )
+            + (
+                "At "
+                + ", ".join(
+                    f"{r['table'].split('_')[-1]} the smallest gap ({r['smallest_adjacent_gap_nats']:.6f} nats) would need "
+                    f"{r['seeds_to_resolve_smallest_gap']} seeds"
+                    for r in unresolvable
+                )
+                + " - the operational definition of a tie. "
+                if unresolvable
+                else ""
+            )
+            + f"A first experiment of {n_range} seeds x 4 optimizers x 1.2B x (1x, 4x, 8x Chinchilla) = "
+            f"{n_range * 4 * 3} runs settles best-versus-worst and bounds the tie cases"
+            + (
+                f"; {n_gap} seeds at the resolvable ratios would separate the ~0.002 nats gaps "
+                "if the noise assumption holds."
+                if n_gap
+                else "."
+            ),
+            "",
+        ]
+    return lines
+
+
 def render_report(results: dict[str, Any]) -> str:
     lines: list[str] = []
     counts = results["counts"]
@@ -373,6 +736,9 @@ def render_report(results: dict[str, Any]) -> str:
         f"Generated by `scripts/run_first_audit.py`{fast_note}. Every number below is read from "
         "`results/first_audit/first_audit.json`. Inputs and their SHA-256 digests are listed at the end.",
         "",
+    ]
+    lines += _headline_section(results)
+    lines += [
         "## What was measured",
         "",
         "- **Data axis** (DataDecide, `intervention_class = data`): 25 pretraining data recipes, 3 seeds per cell, "
@@ -430,6 +796,22 @@ def render_report(results: dict[str, Any]) -> str:
             _flip_row("largest fit budget order vs measured target order", cx["largest_fit_budget_vs_target"], d["n_pairs"]),
             "",
         ]
+        dec = d.get("projection_error_decomposition")
+        if dec and d["axis"] == "data":
+            lines += [
+                "Decomposition of the projection rule's order flips:",
+                "",
+                "| component | pairs | rate | FDR-significant target gap |",
+                "|---|---|---|---|",
+                f"| inherited crossover (largest fit budget also orders the pair wrongly) | "
+                f"{dec['crossover_inherited']['n']} | {_pct(dec['crossover_inherited']['rate'])} | "
+                f"{dec['crossover_inherited']['n_significant']} |",
+                f"| fit / extrapolation error (largest fit budget orders the pair correctly; projection reverses it) | "
+                f"{dec['fit_error']['n']} | {_pct(dec['fit_error']['rate'])} | {dec['fit_error']['n_significant']} |",
+                f"| single-scale flips the projection repairs | {dec['single_scale_only']['n']} | "
+                f"{_pct(dec['single_scale_only']['rate'])} | {dec['single_scale_only']['n_significant']} |",
+                "",
+            ]
         if d["axis"] == "optimizer":
             for label, key in (("Single-scale", "largest_fit_budget_vs_target"), ("Projection", "projection_vs_target")):
                 if cx[key]["pairs"]:
@@ -469,6 +851,7 @@ def render_report(results: dict[str, Any]) -> str:
             f"Pooled over the four optimizer size ladders: {pooled_flips} / {pooled_pairs} pair-decisions flip "
             f"({_pct(pooled_flips / pooled_pairs)}) between a small size and 1.2B.",
         ]
+    lines += _optimizer_sections(results)
     ts = results.get("tuning_stratification")
     if ts:
         lines += [

@@ -652,3 +652,62 @@ def test_signal_and_noise_check_helpers_on_synthetic_tables():
          "projection_check": check}
     )
     assert "Signal-and-Noise" in text and "sha256" in text
+
+
+def test_first_audit_derived_analyses():
+    import importlib
+
+    import pandas as pd
+
+    module = importlib.import_module("scripts.run_first_audit")
+    design = {
+        "n_pairs": 6,
+        "crossovers": {
+            "projection_vs_target": {
+                "pairs": [
+                    {"a": "a", "b": "b", "true_gap": 0.1, "significant": True},
+                    {"a": "a", "b": "c", "true_gap": 0.2, "significant": False},
+                    {"a": "b", "b": "d", "true_gap": 0.3, "significant": True},
+                ]
+            },
+            "largest_fit_budget_vs_target": {
+                "pairs": [
+                    {"a": "a", "b": "b", "true_gap": 0.1, "significant": True},
+                    {"a": "c", "b": "d", "true_gap": 0.4, "significant": True},
+                ]
+            },
+        },
+    }
+    dec = module.decompose_projection_error(design)
+    assert dec["crossover_inherited"]["n"] == 1 and dec["fit_error"]["n"] == 2 and dec["single_scale_only"]["n"] == 1
+    assert dec["fit_error"]["n_significant"] == 1 and dec["excess_projection_flips"] == 1
+    assert dec["fit_error_share_of_projection_flips"] == 2 / 3
+
+    # power: a gap equal to the noise needs ~17 seeds per arm; a gap 10x the noise needs the minimum 2
+    assert 15 <= module.seeds_needed(1.0, 1.0) <= 19
+    assert module.seeds_needed(10.0, 1.0) == 2
+    assert module.seeds_needed(0.0, 1.0) is None
+
+    rows = []
+    for name, offset in (("A", 0.0), ("B", 0.01), ("C", 0.03)):
+        for label, compute in (("s", 1.0), ("l", 8.0)):
+            rows.append(
+                {"intervention": name, "intervention_class": "optimizer", "compute": compute, "seed": 0,
+                 "bpb": 3.0 + offset * (1 if compute == 1.0 else 0.1), "scale_label": label, "chinchilla_ratio": 1}
+            )
+    conv = module.optimizer_convergence({"size_ladder_1xC": pd.DataFrame(rows)})
+    assert [c["level"] for c in conv] == ["s", "l"]
+    assert conv[0]["range_nats"] == pytest.approx(0.03) and conv[1]["range_nats"] == pytest.approx(0.003)
+    assert conv[0]["smallest_adjacent_gap_nats"] == pytest.approx(0.01)
+
+    noise_rows = []
+    for name in ("A", "B"):
+        for seed, value in enumerate((1.0, 1.02, 0.98)):
+            noise_rows.append(
+                {"intervention": name, "intervention_class": "data", "compute": 1.0, "seed": seed, "bpb": value,
+                 "scale_label": "1B", "metric_name": "c4_en_bits_per_token"}
+            )
+    noise = module.seed_noise_reference(pd.DataFrame(noise_rows), scales=("1B",))
+    assert noise[0]["pooled_within_cell_sd"] == pytest.approx(0.02) and noise[0]["seeds_per_cell"] == 3
+    power = module.power_analysis(conv, noise)
+    assert power["rows"][0]["seeds_to_resolve_range"] >= 2
