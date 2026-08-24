@@ -743,3 +743,37 @@ def test_compute_ask_arithmetic_and_exclusion():
     assert ask["recommended"]["gpu_hours"] == pytest.approx(9 * 4 * per_run_1x * (1 + 4))
     assert ask["excluded"]["ratios"] == [8]
     assert ask["full_grid_reference"]["runs"] == 6 * 4 * 3
+
+
+def test_ensemble_sanity_grid_and_pilot_helpers():
+    import importlib
+
+    import numpy as np
+
+    checker = importlib.import_module("scripts.check_ensemble_sanity")
+    audit = importlib.import_module("scripts.run_first_audit")
+    curves = {"a": (1.0, 2.0, 0.3), "b": (1.05, 2.0, 0.3), "c": (0.9, 3.0, 0.4)}
+    budgets = (1.0, 2.0, 4.0, 8.0, 16.0)
+    table, truth = checker.synthetic_grid(curves, budgets, 64.0, 0.0, np.random.default_rng(0))
+    assert len(table) == 3 * 6 * 3 and list(truth.index) == ["c", "a", "b"]
+    sat_table, sat_truth = checker.synthetic_grid(
+        curves, budgets, 64.0, 0.0, np.random.default_rng(0), saturating_names=("a",)
+    )
+    assert sat_truth["a"] >= truth["a"]  # saturating truth flattens: worse (higher) than the power law at the target
+    # noise-free fit-range values agree with the power law for non-saturating curves
+    assert np.isclose(sat_table[(sat_table.intervention == "b") & (sat_table.compute == 1.0)]["bpb"].iloc[0], 3.05)
+
+    gap4 = audit.min_detectable_gap(4, 0.0014)
+    gap9 = audit.min_detectable_gap(9, 0.0014)
+    assert gap9 < gap4
+    assert audit.seeds_needed(gap9, 0.0014) in (9, 10)
+    power = {"rows": [{"table": "size_ladder_1xC", "level": "1.2b", "sigma_nats": 0.0014, "range_nats": 0.018,
+                       "smallest_adjacent_gap_nats": 0.0021, "smallest_gap_identifiable": True},
+                      {"table": "size_ladder_8xC", "level": "1.2b", "sigma_nats": 0.0014, "range_nats": 0.004,
+                       "smallest_adjacent_gap_nats": 7e-6, "smallest_gap_identifiable": False}]}
+    ask = {"rows": [{"chinchilla_ratio": 1, "n_optimizers": 4, "gpu_hours_per_run": 100.0},
+                    {"chinchilla_ratio": 8, "n_optimizers": 4, "gpu_hours_per_run": 800.0}]}
+    tranches = audit.pilot_tranches(power, ask, seed_options=(4, 9))
+    assert [t["ratio"] for t in tranches] == [1, 1] and tranches[0]["gpu_hours"] == 1600.0
+    assert tranches[0]["resolves_best_vs_worst"] and not tranches[0]["resolves_smallest_adjacent_gap"]
+    assert tranches[1]["resolves_smallest_adjacent_gap"]

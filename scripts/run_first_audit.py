@@ -353,6 +353,46 @@ def seeds_needed(delta: float, sigma: float, alpha: float = 0.05, power: float =
     return int(np.ceil(n))
 
 
+def min_detectable_gap(n_seeds: int, sigma: float, alpha: float = 0.05, power: float = 0.8) -> float:
+    """Smallest mean gap a two-sided Welch test detects with ``n_seeds`` per arm at the given power."""
+
+    from scipy.stats import t as t_dist
+
+    dof = max(2 * n_seeds - 2, 1)
+    return float(np.sqrt(2.0 / n_seeds) * (t_dist.ppf(1 - alpha / 2, dof) + t_dist.ppf(power, dof)) * sigma)
+
+
+def pilot_tranches(
+    power: dict[str, Any], ask: dict[str, Any], seed_options: tuple[int, ...] = (4, 6, 9)
+) -> list[dict[str, Any]]:
+    """Cost and resolvable effect size of smaller first tranches at 1.2B."""
+
+    by_ratio = {r["chinchilla_ratio"]: r for r in ask["rows"]}
+    conv = {r["table"]: r for r in power["rows"] if r["level"] == "1.2b"}
+    out = []
+    for table, prow in conv.items():
+        ratio = int(table.split("_")[-1].rstrip("xC"))
+        cost = by_ratio.get(ratio)
+        if cost is None or not prow["smallest_gap_identifiable"]:
+            continue
+        for n in seed_options:
+            gap = min_detectable_gap(n, prow["sigma_nats"])
+            out.append(
+                {
+                    "ratio": ratio,
+                    "seeds_per_optimizer": n,
+                    "runs": n * cost["n_optimizers"],
+                    "gpu_hours": n * cost["n_optimizers"] * cost["gpu_hours_per_run"],
+                    "min_detectable_gap_nats": gap,
+                    "resolves_best_vs_worst": bool(gap <= prow["range_nats"]),
+                    "resolves_smallest_adjacent_gap": bool(gap <= (prow["smallest_adjacent_gap_nats"] or 0.0)),
+                    "range_nats": prow["range_nats"],
+                    "smallest_adjacent_gap_nats": prow["smallest_adjacent_gap_nats"],
+                }
+            )
+    return sorted(out, key=lambda r: r["gpu_hours"])
+
+
 def power_analysis(convergence: list[dict[str, Any]], noise: list[dict[str, Any]], n_pairs: int = 6) -> dict[str, Any]:
     """Seeds per cell needed to resolve the observed optimizer gaps at DataDecide-like seed noise."""
 
@@ -395,8 +435,16 @@ def power_analysis(convergence: list[dict[str, Any]], noise: list[dict[str, Any]
         "equal DataDecide's pooled within-cell seed sd (OLMo architecture, OLMo codebase, DataDecide mixtures) at the "
         "nearest scale. Nothing in the public artifacts measures the former. Sensitivity rows use x0.5 and x2",
         "test": "two-sided Welch t-test, alpha 0.05 (and Bonferroni 0.05/6 for the six optimizer pairs), power 0.8",
-        "unidentifiable_threshold": f"a gap is called unidentifiable when sigma / gap > {UNIDENTIFIABLE_NOISE_TO_GAP:g} "
-        "(more than ~1,500 seeds per arm at power 0.8)",
+        "unidentifiable_threshold": (
+            f"a gap is called unidentifiable when sigma / gap > {UNIDENTIFIABLE_NOISE_TO_GAP:g}. Derivation: the "
+            "two-sample seed count scales as n ~ 2 (z_0.975 + z_0.8)^2 (sigma/gap)^2 ~ 15.7 (sigma/gap)^2 per arm, so "
+            f"sigma/gap = {UNIDENTIFIABLE_NOISE_TO_GAP:g} already means ~{seeds_needed(1.0, UNIDENTIFIABLE_NOISE_TO_GAP):,} "
+            "seeds per optimizer; with four optimizers at the 1.2B/8xC cost per run that is several million GPU-hours "
+            "for one pairwise decision. The cutoff itself is a conventional feasibility choice for interpretability; "
+            "the 8xC conclusion does not depend on it (the observed ratio is ~200, two orders of magnitude past it). "
+            "Conversely sigma/gap ~ 1 is only marginally identifiable: ~16 seeds per arm at the exact ratio, 8-9 at "
+            "the observed 0.65-0.7"
+        ),
         "sigma_1b_nats": sigma_1b,
         "rows": rows,
     }
@@ -502,6 +550,10 @@ def add_derived_analyses(results: dict[str, Any]) -> dict[str, Any]:
     results["seed_noise_reference"] = seed_noise_reference(load_runs(DATADECIDE_TABLES["c4_en_bits_per_token"]))
     results["power_analysis"] = power_analysis(results["optimizer_convergence"], results["seed_noise_reference"])
     results["compute_ask"] = compute_ask(results["power_analysis"], size_tables)
+    results["compute_ask"]["pilot_tranches"] = pilot_tranches(results["power_analysis"], results["compute_ask"])
+    check_path = Path("results/ensemble_check/ensemble_check.json")
+    if check_path.exists():
+        results["ensemble_check"] = json.loads(check_path.read_text(encoding="utf-8"))
     return results
 
 
@@ -633,6 +685,12 @@ def _ci(entry: dict[str, Any], meaningful: bool) -> str:
     return f"{_pct(entry['point'])} [{_pct(entry['lo'])}, {_pct(entry['hi'])}]"
 
 
+def _identifiability_label(row: dict[str, Any]) -> str:
+    if not row["smallest_gap_identifiable"]:
+        return "NO"
+    return "marginal" if row["noise_to_smallest_gap_ratio"] >= 0.5 else "yes"
+
+
 def _ask_status(row: dict[str, Any], rec: dict[str, Any]) -> str:
     if row["chinchilla_ratio"] in rec["ratios"]:
         return "yes"
@@ -681,10 +739,19 @@ def _headline_section(results: dict[str, Any]) -> list[str]:
         fit = dec["fit_error"]
         inh = dec["crossover_inherited"]
         rep = dec["single_scale_only"]
+        p_int = pw["projection_ranker"]["mis_selection_rate"]
+        s_int = pw["single_scale_ranker"]["mis_selection_rate"]
+        separated = meaningful and p_int["lo"] is not None and p_int["lo"] > s_int["hi"]
+        sep_text = (
+            "the intervals do not overlap: a clean separation"
+            if separated
+            else "the intervals overlap: the rates are not distinguished at this seed count, and no significant "
+            "difference in mis-selection rate is claimed for this metric"
+        )
         lines += [
             f"**{label}** ({d['n_pairs']} pairs, fit budgets {d['budget_labels'][0]}-{d['budget_labels'][-1]}, target 1B): "
             f"pairwise mis-selection is {proj_rate} for the scaling-law projection versus {single_rate} for ranking the "
-            f"largest fit budget. The projection flips {cx['projection_vs_target']['n_flipped_pairs']} pairs "
+            f"largest fit budget ({sep_text}). The projection flips {cx['projection_vs_target']['n_flipped_pairs']} pairs "
             f"({cx['projection_vs_target']['n_significant']} with an FDR-significant target gap); single-scale ranking "
             f"flips {cx['largest_fit_budget_vs_target']['n_flipped_pairs']} "
             f"({cx['largest_fit_budget_vs_target']['n_significant']} significant). Of the projection's flips, "
@@ -701,6 +768,7 @@ def _headline_section(results: dict[str, Any]) -> list[str]:
         for d in data_designs
         if d["projection_error_decomposition"]["excess_projection_flips"] > 0
     )
+    lines += _ensemble_evidence(results, c4)
     lines += [
         "**This answers DataDecide's open question.** DataDecide reports that no scaling-law method beats single-scale "
         "ranking on its compute-decision frontier and speculates that improved scaling laws could, because unlike "
@@ -718,12 +786,14 @@ def _headline_section(results: dict[str, Any]) -> list[str]:
             "crossover on the designs above (see the per-design decomposition tables for the exact split)."
         ),
         "",
-        "Reading: on the continuous loss metric the extra error projection introduces is fit/extrapolation error, not "
-        "crossover, and most of it is statistically real (the reversed pairs are separated by more than seed noise at "
-        "the target). On the accuracy metric most projection flips are inherited from a small-scale order that already "
-        "disagreed with the target, and the majority of those inherited flips are not significant - i.e. they are "
-        "small-scale evaluation noise on near-tied pairs rather than crossovers; the fit-error component is again the "
-        "part that survives significance testing.",
+        "Reading: on the continuous loss metric the projection's mis-selection rate is cleanly separated from "
+        "single-scale ranking, and the extra error is fit/extrapolation error, not crossover; most of it is "
+        "statistically real (the reversed pairs are separated by more than seed noise at the target). On the accuracy "
+        "metric the two rates are *not* distinguished - their intervals overlap - so OLMES supports the same "
+        "decomposition verdict (whatever excess exists is fit error, none is crossover) without establishing a "
+        "difference in mis-selection rate. Most OLMES projection flips are inherited from a small-scale order that "
+        "already disagreed with the target, and the majority of those inherited flips are not significant, i.e. they "
+        "are small-scale evaluation noise on near-tied pairs rather than crossovers.",
         "",
         "**Negative-control framing.** H2 predicted the data axis to be scale-stable. It is: single-scale ranking "
         f"flips {_pct(min(single_rates))}-{_pct(max(single_rates))} of pairs depending on metric and design, and the "
@@ -732,6 +802,74 @@ def _headline_section(results: dict[str, Any]) -> list[str]:
         "compared.",
         "",
     ]
+    return lines
+
+
+def _ensemble_evidence(results: dict[str, Any], c4: dict[str, Any]) -> list[str]:
+    check = results.get("ensemble_check")
+    pw = c4["pairwise_decisions"]["rankers"]
+    if not check or "ensemble_ranker" not in pw:
+        return []
+    ens = pw["ensemble_ranker"]["mis_selection_rate"]
+    proj = pw["projection_ranker"]["mis_selection_rate"]
+    ws = check["scenarios"]["well_specified"]
+    sat = check["scenarios"]["saturating_half"]
+    ok = check["verdict"]["well_specified_ensemble_within_2pp_of_projection"]
+    helps = check["verdict"]["ensemble_helps_under_misspecification"]
+    ratio = ens["point"] / proj["point"] if proj["point"] else float("nan")
+
+    lines = [
+        f"**Evidence from the ensemble ranker ({'confirmatory' if (ok and helps) else 'consistent, not confirmatory'}).** "
+        f"On C4 bits/token the misspecification-aware ensemble "
+        f"(three curve families weighted by leave-largest-budget-out loss) mis-selects {_pct(ens['point'])} "
+        f"[{_pct(ens['lo'])}, {_pct(ens['hi'])}] of pairs against {_pct(proj['point'])} for the plain power law - "
+        f"{ratio:.1f}x worse. If the projection's excess error is fit variance rather than crossover, adding model "
+        f"flexibility should make it worse, and it does. "
+    ]
+    check_text = (
+        f"Sanity check on synthetic grids with a known answer (`scripts/check_ensemble_sanity.py`: 25 power-law "
+        f"curves fitted to the real DataDecide seed means, the same {check['n_fit_budgets']} fit budgets, 3 seeds, "
+        f"seed noise {check['sigma_bits_per_token']:.4f} bits/token pooled over the fit budgets (the small scales are "
+        f"far noisier than 1B), {check['n_draws']} noise draws, scored "
+        f"against the noiseless truth): when the power law is the true family the ensemble mis-selects "
+        f"{_pct(ws['ensemble_ranker']['pairwise_mis_selection_mean'])} vs "
+        f"{_pct(ws['projection_ranker']['pairwise_mis_selection_mean'])} for the plain fit; when half the truths "
+        f"saturate the ensemble mis-selects {_pct(sat['ensemble_ranker']['pairwise_mis_selection_mean'])} vs "
+        f"{_pct(sat['projection_ranker']['pairwise_mis_selection_mean'])}. "
+    )
+    impl_ok = check["verdict"].get("implementation_ok_noiseless_within_1pp", False)
+    nl = check["scenarios"].get("noiseless")
+    noiseless_text = (
+        f"With zero seed noise the ensemble and the plain fit mis-select "
+        f"{_pct(nl['ensemble_ranker']['pairwise_mis_selection_mean'])} and "
+        f"{_pct(nl['projection_ranker']['pairwise_mis_selection_mean'])} respectively. "
+        if nl
+        else ""
+    )
+    if not impl_ok:
+        lines[-1] += (
+            check_text + noiseless_text + "**The ensemble does NOT reproduce the plain fit even without noise on a "
+            "well-specified problem - this is a defect in the ensemble implementation, not evidence for the mechanism. "
+            "The DataDecide ensemble number is reported but must not be used as supporting evidence until it is fixed.**"
+        )
+    elif ok and helps:
+        lines[-1] += (
+            check_text + noiseless_text + "The ensemble tracks the plain fit when the family is correct and helps when it "
+            "is not, so its DataDecide result is not a defect: it is the fit-variance mechanism showing up in the "
+            "extrapolation-loss weights. Confirmatory evidence for H1's mechanism."
+        )
+    else:
+        lines[-1] += (
+            check_text + noiseless_text + "The implementation is sound (it reproduces the plain fit exactly when the "
+            "fitting data are noise-free), but at realistic seed noise the ensemble is worse than the plain fit even "
+            "when the power law is the true family" + ("" if helps else ", and it does not help under the saturating "
+            "misspecification it was designed for") + ". Its excess is therefore variance from weighting flexible "
+            "families on noisy leave-one-out losses - the same fit-variance mechanism as H1, now reproduced on synthetic "
+            "data with a known answer - but because the ensemble fails the 'roughly matches the plain fit when "
+            "well-specified' criterion it is reported as **consistent with the mechanism, not as independent "
+            "confirmation**, and it should not be used as a selection rule on this kind of data."
+        )
+    lines.append("")
     return lines
 
 
@@ -785,8 +923,8 @@ def _optimizer_sections(results: dict[str, Any]) -> list[str]:
     for r in one_b_rows:
         lines.append(
             f"| {r['table']} | {r['sigma_nats']:.4f} | {r['range_nats']:.4f} | {r['noise_to_range_ratio']:.2f} | "
-            f"{r['smallest_adjacent_gap_nats']:.6f} | {r['noise_to_smallest_gap_ratio']:.0f} | "
-            f"{'yes' if r['smallest_gap_identifiable'] else 'NO'} |"
+            f"{r['smallest_adjacent_gap_nats']:.6f} | {r['noise_to_smallest_gap_ratio']:.2f} | "
+            f"{_identifiability_label(r)} |"
         )
     if unident:
         worst = max(unident, key=lambda r: r["noise_to_smallest_gap_ratio"])
@@ -800,6 +938,18 @@ def _optimizer_sections(results: dict[str, Any]) -> list[str]:
             f"this scale is ranking noise. Threshold used: {power['unidentifiable_threshold']}. This follows from the "
             "released single-run values and the DataDecide seed variance alone; no new training was needed to "
             "establish it.",
+            "",
+        ]
+    marginal = [r for r in one_b_rows if r["smallest_gap_identifiable"] and r["noise_to_smallest_gap_ratio"] >= 0.5]
+    if marginal:
+        lines += [
+            f"At {', '.join(r['table'].split('_')[-1] for r in marginal)} the smallest adjacent gaps sit at sigma/gap "
+            f"= {min(r['noise_to_smallest_gap_ratio'] for r in marginal):.2f}-"
+            f"{max(r['noise_to_smallest_gap_ratio'] for r in marginal):.2f}: **marginally identifiable**. A single run "
+            "cannot order those pairs either; the rankings at these ratios only become meaningful with real seeds "
+            f"({min(r['seeds_to_resolve_smallest_gap'] for r in marginal)}-"
+            f"{max(r['seeds_to_resolve_smallest_gap'] for r in marginal)} per optimizer), which is exactly what the "
+            "compute ask below buys.",
             "",
         ]
     lines += [
@@ -891,6 +1041,45 @@ def _optimizer_sections(results: dict[str, Any]) -> list[str]:
             f"ask ({full['description']}: {full['runs']} runs) is {full['gpu_hours']:,.0f} GPU-hours.",
             "",
         ]
+        tranches = ask.get("pilot_tranches", [])
+        if tranches:
+            lines += [
+                "### Pilot tranches (cheap entry points; a positive pilot unlocks the full ask)",
+                "",
+                "Minimal detectable gap = sqrt(2/n) x (t_0.975 + t_0.8) x sigma for n seeds per optimizer "
+                "(Welch, power 0.8, no multiplicity correction). 'Resolves' compares that gap with the observed "
+                "single-run spread at 1.2B on the same ratio.",
+                "",
+                "| ratio | seeds/optimizer | runs | GPU-h (40% MFU) | min detectable gap (nats) | observed range | "
+                "observed smallest gap | resolves best-vs-worst | resolves smallest gap |",
+                "|---|---|---|---|---|---|---|---|---|",
+            ]
+            for t in tranches:
+                lines.append(
+                    f"| {t['ratio']}xC | {t['seeds_per_optimizer']} | {t['runs']} | {t['gpu_hours']:,.0f} | "
+                    f"{t['min_detectable_gap_nats']:.4f} | {t['range_nats']:.4f} | {t['smallest_adjacent_gap_nats']:.4f} | "
+                    f"{'yes' if t['resolves_best_vs_worst'] else 'no'} | "
+                    f"{'yes' if t['resolves_smallest_adjacent_gap'] else 'no'} |"
+                )
+            cheapest_full = next((t for t in tranches if t["resolves_smallest_adjacent_gap"]), None)
+            cheapest_range = next((t for t in tranches if t["resolves_best_vs_worst"]), None)
+            lines += [""]
+            if cheapest_range:
+                lines.append(
+                    f"Smallest tranche that settles best-versus-worst at one ratio: {cheapest_range['ratio']}xC x "
+                    f"{cheapest_range['seeds_per_optimizer']} seeds = {cheapest_range['runs']} runs, "
+                    f"**{cheapest_range['gpu_hours']:,.0f} GPU-hours** (detects gaps >= "
+                    f"{cheapest_range['min_detectable_gap_nats']:.4f} nats)."
+                )
+            if cheapest_full:
+                lines.append(
+                    f"Smallest tranche that also resolves the ~0.002 nats adjacent gaps at one ratio: "
+                    f"{cheapest_full['ratio']}xC x {cheapest_full['seeds_per_optimizer']} seeds = {cheapest_full['runs']} "
+                    f"runs, **{cheapest_full['gpu_hours']:,.0f} GPU-hours**. Recommended pilot: this tranche; it also "
+                    "measures the real seed sd of these runs, replacing the cross-study sigma assumption before the "
+                    "rest of the grid is committed."
+                )
+            lines.append("")
     return lines
 
 

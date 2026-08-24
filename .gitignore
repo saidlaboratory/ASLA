@@ -12,6 +12,7 @@ results/*
 !results/first_audit/
 !results/signal_and_noise/
 !results/known_answer/
+!results/ensemble_check/
 .venv/
 logs/*.out
 logs/*.err
