@@ -6,9 +6,9 @@ import json
 from pathlib import Path
 from typing import Any
 
+import independent_rederivation as ir
 import numpy as np
 
-import independent_rederivation as ir
 from asla.analysis.fits import fit_all
 
 REPO = Path(__file__).resolve().parents[1]
