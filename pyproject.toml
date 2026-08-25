@@ -58,3 +58,9 @@ ignore = ["E731"]
 
 [tool.ruff.lint.isort]
 known-first-party = ["asla"]
+
+# The adversarial-audit harness under audit/ is deliberately standalone
+# verification code (it re-implements analysis from scratch and prints wide
+# diagnostic tables). Its long print/format lines are not worth wrapping.
+[tool.ruff.lint.per-file-ignores]
+"audit/*.py" = ["E501"]

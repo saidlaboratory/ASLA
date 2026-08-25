@@ -20,3 +20,6 @@ logs/*.log
 
 # Raw public artifacts pulled by asla harvest-* (re-downloadable; never commit).
 data/raw/
+
+# Adversarial-audit intermediates (regenerable via audit/*.py).
+results/adversarial/_*.md
