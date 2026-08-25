@@ -230,22 +230,34 @@ def sweep() -> list[dict[str, Any]]:
 
 
 def main() -> int:
-    rows = sweep()
-    frame = pd.DataFrame(rows)
+    import sys
+
     destination = REPO / "results" / "adversarial"
     destination.mkdir(parents=True, exist_ok=True)
-    frame.to_csv(destination / "a2_specification_curve.csv", index=False)
-    testable = frame[frame["excess_is_all_fit_error"].notna()]
+    csv_path = destination / "a2_specification_curve.csv"
+    if "--from-csv" in sys.argv and csv_path.exists():
+        frame = pd.read_csv(csv_path)
+    else:
+        frame = pd.DataFrame(sweep())
+        frame.to_csv(csv_path, index=False)
+    # ``excess_is_all_fit_error`` is None where there is no positive excess to
+    # explain; those specifications are not evidence for or against the claim.
+    # Cast to a real boolean mask before negating (``~`` on an object column
+    # containing None yields integers, not booleans).
+    testable = frame[frame["excess_is_all_fit_error"].notna()].copy()
+    testable["excess_is_all_fit_error"] = testable["excess_is_all_fit_error"].astype(bool)
+    worse = frame["projection_worse"].astype(bool)
     summary = {
         "n_specifications": int(len(frame)),
-        "n_where_projection_worse": int(frame["projection_worse"].sum()),
+        "n_where_projection_worse": int(worse.sum()),
         "n_with_positive_excess": int(len(testable)),
         "n_excess_all_fit_error": int(testable["excess_is_all_fit_error"].sum()),
         "excess_all_fit_error_rate": float(testable["excess_is_all_fit_error"].mean()) if len(testable) else None,
-        "n_fit_error_exceeds_inherited": int(frame["fit_error_exceeds_inherited"].sum()),
+        "n_fit_error_exceeds_inherited": int(frame["fit_error_exceeds_inherited"].astype(bool).sum()),
         "counterexamples": testable[~testable["excess_is_all_fit_error"]].to_dict("records"),
-        "projection_better_specs": frame[~frame["projection_worse"]][
-            ["metric", "target", "fit_scales", "fit_bounds", "projection_mis_selection", "single_scale_mis_selection"]
+        "projection_better_specs": frame.loc[
+            ~worse,
+            ["metric", "target", "fit_scales", "fit_bounds", "ranking", "projection_mis_selection", "single_scale_mis_selection"],
         ].to_dict("records"),
     }
     (destination / "a2_specification_summary.json").write_text(
