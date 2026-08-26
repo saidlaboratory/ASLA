@@ -116,16 +116,24 @@ def section_floor(floors: dict[str, Any]) -> list[str]:
     olmes = floors["olmes_macro_error"]
     proxy = floors["olmes_macro_correct_prob_per_char_deficit"]
     lines = [
-        "## Substantive finding: the irreducible-loss floor is not identifiable on accuracy metrics",
+        "## Standalone result: three-parameter scaling-law extrapolation is not identifiable on downstream accuracy metrics",
         "",
-        "Fixing the `alpha` bound exposed a second, deeper problem rather than removing one. With `alpha` free, "
+        "**This result does not depend on H1 and is not about our audit.** It is a statement about a modelling "
+        "practice in wide use: fitting `E + A C^-alpha` to a downstream accuracy metric and extrapolating it. On "
+        "the public DataDecide suite that fit is *unidentifiable* - the likelihood is flat in the floor `E`, so the "
+        "extrapolation is driven by a parameter the data do not constrain at all. Anyone doing this is reading "
+        "structure out of an unconstrained parameter.",
+        "",
+        "It surfaced because fixing the `alpha` bound exposed a deeper problem rather than removing one. With "
+        "`alpha` free, "
         f"**{olmes['n_with_floor_at_zero']} of {olmes['n_interventions']}** OLMES-error fits put the floor `E` at "
         "zero: the fitted curve asserts that downstream error decays to zero at infinite compute, which is false "
         "for a bounded accuracy metric with a non-zero Bayes error. That is not a bug in the optimizer. It is the "
         "data telling us the floor is not estimable from this metric.",
         "",
         "Profiling the likelihood in `E` (fix the floor, refit the rest, measure the residual) makes the contrast "
-        "sharp:",
+        "sharp. Figure: `results/adversarial/fig_floor_identifiability.png` (also `.pdf`) - the C4 profile is a "
+        "steep well, the accuracy profile is flat across the entire left half of the floor range.",
         "",
         "| metric | best floor / min observed value | fits with floor at 0 | SSR(floor=0) / SSR(best) | target projection spread across floors the fit range cannot distinguish |",
         "|---|---|---|---|---|",
@@ -146,7 +154,8 @@ def section_floor(floors: dict[str, Any]) -> list[str]:
         "sensible irreducible-loss estimate. On OLMES error the same ratio is "
         f"**{olmes['median_ssr_ratio_zero_over_best']:.4f}**, i.e. **a zero floor fits exactly as well as the best "
         "floor**. The likelihood is flat in `E`, so the three-parameter power law is over-parameterised for this "
-        "metric family: two parameters are doing all the work and the third is free to be anything.",
+        "metric family: two parameters are doing all the work and the third is free to be anything. A likelihood "
+        "ratio of exactly 1.0000 is not 'poorly constrained'; it is unidentified.",
         "",
         "**Why this matters beyond a diagnostic.** The floor is the parameter that dominates extrapolation. Two "
         "curves that agree on the fit range but differ in floor diverge at the target, and the divergence grows "
@@ -156,11 +165,13 @@ def section_floor(floors: dict[str, Any]) -> list[str]:
         "target. A projection that must choose a floor the data do not constrain is, to that extent, choosing "
         "arbitrarily, and the resulting error is exactly the fit variance H1 identifies as dominant.",
         "",
-        "This is a concrete mechanism for why the OLMES projection numbers are the least trustworthy in "
-        "FIRST_AUDIT.md, and it is a methodological result in its own right: **downstream accuracy metrics do not "
-        "support three-parameter scaling-law extrapolation, because their floor is unidentifiable over realistic "
-        "fit ranges.** Practitioners fitting `E + A C^-alpha` to accuracy should either fix the floor from outside "
-        "the data (e.g. at chance level for the task) or fit a two-parameter form and say so.",
+        "**The actionable statement.** Downstream accuracy metrics do not support three-parameter scaling-law "
+        "extrapolation over realistic fit ranges, because the floor is unidentifiable. Practitioners fitting "
+        "`E + A C^-alpha` to accuracy should either fix the floor exogenously (chance level for the task, or a "
+        "human/Bayes-error estimate) and fit two parameters, or report that the third parameter is unconstrained "
+        "and that the projection inherits its full range. Reporting a point projection without either is reporting "
+        "an arbitrary choice as a measurement. It also explains why the OLMES projection numbers are the least "
+        "trustworthy in FIRST_AUDIT.md.",
         "",
         "*An honest caveat that cuts the other way.* Identified is not the same as tightly determined. Even on C4, "
         f"where the floor is clearly identified, the target projection still moves by "
@@ -531,11 +542,13 @@ def main() -> int:
         "| A4 FDR under dependence | BH used outside its proven regime; BY reported alongside; realised null error 1.7% < 5% |",
         "| A5 traceability | FIRST_AUDIT.md re-renders **byte-identical**; no hand-entered numbers |",
         "| A6 data integrity | clean: no duplicates, no leakage, 3 genuine seeds/cell, 6ND exact against the released column |",
-        "| Follow-on finding | **the loss floor is unidentifiable on accuracy metrics** (SSR ratio 1.0000 vs 10x on C4) - accuracy does not support 3-parameter extrapolation |",
+        "| Standalone result (independent of H1) | **3-parameter extrapolation is unidentifiable on downstream accuracy metrics**: the likelihood is exactly flat in the floor (SSR ratio 1.0000, vs 10x on C4) |",
         "",
     ]
     floors = load("floor_identifiability.json")
     dose = load("a2_dose_response.json")
+    if floors:
+        lines += section_floor(floors)
     if dose:
         lines += section_promoted(dose)
     if a1:
@@ -551,8 +564,6 @@ def main() -> int:
         lines += section_a5(a5)
     if a4:
         lines += section_a6(a4)
-    if floors:
-        lines += section_floor(floors)
     lines += [
         "## What this audit did not rule out",
         "",

@@ -139,14 +139,74 @@ def run(metric: str) -> dict[str, Any]:
     }
 
 
+def make_figure(out: dict[str, Any]) -> list[str]:
+    """Profile likelihood in the floor: flat on accuracy, sharply curved on BPB."""
+
+    try:
+        import matplotlib
+
+        matplotlib.use("Agg")
+        import matplotlib.pyplot as plt
+    except ImportError:
+        return []
+    labels = {
+        "c4_en_bits_per_token": ("C4-EN bits/token", "#2f855a"),
+        "olmes_macro_correct_prob_per_char_deficit": ("OLMES correct-prob deficit", "#b7791f"),
+        "olmes_macro_error": ("OLMES macro error (accuracy)", "#c53030"),
+    }
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(11.5, 4.3))
+    for metric, (label, colour) in labels.items():
+        df, budgets, target = ir.design_frame(metric)
+        cells = _cells(df, budgets)
+        name = sorted(cells)[0]
+        x, y = cells[name]
+        y_min = float(np.min(y))
+        floors = np.linspace(0.0, y_min * 0.999, 80)
+        ssr = []
+        for floor in floors:
+            _, _, value = _best_fit_at_floor(x, y, float(floor))
+            ssr.append(value)
+        ssr_arr = np.asarray(ssr, dtype=float)
+        finite = np.isfinite(ssr_arr)
+        if not finite.any():
+            continue
+        normalised = ssr_arr / np.nanmin(ssr_arr[finite])
+        ax1.plot(floors[finite] / y_min, normalised[finite], lw=2, color=colour, label=label)
+        row = out[metric]
+        ax2.bar(label.split(" (")[0], row["median_ssr_ratio_zero_over_best"], color=colour)
+    ax1.axhline(1.0, color="#718096", lw=1, ls=":")
+    ax1.set_ylim(0.9, 12.0)
+    ax1.set_xlabel("assumed floor E, as a fraction of the smallest observed value")
+    ax1.set_ylabel("residual sum of squares / its minimum")
+    ax1.set_title("Profile likelihood in the floor\n(flat = the data do not constrain E)")
+    ax1.legend(frameon=False, fontsize=8)
+    ax2.axhline(1.0, color="#718096", lw=1.2, ls="--")
+    ax2.set_ylabel("SSR(E=0) / SSR(best E)")
+    ax2.set_title("Cost of forcing the floor to zero\n(1.0 = free: E is unidentified)")
+    ax2.tick_params(axis="x", labelrotation=12, labelsize=8)
+    fig.tight_layout()
+    written = []
+    destination = REPO / "results" / "adversarial"
+    for ext in ("png", "pdf"):
+        path = destination / f"fig_floor_identifiability.{ext}"
+        fig.savefig(path, dpi=160, bbox_inches="tight")
+        written.append(str(path))
+    plt.close(fig)
+    return written
+
+
 def main() -> int:
     out = {metric: run(metric) for metric in ir.TABLES}
+    figures = make_figure(out)
+    out["figures"] = figures
     destination = REPO / "results" / "adversarial"
     destination.mkdir(parents=True, exist_ok=True)
     (destination / "floor_identifiability.json").write_text(
         json.dumps(out, indent=2, sort_keys=True, default=str) + "\n", encoding="utf-8"
     )
     for metric, row in out.items():
+        if metric == "figures":
+            continue
         print(f"=== {metric}")
         print(f"    best floor / y_min (median):        {row['median_best_floor_relative_to_ymin']:.4f}")
         print(f"    interventions with floor == 0:      {row['n_with_floor_at_zero']}/{row['n_interventions']}")
