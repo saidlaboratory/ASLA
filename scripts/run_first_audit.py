@@ -1144,11 +1144,25 @@ def render_report(results: dict[str, Any]) -> str:
             )
         pins = d.get("bound_pins") or {}
         if pins.get("any_pinned"):
+            from collections import Counter
+
+            which = Counter(
+                f"{entry['parameter']}@{entry['side']}"
+                for entries in pins["pinned"].values()
+                for entry in entries
+            )
+            detail = ", ".join(f"{count}x {name}" for name, count in sorted(which.items()))
             lines += [
                 f"> **Fit diagnostic:** {pins['n_pinned']} of {pins['n_interventions']} interventions have a fitted "
-                "parameter resting on a bound in this design. A pinned parameter means the optimizer returned the "
-                "closest curve it was *allowed* to express, not the closest curve; read the projection numbers for "
-                "this design with that in mind.",
+                f"parameter resting on a bound in this design ({detail}). A pinned parameter means the optimizer "
+                "returned the closest curve it was *allowed* to express, not the closest curve."
+                + (
+                    " Every pin here is on the floor `E`, which the non-identifiability result in "
+                    "AUDIT_ADVERSARIAL.md shows is unconstrained by accuracy-metric data: the projection rests on "
+                    "a parameter the likelihood does not determine."
+                    if all(name == "E@lower" for name in which)
+                    else ""
+                ),
                 "",
             ]
         cx = d["crossovers"]

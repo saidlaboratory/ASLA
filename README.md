@@ -157,6 +157,9 @@ bits-per-byte metric, so rows are labelled `c4_en_bits_per_token`,
 `olmes_macro_error`, ...) and a nullable `tuning_quality`. Raw artifacts are
 cached under `data/raw/` (git-ignored). See
 [KNOWN_ANSWER.md](KNOWN_ANSWER.md), [FIRST_AUDIT.md](FIRST_AUDIT.md),
+[AUDIT_ADVERSARIAL.md](AUDIT_ADVERSARIAL.md),
+[NOTES_FIT_BOUNDS_DEFECT.md](NOTES_FIT_BOUNDS_DEFECT.md),
+[PREDICTIONS_TASK_B.md](PREDICTIONS_TASK_B.md),
 [NOTES_TUNING_CONFOUND.md](NOTES_TUNING_CONFOUND.md),
 [SIGNAL_AND_NOISE.md](SIGNAL_AND_NOISE.md), and [RELATED_WORK.md](RELATED_WORK.md).
 
