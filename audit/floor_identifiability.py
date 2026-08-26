@@ -27,10 +27,9 @@ import json
 from pathlib import Path
 from typing import Any
 
+import independent_rederivation as ir
 import numpy as np
 import pandas as pd
-
-import independent_rederivation as ir
 
 REPO = Path(__file__).resolve().parents[1]
 
