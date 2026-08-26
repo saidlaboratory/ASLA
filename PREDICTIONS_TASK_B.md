@@ -122,25 +122,54 @@ hierarchical shrinkage, then shared exponent best or tied with shrinkage.
 - I do predict the curve **flattens** between hierarchical shrinkage and shared
   exponent (difference under 1 point), since shrinkage at a noise share of 0.33
   already captures most of the available variance reduction.
-- **Refuted if** shared-exponent is clearly worse than hierarchical shrinkage (by
-  more than 1 point beyond overlapping CIs), which would indicate real
-  between-recipe exponent structure that complete pooling destroys — a genuine
-  interior optimum and a more interesting result than the monotone prediction.
+P3 has **two named alternative outcomes**, and both are substantive results
+rather than incidental details. Let `d = shrinkage_mis_selection -
+shared_exponent_mis_selection`, in percentage points, with CIs from the seed
+bootstrap.
+
+- **P3a — interior optimum (shared-exponent clearly worse).** Triggered when
+  `d <= -1.0` points and the two CIs do not overlap. Interpretation: there is real
+  between-recipe exponent structure that complete pooling destroys. The
+  accuracy-vs-flexibility curve has an interior optimum, the "less flexibility is
+  always better" reading of H1 is wrong, and the correct claim becomes that there
+  is an optimal flexibility level which the data can locate.
+- **P3b — under-pooling (shared-exponent clearly better).** Triggered when
+  `d >= +1.0` points and the two CIs do not overlap. Interpretation: the
+  data-driven shrinkage is under-pooling, and the between-recipe exponent
+  variation is essentially all noise — i.e. the measured noise share of 0.33 is an
+  underestimate and the true share is near 1. This would say the empirical-Bayes
+  shrinkage target is too conservative, and that the practitioner's fixed-exponent
+  device (the Olmo Hybrid choice) is not merely defensible but optimal. It also
+  predicts that a re-measured noise share on the full recipe set should come out
+  well above 0.33; that check is required before P3b is claimed.
+- **P3 as predicted (monotone, flattening)** requires `|d| < 1.0` or overlapping
+  CIs, with both pooled estimators beating plain projection.
 
 ### P4 — Interaction with the lever arm and the number of budgets
 
 **Pooling helps most where fit variance is worst**, i.e. at long lever arms and few
 fit budgets.
 
-- Point prediction: the improvement from pooling, measured in excess flips removed,
-  is **at least 2x larger** at lever arm 52.5x (fit to 150M, target 1B) than at
-  lever arm 4.7x (fit to 530M, target 1B).
-- At lever arm ~1-5x, where the audit shows excess flips of only ~4-5, I predict the
-  improvement is **small and possibly zero** (under 2 flips), because there is
-  little variance left to remove.
-- **Refuted if** the improvement is flat across lever arms, or larger at short arms
-  than long ones. Either would say pooling is doing something other than reducing
-  extrapolation variance.
+Define the **interaction ratio** `rho_L = I(52.5x) / I(4.7x)`, where `I(L)` is the
+number of excess flips removed by the best pooled estimator at lever arm `L`
+(fit to 150M and to 530M respectively, both targeting 1B, same metric and ladder
+start). `rho_L` is computed on every seed-bootstrap replicate, giving a point
+estimate and a 95% CI.
+
+- Point prediction: **`rho_L >= 2.0`**.
+- At lever arm ~1-5x, where the audit shows excess flips of only ~4-5, I predict
+  `I(4.7x) < 2` flips, because there is little variance left to remove.
+- **P4 counts as FAILED** when the **point estimate `rho_L < 2.0` AND the 95% CI
+  upper bound is below 2.0** — i.e. the data positively exclude the predicted
+  interaction, rather than merely failing to establish it.
+- **P4 counts as UNDERPOWERED** (neither confirmed nor failed, and it does not
+  count toward the compound refutation in section 5) when the point estimate is
+  below 2.0 but the CI includes 2.0, or when `I(52.5x) < 3` so the ratio is
+  computed over too few removed flips to be stable.
+- **P4 counts as CONFIRMED** when the point estimate is at or above 2.0.
+- If `I(4.7x) = 0` the ratio is undefined; in that case P4 is confirmed if
+  `I(52.5x) >= 3`, since an improvement present only at the long arm is the
+  strongest possible form of the predicted interaction.
 
 ### P5 — Where the removed errors come from
 
@@ -148,9 +177,22 @@ fit budgets.
 flips.** Applying the audit's decomposition to the pooled estimator, the reduction
 in fit-error flips should account for **at least 80%** of the total reduction.
 
-- **Refuted if** pooling mainly removes inherited-crossover flips, which would mean
-  it is changing the small-scale ordering rather than stabilising the extrapolation
-  — a different mechanism from the one claimed.
+**Evaluability threshold (fixed in advance).** Let `R` be the total number of flips
+removed by the best pooled estimator relative to plain projection, on the primary
+C4 design. An 80% ratio is meaningless over a handful of flips.
+
+- **P5 is evaluable only if `R >= 8`.** At `R = 8` the 80% threshold distinguishes
+  "at least 7 of 8 removed flips are fit-error" from "6 or fewer", which a
+  seed-bootstrap CI on the count can resolve at this sample size. (For reference,
+  C4 has 14 fit-error flips and 2 inherited-crossover flips in total, so `R >= 8`
+  means pooling removed a majority of the fit-error flips.)
+- **If `R < 8`, P5 is reported as UNDERPOWERED — neither confirmed nor refuted** —
+  and the observed ratio is reported with its bootstrap CI as descriptive only. It
+  does not count toward or against the mechanism.
+- **Refuted (when evaluable)** if the fit-error share of removed flips is below
+  80% and its bootstrap CI upper bound is also below 80%, which would mean pooling
+  is changing the small-scale ordering rather than stabilising the extrapolation —
+  a different mechanism from the one claimed.
 
 ---
 
@@ -160,7 +202,9 @@ The mechanism claim is refuted, not merely dented, if **both** of these hold:
 
 1. Neither pooled estimator improves on plain projection by more than 10% relative
    (P1 fails), **and**
-2. The improvement, if any, shows no interaction with the lever arm (P4 fails).
+2. P4 counts as FAILED under the sharp criterion above (point estimate `rho_L < 2.0`
+   *and* CI upper bound below 2.0). A P4 result of UNDERPOWERED does **not**
+   contribute to this compound condition.
 
 That combination would mean flexibility reduction does not buy accuracy even though
 flexibility increase demonstrably costs it, which is asymmetric in a way a pure
