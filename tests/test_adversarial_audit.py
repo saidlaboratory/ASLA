@@ -86,3 +86,40 @@ def test_simulate_once_recovers_a_noiseless_crossover_exactly():
     noncross_a, noncross_b = dp.make_pair(0.01, False, budgets, target, 0.02)
     out2 = dp.simulate_once(noncross_a, noncross_b, budgets, target, 0.0, 0.0, 3, np.random.default_rng(0))
     assert out2["observed_flip"] is False
+
+
+def test_curvature_families_are_matched_on_signal_and_differ_only_in_geometry():
+    import curvature_boundary_demo as cb
+
+    level = cb.build_truth("level")
+    curvature = cb.build_truth("curvature")
+    # both have real, comparable target spread, so neither arm is at chance
+    assert cb._target_spread(level) > 0.02
+    assert cb._target_spread(curvature) > 0.02
+    # level curves share one exponent; curvature curves do not
+    assert len({round(alpha, 9) for _, _, alpha in level.values()}) == 1
+    assert len({round(alpha, 9) for _, _, alpha in curvature.values()}) == len(curvature)
+    # every level exponent sits below the 0.05 defect floor so the defect binds
+    assert all(alpha < 0.05 for _, _, alpha in level.values())
+
+
+def test_defect_is_monotone_on_level_geometry_and_reorders_on_curvature():
+    import curvature_boundary_demo as cb
+
+    level = cb.run_family("level", n_trials=8, seed=11)
+    curvature = cb.run_family("curvature", n_trials=8, seed=11)
+    # the defect binds on the level family (that is the point: pinned yet harmless)
+    assert level["n_pinned_under_defect"] >= 1
+    # decisions are essentially untouched on level geometry ...
+    assert level["mean_pairs_reordered"] < 0.5
+    assert level["mean_spearman_defective_vs_corrected"] > 0.99
+    # ... and materially disturbed on curvature geometry
+    assert curvature["mean_pairs_reordered"] > level["mean_pairs_reordered"]
+    assert curvature["fraction_trials_ordering_identical"] < 1.0
+
+
+def test_curvature_truths_reject_a_floor_above_the_ladder_pin():
+    import curvature_boundary_demo as cb
+
+    with pytest.raises(ValueError, match="exceeds the ladder pin"):
+        cb._curvature_truths(4, floor_lo=0.0, floor_hi=5.0)

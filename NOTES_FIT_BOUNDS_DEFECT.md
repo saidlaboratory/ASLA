@@ -54,10 +54,30 @@ interventions share a fit range and differ mainly in level, not curvature. Decis
 metrics depend only on the ordering of projections, and a monotone distortion
 preserves ordering (Spearman exactly 1.000000).
 
-**This is a fact about this dataset, not a general licence.** On a suite where
-interventions differ in curvature rather than level, the same defect would
-reorder them and the decision numbers would change. The correct reading is that
-we got lucky, not that bounds do not matter.
+**This is a fact about this dataset, not a general licence.** We got lucky, and
+the luck is demonstrable rather than merely assertable.
+
+### Demonstrated boundary condition
+
+`audit/curvature_boundary_demo.py` builds three synthetic suites on the same
+ladder, with the same seed noise, and applies the *same* alpha-floor defect. The
+families are matched on the two things that would otherwise confound the
+comparison: the same target spread (equally much signal to detect) and true
+exponents below the 0.05 floor (so the defect binds on both). The only
+difference is geometry.
+
+| family | interventions pinned by the defect | pairs reordered per trial | trials with identical ordering | Spearman(defective, corrected) |
+|---|---|---|---|---|
+| `level` (shared exponent, offsets differ) | 8/8 | **0.017** | 98% | 0.99960 |
+| `curvature` (pinned on the ladder, floors and exponents differ) | 1/8 | **1.150** | 33% | 0.96190 |
+| `mixed` | 4/8 | 0.567 | 52% | 0.98571 |
+
+On level geometry **all 8 interventions fit at the bound and the decisions are
+still identical in 98% of trials** - the DataDecide situation reproduced
+synthetically. On curvature geometry the same defect reorders
+**69x more pairs**, and the ordering differs in
+67% of trials. The caveat is therefore not a hedge: it is a
+boundary condition with a measured location.
 
 **C4 is unaffected either way.** Its exponents were always interior
 ([0.1385, 0.1649]), the adaptive floor never binds, and the independent
@@ -74,6 +94,33 @@ and profiling the likelihood shows it is **exactly flat** in `E`
 (`SSR(E=0)/SSR(best) = 1.0000`). That is a standalone result about downstream
 accuracy metrics, reported in `AUDIT_ADVERSARIAL.md`: three-parameter
 scaling-law extrapolation is not identifiable on them.
+
+## The two-sided implication
+
+This episode is the sharpest available illustration of the project's central
+methodological argument, and it cuts both ways. Both halves belong in the paper.
+
+**In favour of decision-level evaluation.** The bounded fit was badly wrong in
+parameter space - exponents off by a factor of three, projections displaced by
+24% of the between-intervention spread - and *exactly right* in decision space.
+Fit quality and decision quality are not the same thing, and optimising or
+reporting the former does not certify the latter. That is the argument for
+measuring what we actually care about, which is what ASLA does.
+
+**Against over-reading a good decision number.** The same fact says decision
+accuracy is *insensitive* to real estimator defects. A pipeline can be
+substantively broken and still produce the right ordering, which means a good
+decision-accuracy number certifies less than it appears to. It certifies the
+decision, on this suite, under this geometry - not the estimator, and not
+transportability to a suite whose interventions differ in curvature. Concretely:
+our own headline decomposition is unchanged by a defect that made every OLMES
+exponent meaningless, so nobody should read that stability as evidence the
+fitting is sound.
+
+The practical consequence is that decision-level evaluation needs
+parameter-level diagnostics alongside it, not instead of it. That is why the
+bound-pin report now runs on every design and prints into the report rather than
+living in a log.
 
 ## Methodological point for the paper
 

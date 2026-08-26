@@ -93,6 +93,70 @@ def training_interventions(df: pd.DataFrame, fraction: float = 0.68, seed: int =
     return sorted(str(name) for name in chosen)
 
 
+def strength_sensitivity(
+    df: pd.DataFrame,
+    budgets: tuple[float, ...],
+    training: list[str],
+    n_boot_inner: int,
+    seed: int,
+    n_resplits: int = 12,
+) -> dict[str, Any]:
+    """How much does the empirical-Bayes strength depend on *which* interventions estimate it?
+
+    lambda = within / (within + between) is a ratio of two estimated variances,
+    both computed from a subset of interventions. It therefore carries two
+    distinct sources of variation that must not be confused:
+
+    * **subset composition** - a different training subset has a genuinely
+      different between-intervention spread, and
+    * **bootstrap noise** in the within-intervention component.
+
+    This resamples the training subset at the same size and reports the spread
+    of lambda across draws, so any single reported value can be read against
+    its own sampling distribution rather than taken as a constant.
+    """
+
+    names = sorted(df["intervention"].astype(str).unique())
+    rng = np.random.default_rng(seed)
+    draws: list[dict[str, Any]] = []
+    for i in range(n_resplits):
+        subset = sorted(
+            str(name) for name in rng.choice(np.asarray(names, dtype=object), size=len(training), replace=False)
+        )
+        rows = df[df["intervention"].astype(str).isin(subset)]
+        between, within, _ = exponent_variance_components(
+            rows, budgets, n_boot=n_boot_inner, rng=np.random.default_rng(seed + 100 + i)
+        )
+        draws.append(
+            {
+                "between_sd": float(np.sqrt(between)),
+                "within_sd": float(np.sqrt(within)),
+                "lambda": empirical_bayes_strength(between, within),
+                "overlap_with_frozen_split": len(set(subset) & set(training)),
+            }
+        )
+    values = np.asarray([d["lambda"] for d in draws], dtype=float)
+    full_between, full_within, _ = exponent_variance_components(
+        df, budgets, n_boot=n_boot_inner, rng=np.random.default_rng(seed)
+    )
+    return {
+        "n_resplits": n_resplits,
+        "subset_size": len(training),
+        "n_total_interventions": len(names),
+        "lambda_mean_over_resplits": float(values.mean()),
+        "lambda_sd_over_resplits": float(values.std(ddof=1)),
+        "lambda_min": float(values.min()),
+        "lambda_max": float(values.max()),
+        "lambda_full_set_descriptive": empirical_bayes_strength(full_between, full_within),
+        "draws": draws,
+        "note": (
+            "lambda varies across training subsets of the same size because the between-intervention spread "
+            "genuinely differs between subsets; this spread is the relevant uncertainty on the shrinkage "
+            "strength, and it is larger than the contamination the held-out protocol removes."
+        ),
+    }
+
+
 def rankers_for(
     strengths: tuple[float, ...], n_boot_inner: int, seed: int, strength_interventions: list[str] | None = None
 ) -> dict[str, Any]:
@@ -425,6 +489,9 @@ def main(argv: list[str] | None = None) -> int:
     results["designs"]["primary_4M-300M_target1B"] = evaluate_design(
         *primary, n_boot=n_boot, n_boot_inner=n_boot_inner, seed=args.seed, include_ensemble=True,
         strength_interventions=train_names,
+    )
+    results["shrinkage_strength_sensitivity"] = strength_sensitivity(
+        primary[0], primary[1], train_names, n_boot_inner, args.seed
     )
     print("done primary", flush=True)
     _write_json_atomically(results, out / "task_b.json")
