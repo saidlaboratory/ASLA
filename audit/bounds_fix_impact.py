@@ -25,11 +25,11 @@ import json
 from pathlib import Path
 from typing import Any
 
+import independent_rederivation as ir
 import numpy as np
 import pandas as pd
 from scipy.stats import kendalltau, spearmanr
 
-import independent_rederivation as ir
 from asla.models import fit_power_law
 
 REPO = Path(__file__).resolve().parents[1]
