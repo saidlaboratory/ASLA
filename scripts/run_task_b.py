@@ -77,12 +77,32 @@ def flip_pairs(scores: pd.Series, truth: pd.Series) -> set[tuple[str, str]]:
     return out
 
 
-def rankers_for(strengths: tuple[float, ...], n_boot_inner: int, seed: int) -> dict[str, Any]:
+def training_interventions(df: pd.DataFrame, fraction: float = 0.68, seed: int = 1729) -> list[str]:
+    """Deterministic training subset of interventions for tuning the shrinkage strength.
+
+    The empirical-Bayes strength is a hyperparameter: if it is estimated from
+    every intervention it will later be scored on, it has seen the evaluation
+    data. This picks a fixed, seeded subset by name so the choice is
+    reproducible and independent of the evaluation ordering.
+    """
+
+    names = sorted(df["intervention"].astype(str).unique())
+    rng = np.random.default_rng(seed)
+    n_train = max(2, int(round(fraction * len(names))))
+    chosen = rng.choice(np.asarray(names, dtype=object), size=n_train, replace=False)
+    return sorted(str(name) for name in chosen)
+
+
+def rankers_for(
+    strengths: tuple[float, ...], n_boot_inner: int, seed: int, strength_interventions: list[str] | None = None
+) -> dict[str, Any]:
     suite: dict[str, Any] = {
         "single_scale": single_scale_ranker,
         "plain_projection": make_projection_ranker("compute_power_law"),
         "shared_exponent": shared_exponent_ranker,
-        "shrinkage_eb": make_shrinkage_ranker(None, n_boot=n_boot_inner, seed=seed),
+        "shrinkage_eb": make_shrinkage_ranker(
+            None, n_boot=n_boot_inner, seed=seed, strength_interventions=strength_interventions
+        ),
     }
     for strength in strengths:
         suite[f"shrinkage_{strength:g}"] = make_shrinkage_ranker(strength, n_boot=n_boot_inner, seed=seed)
@@ -97,11 +117,12 @@ def evaluate_design(
     n_boot_inner: int,
     seed: int,
     include_ensemble: bool,
+    strength_interventions: list[str] | None = None,
 ) -> dict[str, Any]:
     """Point estimates plus seed-bootstrap CIs for every ranker on one design."""
 
     started = time.time()
-    suite = rankers_for(STRENGTH_SWEEP, n_boot_inner, seed)
+    suite = rankers_for(STRENGTH_SWEEP, n_boot_inner, seed, strength_interventions)
     if include_ensemble:
         suite["ensemble"] = ensemble_ranker
     audit = audit_with_ci(
@@ -127,10 +148,24 @@ def evaluate_design(
             "removed_pairs": sorted(removed),
             "added_pairs": sorted(added),
         }
+    strength_df = None
+    if strength_interventions is not None:
+        subset = df[df["intervention"].astype(str).isin(strength_interventions)]
+        if subset["intervention"].nunique() >= 2:
+            strength_df = subset
+    variance_source = df if strength_df is None else strength_df
     between, within, _ = exponent_variance_components(
-        df, budgets, n_boot=n_boot_inner, rng=np.random.default_rng(seed)
+        variance_source, budgets, n_boot=n_boot_inner, rng=np.random.default_rng(seed)
     )
-    fit = fit_shrunk(df, budgets, strength=None, n_boot=n_boot_inner, rng=np.random.default_rng(seed))
+    fit = fit_shrunk(
+        df, budgets, strength=None, n_boot=n_boot_inner, rng=np.random.default_rng(seed), strength_df=strength_df
+    )
+    # The variance components reported for the FULL set are descriptive only:
+    # they ground the pre-registered magnitude prediction and are never used to
+    # choose the shrinkage strength that the held-out evaluation scores.
+    full_between, full_within, _ = exponent_variance_components(
+        df, budgets, n_boot=n_boot_inner, rng=np.random.default_rng(seed + 7)
+    )
     return {
         "n_interventions": int(df["intervention"].nunique()),
         "n_pairs": int(df["intervention"].nunique() * (df["intervention"].nunique() - 1) // 2),
@@ -146,6 +181,16 @@ def evaluate_design(
             "within_sd": float(np.sqrt(within)),
             "pooled_exponent": fit.pooled_exponent,
             "eb_strength": fit.shrinkage,
+            "strength_estimated_from": fit.strength_estimated_from,
+            "strength_source_interventions": list(fit.strength_source),
+            "n_strength_source_interventions": len(fit.strength_source),
+            "n_evaluated_interventions": int(df["intervention"].nunique()),
+            "strength_is_heldout": bool(
+                strength_df is not None and len(fit.strength_source) < int(df["intervention"].nunique())
+            ),
+            "descriptive_full_set_between_sd": float(np.sqrt(full_between)),
+            "descriptive_full_set_within_sd": float(np.sqrt(full_within)),
+            "descriptive_full_set_noise_share": empirical_bayes_strength(full_between, full_within),
         },
         "plain_flip_pairs": sorted(plain_flips),
         "elapsed_seconds": time.time() - started,
@@ -182,11 +227,12 @@ def bootstrap_interaction_ratio(
     n_boot: int,
     n_boot_inner: int,
     seed: int,
+    strength_interventions: list[str] | None = None,
 ) -> dict[str, Any]:
     """Bootstrap rho_L = I(long arm) / I(short arm) for the P4 criterion."""
 
     rng = np.random.default_rng(seed)
-    suite = rankers_for(STRENGTH_SWEEP, n_boot_inner, seed)
+    suite = rankers_for(STRENGTH_SWEEP, n_boot_inner, seed, strength_interventions)
     ranker = suite[ranker_name]
 
     def removed_count(table: pd.DataFrame, budgets: tuple[float, ...], target: float) -> int:
@@ -362,8 +408,23 @@ def main(argv: list[str] | None = None) -> int:
     }
 
     primary = design(PRIMARY, "300M", "1B")
+    train_names = training_interventions(primary[0], seed=args.seed)
+    results["shrinkage_strength_protocol"] = {
+        "n_training_interventions": len(train_names),
+        "training_interventions": train_names,
+        "n_total_interventions": int(primary[0]["intervention"].nunique()),
+        "held_out_interventions": sorted(
+            set(primary[0]["intervention"].astype(str).unique()) - set(train_names)
+        ),
+        "note": (
+            "The empirical-Bayes shrinkage strength is estimated ONLY from the training interventions listed "
+            "here. Every ranker still fits and projects all interventions; only the hyperparameter is restricted. "
+            "Fixed-strength rankers (shrinkage_0 ... shrinkage_1) estimate nothing and are unaffected."
+        ),
+    }
     results["designs"]["primary_4M-300M_target1B"] = evaluate_design(
-        *primary, n_boot=n_boot, n_boot_inner=n_boot_inner, seed=args.seed, include_ensemble=True
+        *primary, n_boot=n_boot, n_boot_inner=n_boot_inner, seed=args.seed, include_ensemble=True,
+        strength_interventions=train_names,
     )
     print("done primary", flush=True)
     _write_json_atomically(results, out / "task_b.json")
@@ -372,7 +433,8 @@ def main(argv: list[str] | None = None) -> int:
     short_arm = design(PRIMARY, "530M", "1B")
     for label, built in (("long_arm_4M-150M_target1B", long_arm), ("short_arm_4M-530M_target1B", short_arm)):
         results["designs"][label] = evaluate_design(
-            *built, n_boot=max(3, n_boot // 2), n_boot_inner=n_boot_inner, seed=args.seed, include_ensemble=False
+            *built, n_boot=max(3, n_boot // 2), n_boot_inner=n_boot_inner, seed=args.seed, include_ensemble=False,
+            strength_interventions=train_names,
         )
         print(f"done {label}", flush=True)
         _write_json_atomically(results, out / "task_b.json")
@@ -383,7 +445,7 @@ def main(argv: list[str] | None = None) -> int:
     )
     results["best_pooled_ranker"] = best_name
     results["interaction"] = bootstrap_interaction_ratio(
-        long_arm, short_arm, best_name, n_boot_ratio, n_boot_inner, args.seed
+        long_arm, short_arm, best_name, n_boot_ratio, n_boot_inner, args.seed, strength_interventions=train_names
     )
     print("done interaction", flush=True)
     results["removed_decomposition"] = decomposition_of_removed(

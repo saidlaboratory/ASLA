@@ -128,3 +128,34 @@ def test_fixed_exponent_solve_keeps_floor_and_amplitude_nonnegative():
     increasing = np.array([1.0, 1.2, 1.4, 1.6])  # rising values force A <= 0 at a positive exponent
     e, a, alpha = _fit_with_fixed_exponent(x, increasing, 0.15)
     assert a >= 0.0 and e >= 0.0 and alpha == 0.15
+
+
+def test_shrinkage_strength_can_be_restricted_to_training_interventions():
+    """The empirical-Bayes strength must not be estimated from evaluation interventions."""
+
+    df = _grid({"a": 0.10, "b": 0.14, "c": 0.18, "d": 0.22}, noise=0.02, seed=3)
+    train = ["a", "b"]
+    leaky = fit_shrunk(df, BUDGETS, n_boot=10, rng=np.random.default_rng(0))
+    split = fit_shrunk(
+        df, BUDGETS, n_boot=10, rng=np.random.default_rng(0), strength_df=df[df["intervention"].isin(train)]
+    )
+    assert leaky.strength_estimated_from == "same_rows_as_evaluation"
+    assert leaky.strength_source == ("a", "b", "c", "d")
+    assert split.strength_estimated_from == "separate_strength_rows"
+    assert split.strength_source == ("a", "b")
+    # both still fit and project every intervention
+    assert set(split.params) == {"a", "b", "c", "d"}
+
+
+def test_shrinkage_ranker_restricts_strength_rows_but_ranks_everything():
+    df = _grid({"a": 0.10, "b": 0.14, "c": 0.18, "d": 0.22}, noise=0.02, seed=4)
+    ranker = make_shrinkage_ranker(None, n_boot=8, seed=0, strength_interventions=["a", "b"])
+    ranked = ranker(df, BUDGETS, 1e21)
+    assert set(ranked.index) == {"a", "b", "c", "d"}
+
+
+def test_fixed_strength_rankers_estimate_nothing_and_are_unaffected_by_the_split():
+    df = _grid({"a": 0.10, "b": 0.14, "c": 0.18}, noise=0.02, seed=5)
+    fixed = fit_shrunk(df, BUDGETS, strength=0.5, n_boot=4, rng=np.random.default_rng(0))
+    assert fixed.strength_estimated_from == "fixed_constant"
+    assert fixed.shrinkage == 0.5

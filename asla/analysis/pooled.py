@@ -53,7 +53,14 @@ from asla.models import FitError, bpb_power_law
 
 @dataclass(frozen=True)
 class PooledFit:
-    """A pooled projection fit: per-intervention parameters plus the pooling used."""
+    """A pooled projection fit: per-intervention parameters plus the pooling used.
+
+    ``strength_source`` records exactly which interventions the shrinkage
+    strength was estimated from. When a fit is evaluated on interventions that
+    appear in that list, the strength has seen the evaluation data and the
+    result is contaminated; ``strength_is_heldout`` makes that explicit rather
+    than leaving it to be inferred.
+    """
 
     params: dict[str, tuple[float, float, float]]
     shrinkage: float
@@ -61,6 +68,8 @@ class PooledFit:
     per_intervention_exponent: dict[str, float]
     between_variance: float
     within_variance: float
+    strength_source: tuple[str, ...] = ()
+    strength_estimated_from: str = "unspecified"
 
 
 def _cell_means(df: pd.DataFrame, budgets: tuple[float, ...]) -> dict[str, tuple[np.ndarray, np.ndarray]]:
@@ -217,18 +226,32 @@ def fit_shrunk(
     strength: float | None = None,
     n_boot: int = 40,
     rng: np.random.Generator | None = None,
+    strength_df: pd.DataFrame | None = None,
 ) -> PooledFit:
     """Shrink each exponent toward the pooled exponent, then refit floor and coefficient.
 
     ``strength=None`` estimates the strength from the data by empirical Bayes.
     ``strength=0`` reproduces the plain fit; ``strength=1`` fixes every exponent
     at the pooled value.
+
+    ``strength_df`` supplies the rows the empirical-Bayes strength is estimated
+    from. **Pass the training interventions here whenever the fit will be
+    evaluated on held-out ones**: with ``strength_df=None`` the strength is
+    estimated from ``df`` itself, which means it has seen every intervention it
+    will later be scored on. The returned :class:`PooledFit` records which
+    interventions the strength came from either way.
     """
 
     validate(df)
     splits.assert_not_test(df)
     fit_budgets = normalize_budgets(budgets)
+    source = df if strength_df is None else strength_df
+    if strength_df is not None:
+        validate(strength_df)
+        splits.assert_not_test(strength_df)
     between, within, exponents = exponent_variance_components(df, fit_budgets, n_boot=n_boot, rng=rng)
+    if strength is None and strength_df is not None:
+        between, within, _ = exponent_variance_components(strength_df, fit_budgets, n_boot=n_boot, rng=rng)
     lam = empirical_bayes_strength(between, within) if strength is None else float(strength)
     if not 0.0 <= lam <= 1.0:
         raise ValueError(f"shrinkage strength must lie in [0, 1], got {lam}")
@@ -247,6 +270,12 @@ def fit_shrunk(
         per_intervention_exponent=exponents,
         between_variance=between,
         within_variance=within,
+        strength_source=tuple(sorted(source["intervention"].astype(str).unique())),
+        strength_estimated_from=(
+            "fixed_constant"
+            if strength is not None
+            else ("separate_strength_rows" if strength_df is not None else "same_rows_as_evaluation")
+        ),
     )
 
 
@@ -266,12 +295,33 @@ def shared_exponent_ranker(df: pd.DataFrame, budgets: tuple[float, ...], target:
     return project(fit_shared_exponent(df, fit_budgets), target)
 
 
-def make_shrinkage_ranker(strength: float | None = None, n_boot: int = 40, seed: int = 0):
-    """Return a ranker using hierarchical shrinkage at a fixed or data-estimated strength."""
+def make_shrinkage_ranker(
+    strength: float | None = None,
+    n_boot: int = 40,
+    seed: int = 0,
+    strength_interventions: Iterable[str] | None = None,
+):
+    """Return a ranker using hierarchical shrinkage at a fixed or data-estimated strength.
+
+    ``strength_interventions`` names the training interventions the
+    empirical-Bayes strength must be estimated from. Supplying it is what keeps
+    the strength from seeing the evaluation interventions; the ranker then
+    restricts the strength estimate to those rows while still fitting and
+    projecting every intervention it is given.
+    """
+
+    training = None if strength_interventions is None else sorted(set(strength_interventions))
 
     def _ranker(df: pd.DataFrame, budgets: tuple[float, ...], target: float) -> pd.Series:
         fit_budgets = normalize_budgets(budgets, target=target)
-        fit = fit_shrunk(df, fit_budgets, strength=strength, n_boot=n_boot, rng=np.random.default_rng(seed))
+        strength_df = None
+        if training is not None and strength is None:
+            subset = df[df["intervention"].astype(str).isin(training)]
+            if subset["intervention"].nunique() >= 2:
+                strength_df = subset
+        fit = fit_shrunk(
+            df, fit_budgets, strength=strength, n_boot=n_boot, rng=np.random.default_rng(seed), strength_df=strength_df
+        )
         return project(fit.params, target)
 
     label = "eb" if strength is None else f"{strength:g}"
@@ -279,13 +329,20 @@ def make_shrinkage_ranker(strength: float | None = None, n_boot: int = 40, seed:
     return _ranker
 
 
-def pooled_ranker_suite(strengths: Iterable[float], n_boot: int = 40, seed: int = 0) -> dict[str, object]:
+def pooled_ranker_suite(
+    strengths: Iterable[float],
+    n_boot: int = 40,
+    seed: int = 0,
+    strength_interventions: Iterable[str] | None = None,
+) -> dict[str, object]:
     """Rankers spanning no pooling to complete pooling, for the flexibility sweep."""
 
     suite: dict[str, object] = {}
     for strength in strengths:
         suite[f"shrinkage_{strength:g}"] = make_shrinkage_ranker(strength, n_boot=n_boot, seed=seed)
-    suite["shrinkage_eb"] = make_shrinkage_ranker(None, n_boot=n_boot, seed=seed)
+    suite["shrinkage_eb"] = make_shrinkage_ranker(
+        None, n_boot=n_boot, seed=seed, strength_interventions=strength_interventions
+    )
     suite["shared_exponent"] = shared_exponent_ranker
     return suite
 
