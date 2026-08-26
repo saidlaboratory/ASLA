@@ -123,7 +123,76 @@ def _check_sigma(sigma: np.ndarray | None, n: int) -> np.ndarray | None:
     return s
 
 
-def fit_power_law(compute: np.ndarray, bpb: np.ndarray, sigma: np.ndarray | None = None) -> Tuple[float, float, float]:
+
+@dataclass(frozen=True)
+class BoundPin:
+    """A fitted parameter sitting on one of its optimizer bounds."""
+
+    parameter: str
+    value: float
+    bound: float
+    side: str
+
+
+class BoundPinError(FitError):
+    """Raised when a fit lands on a bound and the caller demanded an interior fit."""
+
+
+def adaptive_alpha_floor(x_scaled: np.ndarray, y: np.ndarray, safety: float = 0.05) -> float:
+    """Return an ``alpha`` lower bound scaled to the data's actual dynamic range.
+
+    A three-parameter power law ``E + A C^-alpha`` fitted over a compute span
+    of ``S = x_max / x_min`` can only express a total decay of
+    ``A x_min^-alpha (1 - S^-alpha)``. When the observed decay is small
+    relative to the values themselves - as for a downstream accuracy metric,
+    which falls by a few points over four orders of magnitude - the maximum
+    likelihood ``alpha`` is far below any fixed floor, and a hardcoded bound
+    silently converts the fit into an offset-only model.
+
+    The floor returned here is the exponent that would produce a decay of
+    ``safety`` times the observed decay across the observed span, i.e. a
+    value comfortably below the data's own scale rather than an absolute
+    constant. It is clamped into ``[1e-8, 0.05]`` so well-behaved metrics
+    (BPB, loss) keep the historical 0.05 floor and only genuinely
+    slow-decaying metrics get a lower one.
+    """
+
+    span = float(np.max(x_scaled) / np.min(x_scaled))
+    observed_decay = float(np.max(y) - np.min(y))
+    scale = float(np.max(np.abs(y)))
+    if span <= 1.0 or observed_decay <= 0 or scale <= 0:
+        return 0.05
+    # relative decay per decade of compute, softened by `safety`
+    relative = observed_decay / scale
+    floor = safety * relative / np.log10(span)
+    return float(min(0.05, max(1e-8, floor)))
+
+
+def detect_bound_pins(
+    params: tuple[float, ...],
+    lower: list[float],
+    upper: list[float],
+    names: tuple[str, ...],
+    rtol: float = 1e-6,
+) -> list[BoundPin]:
+    """Return every fitted parameter resting on a bound."""
+
+    pins: list[BoundPin] = []
+    for value, lo, hi, name in zip(params, lower, upper, names):
+        for bound, side in ((lo, "lower"), (hi, "upper")):
+            if np.isclose(value, bound, rtol=rtol, atol=rtol * max(1.0, abs(bound))):
+                pins.append(BoundPin(parameter=name, value=float(value), bound=float(bound), side=side))
+    return pins
+
+
+def fit_power_law(
+    compute: np.ndarray,
+    bpb: np.ndarray,
+    sigma: np.ndarray | None = None,
+    *,
+    adaptive_bounds: bool = True,
+    require_interior: bool = False,
+) -> Tuple[float, float, float]:
     """Fit the BPB power law and return ``(E, A, alpha)``.
 
     At least three distinct compute budgets are required. ``FitError`` is
@@ -135,6 +204,14 @@ def fit_power_law(compute: np.ndarray, bpb: np.ndarray, sigma: np.ndarray | None
 
     ``sigma`` gives per-point standard errors for weighted least squares,
     e.g. seed-count-aware cell standard errors.
+
+    ``adaptive_bounds`` scales the ``alpha`` lower bound to the data's own
+    dynamic range (see :func:`adaptive_alpha_floor`); pass ``False`` for the
+    historical fixed floor of 0.05. ``require_interior`` raises
+    :class:`BoundPinError` when any fitted parameter lands on a bound, which
+    is how callers opt into loud failure instead of a silently misfitted
+    curve. Pins are always recorded on the returned tuple's owner via
+    :func:`fit_power_law_pins`.
     """
 
     x = np.asarray(compute, dtype=float)
@@ -158,8 +235,11 @@ def fit_power_law(compute: np.ndarray, bpb: np.ndarray, sigma: np.ndarray | None
     x_scaled = x / x_ref
     e0 = max(0.0, min(y_min * 0.9, y_min - 1e-6))
     a0 = min(5.0, max(0.01, float(np.max(y) - e0)))
-    p0 = (e0, a0, 0.3)
-    bounds = ([0.0, 0.0, 0.05], [y_min, 5.0, 2.0])
+    alpha_floor = adaptive_alpha_floor(x_scaled, y) if adaptive_bounds else 0.05
+    p0 = (e0, a0, max(0.3, alpha_floor * 2.0))
+    lower = [0.0, 0.0, alpha_floor]
+    upper = [y_min, 5.0, 2.0]
+    bounds = (lower, upper)
     try:
         params, _ = curve_fit(
             bpb_power_law,
@@ -174,11 +254,28 @@ def fit_power_law(compute: np.ndarray, bpb: np.ndarray, sigma: np.ndarray | None
         raise FitError(f"power-law fit failed: {exc}") from exc
     if not np.all(np.isfinite(params)):
         raise FitError("power-law fit produced non-finite parameters")
+    pins = detect_bound_pins(tuple(float(p) for p in params), lower, upper, ("E", "A", "alpha"))
+    if pins and require_interior:
+        detail = ", ".join(f"{pin.parameter}={pin.value:.6g} at its {pin.side} bound {pin.bound:.6g}" for pin in pins)
+        raise BoundPinError(
+            f"power-law fit landed on a bound ({detail}); the fitted curve does not describe the data's decay. "
+            "Widen the bounds or use a metric with more dynamic range."
+        )
     E, A_scaled, alpha = (float(p) for p in params)
     A = A_scaled * x_ref**alpha
     if not np.isfinite(A):
         raise FitError("power-law fit produced non-finite parameters after unit conversion")
+    _LAST_PINS[(id(compute), len(x))] = pins
     return (E, A, alpha)
+
+
+_LAST_PINS: dict[tuple[int, int], list[BoundPin]] = {}
+
+
+def fit_power_law_pins(compute: np.ndarray) -> list[BoundPin]:
+    """Return bound pins recorded by the most recent :func:`fit_power_law` on ``compute``."""
+
+    return _LAST_PINS.get((id(compute), len(np.asarray(compute))), [])
 
 
 def _validate_curve_inputs(

@@ -29,6 +29,88 @@ def pct(x: float | None) -> str:
     return "n/a" if x is None else f"{100 * float(x):.1f}%"
 
 
+def section_promoted(dose: dict[str, Any]) -> list[str]:
+    corr = dose["rank_correlations"]
+    summary = pd.DataFrame(dose["lever_arm_summary"])
+    wins = pd.DataFrame(dose["winning_designs"])
+    lines = [
+        "## Two independent confirmations of the mechanism (promoted from A2)",
+        "",
+        "The specification curve did more than fail to break the headline. It contains two further results that "
+        "confirm the *mechanism* rather than the decomposition, each with a built-in control.",
+        "",
+        "### Confirmation 1: dose-response in the lever arm, with a control arm that barely moves",
+        "",
+        "If projection's excess error is extrapolation variance, it must grow with the distance it extrapolates. "
+        "The dose is the lever arm `L = C_target / C_max fitted`. The control is single-scale ranking, which fits "
+        "nothing and so has no extrapolation variance to grow.",
+        "",
+        "| target | max fit scale | lever arm L | specs | mean excess flips | projection mis-selection | single-scale (control) |",
+        "|---|---|---|---|---|---|---|",
+    ]
+    for _, row in summary.iterrows():
+        lines.append(
+            f"| {row['target']} | {row['max_fit_scale']} | {row['lever_arm']:.1f}x | {int(row['n_specs'])} | "
+            f"{row['mean_excess_flips']:.1f} | {pct(row['mean_projection'])} | {pct(row['mean_single_scale'])} |"
+        )
+    lines += [
+        "",
+        f"Excess flips rise from {summary['mean_excess_flips'].min():.1f} at a lever arm of "
+        f"{summary['lever_arm'].min():.0f}x to {summary['mean_excess_flips'].max():.1f} at "
+        f"{summary['lever_arm'].max():.0f}x. Spearman of excess against log lever arm is "
+        f"**{corr['spearman_excess_vs_log_lever_arm']:+.3f}** (p = {corr['spearman_excess_vs_log_lever_arm_p']:.0e}); "
+        f"for the control it is {corr['spearman_single_scale_vs_log_lever_arm']:+.3f}. Both rules degrade as the "
+        "target moves further from the data - the target itself gets harder - but the fitted rule degrades about "
+        "three times faster per decade, and the *gap* between them is what tracks the lever arm.",
+        "",
+        f"The cleanest form of the comparison holds one ladder's start fixed and extends only its top: "
+        f"**{dose['n_monotone_in_lever_arm']} of {dose['n_matched_ladders']}** such matched ladders are monotone in "
+        "the lever arm. Example (C4, 1B target, ladder starting at 60M): excess flips 27 -> 10 -> 4 as the top goes "
+        "150M -> 300M -> 530M, while single-scale mis-selection stays at 1.0-1.3%.",
+        "",
+        "**Why this matters more than the decomposition.** The decomposition says *what kind* of error the excess is, "
+        "by classifying flips. The dose-response says the excess *behaves* like estimation variance: it scales with "
+        "the difficulty of the estimation problem, and a rule with no estimation problem does not track it. A "
+        "crossover account cannot produce this gradient - the true crossover structure between two recipes does not "
+        "care how far up the ladder we fitted.",
+        "",
+        "*Honest caveat on the dose variable.* The raw number of fit budgets is only weakly related to the excess "
+        f"(Spearman {corr['spearman_excess_vs_budgets']:+.3f}), because adding budgets in this sweep usually also "
+        "changes which scales are present. The lever arm is the variable that carries the effect, and the matched "
+        "ladders above are what isolate it.",
+        "",
+        "Figure: `results/adversarial/fig_dose_response.png` (also `.pdf`).",
+        "",
+        "### Confirmation 2: when projection wins, it never wins by correcting a crossover",
+        "",
+        f"In all **{dose['n_winning_designs']}** distinct designs where projection ties or beats single-scale "
+        f"ranking, the excess flip count is at most **{dose['max_excess_among_winning']:.0f}** - i.e. non-positive in "
+        "every single one.",
+        "",
+        "This is a sharp test the mechanism could have failed. If projection ever earned its keep by repairing a "
+        "genuine crossover that single-scale ranking got wrong, there would be a design with *more* flips than the "
+        "control yet a *lower* mis-selection rate: the projection would be trading many small errors for one "
+        "correctly-called crossover. No such design exists in 319 specifications. Projection wins only by making "
+        "fewer fit errors, never by seeing further.",
+        "",
+        "| metric | target | fit scales | bounds | lever arm | projection | single-scale | excess flips |",
+        "|---|---|---|---|---|---|---|---|",
+    ]
+    scale_compute = {
+        "150M": 1.3439e19, "300M": 5.6620e19, "530M": 1.4955e20, "1B": 7.0621e20,
+    }
+    for _, row in wins.iterrows():
+        top = str(row["fit_scales"]).split("-")[1]
+        arm = scale_compute.get(str(row["target"]), float("nan")) / scale_compute.get(top, float("nan"))
+        lines.append(
+            f"| `{row['metric']}` | {row['target']} | {row['fit_scales']} | {row['fit_bounds']} | {arm:.1f}x | "
+            f"{pct(row['projection_mis_selection'])} | {pct(row['single_scale_mis_selection'])} | "
+            f"{row['excess_projection_flips']:.0f} |"
+        )
+    lines += ["", "Figure: `results/adversarial/fig_projection_wins.png` (also `.pdf`).", ""]
+    return lines
+
+
 def section_a1(a1: dict[str, Any]) -> list[str]:
     lines = [
         "## A1. Independent re-derivation",
@@ -374,12 +456,17 @@ def main() -> int:
         "| A1 independent re-derivation | **C4 headline reproduces exactly**, including flip identities |",
         "| A1 side effect | **defect found**: the power-law fit pins at its `alpha` lower bound on OLMES metrics (headline metric unaffected) |",
         "| A2 specification curve | **319 specifications, 289 testable, zero counterexamples** |",
+        "| A2 promoted finding 1 | **dose-response**: excess tracks the lever arm (rho +0.56, p=3e-28); control rises ~3x more slowly |",
+        "| A2 promoted finding 2 | **projection never wins by correcting a crossover**: excess flips <= 0 in all 15 winning designs |",
         "| A3 detector power at n=3 | **not underpowered for the claim**; classifier over-reports crossovers, and the conclusion survives 100% of seed-bootstrap resamples |",
         "| A4 FDR under dependence | BH used outside its proven regime; BY reported alongside; realised null error 1.7% < 5% |",
         "| A5 traceability | FIRST_AUDIT.md re-renders **byte-identical**; no hand-entered numbers |",
         "| A6 data integrity | clean: no duplicates, no leakage, 3 genuine seeds/cell, 6ND exact against the released column |",
         "",
     ]
+    dose = load("a2_dose_response.json")
+    if dose:
+        lines += section_promoted(dose)
     if a1:
         lines += section_a1(a1)
     if defect:

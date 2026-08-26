@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict, Iterable
+from typing import Any, Dict, Iterable
 
 import numpy as np
 import pandas as pd
@@ -10,6 +10,7 @@ import pandas as pd
 from asla.analysis import splits
 from asla.data.schema import validate
 from asla.models import (
+    BoundPin,
     FitDiagnostics,
     FitForm,
     bootstrap_projection,
@@ -219,6 +220,54 @@ def fit_diagnostics_all(
             n_params = 5
         diagnostics[str(intervention)] = fit_diagnostics(y, y_pred, n_params=n_params)
     return diagnostics
+
+
+def bound_pin_report(
+    df: pd.DataFrame,
+    budgets: Iterable[float],
+    fit_form: FitForm = "compute_power_law",
+) -> dict[str, Any]:
+    """Report every intervention whose fit rests on a parameter bound.
+
+    A pinned fit is a silent failure: the optimizer returns the closest curve
+    it is allowed to express, not the closest curve. This is what happened to
+    the OLMES metrics before adaptive bounds (all 25 interventions pinned at
+    the fixed ``alpha`` floor of 0.05, ~3 orders of magnitude above the true
+    exponent), so audits surface it explicitly instead of reporting a
+    projection built on it.
+    """
+
+    from asla.models import adaptive_alpha_floor, detect_bound_pins
+
+    if fit_form != "compute_power_law":
+        return {"checked": False, "reason": f"bound pins are only checked for compute_power_law, got {fit_form!r}"}
+    validate(df)
+    fit_budgets = normalize_budgets(budgets)
+    fit_df = df[_budget_mask(df["compute"], fit_budgets)]
+    params = fit_all(df, fit_budgets, fit_form=fit_form)
+    pinned: dict[str, list[dict[str, Any]]] = {}
+    for intervention, group in fit_df.groupby("intervention", sort=True):
+        x = group["compute"].to_numpy(dtype=float)
+        y = group["bpb"].to_numpy(dtype=float)
+        x_scaled = x / float(np.min(x))
+        floor = adaptive_alpha_floor(x_scaled, y)
+        y_min = float(np.min(y))
+        e, a_raw, alpha = params[str(intervention)]
+        a_scaled = a_raw * float(np.min(x)) ** (-alpha)
+        pins: list[BoundPin] = detect_bound_pins(
+            (e, a_scaled, alpha), [0.0, 0.0, floor], [y_min, 5.0, 2.0], ("E", "A", "alpha")
+        )
+        if pins:
+            pinned[str(intervention)] = [
+                {"parameter": pin.parameter, "value": pin.value, "bound": pin.bound, "side": pin.side} for pin in pins
+            ]
+    return {
+        "checked": True,
+        "n_interventions": int(fit_df["intervention"].nunique()),
+        "n_pinned": len(pinned),
+        "pinned": pinned,
+        "any_pinned": bool(pinned),
+    }
 
 
 def project_ranking(

@@ -28,6 +28,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from asla.analysis.audit import audit_with_ci  # noqa: E402
 from asla.analysis.crossover import detect_crossovers_fdr, detect_single_scale_flips_fdr  # noqa: E402
+from asla.analysis.fits import bound_pin_report  # noqa: E402
 from asla.analysis.known_answer import pairwise_decision_accuracy  # noqa: E402
 from asla.analysis.rankers import (  # noqa: E402
     Ranker,
@@ -169,6 +170,7 @@ def run_design(
         }
 
     result["crossovers"] = {"projection_vs_target": _summ(proj_flips), "largest_fit_budget_vs_target": _summ(single_flips)}
+    result["bound_pins"] = bound_pin_report(df, budgets)
     result["elapsed_seconds"] = time.time() - started
     return result
 
@@ -1140,6 +1142,15 @@ def render_report(results: dict[str, Any]) -> str:
                 f"{'n/a' if s_ is None else _ci(s_['mis_selection_rate'], meaningful)} | "
                 f"{_regret(None if s_ is None else s_['mean_regret'], meaningful)} |"
             )
+        pins = d.get("bound_pins") or {}
+        if pins.get("any_pinned"):
+            lines += [
+                f"> **Fit diagnostic:** {pins['n_pinned']} of {pins['n_interventions']} interventions have a fitted "
+                "parameter resting on a bound in this design. A pinned parameter means the optimizer returned the "
+                "closest curve it was *allowed* to express, not the closest curve; read the projection numbers for "
+                "this design with that in mind.",
+                "",
+            ]
         cx = d["crossovers"]
         single = d["single_design_seed_sensitivity"]
         lines += [
