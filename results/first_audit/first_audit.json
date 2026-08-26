@@ -385,6 +385,424 @@
       },
       "target": 7.06209840434774e+20,
       "target_label": "1B"
+    },
+    {
+      "axis": "data",
+      "bound_pins": {
+        "any_pinned": false,
+        "checked": true,
+        "n_interventions": 25,
+        "n_pinned": 0,
+        "pinned": {}
+      },
+      "budget_labels": [
+        "4M",
+        "6M",
+        "8M",
+        "10M",
+        "14M",
+        "16M",
+        "20M",
+        "60M",
+        "90M",
+        "150M"
+      ],
+      "budgets": [
+        8430221996851200.0,
+        2.170083624144077e+16,
+        4.377678106853376e+16,
+        5.88506060071895e+16,
+        1.2413398842290995e+17,
+        1.5375666115510272e+17,
+        2.1908574798505574e+17,
+        1.955459382959407e+18,
+        5.758063377068851e+18,
+        1.3439040749568e+19
+      ],
+      "crossover_q": 0.05,
+      "crossovers": {
+        "largest_fit_budget_vs_target": {
+          "flip_rate": 0.01,
+          "n_flipped_pairs": 3,
+          "n_significant": 2,
+          "n_untestable": 0,
+          "pairs": [
+            {
+              "a": "Dolma1.7 (no code)",
+              "b": "Falcon+CC",
+              "p_value": 0.28848623623601094,
+              "predicted_gap": 0.003151386527137312,
+              "significant": false,
+              "true_gap": -0.0019483721194206716
+            },
+            {
+              "a": "Dolma1.7 (no math, code)",
+              "b": "Falcon+CC",
+              "p_value": 0.016964423808924347,
+              "predicted_gap": 0.0013177804533723858,
+              "significant": true,
+              "true_gap": -0.008027697550076596
+            },
+            {
+              "a": "Falcon+CC (QC 20%)",
+              "b": "Falcon+CC (QC Tulu 10%)",
+              "p_value": 0.03144742279841898,
+              "predicted_gap": 0.019406362976876146,
+              "significant": true,
+              "true_gap": -0.00588965433394506
+            }
+          ],
+          "significant_rate": 0.006666666666666667
+        },
+        "projection_vs_target": {
+          "flip_rate": 0.09,
+          "n_flipped_pairs": 27,
+          "n_significant": 23,
+          "n_untestable": 0,
+          "pairs": [
+            {
+              "a": "C4",
+              "b": "Dolma1.6++",
+              "p_value": 0.0017567450329336206,
+              "predicted_gap": 0.10816759396164333,
+              "significant": true,
+              "true_gap": -0.0172855388587827
+            },
+            {
+              "a": "C4",
+              "b": "Dolma1.7",
+              "p_value": 1.6189995447041818e-06,
+              "predicted_gap": 0.03351904173871656,
+              "significant": true,
+              "true_gap": -0.10388519177756095
+            },
+            {
+              "a": "C4",
+              "b": "Dolma1.7 (no Flan)",
+              "p_value": 1.4765069830800836e-06,
+              "predicted_gap": 0.02549735236214712,
+              "significant": true,
+              "true_gap": -0.102054697307429
+            },
+            {
+              "a": "C4",
+              "b": "Dolma1.7 (no Reddit)",
+              "p_value": 4.5692928006569236e-05,
+              "predicted_gap": 0.02573488381799116,
+              "significant": true,
+              "true_gap": -0.09979645730914166
+            },
+            {
+              "a": "C4",
+              "b": "Dolma1.7 (no code)",
+              "p_value": 0.000110362829165984,
+              "predicted_gap": 0.0027367373123174943,
+              "significant": true,
+              "true_gap": -0.07299944343668008
+            },
+            {
+              "a": "C4",
+              "b": "Dolma1.7 (no math, code)",
+              "p_value": 0.00010331101695692366,
+              "predicted_gap": 0.017139220923797716,
+              "significant": true,
+              "true_gap": -0.06692011800602415
+            },
+            {
+              "a": "C4",
+              "b": "Falcon+CC",
+              "p_value": 3.2111024325877523e-06,
+              "predicted_gap": 0.014029580856232293,
+              "significant": true,
+              "true_gap": -0.07494781555610075
+            },
+            {
+              "a": "DCLM-Baseline",
+              "b": "Falcon+CC (QC 10%)",
+              "p_value": 0.0002674691354240641,
+              "predicted_gap": 0.0021006189828591815,
+              "significant": true,
+              "true_gap": -0.03296936670111528
+            },
+            {
+              "a": "DCLM-Baseline (QC 10%)",
+              "b": "DCLM-Baseline (QC 7%, FW2)",
+              "p_value": 0.002508666632283093,
+              "predicted_gap": -0.0028359052498450055,
+              "significant": true,
+              "true_gap": 0.05604771938968245
+            },
+            {
+              "a": "DCLM-Baseline (QC 20%)",
+              "b": "FineWeb-Edu",
+              "p_value": 0.00726490064509242,
+              "predicted_gap": -0.033562785068188106,
+              "significant": true,
+              "true_gap": 0.019773167213632092
+            },
+            {
+              "a": "DCLM-Baseline 25% / Dolma 75%",
+              "b": "DCLM-Baseline 50% / Dolma 50%",
+              "p_value": 0.002566610814475068,
+              "predicted_gap": 0.003803070012756926,
+              "significant": true,
+              "true_gap": -0.026611895377890882
+            },
+            {
+              "a": "Dolma1.7",
+              "b": "Dolma1.7 (no Flan)",
+              "p_value": 0.4096122032584465,
+              "predicted_gap": -0.00802168937656944,
+              "significant": false,
+              "true_gap": 0.0018304944701319492
+            },
+            {
+              "a": "Dolma1.7",
+              "b": "Dolma1.7 (no Reddit)",
+              "p_value": 0.04251126835360749,
+              "predicted_gap": -0.007784157920725399,
+              "significant": true,
+              "true_gap": 0.004088734468419286
+            },
+            {
+              "a": "Dolma1.7",
+              "b": "Dolma1.7 (no code)",
+              "p_value": 0.00017788592750889325,
+              "predicted_gap": -0.030782304426399065,
+              "significant": true,
+              "true_gap": 0.03088574834088087
+            },
+            {
+              "a": "Dolma1.7",
+              "b": "Dolma1.7 (no math, code)",
+              "p_value": 7.271204924123788e-05,
+              "predicted_gap": -0.016379820814918844,
+              "significant": true,
+              "true_gap": 0.036965073771536794
+            },
+            {
+              "a": "Dolma1.7",
+              "b": "Falcon",
+              "p_value": 0.010032666254550345,
+              "predicted_gap": -0.07693682481985231,
+              "significant": true,
+              "true_gap": 0.0064277720210035305
+            },
+            {
+              "a": "Dolma1.7",
+              "b": "Falcon+CC",
+              "p_value": 0.00011340797728639194,
+              "predicted_gap": -0.019489460882484266,
+              "significant": true,
+              "true_gap": 0.028937376221460198
+            },
+            {
+              "a": "Dolma1.7 (no Flan)",
+              "b": "Dolma1.7 (no code)",
+              "p_value": 0.0016060801996178027,
+              "predicted_gap": -0.022760615049829624,
+              "significant": true,
+              "true_gap": 0.02905525387074892
+            },
+            {
+              "a": "Dolma1.7 (no Flan)",
+              "b": "Dolma1.7 (no math, code)",
+              "p_value": 0.0008700752089208009,
+              "predicted_gap": -0.008358131438349403,
+              "significant": true,
+              "true_gap": 0.035134579301404845
+            },
+            {
+              "a": "Dolma1.7 (no Flan)",
+              "b": "Falcon",
+              "p_value": 0.08943504408386711,
+              "predicted_gap": -0.06891513544328287,
+              "significant": false,
+              "true_gap": 0.004597277550871581
+            },
+            {
+              "a": "Dolma1.7 (no Flan)",
+              "b": "Falcon+CC",
+              "p_value": 0.00026680424117231523,
+              "predicted_gap": -0.011467771505914826,
+              "significant": true,
+              "true_gap": 0.02710688175132825
+            },
+            {
+              "a": "Dolma1.7 (no Reddit)",
+              "b": "Dolma1.7 (no code)",
+              "p_value": 3.0462467202419044e-06,
+              "predicted_gap": -0.022998146505673667,
+              "significant": true,
+              "true_gap": 0.026797013872461584
+            },
+            {
+              "a": "Dolma1.7 (no Reddit)",
+              "b": "Dolma1.7 (no math, code)",
+              "p_value": 1.724966608003013e-06,
+              "predicted_gap": -0.008595662894193445,
+              "significant": true,
+              "true_gap": 0.03287633930311751
+            },
+            {
+              "a": "Dolma1.7 (no Reddit)",
+              "b": "Falcon",
+              "p_value": 0.07455731319080054,
+              "predicted_gap": -0.06915266689912691,
+              "significant": false,
+              "true_gap": 0.0023390375525842444
+            },
+            {
+              "a": "Dolma1.7 (no Reddit)",
+              "b": "Falcon+CC",
+              "p_value": 0.0010686192398037051,
+              "predicted_gap": -0.011705302961758868,
+              "significant": true,
+              "true_gap": 0.024848641753040912
+            },
+            {
+              "a": "Dolma1.7 (no code)",
+              "b": "Falcon+CC",
+              "p_value": 0.28848623623601094,
+              "predicted_gap": 0.011292843543914799,
+              "significant": false,
+              "true_gap": -0.0019483721194206716
+            },
+            {
+              "a": "Falcon+CC (QC 10%)",
+              "b": "FineWeb-Pro",
+              "p_value": 0.006664149348484679,
+              "predicted_gap": -0.024836614869545137,
+              "significant": true,
+              "true_gap": 0.013943094013550095
+            }
+          ],
+          "significant_rate": 0.07666666666666666
+        }
+      },
+      "elapsed_seconds": 995.4938108921051,
+      "intermediate": 5.66196613152768e+19,
+      "metric_name": "c4_en_bits_per_token",
+      "min_seeds_per_cell": 3,
+      "n_interventions": 25,
+      "n_pairs": 300,
+      "name": "datadecide/c4_en_bits_per_token/cheap_ladder_4M-150M_gate300M",
+      "noise": {
+        "noise_band": 0.0023842454713441587,
+        "noise_band_estimated": true,
+        "pooled_degrees_of_freedom": 50,
+        "representative_gap_sem": 0.001685916140800771
+      },
+      "pairwise_decisions": {
+        "n_boot": 150,
+        "rankers": {
+          "projection_ranker": {
+            "mean_regret": {
+              "hi": 0.004113207324780765,
+              "lo": 0.0016316718663418645,
+              "point": 0.0032702436710533153
+            },
+            "mis_selection_rate": {
+              "hi": 0.10333333333333333,
+              "lo": 0.06333333333333334,
+              "point": 0.09
+            },
+            "pairwise_acc": {
+              "hi": 0.9366666666666666,
+              "lo": 0.8966666666666666,
+              "point": 0.91
+            }
+          },
+          "single_scale_ranker": {
+            "mean_regret": {
+              "hi": 7.431377595668261e-05,
+              "lo": 1.723920487932536e-05,
+              "point": 5.288574667814109e-05
+            },
+            "mis_selection_rate": {
+              "hi": 0.016666666666666666,
+              "lo": 0.0033333333333333335,
+              "point": 0.01
+            },
+            "pairwise_acc": {
+              "hi": 0.9966666666666667,
+              "lo": 0.9833333333333333,
+              "point": 0.99
+            }
+          }
+        }
+      },
+      "seed_bootstrap_meaningful": true,
+      "single_design_seed_sensitivity": {
+        "n_boot": 500,
+        "rankers": {
+          "gate_ranker": {
+            "mean_regret": {
+              "hi": 0.019769340543854597,
+              "lo": 0.01489911844200087,
+              "point": 0.0172855388587827
+            },
+            "mis_selection_rate": {
+              "hi": 1.0,
+              "lo": 1.0,
+              "point": 1.0
+            },
+            "top1_acc": {
+              "hi": 0.0,
+              "lo": 0.0,
+              "point": 0.0
+            }
+          },
+          "projection_ranker": {
+            "mean_regret": {
+              "hi": 0.020270037512301095,
+              "lo": 0.01489911844200087,
+              "point": 0.0172855388587827
+            },
+            "mis_selection_rate": {
+              "hi": 1.0,
+              "lo": 1.0,
+              "point": 1.0
+            },
+            "pairwise_acc": {
+              "hi": 0.9366666666666666,
+              "lo": 0.8966666666666666,
+              "point": 0.91
+            },
+            "top1_acc": {
+              "hi": 0.0,
+              "lo": 0.0,
+              "point": 0.0
+            }
+          },
+          "single_scale_ranker": {
+            "mean_regret": {
+              "hi": 0.0,
+              "lo": 0.0,
+              "point": 0.0
+            },
+            "mis_selection_rate": {
+              "hi": 0.0,
+              "lo": 0.0,
+              "point": 0.0
+            },
+            "pairwise_acc": {
+              "hi": 0.9966666666666667,
+              "lo": 0.9833333333333333,
+              "point": 0.99
+            },
+            "top1_acc": {
+              "hi": 1.0,
+              "lo": 1.0,
+              "point": 1.0
+            }
+          }
+        },
+        "truth_ties_with_winner": [],
+        "truth_winner": "C4"
+      },
+      "target": 7.06209840434774e+20,
+      "target_label": "1B"
     }
   ],
   "fast": false,

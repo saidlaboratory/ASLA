@@ -111,6 +111,75 @@ def section_promoted(dose: dict[str, Any]) -> list[str]:
     return lines
 
 
+def section_floor(floors: dict[str, Any]) -> list[str]:
+    c4 = floors["c4_en_bits_per_token"]
+    olmes = floors["olmes_macro_error"]
+    proxy = floors["olmes_macro_correct_prob_per_char_deficit"]
+    lines = [
+        "## Substantive finding: the irreducible-loss floor is not identifiable on accuracy metrics",
+        "",
+        "Fixing the `alpha` bound exposed a second, deeper problem rather than removing one. With `alpha` free, "
+        f"**{olmes['n_with_floor_at_zero']} of {olmes['n_interventions']}** OLMES-error fits put the floor `E` at "
+        "zero: the fitted curve asserts that downstream error decays to zero at infinite compute, which is false "
+        "for a bounded accuracy metric with a non-zero Bayes error. That is not a bug in the optimizer. It is the "
+        "data telling us the floor is not estimable from this metric.",
+        "",
+        "Profiling the likelihood in `E` (fix the floor, refit the rest, measure the residual) makes the contrast "
+        "sharp:",
+        "",
+        "| metric | best floor / min observed value | fits with floor at 0 | SSR(floor=0) / SSR(best) | target projection spread across floors the fit range cannot distinguish |",
+        "|---|---|---|---|---|",
+    ]
+    for row in (c4, olmes, proxy):
+        lines.append(
+            f"| `{row['metric']}` | {row['median_best_floor_relative_to_ymin']:.2f} | "
+            f"{row['n_with_floor_at_zero']}/{row['n_interventions']} | "
+            f"{row['median_ssr_ratio_zero_over_best']:.2f}x | "
+            f"{row['median_projection_spread_over_admissible_floors']:.4f} "
+            f"({row['projection_ambiguity_over_seed_noise']:.1f}x the target seed sd) |"
+        )
+    lines += [
+        "",
+        f"On C4 bits/token, forcing the floor to zero multiplies the residual by "
+        f"**{c4['median_ssr_ratio_zero_over_best']:.1f}x**: the fit range genuinely constrains the floor, and the "
+        f"best floor sits at {c4['median_best_floor_relative_to_ymin']:.0%} of the smallest observed value - a "
+        "sensible irreducible-loss estimate. On OLMES error the same ratio is "
+        f"**{olmes['median_ssr_ratio_zero_over_best']:.4f}**, i.e. **a zero floor fits exactly as well as the best "
+        "floor**. The likelihood is flat in `E`, so the three-parameter power law is over-parameterised for this "
+        "metric family: two parameters are doing all the work and the third is free to be anything.",
+        "",
+        "**Why this matters beyond a diagnostic.** The floor is the parameter that dominates extrapolation. Two "
+        "curves that agree on the fit range but differ in floor diverge at the target, and the divergence grows "
+        "with the lever arm. Across the floors that the fit range cannot distinguish, the median target projection "
+        f"moves by {olmes['median_projection_spread_over_admissible_floors']:.4f} on OLMES error - "
+        f"{olmes['projection_ambiguity_over_between_spread']:.0%} of the entire between-recipe spread at the "
+        "target. A projection that must choose a floor the data do not constrain is, to that extent, choosing "
+        "arbitrarily, and the resulting error is exactly the fit variance H1 identifies as dominant.",
+        "",
+        "This is a concrete mechanism for why the OLMES projection numbers are the least trustworthy in "
+        "FIRST_AUDIT.md, and it is a methodological result in its own right: **downstream accuracy metrics do not "
+        "support three-parameter scaling-law extrapolation, because their floor is unidentifiable over realistic "
+        "fit ranges.** Practitioners fitting `E + A C^-alpha` to accuracy should either fix the floor from outside "
+        "the data (e.g. at chance level for the task) or fit a two-parameter form and say so.",
+        "",
+        "*An honest caveat that cuts the other way.* Identified is not the same as tightly determined. Even on C4, "
+        f"where the floor is clearly identified, the target projection still moves by "
+        f"{c4['median_projection_spread_over_admissible_floors']:.4f} across floors the fit range cannot separate - "
+        f"{c4['projection_ambiguity_over_seed_noise']:.0f}x the target seed sd, though only "
+        f"{c4['projection_ambiguity_over_between_spread']:.0%} of the between-recipe spread that a decision has to "
+        "resolve. So floor ambiguity is a live source of fit variance on the headline metric too; it is simply not "
+        "*total* there, as it is on accuracy. This is consistent with H1 and is one concrete route by which "
+        "projection acquires the variance the decomposition attributes to it.",
+        "",
+        "Two implications for this project: (i) pooling the floor across interventions - not just the exponent - "
+        "is a natural extension of Task B for accuracy metrics, since the pooled floor would be identified even "
+        "where individual floors are not; (ii) the C4 bits/token headline is unaffected, because its floor *is* "
+        "identified.",
+        "",
+    ]
+    return lines
+
+
 def section_a1(a1: dict[str, Any]) -> list[str]:
     lines = [
         "## A1. Independent re-derivation",
@@ -462,8 +531,10 @@ def main() -> int:
         "| A4 FDR under dependence | BH used outside its proven regime; BY reported alongside; realised null error 1.7% < 5% |",
         "| A5 traceability | FIRST_AUDIT.md re-renders **byte-identical**; no hand-entered numbers |",
         "| A6 data integrity | clean: no duplicates, no leakage, 3 genuine seeds/cell, 6ND exact against the released column |",
+        "| Follow-on finding | **the loss floor is unidentifiable on accuracy metrics** (SSR ratio 1.0000 vs 10x on C4) - accuracy does not support 3-parameter extrapolation |",
         "",
     ]
+    floors = load("floor_identifiability.json")
     dose = load("a2_dose_response.json")
     if dose:
         lines += section_promoted(dose)
@@ -480,6 +551,8 @@ def main() -> int:
         lines += section_a5(a5)
     if a4:
         lines += section_a6(a4)
+    if floors:
+        lines += section_floor(floors)
     lines += [
         "## What this audit did not rule out",
         "",
