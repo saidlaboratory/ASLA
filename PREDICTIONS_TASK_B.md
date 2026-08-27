@@ -220,6 +220,26 @@ extrapolation), then pooling is useful but the stated mechanism is wrong about
 
 ---
 
+## 5b. Addendum (2026-08-27, before the final design completed)
+
+Two protocol points fixed while the run was still in progress, recorded here so
+they are not read as post-hoc choices:
+
+- **Headline estimator: `shared_exponent`.** Complete pooling on the exponent has
+  no free hyperparameter, so it is held out by construction and needs no
+  argument about how a shrinkage strength was selected. `shrinkage_eb` is
+  reported alongside it. P2 continues to be judged against whichever pooled
+  estimator does *best*, which is the hardest version of that test for our own
+  prediction.
+- **The sweep optimum is diagnostic, never a method result.** Fixed strengths
+  were evaluated to trace the flexibility curve; the best of them was identified
+  by inspecting evaluation data and is labelled `sweep_optimum_diagnostic` in the
+  output with an explicit "must not be quoted as the method's performance".
+- **P1 gains an UNDERPOWERED path**, symmetric with P4 and P5: UNDERPOWERED when
+  every improvement is under 0.5 points absolute *and* none is separated from
+  plain projection. As with the others, UNDERPOWERED cannot contribute to the
+  compound mechanism refutation in section 5.
+
 ## 6. Analysis protocol fixed in advance
 
 - Primary metric: C4 bits/token. OLMES metrics reported as secondary, with the

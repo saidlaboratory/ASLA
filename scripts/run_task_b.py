@@ -347,6 +347,10 @@ def judge(results: dict[str, Any]) -> dict[str, Any]:
     rankers = primary["rankers"]
     plain = rankers["plain_projection"]["mis_selection"]["point"]
     single = rankers["single_scale"]["mis_selection"]
+    # P2 asks whether *any* pooled estimator beats single-scale ranking, so it
+    # uses whichever pooled estimator does best - this is deliberately the
+    # hardest version of the test for our own prediction, independent of which
+    # estimator we choose to headline.
     best_name = min(
         ("shared_exponent", "shrinkage_eb"),
         key=lambda n: rankers[n]["mis_selection"]["point"],
@@ -479,6 +483,17 @@ def judge(results: dict[str, Any]) -> dict[str, Any]:
     }
     best_fixed = min(sweep_points, key=lambda n: sweep_points[n]) if sweep_points else None
     provenance = {
+        # Fixed before the final design completed: shared_exponent is the
+        # headline because it has no free hyperparameter at all, so it is
+        # held out by construction and needs no argument about how a
+        # shrinkage strength was chosen. shrinkage_eb is reported alongside
+        # as the more principled but hyperparameter-dependent variant.
+        "headline_estimator": "shared_exponent",
+        "headline_rationale": (
+            "complete pooling on the exponent is fixed a priori: nothing is tuned, so no held-out protocol is "
+            "needed to defend it. Empirical-Bayes shrinkage is reported alongside, but its strength is estimated "
+            "and therefore invites a question shared_exponent does not raise."
+        ),
         "method_result": {
             "ranker": "shrinkage_eb",
             "mis_selection": rankers["shrinkage_eb"]["mis_selection"],
