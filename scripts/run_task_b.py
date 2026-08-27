@@ -43,6 +43,9 @@ PRIMARY = DATA / "datadecide_runs.parquet"
 STRENGTH_SWEEP = (0.0, 0.2, 0.4, 0.6, 0.8, 1.0)
 # Pre-registered thresholds (PREDICTIONS_TASK_B.md).
 P1_MIN_RELATIVE = 0.10
+# P1 is only decidable when the seed bootstrap can separate the pooled estimator
+# from plain projection at all. Mirrors the UNDERPOWERED paths on P4 and P5.
+P1_MIN_ABSOLUTE_POINTS = 0.5
 P3_POINT_MARGIN = 1.0
 P4_RATIO = 2.0
 P4_MIN_LONG_ARM_REMOVED = 3
@@ -351,17 +354,47 @@ def judge(results: dict[str, Any]) -> dict[str, Any]:
     best = rankers[best_name]["mis_selection"]
 
     # P1: both pooled estimators beat plain projection, by >= 10% relative
+    plain_interval = rankers["plain_projection"]["mis_selection"]
     p1_rows = {}
     for name in ("shared_exponent", "shrinkage_eb"):
-        point = rankers[name]["mis_selection"]["point"]
+        interval = rankers[name]["mis_selection"]
+        point = interval["point"]
         relative = (plain - point) / plain if plain > 0 else 0.0
-        p1_rows[name] = {"point": point, "relative_improvement": relative, "beats_plain": bool(point < plain)}
+        # "Separated" means the pooled CI upper bound sits below plain's point
+        # estimate: the bootstrap can tell them apart, not merely order them.
+        separated = bool(interval["hi"] is not None and interval["hi"] < plain)
+        p1_rows[name] = {
+            "point": point,
+            "lo": interval["lo"],
+            "hi": interval["hi"],
+            "relative_improvement": relative,
+            "absolute_improvement_points": 100.0 * (plain - point),
+            "beats_plain": bool(point < plain),
+            "separated_from_plain": separated,
+        }
     p1_ok = all(row["beats_plain"] and row["relative_improvement"] >= P1_MIN_RELATIVE for row in p1_rows.values())
+    # UNDERPOWERED when the improvement is too small in absolute terms for this
+    # bootstrap to resolve, and no estimator is separated from plain.
+    p1_small = all(
+        abs(row["absolute_improvement_points"]) < P1_MIN_ABSOLUTE_POINTS and not row["separated_from_plain"]
+        for row in p1_rows.values()
+    )
+    if p1_ok:
+        p1_verdict = "CONFIRMED"
+    elif p1_small:
+        p1_verdict = "UNDERPOWERED"
+    else:
+        p1_verdict = "REFUTED"
     p1 = {
-        "verdict": "CONFIRMED" if p1_ok else "REFUTED",
+        "verdict": p1_verdict,
         "plain": plain,
+        "plain_interval": plain_interval,
         "per_estimator": p1_rows,
-        "criterion": f"both pooled estimators beat plain projection by >= {P1_MIN_RELATIVE:.0%} relative",
+        "criterion": (
+            f"CONFIRMED if both pooled estimators beat plain projection by >= {P1_MIN_RELATIVE:.0%} relative; "
+            f"UNDERPOWERED if every improvement is < {P1_MIN_ABSOLUTE_POINTS} points absolute and none is separated "
+            "from plain (CI upper bound below plain's point); otherwise REFUTED"
+        ),
     }
 
     # P2: neither pooled estimator beats single-scale ranking
@@ -438,7 +471,40 @@ def judge(results: dict[str, Any]) -> dict[str, Any]:
         }
 
     mechanism_refuted = bool(p1["verdict"] == "REFUTED" and p4.get("verdict") == "FAILED")
+    # UNDERPOWERED on either arm means the test did not run, not that it passed.
+    sweep_points = {
+        name: rankers[name]["mis_selection"]["point"]
+        for name in rankers
+        if name.startswith("shrinkage_") and name != "shrinkage_eb"
+    }
+    best_fixed = min(sweep_points, key=lambda n: sweep_points[n]) if sweep_points else None
+    provenance = {
+        "method_result": {
+            "ranker": "shrinkage_eb",
+            "mis_selection": rankers["shrinkage_eb"]["mis_selection"],
+            "status": "held-out: the shrinkage strength was estimated only on training interventions",
+        },
+        "shared_exponent_result": {
+            "ranker": "shared_exponent",
+            "mis_selection": rankers["shared_exponent"]["mis_selection"],
+            "status": "no free hyperparameter: complete pooling is fixed a priori, nothing was tuned",
+        },
+        "sweep_optimum_diagnostic": {
+            "ranker": best_fixed,
+            "mis_selection": None if best_fixed is None else rankers[best_fixed]["mis_selection"],
+            "status": (
+                "DIAGNOSTIC ONLY, NOT A METHOD RESULT: this strength was identified by inspecting the sweep on the "
+                "evaluation data, so it is not held out and must not be quoted as the method's performance"
+            ),
+        },
+        "eb_vs_sweep_optimum_gap_points": (
+            None
+            if best_fixed is None
+            else 100.0 * (rankers["shrinkage_eb"]["mis_selection"]["point"] - rankers[best_fixed]["mis_selection"]["point"])
+        ),
+    }
     return {
+        "result_provenance": provenance,
         "P1_beats_plain": p1,
         "P2_beats_single_scale": p2,
         "P3_flexibility_curve": p3,
@@ -446,7 +512,8 @@ def judge(results: dict[str, Any]) -> dict[str, Any]:
         "P5_removed_error_type": p5,
         "mechanism_refuted": mechanism_refuted,
         "mechanism_note": (
-            "compound refutation requires P1 REFUTED and P4 FAILED (UNDERPOWERED does not count)"
+            "compound refutation requires P1 REFUTED and P4 FAILED; an UNDERPOWERED verdict on either arm means "
+            "the test did not run and does not contribute"
         ),
     }
 
@@ -456,6 +523,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--out", default="results/task_b")
     parser.add_argument("--fast", action="store_true")
     parser.add_argument("--seed", type=int, default=1729)
+    parser.add_argument(
+        "--resume",
+        action="store_true",
+        help="Reuse completed designs from an existing task_b.json instead of recomputing them.",
+    )
     args = parser.parse_args(argv)
     n_boot = 3 if args.fast else 120
     n_boot_inner = 5 if args.fast else 40
@@ -463,16 +535,42 @@ def main(argv: list[str] | None = None) -> int:
 
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
+    input_sha = _sha256_file(PRIMARY)
     results: dict[str, Any] = {
         "fast": args.fast,
         "seed": args.seed,
-        "inputs": {str(PRIMARY): _sha256_file(PRIMARY)},
+        "inputs": {str(PRIMARY): input_sha},
         "counts": {"n_boot": n_boot, "n_boot_inner": n_boot_inner, "n_boot_ratio": n_boot_ratio},
         "designs": {},
     }
+    existing = out / "task_b.json"
+    if args.resume and existing.exists():
+        prior = json.loads(existing.read_text(encoding="utf-8"))
+        # Only reuse work computed from the same data, seed, and bootstrap counts.
+        compatible = (
+            prior.get("inputs", {}).get(str(PRIMARY)) == input_sha
+            and prior.get("seed") == args.seed
+            and prior.get("fast") == args.fast
+            and prior.get("counts", {}).get("n_boot") == n_boot
+            and prior.get("counts", {}).get("n_boot_inner") == n_boot_inner
+        )
+        if not compatible:
+            raise SystemExit(
+                "cannot resume: the existing task_b.json was produced with different data, seed, or counts; "
+                "delete it or run without --resume"
+            )
+        results["designs"] = prior.get("designs", {})
+        for key in ("shrinkage_strength_protocol", "shrinkage_strength_sensitivity"):
+            if key in prior:
+                results[key] = prior[key]
+        print(f"resuming with {len(results['designs'])} completed designs: {sorted(results['designs'])}", flush=True)
 
     primary = design(PRIMARY, "300M", "1B")
     train_names = training_interventions(primary[0], seed=args.seed)
+
+    def already_done(label: str) -> bool:
+        return label in results["designs"]
+
     results["shrinkage_strength_protocol"] = {
         "n_training_interventions": len(train_names),
         "training_interventions": train_names,
@@ -486,19 +584,26 @@ def main(argv: list[str] | None = None) -> int:
             "Fixed-strength rankers (shrinkage_0 ... shrinkage_1) estimate nothing and are unaffected."
         ),
     }
-    results["designs"]["primary_4M-300M_target1B"] = evaluate_design(
-        *primary, n_boot=n_boot, n_boot_inner=n_boot_inner, seed=args.seed, include_ensemble=True,
-        strength_interventions=train_names,
-    )
-    results["shrinkage_strength_sensitivity"] = strength_sensitivity(
-        primary[0], primary[1], train_names, n_boot_inner, args.seed
-    )
-    print("done primary", flush=True)
+    if not already_done("primary_4M-300M_target1B"):
+        results["designs"]["primary_4M-300M_target1B"] = evaluate_design(
+            *primary, n_boot=n_boot, n_boot_inner=n_boot_inner, seed=args.seed, include_ensemble=True,
+            strength_interventions=train_names,
+        )
+        print("done primary", flush=True)
+    else:
+        print("skipping primary (already computed)", flush=True)
+    if "shrinkage_strength_sensitivity" not in results:
+        results["shrinkage_strength_sensitivity"] = strength_sensitivity(
+            primary[0], primary[1], train_names, n_boot_inner, args.seed
+        )
     _write_json_atomically(results, out / "task_b.json")
 
     long_arm = design(PRIMARY, "150M", "1B")
     short_arm = design(PRIMARY, "530M", "1B")
     for label, built in (("long_arm_4M-150M_target1B", long_arm), ("short_arm_4M-530M_target1B", short_arm)):
+        if already_done(label):
+            print(f"skipping {label} (already computed)", flush=True)
+            continue
         results["designs"][label] = evaluate_design(
             *built, n_boot=max(3, n_boot // 2), n_boot_inner=n_boot_inner, seed=args.seed, include_ensemble=False,
             strength_interventions=train_names,
