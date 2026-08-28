@@ -317,6 +317,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--out", default="results/checkpoints")
     parser.add_argument("--fast", action="store_true")
     parser.add_argument("--seed", type=int, default=1729)
+    parser.add_argument(
+        "--resume",
+        action="store_true",
+        help="Reuse completed designs from an existing checkpoint_study.json instead of recomputing them.",
+    )
     args = parser.parse_args(argv)
     n_boot = 3 if args.fast else 80
     n_boot_ratio = 3 if args.fast else 40
@@ -335,7 +340,26 @@ def main(argv: list[str] | None = None) -> int:
         "counts": {"n_boot": n_boot, "n_boot_ratio": n_boot_ratio},
         "designs": {},
     }
+    existing = out / "checkpoint_study.json"
+    if args.resume and existing.exists():
+        prior = json.loads(existing.read_text(encoding="utf-8"))
+        compatible = (
+            prior.get("seed") == args.seed
+            and prior.get("fast") == args.fast
+            and prior.get("metric") == METRIC
+            and prior.get("counts", {}).get("n_boot") == n_boot
+        )
+        if not compatible:
+            raise SystemExit(
+                "cannot resume: the existing checkpoint_study.json used different settings; "
+                "delete it or run without --resume"
+            )
+        results["designs"] = prior.get("designs", {})
+        print(f"resuming with {len(results['designs'])} completed designs: {sorted(results['designs'])}", flush=True)
     for label, built in builds.items():
+        if label in results["designs"]:
+            print(f"skipping {label} (already computed)", flush=True)
+            continue
         results["designs"][label] = evaluate(
             built, n_boot=n_boot, seed=args.seed, include_ensemble=(label == "primary")
         )
