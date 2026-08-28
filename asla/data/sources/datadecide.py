@@ -284,12 +284,50 @@ def select_common_checkpoints(df: pd.DataFrame) -> pd.DataFrame:
     return chosen
 
 
+def select_all_complete_checkpoints(df: pd.DataFrame, discard_first_fraction: float = 0.10) -> pd.DataFrame:
+    """Return every (scale, step) whose cell is complete, for checkpoint-augmented fitting.
+
+    A checkpoint is usable only when every (recipe, seed) cell has a row at that
+    step, so all interventions are compared on identical data. Choshen, Zhang &
+    Andreas (arXiv:2410.11840) report that the earliest checkpoints of a run hurt
+    scaling-law accuracy and recommend discarding roughly the first 10%;
+    ``discard_first_fraction`` implements that rule per scale, measured against
+    that scale's maximum step.
+    """
+
+    if not 0.0 <= discard_first_fraction < 1.0:
+        raise ValueError(f"discard_first_fraction must lie in [0, 1), got {discard_first_fraction}")
+    n_cells = df.groupby("params")[["data", "seed"]].nunique()
+    expected = (n_cells["data"] * n_cells["seed"]).to_dict()
+    counts = df.groupby(["params", "step"]).size().reset_index(name="n_rows")
+    complete = counts[counts.apply(lambda row: row["n_rows"] == expected[row["params"]], axis=1)]
+    if complete.empty:
+        raise ValueError("no checkpoint is shared by every recipe and seed at any scale")
+    kept: list[pd.DataFrame] = []
+    for scale, group in complete.groupby("params"):
+        steps = np.asarray(sorted(group["step"].unique()), dtype=float)
+        threshold = steps.max() * discard_first_fraction
+        surviving = steps[steps >= threshold]
+        kept.append(pd.DataFrame({"params": scale, "step": surviving.astype(int)}))
+    return pd.concat(kept, ignore_index=True)
+
+
 def build_runs_table(
     eval_df: pd.DataFrame,
     ppl_df: pd.DataFrame | None,
     metric: str = DEFAULT_METRIC,
+    checkpoints: str = "final",
+    discard_first_fraction: float = 0.10,
 ) -> pd.DataFrame:
-    """Map DataDecide tables into the canonical runs schema for one named metric."""
+    """Map DataDecide tables into the canonical runs schema for one named metric.
+
+    ``checkpoints="final"`` keeps one row per (recipe, scale, seed) at the last
+    checkpoint common to every cell - the default, and what every audit to date
+    has used. ``checkpoints="all"`` keeps every complete intermediate checkpoint
+    as its own row, giving many more fitting points per intervention along the
+    same compute ladder. In that mode ``compute`` varies within a scale, so the
+    canonical uniqueness key ``(intervention, compute, seed)`` still holds.
+    """
 
     if metric not in METRICS:
         raise ValueError(f"unknown DataDecide metric {metric!r}; choose one of {sorted(METRICS)}")
@@ -310,7 +348,12 @@ def build_runs_table(
     unknown = sorted(set(source["seed"].astype(str)) - set(SEED_MAP))
     if unknown:
         raise ValueError(f"unrecognised DataDecide seed labels: {unknown}")
-    chosen = select_common_checkpoints(source)
+    if checkpoints == "final":
+        chosen = select_common_checkpoints(source)
+    elif checkpoints == "all":
+        chosen = select_all_complete_checkpoints(source, discard_first_fraction=discard_first_fraction)
+    else:
+        raise ValueError(f"checkpoints must be 'final' or 'all', got {checkpoints!r}")
     rows = source.merge(chosen, on=["params", "step"], how="inner")
     rows = rows.merge(constants, left_on="params", right_index=True, how="left")
     if rows["params_n"].isna().any():
@@ -402,13 +445,17 @@ def harvest(
     out_path: str | Path,
     metric: str = DEFAULT_METRIC,
     cache_dir: str | Path = DEFAULT_CACHE_DIR,
+    checkpoints: str = "final",
+    discard_first_fraction: float = 0.10,
 ) -> pd.DataFrame:
     """Download (if needed), map, validate, save, and print a coverage summary."""
 
     ensure_artifacts(cache_dir)
     eval_df = load_eval_macro(cache_dir)
     ppl_df = load_ppl(cache_dir) if METRICS[metric]["source"] == "ppl" else None
-    table = build_runs_table(eval_df, ppl_df, metric=metric)
+    table = build_runs_table(
+        eval_df, ppl_df, metric=metric, checkpoints=checkpoints, discard_first_fraction=discard_first_fraction
+    )
     save_runs(table, out_path)
     summary = coverage_summary(table)
     print(format_coverage(summary))
