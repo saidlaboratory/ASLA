@@ -1,0 +1,479 @@
+{
+  "correction_effect": {
+    "checkpoints_per_scale": {
+      "10M": 1,
+      "14M": 1,
+      "150M": 16,
+      "16M": 1,
+      "20M": 4,
+      "300M": 14,
+      "4M": 3,
+      "530M": 7,
+      "60M": 10,
+      "6M": 1,
+      "8M": 1,
+      "90M": 4
+    },
+    "max_abs_projection_shift": 0.03266683188619268,
+    "mean_abs_projection_shift": 0.0050458520685111455,
+    "n_interventions": 25,
+    "ordering_differs": true
+  },
+  "counts": {
+    "n_boot": 80,
+    "n_boot_ratio": 40
+  },
+  "designs": {
+    "long": {
+      "autocorrelation": {
+        "max_rho": 0.6110048042458011,
+        "mean_effective_points": 19.26884086188141,
+        "mean_n_points": 43.0,
+        "mean_rho": 0.3882329188270676,
+        "mean_weight": 0.4481125781832887,
+        "median_rho": 0.3448511805107901,
+        "n_runs": 25
+      },
+      "elapsed_seconds": 1985.4091868400574,
+      "lever_arm": 52.54912561058163,
+      "max_fit": "150M",
+      "n_boot": 80,
+      "n_checkpoint_points": 43,
+      "n_ladder_points": 10,
+      "rankers": {
+        "checkpoint_ar1": {
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.08008333333333331,
+            "lo": 0.043333333333333335,
+            "method": "percentile bootstrap",
+            "n_boot": 80,
+            "point": 0.06666666666666667
+          },
+          "n_added_vs_plain": 9,
+          "n_flips": 20,
+          "n_removed_vs_plain": 16,
+          "net_removed_vs_plain": 7
+        },
+        "checkpoint_naive": {
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.05333333333333334,
+            "lo": 0.03333333333333333,
+            "method": "percentile bootstrap",
+            "n_boot": 80,
+            "point": 0.03666666666666667
+          },
+          "n_added_vs_plain": 8,
+          "n_flips": 11,
+          "n_removed_vs_plain": 24,
+          "net_removed_vs_plain": 16
+        },
+        "checkpoint_plus_pooling": {
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.07,
+            "lo": 0.04658333333333334,
+            "method": "percentile bootstrap",
+            "n_boot": 80,
+            "point": 0.056666666666666664
+          },
+          "n_added_vs_plain": 4,
+          "n_flips": 16,
+          "n_removed_vs_plain": 15,
+          "net_removed_vs_plain": 11
+        },
+        "plain_projection": {
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.10666666666666667,
+            "lo": 0.05991666666666667,
+            "method": "percentile bootstrap",
+            "n_boot": 80,
+            "point": 0.09
+          },
+          "n_added_vs_plain": 0,
+          "n_flips": 27,
+          "n_removed_vs_plain": 0,
+          "net_removed_vs_plain": 0
+        },
+        "shared_exponent": {
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.04341666666666664,
+            "lo": 0.016583333333333332,
+            "method": "percentile bootstrap",
+            "n_boot": 80,
+            "point": 0.03
+          },
+          "n_added_vs_plain": 6,
+          "n_flips": 8,
+          "n_removed_vs_plain": 25,
+          "net_removed_vs_plain": 19
+        },
+        "single_scale": {
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.016666666666666666,
+            "lo": 0.0033333333333333335,
+            "method": "percentile bootstrap",
+            "n_boot": 80,
+            "point": 0.01
+          },
+          "n_added_vs_plain": 2,
+          "n_flips": 3,
+          "n_removed_vs_plain": 26,
+          "net_removed_vs_plain": 24
+        }
+      },
+      "target": 7.06209840434774e+20
+    },
+    "primary": {
+      "autocorrelation": {
+        "max_rho": 0.5921553151711129,
+        "mean_effective_points": 25.448156925610807,
+        "mean_n_points": 63.0,
+        "mean_rho": 0.4274683964501634,
+        "mean_weight": 0.40393899881921913,
+        "median_rho": 0.4220806892937385,
+        "n_runs": 25
+      },
+      "elapsed_seconds": 64122.10851621628,
+      "lever_arm": 12.472872921340285,
+      "max_fit": "300M",
+      "n_boot": 80,
+      "n_checkpoint_points": 63,
+      "n_ladder_points": 11,
+      "rankers": {
+        "checkpoint_ar1": {
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.05333333333333334,
+            "lo": 0.03325,
+            "method": "percentile bootstrap",
+            "n_boot": 80,
+            "point": 0.04
+          },
+          "n_added_vs_plain": 10,
+          "n_flips": 12,
+          "n_removed_vs_plain": 14,
+          "net_removed_vs_plain": 4
+        },
+        "checkpoint_naive": {
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.04,
+            "lo": 0.03333333333333333,
+            "method": "percentile bootstrap",
+            "n_boot": 80,
+            "point": 0.04
+          },
+          "n_added_vs_plain": 9,
+          "n_flips": 12,
+          "n_removed_vs_plain": 13,
+          "net_removed_vs_plain": 4
+        },
+        "checkpoint_plus_pooling": {
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.04666666666666667,
+            "lo": 0.03,
+            "method": "percentile bootstrap",
+            "n_boot": 80,
+            "point": 0.03333333333333333
+          },
+          "n_added_vs_plain": 4,
+          "n_flips": 11,
+          "n_removed_vs_plain": 9,
+          "net_removed_vs_plain": 5
+        },
+        "ensemble": {
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.21666666666666667,
+            "lo": 0.12658333333333335,
+            "method": "percentile bootstrap",
+            "n_boot": 80,
+            "point": 0.18666666666666668
+          },
+          "n_added_vs_plain": 43,
+          "n_flips": 56,
+          "n_removed_vs_plain": 3,
+          "net_removed_vs_plain": -40
+        },
+        "plain_projection": {
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.08674999999999998,
+            "lo": 0.04,
+            "method": "percentile bootstrap",
+            "n_boot": 80,
+            "point": 0.05333333333333334
+          },
+          "n_added_vs_plain": 0,
+          "n_flips": 16,
+          "n_removed_vs_plain": 0,
+          "net_removed_vs_plain": 0
+        },
+        "shared_exponent": {
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.03666666666666667,
+            "lo": 0.013333333333333334,
+            "method": "percentile bootstrap",
+            "n_boot": 80,
+            "point": 0.02
+          },
+          "n_added_vs_plain": 3,
+          "n_flips": 6,
+          "n_removed_vs_plain": 13,
+          "net_removed_vs_plain": 10
+        },
+        "single_scale": {
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.02,
+            "lo": 0.006583333333333334,
+            "method": "percentile bootstrap",
+            "n_boot": 80,
+            "point": 0.013333333333333334
+          },
+          "n_added_vs_plain": 2,
+          "n_flips": 4,
+          "n_removed_vs_plain": 14,
+          "net_removed_vs_plain": 12
+        }
+      },
+      "target": 7.06209840434774e+20
+    },
+    "short": {
+      "autocorrelation": {
+        "max_rho": 0.6414593731749897,
+        "mean_effective_points": 27.358073528769438,
+        "mean_n_points": 85.0,
+        "mean_rho": 0.5153871402544649,
+        "mean_weight": 0.32185968857375813,
+        "median_rho": 0.5139495684117757,
+        "n_runs": 25
+      },
+      "elapsed_seconds": 3213.4031608104706,
+      "lever_arm": 4.722189402659495,
+      "max_fit": "530M",
+      "n_boot": 80,
+      "n_checkpoint_points": 85,
+      "n_ladder_points": 12,
+      "rankers": {
+        "checkpoint_ar1": {
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.043333333333333335,
+            "lo": 0.03333333333333333,
+            "method": "percentile bootstrap",
+            "n_boot": 80,
+            "point": 0.03666666666666667
+          },
+          "n_added_vs_plain": 10,
+          "n_flips": 11,
+          "n_removed_vs_plain": 8,
+          "net_removed_vs_plain": -2
+        },
+        "checkpoint_naive": {
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.03666666666666667,
+            "lo": 0.03,
+            "method": "percentile bootstrap",
+            "n_boot": 80,
+            "point": 0.03666666666666667
+          },
+          "n_added_vs_plain": 9,
+          "n_flips": 11,
+          "n_removed_vs_plain": 7,
+          "net_removed_vs_plain": -2
+        },
+        "checkpoint_plus_pooling": {
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.02666666666666667,
+            "lo": 0.013333333333333334,
+            "method": "percentile bootstrap",
+            "n_boot": 80,
+            "point": 0.016666666666666666
+          },
+          "n_added_vs_plain": 1,
+          "n_flips": 5,
+          "n_removed_vs_plain": 5,
+          "net_removed_vs_plain": 4
+        },
+        "plain_projection": {
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.05333333333333334,
+            "lo": 0.023333333333333334,
+            "method": "percentile bootstrap",
+            "n_boot": 80,
+            "point": 0.03
+          },
+          "n_added_vs_plain": 0,
+          "n_flips": 9,
+          "n_removed_vs_plain": 0,
+          "net_removed_vs_plain": 0
+        },
+        "shared_exponent": {
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.030083333333333302,
+            "lo": 0.01,
+            "method": "percentile bootstrap",
+            "n_boot": 80,
+            "point": 0.016666666666666666
+          },
+          "n_added_vs_plain": 2,
+          "n_flips": 5,
+          "n_removed_vs_plain": 6,
+          "net_removed_vs_plain": 4
+        },
+        "single_scale": {
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.013333333333333334,
+            "lo": 0.0033333333333333335,
+            "method": "percentile bootstrap",
+            "n_boot": 80,
+            "point": 0.01
+          },
+          "n_added_vs_plain": 2,
+          "n_flips": 3,
+          "n_removed_vs_plain": 8,
+          "net_removed_vs_plain": 6
+        }
+      },
+      "target": 7.06209840434774e+20
+    }
+  },
+  "fast": false,
+  "interaction": {
+    "I_long_arm": 7,
+    "I_short_arm": -2,
+    "n_draws": 0,
+    "ratio_hi": null,
+    "ratio_lo": null,
+    "ratio_point": null
+  },
+  "metric": "c4_en_bits_per_token",
+  "seed": 1729,
+  "verdicts": {
+    "C1_beats_plain": {
+      "absolute_improvement_points": 1.3333333333333335,
+      "checkpoint_ar1": {
+        "confidence_level": 0.95,
+        "hi": 0.05333333333333334,
+        "lo": 0.03325,
+        "method": "percentile bootstrap",
+        "n_boot": 80,
+        "point": 0.04
+      },
+      "criterion": "CONFIRMED at >= 25% relative; UNDERPOWERED if < 0.5 points absolute and not separated from plain",
+      "plain": 0.05333333333333334,
+      "relative_improvement": 0.25000000000000006,
+      "separated_from_plain": false,
+      "verdict": "CONFIRMED"
+    },
+    "C2_beats_single_scale": {
+      "checkpoint_ar1": {
+        "confidence_level": 0.95,
+        "hi": 0.05333333333333334,
+        "lo": 0.03325,
+        "method": "percentile bootstrap",
+        "n_boot": 80,
+        "point": 0.04
+      },
+      "criterion": "refuted if the checkpoint CI lower bound falls below single-scale's point estimate",
+      "note": "predicted at 65% confidence in the pre-registration",
+      "single_scale": {
+        "confidence_level": 0.95,
+        "hi": 0.02,
+        "lo": 0.006583333333333334,
+        "method": "percentile bootstrap",
+        "n_boot": 80,
+        "point": 0.013333333333333334
+      },
+      "verdict": "CONFIRMED"
+    },
+    "C3_lever_arm_interaction": {
+      "I_long_arm": 7,
+      "I_short_arm": -2,
+      "criterion": "rho_C >= 1.5; FAILED only if the point estimate and CI upper bound are both below",
+      "n_draws": 0,
+      "ratio_hi": null,
+      "ratio_lo": null,
+      "ratio_point": null,
+      "verdict": "UNDERPOWERED"
+    },
+    "C4_composition_with_pooling": {
+      "G_both": 0.37500000000000006,
+      "G_checkpoint": 0.25000000000000006,
+      "G_pooling": 0.6250000000000001,
+      "best_single_lever": 0.6250000000000001,
+      "cis_overlap_with_best_single": true,
+      "criterion": "CONFIRMED if max(parts) < G_both < sum(parts)",
+      "sum_of_parts": 0.8750000000000002,
+      "verdict": "UNDERPOWERED"
+    },
+    "C5_correlation_correction_matters": {
+      "autocorrelation": {
+        "max_rho": 0.5921553151711129,
+        "mean_effective_points": 25.448156925610807,
+        "mean_n_points": 63.0,
+        "mean_rho": 0.4274683964501634,
+        "mean_weight": 0.40393899881921913,
+        "median_rho": 0.4220806892937385,
+        "n_runs": 25
+      },
+      "corrected": {
+        "confidence_level": 0.95,
+        "hi": 0.05333333333333334,
+        "lo": 0.03325,
+        "method": "percentile bootstrap",
+        "n_boot": 80,
+        "point": 0.04
+      },
+      "corrected_ci_width": 0.020083333333333335,
+      "correction_effect": {
+        "checkpoints_per_scale": {
+          "10M": 1,
+          "14M": 1,
+          "150M": 16,
+          "16M": 1,
+          "20M": 4,
+          "300M": 14,
+          "4M": 3,
+          "530M": 7,
+          "60M": 10,
+          "6M": 1,
+          "8M": 1,
+          "90M": 4
+        },
+        "max_abs_projection_shift": 0.03266683188619268,
+        "mean_abs_projection_shift": 0.0050458520685111455,
+        "n_interventions": 25,
+        "ordering_differs": true
+      },
+      "criterion": "the correction must change the fitted projections and/or the induced ordering; identical mis-selection rates alone do not make it a no-op",
+      "fit_changes": true,
+      "mis_selection_rates_differ": false,
+      "naive": {
+        "confidence_level": 0.95,
+        "hi": 0.04,
+        "lo": 0.03333333333333333,
+        "method": "percentile bootstrap",
+        "n_boot": 80,
+        "point": 0.04
+      },
+      "naive_ci_width": 0.006666666666666668,
+      "naive_interval_is_narrower": true,
+      "verdict": "CONFIRMED"
+    },
+    "mechanism_damaged": false
+  }
+}

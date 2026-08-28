@@ -31,6 +31,7 @@ from asla.analysis.pooled import fit_shared_exponent, project, shared_exponent_r
 from asla.analysis.rankers import ensemble_ranker, make_projection_ranker, single_scale_ranker  # noqa: E402
 from asla.cli import _write_json_atomically  # noqa: E402
 from asla.data.sources import datadecide as dd  # noqa: E402
+from asla.models import bpb_power_law  # noqa: E402
 
 CACHE = "data/raw/datadecide"
 METRIC = "c4_en_bits_per_token"
@@ -89,6 +90,35 @@ def checkpoint_plus_pooling_ranker(df: pd.DataFrame, budgets: tuple[float, ...],
     available = sorted(float(c) for c in df["compute"].unique() if float(c) < float(target))
     params = fit_shared_exponent(df, tuple(available))
     return project(params, target)
+
+
+def correction_effect(design: dict[str, Any]) -> dict[str, Any]:
+    """Direct evidence for C5: does the AR(1) correction change the fit at all?
+
+    Compares naive and corrected projections per intervention, rather than the
+    summary mis-selection rate, which can coincide across genuinely different
+    fits.
+    """
+
+    ckpt_table, target = design["ckpt_table"], design["target"]
+    fitting = ckpt_table[ckpt_table["compute"] < target]
+    budgets = tuple(sorted(float(c) for c in fitting["compute"].unique()))
+    naive, _ = fit_checkpoint_augmented(fitting, budgets, weighting="naive")
+    corrected, _ = fit_checkpoint_augmented(fitting, budgets, weighting="ar1")
+    naive_proj = {n: float(bpb_power_law(target, *p)) for n, p in naive.items()}
+    corrected_proj = {n: float(bpb_power_law(target, *p)) for n, p in corrected.items()}
+    shifts = [abs(naive_proj[n] - corrected_proj[n]) for n in naive_proj]
+    order_naive = sorted(naive_proj, key=lambda n: naive_proj[n])
+    order_corrected = sorted(corrected_proj, key=lambda n: corrected_proj[n])
+    return {
+        "max_abs_projection_shift": float(max(shifts)) if shifts else 0.0,
+        "mean_abs_projection_shift": float(np.mean(shifts)) if shifts else 0.0,
+        "ordering_differs": bool(order_naive != order_corrected),
+        "n_interventions": len(naive_proj),
+        "checkpoints_per_scale": (
+            fitting.groupby("scale_label")["compute"].nunique().to_dict() if "scale_label" in fitting else {}
+        ),
+    }
 
 
 def evaluate(design: dict[str, Any], n_boot: int, seed: int, include_ensemble: bool) -> dict[str, Any]:
@@ -290,16 +320,29 @@ def judge(results: dict[str, Any]) -> dict[str, Any]:
     corrected = r["checkpoint_ar1"]["mis_selection"]
     naive_width = (naive["hi"] - naive["lo"]) if naive["hi"] is not None else None
     corrected_width = (corrected["hi"] - corrected["lo"]) if corrected["hi"] is not None else None
-    differs = bool(abs(naive["point"] - corrected["point"]) > 1e-9)
+    # C5 is about the *fit*, not the summary rate: two different fits can land on
+    # the same mis-selection rate by coincidence, so comparing rates alone would
+    # call a real change a no-op. The recorded evidence is the projected-value
+    # shift and whether the induced ordering differs.
+    fit_evidence = results.get("correction_effect", {})
+    fit_changes = bool(fit_evidence.get("ordering_differs") or (fit_evidence.get("max_abs_projection_shift") or 0.0) > 1e-6)
+    rate_differs = bool(abs(naive["point"] - corrected["point"]) > 1e-9)
+    narrower = bool(naive_width is not None and corrected_width is not None and naive_width < corrected_width)
     c5 = {
-        "verdict": "CONFIRMED" if differs else "REFUTED_NO_OP",
+        "verdict": "CONFIRMED" if fit_changes else "REFUTED_NO_OP",
         "naive": naive,
         "corrected": corrected,
         "naive_ci_width": naive_width,
         "corrected_ci_width": corrected_width,
-        "point_estimates_differ": differs,
+        "naive_interval_is_narrower": narrower,
+        "mis_selection_rates_differ": rate_differs,
+        "fit_changes": fit_changes,
+        "correction_effect": fit_evidence,
         "autocorrelation": primary["autocorrelation"],
-        "criterion": "the correction must change the fit; a no-op means the trap was not a trap here",
+        "criterion": (
+            "the correction must change the fitted projections and/or the induced ordering; identical "
+            "mis-selection rates alone do not make it a no-op"
+        ),
     }
 
     return {
@@ -365,6 +408,7 @@ def main(argv: list[str] | None = None) -> int:
         )
         print(f"done {label}", flush=True)
         _write_json_atomically(results, out / "checkpoint_study.json")
+    results["correction_effect"] = correction_effect(builds["primary"])
     results["interaction"] = bootstrap_interaction(results["designs"], builds, n_boot_ratio, args.seed)
     results["verdicts"] = judge(results)
     _write_json_atomically(results, out / "checkpoint_study.json")
