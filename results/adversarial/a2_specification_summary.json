@@ -1,0 +1,281 @@
+{
+  "counterexamples": [],
+  "excess_all_fit_error_rate": 1.0,
+  "n_excess_all_fit_error": 289,
+  "n_fit_error_exceeds_inherited": 173,
+  "n_specifications": 319,
+  "n_where_projection_worse": 289,
+  "n_with_positive_excess": 289,
+  "projection_better_specs": [
+    {
+      "fit_bounds": "bounded",
+      "fit_scales": "14M-530M",
+      "metric": "c4_en_bits_per_token",
+      "projection_mis_selection": 0.01,
+      "ranking": "seed_mean",
+      "single_scale_mis_selection": 0.01,
+      "target": "1B"
+    },
+    {
+      "fit_bounds": "unconstrained",
+      "fit_scales": "14M-530M",
+      "metric": "c4_en_bits_per_token",
+      "projection_mis_selection": 0.01,
+      "ranking": "seed_mean",
+      "single_scale_mis_selection": 0.01,
+      "target": "1B"
+    },
+    {
+      "fit_bounds": "bounded",
+      "fit_scales": "14M-530M",
+      "metric": "c4_en_bits_per_token",
+      "projection_mis_selection": 0.01,
+      "ranking": "seed_mean",
+      "single_scale_mis_selection": 0.01,
+      "target": "1B"
+    },
+    {
+      "fit_bounds": "unconstrained",
+      "fit_scales": "14M-530M",
+      "metric": "c4_en_bits_per_token",
+      "projection_mis_selection": 0.01,
+      "ranking": "seed_mean",
+      "single_scale_mis_selection": 0.01,
+      "target": "1B"
+    },
+    {
+      "fit_bounds": "bounded",
+      "fit_scales": "60M-530M",
+      "metric": "olmes_macro_error",
+      "projection_mis_selection": 0.11,
+      "ranking": "seed_mean",
+      "single_scale_mis_selection": 0.1166666666666666,
+      "target": "1B"
+    },
+    {
+      "fit_bounds": "unconstrained",
+      "fit_scales": "60M-530M",
+      "metric": "olmes_macro_error",
+      "projection_mis_selection": 0.1066666666666666,
+      "ranking": "seed_mean",
+      "single_scale_mis_selection": 0.1166666666666666,
+      "target": "1B"
+    },
+    {
+      "fit_bounds": "bounded",
+      "fit_scales": "60M-530M",
+      "metric": "olmes_macro_error",
+      "projection_mis_selection": 0.11,
+      "ranking": "seed_mean",
+      "single_scale_mis_selection": 0.1166666666666666,
+      "target": "1B"
+    },
+    {
+      "fit_bounds": "unconstrained",
+      "fit_scales": "60M-530M",
+      "metric": "olmes_macro_error",
+      "projection_mis_selection": 0.1066666666666666,
+      "ranking": "seed_mean",
+      "single_scale_mis_selection": 0.1166666666666666,
+      "target": "1B"
+    },
+    {
+      "fit_bounds": "bounded",
+      "fit_scales": "4M-150M",
+      "metric": "olmes_macro_error",
+      "projection_mis_selection": 0.0866666666666666,
+      "ranking": "seed_mean",
+      "single_scale_mis_selection": 0.0933333333333333,
+      "target": "530M"
+    },
+    {
+      "fit_bounds": "unconstrained",
+      "fit_scales": "4M-150M",
+      "metric": "olmes_macro_error",
+      "projection_mis_selection": 0.09,
+      "ranking": "seed_mean",
+      "single_scale_mis_selection": 0.0933333333333333,
+      "target": "530M"
+    },
+    {
+      "fit_bounds": "bounded",
+      "fit_scales": "4M-150M",
+      "metric": "olmes_macro_error",
+      "projection_mis_selection": 0.0866666666666666,
+      "ranking": "seed_mean",
+      "single_scale_mis_selection": 0.0933333333333333,
+      "target": "530M"
+    },
+    {
+      "fit_bounds": "unconstrained",
+      "fit_scales": "4M-150M",
+      "metric": "olmes_macro_error",
+      "projection_mis_selection": 0.09,
+      "ranking": "seed_mean",
+      "single_scale_mis_selection": 0.0933333333333333,
+      "target": "530M"
+    },
+    {
+      "fit_bounds": "bounded",
+      "fit_scales": "14M-150M",
+      "metric": "olmes_macro_error",
+      "projection_mis_selection": 0.0933333333333333,
+      "ranking": "seed_mean",
+      "single_scale_mis_selection": 0.0933333333333333,
+      "target": "530M"
+    },
+    {
+      "fit_bounds": "bounded",
+      "fit_scales": "14M-150M",
+      "metric": "olmes_macro_error",
+      "projection_mis_selection": 0.0933333333333333,
+      "ranking": "seed_mean",
+      "single_scale_mis_selection": 0.0933333333333333,
+      "target": "530M"
+    },
+    {
+      "fit_bounds": "bounded",
+      "fit_scales": "14M-300M",
+      "metric": "olmes_macro_error",
+      "projection_mis_selection": 0.0666666666666666,
+      "ranking": "seed_mean",
+      "single_scale_mis_selection": 0.0766666666666666,
+      "target": "530M"
+    },
+    {
+      "fit_bounds": "unconstrained",
+      "fit_scales": "14M-300M",
+      "metric": "olmes_macro_error",
+      "projection_mis_selection": 0.0666666666666666,
+      "ranking": "seed_mean",
+      "single_scale_mis_selection": 0.0766666666666666,
+      "target": "530M"
+    },
+    {
+      "fit_bounds": "bounded",
+      "fit_scales": "14M-300M",
+      "metric": "olmes_macro_error",
+      "projection_mis_selection": 0.0666666666666666,
+      "ranking": "seed_mean",
+      "single_scale_mis_selection": 0.0766666666666666,
+      "target": "530M"
+    },
+    {
+      "fit_bounds": "unconstrained",
+      "fit_scales": "14M-300M",
+      "metric": "olmes_macro_error",
+      "projection_mis_selection": 0.0666666666666666,
+      "ranking": "seed_mean",
+      "single_scale_mis_selection": 0.0766666666666666,
+      "target": "530M"
+    },
+    {
+      "fit_bounds": "bounded",
+      "fit_scales": "14M-530M",
+      "metric": "olmes_macro_error",
+      "projection_mis_selection": 0.0666666666666666,
+      "ranking": "seed_mean",
+      "single_scale_mis_selection": 0.0766666666666666,
+      "target": "530M"
+    },
+    {
+      "fit_bounds": "unconstrained",
+      "fit_scales": "14M-530M",
+      "metric": "olmes_macro_error",
+      "projection_mis_selection": 0.0666666666666666,
+      "ranking": "seed_mean",
+      "single_scale_mis_selection": 0.0766666666666666,
+      "target": "530M"
+    },
+    {
+      "fit_bounds": "bounded",
+      "fit_scales": "14M-530M",
+      "metric": "olmes_macro_error",
+      "projection_mis_selection": 0.0666666666666666,
+      "ranking": "seed_mean",
+      "single_scale_mis_selection": 0.0766666666666666,
+      "target": "530M"
+    },
+    {
+      "fit_bounds": "unconstrained",
+      "fit_scales": "14M-530M",
+      "metric": "olmes_macro_error",
+      "projection_mis_selection": 0.0666666666666666,
+      "ranking": "seed_mean",
+      "single_scale_mis_selection": 0.0766666666666666,
+      "target": "530M"
+    },
+    {
+      "fit_bounds": "bounded",
+      "fit_scales": "60M-530M",
+      "metric": "olmes_macro_correct_prob_per_char_deficit",
+      "projection_mis_selection": 0.0566666666666666,
+      "ranking": "seed_mean",
+      "single_scale_mis_selection": 0.07,
+      "target": "1B"
+    },
+    {
+      "fit_bounds": "unconstrained",
+      "fit_scales": "60M-530M",
+      "metric": "olmes_macro_correct_prob_per_char_deficit",
+      "projection_mis_selection": 0.0633333333333333,
+      "ranking": "seed_mean",
+      "single_scale_mis_selection": 0.07,
+      "target": "1B"
+    },
+    {
+      "fit_bounds": "bounded",
+      "fit_scales": "60M-530M",
+      "metric": "olmes_macro_correct_prob_per_char_deficit",
+      "projection_mis_selection": 0.0566666666666666,
+      "ranking": "seed_mean",
+      "single_scale_mis_selection": 0.07,
+      "target": "1B"
+    },
+    {
+      "fit_bounds": "unconstrained",
+      "fit_scales": "60M-530M",
+      "metric": "olmes_macro_correct_prob_per_char_deficit",
+      "projection_mis_selection": 0.0633333333333333,
+      "ranking": "seed_mean",
+      "single_scale_mis_selection": 0.07,
+      "target": "1B"
+    },
+    {
+      "fit_bounds": "bounded",
+      "fit_scales": "60M-300M",
+      "metric": "olmes_macro_correct_prob_per_char_deficit",
+      "projection_mis_selection": 0.1033333333333333,
+      "ranking": "seed_mean",
+      "single_scale_mis_selection": 0.1033333333333333,
+      "target": "530M"
+    },
+    {
+      "fit_bounds": "bounded",
+      "fit_scales": "60M-300M",
+      "metric": "olmes_macro_correct_prob_per_char_deficit",
+      "projection_mis_selection": 0.1033333333333333,
+      "ranking": "seed_mean",
+      "single_scale_mis_selection": 0.1033333333333333,
+      "target": "530M"
+    },
+    {
+      "fit_bounds": "bounded",
+      "fit_scales": "60M-530M",
+      "metric": "olmes_macro_correct_prob_per_char_deficit",
+      "projection_mis_selection": 0.1033333333333333,
+      "ranking": "seed_mean",
+      "single_scale_mis_selection": 0.1033333333333333,
+      "target": "530M"
+    },
+    {
+      "fit_bounds": "bounded",
+      "fit_scales": "60M-530M",
+      "metric": "olmes_macro_correct_prob_per_char_deficit",
+      "projection_mis_selection": 0.1033333333333333,
+      "ranking": "seed_mean",
+      "single_scale_mis_selection": 0.1033333333333333,
+      "target": "530M"
+    }
+  ]
+}

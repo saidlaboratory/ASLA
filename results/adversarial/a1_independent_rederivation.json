@@ -1,0 +1,275 @@
+{
+  "all_match": false,
+  "comparisons": {
+    "c4_en_bits_per_token": {
+      "all_match": true,
+      "metric": "c4_en_bits_per_token",
+      "rows": [
+        {
+          "audit": 2,
+          "independent": 2,
+          "match": true,
+          "quantity": "crossover_inherited"
+        },
+        {
+          "audit": 12,
+          "independent": 12,
+          "match": true,
+          "quantity": "excess_projection_flips"
+        },
+        {
+          "audit": 14,
+          "independent": 14,
+          "match": true,
+          "quantity": "fit_error"
+        },
+        {
+          "audit": 10,
+          "independent": 10,
+          "match": true,
+          "quantity": "fit_error_significant"
+        },
+        {
+          "audit": 1,
+          "independent": 1,
+          "match": true,
+          "quantity": "inherited_significant"
+        },
+        {
+          "audit": "16 pairs",
+          "independent": "16 pairs",
+          "match": true,
+          "quantity": "projection_flip_pairs"
+        },
+        {
+          "audit": 16,
+          "independent": 16,
+          "match": true,
+          "quantity": "projection_flips"
+        },
+        {
+          "audit": 11,
+          "independent": 11,
+          "match": true,
+          "quantity": "projection_flips_significant"
+        },
+        {
+          "audit": 0.05333333333333334,
+          "independent": 0.05333333333333334,
+          "match": true,
+          "quantity": "projection_mis_selection"
+        },
+        {
+          "audit": "4 pairs",
+          "independent": "4 pairs",
+          "match": true,
+          "quantity": "single_scale_flip_pairs"
+        },
+        {
+          "audit": 4,
+          "independent": 4,
+          "match": true,
+          "quantity": "single_scale_flips"
+        },
+        {
+          "audit": 3,
+          "independent": 3,
+          "match": true,
+          "quantity": "single_scale_flips_significant"
+        },
+        {
+          "audit": 0.013333333333333334,
+          "independent": 0.013333333333333334,
+          "match": true,
+          "quantity": "single_scale_mis_selection"
+        },
+        {
+          "audit": 2,
+          "independent": 2,
+          "match": true,
+          "quantity": "single_scale_only"
+        }
+      ]
+    },
+    "olmes_macro_correct_prob_per_char_deficit": {
+      "all_match": false,
+      "metric": "olmes_macro_correct_prob_per_char_deficit",
+      "rows": [
+        {
+          "audit": 33,
+          "independent": 33,
+          "match": true,
+          "quantity": "crossover_inherited"
+        },
+        {
+          "audit": 14,
+          "independent": 13,
+          "match": false,
+          "quantity": "excess_projection_flips"
+        },
+        {
+          "audit": 25,
+          "independent": 24,
+          "match": false,
+          "quantity": "fit_error"
+        },
+        {
+          "audit": 19,
+          "independent": 19,
+          "match": true,
+          "quantity": "fit_error_significant"
+        },
+        {
+          "audit": 17,
+          "independent": 17,
+          "match": true,
+          "quantity": "inherited_significant"
+        },
+        {
+          "audit": "58 pairs",
+          "independent": "57 pairs",
+          "match": false,
+          "quantity": "projection_flip_pairs"
+        },
+        {
+          "audit": 58,
+          "independent": 57,
+          "match": false,
+          "quantity": "projection_flips"
+        },
+        {
+          "audit": 36,
+          "independent": 36,
+          "match": true,
+          "quantity": "projection_flips_significant"
+        },
+        {
+          "audit": 0.19333333333333333,
+          "independent": 0.19,
+          "match": false,
+          "quantity": "projection_mis_selection"
+        },
+        {
+          "audit": "44 pairs",
+          "independent": "44 pairs",
+          "match": true,
+          "quantity": "single_scale_flip_pairs"
+        },
+        {
+          "audit": 44,
+          "independent": 44,
+          "match": true,
+          "quantity": "single_scale_flips"
+        },
+        {
+          "audit": 14,
+          "independent": 14,
+          "match": true,
+          "quantity": "single_scale_flips_significant"
+        },
+        {
+          "audit": 0.14666666666666667,
+          "independent": 0.14666666666666667,
+          "match": true,
+          "quantity": "single_scale_mis_selection"
+        },
+        {
+          "audit": 11,
+          "independent": 11,
+          "match": true,
+          "quantity": "single_scale_only"
+        }
+      ]
+    },
+    "olmes_macro_error": {
+      "all_match": false,
+      "metric": "olmes_macro_error",
+      "rows": [
+        {
+          "audit": 37,
+          "independent": 38,
+          "match": false,
+          "quantity": "crossover_inherited"
+        },
+        {
+          "audit": 9,
+          "independent": 10,
+          "match": false,
+          "quantity": "excess_projection_flips"
+        },
+        {
+          "audit": 14,
+          "independent": 14,
+          "match": true,
+          "quantity": "fit_error"
+        },
+        {
+          "audit": 7,
+          "independent": 7,
+          "match": true,
+          "quantity": "fit_error_significant"
+        },
+        {
+          "audit": 16,
+          "independent": 16,
+          "match": true,
+          "quantity": "inherited_significant"
+        },
+        {
+          "audit": "51 pairs",
+          "independent": "52 pairs",
+          "match": false,
+          "quantity": "projection_flip_pairs"
+        },
+        {
+          "audit": 51,
+          "independent": 52,
+          "match": false,
+          "quantity": "projection_flips"
+        },
+        {
+          "audit": 23,
+          "independent": 23,
+          "match": true,
+          "quantity": "projection_flips_significant"
+        },
+        {
+          "audit": 0.17,
+          "independent": 0.17333333333333334,
+          "match": false,
+          "quantity": "projection_mis_selection"
+        },
+        {
+          "audit": "42 pairs",
+          "independent": "42 pairs",
+          "match": true,
+          "quantity": "single_scale_flip_pairs"
+        },
+        {
+          "audit": 42,
+          "independent": 42,
+          "match": true,
+          "quantity": "single_scale_flips"
+        },
+        {
+          "audit": 13,
+          "independent": 13,
+          "match": true,
+          "quantity": "single_scale_flips_significant"
+        },
+        {
+          "audit": 0.14,
+          "independent": 0.14,
+          "match": true,
+          "quantity": "single_scale_mis_selection"
+        },
+        {
+          "audit": 5,
+          "independent": 4,
+          "match": false,
+          "quantity": "single_scale_only"
+        }
+      ]
+    }
+  }
+}

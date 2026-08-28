@@ -1,0 +1,62 @@
+{
+  "c4_en_bits_per_token": {
+    "kendall_old_vs_new_projection": 0.9999999999999998,
+    "max_abs_projection_change": 5.040230766084619e-07,
+    "median_abs_projection_change": 1.2687204797856566e-07,
+    "median_alpha_change": 3.3947263944344996e-08,
+    "metric": "c4_en_bits_per_token",
+    "n_interventions": 25,
+    "new_alpha_range": [
+      0.13853806019703577,
+      0.1648570282834454
+    ],
+    "old_alpha_all_pinned_at_0.05": false,
+    "old_alpha_range": [
+      0.13853806494151683,
+      0.16485704078053218
+    ],
+    "projection_change_relative_to_between_spread": 6.776109854657321e-07,
+    "ranking_identical": true,
+    "spearman_old_vs_new_projection": 1.0
+  },
+  "olmes_macro_correct_prob_per_char_deficit": {
+    "kendall_old_vs_new_projection": 0.9999999999999998,
+    "max_abs_projection_change": 3.7055814766651096e-07,
+    "median_abs_projection_change": 4.000713110796639e-08,
+    "median_alpha_change": 1.0052445674479937e-07,
+    "metric": "olmes_macro_correct_prob_per_char_deficit",
+    "n_interventions": 25,
+    "new_alpha_range": [
+      0.0712989905756659,
+      0.458524220375536
+    ],
+    "old_alpha_all_pinned_at_0.05": false,
+    "old_alpha_range": [
+      0.07129901260118031,
+      0.4585241630771348
+    ],
+    "projection_change_relative_to_between_spread": 7.225415046405433e-07,
+    "ranking_identical": true,
+    "spearman_old_vs_new_projection": 1.0
+  },
+  "olmes_macro_error": {
+    "kendall_old_vs_new_projection": 0.9999999999999998,
+    "max_abs_projection_change": 0.006969107280322295,
+    "median_abs_projection_change": 0.006486396416772844,
+    "median_alpha_change": 0.023205272555964884,
+    "metric": "olmes_macro_error",
+    "n_interventions": 25,
+    "new_alpha_range": [
+      0.017119128416184938,
+      0.03366227636330215
+    ],
+    "old_alpha_all_pinned_at_0.05": true,
+    "old_alpha_range": [
+      0.05000000000000001,
+      0.050000000000206
+    ],
+    "projection_change_relative_to_between_spread": 0.23813489769600213,
+    "ranking_identical": true,
+    "spearman_old_vs_new_projection": 1.0
+  }
+}

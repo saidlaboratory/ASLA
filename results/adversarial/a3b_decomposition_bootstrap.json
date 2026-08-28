@@ -1,0 +1,182 @@
+[
+  {
+    "conclusion_stability": {
+      "excess_all_fit_error_rate": 1.0,
+      "fit_error_exceeds_inherited_rate": 1.0,
+      "projection_worse_rate": 1.0
+    },
+    "intervals": {
+      "excess": {
+        "hi": 21.0,
+        "lo": 7.4750000000000005,
+        "mean": 14.413333333333334,
+        "point": 12
+      },
+      "fit_error": {
+        "hi": 22.524999999999977,
+        "lo": 10.0,
+        "mean": 16.286666666666665,
+        "point": 14
+      },
+      "inherited": {
+        "hi": 4.0,
+        "lo": 0.0,
+        "mean": 1.7866666666666666,
+        "point": 2
+      },
+      "projection_flips": {
+        "hi": 25.0,
+        "lo": 12.0,
+        "mean": 18.073333333333334,
+        "point": 16
+      },
+      "repaired": {
+        "hi": 4.0,
+        "lo": 0.0,
+        "mean": 1.8733333333333333,
+        "point": 2
+      },
+      "single_scale_flips": {
+        "hi": 6.0,
+        "lo": 2.0,
+        "mean": 3.66,
+        "point": 4
+      }
+    },
+    "metric": "c4_en_bits_per_token",
+    "n_boot": 300,
+    "point": {
+      "excess": 12,
+      "excess_all_fit_error": 1,
+      "fit_error": 14,
+      "fit_error_exceeds_inherited": 1,
+      "inherited": 2,
+      "projection_flips": 16,
+      "projection_mis_selection": 0.05333333333333334,
+      "projection_worse": 1,
+      "repaired": 2,
+      "single_scale_flips": 4,
+      "single_scale_mis_selection": 0.013333333333333334
+    }
+  },
+  {
+    "conclusion_stability": {
+      "excess_all_fit_error_rate": 1.0,
+      "fit_error_exceeds_inherited_rate": 0.0,
+      "projection_worse_rate": 0.8
+    },
+    "intervals": {
+      "excess": {
+        "hi": 11.524999999999977,
+        "lo": -4.0,
+        "mean": 3.9033333333333333,
+        "point": 9
+      },
+      "fit_error": {
+        "hi": 16.0,
+        "lo": 5.0,
+        "mean": 10.66,
+        "point": 14
+      },
+      "inherited": {
+        "hi": 51.0,
+        "lo": 36.0,
+        "mean": 43.19,
+        "point": 37
+      },
+      "projection_flips": {
+        "hi": 61.52499999999998,
+        "lo": 46.0,
+        "mean": 53.85,
+        "point": 51
+      },
+      "repaired": {
+        "hi": 11.524999999999977,
+        "lo": 2.4750000000000005,
+        "mean": 6.756666666666667,
+        "point": 5
+      },
+      "single_scale_flips": {
+        "hi": 58.0,
+        "lo": 42.0,
+        "mean": 49.946666666666665,
+        "point": 42
+      }
+    },
+    "metric": "olmes_macro_error",
+    "n_boot": 300,
+    "point": {
+      "excess": 9,
+      "excess_all_fit_error": 1,
+      "fit_error": 14,
+      "fit_error_exceeds_inherited": 0,
+      "inherited": 37,
+      "projection_flips": 51,
+      "projection_mis_selection": 0.17,
+      "projection_worse": 1,
+      "repaired": 5,
+      "single_scale_flips": 42,
+      "single_scale_mis_selection": 0.14
+    }
+  },
+  {
+    "conclusion_stability": {
+      "excess_all_fit_error_rate": 1.0,
+      "fit_error_exceeds_inherited_rate": 0.06333333333333334,
+      "projection_worse_rate": 1.0
+    },
+    "intervals": {
+      "excess": {
+        "hi": 23.524999999999977,
+        "lo": 5.950000000000001,
+        "mean": 14.92,
+        "point": 14
+      },
+      "fit_error": {
+        "hi": 32.52499999999998,
+        "lo": 18.475,
+        "mean": 25.43,
+        "point": 25
+      },
+      "inherited": {
+        "hi": 39.52499999999998,
+        "lo": 27.475,
+        "mean": 33.843333333333334,
+        "point": 33
+      },
+      "projection_flips": {
+        "hi": 66.0,
+        "lo": 52.0,
+        "mean": 59.27333333333333,
+        "point": 58
+      },
+      "repaired": {
+        "hi": 15.0,
+        "lo": 6.0,
+        "mean": 10.51,
+        "point": 11
+      },
+      "single_scale_flips": {
+        "hi": 52.0,
+        "lo": 36.0,
+        "mean": 44.35333333333333,
+        "point": 44
+      }
+    },
+    "metric": "olmes_macro_correct_prob_per_char_deficit",
+    "n_boot": 300,
+    "point": {
+      "excess": 14,
+      "excess_all_fit_error": 1,
+      "fit_error": 25,
+      "fit_error_exceeds_inherited": 0,
+      "inherited": 33,
+      "projection_flips": 58,
+      "projection_mis_selection": 0.19333333333333333,
+      "projection_worse": 1,
+      "repaired": 11,
+      "single_scale_flips": 44,
+      "single_scale_mis_selection": 0.14666666666666667
+    }
+  }
+]

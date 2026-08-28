@@ -1,0 +1,194 @@
+{
+  "all_eb_inside_plateau": true,
+  "consistent_direction": true,
+  "designs": [
+    {
+      "available": true,
+      "between_sd": 0.007603785187824612,
+      "cost_of_eb_points": 3.6666666666666665,
+      "curve": [
+        {
+          "hi": 0.10666666666666667,
+          "lo": 0.06158333333333334,
+          "mis_selection": 0.09,
+          "strength": 0.0
+        },
+        {
+          "hi": 0.08841666666666666,
+          "lo": 0.04825,
+          "mis_selection": 0.07666666666666666,
+          "strength": 0.2
+        },
+        {
+          "hi": 0.07175,
+          "lo": 0.03158333333333333,
+          "mis_selection": 0.05,
+          "strength": 0.4
+        },
+        {
+          "hi": 0.05175,
+          "lo": 0.023333333333333334,
+          "mis_selection": 0.02666666666666667,
+          "strength": 0.6
+        },
+        {
+          "hi": 0.03841666666666666,
+          "lo": 0.02,
+          "mis_selection": 0.02666666666666667,
+          "strength": 0.8
+        },
+        {
+          "hi": 0.043333333333333335,
+          "lo": 0.014916666666666667,
+          "mis_selection": 0.02666666666666667,
+          "strength": 1.0
+        }
+      ],
+      "decision_optimal_mis_selection": 0.02666666666666667,
+      "decision_optimal_strength": 0.6,
+      "design": "long_arm_4M-150M_target1B",
+      "eb_below_decision_optimum": true,
+      "eb_inside_plateau": true,
+      "eb_mis_selection": 0.06333333333333334,
+      "eb_strength": 0.23145121191148232,
+      "noise_share": 0.23077505790003672,
+      "plateau_strengths": [
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1.0
+      ],
+      "strength_gap": 0.36854878808851765,
+      "within_sd": 0.0041648330263890105
+    },
+    {
+      "available": true,
+      "between_sd": 0.006476620314507018,
+      "cost_of_eb_points": 1.3333333333333333,
+      "curve": [
+        {
+          "hi": 0.08666666666666667,
+          "lo": 0.04,
+          "mis_selection": 0.05333333333333334,
+          "strength": 0.0
+        },
+        {
+          "hi": 0.07341666666666664,
+          "lo": 0.03333333333333333,
+          "mis_selection": 0.05,
+          "strength": 0.2
+        },
+        {
+          "hi": 0.05,
+          "lo": 0.023333333333333334,
+          "mis_selection": 0.03666666666666667,
+          "strength": 0.4
+        },
+        {
+          "hi": 0.03666666666666667,
+          "lo": 0.016666666666666666,
+          "mis_selection": 0.016666666666666666,
+          "strength": 0.6
+        },
+        {
+          "hi": 0.03333333333333333,
+          "lo": 0.013333333333333334,
+          "mis_selection": 0.016666666666666666,
+          "strength": 0.8
+        },
+        {
+          "hi": 0.03666666666666667,
+          "lo": 0.013333333333333334,
+          "mis_selection": 0.02,
+          "strength": 1.0
+        }
+      ],
+      "decision_optimal_mis_selection": 0.016666666666666666,
+      "decision_optimal_strength": 0.6,
+      "design": "primary_4M-300M_target1B",
+      "eb_below_decision_optimum": true,
+      "eb_inside_plateau": true,
+      "eb_mis_selection": 0.03,
+      "eb_strength": 0.21566065872944928,
+      "noise_share": 0.2196195464266531,
+      "plateau_strengths": [
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1.0
+      ],
+      "strength_gap": 0.3843393412705507,
+      "within_sd": 0.003435822673830394
+    },
+    {
+      "available": true,
+      "between_sd": 0.005424933963251408,
+      "cost_of_eb_points": 0.6666666666666666,
+      "curve": [
+        {
+          "hi": 0.05333333333333334,
+          "lo": 0.023333333333333334,
+          "mis_selection": 0.03,
+          "strength": 0.0
+        },
+        {
+          "hi": 0.04,
+          "lo": 0.02,
+          "mis_selection": 0.023333333333333334,
+          "strength": 0.2
+        },
+        {
+          "hi": 0.03,
+          "lo": 0.013333333333333334,
+          "mis_selection": 0.02,
+          "strength": 0.4
+        },
+        {
+          "hi": 0.023333333333333334,
+          "lo": 0.013333333333333334,
+          "mis_selection": 0.016666666666666666,
+          "strength": 0.6
+        },
+        {
+          "hi": 0.028416666666666663,
+          "lo": 0.013333333333333334,
+          "mis_selection": 0.013333333333333334,
+          "strength": 0.8
+        },
+        {
+          "hi": 0.031749999999999994,
+          "lo": 0.01,
+          "mis_selection": 0.016666666666666666,
+          "strength": 1.0
+        }
+      ],
+      "decision_optimal_mis_selection": 0.013333333333333334,
+      "decision_optimal_strength": 0.8,
+      "design": "short_arm_4M-530M_target1B",
+      "eb_below_decision_optimum": true,
+      "eb_inside_plateau": true,
+      "eb_mis_selection": 0.02,
+      "eb_strength": 0.1967698815741348,
+      "noise_share": 0.21665871444461757,
+      "plateau_strengths": [
+        0.0,
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1.0
+      ],
+      "strength_gap": 0.6032301184258653,
+      "within_sd": 0.002853034535332323
+    }
+  ],
+  "interpretation": "Empirical Bayes minimises squared error in the exponent; decision accuracy depends only on the ordering of projections. A systematic gap between the parameter-optimal and decision-optimal shrinkage strength would be the same fit-quality-versus-decision-quality dissociation the project's headline identifies, appearing inside the estimator we built to exploit it.",
+  "mean_cost_of_eb_points": 1.888888888888889,
+  "mean_strength_gap": 0.4520394159283112,
+  "n_designs": 3,
+  "n_eb_below_decision_optimum": 3,
+  "plateau_spans_whole_sweep": false,
+  "statistical_caveat": "The direction is consistent but the evidence is weak: the seed-bootstrap CIs of every strength in the sweep overlap the optimum's, so no strength is distinguishable from any other at this seed count. The point estimates suggest EB under-pools for the decision objective; the intervals do not establish it. Reported as a suggested direction requiring more seeds, not as a finding."
+}

@@ -1,0 +1,31 @@
+{
+  "numbers": {
+    "n_numeric_tokens": 1123,
+    "n_unmatched": 28,
+    "unmatched_examples": [
+      "1.23e-02",
+      "1.401e+21",
+      "1.90e-02",
+      "1.933e+11",
+      "1.98e-01",
+      "2.12e-01",
+      "2.416e+10",
+      "2.77e-03",
+      "256",
+      "29,508",
+      "3.956e+14",
+      "4.832e+10",
+      "8.02e-02",
+      "8.15e-03",
+      "9.664e+10",
+      "97",
+      "989"
+    ]
+  },
+  "rerender": {
+    "byte_identical": true,
+    "committed_bytes": 38353,
+    "render_exit_code": 0,
+    "rendered_bytes": 38353
+  }
+}

@@ -12,6 +12,9 @@ results/*
 !results/first_audit/
 !results/signal_and_noise/
 !results/known_answer/
+!results/task_b/
+!results/checkpoints/
+!results/adversarial/
 !results/ensemble_check/
 .venv/
 logs/*.out

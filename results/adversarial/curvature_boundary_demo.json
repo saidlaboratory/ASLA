@@ -1,0 +1,72 @@
+{
+  "contrast": {
+    "claim": "The alpha-floor defect is invisible to decision metrics when interventions differ in level, and changes decisions when they differ in curvature.",
+    "curvature_fraction_trials_ordering_identical": 0.3333333333333333,
+    "curvature_pairs_reordered": 1.15,
+    "demonstrated": true,
+    "level_fraction_trials_ordering_identical": 0.9833333333333333,
+    "level_pairs_reordered": 0.016666666666666666,
+    "note": "Both families are matched on target spread (so equally much signal) and on having true exponents below the 0.05 floor (so the defect binds on both). The only difference is geometry.",
+    "reordering_ratio_curvature_over_level": 69.0
+  },
+  "curvature": {
+    "accuracy_change": -0.010119047619047805,
+    "family": "curvature",
+    "fit_range_disagreement": 0.19023942952731254,
+    "fraction_trials_ordering_identical": 0.3333333333333333,
+    "mean_accuracy_corrected": 0.8291666666666667,
+    "mean_accuracy_defective": 0.8392857142857145,
+    "mean_pairs_reordered": 1.15,
+    "mean_spearman_defective_vs_corrected": 0.961904761904762,
+    "n_interventions": 8,
+    "n_pinned_under_defect": 1,
+    "n_trials": 60,
+    "target_spread": 0.031718270193273224,
+    "target_spread_over_sigma": 3.1718270193273224,
+    "true_alpha_range": [
+      0.01,
+      0.12
+    ],
+    "true_alpha_sd": 0.03849198167230708
+  },
+  "level": {
+    "accuracy_change": -0.0005952380952380931,
+    "family": "level",
+    "fit_range_disagreement": 0.09999999999999998,
+    "fraction_trials_ordering_identical": 0.9833333333333333,
+    "mean_accuracy_corrected": 0.9994047619047619,
+    "mean_accuracy_defective": 1.0,
+    "mean_pairs_reordered": 0.016666666666666666,
+    "mean_spearman_defective_vs_corrected": 0.9996031746031746,
+    "n_interventions": 8,
+    "n_pinned_under_defect": 8,
+    "n_trials": 60,
+    "target_spread": 0.09999999999999998,
+    "target_spread_over_sigma": 9.999999999999998,
+    "true_alpha_range": [
+      0.02,
+      0.02
+    ],
+    "true_alpha_sd": 0.0
+  },
+  "mixed": {
+    "accuracy_change": 0.005952380952381042,
+    "family": "mixed",
+    "fit_range_disagreement": 0.22428102017050466,
+    "fraction_trials_ordering_identical": 0.5166666666666667,
+    "mean_accuracy_corrected": 0.9267857142857143,
+    "mean_accuracy_defective": 0.9208333333333333,
+    "mean_pairs_reordered": 0.5666666666666667,
+    "mean_spearman_defective_vs_corrected": 0.9857142857142857,
+    "n_interventions": 8,
+    "n_pinned_under_defect": 4,
+    "n_trials": 60,
+    "target_spread": 0.0928490660402479,
+    "target_spread_over_sigma": 9.284906604024789,
+    "true_alpha_range": [
+      0.01,
+      0.08
+    ],
+    "true_alpha_sd": 0.02449489742783178
+  }
+}

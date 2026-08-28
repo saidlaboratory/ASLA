@@ -1,0 +1,1251 @@
+{
+  "c4_en_bits_per_token": {
+    "median_admissible_floor_width": 0.43733461154500786,
+    "median_best_floor_relative_to_ymin": 0.7788813559322034,
+    "median_projection_spread_over_admissible_floors": 0.08965433149392688,
+    "median_ssr_ratio_zero_over_best": 10.025150121798408,
+    "metric": "c4_en_bits_per_token",
+    "n_interventions": 25,
+    "n_with_floor_at_zero": 0,
+    "per_intervention": [
+      {
+        "admissible_floor_range": [
+          3.1791624046706466,
+          3.5404308597468566
+        ],
+        "best_floor": 3.3959234777163725,
+        "best_floor_relative_to_ymin": 0.7958135593220339,
+        "intervention": "C4",
+        "n_admissible_floors": 6,
+        "projection_at_best": 4.010469892752826,
+        "projection_spread_over_admissible": 0.08457225421327585,
+        "ssr_at_best": 0.012991275992269326,
+        "ssr_at_zero_floor": 0.13090098106359824,
+        "ssr_ratio_zero_over_best": 10.076068058402656,
+        "y_min_on_fit_range": 4.2672350049041805
+      },
+      {
+        "admissible_floor_range": [
+          3.11353963197651,
+          3.569179578119414
+        ],
+        "best_floor": 3.4172995960717794,
+        "best_floor_relative_to_ymin": 0.7619491525423728,
+        "intervention": "DCLM-Baseline",
+        "n_admissible_floors": 7,
+        "projection_at_best": 4.1842283850875255,
+        "projection_spread_over_admissible": 0.09231822478099438,
+        "ssr_at_best": 0.017571801507756075,
+        "ssr_at_zero_floor": 0.11044327277967492,
+        "ssr_ratio_zero_over_best": 6.285256109393565,
+        "y_min_on_fit_range": 4.484944414820042
+      },
+      {
+        "admissible_floor_range": [
+          3.47898983271596,
+          3.8743295864336824
+        ],
+        "best_floor": 3.7161936849465937,
+        "best_floor_relative_to_ymin": 0.795813559322034,
+        "intervention": "DCLM-Baseline (QC 10%)",
+        "n_admissible_floors": 6,
+        "projection_at_best": 4.3841735179585495,
+        "projection_spread_over_admissible": 0.08939934793368032,
+        "ssr_at_best": 0.007478315028519698,
+        "ssr_at_zero_floor": 0.12570760277742168,
+        "ssr_ratio_zero_over_best": 16.809615842341024,
+        "y_min_on_fit_range": 4.6696787726417694
+      },
+      {
+        "admissible_floor_range": [
+          3.35220733335663,
+          3.741998883746936
+        ],
+        "best_floor": 3.5860822635908134,
+        "best_floor_relative_to_ymin": 0.7788813559322034,
+        "intervention": "DCLM-Baseline (QC 20%)",
+        "n_admissible_floors": 6,
+        "projection_at_best": 4.306201432572957,
+        "projection_spread_over_admissible": 0.08408870823674786,
+        "ssr_at_best": 0.007844615836629211,
+        "ssr_at_zero_floor": 0.11795780042168047,
+        "ssr_ratio_zero_over_best": 15.03678483156497,
+        "y_min_on_fit_range": 4.604144439044653
+      },
+      {
+        "admissible_floor_range": [
+          3.5355333546818186,
+          3.92837039409091
+        ],
+        "best_floor": 3.771235578327273,
+        "best_floor_relative_to_ymin": 0.8127457627118643,
+        "intervention": "DCLM-Baseline (QC 7%, FW2)",
+        "n_admissible_floors": 6,
+        "projection_at_best": 4.373995898912311,
+        "projection_spread_over_admissible": 0.09345054777690187,
+        "ssr_at_best": 0.009956481258718189,
+        "ssr_at_zero_floor": 0.14392452496361677,
+        "ssr_ratio_zero_over_best": 14.455360405323136,
+        "y_min_on_fit_range": 4.640117182209483
+      },
+      {
+        "admissible_floor_range": [
+          3.6685463195710497,
+          4.076162577301166
+        ],
+        "best_floor": 3.9131160742091198,
+        "best_floor_relative_to_ymin": 0.8127457627118644,
+        "intervention": "DCLM-Baseline (QC 7%, FW3)",
+        "n_admissible_floors": 6,
+        "projection_at_best": 4.538319928057691,
+        "projection_spread_over_admissible": 0.09479929159035905,
+        "ssr_at_best": 0.009936553081591087,
+        "ssr_at_zero_floor": 0.13662256517530347,
+        "ssr_ratio_zero_over_best": 13.749492812393534,
+        "y_min_on_fit_range": 4.8146865277431194
+      },
+      {
+        "admissible_floor_range": [
+          3.613984541015665,
+          3.9352276113281683
+        ],
+        "best_floor": 3.8549168437500425,
+        "best_floor_relative_to_ymin": 0.8127457627118645,
+        "intervention": "DCLM-Baseline (QC FW 10%)",
+        "n_admissible_floors": 5,
+        "projection_at_best": 4.469193438714493,
+        "projection_spread_over_admissible": 0.07352801129264996,
+        "ssr_at_best": 0.007126488965690831,
+        "ssr_at_zero_floor": 0.13209037431683868,
+        "ssr_ratio_zero_over_best": 18.53512647711425,
+        "y_min_on_fit_range": 4.743078365474902
+      },
+      {
+        "admissible_floor_range": [
+          3.919471120136315,
+          4.16965012780459
+        ],
+        "best_floor": 4.0862571252484985,
+        "best_floor_relative_to_ymin": 0.8296779661016949,
+        "intervention": "DCLM-Baseline (QC FW 3%)",
+        "n_admissible_floors": 4,
+        "projection_at_best": 4.654869914399212,
+        "projection_spread_over_admissible": 0.061219290468081944,
+        "ssr_at_best": 0.004875417767954764,
+        "ssr_at_zero_floor": 0.1485156071968802,
+        "ssr_ratio_zero_over_best": 30.462129455458427,
+        "y_min_on_fit_range": 4.9251122630724895
+      },
+      {
+        "admissible_floor_range": [
+          3.1676879651732537,
+          3.536023775077121
+        ],
+        "best_floor": 3.388689451115574,
+        "best_floor_relative_to_ymin": 0.7788813559322034,
+        "intervention": "DCLM-Baseline 25% / Dolma 75%",
+        "n_admissible_floors": 6,
+        "projection_at_best": 4.065372665190148,
+        "projection_spread_over_admissible": 0.08388568939048469,
+        "ssr_at_best": 0.013464324468040176,
+        "ssr_at_zero_floor": 0.1347842145248086,
+        "ssr_ratio_zero_over_best": 10.010469878733348,
+        "y_min_on_fit_range": 4.350713270135763
+      },
+      {
+        "admissible_floor_range": [
+          3.0376207675688667,
+          3.482150635993579
+        ],
+        "best_floor": 3.3339740131853417,
+        "best_floor_relative_to_ymin": 0.7619491525423729,
+        "intervention": "DCLM-Baseline 50% / Dolma 50%",
+        "n_admissible_floors": 7,
+        "projection_at_best": 4.077600179667258,
+        "projection_spread_over_admissible": 0.0926116629642415,
+        "ssr_at_best": 0.01205347524395246,
+        "ssr_at_zero_floor": 0.10783741354789987,
+        "ssr_ratio_zero_over_best": 8.946582737787983,
+        "y_min_on_fit_range": 4.375585958801805
+      },
+      {
+        "admissible_floor_range": [
+          2.987229120459453,
+          3.5099942165398574
+        ],
+        "best_floor": 3.2859520325053984,
+        "best_floor_relative_to_ymin": 0.7450169491525422,
+        "intervention": "DCLM-Baseline 75% / Dolma 25%",
+        "n_admissible_floors": 8,
+        "projection_at_best": 4.095915622629144,
+        "projection_spread_over_admissible": 0.10581913959970546,
+        "ssr_at_best": 0.013462342198543534,
+        "ssr_at_zero_floor": 0.1024943468465224,
+        "ssr_ratio_zero_over_best": 7.613411198061142,
+        "y_min_on_fit_range": 4.410573526203898
+      },
+      {
+        "admissible_floor_range": [
+          2.750452998353137,
+          3.2571153927866097
+        ],
+        "best_floor": 3.039974366600836,
+        "best_floor_relative_to_ymin": 0.7111525423728813,
+        "intervention": "Dolma1.6++",
+        "n_admissible_floors": 8,
+        "projection_at_best": 3.9355682006916215,
+        "projection_spread_over_admissible": 0.0977166106165428,
+        "ssr_at_best": 0.009213438755750402,
+        "ssr_at_zero_floor": 0.08750904048530266,
+        "ssr_ratio_zero_over_best": 9.497978203923639,
+        "y_min_on_fit_range": 4.274714896550106
+      },
+      {
+        "admissible_floor_range": [
+          2.9372581247784053,
+          3.377846843495166
+        ],
+        "best_floor": 3.2309839372562457,
+        "best_floor_relative_to_ymin": 0.7450169491525424,
+        "intervention": "Dolma1.7",
+        "n_admissible_floors": 7,
+        "projection_at_best": 4.0207531149024485,
+        "projection_spread_over_admissible": 0.08940754396378026,
+        "ssr_at_best": 0.011744648256137781,
+        "ssr_at_zero_floor": 0.10134271734463525,
+        "ssr_ratio_zero_over_best": 8.628842272196046,
+        "y_min_on_fit_range": 4.3367925265747225
+      },
+      {
+        "admissible_floor_range": [
+          2.9356852221620016,
+          3.376038005486302
+        ],
+        "best_floor": 3.2292537443782017,
+        "best_floor_relative_to_ymin": 0.7450169491525424,
+        "intervention": "Dolma1.7 (no Flan)",
+        "n_admissible_floors": 7,
+        "projection_at_best": 4.0198087268688125,
+        "projection_spread_over_admissible": 0.08946815792759644,
+        "ssr_at_best": 0.012564935917057814,
+        "ssr_at_zero_floor": 0.10312188850429252,
+        "ssr_ratio_zero_over_best": 8.207116151248893,
+        "y_min_on_fit_range": 4.334470172861814
+      },
+      {
+        "admissible_floor_range": [
+          2.9366576724163673,
+          3.3771563232788226
+        ],
+        "best_floor": 3.230323439658004,
+        "best_floor_relative_to_ymin": 0.7450169491525424,
+        "intervention": "Dolma1.7 (no Reddit)",
+        "n_admissible_floors": 7,
+        "projection_at_best": 4.018734109136751,
+        "projection_spread_over_admissible": 0.08965433149392688,
+        "ssr_at_best": 0.016043858627626684,
+        "ssr_at_zero_floor": 0.1094098146219865,
+        "ssr_ratio_zero_over_best": 6.8194202630026,
+        "y_min_on_fit_range": 4.335905972786929
+      },
+      {
+        "admissible_floor_range": [
+          3.061342280815055,
+          3.498676892360063
+        ],
+        "best_floor": 3.2800095865875587,
+        "best_floor_relative_to_ymin": 0.7619491525423728,
+        "intervention": "Dolma1.7 (no code)",
+        "n_admissible_floors": 7,
+        "projection_at_best": 4.011895155252483,
+        "projection_spread_over_admissible": 0.09533212636382737,
+        "ssr_at_best": 0.011139093274926858,
+        "ssr_at_zero_floor": 0.11262054164437746,
+        "ssr_ratio_zero_over_best": 10.110386803015343,
+        "y_min_on_fit_range": 4.304761775301212
+      },
+      {
+        "admissible_floor_range": [
+          2.9885447834016587,
+          3.4258928004848284
+        ],
+        "best_floor": 3.2801101281237717,
+        "best_floor_relative_to_ymin": 0.7619491525423729,
+        "intervention": "Dolma1.7 (no math, code)",
+        "n_admissible_floors": 7,
+        "projection_at_best": 4.01259028451944,
+        "projection_spread_over_admissible": 0.09069893923862837,
+        "ssr_at_best": 0.012162948635026346,
+        "ssr_at_zero_floor": 0.10619149061260205,
+        "ssr_ratio_zero_over_best": 8.730735761458064,
+        "y_min_on_fit_range": 4.304893728379547
+      },
+      {
+        "admissible_floor_range": [
+          3.152478129166958,
+          3.519045353488697
+        ],
+        "best_floor": 3.3724184637600017,
+        "best_floor_relative_to_ymin": 0.7788813559322034,
+        "intervention": "Falcon",
+        "n_admissible_floors": 6,
+        "projection_at_best": 4.053211899041564,
+        "projection_spread_over_admissible": 0.08075337021390006,
+        "ssr_at_best": 0.0135593677338545,
+        "ssr_at_zero_floor": 0.12042726869884926,
+        "ssr_ratio_zero_over_best": 8.881481132646853,
+        "y_min_on_fit_range": 4.32982307006659
+      },
+      {
+        "admissible_floor_range": [
+          3.0693220199671103,
+          3.507796594248126
+        ],
+        "best_floor": 3.2885593071076182,
+        "best_floor_relative_to_ymin": 0.7619491525423729,
+        "intervention": "Falcon+CC",
+        "n_admissible_floors": 7,
+        "projection_at_best": 4.019512429933138,
+        "projection_spread_over_admissible": 0.09502615218068655,
+        "ssr_at_best": 0.008527386265129815,
+        "ssr_at_zero_floor": 0.10672496946279997,
+        "ssr_ratio_zero_over_best": 12.51555472504156,
+        "y_min_on_fit_range": 4.315982629726381
+      },
+      {
+        "admissible_floor_range": [
+          3.140049352151428,
+          3.5995687695394416
+        ],
+        "best_floor": 3.3698090608454345,
+        "best_floor_relative_to_ymin": 0.7450169491525425,
+        "intervention": "Falcon+CC (QC 10%)",
+        "n_admissible_floors": 7,
+        "projection_at_best": 4.198154206460824,
+        "projection_spread_over_admissible": 0.09433504894099176,
+        "ssr_at_best": 0.010762459103081507,
+        "ssr_at_zero_floor": 0.10489493623314433,
+        "ssr_ratio_zero_over_best": 9.746372574192716,
+        "y_min_on_fit_range": 4.523130735050519
+      },
+      {
+        "admissible_floor_range": [
+          3.087391025617684,
+          3.5392043464397847
+        ],
+        "best_floor": 3.388599906165751,
+        "best_floor_relative_to_ymin": 0.7619491525423728,
+        "intervention": "Falcon+CC (QC 20%)",
+        "n_admissible_floors": 7,
+        "projection_at_best": 4.145728152016355,
+        "projection_spread_over_admissible": 0.09277159803038515,
+        "ssr_at_best": 0.011654550016263011,
+        "ssr_at_zero_floor": 0.10783015691929182,
+        "ssr_ratio_zero_over_best": 9.252193930166612,
+        "y_min_on_fit_range": 4.447278266350335
+      },
+      {
+        "admissible_floor_range": [
+          3.193754850298881,
+          3.650005543198721
+        ],
+        "best_floor": 3.4979219788987743,
+        "best_floor_relative_to_ymin": 0.7788813559322035,
+        "intervention": "Falcon+CC (QC Orig 10%)",
+        "n_admissible_floors": 7,
+        "projection_at_best": 4.200026622636815,
+        "projection_spread_over_admissible": 0.09730312939766961,
+        "ssr_at_best": 0.0112978054479989,
+        "ssr_at_zero_floor": 0.11326219566306088,
+        "ssr_ratio_zero_over_best": 10.025150121798408,
+        "y_min_on_fit_range": 4.490956102951379
+      },
+      {
+        "admissible_floor_range": [
+          3.3087345190007054,
+          3.6847270779780583
+        ],
+        "best_floor": 3.534330054387117,
+        "best_floor_relative_to_ymin": 0.7958135593220339,
+        "intervention": "Falcon+CC (QC Tulu 10%)",
+        "n_admissible_floors": 6,
+        "projection_at_best": 4.1738689455858164,
+        "projection_spread_over_admissible": 0.08554463650885591,
+        "ssr_at_best": 0.011214210130608531,
+        "ssr_at_zero_floor": 0.12331342764603716,
+        "ssr_ratio_zero_over_best": 10.9961759419382,
+        "y_min_on_fit_range": 4.441153349282046
+      },
+      {
+        "admissible_floor_range": [
+          3.4923982127669118,
+          3.802833609457304
+        ],
+        "best_floor": 3.725224760284706,
+        "best_floor_relative_to_ymin": 0.8127457627118644,
+        "intervention": "FineWeb-Edu",
+        "n_admissible_floors": 5,
+        "projection_at_best": 4.325877223601365,
+        "projection_spread_over_admissible": 0.07131801090601453,
+        "ssr_at_best": 0.011342292057226528,
+        "ssr_at_zero_floor": 0.13699865140069653,
+        "ssr_ratio_zero_over_best": 12.078568485935824,
+        "y_min_on_fit_range": 4.583505606790075
+      },
+      {
+        "admissible_floor_range": [
+          3.278094998228652,
+          3.659268835231984
+        ],
+        "best_floor": 3.506799300430651,
+        "best_floor_relative_to_ymin": 0.7788813559322034,
+        "intervention": "FineWeb-Pro",
+        "n_admissible_floors": 6,
+        "projection_at_best": 4.211794906094958,
+        "projection_spread_over_admissible": 0.08301878284036235,
+        "ssr_at_best": 0.010084210196873394,
+        "ssr_at_zero_floor": 0.12002330714538774,
+        "ssr_ratio_zero_over_best": 11.902102871933483,
+        "y_min_on_fit_range": 4.502353630269583
+      }
+    ],
+    "projection_ambiguity_over_between_spread": 0.4010164287744956,
+    "projection_ambiguity_over_seed_noise": 43.41998594033434,
+    "target_between_intervention_sd": 0.223567727057742,
+    "target_seed_sd": 0.0020648171470420452
+  },
+  "figures": [
+    "/Users/Evan/ASLA/results/adversarial/fig_floor_identifiability.png",
+    "/Users/Evan/ASLA/results/adversarial/fig_floor_identifiability.pdf"
+  ],
+  "olmes_macro_correct_prob_per_char_deficit": {
+    "median_admissible_floor_width": 0.395910165068735,
+    "median_best_floor_relative_to_ymin": 0.7450169491525424,
+    "median_projection_spread_over_admissible_floors": 0.04331926904446409,
+    "median_ssr_ratio_zero_over_best": 2.965555838789411,
+    "metric": "olmes_macro_correct_prob_per_char_deficit",
+    "n_interventions": 25,
+    "n_with_floor_at_zero": 0,
+    "per_intervention": [
+      {
+        "admissible_floor_range": [
+          0.0,
+          0.44866545844710287
+        ],
+        "best_floor": 0.3640115983627438,
+        "best_floor_relative_to_ymin": 0.7280847457627118,
+        "intervention": "C4",
+        "n_admissible_floors": 54,
+        "projection_at_best": 0.47336064383870835,
+        "projection_spread_over_admissible": 0.039508721117171186,
+        "ssr_at_best": 0.00036721490868423326,
+        "ssr_at_zero_floor": 0.0007156401884910076,
+        "ssr_ratio_zero_over_best": 1.9488320641861083,
+        "y_min_on_fit_range": 0.49995773222994827
+      },
+      {
+        "admissible_floor_range": [
+          0.015730728178033095,
+          0.42472966080689356
+        ],
+        "best_floor": 0.3696721121837777,
+        "best_floor_relative_to_ymin": 0.7958135593220338,
+        "intervention": "DCLM-Baseline",
+        "n_admissible_floors": 53,
+        "projection_at_best": 0.43924657456072086,
+        "projection_spread_over_admissible": 0.04820129175285426,
+        "ssr_at_best": 0.0003264615857134064,
+        "ssr_at_zero_floor": 0.0012255596197576863,
+        "ssr_ratio_zero_over_best": 3.75406992243669,
+        "y_min_on_fit_range": 0.46452100225423054
+      },
+      {
+        "admissible_floor_range": [
+          0.0,
+          0.39594515820675064
+        ],
+        "best_floor": 0.31218752858609183,
+        "best_floor_relative_to_ymin": 0.6942203389830508,
+        "intervention": "DCLM-Baseline (QC 10%)",
+        "n_admissible_floors": 53,
+        "projection_at_best": 0.4167873932391316,
+        "projection_spread_over_admissible": 0.04419527731976658,
+        "ssr_at_best": 9.168456632223922e-05,
+        "ssr_at_zero_floor": 0.0005426262256889141,
+        "ssr_ratio_zero_over_best": 5.91840314521173,
+        "y_min_on_fit_range": 0.4496951631284802
+      },
+      {
+        "admissible_floor_range": [
+          0.0,
+          0.395910165068735
+        ],
+        "best_floor": 0.32738725188376167,
+        "best_floor_relative_to_ymin": 0.728084745762712,
+        "intervention": "DCLM-Baseline (QC 20%)",
+        "n_admissible_floors": 53,
+        "projection_at_best": 0.41960963957568465,
+        "projection_spread_over_admissible": 0.04451808120106021,
+        "ssr_at_best": 0.00031292757359660745,
+        "ssr_at_zero_floor": 0.00093272512358851,
+        "ssr_ratio_zero_over_best": 2.980642175019319,
+        "y_min_on_fit_range": 0.4496554196322354
+      },
+      {
+        "admissible_floor_range": [
+          0.0,
+          0.40352774719245815
+        ],
+        "best_floor": 0.3350041674805313,
+        "best_floor_relative_to_ymin": 0.7450169491525424,
+        "intervention": "DCLM-Baseline (QC 7%, FW2)",
+        "n_admissible_floors": 54,
+        "projection_at_best": 0.418831012841379,
+        "projection_spread_over_admissible": 0.04865747260209213,
+        "ssr_at_best": 0.0004180173270305152,
+        "ssr_at_zero_floor": 0.0011823596466947533,
+        "ssr_ratio_zero_over_best": 2.8284943475762696,
+        "y_min_on_fit_range": 0.4496597934605366
+      },
+      {
+        "admissible_floor_range": [
+          0.0,
+          0.39064320814448056
+        ],
+        "best_floor": 0.31404650066517065,
+        "best_floor_relative_to_ymin": 0.6942203389830509,
+        "intervention": "DCLM-Baseline (QC 7%, FW3)",
+        "n_admissible_floors": 52,
+        "projection_at_best": 0.41508232599930533,
+        "projection_spread_over_admissible": 0.045276702907549704,
+        "ssr_at_best": 0.0002094044851812701,
+        "ssr_at_zero_floor": 0.0007317689246319583,
+        "ssr_ratio_zero_over_best": 3.494523644030383,
+        "y_min_on_fit_range": 0.4523729470750035
+      },
+      {
+        "admissible_floor_range": [
+          0.0,
+          0.39783169377090055
+        ],
+        "best_floor": 0.32132559881495815,
+        "best_floor_relative_to_ymin": 0.7111525423728813,
+        "intervention": "DCLM-Baseline (QC FW 10%)",
+        "n_admissible_floors": 53,
+        "projection_at_best": 0.4161679141872101,
+        "projection_spread_over_admissible": 0.04804698805528074,
+        "ssr_at_best": 0.00030622280124657206,
+        "ssr_at_zero_floor": 0.0009081208162072211,
+        "ssr_ratio_zero_over_best": 2.965555838789411,
+        "y_min_on_fit_range": 0.45183779803809837
+      },
+      {
+        "admissible_floor_range": [
+          0.0,
+          0.4045725326408003
+        ],
+        "best_floor": 0.33455036352989254,
+        "best_floor_relative_to_ymin": 0.7280847457627119,
+        "intervention": "DCLM-Baseline (QC FW 3%)",
+        "n_admissible_floors": 53,
+        "projection_at_best": 0.42224755554146215,
+        "projection_spread_over_admissible": 0.04880829732656028,
+        "ssr_at_best": 0.0002700924037428937,
+        "ssr_at_zero_floor": 0.0009714402859206141,
+        "ssr_ratio_zero_over_best": 3.5966960657114493,
+        "y_min_on_fit_range": 0.4594937134405023
+      },
+      {
+        "admissible_floor_range": [
+          0.0,
+          0.4282903794790211
+        ],
+        "best_floor": 0.37277125621322205,
+        "best_floor_relative_to_ymin": 0.7958135593220339,
+        "intervention": "DCLM-Baseline 25% / Dolma 75%",
+        "n_admissible_floors": 55,
+        "projection_at_best": 0.4465416311453962,
+        "projection_spread_over_admissible": 0.042555528270878884,
+        "ssr_at_best": 0.0010499092221595144,
+        "ssr_at_zero_floor": 0.0017182237186790105,
+        "ssr_ratio_zero_over_best": 1.6365450292405928,
+        "y_min_on_fit_range": 0.4684153114088578
+      },
+      {
+        "admissible_floor_range": [
+          0.0,
+          0.42394622753808464
+        ],
+        "best_floor": 0.368990235079444,
+        "best_floor_relative_to_ymin": 0.7958135593220338,
+        "intervention": "DCLM-Baseline 50% / Dolma 50%",
+        "n_admissible_floors": 55,
+        "projection_at_best": 0.4405314543791115,
+        "projection_spread_over_admissible": 0.04499787393947313,
+        "ssr_at_best": 0.000604324817204629,
+        "ssr_at_zero_floor": 0.0013094939395746129,
+        "ssr_ratio_zero_over_best": 2.166871030767562,
+        "y_min_on_fit_range": 0.4636641720377228
+      },
+      {
+        "admissible_floor_range": [
+          0.07007658109424574,
+          0.4204594865654744
+        ],
+        "best_floor": 0.37374176583597724,
+        "best_floor_relative_to_ymin": 0.8127457627118644,
+        "intervention": "DCLM-Baseline 75% / Dolma 25%",
+        "n_admissible_floors": 46,
+        "projection_at_best": 0.4386353413008836,
+        "projection_spread_over_admissible": 0.04331926904446409,
+        "ssr_at_best": 0.0007039313014979533,
+        "ssr_at_zero_floor": 0.0017012464927980623,
+        "ssr_ratio_zero_over_best": 2.416779150433913,
+        "y_min_on_fit_range": 0.459850771278
+      },
+      {
+        "admissible_floor_range": [
+          0.3894326744183984,
+          0.4825578791706241
+        ],
+        "best_floor": 0.4656260237611285,
+        "best_floor_relative_to_ymin": 0.931271186440678,
+        "intervention": "Dolma1.6++",
+        "n_admissible_floors": 12,
+        "projection_at_best": 0.4911161793313807,
+        "projection_spread_over_admissible": 0.022239379924606728,
+        "ssr_at_best": 0.0009236310346849579,
+        "ssr_at_zero_floor": 0.0030687174640410715,
+        "ssr_ratio_zero_over_best": 3.3224494942266456,
+        "y_min_on_fit_range": 0.49998972430442407
+      },
+      {
+        "admissible_floor_range": [
+          0.5524880580590323,
+          0.5621808310074364
+        ],
+        "best_floor": 0.5621808310074364,
+        "best_floor_relative_to_ymin": 0.9820677966101695,
+        "intervention": "Dolma1.7",
+        "n_admissible_floors": 2,
+        "projection_at_best": 0.5656914376253123,
+        "projection_spread_over_admissible": 0.005055548237259844,
+        "ssr_at_best": 0.0012537989356799404,
+        "ssr_at_zero_floor": 0.005104748974261262,
+        "ssr_ratio_zero_over_best": 4.0714255124909124,
+        "y_min_on_fit_range": 0.5724460500058464
+      },
+      {
+        "admissible_floor_range": [
+          0.12200598343402712,
+          0.44735527259143276
+        ],
+        "best_floor": 0.40668661144675705,
+        "best_floor_relative_to_ymin": 0.8466101694915253,
+        "intervention": "Dolma1.7 (no Flan)",
+        "n_admissible_floors": 41,
+        "projection_at_best": 0.4625674810969145,
+        "projection_spread_over_admissible": 0.04122853086799133,
+        "ssr_at_best": 0.0008319715083363344,
+        "ssr_at_zero_floor": 0.0018984918303246742,
+        "ssr_ratio_zero_over_best": 2.281919286059477,
+        "y_min_on_fit_range": 0.4803705720792526
+      },
+      {
+        "admissible_floor_range": [
+          0.5522999039538066,
+          0.5619893759529961
+        ],
+        "best_floor": 0.5619893759529961,
+        "best_floor_relative_to_ymin": 0.9820677966101695,
+        "intervention": "Dolma1.7 (no Reddit)",
+        "n_admissible_floors": 2,
+        "projection_at_best": 0.5667490261699089,
+        "projection_spread_over_admissible": 0.004476985849348081,
+        "ssr_at_best": 0.0010619469112082226,
+        "ssr_at_zero_floor": 0.004544030354731856,
+        "ssr_ratio_zero_over_best": 4.278961882907986,
+        "y_min_on_fit_range": 0.5722510990512369
+      },
+      {
+        "admissible_floor_range": [
+          0.5750975924489722,
+          0.5750975924489722
+        ],
+        "best_floor": 0.5750975924489722,
+        "best_floor_relative_to_ymin": 0.9989999999999999,
+        "intervention": "Dolma1.7 (no code)",
+        "n_admissible_floors": 1,
+        "projection_at_best": 0.5759151601799679,
+        "projection_spread_over_admissible": 0.0,
+        "ssr_at_best": 0.0010669583293670172,
+        "ssr_at_zero_floor": 0.00624347829919261,
+        "ssr_ratio_zero_over_best": 5.851660863734586,
+        "y_min_on_fit_range": 0.5756732657146869
+      },
+      {
+        "admissible_floor_range": [
+          0.5716194801330686,
+          0.5716194801330686
+        ],
+        "best_floor": 0.5716194801330686,
+        "best_floor_relative_to_ymin": 0.999,
+        "intervention": "Dolma1.7 (no math, code)",
+        "n_admissible_floors": 1,
+        "projection_at_best": 0.573101508719255,
+        "projection_spread_over_admissible": 0.0,
+        "ssr_at_best": 0.0007278898121962813,
+        "ssr_at_zero_floor": 0.004582136560928652,
+        "ssr_ratio_zero_over_best": 6.295096433762206,
+        "y_min_on_fit_range": 0.5721916718048735
+      },
+      {
+        "admissible_floor_range": [
+          0.217486050409062,
+          0.44302713972216334
+        ],
+        "best_floor": 0.410806984106006,
+        "best_floor_relative_to_ymin": 0.8635423728813558,
+        "intervention": "Falcon",
+        "n_admissible_floors": 29,
+        "projection_at_best": 0.4597714703936493,
+        "projection_spread_over_admissible": 0.03643697911004001,
+        "ssr_at_best": 0.0005922305345634714,
+        "ssr_at_zero_floor": 0.0019747527549053762,
+        "ssr_ratio_zero_over_best": 3.334432521891076,
+        "y_min_on_fit_range": 0.4757230183566774
+      },
+      {
+        "admissible_floor_range": [
+          0.11429001432399419,
+          0.44899648484426286
+        ],
+        "best_floor": 0.40001505013397964,
+        "best_floor_relative_to_ymin": 0.8296779661016949,
+        "intervention": "Falcon+CC",
+        "n_admissible_floors": 42,
+        "projection_at_best": 0.4607754286284361,
+        "projection_spread_over_admissible": 0.044031424412382336,
+        "ssr_at_best": 0.0008725718510581605,
+        "ssr_at_zero_floor": 0.0019425276132946047,
+        "ssr_ratio_zero_over_best": 2.226209349910747,
+        "y_min_on_fit_range": 0.48213290755867705
+      },
+      {
+        "admissible_floor_range": [
+          0.0,
+          0.40490693490602
+        ],
+        "best_floor": 0.32704021665486227,
+        "best_floor_relative_to_ymin": 0.7111525423728813,
+        "intervention": "Falcon+CC (QC 10%)",
+        "n_admissible_floors": 53,
+        "projection_at_best": 0.42912670986230506,
+        "projection_spread_over_admissible": 0.04443143506828845,
+        "ssr_at_best": 0.0007152474322112989,
+        "ssr_at_zero_floor": 0.001247980951828366,
+        "ssr_ratio_zero_over_best": 1.7448240925102498,
+        "y_min_on_fit_range": 0.4598735111930234
+      },
+      {
+        "admissible_floor_range": [
+          0.0,
+          0.40072231788375196
+        ],
+        "best_floor": 0.29857741332514853,
+        "best_floor_relative_to_ymin": 0.6434237288135594,
+        "intervention": "Falcon+CC (QC 20%)",
+        "n_admissible_floors": 52,
+        "projection_at_best": 0.42990920593687526,
+        "projection_spread_over_admissible": 0.040906191453736196,
+        "ssr_at_best": 0.0004929784687985999,
+        "ssr_at_zero_floor": 0.0008122417885450935,
+        "ssr_ratio_zero_over_best": 1.6476212247657505,
+        "y_min_on_fit_range": 0.46404476545450085
+      },
+      {
+        "admissible_floor_range": [
+          0.0,
+          0.4006517496271711
+        ],
+        "best_floor": 0.3313081775763146,
+        "best_floor_relative_to_ymin": 0.7280847457627119,
+        "intervention": "Falcon+CC (QC Orig 10%)",
+        "n_admissible_floors": 53,
+        "projection_at_best": 0.42331754857241766,
+        "projection_spread_over_admissible": 0.04530349219463631,
+        "ssr_at_best": 0.0005055761356156819,
+        "ssr_at_zero_floor": 0.0011557443190496812,
+        "ssr_ratio_zero_over_best": 2.2859946062173915,
+        "y_min_on_fit_range": 0.45504067967973927
+      },
+      {
+        "admissible_floor_range": [
+          0.0,
+          0.4130017731569663
+        ],
+        "best_floor": 0.3428693965831418,
+        "best_floor_relative_to_ymin": 0.7450169491525424,
+        "intervention": "Falcon+CC (QC Tulu 10%)",
+        "n_admissible_floors": 54,
+        "projection_at_best": 0.4304995055248943,
+        "projection_spread_over_admissible": 0.047591187091810594,
+        "ssr_at_best": 0.000218314158856827,
+        "ssr_at_zero_floor": 0.0009022939469372073,
+        "ssr_ratio_zero_over_best": 4.13300700083746,
+        "y_min_on_fit_range": 0.4602169077806299
+      },
+      {
+        "admissible_floor_range": [
+          0.0,
+          0.35762449172578764
+        ],
+        "best_floor": 0.13994001850139515,
+        "best_floor_relative_to_ymin": 0.30477966101694914,
+        "intervention": "FineWeb-Edu",
+        "n_admissible_floors": 47,
+        "projection_at_best": 0.40461075197410407,
+        "projection_spread_over_admissible": 0.03461138118328555,
+        "ssr_at_best": 0.0007731490585450518,
+        "ssr_at_zero_floor": 0.000810046032944975,
+        "ssr_ratio_zero_over_best": 1.0477229765620586,
+        "y_min_on_fit_range": 0.4591514342999841
+      },
+      {
+        "admissible_floor_range": [
+          0.0,
+          0.3772108708181262
+        ],
+        "best_floor": 0.22003967464390695,
+        "best_floor_relative_to_ymin": 0.4741016949152542,
+        "intervention": "FineWeb-Pro",
+        "n_admissible_floors": 49,
+        "projection_at_best": 0.4191419810729098,
+        "projection_spread_over_admissible": 0.03692664188262418,
+        "ssr_at_best": 0.0003979987834652721,
+        "ssr_at_zero_floor": 0.0005096871471975913,
+        "ssr_ratio_zero_over_best": 1.2806248872418093,
+        "y_min_on_fit_range": 0.4641191478618086
+      }
+    ],
+    "projection_ambiguity_over_between_spread": 0.7901305973632815,
+    "projection_ambiguity_over_seed_noise": 2.943280579595434,
+    "target_between_intervention_sd": 0.05482545441098393,
+    "target_seed_sd": 0.014718022245238509
+  },
+  "olmes_macro_error": {
+    "median_admissible_floor_width": 0.3183187508939103,
+    "median_best_floor_relative_to_ymin": 0.0,
+    "median_projection_spread_over_admissible_floors": 0.006071539833639339,
+    "median_ssr_ratio_zero_over_best": 1.0,
+    "metric": "olmes_macro_error",
+    "n_interventions": 25,
+    "n_with_floor_at_zero": 25,
+    "per_intervention": [
+      {
+        "admissible_floor_range": [
+          0.0,
+          0.43983053475828426
+        ],
+        "best_floor": 0.0,
+        "best_floor_relative_to_ymin": 0.0,
+        "intervention": "C4",
+        "n_admissible_floors": 48,
+        "projection_at_best": 0.5405072462601934,
+        "projection_spread_over_admissible": 0.007365573129298086,
+        "ssr_at_best": 0.0010619547174419925,
+        "ssr_at_zero_floor": 0.0010619547174419925,
+        "ssr_ratio_zero_over_best": 1.0,
+        "y_min_on_fit_range": 0.5526803729418519
+      },
+      {
+        "admissible_floor_range": [
+          0.0,
+          0.33586846420816874
+        ],
+        "best_floor": 0.0,
+        "best_floor_relative_to_ymin": 0.0,
+        "intervention": "DCLM-Baseline",
+        "n_admissible_floors": 39,
+        "projection_at_best": 0.500346171131638,
+        "projection_spread_over_admissible": 0.008104889722905018,
+        "ssr_at_best": 0.0014771620029156768,
+        "ssr_at_zero_floor": 0.0014771620029156768,
+        "ssr_ratio_zero_over_best": 1.0,
+        "y_min_on_fit_range": 0.5220019858880448
+      },
+      {
+        "admissible_floor_range": [
+          0.0,
+          0.2625406815969883
+        ],
+        "best_floor": 0.0,
+        "best_floor_relative_to_ymin": 0.0,
+        "intervention": "DCLM-Baseline (QC 10%)",
+        "n_admissible_floors": 32,
+        "projection_at_best": 0.4825909430222615,
+        "projection_spread_over_admissible": 0.005835950960366876,
+        "ssr_at_best": 0.0023275793169107457,
+        "ssr_at_zero_floor": 0.0023275793169107457,
+        "ssr_ratio_zero_over_best": 1.0,
+        "y_min_on_fit_range": 0.5001743748336178
+      },
+      {
+        "admissible_floor_range": [
+          0.0,
+          0.24746151738056268
+        ],
+        "best_floor": 0.0,
+        "best_floor_relative_to_ymin": 0.0,
+        "intervention": "DCLM-Baseline (QC 20%)",
+        "n_admissible_floors": 30,
+        "projection_at_best": 0.48487936394780773,
+        "projection_spread_over_admissible": 0.0048787763488100655,
+        "ssr_at_best": 0.0029793003049743932,
+        "ssr_at_zero_floor": 0.0029793003049743932,
+        "ssr_ratio_zero_over_best": 1.0,
+        "y_min_on_fit_range": 0.5039601506835525
+      },
+      {
+        "admissible_floor_range": [
+          0.0,
+          0.2436450145644742
+        ],
+        "best_floor": 0.0,
+        "best_floor_relative_to_ymin": 0.0,
+        "intervention": "DCLM-Baseline (QC 7%, FW2)",
+        "n_admissible_floors": 30,
+        "projection_at_best": 0.47494646525263073,
+        "projection_spread_over_admissible": 0.005830238573089563,
+        "ssr_at_best": 0.0022295019436562196,
+        "ssr_at_zero_floor": 0.0022295019436562196,
+        "ssr_ratio_zero_over_best": 1.0,
+        "y_min_on_fit_range": 0.496187769124434
+      },
+      {
+        "admissible_floor_range": [
+          0.0,
+          0.2522392888838575
+        ],
+        "best_floor": 0.0,
+        "best_floor_relative_to_ymin": 0.0,
+        "intervention": "DCLM-Baseline (QC 7%, FW3)",
+        "n_admissible_floors": 31,
+        "projection_at_best": 0.4680466953160776,
+        "projection_spread_over_admissible": 0.0069804319268559345,
+        "ssr_at_best": 0.0019481374508665643,
+        "ssr_at_zero_floor": 0.0019481374508665643,
+        "ssr_ratio_zero_over_best": 1.0,
+        "y_min_on_fit_range": 0.4965671686402266
+      },
+      {
+        "admissible_floor_range": [
+          0.0,
+          0.24167241206130738
+        ],
+        "best_floor": 0.0,
+        "best_floor_relative_to_ymin": 0.0,
+        "intervention": "DCLM-Baseline (QC FW 10%)",
+        "n_admissible_floors": 30,
+        "projection_at_best": 0.4702569182409853,
+        "projection_spread_over_admissible": 0.006071539833639339,
+        "ssr_at_best": 0.0022762739927564327,
+        "ssr_at_zero_floor": 0.0022762739927564327,
+        "ssr_ratio_zero_over_best": 1.0,
+        "y_min_on_fit_range": 0.4921705260991038
+      },
+      {
+        "admissible_floor_range": [
+          0.0,
+          0.2645863018224236
+        ],
+        "best_floor": 0.0,
+        "best_floor_relative_to_ymin": 0.0,
+        "intervention": "DCLM-Baseline (QC FW 3%)",
+        "n_admissible_floors": 32,
+        "projection_at_best": 0.47628056295412585,
+        "projection_spread_over_admissible": 0.006584954969671597,
+        "ssr_at_best": 0.0020540519405415616,
+        "ssr_at_zero_floor": 0.0020540519405415616,
+        "ssr_ratio_zero_over_best": 1.0,
+        "y_min_on_fit_range": 0.5040715492112433
+      },
+      {
+        "admissible_floor_range": [
+          0.0,
+          0.3292267248606057
+        ],
+        "best_floor": 0.0,
+        "best_floor_relative_to_ymin": 0.0,
+        "intervention": "DCLM-Baseline 25% / Dolma 75%",
+        "n_admissible_floors": 38,
+        "projection_at_best": 0.518231591476781,
+        "projection_spread_over_admissible": 0.004537160079059022,
+        "ssr_at_best": 0.0027079066432187404,
+        "ssr_at_zero_floor": 0.0027079066432187404,
+        "ssr_ratio_zero_over_best": 1.0,
+        "y_min_on_fit_range": 0.525508664523327
+      },
+      {
+        "admissible_floor_range": [
+          0.0,
+          0.32914262968923325
+        ],
+        "best_floor": 0.0,
+        "best_floor_relative_to_ymin": 0.0,
+        "intervention": "DCLM-Baseline 50% / Dolma 50%",
+        "n_admissible_floors": 38,
+        "projection_at_best": 0.5127363404668693,
+        "projection_spread_over_admissible": 0.005572369912521413,
+        "ssr_at_best": 0.002099243826434764,
+        "ssr_at_zero_floor": 0.002099243826434764,
+        "ssr_ratio_zero_over_best": 1.0,
+        "y_min_on_fit_range": 0.5253744325856874
+      },
+      {
+        "admissible_floor_range": [
+          0.0,
+          0.3171441020270112
+        ],
+        "best_floor": 0.0,
+        "best_floor_relative_to_ymin": 0.0,
+        "intervention": "DCLM-Baseline 75% / Dolma 25%",
+        "n_admissible_floors": 37,
+        "projection_at_best": 0.50546517980276,
+        "projection_spread_over_admissible": 0.005780943684553508,
+        "ssr_at_best": 0.0021342243077504004,
+        "ssr_at_zero_floor": 0.0021342243077504004,
+        "ssr_ratio_zero_over_best": 1.0,
+        "y_min_on_fit_range": 0.5202842292179307
+      },
+      {
+        "admissible_floor_range": [
+          0.0,
+          0.47739282725471655
+        ],
+        "best_floor": 0.0,
+        "best_floor_relative_to_ymin": 0.0,
+        "intervention": "Dolma1.6++",
+        "n_admissible_floors": 51,
+        "projection_at_best": 0.5504212525762077,
+        "projection_spread_over_admissible": 0.00867773920828896,
+        "ssr_at_best": 0.000873527668968648,
+        "ssr_at_zero_floor": 0.000873527668968648,
+        "ssr_ratio_zero_over_best": 1.0,
+        "y_min_on_fit_range": 0.5638874235841497
+      },
+      {
+        "admissible_floor_range": [
+          0.0,
+          0.44682449771005933
+        ],
+        "best_floor": 0.0,
+        "best_floor_relative_to_ymin": 0.0,
+        "intervention": "Dolma1.7",
+        "n_admissible_floors": 48,
+        "projection_at_best": 0.5561915166603031,
+        "projection_spread_over_admissible": 0.004935928288092195,
+        "ssr_at_best": 0.0020926743415537233,
+        "ssr_at_zero_floor": 0.0020926743415537233,
+        "ssr_ratio_zero_over_best": 1.0,
+        "y_min_on_fit_range": 0.5614688170062296
+      },
+      {
+        "admissible_floor_range": [
+          0.0,
+          0.38610949614420376
+        ],
+        "best_floor": 0.0,
+        "best_floor_relative_to_ymin": 0.0,
+        "intervention": "Dolma1.7 (no Flan)",
+        "n_admissible_floors": 43,
+        "projection_at_best": 0.5286978496128094,
+        "projection_spread_over_admissible": 0.006606137157286196,
+        "ssr_at_best": 0.001566913097063728,
+        "ssr_at_zero_floor": 0.001566913097063728,
+        "ssr_ratio_zero_over_best": 1.0,
+        "y_min_on_fit_range": 0.5429348460962873
+      },
+      {
+        "admissible_floor_range": [
+          0.0,
+          0.4440792832311497
+        ],
+        "best_floor": 0.0,
+        "best_floor_relative_to_ymin": 0.0,
+        "intervention": "Dolma1.7 (no Reddit)",
+        "n_admissible_floors": 48,
+        "projection_at_best": 0.5522298434585341,
+        "projection_spread_over_admissible": 0.005384855432675306,
+        "ssr_at_best": 0.002008359747378146,
+        "ssr_at_zero_floor": 0.002008359747378146,
+        "ssr_ratio_zero_over_best": 1.0,
+        "y_min_on_fit_range": 0.5580192471330444
+      },
+      {
+        "admissible_floor_range": [
+          0.0,
+          0.4403857436477835
+        ],
+        "best_floor": 0.0,
+        "best_floor_relative_to_ymin": 0.0,
+        "intervention": "Dolma1.7 (no code)",
+        "n_admissible_floors": 48,
+        "projection_at_best": 0.5441216089118506,
+        "projection_spread_over_admissible": 0.006493599541921968,
+        "ssr_at_best": 0.001534879796894558,
+        "ssr_at_zero_floor": 0.001534879796894558,
+        "ssr_ratio_zero_over_best": 1.0,
+        "y_min_on_fit_range": 0.5533780349545124
+      },
+      {
+        "admissible_floor_range": [
+          0.0,
+          0.4476259415752105
+        ],
+        "best_floor": 0.0,
+        "best_floor_relative_to_ymin": 0.0,
+        "intervention": "Dolma1.7 (no math, code)",
+        "n_admissible_floors": 48,
+        "projection_at_best": 0.5521991523117689,
+        "projection_spread_over_admissible": 0.005668236865793319,
+        "ssr_at_best": 0.0016960607289701953,
+        "ssr_at_zero_floor": 0.0016960607289701953,
+        "ssr_ratio_zero_over_best": 1.0,
+        "y_min_on_fit_range": 0.562475891911857
+      },
+      {
+        "admissible_floor_range": [
+          0.0,
+          0.3893001624296329
+        ],
+        "best_floor": 0.0,
+        "best_floor_relative_to_ymin": 0.0,
+        "intervention": "Falcon",
+        "n_admissible_floors": 44,
+        "projection_at_best": 0.5223950831974301,
+        "projection_spread_over_admissible": 0.0071628122827374074,
+        "ssr_at_best": 0.0014234589807258875,
+        "ssr_at_zero_floor": 0.0014234589807258875,
+        "ssr_ratio_zero_over_best": 1.0,
+        "y_min_on_fit_range": 0.534690727549604
+      },
+      {
+        "admissible_floor_range": [
+          0.0,
+          0.37580710296501585
+        ],
+        "best_floor": 0.0,
+        "best_floor_relative_to_ymin": 0.0,
+        "intervention": "Falcon+CC",
+        "n_admissible_floors": 42,
+        "projection_at_best": 0.5269415109249194,
+        "projection_spread_over_admissible": 0.005950877232223206,
+        "ssr_at_best": 0.002008513599670292,
+        "ssr_at_zero_floor": 0.002008513599670292,
+        "ssr_ratio_zero_over_best": 1.0,
+        "y_min_on_fit_range": 0.5413369241176772
+      },
+      {
+        "admissible_floor_range": [
+          0.0,
+          0.3037576986404506
+        ],
+        "best_floor": 0.0,
+        "best_floor_relative_to_ymin": 0.0,
+        "intervention": "Falcon+CC (QC 10%)",
+        "n_admissible_floors": 36,
+        "projection_at_best": 0.49637188106197383,
+        "projection_spread_over_admissible": 0.006187606696783976,
+        "ssr_at_best": 0.0018401732352694082,
+        "ssr_at_zero_floor": 0.0018401732352694082,
+        "ssr_ratio_zero_over_best": 1.0,
+        "y_min_on_fit_range": 0.5125612532471496
+      },
+      {
+        "admissible_floor_range": [
+          0.0,
+          0.30496839000594356
+        ],
+        "best_floor": 0.0,
+        "best_floor_relative_to_ymin": 0.0,
+        "intervention": "Falcon+CC (QC 20%)",
+        "n_admissible_floors": 36,
+        "projection_at_best": 0.5014063102789925,
+        "projection_spread_over_admissible": 0.005470974869785317,
+        "ssr_at_best": 0.0023417909208237764,
+        "ssr_at_zero_floor": 0.0023417909208237764,
+        "ssr_ratio_zero_over_best": 1.0,
+        "y_min_on_fit_range": 0.514604175900205
+      },
+      {
+        "admissible_floor_range": [
+          0.0,
+          0.3183187508939103
+        ],
+        "best_floor": 0.0,
+        "best_floor_relative_to_ymin": 0.0,
+        "intervention": "Falcon+CC (QC Orig 10%)",
+        "n_admissible_floors": 38,
+        "projection_at_best": 0.4847787949851893,
+        "projection_spread_over_admissible": 0.008531684602298806,
+        "ssr_at_best": 0.0012517222819326745,
+        "ssr_at_zero_floor": 0.0012517222819326745,
+        "ssr_ratio_zero_over_best": 1.0,
+        "y_min_on_fit_range": 0.5080974569905232
+      },
+      {
+        "admissible_floor_range": [
+          0.0,
+          0.31720221142162147
+        ],
+        "best_floor": 0.0,
+        "best_floor_relative_to_ymin": 0.0,
+        "intervention": "Falcon+CC (QC Tulu 10%)",
+        "n_admissible_floors": 37,
+        "projection_at_best": 0.5004972756565373,
+        "projection_spread_over_admissible": 0.0067916898750349786,
+        "ssr_at_best": 0.0017289471417368427,
+        "ssr_at_zero_floor": 0.0017289471417368427,
+        "ssr_ratio_zero_over_best": 1.0,
+        "y_min_on_fit_range": 0.5203795593892688
+      },
+      {
+        "admissible_floor_range": [
+          0.0,
+          0.313702812653058
+        ],
+        "best_floor": 0.0,
+        "best_floor_relative_to_ymin": 0.0,
+        "intervention": "FineWeb-Edu",
+        "n_admissible_floors": 37,
+        "projection_at_best": 0.49266485549507444,
+        "projection_spread_over_admissible": 0.007297057509266347,
+        "ssr_at_best": 0.001784680570782013,
+        "ssr_at_zero_floor": 0.001784680570782013,
+        "ssr_ratio_zero_over_best": 1.0,
+        "y_min_on_fit_range": 0.5146386927630525
+      },
+      {
+        "admissible_floor_range": [
+          0.0,
+          0.28660761045243693
+        ],
+        "best_floor": 0.0,
+        "best_floor_relative_to_ymin": 0.0,
+        "intervention": "FineWeb-Pro",
+        "n_admissible_floors": 34,
+        "projection_at_best": 0.4949859848369979,
+        "projection_spread_over_admissible": 0.005920684492321804,
+        "ssr_at_best": 0.002140462151192986,
+        "ssr_at_zero_floor": 0.002140462151192986,
+        "ssr_ratio_zero_over_best": 1.0,
+        "y_min_on_fit_range": 0.5129325997723111
+      }
+    ],
+    "projection_ambiguity_over_between_spread": 0.29518790110884396,
+    "projection_ambiguity_over_seed_noise": 1.0518886128346194,
+    "target_between_intervention_sd": 0.020568389865682855,
+    "target_seed_sd": 0.00577203684834824
+  }
+}

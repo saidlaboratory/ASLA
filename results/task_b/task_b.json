@@ -1,0 +1,2720 @@
+{
+  "best_pooled_ranker": "shared_exponent",
+  "counts": {
+    "n_boot": 120,
+    "n_boot_inner": 40,
+    "n_boot_ratio": 60
+  },
+  "designs": {
+    "long_arm_4M-150M_target1B": {
+      "budgets": [
+        8430221996851200.0,
+        2.170083624144077e+16,
+        4.377678106853376e+16,
+        5.88506060071895e+16,
+        1.2413398842290995e+17,
+        1.5375666115510272e+17,
+        2.1908574798505574e+17,
+        1.955459382959407e+18,
+        5.758063377068851e+18,
+        1.3439040749568e+19
+      ],
+      "elapsed_seconds": 77207.28873991966,
+      "n_boot": 60,
+      "n_interventions": 25,
+      "n_pairs": 300,
+      "plain_flip_pairs": [
+        [
+          "C4",
+          "Dolma1.6++"
+        ],
+        [
+          "C4",
+          "Dolma1.7"
+        ],
+        [
+          "C4",
+          "Dolma1.7 (no Flan)"
+        ],
+        [
+          "C4",
+          "Dolma1.7 (no Reddit)"
+        ],
+        [
+          "C4",
+          "Dolma1.7 (no code)"
+        ],
+        [
+          "C4",
+          "Dolma1.7 (no math, code)"
+        ],
+        [
+          "C4",
+          "Falcon+CC"
+        ],
+        [
+          "DCLM-Baseline",
+          "Falcon+CC (QC 10%)"
+        ],
+        [
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 7%, FW2)"
+        ],
+        [
+          "DCLM-Baseline (QC 20%)",
+          "FineWeb-Edu"
+        ],
+        [
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%"
+        ],
+        [
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)"
+        ],
+        [
+          "Dolma1.7",
+          "Dolma1.7 (no Reddit)"
+        ],
+        [
+          "Dolma1.7",
+          "Dolma1.7 (no code)"
+        ],
+        [
+          "Dolma1.7",
+          "Dolma1.7 (no math, code)"
+        ],
+        [
+          "Dolma1.7",
+          "Falcon"
+        ],
+        [
+          "Dolma1.7",
+          "Falcon+CC"
+        ],
+        [
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no code)"
+        ],
+        [
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no math, code)"
+        ],
+        [
+          "Dolma1.7 (no Flan)",
+          "Falcon"
+        ],
+        [
+          "Dolma1.7 (no Flan)",
+          "Falcon+CC"
+        ],
+        [
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)"
+        ],
+        [
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no math, code)"
+        ],
+        [
+          "Dolma1.7 (no Reddit)",
+          "Falcon"
+        ],
+        [
+          "Dolma1.7 (no Reddit)",
+          "Falcon+CC"
+        ],
+        [
+          "Dolma1.7 (no code)",
+          "Falcon+CC"
+        ],
+        [
+          "Falcon+CC (QC 10%)",
+          "FineWeb-Pro"
+        ]
+      ],
+      "rankers": {
+        "plain_projection": {
+          "added_pairs": [],
+          "mean_regret": {
+            "confidence_level": 0.95,
+            "hi": 0.004054030736114861,
+            "lo": 0.001570530833164085,
+            "method": "percentile bootstrap",
+            "n_boot": 60,
+            "point": 0.0032702436710533153
+          },
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.10666666666666667,
+            "lo": 0.06158333333333334,
+            "method": "percentile bootstrap",
+            "n_boot": 60,
+            "point": 0.09
+          },
+          "n_added_vs_plain": 0,
+          "n_flips": 27,
+          "n_removed_vs_plain": 0,
+          "net_removed_vs_plain": 0,
+          "removed_pairs": []
+        },
+        "shared_exponent": {
+          "added_pairs": [
+            [
+              "DCLM-Baseline",
+              "FineWeb-Pro"
+            ],
+            [
+              "DCLM-Baseline 25% / Dolma 75%",
+              "Dolma1.7"
+            ],
+            [
+              "DCLM-Baseline 25% / Dolma 75%",
+              "Dolma1.7 (no Flan)"
+            ],
+            [
+              "DCLM-Baseline 25% / Dolma 75%",
+              "Falcon"
+            ],
+            [
+              "Dolma1.7 (no code)",
+              "Dolma1.7 (no math, code)"
+            ],
+            [
+              "Falcon+CC (QC 20%)",
+              "Falcon+CC (QC Tulu 10%)"
+            ]
+          ],
+          "mean_regret": {
+            "confidence_level": 0.95,
+            "hi": 0.0005270904405939192,
+            "lo": 0.0001033679130423428,
+            "method": "percentile bootstrap",
+            "n_boot": 60,
+            "point": 0.0002565295138621293
+          },
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.043333333333333335,
+            "lo": 0.014916666666666667,
+            "method": "percentile bootstrap",
+            "n_boot": 60,
+            "point": 0.03
+          },
+          "n_added_vs_plain": 6,
+          "n_flips": 8,
+          "n_removed_vs_plain": 25,
+          "net_removed_vs_plain": 19,
+          "removed_pairs": [
+            [
+              "C4",
+              "Dolma1.6++"
+            ],
+            [
+              "C4",
+              "Dolma1.7"
+            ],
+            [
+              "C4",
+              "Dolma1.7 (no Flan)"
+            ],
+            [
+              "C4",
+              "Dolma1.7 (no Reddit)"
+            ],
+            [
+              "C4",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "C4",
+              "Dolma1.7 (no math, code)"
+            ],
+            [
+              "C4",
+              "Falcon+CC"
+            ],
+            [
+              "DCLM-Baseline",
+              "Falcon+CC (QC 10%)"
+            ],
+            [
+              "DCLM-Baseline (QC 10%)",
+              "DCLM-Baseline (QC 7%, FW2)"
+            ],
+            [
+              "DCLM-Baseline (QC 20%)",
+              "FineWeb-Edu"
+            ],
+            [
+              "DCLM-Baseline 25% / Dolma 75%",
+              "DCLM-Baseline 50% / Dolma 50%"
+            ],
+            [
+              "Dolma1.7",
+              "Dolma1.7 (no Reddit)"
+            ],
+            [
+              "Dolma1.7",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "Dolma1.7",
+              "Dolma1.7 (no math, code)"
+            ],
+            [
+              "Dolma1.7",
+              "Falcon"
+            ],
+            [
+              "Dolma1.7",
+              "Falcon+CC"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Dolma1.7 (no math, code)"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Falcon"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Falcon+CC"
+            ],
+            [
+              "Dolma1.7 (no Reddit)",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "Dolma1.7 (no Reddit)",
+              "Dolma1.7 (no math, code)"
+            ],
+            [
+              "Dolma1.7 (no Reddit)",
+              "Falcon+CC"
+            ],
+            [
+              "Dolma1.7 (no code)",
+              "Falcon+CC"
+            ],
+            [
+              "Falcon+CC (QC 10%)",
+              "FineWeb-Pro"
+            ]
+          ]
+        },
+        "shrinkage_0": {
+          "added_pairs": [],
+          "mean_regret": {
+            "confidence_level": 0.95,
+            "hi": 0.004054030736114861,
+            "lo": 0.001570530833164085,
+            "method": "percentile bootstrap",
+            "n_boot": 60,
+            "point": 0.0032702436710533153
+          },
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.10666666666666667,
+            "lo": 0.06158333333333334,
+            "method": "percentile bootstrap",
+            "n_boot": 60,
+            "point": 0.09
+          },
+          "n_added_vs_plain": 0,
+          "n_flips": 27,
+          "n_removed_vs_plain": 0,
+          "net_removed_vs_plain": 0,
+          "removed_pairs": []
+        },
+        "shrinkage_0.2": {
+          "added_pairs": [],
+          "mean_regret": {
+            "confidence_level": 0.95,
+            "hi": 0.0032492410911794125,
+            "lo": 0.0007933290366379754,
+            "method": "percentile bootstrap",
+            "n_boot": 60,
+            "point": 0.0026414822547020894
+          },
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.08841666666666666,
+            "lo": 0.04825,
+            "method": "percentile bootstrap",
+            "n_boot": 60,
+            "point": 0.07666666666666666
+          },
+          "n_added_vs_plain": 0,
+          "n_flips": 23,
+          "n_removed_vs_plain": 4,
+          "net_removed_vs_plain": 4,
+          "removed_pairs": [
+            [
+              "C4",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "DCLM-Baseline",
+              "Falcon+CC (QC 10%)"
+            ],
+            [
+              "DCLM-Baseline (QC 10%)",
+              "DCLM-Baseline (QC 7%, FW2)"
+            ],
+            [
+              "DCLM-Baseline 25% / Dolma 75%",
+              "DCLM-Baseline 50% / Dolma 50%"
+            ]
+          ]
+        },
+        "shrinkage_0.4": {
+          "added_pairs": [],
+          "mean_regret": {
+            "confidence_level": 0.95,
+            "hi": 0.002662344401766553,
+            "lo": 0.00036240065051800456,
+            "method": "percentile bootstrap",
+            "n_boot": 60,
+            "point": 0.0008324086536617381
+          },
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.07175,
+            "lo": 0.03158333333333333,
+            "method": "percentile bootstrap",
+            "n_boot": 60,
+            "point": 0.05
+          },
+          "n_added_vs_plain": 0,
+          "n_flips": 15,
+          "n_removed_vs_plain": 12,
+          "net_removed_vs_plain": 12,
+          "removed_pairs": [
+            [
+              "C4",
+              "Dolma1.7"
+            ],
+            [
+              "C4",
+              "Dolma1.7 (no Flan)"
+            ],
+            [
+              "C4",
+              "Dolma1.7 (no Reddit)"
+            ],
+            [
+              "C4",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "C4",
+              "Dolma1.7 (no math, code)"
+            ],
+            [
+              "C4",
+              "Falcon+CC"
+            ],
+            [
+              "DCLM-Baseline",
+              "Falcon+CC (QC 10%)"
+            ],
+            [
+              "DCLM-Baseline (QC 10%)",
+              "DCLM-Baseline (QC 7%, FW2)"
+            ],
+            [
+              "DCLM-Baseline 25% / Dolma 75%",
+              "DCLM-Baseline 50% / Dolma 50%"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Dolma1.7 (no math, code)"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Falcon+CC"
+            ],
+            [
+              "Dolma1.7 (no Reddit)",
+              "Dolma1.7 (no math, code)"
+            ]
+          ]
+        },
+        "shrinkage_0.6": {
+          "added_pairs": [
+            [
+              "DCLM-Baseline 25% / Dolma 75%",
+              "Falcon"
+            ]
+          ],
+          "mean_regret": {
+            "confidence_level": 0.95,
+            "hi": 0.0008835497211583752,
+            "lo": 0.00017730627745916555,
+            "method": "percentile bootstrap",
+            "n_boot": 60,
+            "point": 0.00019430131418281575
+          },
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.05175,
+            "lo": 0.023333333333333334,
+            "method": "percentile bootstrap",
+            "n_boot": 60,
+            "point": 0.02666666666666667
+          },
+          "n_added_vs_plain": 1,
+          "n_flips": 9,
+          "n_removed_vs_plain": 19,
+          "net_removed_vs_plain": 18,
+          "removed_pairs": [
+            [
+              "C4",
+              "Dolma1.7"
+            ],
+            [
+              "C4",
+              "Dolma1.7 (no Flan)"
+            ],
+            [
+              "C4",
+              "Dolma1.7 (no Reddit)"
+            ],
+            [
+              "C4",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "C4",
+              "Dolma1.7 (no math, code)"
+            ],
+            [
+              "C4",
+              "Falcon+CC"
+            ],
+            [
+              "DCLM-Baseline",
+              "Falcon+CC (QC 10%)"
+            ],
+            [
+              "DCLM-Baseline (QC 10%)",
+              "DCLM-Baseline (QC 7%, FW2)"
+            ],
+            [
+              "DCLM-Baseline 25% / Dolma 75%",
+              "DCLM-Baseline 50% / Dolma 50%"
+            ],
+            [
+              "Dolma1.7",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "Dolma1.7",
+              "Dolma1.7 (no math, code)"
+            ],
+            [
+              "Dolma1.7",
+              "Falcon+CC"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Dolma1.7 (no math, code)"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Falcon+CC"
+            ],
+            [
+              "Dolma1.7 (no Reddit)",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "Dolma1.7 (no Reddit)",
+              "Dolma1.7 (no math, code)"
+            ],
+            [
+              "Dolma1.7 (no Reddit)",
+              "Falcon+CC"
+            ],
+            [
+              "Falcon+CC (QC 10%)",
+              "FineWeb-Pro"
+            ]
+          ]
+        },
+        "shrinkage_0.8": {
+          "added_pairs": [
+            [
+              "DCLM-Baseline 25% / Dolma 75%",
+              "Falcon"
+            ],
+            [
+              "Dolma1.7 (no code)",
+              "Dolma1.7 (no math, code)"
+            ],
+            [
+              "Falcon+CC (QC 20%)",
+              "Falcon+CC (QC Tulu 10%)"
+            ]
+          ],
+          "mean_regret": {
+            "confidence_level": 0.95,
+            "hi": 0.0004149985072589295,
+            "lo": 9.613384064870449e-05,
+            "method": "percentile bootstrap",
+            "n_boot": 60,
+            "point": 0.00019970960876505443
+          },
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.03841666666666666,
+            "lo": 0.02,
+            "method": "percentile bootstrap",
+            "n_boot": 60,
+            "point": 0.02666666666666667
+          },
+          "n_added_vs_plain": 3,
+          "n_flips": 8,
+          "n_removed_vs_plain": 22,
+          "net_removed_vs_plain": 19,
+          "removed_pairs": [
+            [
+              "C4",
+              "Dolma1.7"
+            ],
+            [
+              "C4",
+              "Dolma1.7 (no Flan)"
+            ],
+            [
+              "C4",
+              "Dolma1.7 (no Reddit)"
+            ],
+            [
+              "C4",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "C4",
+              "Dolma1.7 (no math, code)"
+            ],
+            [
+              "C4",
+              "Falcon+CC"
+            ],
+            [
+              "DCLM-Baseline",
+              "Falcon+CC (QC 10%)"
+            ],
+            [
+              "DCLM-Baseline (QC 10%)",
+              "DCLM-Baseline (QC 7%, FW2)"
+            ],
+            [
+              "DCLM-Baseline (QC 20%)",
+              "FineWeb-Edu"
+            ],
+            [
+              "DCLM-Baseline 25% / Dolma 75%",
+              "DCLM-Baseline 50% / Dolma 50%"
+            ],
+            [
+              "Dolma1.7",
+              "Dolma1.7 (no Reddit)"
+            ],
+            [
+              "Dolma1.7",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "Dolma1.7",
+              "Dolma1.7 (no math, code)"
+            ],
+            [
+              "Dolma1.7",
+              "Falcon+CC"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Dolma1.7 (no math, code)"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Falcon+CC"
+            ],
+            [
+              "Dolma1.7 (no Reddit)",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "Dolma1.7 (no Reddit)",
+              "Dolma1.7 (no math, code)"
+            ],
+            [
+              "Dolma1.7 (no Reddit)",
+              "Falcon+CC"
+            ],
+            [
+              "Dolma1.7 (no code)",
+              "Falcon+CC"
+            ],
+            [
+              "Falcon+CC (QC 10%)",
+              "FineWeb-Pro"
+            ]
+          ]
+        },
+        "shrinkage_1": {
+          "added_pairs": [
+            [
+              "DCLM-Baseline",
+              "FineWeb-Pro"
+            ],
+            [
+              "DCLM-Baseline 25% / Dolma 75%",
+              "Dolma1.7"
+            ],
+            [
+              "DCLM-Baseline 25% / Dolma 75%",
+              "Dolma1.7 (no Flan)"
+            ],
+            [
+              "DCLM-Baseline 25% / Dolma 75%",
+              "Falcon"
+            ],
+            [
+              "Dolma1.7 (no code)",
+              "Dolma1.7 (no math, code)"
+            ],
+            [
+              "Falcon+CC (QC 20%)",
+              "Falcon+CC (QC Tulu 10%)"
+            ]
+          ],
+          "mean_regret": {
+            "confidence_level": 0.95,
+            "hi": 0.0005270904405939192,
+            "lo": 0.0001033679130423428,
+            "method": "percentile bootstrap",
+            "n_boot": 60,
+            "point": 0.00023510360712545233
+          },
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.043333333333333335,
+            "lo": 0.014916666666666667,
+            "method": "percentile bootstrap",
+            "n_boot": 60,
+            "point": 0.02666666666666667
+          },
+          "n_added_vs_plain": 6,
+          "n_flips": 8,
+          "n_removed_vs_plain": 25,
+          "net_removed_vs_plain": 19,
+          "removed_pairs": [
+            [
+              "C4",
+              "Dolma1.6++"
+            ],
+            [
+              "C4",
+              "Dolma1.7"
+            ],
+            [
+              "C4",
+              "Dolma1.7 (no Flan)"
+            ],
+            [
+              "C4",
+              "Dolma1.7 (no Reddit)"
+            ],
+            [
+              "C4",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "C4",
+              "Dolma1.7 (no math, code)"
+            ],
+            [
+              "C4",
+              "Falcon+CC"
+            ],
+            [
+              "DCLM-Baseline",
+              "Falcon+CC (QC 10%)"
+            ],
+            [
+              "DCLM-Baseline (QC 10%)",
+              "DCLM-Baseline (QC 7%, FW2)"
+            ],
+            [
+              "DCLM-Baseline (QC 20%)",
+              "FineWeb-Edu"
+            ],
+            [
+              "DCLM-Baseline 25% / Dolma 75%",
+              "DCLM-Baseline 50% / Dolma 50%"
+            ],
+            [
+              "Dolma1.7",
+              "Dolma1.7 (no Reddit)"
+            ],
+            [
+              "Dolma1.7",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "Dolma1.7",
+              "Dolma1.7 (no math, code)"
+            ],
+            [
+              "Dolma1.7",
+              "Falcon"
+            ],
+            [
+              "Dolma1.7",
+              "Falcon+CC"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Dolma1.7 (no math, code)"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Falcon"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Falcon+CC"
+            ],
+            [
+              "Dolma1.7 (no Reddit)",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "Dolma1.7 (no Reddit)",
+              "Dolma1.7 (no math, code)"
+            ],
+            [
+              "Dolma1.7 (no Reddit)",
+              "Falcon+CC"
+            ],
+            [
+              "Dolma1.7 (no code)",
+              "Falcon+CC"
+            ],
+            [
+              "Falcon+CC (QC 10%)",
+              "FineWeb-Pro"
+            ]
+          ]
+        },
+        "shrinkage_eb": {
+          "added_pairs": [],
+          "mean_regret": {
+            "confidence_level": 0.95,
+            "hi": 0.003866079375339584,
+            "lo": 0.0010713368101973467,
+            "method": "percentile bootstrap",
+            "n_boot": 60,
+            "point": 0.0022795109408161986
+          },
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.10016666666666665,
+            "lo": 0.04825,
+            "method": "percentile bootstrap",
+            "n_boot": 60,
+            "point": 0.06333333333333334
+          },
+          "n_added_vs_plain": 0,
+          "n_flips": 22,
+          "n_removed_vs_plain": 5,
+          "net_removed_vs_plain": 5,
+          "removed_pairs": [
+            [
+              "C4",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "C4",
+              "Falcon+CC"
+            ],
+            [
+              "DCLM-Baseline",
+              "Falcon+CC (QC 10%)"
+            ],
+            [
+              "DCLM-Baseline (QC 10%)",
+              "DCLM-Baseline (QC 7%, FW2)"
+            ],
+            [
+              "DCLM-Baseline 25% / Dolma 75%",
+              "DCLM-Baseline 50% / Dolma 50%"
+            ]
+          ]
+        },
+        "single_scale": {
+          "added_pairs": [
+            [
+              "Dolma1.7 (no math, code)",
+              "Falcon+CC"
+            ],
+            [
+              "Falcon+CC (QC 20%)",
+              "Falcon+CC (QC Tulu 10%)"
+            ]
+          ],
+          "mean_regret": {
+            "confidence_level": 0.95,
+            "hi": 7.23950816864172e-05,
+            "lo": 1.5214228671529995e-05,
+            "method": "percentile bootstrap",
+            "n_boot": 60,
+            "point": 5.288574667814109e-05
+          },
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.013333333333333334,
+            "lo": 0.0033333333333333335,
+            "method": "percentile bootstrap",
+            "n_boot": 60,
+            "point": 0.01
+          },
+          "n_added_vs_plain": 2,
+          "n_flips": 3,
+          "n_removed_vs_plain": 26,
+          "net_removed_vs_plain": 24,
+          "removed_pairs": [
+            [
+              "C4",
+              "Dolma1.6++"
+            ],
+            [
+              "C4",
+              "Dolma1.7"
+            ],
+            [
+              "C4",
+              "Dolma1.7 (no Flan)"
+            ],
+            [
+              "C4",
+              "Dolma1.7 (no Reddit)"
+            ],
+            [
+              "C4",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "C4",
+              "Dolma1.7 (no math, code)"
+            ],
+            [
+              "C4",
+              "Falcon+CC"
+            ],
+            [
+              "DCLM-Baseline",
+              "Falcon+CC (QC 10%)"
+            ],
+            [
+              "DCLM-Baseline (QC 10%)",
+              "DCLM-Baseline (QC 7%, FW2)"
+            ],
+            [
+              "DCLM-Baseline (QC 20%)",
+              "FineWeb-Edu"
+            ],
+            [
+              "DCLM-Baseline 25% / Dolma 75%",
+              "DCLM-Baseline 50% / Dolma 50%"
+            ],
+            [
+              "Dolma1.7",
+              "Dolma1.7 (no Flan)"
+            ],
+            [
+              "Dolma1.7",
+              "Dolma1.7 (no Reddit)"
+            ],
+            [
+              "Dolma1.7",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "Dolma1.7",
+              "Dolma1.7 (no math, code)"
+            ],
+            [
+              "Dolma1.7",
+              "Falcon"
+            ],
+            [
+              "Dolma1.7",
+              "Falcon+CC"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Dolma1.7 (no math, code)"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Falcon"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Falcon+CC"
+            ],
+            [
+              "Dolma1.7 (no Reddit)",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "Dolma1.7 (no Reddit)",
+              "Dolma1.7 (no math, code)"
+            ],
+            [
+              "Dolma1.7 (no Reddit)",
+              "Falcon"
+            ],
+            [
+              "Dolma1.7 (no Reddit)",
+              "Falcon+CC"
+            ],
+            [
+              "Falcon+CC (QC 10%)",
+              "FineWeb-Pro"
+            ]
+          ]
+        }
+      },
+      "target": 7.06209840434774e+20,
+      "variance_components": {
+        "between_sd": 0.007603785187824612,
+        "between_variance": 5.781754918258096e-05,
+        "descriptive_full_set_between_sd": 0.007846553824369572,
+        "descriptive_full_set_noise_share": 0.19984073874812952,
+        "descriptive_full_set_within_sd": 0.003921324233654233,
+        "eb_strength": 0.23145121191148232,
+        "n_evaluated_interventions": 25,
+        "n_strength_source_interventions": 17,
+        "noise_share": 0.23077505790003672,
+        "pooled_exponent": 0.16691558165106657,
+        "strength_estimated_from": "separate_strength_rows",
+        "strength_is_heldout": true,
+        "strength_source_interventions": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ],
+        "within_sd": 0.0041648330263890105,
+        "within_variance": 1.734583413770064e-05
+      }
+    },
+    "primary_4M-300M_target1B": {
+      "budgets": [
+        8430221996851200.0,
+        2.170083624144077e+16,
+        4.377678106853376e+16,
+        5.88506060071895e+16,
+        1.2413398842290995e+17,
+        1.5375666115510272e+17,
+        2.1908574798505574e+17,
+        1.955459382959407e+18,
+        5.758063377068851e+18,
+        1.3439040749568e+19,
+        5.66196613152768e+19
+      ],
+      "elapsed_seconds": 78476.73604130745,
+      "n_boot": 120,
+      "n_interventions": 25,
+      "n_pairs": 300,
+      "plain_flip_pairs": [
+        [
+          "C4",
+          "Dolma1.6++"
+        ],
+        [
+          "DCLM-Baseline",
+          "Falcon+CC (QC Orig 10%)"
+        ],
+        [
+          "DCLM-Baseline (QC 20%)",
+          "FineWeb-Edu"
+        ],
+        [
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)"
+        ],
+        [
+          "Dolma1.7",
+          "Dolma1.7 (no Reddit)"
+        ],
+        [
+          "Dolma1.7",
+          "Dolma1.7 (no code)"
+        ],
+        [
+          "Dolma1.7",
+          "Falcon"
+        ],
+        [
+          "Dolma1.7",
+          "Falcon+CC"
+        ],
+        [
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)"
+        ],
+        [
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no code)"
+        ],
+        [
+          "Dolma1.7 (no Flan)",
+          "Falcon"
+        ],
+        [
+          "Dolma1.7 (no Flan)",
+          "Falcon+CC"
+        ],
+        [
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)"
+        ],
+        [
+          "Dolma1.7 (no Reddit)",
+          "Falcon"
+        ],
+        [
+          "Dolma1.7 (no Reddit)",
+          "Falcon+CC"
+        ],
+        [
+          "Falcon+CC (QC 10%)",
+          "FineWeb-Pro"
+        ]
+      ],
+      "rankers": {
+        "ensemble": {
+          "added_pairs": [
+            [
+              "C4",
+              "DCLM-Baseline 25% / Dolma 75%"
+            ],
+            [
+              "C4",
+              "DCLM-Baseline 50% / Dolma 50%"
+            ],
+            [
+              "C4",
+              "DCLM-Baseline 75% / Dolma 25%"
+            ],
+            [
+              "C4",
+              "Dolma1.7"
+            ],
+            [
+              "C4",
+              "Dolma1.7 (no Flan)"
+            ],
+            [
+              "C4",
+              "Dolma1.7 (no Reddit)"
+            ],
+            [
+              "C4",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "C4",
+              "Dolma1.7 (no math, code)"
+            ],
+            [
+              "C4",
+              "Falcon+CC"
+            ],
+            [
+              "C4",
+              "Falcon+CC (QC 10%)"
+            ],
+            [
+              "C4",
+              "Falcon+CC (QC 20%)"
+            ],
+            [
+              "DCLM-Baseline",
+              "DCLM-Baseline (QC 10%)"
+            ],
+            [
+              "DCLM-Baseline",
+              "DCLM-Baseline (QC 20%)"
+            ],
+            [
+              "DCLM-Baseline",
+              "Falcon+CC (QC 10%)"
+            ],
+            [
+              "DCLM-Baseline",
+              "FineWeb-Pro"
+            ],
+            [
+              "DCLM-Baseline (QC 10%)",
+              "DCLM-Baseline (QC 7%, FW2)"
+            ],
+            [
+              "DCLM-Baseline (QC 10%)",
+              "Falcon+CC (QC Tulu 10%)"
+            ],
+            [
+              "DCLM-Baseline (QC 10%)",
+              "FineWeb-Edu"
+            ],
+            [
+              "DCLM-Baseline (QC 20%)",
+              "Falcon+CC (QC Tulu 10%)"
+            ],
+            [
+              "DCLM-Baseline (QC 7%, FW2)",
+              "FineWeb-Edu"
+            ],
+            [
+              "DCLM-Baseline (QC FW 10%)",
+              "FineWeb-Edu"
+            ],
+            [
+              "DCLM-Baseline 25% / Dolma 75%",
+              "DCLM-Baseline 50% / Dolma 50%"
+            ],
+            [
+              "DCLM-Baseline 25% / Dolma 75%",
+              "DCLM-Baseline 75% / Dolma 25%"
+            ],
+            [
+              "DCLM-Baseline 25% / Dolma 75%",
+              "Falcon"
+            ],
+            [
+              "DCLM-Baseline 25% / Dolma 75%",
+              "Falcon+CC (QC 20%)"
+            ],
+            [
+              "DCLM-Baseline 50% / Dolma 50%",
+              "Falcon"
+            ],
+            [
+              "DCLM-Baseline 50% / Dolma 50%",
+              "Falcon+CC (QC 20%)"
+            ],
+            [
+              "DCLM-Baseline 75% / Dolma 25%",
+              "Falcon"
+            ],
+            [
+              "DCLM-Baseline 75% / Dolma 25%",
+              "Falcon+CC (QC 20%)"
+            ],
+            [
+              "Dolma1.7",
+              "Dolma1.7 (no math, code)"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Dolma1.7 (no math, code)"
+            ],
+            [
+              "Dolma1.7 (no Reddit)",
+              "Dolma1.7 (no math, code)"
+            ],
+            [
+              "Dolma1.7 (no code)",
+              "Falcon+CC"
+            ],
+            [
+              "Dolma1.7 (no math, code)",
+              "Falcon+CC"
+            ],
+            [
+              "Falcon",
+              "Falcon+CC (QC 10%)"
+            ],
+            [
+              "Falcon",
+              "Falcon+CC (QC 20%)"
+            ],
+            [
+              "Falcon",
+              "Falcon+CC (QC Orig 10%)"
+            ],
+            [
+              "Falcon",
+              "FineWeb-Pro"
+            ],
+            [
+              "Falcon+CC (QC 10%)",
+              "Falcon+CC (QC Orig 10%)"
+            ],
+            [
+              "Falcon+CC (QC 10%)",
+              "Falcon+CC (QC Tulu 10%)"
+            ],
+            [
+              "Falcon+CC (QC Orig 10%)",
+              "Falcon+CC (QC Tulu 10%)"
+            ],
+            [
+              "Falcon+CC (QC Orig 10%)",
+              "FineWeb-Pro"
+            ],
+            [
+              "Falcon+CC (QC Tulu 10%)",
+              "FineWeb-Pro"
+            ]
+          ],
+          "mean_regret": {
+            "confidence_level": 0.95,
+            "hi": 0.01957210403723537,
+            "lo": 0.0076223694812066894,
+            "method": "percentile bootstrap",
+            "n_boot": 120,
+            "point": 0.014272746746929516
+          },
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.21666666666666667,
+            "lo": 0.12666666666666668,
+            "method": "percentile bootstrap",
+            "n_boot": 120,
+            "point": 0.18666666666666668
+          },
+          "n_added_vs_plain": 43,
+          "n_flips": 56,
+          "n_removed_vs_plain": 3,
+          "net_removed_vs_plain": -40,
+          "removed_pairs": [
+            [
+              "DCLM-Baseline",
+              "Falcon+CC (QC Orig 10%)"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Falcon+CC"
+            ],
+            [
+              "Dolma1.7 (no Reddit)",
+              "Falcon+CC"
+            ]
+          ]
+        },
+        "plain_projection": {
+          "added_pairs": [],
+          "mean_regret": {
+            "confidence_level": 0.95,
+            "hi": 0.0030715850031369295,
+            "lo": 0.000632025640005106,
+            "method": "percentile bootstrap",
+            "n_boot": 120,
+            "point": 0.0008210976558637
+          },
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.08666666666666667,
+            "lo": 0.04,
+            "method": "percentile bootstrap",
+            "n_boot": 120,
+            "point": 0.05333333333333334
+          },
+          "n_added_vs_plain": 0,
+          "n_flips": 16,
+          "n_removed_vs_plain": 0,
+          "net_removed_vs_plain": 0,
+          "removed_pairs": []
+        },
+        "shared_exponent": {
+          "added_pairs": [
+            [
+              "DCLM-Baseline 25% / Dolma 75%",
+              "Falcon"
+            ],
+            [
+              "Dolma1.7 (no code)",
+              "Dolma1.7 (no math, code)"
+            ],
+            [
+              "Falcon+CC (QC 20%)",
+              "Falcon+CC (QC Tulu 10%)"
+            ]
+          ],
+          "mean_regret": {
+            "confidence_level": 0.95,
+            "hi": 0.00033534462522362543,
+            "lo": 6.652978804190923e-05,
+            "method": "percentile bootstrap",
+            "n_boot": 120,
+            "point": 0.00013598949766867227
+          },
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.03666666666666667,
+            "lo": 0.013333333333333334,
+            "method": "percentile bootstrap",
+            "n_boot": 120,
+            "point": 0.02
+          },
+          "n_added_vs_plain": 3,
+          "n_flips": 6,
+          "n_removed_vs_plain": 13,
+          "net_removed_vs_plain": 10,
+          "removed_pairs": [
+            [
+              "C4",
+              "Dolma1.6++"
+            ],
+            [
+              "DCLM-Baseline",
+              "Falcon+CC (QC Orig 10%)"
+            ],
+            [
+              "DCLM-Baseline (QC 20%)",
+              "FineWeb-Edu"
+            ],
+            [
+              "Dolma1.7",
+              "Dolma1.7 (no Flan)"
+            ],
+            [
+              "Dolma1.7",
+              "Dolma1.7 (no Reddit)"
+            ],
+            [
+              "Dolma1.7",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "Dolma1.7",
+              "Falcon+CC"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Dolma1.7 (no Reddit)"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Falcon+CC"
+            ],
+            [
+              "Dolma1.7 (no Reddit)",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "Dolma1.7 (no Reddit)",
+              "Falcon+CC"
+            ],
+            [
+              "Falcon+CC (QC 10%)",
+              "FineWeb-Pro"
+            ]
+          ]
+        },
+        "shrinkage_0": {
+          "added_pairs": [],
+          "mean_regret": {
+            "confidence_level": 0.95,
+            "hi": 0.0030715850031369295,
+            "lo": 0.000632025640005106,
+            "method": "percentile bootstrap",
+            "n_boot": 120,
+            "point": 0.0008210976558637
+          },
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.08666666666666667,
+            "lo": 0.04,
+            "method": "percentile bootstrap",
+            "n_boot": 120,
+            "point": 0.05333333333333334
+          },
+          "n_added_vs_plain": 0,
+          "n_flips": 16,
+          "n_removed_vs_plain": 0,
+          "net_removed_vs_plain": 0,
+          "removed_pairs": []
+        },
+        "shrinkage_0.2": {
+          "added_pairs": [],
+          "mean_regret": {
+            "confidence_level": 0.95,
+            "hi": 0.0025529130855572795,
+            "lo": 0.00035131776535397185,
+            "method": "percentile bootstrap",
+            "n_boot": 120,
+            "point": 0.000731774276288828
+          },
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.07341666666666664,
+            "lo": 0.03333333333333333,
+            "method": "percentile bootstrap",
+            "n_boot": 120,
+            "point": 0.05
+          },
+          "n_added_vs_plain": 0,
+          "n_flips": 15,
+          "n_removed_vs_plain": 1,
+          "net_removed_vs_plain": 1,
+          "removed_pairs": [
+            [
+              "Dolma1.7 (no Reddit)",
+              "Dolma1.7 (no code)"
+            ]
+          ]
+        },
+        "shrinkage_0.4": {
+          "added_pairs": [],
+          "mean_regret": {
+            "confidence_level": 0.95,
+            "hi": 0.0008815701305163191,
+            "lo": 0.00018761835308922698,
+            "method": "percentile bootstrap",
+            "n_boot": 120,
+            "point": 0.0004793923073044611
+          },
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.05,
+            "lo": 0.023333333333333334,
+            "method": "percentile bootstrap",
+            "n_boot": 120,
+            "point": 0.03666666666666667
+          },
+          "n_added_vs_plain": 0,
+          "n_flips": 11,
+          "n_removed_vs_plain": 5,
+          "net_removed_vs_plain": 5,
+          "removed_pairs": [
+            [
+              "Dolma1.7",
+              "Dolma1.7 (no Flan)"
+            ],
+            [
+              "Dolma1.7",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "Dolma1.7 (no Reddit)",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "Falcon+CC (QC 10%)",
+              "FineWeb-Pro"
+            ]
+          ]
+        },
+        "shrinkage_0.6": {
+          "added_pairs": [],
+          "mean_regret": {
+            "confidence_level": 0.95,
+            "hi": 0.00047708914465898747,
+            "lo": 0.00011466924946892776,
+            "method": "percentile bootstrap",
+            "n_boot": 120,
+            "point": 0.0001226821692839068
+          },
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.03666666666666667,
+            "lo": 0.016666666666666666,
+            "method": "percentile bootstrap",
+            "n_boot": 120,
+            "point": 0.016666666666666666
+          },
+          "n_added_vs_plain": 0,
+          "n_flips": 5,
+          "n_removed_vs_plain": 11,
+          "net_removed_vs_plain": 11,
+          "removed_pairs": [
+            [
+              "DCLM-Baseline (QC 20%)",
+              "FineWeb-Edu"
+            ],
+            [
+              "Dolma1.7",
+              "Dolma1.7 (no Flan)"
+            ],
+            [
+              "Dolma1.7",
+              "Dolma1.7 (no Reddit)"
+            ],
+            [
+              "Dolma1.7",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "Dolma1.7",
+              "Falcon+CC"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Dolma1.7 (no Reddit)"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Falcon+CC"
+            ],
+            [
+              "Dolma1.7 (no Reddit)",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "Dolma1.7 (no Reddit)",
+              "Falcon+CC"
+            ],
+            [
+              "Falcon+CC (QC 10%)",
+              "FineWeb-Pro"
+            ]
+          ]
+        },
+        "shrinkage_0.8": {
+          "added_pairs": [
+            [
+              "Dolma1.7 (no code)",
+              "Dolma1.7 (no math, code)"
+            ]
+          ],
+          "mean_regret": {
+            "confidence_level": 0.95,
+            "hi": 0.00031313162134022143,
+            "lo": 6.695590031791843e-05,
+            "method": "percentile bootstrap",
+            "n_boot": 120,
+            "point": 0.00012242983804632365
+          },
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.03333333333333333,
+            "lo": 0.013333333333333334,
+            "method": "percentile bootstrap",
+            "n_boot": 120,
+            "point": 0.016666666666666666
+          },
+          "n_added_vs_plain": 1,
+          "n_flips": 5,
+          "n_removed_vs_plain": 12,
+          "net_removed_vs_plain": 11,
+          "removed_pairs": [
+            [
+              "DCLM-Baseline",
+              "Falcon+CC (QC Orig 10%)"
+            ],
+            [
+              "DCLM-Baseline (QC 20%)",
+              "FineWeb-Edu"
+            ],
+            [
+              "Dolma1.7",
+              "Dolma1.7 (no Flan)"
+            ],
+            [
+              "Dolma1.7",
+              "Dolma1.7 (no Reddit)"
+            ],
+            [
+              "Dolma1.7",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "Dolma1.7",
+              "Falcon+CC"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Dolma1.7 (no Reddit)"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Falcon+CC"
+            ],
+            [
+              "Dolma1.7 (no Reddit)",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "Dolma1.7 (no Reddit)",
+              "Falcon+CC"
+            ],
+            [
+              "Falcon+CC (QC 10%)",
+              "FineWeb-Pro"
+            ]
+          ]
+        },
+        "shrinkage_1": {
+          "added_pairs": [
+            [
+              "DCLM-Baseline 25% / Dolma 75%",
+              "Falcon"
+            ],
+            [
+              "Dolma1.7 (no code)",
+              "Dolma1.7 (no math, code)"
+            ],
+            [
+              "Falcon+CC (QC 20%)",
+              "Falcon+CC (QC Tulu 10%)"
+            ]
+          ],
+          "mean_regret": {
+            "confidence_level": 0.95,
+            "hi": 0.00033534462522362543,
+            "lo": 6.652978804190923e-05,
+            "method": "percentile bootstrap",
+            "n_boot": 120,
+            "point": 0.00013598949766867227
+          },
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.03666666666666667,
+            "lo": 0.013333333333333334,
+            "method": "percentile bootstrap",
+            "n_boot": 120,
+            "point": 0.02
+          },
+          "n_added_vs_plain": 3,
+          "n_flips": 6,
+          "n_removed_vs_plain": 13,
+          "net_removed_vs_plain": 10,
+          "removed_pairs": [
+            [
+              "C4",
+              "Dolma1.6++"
+            ],
+            [
+              "DCLM-Baseline",
+              "Falcon+CC (QC Orig 10%)"
+            ],
+            [
+              "DCLM-Baseline (QC 20%)",
+              "FineWeb-Edu"
+            ],
+            [
+              "Dolma1.7",
+              "Dolma1.7 (no Flan)"
+            ],
+            [
+              "Dolma1.7",
+              "Dolma1.7 (no Reddit)"
+            ],
+            [
+              "Dolma1.7",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "Dolma1.7",
+              "Falcon+CC"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Dolma1.7 (no Reddit)"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Falcon+CC"
+            ],
+            [
+              "Dolma1.7 (no Reddit)",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "Dolma1.7 (no Reddit)",
+              "Falcon+CC"
+            ],
+            [
+              "Falcon+CC (QC 10%)",
+              "FineWeb-Pro"
+            ]
+          ]
+        },
+        "shrinkage_eb": {
+          "added_pairs": [],
+          "mean_regret": {
+            "confidence_level": 0.95,
+            "hi": 0.0026808779494786883,
+            "lo": 0.0003511446387085074,
+            "method": "percentile bootstrap",
+            "n_boot": 120,
+            "point": 0.00042188389995046963
+          },
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.07674999999999997,
+            "lo": 0.03,
+            "method": "percentile bootstrap",
+            "n_boot": 120,
+            "point": 0.03
+          },
+          "n_added_vs_plain": 0,
+          "n_flips": 15,
+          "n_removed_vs_plain": 1,
+          "net_removed_vs_plain": 1,
+          "removed_pairs": [
+            [
+              "Dolma1.7 (no Reddit)",
+              "Dolma1.7 (no code)"
+            ]
+          ]
+        },
+        "single_scale": {
+          "added_pairs": [
+            [
+              "Dolma1.7 (no code)",
+              "Dolma1.7 (no math, code)"
+            ],
+            [
+              "Falcon+CC (QC 20%)",
+              "Falcon+CC (QC Tulu 10%)"
+            ]
+          ],
+          "mean_regret": {
+            "confidence_level": 0.95,
+            "hi": 8.972118131301132e-05,
+            "lo": 2.1770357296191812e-05,
+            "method": "percentile bootstrap",
+            "n_boot": 120,
+            "point": 6.794081521606246e-05
+          },
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.01674999999999997,
+            "lo": 0.006666666666666667,
+            "method": "percentile bootstrap",
+            "n_boot": 120,
+            "point": 0.013333333333333334
+          },
+          "n_added_vs_plain": 2,
+          "n_flips": 4,
+          "n_removed_vs_plain": 14,
+          "net_removed_vs_plain": 12,
+          "removed_pairs": [
+            [
+              "C4",
+              "Dolma1.6++"
+            ],
+            [
+              "DCLM-Baseline (QC 20%)",
+              "FineWeb-Edu"
+            ],
+            [
+              "Dolma1.7",
+              "Dolma1.7 (no Flan)"
+            ],
+            [
+              "Dolma1.7",
+              "Dolma1.7 (no Reddit)"
+            ],
+            [
+              "Dolma1.7",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "Dolma1.7",
+              "Falcon"
+            ],
+            [
+              "Dolma1.7",
+              "Falcon+CC"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Falcon"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Falcon+CC"
+            ],
+            [
+              "Dolma1.7 (no Reddit)",
+              "Dolma1.7 (no code)"
+            ],
+            [
+              "Dolma1.7 (no Reddit)",
+              "Falcon"
+            ],
+            [
+              "Dolma1.7 (no Reddit)",
+              "Falcon+CC"
+            ],
+            [
+              "Falcon+CC (QC 10%)",
+              "FineWeb-Pro"
+            ]
+          ]
+        }
+      },
+      "target": 7.06209840434774e+20,
+      "variance_components": {
+        "between_sd": 0.006476620314507018,
+        "between_variance": 4.194661069828499e-05,
+        "descriptive_full_set_between_sd": 0.007003571102978894,
+        "descriptive_full_set_noise_share": 0.17952010544729677,
+        "descriptive_full_set_within_sd": 0.0032759866085243406,
+        "eb_strength": 0.21566065872944928,
+        "n_evaluated_interventions": 25,
+        "n_strength_source_interventions": 17,
+        "noise_share": 0.2196195464266531,
+        "pooled_exponent": 0.15199034689677127,
+        "strength_estimated_from": "separate_strength_rows",
+        "strength_is_heldout": true,
+        "strength_source_interventions": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ],
+        "within_sd": 0.003435822673830394,
+        "within_variance": 1.1804877446007038e-05
+      }
+    },
+    "short_arm_4M-530M_target1B": {
+      "budgets": [
+        8430221996851200.0,
+        2.170083624144077e+16,
+        4.377678106853376e+16,
+        5.88506060071895e+16,
+        1.2413398842290995e+17,
+        1.5375666115510272e+17,
+        2.1908574798505574e+17,
+        1.955459382959407e+18,
+        5.758063377068851e+18,
+        1.3439040749568e+19,
+        5.66196613152768e+19,
+        1.4955135853658112e+20
+      ],
+      "elapsed_seconds": 79413.39930415154,
+      "n_boot": 60,
+      "n_interventions": 25,
+      "n_pairs": 300,
+      "plain_flip_pairs": [
+        [
+          "C4",
+          "Dolma1.6++"
+        ],
+        [
+          "DCLM-Baseline",
+          "Falcon+CC (QC Orig 10%)"
+        ],
+        [
+          "DCLM-Baseline (QC 20%)",
+          "FineWeb-Edu"
+        ],
+        [
+          "Dolma1.7",
+          "Dolma1.7 (no Reddit)"
+        ],
+        [
+          "Dolma1.7",
+          "Falcon"
+        ],
+        [
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)"
+        ],
+        [
+          "Dolma1.7 (no Flan)",
+          "Falcon"
+        ],
+        [
+          "Dolma1.7 (no Reddit)",
+          "Falcon"
+        ],
+        [
+          "Falcon+CC (QC 10%)",
+          "FineWeb-Pro"
+        ]
+      ],
+      "rankers": {
+        "plain_projection": {
+          "added_pairs": [],
+          "mean_regret": {
+            "confidence_level": 0.95,
+            "hi": 0.0009731114758170168,
+            "lo": 0.00019114063883005642,
+            "method": "percentile bootstrap",
+            "n_boot": 60,
+            "point": 0.0002562262882635302
+          },
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.05333333333333334,
+            "lo": 0.023333333333333334,
+            "method": "percentile bootstrap",
+            "n_boot": 60,
+            "point": 0.03
+          },
+          "n_added_vs_plain": 0,
+          "n_flips": 9,
+          "n_removed_vs_plain": 0,
+          "net_removed_vs_plain": 0,
+          "removed_pairs": []
+        },
+        "shared_exponent": {
+          "added_pairs": [
+            [
+              "Dolma1.7 (no code)",
+              "Dolma1.7 (no math, code)"
+            ],
+            [
+              "Falcon+CC (QC 20%)",
+              "Falcon+CC (QC Tulu 10%)"
+            ]
+          ],
+          "mean_regret": {
+            "confidence_level": 0.95,
+            "hi": 0.0002323751211848674,
+            "lo": 4.11806629273751e-05,
+            "method": "percentile bootstrap",
+            "n_boot": 60,
+            "point": 8.444355629686485e-05
+          },
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.031749999999999994,
+            "lo": 0.01,
+            "method": "percentile bootstrap",
+            "n_boot": 60,
+            "point": 0.016666666666666666
+          },
+          "n_added_vs_plain": 2,
+          "n_flips": 5,
+          "n_removed_vs_plain": 6,
+          "net_removed_vs_plain": 4,
+          "removed_pairs": [
+            [
+              "C4",
+              "Dolma1.6++"
+            ],
+            [
+              "DCLM-Baseline",
+              "Falcon+CC (QC Orig 10%)"
+            ],
+            [
+              "DCLM-Baseline (QC 20%)",
+              "FineWeb-Edu"
+            ],
+            [
+              "Dolma1.7",
+              "Dolma1.7 (no Reddit)"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Dolma1.7 (no Reddit)"
+            ],
+            [
+              "Falcon+CC (QC 10%)",
+              "FineWeb-Pro"
+            ]
+          ]
+        },
+        "shrinkage_0": {
+          "added_pairs": [],
+          "mean_regret": {
+            "confidence_level": 0.95,
+            "hi": 0.0009731114758170168,
+            "lo": 0.00019114063883005642,
+            "method": "percentile bootstrap",
+            "n_boot": 60,
+            "point": 0.0002562262882635302
+          },
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.05333333333333334,
+            "lo": 0.023333333333333334,
+            "method": "percentile bootstrap",
+            "n_boot": 60,
+            "point": 0.03
+          },
+          "n_added_vs_plain": 0,
+          "n_flips": 9,
+          "n_removed_vs_plain": 0,
+          "net_removed_vs_plain": 0,
+          "removed_pairs": []
+        },
+        "shrinkage_0.2": {
+          "added_pairs": [],
+          "mean_regret": {
+            "confidence_level": 0.95,
+            "hi": 0.0005322658583250561,
+            "lo": 0.00012768769766604844,
+            "method": "percentile bootstrap",
+            "n_boot": 60,
+            "point": 0.00014383875083959257
+          },
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.04,
+            "lo": 0.02,
+            "method": "percentile bootstrap",
+            "n_boot": 60,
+            "point": 0.023333333333333334
+          },
+          "n_added_vs_plain": 0,
+          "n_flips": 7,
+          "n_removed_vs_plain": 2,
+          "net_removed_vs_plain": 2,
+          "removed_pairs": [
+            [
+              "DCLM-Baseline (QC 20%)",
+              "FineWeb-Edu"
+            ],
+            [
+              "Falcon+CC (QC 10%)",
+              "FineWeb-Pro"
+            ]
+          ]
+        },
+        "shrinkage_0.4": {
+          "added_pairs": [],
+          "mean_regret": {
+            "confidence_level": 0.95,
+            "hi": 0.0003164381730300922,
+            "lo": 0.00010132473745048624,
+            "method": "percentile bootstrap",
+            "n_boot": 60,
+            "point": 0.0001302096359448631
+          },
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.03,
+            "lo": 0.013333333333333334,
+            "method": "percentile bootstrap",
+            "n_boot": 60,
+            "point": 0.02
+          },
+          "n_added_vs_plain": 0,
+          "n_flips": 6,
+          "n_removed_vs_plain": 3,
+          "net_removed_vs_plain": 3,
+          "removed_pairs": [
+            [
+              "DCLM-Baseline (QC 20%)",
+              "FineWeb-Edu"
+            ],
+            [
+              "Dolma1.7",
+              "Dolma1.7 (no Reddit)"
+            ],
+            [
+              "Falcon+CC (QC 10%)",
+              "FineWeb-Pro"
+            ]
+          ]
+        },
+        "shrinkage_0.6": {
+          "added_pairs": [],
+          "mean_regret": {
+            "confidence_level": 0.95,
+            "hi": 0.00015332833830104884,
+            "lo": 9.023481234037429e-05,
+            "method": "percentile bootstrap",
+            "n_boot": 60,
+            "point": 0.00010969288660509353
+          },
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.023333333333333334,
+            "lo": 0.013333333333333334,
+            "method": "percentile bootstrap",
+            "n_boot": 60,
+            "point": 0.016666666666666666
+          },
+          "n_added_vs_plain": 0,
+          "n_flips": 5,
+          "n_removed_vs_plain": 4,
+          "net_removed_vs_plain": 4,
+          "removed_pairs": [
+            [
+              "DCLM-Baseline",
+              "Falcon+CC (QC Orig 10%)"
+            ],
+            [
+              "DCLM-Baseline (QC 20%)",
+              "FineWeb-Edu"
+            ],
+            [
+              "Dolma1.7",
+              "Dolma1.7 (no Reddit)"
+            ],
+            [
+              "Falcon+CC (QC 10%)",
+              "FineWeb-Pro"
+            ]
+          ]
+        },
+        "shrinkage_0.8": {
+          "added_pairs": [],
+          "mean_regret": {
+            "confidence_level": 0.95,
+            "hi": 0.00017692195965894034,
+            "lo": 8.213505957398356e-05,
+            "method": "percentile bootstrap",
+            "n_boot": 60,
+            "point": 0.00010216541994413723
+          },
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.028416666666666663,
+            "lo": 0.013333333333333334,
+            "method": "percentile bootstrap",
+            "n_boot": 60,
+            "point": 0.013333333333333334
+          },
+          "n_added_vs_plain": 0,
+          "n_flips": 4,
+          "n_removed_vs_plain": 5,
+          "net_removed_vs_plain": 5,
+          "removed_pairs": [
+            [
+              "DCLM-Baseline",
+              "Falcon+CC (QC Orig 10%)"
+            ],
+            [
+              "DCLM-Baseline (QC 20%)",
+              "FineWeb-Edu"
+            ],
+            [
+              "Dolma1.7",
+              "Dolma1.7 (no Reddit)"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Dolma1.7 (no Reddit)"
+            ],
+            [
+              "Falcon+CC (QC 10%)",
+              "FineWeb-Pro"
+            ]
+          ]
+        },
+        "shrinkage_1": {
+          "added_pairs": [
+            [
+              "Dolma1.7 (no code)",
+              "Dolma1.7 (no math, code)"
+            ],
+            [
+              "Falcon+CC (QC 20%)",
+              "Falcon+CC (QC Tulu 10%)"
+            ]
+          ],
+          "mean_regret": {
+            "confidence_level": 0.95,
+            "hi": 0.0002323751211848674,
+            "lo": 3.808665122024017e-05,
+            "method": "percentile bootstrap",
+            "n_boot": 60,
+            "point": 8.444355629686485e-05
+          },
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.031749999999999994,
+            "lo": 0.01,
+            "method": "percentile bootstrap",
+            "n_boot": 60,
+            "point": 0.016666666666666666
+          },
+          "n_added_vs_plain": 2,
+          "n_flips": 5,
+          "n_removed_vs_plain": 6,
+          "net_removed_vs_plain": 4,
+          "removed_pairs": [
+            [
+              "C4",
+              "Dolma1.6++"
+            ],
+            [
+              "DCLM-Baseline",
+              "Falcon+CC (QC Orig 10%)"
+            ],
+            [
+              "DCLM-Baseline (QC 20%)",
+              "FineWeb-Edu"
+            ],
+            [
+              "Dolma1.7",
+              "Dolma1.7 (no Reddit)"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Dolma1.7 (no Reddit)"
+            ],
+            [
+              "Falcon+CC (QC 10%)",
+              "FineWeb-Pro"
+            ]
+          ]
+        },
+        "shrinkage_eb": {
+          "added_pairs": [],
+          "mean_regret": {
+            "confidence_level": 0.95,
+            "hi": 0.0007782918659541009,
+            "lo": 0.0001398954010004441,
+            "method": "percentile bootstrap",
+            "n_boot": 60,
+            "point": 0.0001691591493290708
+          },
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.03841666666666666,
+            "lo": 0.02,
+            "method": "percentile bootstrap",
+            "n_boot": 60,
+            "point": 0.02
+          },
+          "n_added_vs_plain": 0,
+          "n_flips": 7,
+          "n_removed_vs_plain": 2,
+          "net_removed_vs_plain": 2,
+          "removed_pairs": [
+            [
+              "DCLM-Baseline (QC 20%)",
+              "FineWeb-Edu"
+            ],
+            [
+              "Falcon+CC (QC 10%)",
+              "FineWeb-Pro"
+            ]
+          ]
+        },
+        "single_scale": {
+          "added_pairs": [
+            [
+              "Dolma1.7 (no code)",
+              "Falcon+CC"
+            ],
+            [
+              "Falcon+CC (QC 20%)",
+              "Falcon+CC (QC Tulu 10%)"
+            ]
+          ],
+          "mean_regret": {
+            "confidence_level": 0.95,
+            "hi": 4.716436259242681e-05,
+            "lo": 4.839501244339813e-06,
+            "method": "percentile bootstrap",
+            "n_boot": 60,
+            "point": 3.3654221505508746e-05
+          },
+          "mis_selection": {
+            "confidence_level": 0.95,
+            "hi": 0.013333333333333334,
+            "lo": 0.0033333333333333335,
+            "method": "percentile bootstrap",
+            "n_boot": 60,
+            "point": 0.01
+          },
+          "n_added_vs_plain": 2,
+          "n_flips": 3,
+          "n_removed_vs_plain": 8,
+          "net_removed_vs_plain": 6,
+          "removed_pairs": [
+            [
+              "C4",
+              "Dolma1.6++"
+            ],
+            [
+              "DCLM-Baseline",
+              "Falcon+CC (QC Orig 10%)"
+            ],
+            [
+              "DCLM-Baseline (QC 20%)",
+              "FineWeb-Edu"
+            ],
+            [
+              "Dolma1.7",
+              "Dolma1.7 (no Reddit)"
+            ],
+            [
+              "Dolma1.7",
+              "Falcon"
+            ],
+            [
+              "Dolma1.7 (no Flan)",
+              "Falcon"
+            ],
+            [
+              "Dolma1.7 (no Reddit)",
+              "Falcon"
+            ],
+            [
+              "Falcon+CC (QC 10%)",
+              "FineWeb-Pro"
+            ]
+          ]
+        }
+      },
+      "target": 7.06209840434774e+20,
+      "variance_components": {
+        "between_sd": 0.005424933963251408,
+        "between_variance": 2.942990850563863e-05,
+        "descriptive_full_set_between_sd": 0.0068516627276104,
+        "descriptive_full_set_noise_share": 0.13205579023330097,
+        "descriptive_full_set_within_sd": 0.002672568195270684,
+        "eb_strength": 0.1967698815741348,
+        "n_evaluated_interventions": 25,
+        "n_strength_source_interventions": 17,
+        "noise_share": 0.21665871444461757,
+        "pooled_exponent": 0.14194254695525893,
+        "strength_estimated_from": "separate_strength_rows",
+        "strength_is_heldout": true,
+        "strength_source_interventions": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ],
+        "within_sd": 0.002853034535332323,
+        "within_variance": 8.139806059798924e-06
+      }
+    }
+  },
+  "fast": false,
+  "inputs": {
+    "data/datadecide_runs.parquet": "f61f9c58bb87309521ae62ff1b2585749d763ab110a3fd67998bbdd240e0767b"
+  },
+  "interaction": {
+    "I_long_arm": 19,
+    "I_short_arm": 4,
+    "mean_I_long": 17.083333333333332,
+    "mean_I_short": 4.366666666666666,
+    "n_boot_attempted": 60,
+    "n_ratio_draws": 53,
+    "ranker": "shared_exponent",
+    "ratio_hi": 15.399999999999991,
+    "ratio_lo": 1.53,
+    "ratio_point": 4.75
+  },
+  "removed_decomposition": {
+    "fit_error_pairs": [
+      [
+        "C4",
+        "Dolma1.6++"
+      ],
+      [
+        "DCLM-Baseline (QC 20%)",
+        "FineWeb-Edu"
+      ],
+      [
+        "Dolma1.7",
+        "Dolma1.7 (no Flan)"
+      ],
+      [
+        "Dolma1.7",
+        "Dolma1.7 (no Reddit)"
+      ],
+      [
+        "Dolma1.7",
+        "Dolma1.7 (no code)"
+      ],
+      [
+        "Dolma1.7",
+        "Falcon+CC"
+      ],
+      [
+        "Dolma1.7 (no Flan)",
+        "Dolma1.7 (no code)"
+      ],
+      [
+        "Dolma1.7 (no Flan)",
+        "Falcon+CC"
+      ],
+      [
+        "Dolma1.7 (no Reddit)",
+        "Dolma1.7 (no code)"
+      ],
+      [
+        "Dolma1.7 (no Reddit)",
+        "Falcon+CC"
+      ],
+      [
+        "Falcon+CC (QC 10%)",
+        "FineWeb-Pro"
+      ]
+    ],
+    "fit_error_share": 0.8461538461538461,
+    "inherited_pairs": [
+      [
+        "DCLM-Baseline",
+        "Falcon+CC (QC Orig 10%)"
+      ],
+      [
+        "Dolma1.7 (no Flan)",
+        "Dolma1.7 (no Reddit)"
+      ]
+    ],
+    "n_removed": 13,
+    "n_removed_fit_error": 11,
+    "n_removed_inherited": 2
+  },
+  "seed": 1729,
+  "shrinkage_strength_protocol": {
+    "held_out_interventions": [
+      "DCLM-Baseline (QC 7%, FW3)",
+      "DCLM-Baseline (QC FW 3%)",
+      "Dolma1.6++",
+      "Dolma1.7",
+      "Dolma1.7 (no math, code)",
+      "Falcon",
+      "Falcon+CC (QC Orig 10%)",
+      "Falcon+CC (QC Tulu 10%)"
+    ],
+    "n_total_interventions": 25,
+    "n_training_interventions": 17,
+    "note": "The empirical-Bayes shrinkage strength is estimated ONLY from the training interventions listed here. Every ranker still fits and projects all interventions; only the hyperparameter is restricted. Fixed-strength rankers (shrinkage_0 ... shrinkage_1) estimate nothing and are unaffected.",
+    "training_interventions": [
+      "C4",
+      "DCLM-Baseline",
+      "DCLM-Baseline (QC 10%)",
+      "DCLM-Baseline (QC 20%)",
+      "DCLM-Baseline (QC 7%, FW2)",
+      "DCLM-Baseline (QC FW 10%)",
+      "DCLM-Baseline 25% / Dolma 75%",
+      "DCLM-Baseline 50% / Dolma 50%",
+      "DCLM-Baseline 75% / Dolma 25%",
+      "Dolma1.7 (no Flan)",
+      "Dolma1.7 (no Reddit)",
+      "Dolma1.7 (no code)",
+      "Falcon+CC",
+      "Falcon+CC (QC 10%)",
+      "Falcon+CC (QC 20%)",
+      "FineWeb-Edu",
+      "FineWeb-Pro"
+    ]
+  },
+  "verdicts": {
+    "P1_beats_plain": {
+      "criterion": "both pooled estimators beat plain projection by >= 10% relative",
+      "per_estimator": {
+        "shared_exponent": {
+          "beats_plain": true,
+          "point": 0.02,
+          "relative_improvement": 0.6250000000000001
+        },
+        "shrinkage_eb": {
+          "beats_plain": true,
+          "point": 0.03,
+          "relative_improvement": 0.43750000000000006
+        }
+      },
+      "plain": 0.05333333333333334,
+      "verdict": "CONFIRMED"
+    },
+    "P2_beats_single_scale": {
+      "best_pooled": {
+        "confidence_level": 0.95,
+        "hi": 0.03666666666666667,
+        "lo": 0.013333333333333334,
+        "method": "percentile bootstrap",
+        "n_boot": 120,
+        "name": "shared_exponent",
+        "point": 0.02
+      },
+      "criterion": "refuted if a pooled estimator's CI lower bound falls below single-scale's point estimate",
+      "note": "predicted at 70% confidence in the pre-registration",
+      "single_scale": {
+        "confidence_level": 0.95,
+        "hi": 0.01674999999999997,
+        "lo": 0.006666666666666667,
+        "method": "percentile bootstrap",
+        "n_boot": 120,
+        "point": 0.013333333333333334
+      },
+      "verdict": "CONFIRMED"
+    },
+    "P3_flexibility_curve": {
+      "cis_overlap": true,
+      "d_points_shrinkage_minus_shared": 0.9999999999999999,
+      "sweep": {
+        "ensemble": 0.18666666666666668,
+        "plain_projection": 0.05333333333333334,
+        "shared_exponent": 0.02,
+        "shrinkage_0": 0.05333333333333334,
+        "shrinkage_0.2": 0.05,
+        "shrinkage_0.4": 0.03666666666666667,
+        "shrinkage_0.6": 0.016666666666666666,
+        "shrinkage_0.8": 0.016666666666666666,
+        "shrinkage_1": 0.02,
+        "shrinkage_eb": 0.03
+      },
+      "verdict": "CONFIRMED_MONOTONE_FLAT"
+    },
+    "P4_lever_arm_interaction": {
+      "I_long_arm": 19,
+      "I_short_arm": 4,
+      "criterion": "rho_L >= 2.0; FAILED only if point < 2.0 and CI upper < 2.0",
+      "mean_I_long": 17.083333333333332,
+      "mean_I_short": 4.366666666666666,
+      "n_boot_attempted": 60,
+      "n_ratio_draws": 53,
+      "ranker": "shared_exponent",
+      "ratio_hi": 15.399999999999991,
+      "ratio_lo": 1.53,
+      "ratio_point": 4.75,
+      "verdict": "CONFIRMED"
+    },
+    "P5_removed_error_type": {
+      "criterion": "fit-error share of removed flips >= 80%, evaluable only at >= 8 removed",
+      "fit_error_pairs": [
+        [
+          "C4",
+          "Dolma1.6++"
+        ],
+        [
+          "DCLM-Baseline (QC 20%)",
+          "FineWeb-Edu"
+        ],
+        [
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)"
+        ],
+        [
+          "Dolma1.7",
+          "Dolma1.7 (no Reddit)"
+        ],
+        [
+          "Dolma1.7",
+          "Dolma1.7 (no code)"
+        ],
+        [
+          "Dolma1.7",
+          "Falcon+CC"
+        ],
+        [
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no code)"
+        ],
+        [
+          "Dolma1.7 (no Flan)",
+          "Falcon+CC"
+        ],
+        [
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)"
+        ],
+        [
+          "Dolma1.7 (no Reddit)",
+          "Falcon+CC"
+        ],
+        [
+          "Falcon+CC (QC 10%)",
+          "FineWeb-Pro"
+        ]
+      ],
+      "fit_error_share": 0.8461538461538461,
+      "inherited_pairs": [
+        [
+          "DCLM-Baseline",
+          "Falcon+CC (QC Orig 10%)"
+        ],
+        [
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)"
+        ]
+      ],
+      "n_removed": 13,
+      "n_removed_fit_error": 11,
+      "n_removed_inherited": 2,
+      "verdict": "CONFIRMED"
+    },
+    "mechanism_note": "compound refutation requires P1 REFUTED and P4 FAILED (UNDERPOWERED does not count)",
+    "mechanism_refuted": false
+  }
+}

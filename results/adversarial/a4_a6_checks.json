@@ -1,0 +1,133 @@
+{
+  "data_integrity": [
+    {
+      "cells_total": 350,
+      "cells_where_all_seeds_identical": 0,
+      "cells_with_fewer_than_3_seeds": 0,
+      "compute_equals_6ND": true,
+      "distinct_seed_labelings": [
+        "(np.int64(0), np.int64(1), np.int64(2))"
+      ],
+      "duplicate_full_rows": 0,
+      "duplicate_identity_rows": 0,
+      "max_abs_6ND_relative_error": 0.0,
+      "max_fit_budget_over_target": 0.08017399089259254,
+      "metric": "c4_en_bits_per_token",
+      "n_rows": 1050,
+      "scales_with_misaligned_seed_labels": {},
+      "seeds_per_cell_max": 3,
+      "seeds_per_cell_min": 3,
+      "target_in_fit_budgets": false
+    },
+    {
+      "cells_total": 350,
+      "cells_where_all_seeds_identical": 0,
+      "cells_with_fewer_than_3_seeds": 0,
+      "compute_equals_6ND": true,
+      "distinct_seed_labelings": [
+        "(np.int64(0), np.int64(1), np.int64(2))"
+      ],
+      "duplicate_full_rows": 0,
+      "duplicate_identity_rows": 0,
+      "max_abs_6ND_relative_error": 0.0,
+      "max_fit_budget_over_target": 0.08017399089259254,
+      "metric": "olmes_macro_error",
+      "n_rows": 1050,
+      "scales_with_misaligned_seed_labels": {},
+      "seeds_per_cell_max": 3,
+      "seeds_per_cell_min": 3,
+      "target_in_fit_budgets": false
+    },
+    {
+      "cells_total": 350,
+      "cells_where_all_seeds_identical": 0,
+      "cells_with_fewer_than_3_seeds": 0,
+      "compute_equals_6ND": true,
+      "distinct_seed_labelings": [
+        "(np.int64(0), np.int64(1), np.int64(2))"
+      ],
+      "duplicate_full_rows": 0,
+      "duplicate_identity_rows": 0,
+      "max_abs_6ND_relative_error": 0.0,
+      "max_fit_budget_over_target": 0.08017399089259254,
+      "metric": "olmes_macro_correct_prob_per_char_deficit",
+      "n_rows": 1050,
+      "scales_with_misaligned_seed_labels": {},
+      "seeds_per_cell_max": 3,
+      "seeds_per_cell_min": 3,
+      "target_in_fit_budgets": false
+    }
+  ],
+  "fdr_under_dependence": [
+    {
+      "metric": "c4_en_bits_per_token",
+      "projection": {
+        "harmonic_factor": 3.3807289932289937,
+        "n_flips": 16,
+        "n_significant_BH": 11,
+        "n_significant_BY": 9,
+        "n_significant_bonferroni_over_all_pairs": 2
+      },
+      "q": 0.05,
+      "single_scale": {
+        "harmonic_factor": 2.083333333333333,
+        "n_flips": 4,
+        "n_significant_BH": 3,
+        "n_significant_BY": 1,
+        "n_significant_bonferroni_over_all_pairs": 0
+      }
+    },
+    {
+      "metric": "olmes_macro_error",
+      "projection": {
+        "harmonic_factor": 4.538043950697448,
+        "n_flips": 52,
+        "n_significant_BH": 23,
+        "n_significant_BY": 11,
+        "n_significant_bonferroni_over_all_pairs": 1
+      },
+      "q": 0.05,
+      "single_scale": {
+        "harmonic_factor": 4.326742806648339,
+        "n_flips": 42,
+        "n_significant_BH": 13,
+        "n_significant_BY": 9,
+        "n_significant_bonferroni_over_all_pairs": 1
+      }
+    },
+    {
+      "metric": "olmes_macro_correct_prob_per_char_deficit",
+      "projection": {
+        "harmonic_factor": 4.629013214432352,
+        "n_flips": 57,
+        "n_significant_BH": 36,
+        "n_significant_BY": 21,
+        "n_significant_bonferroni_over_all_pairs": 8
+      },
+      "q": 0.05,
+      "single_scale": {
+        "harmonic_factor": 4.3727258933290996,
+        "n_flips": 44,
+        "n_significant_BH": 14,
+        "n_significant_BY": 9,
+        "n_significant_bonferroni_over_all_pairs": 5
+      }
+    }
+  ],
+  "null_simulation": {
+    "familywise_error_rate_BH": 0.017,
+    "familywise_error_rate_BY": 0.0015,
+    "n_interventions": 25,
+    "n_pairs": 300,
+    "n_seeds": 3,
+    "n_trials": 2000,
+    "note": "under the complete null FDR == FWER, so these are directly comparable to q=0.05"
+  },
+  "raw_compute_cross_check": {
+    "all_within_1e_9": true,
+    "available": true,
+    "max_relative_compute_error_vs_released": 0.0,
+    "n_harvested_rows": 1050,
+    "n_matched_to_raw": 1050
+  }
+}

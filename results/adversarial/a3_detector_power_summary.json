@@ -1,0 +1,212 @@
+{
+  "false_flip_at_n3": [
+    {
+      "flip_rate": 0.4885,
+      "gap_over_sigma": 0.5
+    },
+    {
+      "flip_rate": 0.504,
+      "gap_over_sigma": 0.5
+    },
+    {
+      "flip_rate": 0.5025,
+      "gap_over_sigma": 0.5
+    },
+    {
+      "flip_rate": 0.4925,
+      "gap_over_sigma": 1.0
+    },
+    {
+      "flip_rate": 0.4745,
+      "gap_over_sigma": 1.0
+    },
+    {
+      "flip_rate": 0.481,
+      "gap_over_sigma": 1.0
+    },
+    {
+      "flip_rate": 0.472,
+      "gap_over_sigma": 2.0
+    },
+    {
+      "flip_rate": 0.4635,
+      "gap_over_sigma": 2.0
+    },
+    {
+      "flip_rate": 0.433,
+      "gap_over_sigma": 2.0
+    },
+    {
+      "flip_rate": 0.424,
+      "gap_over_sigma": 4.0
+    },
+    {
+      "flip_rate": 0.3945,
+      "gap_over_sigma": 4.0
+    },
+    {
+      "flip_rate": 0.416,
+      "gap_over_sigma": 4.0
+    },
+    {
+      "flip_rate": 0.3185,
+      "gap_over_sigma": 8.0
+    },
+    {
+      "flip_rate": 0.3325,
+      "gap_over_sigma": 8.0
+    },
+    {
+      "flip_rate": 0.3385,
+      "gap_over_sigma": 8.0
+    }
+  ],
+  "flip_detection_at_n3": [
+    {
+      "flip_rate": 0.6045,
+      "gap_over_sigma": 0.5
+    },
+    {
+      "flip_rate": 0.6805,
+      "gap_over_sigma": 0.5
+    },
+    {
+      "flip_rate": 0.7395,
+      "gap_over_sigma": 0.5
+    },
+    {
+      "flip_rate": 0.67,
+      "gap_over_sigma": 1.0
+    },
+    {
+      "flip_rate": 0.804,
+      "gap_over_sigma": 1.0
+    },
+    {
+      "flip_rate": 0.886,
+      "gap_over_sigma": 1.0
+    },
+    {
+      "flip_rate": 0.7065,
+      "gap_over_sigma": 2.0
+    },
+    {
+      "flip_rate": 0.8735,
+      "gap_over_sigma": 2.0
+    },
+    {
+      "flip_rate": 0.9865,
+      "gap_over_sigma": 2.0
+    },
+    {
+      "flip_rate": 0.7355,
+      "gap_over_sigma": 4.0
+    },
+    {
+      "flip_rate": 0.876,
+      "gap_over_sigma": 4.0
+    },
+    {
+      "flip_rate": 0.9905,
+      "gap_over_sigma": 4.0
+    },
+    {
+      "flip_rate": 0.747,
+      "gap_over_sigma": 8.0
+    },
+    {
+      "flip_rate": 0.8865,
+      "gap_over_sigma": 8.0
+    },
+    {
+      "flip_rate": 0.995,
+      "gap_over_sigma": 8.0
+    }
+  ],
+  "n_fit_budgets": 11,
+  "observed_gaps": {
+    "crossover_inherited": {
+      "median_abs_target_gap": 0.0042066324001091004,
+      "median_gap_over_sigma": 2.0372905204392135,
+      "min_gap_over_sigma": 1.093675535154471,
+      "n": 2
+    },
+    "fit_error": {
+      "median_abs_target_gap": 0.018529353036207397,
+      "median_gap_over_sigma": 8.973846939789139,
+      "min_gap_over_sigma": 0.886516499901323,
+      "n": 14
+    },
+    "sigma_target": 0.0020648171470420452,
+    "single_scale_only": {
+      "median_abs_target_gap": 0.005984489882300492,
+      "median_gap_over_sigma": 2.8983146962304027,
+      "min_gap_over_sigma": 2.852385424240731,
+      "n": 2
+    }
+  },
+  "sigma_fit_budgets_bits_per_token": 0.022021864545922146,
+  "sigma_target_bits_per_token": 0.0020648171470420452,
+  "significance_power_at_n3": [
+    {
+      "gap_over_sigma": 0.5,
+      "significance_rate": 0.058
+    },
+    {
+      "gap_over_sigma": 0.5,
+      "significance_rate": 0.0505
+    },
+    {
+      "gap_over_sigma": 0.5,
+      "significance_rate": 0.049
+    },
+    {
+      "gap_over_sigma": 1.0,
+      "significance_rate": 0.0935
+    },
+    {
+      "gap_over_sigma": 1.0,
+      "significance_rate": 0.1095
+    },
+    {
+      "gap_over_sigma": 1.0,
+      "significance_rate": 0.113
+    },
+    {
+      "gap_over_sigma": 2.0,
+      "significance_rate": 0.352
+    },
+    {
+      "gap_over_sigma": 2.0,
+      "significance_rate": 0.3635
+    },
+    {
+      "gap_over_sigma": 2.0,
+      "significance_rate": 0.366
+    },
+    {
+      "gap_over_sigma": 4.0,
+      "significance_rate": 0.885
+    },
+    {
+      "gap_over_sigma": 4.0,
+      "significance_rate": 0.8835
+    },
+    {
+      "gap_over_sigma": 4.0,
+      "significance_rate": 0.8875
+    },
+    {
+      "gap_over_sigma": 8.0,
+      "significance_rate": 1.0
+    },
+    {
+      "gap_over_sigma": 8.0,
+      "significance_rate": 1.0
+    },
+    {
+      "gap_over_sigma": 8.0,
+      "significance_rate": 0.999
+    }
+  ]
+}

@@ -1,0 +1,1661 @@
+{
+  "all_winning_have_nonpositive_excess": true,
+  "dose_response_by_budget_count": [
+    {
+      "excess_over_single": 0.0925,
+      "mean_excess_flips": 27.75,
+      "mean_projection": 0.1720833333333333,
+      "mean_projection_flips": 51.625,
+      "mean_single_flips": 23.875,
+      "mean_single_scale": 0.07958333333333331,
+      "n_fit_budgets": 3,
+      "n_specs": 32,
+      "sd_excess_flips": 14.495828098389707
+    },
+    {
+      "excess_over_single": 0.03357142857142855,
+      "mean_excess_flips": 10.071428571428571,
+      "mean_projection": 0.08738095238095234,
+      "mean_projection_flips": 26.214285714285715,
+      "mean_single_flips": 16.142857142857142,
+      "mean_single_scale": 0.053809523809523786,
+      "n_fit_budgets": 4,
+      "n_specs": 56,
+      "sd_excess_flips": 14.61985840356396
+    },
+    {
+      "excess_over_single": 0.03907407407407408,
+      "mean_excess_flips": 11.722222222222221,
+      "mean_projection": 0.07055555555555554,
+      "mean_projection_flips": 21.166666666666668,
+      "mean_single_flips": 9.444444444444445,
+      "mean_single_scale": 0.03148148148148146,
+      "n_fit_budgets": 5,
+      "n_specs": 36,
+      "sd_excess_flips": 15.5904936439964
+    },
+    {
+      "excess_over_single": 0.05757575757575757,
+      "mean_excess_flips": 17.272727272727273,
+      "mean_projection": 0.11848484848484846,
+      "mean_projection_flips": 35.54545454545455,
+      "mean_single_flips": 18.272727272727273,
+      "mean_single_scale": 0.060909090909090885,
+      "n_fit_budgets": 6,
+      "n_specs": 44,
+      "sd_excess_flips": 11.215362463144205
+    },
+    {
+      "excess_over_single": 0.012166666666666659,
+      "mean_excess_flips": 3.65,
+      "mean_projection": 0.08149999999999996,
+      "mean_projection_flips": 24.45,
+      "mean_single_flips": 20.8,
+      "mean_single_scale": 0.0693333333333333,
+      "n_fit_budgets": 7,
+      "n_specs": 40,
+      "sd_excess_flips": 4.763913495737699
+    },
+    {
+      "excess_over_single": 0.011111111111111113,
+      "mean_excess_flips": 3.3333333333333335,
+      "mean_projection": 0.07666666666666665,
+      "mean_projection_flips": 23.0,
+      "mean_single_flips": 19.666666666666668,
+      "mean_single_scale": 0.06555555555555553,
+      "n_fit_budgets": 8,
+      "n_specs": 12,
+      "sd_excess_flips": 2.933608802492351
+    },
+    {
+      "excess_over_single": 0.027777777777777776,
+      "mean_excess_flips": 8.333333333333334,
+      "mean_projection": 0.1283333333333333,
+      "mean_projection_flips": 38.5,
+      "mean_single_flips": 30.166666666666668,
+      "mean_single_scale": 0.10055555555555552,
+      "n_fit_budgets": 10,
+      "n_specs": 24,
+      "sd_excess_flips": 8.468184275719105
+    },
+    {
+      "excess_over_single": 0.02978835978835981,
+      "mean_excess_flips": 8.936507936507937,
+      "mean_projection": 0.11687830687830686,
+      "mean_projection_flips": 35.06349206349206,
+      "mean_single_flips": 26.126984126984127,
+      "mean_single_scale": 0.08708994708994705,
+      "n_fit_budgets": 11,
+      "n_specs": 63,
+      "sd_excess_flips": 4.011568014054805
+    },
+    {
+      "excess_over_single": 0.04444444444444445,
+      "mean_excess_flips": 13.333333333333334,
+      "mean_projection": 0.10999999999999999,
+      "mean_projection_flips": 33.0,
+      "mean_single_flips": 19.666666666666668,
+      "mean_single_scale": 0.06555555555555553,
+      "n_fit_budgets": 12,
+      "n_specs": 12,
+      "sd_excess_flips": 6.945676658355487
+    }
+  ],
+  "figures": [
+    "/Users/Evan/ASLA/results/adversarial/fig_dose_response.png",
+    "/Users/Evan/ASLA/results/adversarial/fig_dose_response.pdf",
+    "/Users/Evan/ASLA/results/adversarial/fig_projection_wins.png",
+    "/Users/Evan/ASLA/results/adversarial/fig_projection_wins.pdf"
+  ],
+  "lever_arm_summary": [
+    {
+      "lever_arm": 1.0,
+      "max_fit_scale": "530M",
+      "mean_excess_flips": 4.208333333333333,
+      "mean_projection": 0.06486111111111108,
+      "mean_single_scale": 0.05083333333333331,
+      "n_specs": 48,
+      "target": "530M"
+    },
+    {
+      "lever_arm": 2.6412928293889086,
+      "max_fit_scale": "300M",
+      "mean_excess_flips": 4.208333333333333,
+      "mean_projection": 0.06486111111111108,
+      "mean_single_scale": 0.05083333333333331,
+      "n_specs": 48,
+      "target": "530M"
+    },
+    {
+      "lever_arm": 4.722233366766967,
+      "max_fit_scale": "530M",
+      "mean_excess_flips": 5.291666666666667,
+      "mean_projection": 0.07013888888888886,
+      "mean_single_scale": 0.05249999999999997,
+      "n_specs": 48,
+      "target": "1B"
+    },
+    {
+      "lever_arm": 11.128060123521095,
+      "max_fit_scale": "150M",
+      "mean_excess_flips": 17.875,
+      "mean_projection": 0.12124999999999997,
+      "mean_single_scale": 0.06166666666666663,
+      "n_specs": 48,
+      "target": "530M"
+    },
+    {
+      "lever_arm": 12.472801130342633,
+      "max_fit_scale": "300M",
+      "mean_excess_flips": 11.227848101265822,
+      "mean_projection": 0.12071729957805906,
+      "mean_single_scale": 0.0832911392405063,
+      "n_specs": 79,
+      "target": "1B"
+    },
+    {
+      "lever_arm": 52.549296822680255,
+      "max_fit_scale": "150M",
+      "mean_excess_flips": 27.916666666666668,
+      "mean_projection": 0.1905555555555555,
+      "mean_single_scale": 0.09750000000000002,
+      "n_specs": 48,
+      "target": "1B"
+    }
+  ],
+  "matched_ladders": [
+    {
+      "design": "c4_en_bits_per_token | 1B | 14M | bounded",
+      "excess_projection_flips": 0,
+      "lever_arm": 4.722233366766967,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 8,
+      "projection_mis_selection": 0.01,
+      "single_scale_mis_selection": 0.01
+    },
+    {
+      "design": "c4_en_bits_per_token | 1B | 14M | bounded",
+      "excess_projection_flips": 5,
+      "lever_arm": 12.472801130342633,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 7,
+      "projection_mis_selection": 0.03,
+      "single_scale_mis_selection": 0.0133333333333333
+    },
+    {
+      "design": "c4_en_bits_per_token | 1B | 14M | bounded",
+      "excess_projection_flips": 25,
+      "lever_arm": 52.549296822680255,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 6,
+      "projection_mis_selection": 0.0933333333333333,
+      "single_scale_mis_selection": 0.01
+    },
+    {
+      "design": "c4_en_bits_per_token | 1B | 14M | unconstrained",
+      "excess_projection_flips": 0,
+      "lever_arm": 4.722233366766967,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 8,
+      "projection_mis_selection": 0.01,
+      "single_scale_mis_selection": 0.01
+    },
+    {
+      "design": "c4_en_bits_per_token | 1B | 14M | unconstrained",
+      "excess_projection_flips": 5,
+      "lever_arm": 12.472801130342633,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 7,
+      "projection_mis_selection": 0.03,
+      "single_scale_mis_selection": 0.0133333333333333
+    },
+    {
+      "design": "c4_en_bits_per_token | 1B | 14M | unconstrained",
+      "excess_projection_flips": 49,
+      "lever_arm": 52.549296822680255,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 6,
+      "projection_mis_selection": 0.1733333333333333,
+      "single_scale_mis_selection": 0.01
+    },
+    {
+      "design": "c4_en_bits_per_token | 1B | 4M | bounded",
+      "excess_projection_flips": 6,
+      "lever_arm": 4.722233366766967,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 12,
+      "projection_mis_selection": 0.03,
+      "single_scale_mis_selection": 0.01
+    },
+    {
+      "design": "c4_en_bits_per_token | 1B | 4M | bounded",
+      "excess_projection_flips": 12,
+      "lever_arm": 12.472801130342633,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 11,
+      "projection_mis_selection": 0.0533333333333333,
+      "single_scale_mis_selection": 0.0133333333333333
+    },
+    {
+      "design": "c4_en_bits_per_token | 1B | 4M | bounded",
+      "excess_projection_flips": 24,
+      "lever_arm": 52.549296822680255,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 10,
+      "projection_mis_selection": 0.09,
+      "single_scale_mis_selection": 0.01
+    },
+    {
+      "design": "c4_en_bits_per_token | 1B | 4M | unconstrained",
+      "excess_projection_flips": 6,
+      "lever_arm": 4.722233366766967,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 12,
+      "projection_mis_selection": 0.03,
+      "single_scale_mis_selection": 0.01
+    },
+    {
+      "design": "c4_en_bits_per_token | 1B | 4M | unconstrained",
+      "excess_projection_flips": 12,
+      "lever_arm": 12.472801130342633,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 11,
+      "projection_mis_selection": 0.0533333333333333,
+      "single_scale_mis_selection": 0.0133333333333333
+    },
+    {
+      "design": "c4_en_bits_per_token | 1B | 4M | unconstrained",
+      "excess_projection_flips": 24,
+      "lever_arm": 52.549296822680255,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 10,
+      "projection_mis_selection": 0.09,
+      "single_scale_mis_selection": 0.01
+    },
+    {
+      "design": "c4_en_bits_per_token | 1B | 60M | bounded",
+      "excess_projection_flips": 4,
+      "lever_arm": 4.722233366766967,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 5,
+      "projection_mis_selection": 0.0233333333333333,
+      "single_scale_mis_selection": 0.01
+    },
+    {
+      "design": "c4_en_bits_per_token | 1B | 60M | bounded",
+      "excess_projection_flips": 10,
+      "lever_arm": 12.472801130342633,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 4,
+      "projection_mis_selection": 0.0466666666666666,
+      "single_scale_mis_selection": 0.0133333333333333
+    },
+    {
+      "design": "c4_en_bits_per_token | 1B | 60M | bounded",
+      "excess_projection_flips": 27,
+      "lever_arm": 52.549296822680255,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 3,
+      "projection_mis_selection": 0.1,
+      "single_scale_mis_selection": 0.01
+    },
+    {
+      "design": "c4_en_bits_per_token | 1B | 60M | unconstrained",
+      "excess_projection_flips": 4,
+      "lever_arm": 4.722233366766967,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 5,
+      "projection_mis_selection": 0.0233333333333333,
+      "single_scale_mis_selection": 0.01
+    },
+    {
+      "design": "c4_en_bits_per_token | 1B | 60M | unconstrained",
+      "excess_projection_flips": 10,
+      "lever_arm": 12.472801130342633,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 4,
+      "projection_mis_selection": 0.0466666666666666,
+      "single_scale_mis_selection": 0.0133333333333333
+    },
+    {
+      "design": "c4_en_bits_per_token | 1B | 60M | unconstrained",
+      "excess_projection_flips": 59,
+      "lever_arm": 52.549296822680255,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 3,
+      "projection_mis_selection": 0.2066666666666666,
+      "single_scale_mis_selection": 0.01
+    },
+    {
+      "design": "c4_en_bits_per_token | 530M | 14M | bounded",
+      "excess_projection_flips": 2,
+      "lever_arm": 1.0,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 7,
+      "projection_mis_selection": 0.0166666666666666,
+      "single_scale_mis_selection": 0.01
+    },
+    {
+      "design": "c4_en_bits_per_token | 530M | 14M | bounded",
+      "excess_projection_flips": 2,
+      "lever_arm": 2.6412928293889086,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 7,
+      "projection_mis_selection": 0.0166666666666666,
+      "single_scale_mis_selection": 0.01
+    },
+    {
+      "design": "c4_en_bits_per_token | 530M | 14M | bounded",
+      "excess_projection_flips": 16,
+      "lever_arm": 11.128060123521095,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 6,
+      "projection_mis_selection": 0.06,
+      "single_scale_mis_selection": 0.0066666666666666
+    },
+    {
+      "design": "c4_en_bits_per_token | 530M | 14M | unconstrained",
+      "excess_projection_flips": 2,
+      "lever_arm": 1.0,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 7,
+      "projection_mis_selection": 0.0166666666666666,
+      "single_scale_mis_selection": 0.01
+    },
+    {
+      "design": "c4_en_bits_per_token | 530M | 14M | unconstrained",
+      "excess_projection_flips": 2,
+      "lever_arm": 2.6412928293889086,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 7,
+      "projection_mis_selection": 0.0166666666666666,
+      "single_scale_mis_selection": 0.01
+    },
+    {
+      "design": "c4_en_bits_per_token | 530M | 14M | unconstrained",
+      "excess_projection_flips": 18,
+      "lever_arm": 11.128060123521095,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 6,
+      "projection_mis_selection": 0.0666666666666666,
+      "single_scale_mis_selection": 0.0066666666666666
+    },
+    {
+      "design": "c4_en_bits_per_token | 530M | 4M | bounded",
+      "excess_projection_flips": 7,
+      "lever_arm": 1.0,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 11,
+      "projection_mis_selection": 0.0333333333333333,
+      "single_scale_mis_selection": 0.01
+    },
+    {
+      "design": "c4_en_bits_per_token | 530M | 4M | bounded",
+      "excess_projection_flips": 7,
+      "lever_arm": 2.6412928293889086,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 11,
+      "projection_mis_selection": 0.0333333333333333,
+      "single_scale_mis_selection": 0.01
+    },
+    {
+      "design": "c4_en_bits_per_token | 530M | 4M | bounded",
+      "excess_projection_flips": 13,
+      "lever_arm": 11.128060123521095,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 10,
+      "projection_mis_selection": 0.05,
+      "single_scale_mis_selection": 0.0066666666666666
+    },
+    {
+      "design": "c4_en_bits_per_token | 530M | 4M | unconstrained",
+      "excess_projection_flips": 7,
+      "lever_arm": 1.0,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 11,
+      "projection_mis_selection": 0.0333333333333333,
+      "single_scale_mis_selection": 0.01
+    },
+    {
+      "design": "c4_en_bits_per_token | 530M | 4M | unconstrained",
+      "excess_projection_flips": 7,
+      "lever_arm": 2.6412928293889086,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 11,
+      "projection_mis_selection": 0.0333333333333333,
+      "single_scale_mis_selection": 0.01
+    },
+    {
+      "design": "c4_en_bits_per_token | 530M | 4M | unconstrained",
+      "excess_projection_flips": 13,
+      "lever_arm": 11.128060123521095,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 10,
+      "projection_mis_selection": 0.05,
+      "single_scale_mis_selection": 0.0066666666666666
+    },
+    {
+      "design": "c4_en_bits_per_token | 530M | 60M | bounded",
+      "excess_projection_flips": 2,
+      "lever_arm": 1.0,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 4,
+      "projection_mis_selection": 0.0166666666666666,
+      "single_scale_mis_selection": 0.01
+    },
+    {
+      "design": "c4_en_bits_per_token | 530M | 60M | bounded",
+      "excess_projection_flips": 2,
+      "lever_arm": 2.6412928293889086,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 4,
+      "projection_mis_selection": 0.0166666666666666,
+      "single_scale_mis_selection": 0.01
+    },
+    {
+      "design": "c4_en_bits_per_token | 530M | 60M | bounded",
+      "excess_projection_flips": 10,
+      "lever_arm": 11.128060123521095,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 3,
+      "projection_mis_selection": 0.04,
+      "single_scale_mis_selection": 0.0066666666666666
+    },
+    {
+      "design": "c4_en_bits_per_token | 530M | 60M | unconstrained",
+      "excess_projection_flips": 2,
+      "lever_arm": 1.0,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 4,
+      "projection_mis_selection": 0.0166666666666666,
+      "single_scale_mis_selection": 0.01
+    },
+    {
+      "design": "c4_en_bits_per_token | 530M | 60M | unconstrained",
+      "excess_projection_flips": 2,
+      "lever_arm": 2.6412928293889086,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 4,
+      "projection_mis_selection": 0.0166666666666666,
+      "single_scale_mis_selection": 0.01
+    },
+    {
+      "design": "c4_en_bits_per_token | 530M | 60M | unconstrained",
+      "excess_projection_flips": 24,
+      "lever_arm": 11.128060123521095,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 3,
+      "projection_mis_selection": 0.0866666666666666,
+      "single_scale_mis_selection": 0.0066666666666666
+    },
+    {
+      "design": "olmes_macro_correct_prob_per_char_deficit | 1B | 14M | bounded",
+      "excess_projection_flips": 2,
+      "lever_arm": 4.722233366766967,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 8,
+      "projection_mis_selection": 0.0766666666666666,
+      "single_scale_mis_selection": 0.07
+    },
+    {
+      "design": "olmes_macro_correct_prob_per_char_deficit | 1B | 14M | bounded",
+      "excess_projection_flips": 4,
+      "lever_arm": 12.472801130342633,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 7,
+      "projection_mis_selection": 0.16,
+      "single_scale_mis_selection": 0.1466666666666666
+    },
+    {
+      "design": "olmes_macro_correct_prob_per_char_deficit | 1B | 14M | bounded",
+      "excess_projection_flips": 21,
+      "lever_arm": 52.549296822680255,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 6,
+      "projection_mis_selection": 0.26,
+      "single_scale_mis_selection": 0.19
+    },
+    {
+      "design": "olmes_macro_correct_prob_per_char_deficit | 1B | 14M | unconstrained",
+      "excess_projection_flips": 5,
+      "lever_arm": 4.722233366766967,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 8,
+      "projection_mis_selection": 0.0866666666666666,
+      "single_scale_mis_selection": 0.07
+    },
+    {
+      "design": "olmes_macro_correct_prob_per_char_deficit | 1B | 14M | unconstrained",
+      "excess_projection_flips": 17,
+      "lever_arm": 12.472801130342633,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 7,
+      "projection_mis_selection": 0.2033333333333333,
+      "single_scale_mis_selection": 0.1466666666666666
+    },
+    {
+      "design": "olmes_macro_correct_prob_per_char_deficit | 1B | 14M | unconstrained",
+      "excess_projection_flips": 33,
+      "lever_arm": 52.549296822680255,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 6,
+      "projection_mis_selection": 0.3,
+      "single_scale_mis_selection": 0.19
+    },
+    {
+      "design": "olmes_macro_correct_prob_per_char_deficit | 1B | 4M | bounded",
+      "excess_projection_flips": 21,
+      "lever_arm": 4.722233366766967,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 12,
+      "projection_mis_selection": 0.14,
+      "single_scale_mis_selection": 0.07
+    },
+    {
+      "design": "olmes_macro_correct_prob_per_char_deficit | 1B | 4M | bounded",
+      "excess_projection_flips": 14,
+      "lever_arm": 12.472801130342633,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 11,
+      "projection_mis_selection": 0.1933333333333333,
+      "single_scale_mis_selection": 0.1466666666666666
+    },
+    {
+      "design": "olmes_macro_correct_prob_per_char_deficit | 1B | 4M | bounded",
+      "excess_projection_flips": 7,
+      "lever_arm": 52.549296822680255,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 10,
+      "projection_mis_selection": 0.2133333333333333,
+      "single_scale_mis_selection": 0.19
+    },
+    {
+      "design": "olmes_macro_correct_prob_per_char_deficit | 1B | 4M | unconstrained",
+      "excess_projection_flips": 23,
+      "lever_arm": 4.722233366766967,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 12,
+      "projection_mis_selection": 0.1466666666666666,
+      "single_scale_mis_selection": 0.07
+    },
+    {
+      "design": "olmes_macro_correct_prob_per_char_deficit | 1B | 4M | unconstrained",
+      "excess_projection_flips": 13,
+      "lever_arm": 12.472801130342633,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 11,
+      "projection_mis_selection": 0.19,
+      "single_scale_mis_selection": 0.1466666666666666
+    },
+    {
+      "design": "olmes_macro_correct_prob_per_char_deficit | 1B | 4M | unconstrained",
+      "excess_projection_flips": 7,
+      "lever_arm": 52.549296822680255,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 10,
+      "projection_mis_selection": 0.2133333333333333,
+      "single_scale_mis_selection": 0.19
+    },
+    {
+      "design": "olmes_macro_correct_prob_per_char_deficit | 1B | 60M | bounded",
+      "excess_projection_flips": -4,
+      "lever_arm": 4.722233366766967,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 5,
+      "projection_mis_selection": 0.0566666666666666,
+      "single_scale_mis_selection": 0.07
+    },
+    {
+      "design": "olmes_macro_correct_prob_per_char_deficit | 1B | 60M | bounded",
+      "excess_projection_flips": 2,
+      "lever_arm": 12.472801130342633,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 4,
+      "projection_mis_selection": 0.1533333333333333,
+      "single_scale_mis_selection": 0.1466666666666666
+    },
+    {
+      "design": "olmes_macro_correct_prob_per_char_deficit | 1B | 60M | bounded",
+      "excess_projection_flips": 15,
+      "lever_arm": 52.549296822680255,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 3,
+      "projection_mis_selection": 0.24,
+      "single_scale_mis_selection": 0.19
+    },
+    {
+      "design": "olmes_macro_correct_prob_per_char_deficit | 1B | 60M | unconstrained",
+      "excess_projection_flips": -2,
+      "lever_arm": 4.722233366766967,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 5,
+      "projection_mis_selection": 0.0633333333333333,
+      "single_scale_mis_selection": 0.07
+    },
+    {
+      "design": "olmes_macro_correct_prob_per_char_deficit | 1B | 60M | unconstrained",
+      "excess_projection_flips": 9,
+      "lever_arm": 12.472801130342633,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 4,
+      "projection_mis_selection": 0.1766666666666666,
+      "single_scale_mis_selection": 0.1466666666666666
+    },
+    {
+      "design": "olmes_macro_correct_prob_per_char_deficit | 1B | 60M | unconstrained",
+      "excess_projection_flips": 19,
+      "lever_arm": 52.549296822680255,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 3,
+      "projection_mis_selection": 0.2533333333333333,
+      "single_scale_mis_selection": 0.19
+    },
+    {
+      "design": "olmes_macro_correct_prob_per_char_deficit | 530M | 14M | bounded",
+      "excess_projection_flips": 5,
+      "lever_arm": 1.0,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 7,
+      "projection_mis_selection": 0.12,
+      "single_scale_mis_selection": 0.1033333333333333
+    },
+    {
+      "design": "olmes_macro_correct_prob_per_char_deficit | 530M | 14M | bounded",
+      "excess_projection_flips": 5,
+      "lever_arm": 2.6412928293889086,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 7,
+      "projection_mis_selection": 0.12,
+      "single_scale_mis_selection": 0.1033333333333333
+    },
+    {
+      "design": "olmes_macro_correct_prob_per_char_deficit | 530M | 14M | bounded",
+      "excess_projection_flips": 20,
+      "lever_arm": 11.128060123521095,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 6,
+      "projection_mis_selection": 0.2,
+      "single_scale_mis_selection": 0.1333333333333333
+    },
+    {
+      "design": "olmes_macro_correct_prob_per_char_deficit | 530M | 14M | unconstrained",
+      "excess_projection_flips": 9,
+      "lever_arm": 1.0,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 7,
+      "projection_mis_selection": 0.1333333333333333,
+      "single_scale_mis_selection": 0.1033333333333333
+    },
+    {
+      "design": "olmes_macro_correct_prob_per_char_deficit | 530M | 14M | unconstrained",
+      "excess_projection_flips": 9,
+      "lever_arm": 2.6412928293889086,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 7,
+      "projection_mis_selection": 0.1333333333333333,
+      "single_scale_mis_selection": 0.1033333333333333
+    },
+    {
+      "design": "olmes_macro_correct_prob_per_char_deficit | 530M | 14M | unconstrained",
+      "excess_projection_flips": 28,
+      "lever_arm": 11.128060123521095,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 6,
+      "projection_mis_selection": 0.2266666666666666,
+      "single_scale_mis_selection": 0.1333333333333333
+    },
+    {
+      "design": "olmes_macro_correct_prob_per_char_deficit | 530M | 4M | bounded",
+      "excess_projection_flips": 8,
+      "lever_arm": 1.0,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 11,
+      "projection_mis_selection": 0.13,
+      "single_scale_mis_selection": 0.1033333333333333
+    },
+    {
+      "design": "olmes_macro_correct_prob_per_char_deficit | 530M | 4M | bounded",
+      "excess_projection_flips": 8,
+      "lever_arm": 2.6412928293889086,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 11,
+      "projection_mis_selection": 0.13,
+      "single_scale_mis_selection": 0.1033333333333333
+    },
+    {
+      "design": "olmes_macro_correct_prob_per_char_deficit | 530M | 4M | bounded",
+      "excess_projection_flips": 4,
+      "lever_arm": 11.128060123521095,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 10,
+      "projection_mis_selection": 0.1466666666666666,
+      "single_scale_mis_selection": 0.1333333333333333
+    },
+    {
+      "design": "olmes_macro_correct_prob_per_char_deficit | 530M | 4M | unconstrained",
+      "excess_projection_flips": 8,
+      "lever_arm": 1.0,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 11,
+      "projection_mis_selection": 0.13,
+      "single_scale_mis_selection": 0.1033333333333333
+    },
+    {
+      "design": "olmes_macro_correct_prob_per_char_deficit | 530M | 4M | unconstrained",
+      "excess_projection_flips": 8,
+      "lever_arm": 2.6412928293889086,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 11,
+      "projection_mis_selection": 0.13,
+      "single_scale_mis_selection": 0.1033333333333333
+    },
+    {
+      "design": "olmes_macro_correct_prob_per_char_deficit | 530M | 4M | unconstrained",
+      "excess_projection_flips": 6,
+      "lever_arm": 11.128060123521095,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 10,
+      "projection_mis_selection": 0.1533333333333333,
+      "single_scale_mis_selection": 0.1333333333333333
+    },
+    {
+      "design": "olmes_macro_correct_prob_per_char_deficit | 530M | 60M | bounded",
+      "excess_projection_flips": 0,
+      "lever_arm": 1.0,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 4,
+      "projection_mis_selection": 0.1033333333333333,
+      "single_scale_mis_selection": 0.1033333333333333
+    },
+    {
+      "design": "olmes_macro_correct_prob_per_char_deficit | 530M | 60M | bounded",
+      "excess_projection_flips": 0,
+      "lever_arm": 2.6412928293889086,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 4,
+      "projection_mis_selection": 0.1033333333333333,
+      "single_scale_mis_selection": 0.1033333333333333
+    },
+    {
+      "design": "olmes_macro_correct_prob_per_char_deficit | 530M | 60M | bounded",
+      "excess_projection_flips": 20,
+      "lever_arm": 11.128060123521095,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 3,
+      "projection_mis_selection": 0.2,
+      "single_scale_mis_selection": 0.1333333333333333
+    },
+    {
+      "design": "olmes_macro_correct_prob_per_char_deficit | 530M | 60M | unconstrained",
+      "excess_projection_flips": 1,
+      "lever_arm": 1.0,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 4,
+      "projection_mis_selection": 0.1066666666666666,
+      "single_scale_mis_selection": 0.1033333333333333
+    },
+    {
+      "design": "olmes_macro_correct_prob_per_char_deficit | 530M | 60M | unconstrained",
+      "excess_projection_flips": 1,
+      "lever_arm": 2.6412928293889086,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 4,
+      "projection_mis_selection": 0.1066666666666666,
+      "single_scale_mis_selection": 0.1033333333333333
+    },
+    {
+      "design": "olmes_macro_correct_prob_per_char_deficit | 530M | 60M | unconstrained",
+      "excess_projection_flips": 21,
+      "lever_arm": 11.128060123521095,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 3,
+      "projection_mis_selection": 0.2033333333333333,
+      "single_scale_mis_selection": 0.1333333333333333
+    },
+    {
+      "design": "olmes_macro_error | 1B | 14M | bounded",
+      "excess_projection_flips": 7,
+      "lever_arm": 4.722233366766967,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 8,
+      "projection_mis_selection": 0.14,
+      "single_scale_mis_selection": 0.1166666666666666
+    },
+    {
+      "design": "olmes_macro_error | 1B | 14M | bounded",
+      "excess_projection_flips": 3,
+      "lever_arm": 12.472801130342633,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 7,
+      "projection_mis_selection": 0.15,
+      "single_scale_mis_selection": 0.14
+    },
+    {
+      "design": "olmes_macro_error | 1B | 14M | bounded",
+      "excess_projection_flips": 8,
+      "lever_arm": 52.549296822680255,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 6,
+      "projection_mis_selection": 0.1966666666666666,
+      "single_scale_mis_selection": 0.17
+    },
+    {
+      "design": "olmes_macro_error | 1B | 14M | unconstrained",
+      "excess_projection_flips": 6,
+      "lever_arm": 4.722233366766967,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 8,
+      "projection_mis_selection": 0.1366666666666666,
+      "single_scale_mis_selection": 0.1166666666666666
+    },
+    {
+      "design": "olmes_macro_error | 1B | 14M | unconstrained",
+      "excess_projection_flips": 3,
+      "lever_arm": 12.472801130342633,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 7,
+      "projection_mis_selection": 0.15,
+      "single_scale_mis_selection": 0.14
+    },
+    {
+      "design": "olmes_macro_error | 1B | 14M | unconstrained",
+      "excess_projection_flips": 7,
+      "lever_arm": 52.549296822680255,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 6,
+      "projection_mis_selection": 0.1933333333333333,
+      "single_scale_mis_selection": 0.17
+    },
+    {
+      "design": "olmes_macro_error | 1B | 4M | bounded",
+      "excess_projection_flips": 13,
+      "lever_arm": 4.722233366766967,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 12,
+      "projection_mis_selection": 0.16,
+      "single_scale_mis_selection": 0.1166666666666666
+    },
+    {
+      "design": "olmes_macro_error | 1B | 4M | bounded",
+      "excess_projection_flips": 9,
+      "lever_arm": 12.472801130342633,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 11,
+      "projection_mis_selection": 0.17,
+      "single_scale_mis_selection": 0.14
+    },
+    {
+      "design": "olmes_macro_error | 1B | 4M | bounded",
+      "excess_projection_flips": 2,
+      "lever_arm": 52.549296822680255,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 10,
+      "projection_mis_selection": 0.1766666666666666,
+      "single_scale_mis_selection": 0.17
+    },
+    {
+      "design": "olmes_macro_error | 1B | 4M | unconstrained",
+      "excess_projection_flips": 11,
+      "lever_arm": 4.722233366766967,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 12,
+      "projection_mis_selection": 0.1533333333333333,
+      "single_scale_mis_selection": 0.1166666666666666
+    },
+    {
+      "design": "olmes_macro_error | 1B | 4M | unconstrained",
+      "excess_projection_flips": 10,
+      "lever_arm": 12.472801130342633,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 11,
+      "projection_mis_selection": 0.1733333333333333,
+      "single_scale_mis_selection": 0.14
+    },
+    {
+      "design": "olmes_macro_error | 1B | 4M | unconstrained",
+      "excess_projection_flips": 3,
+      "lever_arm": 52.549296822680255,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 10,
+      "projection_mis_selection": 0.18,
+      "single_scale_mis_selection": 0.17
+    },
+    {
+      "design": "olmes_macro_error | 1B | 60M | bounded",
+      "excess_projection_flips": -2,
+      "lever_arm": 4.722233366766967,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 5,
+      "projection_mis_selection": 0.11,
+      "single_scale_mis_selection": 0.1166666666666666
+    },
+    {
+      "design": "olmes_macro_error | 1B | 60M | bounded",
+      "excess_projection_flips": 2,
+      "lever_arm": 12.472801130342633,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 4,
+      "projection_mis_selection": 0.1466666666666666,
+      "single_scale_mis_selection": 0.14
+    },
+    {
+      "design": "olmes_macro_error | 1B | 60M | bounded",
+      "excess_projection_flips": 19,
+      "lever_arm": 52.549296822680255,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 3,
+      "projection_mis_selection": 0.2333333333333333,
+      "single_scale_mis_selection": 0.17
+    },
+    {
+      "design": "olmes_macro_error | 1B | 60M | unconstrained",
+      "excess_projection_flips": -3,
+      "lever_arm": 4.722233366766967,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 5,
+      "projection_mis_selection": 0.1066666666666666,
+      "single_scale_mis_selection": 0.1166666666666666
+    },
+    {
+      "design": "olmes_macro_error | 1B | 60M | unconstrained",
+      "excess_projection_flips": 1,
+      "lever_arm": 12.472801130342633,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 4,
+      "projection_mis_selection": 0.1433333333333333,
+      "single_scale_mis_selection": 0.14
+    },
+    {
+      "design": "olmes_macro_error | 1B | 60M | unconstrained",
+      "excess_projection_flips": 22,
+      "lever_arm": 52.549296822680255,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 3,
+      "projection_mis_selection": 0.2433333333333333,
+      "single_scale_mis_selection": 0.17
+    },
+    {
+      "design": "olmes_macro_error | 530M | 14M | bounded",
+      "excess_projection_flips": -3,
+      "lever_arm": 1.0,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 7,
+      "projection_mis_selection": 0.0666666666666666,
+      "single_scale_mis_selection": 0.0766666666666666
+    },
+    {
+      "design": "olmes_macro_error | 530M | 14M | bounded",
+      "excess_projection_flips": -3,
+      "lever_arm": 2.6412928293889086,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 7,
+      "projection_mis_selection": 0.0666666666666666,
+      "single_scale_mis_selection": 0.0766666666666666
+    },
+    {
+      "design": "olmes_macro_error | 530M | 14M | bounded",
+      "excess_projection_flips": 0,
+      "lever_arm": 11.128060123521095,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 6,
+      "projection_mis_selection": 0.0933333333333333,
+      "single_scale_mis_selection": 0.0933333333333333
+    },
+    {
+      "design": "olmes_macro_error | 530M | 14M | unconstrained",
+      "excess_projection_flips": -3,
+      "lever_arm": 1.0,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 7,
+      "projection_mis_selection": 0.0666666666666666,
+      "single_scale_mis_selection": 0.0766666666666666
+    },
+    {
+      "design": "olmes_macro_error | 530M | 14M | unconstrained",
+      "excess_projection_flips": -3,
+      "lever_arm": 2.6412928293889086,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 7,
+      "projection_mis_selection": 0.0666666666666666,
+      "single_scale_mis_selection": 0.0766666666666666
+    },
+    {
+      "design": "olmes_macro_error | 530M | 14M | unconstrained",
+      "excess_projection_flips": 5,
+      "lever_arm": 11.128060123521095,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 6,
+      "projection_mis_selection": 0.11,
+      "single_scale_mis_selection": 0.0933333333333333
+    },
+    {
+      "design": "olmes_macro_error | 530M | 4M | bounded",
+      "excess_projection_flips": 1,
+      "lever_arm": 1.0,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 11,
+      "projection_mis_selection": 0.08,
+      "single_scale_mis_selection": 0.0766666666666666
+    },
+    {
+      "design": "olmes_macro_error | 530M | 4M | bounded",
+      "excess_projection_flips": 1,
+      "lever_arm": 2.6412928293889086,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 11,
+      "projection_mis_selection": 0.08,
+      "single_scale_mis_selection": 0.0766666666666666
+    },
+    {
+      "design": "olmes_macro_error | 530M | 4M | bounded",
+      "excess_projection_flips": -2,
+      "lever_arm": 11.128060123521095,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 10,
+      "projection_mis_selection": 0.0866666666666666,
+      "single_scale_mis_selection": 0.0933333333333333
+    },
+    {
+      "design": "olmes_macro_error | 530M | 4M | unconstrained",
+      "excess_projection_flips": 1,
+      "lever_arm": 1.0,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 11,
+      "projection_mis_selection": 0.08,
+      "single_scale_mis_selection": 0.0766666666666666
+    },
+    {
+      "design": "olmes_macro_error | 530M | 4M | unconstrained",
+      "excess_projection_flips": 1,
+      "lever_arm": 2.6412928293889086,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 11,
+      "projection_mis_selection": 0.08,
+      "single_scale_mis_selection": 0.0766666666666666
+    },
+    {
+      "design": "olmes_macro_error | 530M | 4M | unconstrained",
+      "excess_projection_flips": -1,
+      "lever_arm": 11.128060123521095,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 10,
+      "projection_mis_selection": 0.09,
+      "single_scale_mis_selection": 0.0933333333333333
+    },
+    {
+      "design": "olmes_macro_error | 530M | 60M | bounded",
+      "excess_projection_flips": 2,
+      "lever_arm": 1.0,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 4,
+      "projection_mis_selection": 0.0833333333333333,
+      "single_scale_mis_selection": 0.0766666666666666
+    },
+    {
+      "design": "olmes_macro_error | 530M | 60M | bounded",
+      "excess_projection_flips": 2,
+      "lever_arm": 2.6412928293889086,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 4,
+      "projection_mis_selection": 0.0833333333333333,
+      "single_scale_mis_selection": 0.0766666666666666
+    },
+    {
+      "design": "olmes_macro_error | 530M | 60M | bounded",
+      "excess_projection_flips": 25,
+      "lever_arm": 11.128060123521095,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 3,
+      "projection_mis_selection": 0.1766666666666666,
+      "single_scale_mis_selection": 0.0933333333333333
+    },
+    {
+      "design": "olmes_macro_error | 530M | 60M | unconstrained",
+      "excess_projection_flips": 5,
+      "lever_arm": 1.0,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 4,
+      "projection_mis_selection": 0.0933333333333333,
+      "single_scale_mis_selection": 0.0766666666666666
+    },
+    {
+      "design": "olmes_macro_error | 530M | 60M | unconstrained",
+      "excess_projection_flips": 5,
+      "lever_arm": 2.6412928293889086,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 4,
+      "projection_mis_selection": 0.0933333333333333,
+      "single_scale_mis_selection": 0.0766666666666666
+    },
+    {
+      "design": "olmes_macro_error | 530M | 60M | unconstrained",
+      "excess_projection_flips": 30,
+      "lever_arm": 11.128060123521095,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 3,
+      "projection_mis_selection": 0.1933333333333333,
+      "single_scale_mis_selection": 0.0933333333333333
+    },
+    {
+      "design": "sn_c4_bits_per_byte | 1B | 14M | bounded",
+      "excess_projection_flips": 3,
+      "lever_arm": 4.722233366766967,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 6,
+      "projection_mis_selection": 0.0233333333333333,
+      "single_scale_mis_selection": 0.0133333333333333
+    },
+    {
+      "design": "sn_c4_bits_per_byte | 1B | 14M | bounded",
+      "excess_projection_flips": 14,
+      "lever_arm": 12.472801130342633,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 5,
+      "projection_mis_selection": 0.06,
+      "single_scale_mis_selection": 0.0133333333333333
+    },
+    {
+      "design": "sn_c4_bits_per_byte | 1B | 14M | bounded",
+      "excess_projection_flips": 52,
+      "lever_arm": 52.549296822680255,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 4,
+      "projection_mis_selection": 0.1933333333333333,
+      "single_scale_mis_selection": 0.02
+    },
+    {
+      "design": "sn_c4_bits_per_byte | 1B | 14M | unconstrained",
+      "excess_projection_flips": 3,
+      "lever_arm": 4.722233366766967,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 6,
+      "projection_mis_selection": 0.0233333333333333,
+      "single_scale_mis_selection": 0.0133333333333333
+    },
+    {
+      "design": "sn_c4_bits_per_byte | 1B | 14M | unconstrained",
+      "excess_projection_flips": 14,
+      "lever_arm": 12.472801130342633,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 5,
+      "projection_mis_selection": 0.06,
+      "single_scale_mis_selection": 0.0133333333333333
+    },
+    {
+      "design": "sn_c4_bits_per_byte | 1B | 14M | unconstrained",
+      "excess_projection_flips": 52,
+      "lever_arm": 52.549296822680255,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 4,
+      "projection_mis_selection": 0.1933333333333333,
+      "single_scale_mis_selection": 0.02
+    },
+    {
+      "design": "sn_c4_bits_per_byte | 1B | 4M | bounded",
+      "excess_projection_flips": 6,
+      "lever_arm": 4.722233366766967,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 7,
+      "projection_mis_selection": 0.0333333333333333,
+      "single_scale_mis_selection": 0.0133333333333333
+    },
+    {
+      "design": "sn_c4_bits_per_byte | 1B | 4M | bounded",
+      "excess_projection_flips": 23,
+      "lever_arm": 12.472801130342633,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 6,
+      "projection_mis_selection": 0.09,
+      "single_scale_mis_selection": 0.0133333333333333
+    },
+    {
+      "design": "sn_c4_bits_per_byte | 1B | 4M | bounded",
+      "excess_projection_flips": 45,
+      "lever_arm": 52.549296822680255,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 5,
+      "projection_mis_selection": 0.17,
+      "single_scale_mis_selection": 0.02
+    },
+    {
+      "design": "sn_c4_bits_per_byte | 1B | 4M | unconstrained",
+      "excess_projection_flips": 6,
+      "lever_arm": 4.722233366766967,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 7,
+      "projection_mis_selection": 0.0333333333333333,
+      "single_scale_mis_selection": 0.0133333333333333
+    },
+    {
+      "design": "sn_c4_bits_per_byte | 1B | 4M | unconstrained",
+      "excess_projection_flips": 23,
+      "lever_arm": 12.472801130342633,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 6,
+      "projection_mis_selection": 0.09,
+      "single_scale_mis_selection": 0.0133333333333333
+    },
+    {
+      "design": "sn_c4_bits_per_byte | 1B | 4M | unconstrained",
+      "excess_projection_flips": 45,
+      "lever_arm": 52.549296822680255,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 5,
+      "projection_mis_selection": 0.17,
+      "single_scale_mis_selection": 0.02
+    },
+    {
+      "design": "sn_c4_bits_per_byte | 1B | 60M | bounded",
+      "excess_projection_flips": 6,
+      "lever_arm": 4.722233366766967,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 5,
+      "projection_mis_selection": 0.0333333333333333,
+      "single_scale_mis_selection": 0.0133333333333333
+    },
+    {
+      "design": "sn_c4_bits_per_byte | 1B | 60M | bounded",
+      "excess_projection_flips": 16,
+      "lever_arm": 12.472801130342633,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 4,
+      "projection_mis_selection": 0.0666666666666666,
+      "single_scale_mis_selection": 0.0133333333333333
+    },
+    {
+      "design": "sn_c4_bits_per_byte | 1B | 60M | bounded",
+      "excess_projection_flips": 43,
+      "lever_arm": 52.549296822680255,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 3,
+      "projection_mis_selection": 0.1633333333333333,
+      "single_scale_mis_selection": 0.02
+    },
+    {
+      "design": "sn_c4_bits_per_byte | 1B | 60M | unconstrained",
+      "excess_projection_flips": 6,
+      "lever_arm": 4.722233366766967,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 5,
+      "projection_mis_selection": 0.0333333333333333,
+      "single_scale_mis_selection": 0.0133333333333333
+    },
+    {
+      "design": "sn_c4_bits_per_byte | 1B | 60M | unconstrained",
+      "excess_projection_flips": 19,
+      "lever_arm": 12.472801130342633,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 4,
+      "projection_mis_selection": 0.0766666666666666,
+      "single_scale_mis_selection": 0.0133333333333333
+    },
+    {
+      "design": "sn_c4_bits_per_byte | 1B | 60M | unconstrained",
+      "excess_projection_flips": 62,
+      "lever_arm": 52.549296822680255,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 3,
+      "projection_mis_selection": 0.2266666666666666,
+      "single_scale_mis_selection": 0.02
+    },
+    {
+      "design": "sn_c4_bits_per_byte | 530M | 14M | bounded",
+      "excess_projection_flips": 5,
+      "lever_arm": 1.0,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 5,
+      "projection_mis_selection": 0.03,
+      "single_scale_mis_selection": 0.0133333333333333
+    },
+    {
+      "design": "sn_c4_bits_per_byte | 530M | 14M | bounded",
+      "excess_projection_flips": 5,
+      "lever_arm": 2.6412928293889086,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 5,
+      "projection_mis_selection": 0.03,
+      "single_scale_mis_selection": 0.0133333333333333
+    },
+    {
+      "design": "sn_c4_bits_per_byte | 530M | 14M | bounded",
+      "excess_projection_flips": 33,
+      "lever_arm": 11.128060123521095,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 4,
+      "projection_mis_selection": 0.1233333333333333,
+      "single_scale_mis_selection": 0.0133333333333333
+    },
+    {
+      "design": "sn_c4_bits_per_byte | 530M | 14M | unconstrained",
+      "excess_projection_flips": 5,
+      "lever_arm": 1.0,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 5,
+      "projection_mis_selection": 0.03,
+      "single_scale_mis_selection": 0.0133333333333333
+    },
+    {
+      "design": "sn_c4_bits_per_byte | 530M | 14M | unconstrained",
+      "excess_projection_flips": 5,
+      "lever_arm": 2.6412928293889086,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 5,
+      "projection_mis_selection": 0.03,
+      "single_scale_mis_selection": 0.0133333333333333
+    },
+    {
+      "design": "sn_c4_bits_per_byte | 530M | 14M | unconstrained",
+      "excess_projection_flips": 34,
+      "lever_arm": 11.128060123521095,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 4,
+      "projection_mis_selection": 0.1266666666666666,
+      "single_scale_mis_selection": 0.0133333333333333
+    },
+    {
+      "design": "sn_c4_bits_per_byte | 530M | 4M | bounded",
+      "excess_projection_flips": 13,
+      "lever_arm": 1.0,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 6,
+      "projection_mis_selection": 0.0566666666666666,
+      "single_scale_mis_selection": 0.0133333333333333
+    },
+    {
+      "design": "sn_c4_bits_per_byte | 530M | 4M | bounded",
+      "excess_projection_flips": 13,
+      "lever_arm": 2.6412928293889086,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 6,
+      "projection_mis_selection": 0.0566666666666666,
+      "single_scale_mis_selection": 0.0133333333333333
+    },
+    {
+      "design": "sn_c4_bits_per_byte | 530M | 4M | bounded",
+      "excess_projection_flips": 32,
+      "lever_arm": 11.128060123521095,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 5,
+      "projection_mis_selection": 0.12,
+      "single_scale_mis_selection": 0.0133333333333333
+    },
+    {
+      "design": "sn_c4_bits_per_byte | 530M | 4M | unconstrained",
+      "excess_projection_flips": 13,
+      "lever_arm": 1.0,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 6,
+      "projection_mis_selection": 0.0566666666666666,
+      "single_scale_mis_selection": 0.0133333333333333
+    },
+    {
+      "design": "sn_c4_bits_per_byte | 530M | 4M | unconstrained",
+      "excess_projection_flips": 13,
+      "lever_arm": 2.6412928293889086,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 6,
+      "projection_mis_selection": 0.0566666666666666,
+      "single_scale_mis_selection": 0.0133333333333333
+    },
+    {
+      "design": "sn_c4_bits_per_byte | 530M | 4M | unconstrained",
+      "excess_projection_flips": 32,
+      "lever_arm": 11.128060123521095,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 5,
+      "projection_mis_selection": 0.12,
+      "single_scale_mis_selection": 0.0133333333333333
+    },
+    {
+      "design": "sn_c4_bits_per_byte | 530M | 60M | bounded",
+      "excess_projection_flips": 4,
+      "lever_arm": 1.0,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 4,
+      "projection_mis_selection": 0.0266666666666666,
+      "single_scale_mis_selection": 0.0133333333333333
+    },
+    {
+      "design": "sn_c4_bits_per_byte | 530M | 60M | bounded",
+      "excess_projection_flips": 4,
+      "lever_arm": 2.6412928293889086,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 4,
+      "projection_mis_selection": 0.0266666666666666,
+      "single_scale_mis_selection": 0.0133333333333333
+    },
+    {
+      "design": "sn_c4_bits_per_byte | 530M | 60M | bounded",
+      "excess_projection_flips": 19,
+      "lever_arm": 11.128060123521095,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 3,
+      "projection_mis_selection": 0.0766666666666666,
+      "single_scale_mis_selection": 0.0133333333333333
+    },
+    {
+      "design": "sn_c4_bits_per_byte | 530M | 60M | unconstrained",
+      "excess_projection_flips": 5,
+      "lever_arm": 1.0,
+      "max_fit_scale": "530M",
+      "n_fit_budgets": 4,
+      "projection_mis_selection": 0.03,
+      "single_scale_mis_selection": 0.0133333333333333
+    },
+    {
+      "design": "sn_c4_bits_per_byte | 530M | 60M | unconstrained",
+      "excess_projection_flips": 5,
+      "lever_arm": 2.6412928293889086,
+      "max_fit_scale": "300M",
+      "n_fit_budgets": 4,
+      "projection_mis_selection": 0.03,
+      "single_scale_mis_selection": 0.0133333333333333
+    },
+    {
+      "design": "sn_c4_bits_per_byte | 530M | 60M | unconstrained",
+      "excess_projection_flips": 29,
+      "lever_arm": 11.128060123521095,
+      "max_fit_scale": "150M",
+      "n_fit_budgets": 3,
+      "projection_mis_selection": 0.11,
+      "single_scale_mis_selection": 0.0133333333333333
+    }
+  ],
+  "max_excess_among_winning": 0.0,
+  "n_matched_ladders": 48,
+  "n_monotone_in_lever_arm": 38,
+  "n_winning_designs": 15,
+  "rank_correlations": {
+    "spearman_excess_p": 0.015176898324560059,
+    "spearman_excess_vs_budgets": -0.13585164750623396,
+    "spearman_excess_vs_log_lever_arm": 0.5643631186271972,
+    "spearman_excess_vs_log_lever_arm_p": 3.1652162580993404e-28,
+    "spearman_projection_vs_budgets": -0.014763452950632014,
+    "spearman_single_scale_p": 0.064524680850617,
+    "spearman_single_scale_vs_budgets": 0.10362620191796626,
+    "spearman_single_scale_vs_log_lever_arm": 0.27629333343377915,
+    "spearman_single_scale_vs_log_lever_arm_p": 5.350183699225506e-07
+  },
+  "winning_designs": [
+    {
+      "excess_projection_flips": 0,
+      "fit_bounds": "bounded",
+      "fit_scales": "14M-530M",
+      "metric": "c4_en_bits_per_token",
+      "n_fit_budgets": 8,
+      "n_fit_error": 2,
+      "n_inherited": 1,
+      "projection_mis_selection": 0.01,
+      "single_scale_mis_selection": 0.01,
+      "target": "1B"
+    },
+    {
+      "excess_projection_flips": 0,
+      "fit_bounds": "unconstrained",
+      "fit_scales": "14M-530M",
+      "metric": "c4_en_bits_per_token",
+      "n_fit_budgets": 8,
+      "n_fit_error": 2,
+      "n_inherited": 1,
+      "projection_mis_selection": 0.01,
+      "single_scale_mis_selection": 0.01,
+      "target": "1B"
+    },
+    {
+      "excess_projection_flips": -2,
+      "fit_bounds": "bounded",
+      "fit_scales": "60M-530M",
+      "metric": "olmes_macro_error",
+      "n_fit_budgets": 5,
+      "n_fit_error": 6,
+      "n_inherited": 27,
+      "projection_mis_selection": 0.11,
+      "single_scale_mis_selection": 0.1166666666666666,
+      "target": "1B"
+    },
+    {
+      "excess_projection_flips": -3,
+      "fit_bounds": "unconstrained",
+      "fit_scales": "60M-530M",
+      "metric": "olmes_macro_error",
+      "n_fit_budgets": 5,
+      "n_fit_error": 6,
+      "n_inherited": 26,
+      "projection_mis_selection": 0.1066666666666666,
+      "single_scale_mis_selection": 0.1166666666666666,
+      "target": "1B"
+    },
+    {
+      "excess_projection_flips": -2,
+      "fit_bounds": "bounded",
+      "fit_scales": "4M-150M",
+      "metric": "olmes_macro_error",
+      "n_fit_budgets": 10,
+      "n_fit_error": 8,
+      "n_inherited": 18,
+      "projection_mis_selection": 0.0866666666666666,
+      "single_scale_mis_selection": 0.0933333333333333,
+      "target": "530M"
+    },
+    {
+      "excess_projection_flips": -1,
+      "fit_bounds": "unconstrained",
+      "fit_scales": "4M-150M",
+      "metric": "olmes_macro_error",
+      "n_fit_budgets": 10,
+      "n_fit_error": 8,
+      "n_inherited": 19,
+      "projection_mis_selection": 0.09,
+      "single_scale_mis_selection": 0.0933333333333333,
+      "target": "530M"
+    },
+    {
+      "excess_projection_flips": 0,
+      "fit_bounds": "bounded",
+      "fit_scales": "14M-150M",
+      "metric": "olmes_macro_error",
+      "n_fit_budgets": 6,
+      "n_fit_error": 7,
+      "n_inherited": 21,
+      "projection_mis_selection": 0.0933333333333333,
+      "single_scale_mis_selection": 0.0933333333333333,
+      "target": "530M"
+    },
+    {
+      "excess_projection_flips": -3,
+      "fit_bounds": "bounded",
+      "fit_scales": "14M-300M",
+      "metric": "olmes_macro_error",
+      "n_fit_budgets": 7,
+      "n_fit_error": 5,
+      "n_inherited": 15,
+      "projection_mis_selection": 0.0666666666666666,
+      "single_scale_mis_selection": 0.0766666666666666,
+      "target": "530M"
+    },
+    {
+      "excess_projection_flips": -3,
+      "fit_bounds": "unconstrained",
+      "fit_scales": "14M-300M",
+      "metric": "olmes_macro_error",
+      "n_fit_budgets": 7,
+      "n_fit_error": 5,
+      "n_inherited": 15,
+      "projection_mis_selection": 0.0666666666666666,
+      "single_scale_mis_selection": 0.0766666666666666,
+      "target": "530M"
+    },
+    {
+      "excess_projection_flips": -3,
+      "fit_bounds": "bounded",
+      "fit_scales": "14M-530M",
+      "metric": "olmes_macro_error",
+      "n_fit_budgets": 7,
+      "n_fit_error": 5,
+      "n_inherited": 15,
+      "projection_mis_selection": 0.0666666666666666,
+      "single_scale_mis_selection": 0.0766666666666666,
+      "target": "530M"
+    },
+    {
+      "excess_projection_flips": -3,
+      "fit_bounds": "unconstrained",
+      "fit_scales": "14M-530M",
+      "metric": "olmes_macro_error",
+      "n_fit_budgets": 7,
+      "n_fit_error": 5,
+      "n_inherited": 15,
+      "projection_mis_selection": 0.0666666666666666,
+      "single_scale_mis_selection": 0.0766666666666666,
+      "target": "530M"
+    },
+    {
+      "excess_projection_flips": -4,
+      "fit_bounds": "bounded",
+      "fit_scales": "60M-530M",
+      "metric": "olmes_macro_correct_prob_per_char_deficit",
+      "n_fit_budgets": 5,
+      "n_fit_error": 5,
+      "n_inherited": 12,
+      "projection_mis_selection": 0.0566666666666666,
+      "single_scale_mis_selection": 0.07,
+      "target": "1B"
+    },
+    {
+      "excess_projection_flips": -2,
+      "fit_bounds": "unconstrained",
+      "fit_scales": "60M-530M",
+      "metric": "olmes_macro_correct_prob_per_char_deficit",
+      "n_fit_budgets": 5,
+      "n_fit_error": 10,
+      "n_inherited": 9,
+      "projection_mis_selection": 0.0633333333333333,
+      "single_scale_mis_selection": 0.07,
+      "target": "1B"
+    },
+    {
+      "excess_projection_flips": 0,
+      "fit_bounds": "bounded",
+      "fit_scales": "60M-300M",
+      "metric": "olmes_macro_correct_prob_per_char_deficit",
+      "n_fit_budgets": 4,
+      "n_fit_error": 7,
+      "n_inherited": 24,
+      "projection_mis_selection": 0.1033333333333333,
+      "single_scale_mis_selection": 0.1033333333333333,
+      "target": "530M"
+    },
+    {
+      "excess_projection_flips": 0,
+      "fit_bounds": "bounded",
+      "fit_scales": "60M-530M",
+      "metric": "olmes_macro_correct_prob_per_char_deficit",
+      "n_fit_budgets": 4,
+      "n_fit_error": 7,
+      "n_inherited": 24,
+      "projection_mis_selection": 0.1033333333333333,
+      "single_scale_mis_selection": 0.1033333333333333,
+      "target": "530M"
+    }
+  ]
+}

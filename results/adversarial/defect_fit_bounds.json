@@ -1,0 +1,42 @@
+{
+  "alpha_bounds": [
+    0.05,
+    2.0
+  ],
+  "n_free_alphas_below_bound": 25,
+  "n_interventions": 25,
+  "n_pinned_olmes": 25,
+  "olmes_compute_span": 6716.2716873203335,
+  "olmes_free_alpha": 2.278213774497345e-05,
+  "olmes_total_decay": 0.10477517508899781,
+  "orders_of_magnitude": 3.3413755309807356,
+  "per_metric": [
+    {
+      "alpha_max": 0.16485703901378918,
+      "alpha_min": 0.13853806419047424,
+      "at_E_hi": 0,
+      "at_alpha_hi": 0,
+      "at_alpha_lo": 0,
+      "metric": "c4_en_bits_per_token",
+      "n_interventions": 25
+    },
+    {
+      "alpha_max": 0.05000000000015999,
+      "alpha_min": 0.05000000000000001,
+      "at_E_hi": 0,
+      "at_alpha_hi": 0,
+      "at_alpha_lo": 25,
+      "metric": "olmes_macro_error",
+      "n_interventions": 25
+    },
+    {
+      "alpha_max": 0.32920611208860834,
+      "alpha_min": 0.07129881776435608,
+      "at_E_hi": 4,
+      "at_alpha_hi": 0,
+      "at_alpha_lo": 0,
+      "metric": "olmes_macro_correct_prob_per_char_deficit",
+      "n_interventions": 25
+    }
+  ]
+}
