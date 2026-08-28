@@ -159,7 +159,9 @@ def evaluate(design: dict[str, Any], n_boot: int, seed: int, include_ensemble: b
     }
 
 
-def bootstrap_interaction(designs: dict[str, dict[str, Any]], builds: dict[str, dict[str, Any]], n_boot: int, seed: int) -> dict[str, Any]:
+def bootstrap_interaction(
+    designs: dict[str, dict[str, Any]], builds: dict[str, dict[str, Any]], n_boot: int, seed: int
+) -> dict[str, Any]:
     """C3: rho_C = I(long arm) / I(short arm) for the checkpoint ranker."""
 
     rng = np.random.default_rng(seed)
