@@ -9,6 +9,56 @@ would destroy that.
 
 Date: 2026-08-28.
 
+## 0. What the misfit measurement changes about H1
+
+H1 has said that projection's excess mis-selection over single-scale ranking is
+"fit variance". The misfit measurement says **which kind**, and the distinction
+carries opposite practical implications:
+
+| kind of error | shrinks with more seeds? | shrinks with more budgets? | measured share here |
+|---|---|---|---|
+| parameter estimation noise | yes, as `1/s` | yes, via `S_uu` | seed SE 0.00866 |
+| **functional-form misspecification** | **no** | only by changing the fitted range | residual 0.03655 |
+
+Residual scatter of cell means about the fitted power law is **4.22x** the seed
+standard error, a **17.8x** variance inflation. So the dominant term in projection
+variance is **misspecification, which more seeds would not shrink**, not parameter
+uncertainty, which they would.
+
+**This is a refinement of H1, not a side observation.** The practical
+recommendation changes: for a practitioner deciding between recipes by
+extrapolation on this kind of ladder, buying more seeds per cell mostly does not
+help - the curve is in the wrong family, and the error it induces is a property of
+the family and the ladder, not of the sampling. What helps is reducing the
+extrapolation distance, constraining the fit (pooling), or changing the functional
+form. The pre-registered predictions in section 4 are the test of whether that
+refined account also predicts the decision-level numbers.
+
+**Two claims that must not be conflated.** "The excess is fit variance" is
+established (289/289 specifications, 100% of 300 seed-bootstrap resamples).
+"The dominant component of that variance is misspecification" is measured here on
+one suite and one metric, and is what the extension tests.
+
+## 0b. Three threads, one statement about DataDecide's geometry
+
+Three separate results in this project turn out to describe the same fact:
+
+| result | what it showed |
+|---|---|
+| **synthetic `saturation_crossover` scenario** (from the original harness) | a truth placed *outside* the fitted family makes the naive power-law fit confidently wrong at the target - the "fit is blind" case, constructed |
+| **ensemble result** (Task B, and the sanity check) | a *more flexible* family is worse (18.67% vs 5.33%), because with realistic noise the extra freedom fits noise rather than the missing structure |
+| **alpha-bounds defect** (`NOTES_FIT_BOUNDS_DEFECT.md`) | a *more rigid* fit was also wrong - exponents pinned three orders of magnitude from truth - but wrong **monotonically**, so the induced ordering survived exactly |
+
+The single statement: **on DataDecide's ladder the power law is misspecified by a
+factor of 4.22 in residual scale, and the interventions differ mainly in level
+rather than curvature.** Every one of the three follows. Misspecification is why
+the naive fit is blind and why the residual is 4.22x seed noise; the level-not-
+curvature geometry is why a rigid, badly-biased fit still orders correctly (the
+bias is common to all interventions and cancels in comparisons), and why extra
+flexibility buys nothing but variance. The curvature demonstration
+(`audit/curvature_boundary_demo.py`) is the control: change the geometry so
+interventions differ in curvature, and the same defect reorders 69x more pairs.
+
 ## 1. The floor is one object appearing in three places
 
 The parameter the two-parameter theory omits is the irreducible-loss floor `E`.
@@ -65,10 +115,14 @@ resampling within cells.
 1. Characterise projection variance numerically under a noise model that mixes the
    two components, `sigma_eff^2 = sigma_seed^2 + phi * sigma_misfit^2`, with `phi`
    estimated from data rather than chosen.
-2. Validate the numeric machinery against the analytic two-parameter case as a
-   known limit: with `phi = 0` and a floor held fixed, the numeric result must
-   reproduce `sigma^2 h*` to within Monte Carlo error. **If it does not, the
-   numeric implementation is wrong and no result from it is reportable.**
+2. **GATE (hard stop, evaluated first, before any V1-V3 number is computed).**
+   With `phi = 0` and the floor held fixed, the numeric machinery must reproduce
+   the analytic `sigma^2 h*` to within Monte Carlo error, defined in advance as
+   **a ratio in [0.9, 1.1]** at 2000 draws. This is not a sanity check to be
+   noted and moved past: **if the gate fails, the implementation is wrong, no
+   V1-V3 result is computed or reported, and the failure is what gets
+   reported.** The gate result is written to the output JSON before anything
+   else, so a passing V1 can never be shown without it.
 
 Reason for numeric over analytic: the failure is misspecification, which has no
 closed form in general. A delta-method expression would be exact algebra about the
@@ -99,6 +153,40 @@ theory.
 
 Target to beat: the two-parameter theory's **3.2x** variance shortfall (empirical
 5.329e-06 vs predicted 1.666e-06).
+
+### V0 - Is `phi` a model, or a fudge factor? (falsification of V1)
+
+A single free scalar multiplying squared residuals can fit almost anything at
+these scales, so **V1 could pass by construction**. V1 is therefore not
+interpretable unless V0 passes first. Two independent falsifications, both fixed
+here:
+
+**V0a - stability across designs.** If `phi` is capturing a real property of the
+misspecification, one value should serve every design; if it is absorbing whatever
+each design needs, it will move. Measured in advance (this is descriptive, not an
+outcome): `phi` estimated per design is **0.797** (fit to 150M), **0.876** (300M),
+**0.905** (530M) - a spread of 0.108.
+
+- **PASS** if the per-design estimates span **less than 0.20**, and a *single*
+  `phi` fixed at the primary design's value still satisfies V1 on the other two
+  designs to within a factor of 2.
+- **FAIL** if a shared `phi` cannot satisfy V1 elsewhere, i.e. each design needs
+  its own value. Then `phi` is a fudge factor and V1's result is void.
+
+**V0b - held-out structure.** `phi` is estimated only from fitting-range
+residuals. If it models real misspecification, the resulting variance model should
+also predict residual structure it never saw: specifically, the observed residual
+at the *intermediate* held-out budget (530M, excluded from the primary design's
+fit and never used to estimate `phi`).
+
+- **PASS** if predicted and observed held-out residual variance agree within a
+  factor of **2**.
+- **FAIL** otherwise: `phi` then describes the fitting range only and does not
+  generalise, which is exactly what a fudge factor does.
+
+**V1 is reported as CONFIRMED only if V0a and V0b both pass.** If either fails,
+V1's verdict is recorded as `UNINTERPRETABLE` regardless of how well the variance
+matches.
 
 ### V1 - Variance calibration
 
@@ -144,9 +232,28 @@ Stated in advance:
    replaces. Then the extra parameter buys nothing and should be reported as a
    dead end, not tuned further.
 2. **V1 CONFIRMED but V2 and V3 both MISSED** — variance is calibrated in aggregate
-   yet the decision-level predictions do not improve. That would mean the route
-   from variance to ordering errors (equation 5, assumption A5) is where the
-   theory actually breaks, not the variance model, and the next work is there.
+   yet the decision-level predictions do not improve. That locates the break at
+   the variance-to-ordering step (equation 5, assumption A5), which we already
+   flagged as semi-empirical because `f(Delta)` is an empirical property of which
+   interventions happen to be in the suite rather than anything derived.
+
+   **What we would do, stated in advance rather than left as a direction.** A5
+   assumes the flip probability depends on the gap only through
+   `Phi(-|Delta| / sd_gap)` with gaps drawn independently of the fit errors. The
+   specific, testable suspicion is that **`Delta` and the projection error are not
+   independent**: interventions whose curves are hardest to fit may also be the
+   ones with unusual target values, so pairs with small gaps could be
+   systematically the pairs with large fit errors. That correlation would make the
+   integral in (5) wrong in a way no variance calibration can repair.
+
+   The concrete next step is therefore not more theory but a measurement: compute,
+   per pair, the realised projection error against the true gap, and estimate their
+   correlation directly by seed bootstrap (the same machinery that measured
+   `rho_ab = -0.004` for A4). If that correlation is near zero, A5's independence
+   holds and the break is in the *shape* of `f(Delta)`, which we would then replace
+   with the empirical joint distribution rather than the marginal. If it is not
+   near zero, equation (5) must be re-derived conditioning on the gap. Either way
+   the next artefact is a measured correlation, not a new assumption.
 3. **The analytic limit check in section 2 fails** — the numeric machinery does not
    reproduce `sigma^2 h*` at `phi = 0`. Then nothing computed from it is
    reportable and the implementation must be fixed first.
