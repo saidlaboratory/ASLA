@@ -149,7 +149,6 @@ def ladder_imbalance_and_deflation(metric: str) -> dict[str, Any]:
     final = dd.build_runs_table(eval_df, ppl_df, metric=metric, checkpoints="final")
     augmented = augmented[augmented["scale_label"] != "750M"]
     final = final[final["scale_label"] != "750M"]
-    target = float(final[final["scale_label"] == "1B"]["compute"].iloc[0])
     keep = LADDER[: LADDER.index("300M") + 1]
     max_budget = float(final[final["scale_label"].isin(keep)]["compute"].max())
     fitting = augmented[augmented["compute"] <= max_budget]

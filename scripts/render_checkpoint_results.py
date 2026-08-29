@@ -76,7 +76,8 @@ def render(d: dict[str, Any]) -> str:
         lines.append(f"| **varying across groups** ({name.replace('_', ' ')}) | **{change:.2e}** |")
     lines += [
         "",
-        f"That is, {noop['conclusion']}. A correlation correction must therefore act *between* groups (here, between "
+        f"That is, {noop['conclusion']}. A correlation correction must therefore act *between* groups "
+        "(here, between "
         "scales), not within a run.",
         "",
         "### 1.3 Real ladders are badly unbalanced, so naive fitting silently reweights them",
