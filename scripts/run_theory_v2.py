@@ -391,6 +391,52 @@ def main(argv: list[str] | None = None) -> int:
     }
     results["V3_pooling"] = v3
 
+    # The V0 failure is a positive finding, not four separate negatives.
+    shared = v0["shared_phi_check"]
+    results["FINDING_misspecification_is_structured"] = {
+        "claim": (
+            "Model misspecification in scaling-law fits cannot be absorbed into a noise-inflation term. A "
+            "constant multiplying squared residuals is the wrong functional object, because the misspecification "
+            "is structured in compute rather than exchangeable across the ladder."
+        ),
+        "why_it_matters": (
+            "Variance inflation is the first thing a practitioner reaches for when a fit does not match its "
+            "nominal noise. This says that reflex fails here, and says why, which is more useful than the "
+            "extension would have been had it worked."
+        ),
+        "evidence": {
+            "1_misspecification_is_real": {
+                "residual_scatter_over_seed_se": 4.22,
+                "variance_inflation": 17.8,
+                "note": "the power law does not fit DataDecide cell means within seed noise",
+            },
+            "2_a_shared_inflator_does_not_transfer_across_ladders": {
+                "modelled_over_empirical_by_design": {k: e["ratio"] for k, e in shared.items()},
+                "spread_factor": max(e["ratio"] for e in shared.values()) / min(e["ratio"] for e in shared.values()),
+                "note": "one phi over-states variance by 2.7x to 8.9x depending on the ladder",
+            },
+            "3_the_inflator_tracks_design_geometry": {
+                "slope_phi_vs_log_L": v0["V0a_trend"]["slope_phi_vs_log_L"],
+                "slope_phi_vs_k": v0["V0a_trend"]["slope_phi_vs_k"],
+                "monotone_in_log_L": v0["V0a_trend"]["monotone_in_log_L"],
+                "monotone_in_k": v0["V0a_trend"]["monotone_in_k"],
+                "note": "phi is not a property of the misspecification; it moves with the ladder it was fitted on",
+            },
+            "4_it_does_not_predict_held_out_structure": {
+                "predicted_over_observed": v0["V0b_ratio"],
+                "held_out_scale": v0["held_out_scale"],
+                "note": "phi fitted on the ladder under-predicts residual structure at an unseen scale by ~12x",
+            },
+        },
+        "single_reading": (
+            "All four measurements say the same thing. If the residuals were exchangeable noise, one inflator "
+            "would serve every ladder, would not track ladder geometry, and would extrapolate to a held-out "
+            "scale. None of those hold. The residuals carry compute-dependent structure, so the correct object "
+            "is a model of that structure, not a scalar."
+        ),
+        "scope": "DataDecide 5xC ladder, C4-EN bits per token, three-parameter power law, three fit ranges",
+    }
+
     # V4: which pre-registered failure mode did the extension land in?
     results["V4_overall"] = {
         "gate_passed": gate["passed"],
@@ -410,10 +456,19 @@ def main(argv: list[str] | None = None) -> int:
             "evidence that the variance model is right, and it does not rescue V1."
         ),
         "next_step": (
-            "The mixed noise model sigma_seed^2 + phi r^2 over-states projection variance by ~5x and fails to "
-            "predict held-out residual structure by ~12x. Misspecification is real (residual 4.22x seed SE) but "
-            "is not captured by scaling squared residuals: the residuals are structured in compute, not "
-            "exchangeable noise. A correct treatment needs a model of that structure, not a variance inflator."
+            "Modelling compute-structured misspecification properly is separate work, not a third derivation "
+            "bolted onto this one. The theory line stops here: correct structure (quadratic in log L, correct "
+            "signs, pooling via the leverage ratio), magnitudes wrong by 2-16x for an identified reason, and a "
+            "demonstration that the obvious fix fails for a specific structural reason."
+        ),
+        "methods_note_gate_found_a_shipped_error": (
+            "The phi=0 gate was installed to guard the new work. On its first run it failed at ratio 2.06 and "
+            "stopped the script, and the cause was an error already present in the two-parameter theory we had "
+            "reported: the analytic side squared a mean of relative standard errors while the numeric side "
+            "averaged their squares. With a noise coefficient of variation near 1.0 those differ by ~2x. The "
+            "numeric estimator was the correct one; the analytic constant was the loose one, and it was "
+            "corrected to match, after which the gate passed at exactly 1.0000. A gate guarding new work found "
+            "a defect in work already shipped."
         ),
     }
     _write_json_atomically(results, destination)
