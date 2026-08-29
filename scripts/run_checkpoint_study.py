@@ -92,6 +92,85 @@ def checkpoint_plus_pooling_ranker(df: pd.DataFrame, budgets: tuple[float, ...],
     return project(params, target)
 
 
+def uniform_weight_is_a_noop(seed: int = 0) -> dict[str, Any]:
+    """Demonstrate that a per-run constant weight cannot correct anything.
+
+    The obvious reading of "down-weight a correlated run" is to scale all of its
+    points by one factor. In least squares that factor cancels in the normal
+    equations, so it leaves the fitted parameters unchanged. The correction must
+    therefore vary *across* groups. Measured on noisy data, where weighting can
+    actually matter: on noise-free data every weighting recovers the truth and
+    the comparison is vacuous.
+    """
+
+    from asla.models import fit_power_law
+
+    # 20 well-spaced points with realistic noise: enough to condition a
+    # three-parameter fit, so any change reflects the weighting rather than a
+    # diverging optimisation.
+    rng = np.random.default_rng(seed)
+    n_points = 20
+    x = np.geomspace(1e15, 1e19, n_points)
+    y = 0.5 + 3.0 * x ** (-0.15) + rng.normal(0.0, 0.003, size=n_points)
+    baseline = np.asarray(fit_power_law(x, y))
+
+    def relative_change(sigma: np.ndarray) -> float:
+        fitted = np.asarray(fit_power_law(x, y, sigma=sigma))
+        return float(np.max(np.abs((fitted - baseline) / baseline)))
+
+    uniform = {str(c): relative_change(np.full(n_points, c)) for c in (2.0, 10.0, 50.0)}
+    top_heavy = np.ones(n_points)
+    top_heavy[n_points // 2 :] = 10.0
+    bottom_heavy = np.ones(n_points)
+    bottom_heavy[: n_points // 2] = 10.0
+    varying = {
+        "downweight_top_half": relative_change(top_heavy),
+        "downweight_bottom_half": relative_change(bottom_heavy),
+    }
+    return {
+        "max_relative_parameter_change_uniform_weight": uniform,
+        "max_relative_parameter_change_varying_weight": varying,
+        "largest_uniform_effect": max(uniform.values()),
+        "largest_varying_effect": max(varying.values()),
+        "varying_dominates_uniform": bool(max(varying.values()) > 10 * max(uniform.values())),
+        "conclusion": (
+            "a per-run uniform weight changes the fit only to optimizer tolerance; a weight that varies across "
+            "groups (here, across scales) changes it by orders of magnitude more"
+        ),
+    }
+
+
+def ladder_imbalance_and_deflation(metric: str) -> dict[str, Any]:
+    """Per-metric checkpoint counts per scale and the AR(1) information deflation."""
+
+    eval_df = dd.load_eval_macro(CACHE)
+    ppl_df = dd.load_ppl(CACHE) if dd.METRICS[metric]["source"] == "ppl" else None
+    augmented = dd.build_runs_table(eval_df, ppl_df, metric=metric, checkpoints="all")
+    final = dd.build_runs_table(eval_df, ppl_df, metric=metric, checkpoints="final")
+    augmented = augmented[augmented["scale_label"] != "750M"]
+    final = final[final["scale_label"] != "750M"]
+    target = float(final[final["scale_label"] == "1B"]["compute"].iloc[0])
+    keep = LADDER[: LADDER.index("300M") + 1]
+    max_budget = float(final[final["scale_label"].isin(keep)]["compute"].max())
+    fitting = augmented[augmented["compute"] <= max_budget]
+    per_scale = fitting.groupby("scale_label")["compute"].nunique().to_dict()
+    budgets = tuple(sorted(float(c) for c in fitting["compute"].unique()))
+    _, diagnostics = fit_checkpoint_augmented(fitting, budgets)
+    summary = autocorrelation_summary(diagnostics)
+    counts = sorted(per_scale.values())
+    return {
+        "metric": metric,
+        "checkpoints_per_scale": per_scale,
+        "min_checkpoints_at_a_scale": counts[0],
+        "max_checkpoints_at_a_scale": counts[-1],
+        "imbalance_ratio": counts[-1] / max(counts[0], 1),
+        "ladder_points_final_only": int(final[final["scale_label"].isin(keep)]["compute"].nunique()),
+        "checkpoint_points": int(fitting.groupby("intervention")["compute"].nunique().min()),
+        **summary,
+        "information_deflation_factor": float(summary["mean_n_points"] / max(summary["mean_effective_points"], 1e-9)),
+    }
+
+
 def correction_effect(design: dict[str, Any]) -> dict[str, Any]:
     """Direct evidence for C5: does the AR(1) correction change the fit at all?
 
@@ -409,6 +488,16 @@ def main(argv: list[str] | None = None) -> int:
         print(f"done {label}", flush=True)
         _write_json_atomically(results, out / "checkpoint_study.json")
     results["correction_effect"] = correction_effect(builds["primary"])
+    results["technique_critique"] = {
+        "uniform_weight_noop": uniform_weight_is_a_noop(),
+        "per_metric": [ladder_imbalance_and_deflation(m) for m in ("c4_en_bits_per_token", "olmes_macro_error")],
+        "context": (
+            "Choshen, Zhang & Andreas (arXiv:2410.11840, ICML 2025) recommend fitting scaling laws to "
+            "intermediate checkpoints and specify discarding roughly the first 10%. They do not address serial "
+            "correlation between checkpoints, the resulting information deflation, ladder imbalance, or the "
+            "over-confidence of intervals computed as if checkpoints were independent."
+        ),
+    }
     results["interaction"] = bootstrap_interaction(results["designs"], builds, n_boot_ratio, args.seed)
     results["verdicts"] = judge(results)
     _write_json_atomically(results, out / "checkpoint_study.json")
