@@ -70,7 +70,8 @@ def render(d: dict[str, Any]) -> str:
         "| weighting | max relative change in fitted parameters |",
         "|---|---|",
     ]
-    for constant, change in sorted(noop["max_relative_parameter_change_uniform_weight"].items(), key=lambda kv: float(kv[0])):
+    uniform_rows = sorted(noop["max_relative_parameter_change_uniform_weight"].items(), key=lambda kv: float(kv[0]))
+    for constant, change in uniform_rows:
         lines.append(f"| uniform, sigma = {constant} | {change:.2e} |")
     for name, change in sorted(noop["max_relative_parameter_change_varying_weight"].items()):
         lines.append(f"| **varying across groups** ({name.replace('_', ' ')}) | **{change:.2e}** |")
