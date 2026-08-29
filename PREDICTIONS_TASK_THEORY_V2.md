@@ -39,6 +39,31 @@ established (289/289 specifications, 100% of 300 seed-bootstrap resamples).
 "The dominant component of that variance is misspecification" is measured here on
 one suite and one metric, and is what the extension tests.
 
+**Scope of the practical inversion.** "More seeds mostly do not help" is the
+sharpest actionable claim in this document and the most attackable, so its scope is
+fixed here: it is established for **DataDecide's 5xC ladder, C4-EN bits per token,
+and a power-law fit** - one suite, one metric, one functional form. It is *not*
+established for other suites, other metrics, other ladders, or other fitted
+families, and it is not established at all until the extension's V1-V3 verdicts
+land. Until then it is a measured property of one grid, stated as such.
+
+**It does not contradict our own compute ask, and here is the distinction before a
+reviewer draws it.** FIRST_AUDIT.md asks for 9 seeds x 4 optimizers x 1.2B to
+resolve optimizer orderings. That is not in tension with "more seeds mostly do not
+help here", because the two use seeds for different questions:
+
+| question | what seeds buy | our instance |
+|---|---|---|
+| **identifiability**: are two systems distinguishable *at the scale where they were measured*? | everything - the gap is compared against seed noise directly, and with one run per cell there is no noise estimate at all | the 1.2B/8xC result: noise is 207x the smallest adjacent gap, so the ordering is unresolvable at any feasible seed count. Seeds are the *only* thing that answers this |
+| **extrapolation**: does an ordering fitted at small scale hold at a target nobody trained? | little, once misspecification dominates - more seeds shrink the 0.00866 term while the 0.03655 term is untouched | the DataDecide projection result: seed noise is ~19% of the residual scale |
+
+Both are legitimate uses; they are different uses. The compute ask buys a noise
+estimate where none exists, so that the *identifiability* question can be answered
+at all. The inversion says that once such an estimate exists and the fit is
+misspecified, buying still more of it does not fix the *extrapolation* question.
+A single sentence version: **seeds tell you whether a measured difference is real;
+they do not tell you whether a fitted trend will hold.**
+
 ## 0b. Three threads, one statement about DataDecide's geometry
 
 Three separate results in this project turn out to describe the same fact:
@@ -172,6 +197,23 @@ outcome): `phi` estimated per design is **0.797** (fit to 150M), **0.876** (300M
   designs to within a factor of 2.
 - **FAIL** if a shared `phi` cannot satisfy V1 elsewhere, i.e. each design needs
   its own value. Then `phi` is a fudge factor and V1's result is void.
+
+**V0a-trend (added before computing, because the spread test alone is too weak).**
+The three values are inside the threshold but they are **monotone**: 0.797 <
+0.876 < 0.905, ordered by ladder length (10, 11, 12 budgets) and inversely by
+lever arm (52.5x, 12.5x, 4.7x). A `phi` that is stable *and unstructured* is
+evidence of a real property; a `phi` that is stable *but trending with design
+geometry* may be partially absorbing the scale-dependence that A2 describes,
+which would mean the noise model is double-counting rather than decomposing.
+
+- **Test:** regress the per-design `phi` on `log L` and on `k`, and report the
+  slope, sign, and whether the trend is monotone in each.
+- **REPORTED AS WEAKER EVIDENCE** if `phi` is monotone in either geometry
+  variable, even when V0a's spread test passes. In that case V1 is reported with
+  an explicit caveat that `phi` co-varies with design geometry and may be partly
+  absorbing heteroscedasticity.
+- With only three designs this cannot be a formal significance test, and it is not
+  presented as one; the direction and monotonicity are what get reported.
 
 **V0b - held-out structure.** `phi` is estimated only from fitting-range
 residuals. If it models real misspecification, the resulting variance model should
