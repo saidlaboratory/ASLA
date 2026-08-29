@@ -294,7 +294,8 @@ def main(argv: list[str] | None = None) -> int:
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
     _write_json_atomically(results, out / "theory_check.json")
-    print(json.dumps({k: (v["verdict"] if isinstance(v, dict) and "verdict" in v else "n/a") for k, v in results.items()}, indent=2))
+    summary = {k: (v["verdict"] if isinstance(v, dict) and "verdict" in v else "n/a") for k, v in results.items()}
+    print(json.dumps(summary, indent=2))
     return 0
 
 
