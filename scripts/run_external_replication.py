@@ -154,7 +154,8 @@ def main(argv: list[str] | None = None) -> int:
             f"| fit_err={d['n_fit_error']:3d} inherited={d['n_inherited_crossover']:3d} "
             f"excess={d['excess_projection_flips']:+3d} -> all_fit_error={d['excess_is_all_fit_error']}"
         )
-    print(f"\nreplication: {results['replication']['n_replicating']}/{results['replication']['n_external_designs']} external designs")
+    rep = results["replication"]
+    print(f"\nreplication: {rep['n_replicating']}/{rep['n_external_designs']} external designs")
     return 0
 
 
