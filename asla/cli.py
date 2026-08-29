@@ -23,6 +23,7 @@ from asla.analysis.known_answer import PUBLISHED_SINGLE_SCALE_150M, known_answer
 from asla.analysis.metrics import decision_metrics
 from asla.analysis.racing import monte_carlo_selection
 from asla.analysis.rankers import Ranker, ensemble_ranker, make_gate_ranker, make_projection_ranker, single_scale_ranker
+from asla.analysis.resolution import resolution_report, sensitivity
 from asla.config import AuditConfig
 from asla.data.benchmark import FAMILIES as BENCHMARK_FAMILIES
 from asla.data.benchmark import benchmark_grid, evaluate_configs
@@ -436,6 +437,50 @@ def _harvest_fantastic_optimizers(args: argparse.Namespace) -> int:
     return 0
 
 
+def _resolution(args: argparse.Namespace) -> int:
+    """Report which leaderboard orderings are statistically resolvable."""
+
+    payload = json.loads(Path(args.entries).read_text(encoding="utf-8"))
+    if not isinstance(payload, dict) or not payload:
+        raise SystemExit("--entries must be a JSON object mapping entry name to metric value")
+    entries = {str(k): float(v) for k, v in payload.items()}
+    report = resolution_report(
+        entries,
+        sigma=args.sigma,
+        seed_budget=args.seed_budget,
+        alpha=args.alpha,
+        power=args.power,
+        lower_is_better=not args.higher_is_better,
+        top_k=args.top_k,
+        multiplicity="none" if args.no_multiplicity else "bonferroni",
+    )
+    report["sensitivity"] = sensitivity(
+        entries,
+        sigma=args.sigma,
+        lower_is_better=not args.higher_is_better,
+        top_k=args.top_k,
+        multiplicity="none" if args.no_multiplicity else "bonferroni",
+    )
+    report["sigma_provenance"] = args.sigma_note
+    print(f"Leaderboard: {report['n_entries']} entries, {report['n_adjacent_pairs']} adjacent pairs")
+    print(f"sigma = {args.sigma:g} ({args.sigma_note})")
+    print(f"minimum detectable gap at {args.seed_budget} seeds: {report['minimum_detectable_gap']:.6g}")
+    print(f"** {report['headline']} **")
+    print(f"{report['n_unidentifiable_at_any_budget']} pair(s) unidentifiable at ANY feasible seed count")
+    print(f"top-{args.top_k} fully resolved: {report['top_k_fully_resolved']}")
+    for pair in report["adjacent_pairs"]:
+        needed = "infeasible" if pair["seeds_required"] is None else f"{pair['seeds_required']} seeds"
+        flag = "" if pair["resolvable_at_budget"] else "  <-- UNRESOLVED"
+        print(
+            f"   {pair['better']} > {pair['worse']}: gap={pair['gap']:.6g} "
+            f"noise/gap={pair['noise_to_gap']:.1f} needs {needed}{flag}"
+        )
+    if args.out:
+        _write_json_atomically(report, args.out)
+        print(f"wrote {args.out}")
+    return 0
+
+
 def _harvest_signal_and_noise(args: argparse.Namespace) -> int:
     signal_and_noise.harvest(args.out, cache_dir=args.cache_dir)
     return 0
@@ -653,6 +698,26 @@ def build_parser() -> argparse.ArgumentParser:
     hsn.add_argument("--out", default="data/signal_and_noise_datadecide_c4_bpb.parquet")
     hsn.add_argument("--cache-dir", default=str(signal_and_noise.DEFAULT_CACHE_DIR))
     hsn.set_defaults(func=_harvest_signal_and_noise)
+
+    res = sub.add_parser(
+        "resolution",
+        help="Report which leaderboard orderings are statistically resolvable at a seed budget.",
+    )
+    res.add_argument("--entries", required=True, help="JSON file mapping entry name to metric value.")
+    res.add_argument("--sigma", type=float, required=True, help="Run-to-run standard deviation of the metric.")
+    res.add_argument(
+        "--sigma-note",
+        default="supplied by the caller; transferring a noise estimate across studies is an assumption",
+        help="Where the sigma estimate came from; recorded in the output.",
+    )
+    res.add_argument("--seed-budget", type=_positive_int, default=3)
+    res.add_argument("--alpha", type=float, default=0.05)
+    res.add_argument("--power", type=float, default=0.8)
+    res.add_argument("--top-k", type=_positive_int, default=3)
+    res.add_argument("--higher-is-better", action="store_true", help="Set for accuracy-like metrics.")
+    res.add_argument("--no-multiplicity", action="store_true", help="Disable the Bonferroni correction.")
+    res.add_argument("--out", help="Write the full report as JSON.")
+    res.set_defaults(func=_resolution)
 
     vka = sub.add_parser("validate-known-answer", help="Reproduce DataDecide's published single-scale decision accuracy.")
     vka.add_argument(

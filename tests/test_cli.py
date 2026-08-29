@@ -168,3 +168,34 @@ def test_report_orders_truth_by_mean(tmp_path):
     }
     text = render_report(_json.loads(_json.dumps(payload, sort_keys=True)))
     assert text.index("zeta_best") < text.index("alpha_worst")
+
+
+def test_resolution_cli_reports_unresolvable_orderings(tmp_path, capsys):
+    entries = tmp_path / "entries.json"
+    entries.write_text(
+        json.dumps({"Muon": 2.748363, "NAdamW": 2.748523, "SOAP": 2.748529, "AdamW": 2.752277}),
+        encoding="utf-8",
+    )
+    out = tmp_path / "resolution.json"
+    parser = build_parser()
+    args = parser.parse_args(
+        ["resolution", "--entries", str(entries), "--sigma", "0.0014312", "--out", str(out)]
+    )
+    assert args.func(args) == 0
+    captured = capsys.readouterr().out
+    assert "not resolvable" in captured
+    assert "unidentifiable at ANY feasible seed count" in captured
+    payload = json.loads(out.read_text(encoding="utf-8"))
+    assert payload["n_entries"] == 4
+    assert payload["n_unidentifiable_at_any_budget"] == 1
+    assert payload["top_k_fully_resolved"] is False
+    assert "sensitivity" in payload and payload["sigma_provenance"]
+
+
+def test_resolution_cli_rejects_a_non_mapping_entries_file(tmp_path):
+    entries = tmp_path / "bad.json"
+    entries.write_text(json.dumps([1, 2, 3]), encoding="utf-8")
+    parser = build_parser()
+    args = parser.parse_args(["resolution", "--entries", str(entries), "--sigma", "0.01"])
+    with pytest.raises(SystemExit, match="JSON object"):
+        args.func(args)

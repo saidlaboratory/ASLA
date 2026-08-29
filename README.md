@@ -148,6 +148,7 @@ asla harvest-datadecide --metric olmes_macro_error --out data/datadecide_runs_ol
 asla harvest-fantastic-optimizers --out-dir data
 asla harvest-signal-and-noise --out data/signal_and_noise_datadecide_c4_bpb.parquet
 asla validate-known-answer --runs data/datadecide_runs_olmes_macro_error.parquet
+asla resolution --entries leaderboard.json --sigma 0.0014  # which orderings are resolvable?
 python scripts/run_first_audit.py            # writes results/first_audit/ and FIRST_AUDIT.md
 python scripts/run_signal_and_noise_check.py # writes results/signal_and_noise/ and SIGNAL_AND_NOISE.md
 ```
