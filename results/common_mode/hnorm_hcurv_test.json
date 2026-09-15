@@ -1,0 +1,182 @@
+{
+  "anomaly": "Signal-and-Noise re-evaluates the same DataDecide checkpoints, and both metrics are cross-entropy on C4-like text, yet one is cleanly offset and the other cleanly scaled.",
+  "loading_correlations": {
+    "datadecide_c4_bits_per_token": {
+      "alpha_cv": 0.046079090117912024,
+      "corr_loading_vs_alpha_pearson": 0.2606481880480508,
+      "corr_loading_vs_alpha_spearman": 0.1769230769230769,
+      "corr_loading_vs_level_pearson": 0.6423760751800431,
+      "corr_loading_vs_level_spearman": 0.5046153846153847,
+      "loading_cv": 0.15617640911407304,
+      "loadings_mixed_sign": false,
+      "n_interventions": 25,
+      "which_predictor_is_stronger": "level (H-norm)"
+    },
+    "datadecide_olmes_correct_prob": {
+      "alpha_cv": 2.1411710204788528,
+      "corr_loading_vs_alpha_pearson": -0.8521621006447189,
+      "corr_loading_vs_alpha_spearman": -0.7907692307692307,
+      "corr_loading_vs_level_pearson": -0.6493872123461947,
+      "corr_loading_vs_level_spearman": -0.4969230769230769,
+      "loading_cv": 2.031953533428936,
+      "loadings_mixed_sign": true,
+      "n_interventions": 25,
+      "which_predictor_is_stronger": "alpha (H-curv)"
+    },
+    "signal_and_noise_c4_bits_per_byte": {
+      "alpha_cv": 0.10068059526487602,
+      "corr_loading_vs_alpha_pearson": -0.8117496454704201,
+      "corr_loading_vs_alpha_spearman": -0.7576923076923077,
+      "corr_loading_vs_level_pearson": -0.1099637836455716,
+      "corr_loading_vs_level_spearman": -0.11384615384615385,
+      "loading_cv": 1.3702626037520587,
+      "loadings_mixed_sign": true,
+      "n_interventions": 25,
+      "which_predictor_is_stronger": "alpha (H-curv)"
+    }
+  },
+  "method_concept_limitation": "Stated before building anything: the differenced estimator's variance advantage is largest exactly where single-scale ranking is already at 1.33% mis-selection, so there is little headroom to win. And differencing only helps when the misspecification amplitude is shared; where it is not, the residual left after differencing is proportional to the spread of amplitudes. Since a per-intervention amplitude also biases each fitted exponent, the regime where differencing fails overlaps the regime where interventions' fitted trends genuinely diverge - which is where crossovers live, and where beating single-scale would actually matter. The method is therefore expected to be weakest exactly where it would be most useful.",
+  "synthetic_control": {
+    "conclusion": "Cancellation is governed by whether the misspecification AMPLITUDE is shared across interventions, not by whether the interventions differ in curvature. Holding the amplitude shared, cancellation stays near zero across an exponent spread of 0 to 0.6; making the amplitude per-intervention destroys cancellation at every exponent spread.",
+    "grid": [
+      {
+        "cancellation": 1.4883637346235013e-05,
+        "loading_cv": 0.000614268494106696,
+        "mean_abs_relative_residual": 0.008616764630779233,
+        "misspecification_amplitude": "shared",
+        "true_alpha_cv": 0.0
+      },
+      {
+        "cancellation": 1.0135057579399884,
+        "loading_cv": 7.860413461433922,
+        "mean_abs_relative_residual": 0.006530575584005517,
+        "misspecification_amplitude": "per_intervention",
+        "true_alpha_cv": 0.0
+      },
+      {
+        "cancellation": 0.0007545871808151347,
+        "loading_cv": 0.002366467418610207,
+        "mean_abs_relative_residual": 0.008622742679767021,
+        "misspecification_amplitude": "shared",
+        "true_alpha_cv": 0.3
+      },
+      {
+        "cancellation": 1.0291330990911876,
+        "loading_cv": 7.840999908484502,
+        "mean_abs_relative_residual": 0.006505094271625762,
+        "misspecification_amplitude": "per_intervention",
+        "true_alpha_cv": 0.3
+      },
+      {
+        "cancellation": 0.0016791371576596133,
+        "loading_cv": 0.002791918433908596,
+        "mean_abs_relative_residual": 0.008647726225985133,
+        "misspecification_amplitude": "shared",
+        "true_alpha_cv": 0.6
+      },
+      {
+        "cancellation": 1.0279877123315104,
+        "loading_cv": 7.656593641278816,
+        "mean_abs_relative_residual": 0.0064883496803008365,
+        "misspecification_amplitude": "per_intervention",
+        "true_alpha_cv": 0.6
+      }
+    ],
+    "summary": {
+      "per_intervention": {
+        "cancellation_range": [
+          1.0135057579399884,
+          1.0291330990911876
+        ],
+        "varies_with_alpha_cv": false
+      },
+      "shared": {
+        "cancellation_range": [
+          1.4883637346235013e-05,
+          0.0016791371576596133
+        ],
+        "varies_with_alpha_cv": false
+      }
+    }
+  },
+  "transform_test": {
+    "datadecide_c4_bits_per_token": [
+      {
+        "cancellation": 0.16971086715967562,
+        "loading_cv": 0.15940094398252136,
+        "mixed_sign": false,
+        "pc1_fraction": 0.8582236643580315,
+        "space": "absolute"
+      },
+      {
+        "cancellation": 0.1474207217241956,
+        "loading_cv": 0.15617640911407304,
+        "mixed_sign": false,
+        "pc1_fraction": 0.8811925815519058,
+        "space": "relative"
+      },
+      {
+        "cancellation": 0.1964162937077432,
+        "loading_cv": 0.18442689837137946,
+        "mixed_sign": false,
+        "pc1_fraction": 0.8409988558104123,
+        "space": "log"
+      }
+    ],
+    "datadecide_olmes_correct_prob": [
+      {
+        "cancellation": 0.7112740285558297,
+        "loading_cv": 2.015020218498411,
+        "mixed_sign": true,
+        "pc1_fraction": 0.9117577538597578,
+        "space": "absolute"
+      },
+      {
+        "cancellation": 0.7068165409702579,
+        "loading_cv": 2.031953533428936,
+        "mixed_sign": true,
+        "pc1_fraction": 0.9068164345536017,
+        "space": "relative"
+      },
+      {
+        "cancellation": 0.724069218793602,
+        "loading_cv": 0.7467682684568819,
+        "mixed_sign": true,
+        "pc1_fraction": 0.46768197326625427,
+        "space": "log"
+      }
+    ],
+    "signal_and_noise_c4_bits_per_byte": [
+      {
+        "cancellation": 0.8312702214054932,
+        "loading_cv": 1.4493261500374952,
+        "mixed_sign": true,
+        "pc1_fraction": 0.833675384947021,
+        "space": "absolute"
+      },
+      {
+        "cancellation": 0.8166738799106866,
+        "loading_cv": 1.3702626037520587,
+        "mixed_sign": true,
+        "pc1_fraction": 0.8220414126696726,
+        "space": "relative"
+      },
+      {
+        "cancellation": 0.9239006304586038,
+        "loading_cv": 2.1002400667394645,
+        "mixed_sign": true,
+        "pc1_fraction": 0.779592263469842,
+        "space": "log"
+      }
+    ]
+  },
+  "verdict": {
+    "H_curv_evidence": "loadings do track the fitted exponent on the scaled suites (r = -0.812 versus -0.110 for level), which is the correlational prediction of H-curv. But the synthetic control shows curvature spread does NOT cause the scaled signature: with a shared misspecification amplitude, cancellation stays near zero across an exponent spread of 0 to 0.6. So the correlation is not the cause.",
+    "H_curv_supported_as_stated": false,
+    "H_norm_evidence": "no space collapses the scaled signature: cancellation stays at [0.831, 0.817, 0.924] across ['absolute', 'relative', 'log']",
+    "H_norm_supported": false,
+    "decision_rule_outcome": "Neither branch of the pre-agreed rule fires cleanly. H-norm is refuted, so the method is not general. H-curv is refuted as a *cause*, so the taxonomy is not simply 'differs in curvature'. The measurable diagnostic (loading CV) still separates the suites perfectly and still predicts where differencing can work, so the diagnostic contribution stands; what changes is the explanation attached to it.",
+    "verdict": "BOTH_REFUTED_AS_STATED",
+    "what_actually_governs_it": "Whether the misspecification amplitude is shared across interventions. This is neither a normalisation artifact (no transform fixes it) nor curvature spread per se (curvature has no effect when the amplitude is shared). The exponent correlation on the real suites is a symptom: a per-intervention misspecification amplitude biases each intervention's fitted exponent, so loadings and exponents co-vary without one causing the other."
+  }
+}
