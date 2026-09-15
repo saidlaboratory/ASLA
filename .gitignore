@@ -30,3 +30,4 @@ results/adversarial/_*.md
 # ColPret raw archive (64 MB, re-downloadable from github.com/IBM/ColPret)
 data/raw/colpret/
 !results/common_mode/
+!results/consolidated/
