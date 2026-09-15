@@ -1,0 +1,963 @@
+{
+  "assessments": [
+    {
+      "cancellation": {
+        "implied_variance_reduction": 0.8525792782758044,
+        "max_ratio": 0.6285053886570878,
+        "mean_ratio": 0.1474207217241956,
+        "median_ratio": 0.11574425254479401,
+        "min_ratio": 0.00982333148010662,
+        "n_pairs": 300,
+        "pooled_ratio": 0.14456707697996665
+      },
+      "cancellation_ci": {
+        "hi": 0.19485259870011185,
+        "lo": 0.09522774009882655,
+        "n_draws": 400
+      },
+      "fit_scales": [
+        "4M",
+        "6M",
+        "8M",
+        "10M",
+        "14M",
+        "16M",
+        "20M",
+        "60M",
+        "90M",
+        "150M",
+        "300M"
+      ],
+      "metric": "c4_en_bits_per_token",
+      "min_seeds_per_cell": 3,
+      "n_budgets": 11,
+      "n_interventions": 25,
+      "path": "/Users/Evan/ASLA/data/datadecide_runs.parquet",
+      "residual_correlation": {
+        "fraction_positive": 1.0,
+        "max": 0.9946374529248696,
+        "mean": 0.8689379806002303,
+        "median": 0.8990620214906813,
+        "min": 0.42898725937036813
+      },
+      "scale_dependence": [
+        {
+          "compute": 8430221996851200.0,
+          "mean_residual": 0.004513925413082153,
+          "sd_residual": 0.0016006665941494507,
+          "shared_to_spread": 2.820028499114599
+        },
+        {
+          "compute": 2.170083624144077e+16,
+          "mean_residual": -0.00019261123760397022,
+          "sd_residual": 0.002789445166481589,
+          "shared_to_spread": 0.06905001751546044
+        },
+        {
+          "compute": 4.377678106853376e+16,
+          "mean_residual": -0.005408799303360385,
+          "sd_residual": 0.0019289418338055606,
+          "shared_to_spread": 2.8040240553493008
+        },
+        {
+          "compute": 5.88506060071895e+16,
+          "mean_residual": -0.004660211947076937,
+          "sd_residual": 0.0016879026312508348,
+          "shared_to_spread": 2.7609483277026747
+        },
+        {
+          "compute": 1.2413398842290995e+17,
+          "mean_residual": -0.0032278240578371598,
+          "sd_residual": 0.0019202661518202852,
+          "shared_to_spread": 1.6809253523410785
+        },
+        {
+          "compute": 1.5375666115510272e+17,
+          "mean_residual": -0.0017009376037117972,
+          "sd_residual": 0.0017707309934144077,
+          "shared_to_spread": 0.9605849844148084
+        },
+        {
+          "compute": 2.1908574798505574e+17,
+          "mean_residual": 0.004633789544001327,
+          "sd_residual": 0.004155036879163453,
+          "shared_to_spread": 1.1152222420067335
+        },
+        {
+          "compute": 1.955459382959407e+18,
+          "mean_residual": 0.007938943934823063,
+          "sd_residual": 0.0020666362290298304,
+          "shared_to_spread": 3.841481061497674
+        },
+        {
+          "compute": 5.758063377068851e+18,
+          "mean_residual": 0.006822870352182303,
+          "sd_residual": 0.001447588021625206,
+          "shared_to_spread": 4.713268036386673
+        },
+        {
+          "compute": 1.3439040749568e+19,
+          "mean_residual": 0.0008062987306915811,
+          "sd_residual": 0.0011549506969547867,
+          "shared_to_spread": 0.6981239396777
+        },
+        {
+          "compute": 5.66196613152768e+19,
+          "mean_residual": -0.009543134525568275,
+          "sd_residual": 0.0017065744078618432,
+          "shared_to_spread": 5.591982676878889
+        }
+      ],
+      "sha256": "f61f9c58bb87309521ae62ff1b2585749d763ab110a3fd67998bbdd240e0767b",
+      "shared_component": {
+        "one_way_fraction": 0.8612156060992321,
+        "pc1_fraction": 0.8811925815519059
+      },
+      "shared_component_shape": {
+        "interpretation": "common OFFSET: cancels under differencing",
+        "loading_cv": 0.15617640911407304,
+        "loading_mean": -0.017532924077831323,
+        "loading_sd": 0.0027382291237453664,
+        "loadings_same_sign": true,
+        "pc1_variance_fraction": 0.8811925815519058
+      },
+      "suite": "datadecide_c4_bits_per_token"
+    },
+    {
+      "cancellation": {
+        "implied_variance_reduction": 0.7661949165851012,
+        "max_ratio": 0.8443679705999195,
+        "mean_ratio": 0.23380508341489886,
+        "median_ratio": 0.18241257736622804,
+        "min_ratio": 0.012786608441274695,
+        "n_pairs": 300,
+        "pooled_ratio": 0.23329266216084796
+      },
+      "cancellation_ci": {
+        "hi": 0.30114828256351833,
+        "lo": 0.1515263574600447,
+        "n_draws": 400
+      },
+      "fit_scales": [
+        "4M",
+        "6M",
+        "8M",
+        "10M",
+        "14M",
+        "16M",
+        "20M",
+        "60M",
+        "90M",
+        "150M"
+      ],
+      "metric": "c4_en_bits_per_token",
+      "min_seeds_per_cell": 3,
+      "n_budgets": 10,
+      "n_interventions": 25,
+      "path": "/Users/Evan/ASLA/data/datadecide_runs.parquet",
+      "residual_correlation": {
+        "fraction_positive": 1.0,
+        "max": 0.9921451003964732,
+        "mean": 0.7832716479665984,
+        "median": 0.8362491078788077,
+        "min": 0.17602453576051133
+      },
+      "scale_dependence": [
+        {
+          "compute": 8430221996851200.0,
+          "mean_residual": 0.002515952269942155,
+          "sd_residual": 0.0014665098508162132,
+          "shared_to_spread": 1.715605434591425
+        },
+        {
+          "compute": 2.170083624144077e+16,
+          "mean_residual": -5.03848834477932e-05,
+          "sd_residual": 0.0027918068491664706,
+          "shared_to_spread": 0.018047410214942432
+        },
+        {
+          "compute": 4.377678106853376e+16,
+          "mean_residual": -0.004349396659892456,
+          "sd_residual": 0.001926606852915404,
+          "shared_to_spread": 2.2575424006775475
+        },
+        {
+          "compute": 5.88506060071895e+16,
+          "mean_residual": -0.0033721409772405476,
+          "sd_residual": 0.0016667378516359453,
+          "shared_to_spread": 2.0231981735644307
+        },
+        {
+          "compute": 1.2413398842290995e+17,
+          "mean_residual": -0.0017597274892427628,
+          "sd_residual": 0.0019120898167043435,
+          "shared_to_spread": 0.9203163334010164
+        },
+        {
+          "compute": 1.5375666115510272e+17,
+          "mean_residual": -0.0002797221126444661,
+          "sd_residual": 0.001733953739280791,
+          "shared_to_spread": 0.1613204010624235
+        },
+        {
+          "compute": 2.1908574798505574e+17,
+          "mean_residual": 0.00588919867390172,
+          "sd_residual": 0.0041878789128356525,
+          "shared_to_spread": 1.4062485560056672
+        },
+        {
+          "compute": 1.955459382959407e+18,
+          "mean_residual": 0.005873424350849766,
+          "sd_residual": 0.0018206166232842408,
+          "shared_to_spread": 3.2260632335953288
+        },
+        {
+          "compute": 5.758063377068851e+18,
+          "mean_residual": 0.0020079625767344088,
+          "sd_residual": 0.0011305163339579575,
+          "shared_to_spread": 1.7761464531029787
+        },
+        {
+          "compute": 1.3439040749568e+19,
+          "mean_residual": -0.006479552483713725,
+          "sd_residual": 0.0011684862148924973,
+          "shared_to_spread": 5.545253680472263
+        }
+      ],
+      "sha256": "f61f9c58bb87309521ae62ff1b2585749d763ab110a3fd67998bbdd240e0767b",
+      "shared_component": {
+        "one_way_fraction": 0.7760390443255858,
+        "pc1_fraction": 0.8094872903119011
+      },
+      "shared_component_shape": {
+        "interpretation": "common OFFSET: cancels under differencing",
+        "loading_cv": 0.21890777113293006,
+        "loading_mean": -0.012432305810252522,
+        "loading_sd": 0.0027215283549653557,
+        "loadings_same_sign": true,
+        "pc1_variance_fraction": 0.8094872903119016
+      },
+      "suite": "datadecide_c4_bits_per_token"
+    },
+    {
+      "cancellation": {
+        "implied_variance_reduction": 0.8695093434251603,
+        "max_ratio": 0.3824229505919399,
+        "mean_ratio": 0.1304906565748397,
+        "median_ratio": 0.12029978819876831,
+        "min_ratio": 0.021904123079019063,
+        "n_pairs": 300,
+        "pooled_ratio": 0.1291535709003264
+      },
+      "cancellation_ci": {
+        "hi": 0.14854756158289287,
+        "lo": 0.10193907397949355,
+        "n_draws": 400
+      },
+      "fit_scales": [
+        "4M",
+        "6M",
+        "8M",
+        "10M",
+        "14M",
+        "16M",
+        "20M",
+        "60M",
+        "90M",
+        "150M",
+        "300M"
+      ],
+      "metric": "olmes_macro_error",
+      "min_seeds_per_cell": 3,
+      "n_budgets": 11,
+      "n_interventions": 25,
+      "path": "/Users/Evan/ASLA/data/datadecide_runs_olmes_macro_error.parquet",
+      "residual_correlation": {
+        "fraction_positive": 1.0,
+        "max": 0.9816045645673956,
+        "mean": 0.8863844868377893,
+        "median": 0.8947830127541443,
+        "min": 0.6957862936313823
+      },
+      "scale_dependence": [
+        {
+          "compute": 8430221996851200.0,
+          "mean_residual": -0.03587091808309147,
+          "sd_residual": 0.005062627468762834,
+          "shared_to_spread": 7.08543504423748
+        },
+        {
+          "compute": 2.170083624144077e+16,
+          "mean_residual": -0.006845193415211135,
+          "sd_residual": 0.0072582522116895285,
+          "shared_to_spread": 0.943091148608317
+        },
+        {
+          "compute": 4.377678106853376e+16,
+          "mean_residual": 0.0031852890494159553,
+          "sd_residual": 0.006642968419351892,
+          "shared_to_spread": 0.4794978461942954
+        },
+        {
+          "compute": 5.88506060071895e+16,
+          "mean_residual": 0.0075263590631459995,
+          "sd_residual": 0.004666493835678981,
+          "shared_to_spread": 1.612850960093662
+        },
+        {
+          "compute": 1.1309068320768e+17,
+          "mean_residual": 0.01026689274855367,
+          "sd_residual": 0.00788478067939326,
+          "shared_to_spread": 1.302115197114616
+        },
+        {
+          "compute": 1.5375666115510272e+17,
+          "mean_residual": 0.015936325909143016,
+          "sd_residual": 0.007070962680148605,
+          "shared_to_spread": 2.253770332275052
+        },
+        {
+          "compute": 2.1908574798505574e+17,
+          "mean_residual": 0.02054449292102442,
+          "sd_residual": 0.005566341630060474,
+          "shared_to_spread": 3.690842978461101
+        },
+        {
+          "compute": 1.955459382959407e+18,
+          "mean_residual": 0.01068486796115158,
+          "sd_residual": 0.008890929497114489,
+          "shared_to_spread": 1.2017717567796826
+        },
+        {
+          "compute": 5.758063377068851e+18,
+          "mean_residual": 0.0069200442431867695,
+          "sd_residual": 0.00606442118843272,
+          "shared_to_spread": 1.1410889890672609
+        },
+        {
+          "compute": 1.3439040749568e+19,
+          "mean_residual": -0.0002756421544020519,
+          "sd_residual": 0.007739294932492186,
+          "shared_to_spread": 0.03561592584420224
+        },
+        {
+          "compute": 5.66196613152768e+19,
+          "mean_residual": -0.03295208438215565,
+          "sd_residual": 0.00652484812274939,
+          "shared_to_spread": 5.050245425217737
+        }
+      ],
+      "sha256": "de17854d09b27d856d88fc9c2e9939f2a48db192137b384fa456da95b81e7616",
+      "shared_component": {
+        "one_way_fraction": 0.8760125719356868,
+        "pc1_fraction": 0.8934968352546232
+      },
+      "shared_component_shape": {
+        "interpretation": "common OFFSET: cancels under differencing",
+        "loading_cv": 0.14501793292587176,
+        "loading_mean": -0.0585578270688,
+        "loading_sd": 0.008491935038148036,
+        "loadings_same_sign": true,
+        "pc1_variance_fraction": 0.8934968352546232
+      },
+      "suite": "datadecide_olmes_macro_error"
+    },
+    {
+      "cancellation": {
+        "implied_variance_reduction": 0.8079969449988047,
+        "max_ratio": 0.5560797824578759,
+        "mean_ratio": 0.1920030550011953,
+        "median_ratio": 0.17630735463777575,
+        "min_ratio": 0.028221597449923627,
+        "n_pairs": 300,
+        "pooled_ratio": 0.18748522473093746
+      },
+      "cancellation_ci": {
+        "hi": 0.21893663109895767,
+        "lo": 0.14682078899850126,
+        "n_draws": 400
+      },
+      "fit_scales": [
+        "4M",
+        "6M",
+        "8M",
+        "10M",
+        "14M",
+        "16M",
+        "20M",
+        "60M",
+        "90M",
+        "150M"
+      ],
+      "metric": "olmes_macro_error",
+      "min_seeds_per_cell": 3,
+      "n_budgets": 10,
+      "n_interventions": 25,
+      "path": "/Users/Evan/ASLA/data/datadecide_runs_olmes_macro_error.parquet",
+      "residual_correlation": {
+        "fraction_positive": 1.0,
+        "max": 0.9735783663411288,
+        "mean": 0.8281124710965522,
+        "median": 0.8415752884343943,
+        "min": 0.47878462572565184
+      },
+      "scale_dependence": [
+        {
+          "compute": 8430221996851200.0,
+          "mean_residual": -0.02978310888104717,
+          "sd_residual": 0.005012829413287199,
+          "shared_to_spread": 5.941376900259744
+        },
+        {
+          "compute": 2.170083624144077e+16,
+          "mean_residual": -0.0030757066772604848,
+          "sd_residual": 0.007029624636590579,
+          "shared_to_spread": 0.4375349803531225
+        },
+        {
+          "compute": 4.377678106853376e+16,
+          "mean_residual": 0.005054045218195622,
+          "sd_residual": 0.006601752810941739,
+          "shared_to_spread": 0.7655611112580666
+        },
+        {
+          "compute": 5.88506060071895e+16,
+          "mean_residual": 0.00856426642708393,
+          "sd_residual": 0.004671410082657563,
+          "shared_to_spread": 1.833336460628548
+        },
+        {
+          "compute": 1.1309068320768e+17,
+          "mean_residual": 0.00941108189042958,
+          "sd_residual": 0.00784066948896188,
+          "shared_to_spread": 1.2002906006532392
+        },
+        {
+          "compute": 1.5375666115510272e+17,
+          "mean_residual": 0.014159807573186524,
+          "sd_residual": 0.006992552524174222,
+          "shared_to_spread": 2.0249840847436054
+        },
+        {
+          "compute": 2.1908574798505574e+17,
+          "mean_residual": 0.017684152233925846,
+          "sd_residual": 0.0055046242836104655,
+          "shared_to_spread": 3.2125993206437093
+        },
+        {
+          "compute": 1.955459382959407e+18,
+          "mean_residual": 0.0008671577105233955,
+          "sd_residual": 0.008135995000305245,
+          "shared_to_spread": 0.10658287160831116
+        },
+        {
+          "compute": 5.758063377068851e+18,
+          "mean_residual": -0.006558098490679118,
+          "sd_residual": 0.005879674868592872,
+          "shared_to_spread": 1.1153845471473505
+        },
+        {
+          "compute": 1.3439040749568e+19,
+          "mean_residual": -0.016679450679863123,
+          "sd_residual": 0.00757627295308932,
+          "shared_to_spread": 2.201537719554028
+        }
+      ],
+      "sha256": "de17854d09b27d856d88fc9c2e9939f2a48db192137b384fa456da95b81e7616",
+      "shared_component": {
+        "one_way_fraction": 0.8200141842583002,
+        "pc1_fraction": 0.8456306547109611
+      },
+      "shared_component_shape": {
+        "interpretation": "common OFFSET: cancels under differencing",
+        "loading_cv": 0.18204049977200767,
+        "loading_mean": -0.043795870201120454,
+        "loading_sd": 0.007972622099361946,
+        "loadings_same_sign": true,
+        "pc1_variance_fraction": 0.8456306547109611
+      },
+      "suite": "datadecide_olmes_macro_error"
+    },
+    {
+      "cancellation": {
+        "implied_variance_reduction": 0.2931834590297421,
+        "max_ratio": 1.1732365648549359,
+        "mean_ratio": 0.7068165409702579,
+        "median_ratio": 0.7896310530401776,
+        "min_ratio": 0.007653468176132922,
+        "n_pairs": 300,
+        "pooled_ratio": 0.8254675147939415
+      },
+      "cancellation_ci": {
+        "hi": 0.7512120807955831,
+        "lo": 0.5679486923283463,
+        "n_draws": 400
+      },
+      "fit_scales": [
+        "4M",
+        "6M",
+        "8M",
+        "10M",
+        "14M",
+        "16M",
+        "20M",
+        "60M",
+        "90M",
+        "150M",
+        "300M"
+      ],
+      "metric": "olmes_macro_correct_prob_per_char_deficit",
+      "min_seeds_per_cell": 3,
+      "n_budgets": 11,
+      "n_interventions": 25,
+      "path": "/Users/Evan/ASLA/data/datadecide_runs_olmes_correct_prob_per_char.parquet",
+      "residual_correlation": {
+        "fraction_positive": 0.8266666666666667,
+        "max": 0.9931702388029915,
+        "mean": 0.31985288158668707,
+        "median": 0.23570974917371063,
+        "min": -0.1866767024669694
+      },
+      "scale_dependence": [
+        {
+          "compute": 8430221996851200.0,
+          "mean_residual": 0.038364013740547584,
+          "sd_residual": 0.07585094205816789,
+          "shared_to_spread": 0.5057816382969552
+        },
+        {
+          "compute": 2.170083624144077e+16,
+          "mean_residual": 0.023607307764312146,
+          "sd_residual": 0.031798137990334346,
+          "shared_to_spread": 0.7424116396843123
+        },
+        {
+          "compute": 4.377678106853376e+16,
+          "mean_residual": 0.0031379076770909823,
+          "sd_residual": 0.020289545170013225,
+          "shared_to_spread": 0.15465638341310028
+        },
+        {
+          "compute": 5.88506060071895e+16,
+          "mean_residual": -0.003740556046655254,
+          "sd_residual": 0.017696980906387248,
+          "shared_to_spread": 0.2113669030012459
+        },
+        {
+          "compute": 1.1309068320768e+17,
+          "mean_residual": -0.0074174423609678405,
+          "sd_residual": 0.007644109351133702,
+          "shared_to_spread": 0.9703474950770761
+        },
+        {
+          "compute": 1.5375666115510272e+17,
+          "mean_residual": -0.001125496725355419,
+          "sd_residual": 0.009189303453049049,
+          "shared_to_spread": 0.12247900301757633
+        },
+        {
+          "compute": 2.1908574798505574e+17,
+          "mean_residual": 0.003855919007300526,
+          "sd_residual": 0.009836607867491283,
+          "shared_to_spread": 0.3919968203717706
+        },
+        {
+          "compute": 1.955459382959407e+18,
+          "mean_residual": -0.005764325246101658,
+          "sd_residual": 0.030947265301604385,
+          "shared_to_spread": 0.18626283097792232
+        },
+        {
+          "compute": 5.758063377068851e+18,
+          "mean_residual": -0.00790182142389621,
+          "sd_residual": 0.032599386496998894,
+          "shared_to_spread": 0.2423917218388037
+        },
+        {
+          "compute": 1.3439040749568e+19,
+          "mean_residual": -0.014689315341555573,
+          "sd_residual": 0.040195573704905604,
+          "shared_to_spread": 0.36544609238312326
+        },
+        {
+          "compute": 5.66196613152768e+19,
+          "mean_residual": -0.028325936919333553,
+          "sd_residual": 0.038891763026389095,
+          "shared_to_spread": 0.7283274070171016
+        }
+      ],
+      "sha256": "df1e0fa704d6f90e2415d9d4bf197aee92e86600181c7aefdc944d66a2c419f9",
+      "shared_component": {
+        "one_way_fraction": 0.20755118579781626,
+        "pc1_fraction": 0.9068164345536015
+      },
+      "shared_component_shape": {
+        "interpretation": "per-intervention SCALED shape: does not cancel under differencing",
+        "loading_cv": 2.031953533428936,
+        "loading_mean": -0.053385891076699235,
+        "loading_sd": 0.10847765000855131,
+        "loadings_same_sign": false,
+        "pc1_variance_fraction": 0.9068164345536017
+      },
+      "suite": "datadecide_olmes_correct_prob"
+    },
+    {
+      "cancellation": {
+        "implied_variance_reduction": 0.22802660375320372,
+        "max_ratio": 1.4899316967159766,
+        "mean_ratio": 0.7719733962467963,
+        "median_ratio": 0.977755042701375,
+        "min_ratio": 0.0033901178809539454,
+        "n_pairs": 300,
+        "pooled_ratio": 0.6882127300230134
+      },
+      "cancellation_ci": {
+        "hi": 0.8094750582336184,
+        "lo": 0.6595528456024855,
+        "n_draws": 400
+      },
+      "fit_scales": [
+        "4M",
+        "6M",
+        "8M",
+        "10M",
+        "14M",
+        "16M",
+        "20M",
+        "60M",
+        "90M",
+        "150M"
+      ],
+      "metric": "olmes_macro_correct_prob_per_char_deficit",
+      "min_seeds_per_cell": 3,
+      "n_budgets": 10,
+      "n_interventions": 25,
+      "path": "/Users/Evan/ASLA/data/datadecide_runs_olmes_correct_prob_per_char.parquet",
+      "residual_correlation": {
+        "fraction_positive": 0.81,
+        "max": 0.9996204229659709,
+        "mean": 0.25608181453303447,
+        "median": 0.0854819118474533,
+        "min": -0.5423702636028611
+      },
+      "scale_dependence": [
+        {
+          "compute": 8430221996851200.0,
+          "mean_residual": 0.06666688424781535,
+          "sd_residual": 0.09445943853924389,
+          "shared_to_spread": 0.7057726075739703
+        },
+        {
+          "compute": 2.170083624144077e+16,
+          "mean_residual": 0.041258057405334864,
+          "sd_residual": 0.04836508264416458,
+          "shared_to_spread": 0.8530546243223012
+        },
+        {
+          "compute": 4.377678106853376e+16,
+          "mean_residual": 0.013224934249401092,
+          "sd_residual": 0.02413496242848764,
+          "shared_to_spread": 0.5479575238033549
+        },
+        {
+          "compute": 5.88506060071895e+16,
+          "mean_residual": 0.0034684573462652746,
+          "sd_residual": 0.01917064980266255,
+          "shared_to_spread": 0.1809253928254196
+        },
+        {
+          "compute": 1.1309068320768e+17,
+          "mean_residual": -0.006199664269143578,
+          "sd_residual": 0.008436335224556337,
+          "shared_to_spread": 0.7348764723215009
+        },
+        {
+          "compute": 1.5375666115510272e+17,
+          "mean_residual": -0.002662796148959977,
+          "sd_residual": 0.009064719907527658,
+          "shared_to_spread": 0.29375382539384354
+        },
+        {
+          "compute": 2.1908574798505574e+17,
+          "mean_residual": -0.0007906018195174068,
+          "sd_residual": 0.013476507069811416,
+          "shared_to_spread": 0.05866518790231823
+        },
+        {
+          "compute": 1.955459382959407e+18,
+          "mean_residual": -0.027842231924115324,
+          "sd_residual": 0.04643287355291297,
+          "shared_to_spread": 0.599623279666021
+        },
+        {
+          "compute": 5.758063377068851e+18,
+          "mean_residual": -0.037484896558783995,
+          "sd_residual": 0.05702293637095347,
+          "shared_to_spread": 0.657365245362534
+        },
+        {
+          "compute": 1.3439040749568e+19,
+          "mean_residual": -0.049633975674843935,
+          "sd_residual": 0.06636377150048957,
+          "shared_to_spread": 0.7479076995266579
+        }
+      ],
+      "sha256": "df1e0fa704d6f90e2415d9d4bf197aee92e86600181c7aefdc944d66a2c419f9",
+      "shared_component": {
+        "one_way_fraction": 0.3393157791779073,
+        "pc1_fraction": 0.966039468525042
+      },
+      "shared_component_shape": {
+        "interpretation": "per-intervention SCALED shape: does not cancel under differencing",
+        "loading_cv": 1.3979015535399362,
+        "loading_mean": 0.10446380326340181,
+        "loading_sd": 0.14603011287059964,
+        "loadings_same_sign": false,
+        "pc1_variance_fraction": 0.966039468525042
+      },
+      "suite": "datadecide_olmes_correct_prob"
+    },
+    {
+      "cancellation": {
+        "implied_variance_reduction": 0.18332612008931337,
+        "max_ratio": 1.9790867244982195,
+        "mean_ratio": 0.8166738799106866,
+        "median_ratio": 0.7580844388731676,
+        "min_ratio": 0.006826336118755027,
+        "n_pairs": 300,
+        "pooled_ratio": 0.7127461704811964
+      },
+      "cancellation_ci": {
+        "hi": 0.9370677844552406,
+        "lo": 0.6273577559619593,
+        "n_draws": 400
+      },
+      "fit_scales": [
+        "4M",
+        "20M",
+        "60M",
+        "90M",
+        "150M",
+        "300M"
+      ],
+      "metric": "c4_en_bits_per_byte_paloma",
+      "min_seeds_per_cell": 1,
+      "n_budgets": 6,
+      "n_interventions": 25,
+      "path": "/Users/Evan/ASLA/data/signal_and_noise_datadecide_c4_bpb.parquet",
+      "residual_correlation": {
+        "fraction_positive": 0.62,
+        "max": 0.9986286105087324,
+        "mean": 0.22584072260209231,
+        "median": 0.3573391284659505,
+        "min": -0.9839381815694973
+      },
+      "scale_dependence": [
+        {
+          "compute": 8430221996851200.0,
+          "mean_residual": 0.00036684684127476187,
+          "sd_residual": 0.0005471487319109716,
+          "shared_to_spread": 0.6704700566398328
+        },
+        {
+          "compute": 2.1908574798505574e+17,
+          "mean_residual": -0.002093458879583061,
+          "sd_residual": 0.0034965264446537112,
+          "shared_to_spread": 0.5987253100241869
+        },
+        {
+          "compute": 1.955459382959407e+18,
+          "mean_residual": 0.0005195872069589395,
+          "sd_residual": 0.0034420800354575394,
+          "shared_to_spread": 0.15095151815372396
+        },
+        {
+          "compute": 5.758063377068851e+18,
+          "mean_residual": 0.0029225935897716692,
+          "sd_residual": 0.003225718019737622,
+          "shared_to_spread": 0.9060288505966158
+        },
+        {
+          "compute": 1.3674492743500431e+19,
+          "mean_residual": 0.0007547176767586292,
+          "sd_residual": 0.001332918323598624,
+          "shared_to_spread": 0.5662144959647911
+        },
+        {
+          "compute": 5.76098762809462e+19,
+          "mean_residual": -0.002473342697490929,
+          "sd_residual": 0.0029367994294935864,
+          "shared_to_spread": 0.8421898590185389
+        }
+      ],
+      "sha256": "c0eccd7d4b90dd2c3641e7b343ee4cc24a0c1c7abfd2381181f8e30ec5ffb2ea",
+      "shared_component": {
+        "one_way_fraction": 0.31576367633805147,
+        "pc1_fraction": 0.8220414126696723
+      },
+      "shared_component_shape": {
+        "interpretation": "per-intervention SCALED shape: does not cancel under differencing",
+        "loading_cv": 1.3702626037520587,
+        "loading_mean": -0.004311983874369941,
+        "loading_sd": 0.005908550251031045,
+        "loadings_same_sign": false,
+        "pc1_variance_fraction": 0.8220414126696726
+      },
+      "suite": "signal_and_noise_c4_bits_per_byte"
+    },
+    {
+      "cancellation": {
+        "implied_variance_reduction": 0.08424686873996656,
+        "max_ratio": 1.9952735758863254,
+        "mean_ratio": 0.9157531312600334,
+        "median_ratio": 0.925837345402917,
+        "min_ratio": 0.0020651111680607404,
+        "n_pairs": 300,
+        "pooled_ratio": 0.835868541117496
+      },
+      "cancellation_ci": {
+        "hi": 0.9868016784024521,
+        "lo": 0.7262493483351804,
+        "n_draws": 400
+      },
+      "fit_scales": [
+        "4M",
+        "20M",
+        "60M",
+        "90M",
+        "150M"
+      ],
+      "metric": "c4_en_bits_per_byte_paloma",
+      "min_seeds_per_cell": 1,
+      "n_budgets": 5,
+      "n_interventions": 25,
+      "path": "/Users/Evan/ASLA/data/signal_and_noise_datadecide_c4_bpb.parquet",
+      "residual_correlation": {
+        "fraction_positive": 0.56,
+        "max": 0.9999026033475481,
+        "mean": 0.10490329354128072,
+        "median": 0.17323662325597125,
+        "min": -0.9999911355123047
+      },
+      "scale_dependence": [
+        {
+          "compute": 8430221996851200.0,
+          "mean_residual": 9.449400879998912e-05,
+          "sd_residual": 0.0002615814404062833,
+          "shared_to_spread": 0.36124125875758933
+        },
+        {
+          "compute": 2.1908574798505574e+17,
+          "mean_residual": -0.0007028531211080164,
+          "sd_residual": 0.0020629368372766894,
+          "shared_to_spread": 0.34070510953493965
+        },
+        {
+          "compute": 1.955459382959407e+18,
+          "mean_residual": 0.0005318806198768756,
+          "sd_residual": 0.003419448705736473,
+          "shared_to_spread": 0.15554572261446467
+        },
+        {
+          "compute": 5.758063377068851e+18,
+          "mean_residual": 0.0017043382585418146,
+          "sd_residual": 0.0019832335960149956,
+          "shared_to_spread": 0.8593734303243055
+        },
+        {
+          "compute": 1.3674492743500431e+19,
+          "mean_residual": -0.001627351334970737,
+          "sd_residual": 0.0026208181379086142,
+          "shared_to_spread": 0.6209325673659091
+        }
+      ],
+      "sha256": "c0eccd7d4b90dd2c3641e7b343ee4cc24a0c1c7abfd2381181f8e30ec5ffb2ea",
+      "shared_component": {
+        "one_way_fraction": 0.19756620052720406,
+        "pc1_fraction": 0.7945406030958637
+      },
+      "shared_component_shape": {
+        "interpretation": "per-intervention SCALED shape: does not cancel under differencing",
+        "loading_cv": 2.1534001409686194,
+        "loading_mean": -0.0021624385946325164,
+        "loading_sd": 0.004656595574517644,
+        "loadings_same_sign": false,
+        "pc1_variance_fraction": 0.7945406030958637
+      },
+      "suite": "signal_and_noise_c4_bits_per_byte"
+    }
+  ],
+  "gate": {
+    "best_case_ratio": 0.1304906565748397,
+    "cancellation_ratio_by_suite": {
+      "datadecide_c4_bits_per_token": 0.23380508341489886,
+      "datadecide_olmes_correct_prob": 0.7719733962467963,
+      "datadecide_olmes_macro_error": 0.1920030550011953,
+      "signal_and_noise_c4_bits_per_byte": 0.9157531312600334
+    },
+    "mechanism": {
+      "finding": "The split across suites is not noise: it tracks whether the dominant shared residual component is a common OFFSET or a per-intervention SCALED shape. Every suite has a large first principal component (0.80-0.97 of residual variance), but that is not sufficient for cancellation. What matters is whether the PC1 loadings are near-constant across interventions.",
+      "suites_with_offset_structure": [
+        {
+          "cancellation": 0.1474207217241956,
+          "fit_to": "300M",
+          "loading_cv": 0.15617640911407304,
+          "suite": "datadecide_c4_bits_per_token"
+        },
+        {
+          "cancellation": 0.23380508341489886,
+          "fit_to": "150M",
+          "loading_cv": 0.21890777113293006,
+          "suite": "datadecide_c4_bits_per_token"
+        },
+        {
+          "cancellation": 0.1304906565748397,
+          "fit_to": "300M",
+          "loading_cv": 0.14501793292587176,
+          "suite": "datadecide_olmes_macro_error"
+        },
+        {
+          "cancellation": 0.1920030550011953,
+          "fit_to": "150M",
+          "loading_cv": 0.18204049977200767,
+          "suite": "datadecide_olmes_macro_error"
+        }
+      ],
+      "suites_with_scaled_structure": [
+        {
+          "cancellation": 0.7068165409702579,
+          "fit_to": "300M",
+          "loading_cv": 2.031953533428936,
+          "suite": "datadecide_olmes_correct_prob"
+        },
+        {
+          "cancellation": 0.7719733962467963,
+          "fit_to": "150M",
+          "loading_cv": 1.3979015535399362,
+          "suite": "datadecide_olmes_correct_prob"
+        },
+        {
+          "cancellation": 0.8166738799106866,
+          "fit_to": "300M",
+          "loading_cv": 1.3702626037520587,
+          "suite": "signal_and_noise_c4_bits_per_byte"
+        },
+        {
+          "cancellation": 0.9157531312600334,
+          "fit_to": "150M",
+          "loading_cv": 2.1534001409686194,
+          "suite": "signal_and_noise_c4_bits_per_byte"
+        }
+      ],
+      "why_it_matters": "r_i = m + e_i differences to e_i - e_j and the misspecification disappears. r_i = a_i m + e_i differences to (a_i - a_j) m + e_i - e_j and it does not. A large PC1 is therefore not evidence for the method premise on its own; the loading spread is the test."
+    },
+    "reading": "The cancellation ratio sits between the pre-set thresholds, or differs across suites. Reported with intervals for a human decision rather than resolved by the script.",
+    "thresholds": {
+      "note": "fixed before the measurement was read; ~1.0 means independent residuals, ~0 perfect common-mode",
+      "proceed_below": 0.7,
+      "stop_at_or_above": 0.9
+    },
+    "verdict": "AMBIGUOUS_HUMAN_DECISION",
+    "worst_case_ratio": 0.9157531312600334
+  }
+}
