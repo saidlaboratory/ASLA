@@ -63,6 +63,11 @@ RENDERERS: list[tuple[str, list[str], dict[str, str]]] = [
         {"results/curvature/RESULTS.md": "{tmp}/curvature_RESULTS.md"},
     ),
     (
+        "render_selection_stability.py",
+        ["--out", "{tmp}/SELECTION_STABILITY.md"],
+        {"results/external/SELECTION_STABILITY.md": "{tmp}/SELECTION_STABILITY.md"},
+    ),
+    (
         "render_macros.py",
         ["--out", "{tmp}/macros.tex"],
         {"paper/macros.tex": "{tmp}/macros.tex"},

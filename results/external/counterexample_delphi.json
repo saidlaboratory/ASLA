@@ -1,0 +1,79 @@
+{
+  "level_accuracy_does_not_imply_decision_accuracy": {
+    "by_accuracy": [
+      {
+        "fraction_unresolved": 0.03666666666666667,
+        "level_accuracy": 0.002,
+        "pairs_with_gap_below_tolerance": 11,
+        "tolerance_in_metric_units": 0.008099434586133535
+      },
+      {
+        "fraction_unresolved": 0.06333333333333334,
+        "level_accuracy": 0.005,
+        "pairs_with_gap_below_tolerance": 19,
+        "tolerance_in_metric_units": 0.020248586465333836
+      },
+      {
+        "fraction_unresolved": 0.15,
+        "level_accuracy": 0.01,
+        "pairs_with_gap_below_tolerance": 45,
+        "tolerance_in_metric_units": 0.04049717293066767
+      }
+    ],
+    "gap_mean": 0.23831534769972984,
+    "gap_median": 0.17542904775319457,
+    "gap_min": 0.0018304944701319492,
+    "mean_level": 4.0497172930667675,
+    "n_candidates": 25,
+    "n_pairs": 300
+  },
+  "moderators_this_suggests": {
+    "hyperparameter_transfer_regime": "Their stated enabler is a token-horizon correction to the learning rate. That is a claim about hyperparameter transfer, and it is testable as a moderator: extrapolation should work better for recipes whose hyperparameters transfer correctly across scale. We cannot test it here -- DataDecide varies corpora under one recipe, so there is no hyperparameter-transfer contrast in it, and the suite that would provide one (compute-multipliers, seven recipes differing in optimizer, schedule and initialisation) releases only its top budget.",
+    "related_evidence_in_this_project": {
+      "by_scale": {
+        "130m": {
+          "coordinate_descent_tuned": 0.8727272727272727,
+          "single_hp_ablation_median": 0.7636363636363637
+        },
+        "300m": {
+          "coordinate_descent_tuned": 0.9818181818181818,
+          "single_hp_ablation_median": 0.8545454545454545
+        }
+      },
+      "measure": "pairwise agreement between small-scale and target ordering",
+      "note": "The tuning-confound study already measures a version of this: agreement falls when a single hyperparameter is mis-tuned relative to coordinate-descent tuning, at both small scales. That is the same mechanism, in the direction their token-horizon correction is designed to remove."
+    }
+  },
+  "source": {
+    "enablers": [
+      "token-horizon learning-rate correction eta ~ (T0/T)^0.3",
+      "AdamH optimizer, which removes weight decay from the search"
+    ],
+    "extrapolation_factor": 300,
+    "fit_range_flops": [
+      3e+18,
+      3e+20
+    ],
+    "heldout_budgets_flops": [
+      1e+21,
+      1e+22
+    ],
+    "metric": "pretraining loss",
+    "n_isoflop_optima_in_fit": 7,
+    "name": "Open Athena, Scaling Laws That Extrapolate 300x Past the Fit (Delphi)",
+    "reported_accuracy_at_target": 0.002,
+    "reported_accuracy_heldout": 0.005,
+    "seeds_per_heldout_budget": 3,
+    "target_flops": 1e+23,
+    "url": "https://openathena.ai/blog/delphi/",
+    "verified_against_source": true
+  },
+  "target_compute": 7.06209840434774e+20,
+  "target_scale": "1B",
+  "what_they_did_not_do": {
+    "note": "Every fit predicts one configuration's loss. Delphi Attempt 1 versus Attempt 2 is a diagnosis of why a recipe mis-extrapolated, then a rewrite, not a selection between candidates at a target budget. Absolute losses are reported; the difference between two recipes at the target never is.",
+    "ranked_candidates": false,
+    "reported_gaps_between_recipes": false
+  },
+  "why_the_results_are_compatible": "They solve a level problem for one recipe; we solve a sign problem between recipes. A bound on each candidate's predicted value does not bound the sign of a difference unless the residual error is common-mode across candidates --- which is exactly the cancellation question this project measures, and which is metric-dependent."
+}
