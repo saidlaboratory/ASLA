@@ -6,6 +6,7 @@ import pytest
 
 from asla.analysis.crossover import benjamini_hochberg, detect_crossovers_fdr, pairwise_target_tests
 from asla.analysis.fits import (
+    MixedSeedCountError,
     cell_means_and_sigma,
     fit_all,
     fit_diagnostics_all,
@@ -86,15 +87,43 @@ def test_cell_means_and_sigma_values():
     assert np.allclose(cells["sigma"], expected_sigma)
 
 
-def test_cell_means_imputes_single_seed_sigma():
+def test_cell_means_raises_on_mixed_seed_counts():
+    """Mixed seed counts must raise rather than impute a mean standard error.
+
+    The historical behaviour filled a single-seed cell's sigma with the mean
+    sigma of the seeded cells. That is a linear aggregate of a scale feeding a
+    fit that consumes 1/sigma**2 -- the Jensen-class defect audited in this
+    project -- so the caller is now required to choose explicitly.
+    """
+
     rows = [
         {"intervention": "a", "intervention_class": "x", "compute": 1.0, "seed": 0, "bpb": 1.0},
         {"intervention": "a", "intervention_class": "x", "compute": 1.0, "seed": 1, "bpb": 1.1},
         {"intervention": "a", "intervention_class": "x", "compute": 2.0, "seed": 0, "bpb": 0.9},
     ]
+    with pytest.raises(MixedSeedCountError, match="single seed"):
+        cell_means_and_sigma(_frame(rows))
+
+
+def test_cell_means_uniform_seed_counts_are_unaffected():
+    """The guard must fire only on the mixed case, not on well-seeded tables."""
+
+    rows = [
+        {"intervention": "a", "intervention_class": "x", "compute": c, "seed": s, "bpb": 1.0 + 0.1 * s}
+        for c in (1.0, 2.0)
+        for s in (0, 1)
+    ]
     cells = cell_means_and_sigma(_frame(rows))
     assert cells["sigma"].notna().all()
     assert (cells["sigma"] > 0).all()
+
+
+def test_cell_means_all_single_seed_leaves_sigma_null():
+    """No cell has two seeds, so there is nothing to impute from and nothing to raise about."""
+
+    rows = [{"intervention": "a", "intervention_class": "x", "compute": c, "seed": 0, "bpb": 1.0} for c in (1.0, 2.0, 4.0)]
+    cells = cell_means_and_sigma(_frame(rows))
+    assert cells["sigma"].isna().all()
 
 
 def test_weighted_fit_all_runs_and_matches_truth_shape():

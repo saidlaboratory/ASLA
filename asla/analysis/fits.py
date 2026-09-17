@@ -58,8 +58,10 @@ def resolve_fit_budgets(
             raise ValueError("intermediate budget must be strictly below the target budget")
 
     requested_values = None if requested is None else [float(value) for value in requested]
-    if requested_values is not None and intermediate_budget is not None and any(
-        np.isclose(value, intermediate_budget) for value in requested_values
+    if (
+        requested_values is not None
+        and intermediate_budget is not None
+        and any(np.isclose(value, intermediate_budget) for value in requested_values)
     ):
         raise ValueError("fitting budgets must not include the reserved intermediate budget")
     candidates = requested_values if requested_values is not None else [value for value in computes if value < target]
@@ -89,15 +91,34 @@ def _require_chinchilla_columns(df: pd.DataFrame) -> None:
         raise ValueError(f"fit_form='chinchilla' requires columns {missing}")
 
 
+class MixedSeedCountError(ValueError):
+    """Raised when some cells are single-seeded and others are not.
+
+    Imputing a standard error for the single-seed cells would aggregate scales
+    linearly and feed the result to a fit that squares them. The caller must
+    decide instead; see :func:`cell_means_and_sigma`.
+    """
+
+
 def cell_means_and_sigma(df: pd.DataFrame) -> pd.DataFrame:
     """Aggregate seed-level rows into per-cell means with seed-aware standard errors.
 
     Each ``(intervention, compute)`` cell yields the mean BPB, the number of
-    distinct seeds, and ``sigma = sd / sqrt(n_seeds)``. Cells with one seed
-    cannot estimate a standard error; their sigma is imputed as the mean sigma
-    of the adequately seeded cells so weighted fits neither drop them nor let
-    them dominate. When no cell has two seeds, all sigmas are null and callers
-    should fall back to unweighted fitting.
+    distinct seeds, and ``sigma = sd / sqrt(n_seeds)``. When no cell has two
+    seeds, all sigmas are null and callers should fall back to unweighted
+    fitting.
+
+    **Mixed seed counts raise.** A single-seed cell cannot estimate a standard
+    error, and the historical behaviour was to impute the *mean* sigma of the
+    adequately seeded cells. That is a linear aggregate of a scale feeding a
+    weighted fit that consumes ``1 / sigma**2`` --- the shape of the Jensen-class
+    defect audited in this project, where pooling in the wrong space understated
+    a squared quantity by 2.06x. It is a plausibility fill rather than a variance
+    pooling, and on every suite here the path is unreachable: DataDecide has no
+    single-seed cells and Fantastic Optimizers has no multi-seed cell to impute
+    *from*. Rather than leave a latent defect that goes live the first time
+    someone runs this on a suite with mixed seed counts, that case now raises
+    :class:`MixedSeedCountError` and asks the caller to choose explicitly.
     """
 
     validate(df)
@@ -119,9 +140,18 @@ def cell_means_and_sigma(df: pd.DataFrame) -> pd.DataFrame:
     cells = pd.DataFrame.from_records(records)
     estimated = cells["sigma"].dropna()
     if not estimated.empty:
+        missing = int(cells["sigma"].isna().sum())
+        if missing:
+            raise MixedSeedCountError(
+                f"{missing} of {len(cells)} cells have a single seed while "
+                f"{len(estimated)} have two or more, so their standard error would have "
+                "to be imputed. Imputing the mean sigma is a linear aggregate of a scale "
+                "feeding a fit that consumes 1/sigma**2, which is the Jensen-class defect "
+                "audited in this project. Choose explicitly: drop the single-seed cells, "
+                "fit unweighted, or supply sigma yourself."
+            )
         floor = float(estimated[estimated > 0].min()) if (estimated > 0).any() else 1e-12
-        fill = float(max(estimated.mean(), floor))
-        cells["sigma"] = cells["sigma"].fillna(fill).clip(lower=floor)
+        cells["sigma"] = cells["sigma"].clip(lower=floor)
     return cells
 
 
