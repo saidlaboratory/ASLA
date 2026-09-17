@@ -76,7 +76,66 @@ def test_estimate_deviation_records_provenance() -> None:
     assert info["estimated_from"] == "train_interventions_only"
     assert info["interventions_used"] == names
     assert len(info["deviation"]) == len(budgets)
-    assert all(value >= 0 for value in info["deviation"])
+    # The deviation is the SIGNED mean residual, so negative entries are
+    # expected and required: an all-positive vector would mean RMS was used,
+    # which manufactures bias out of an oscillating residual.
+    assert info["deviation_summary"] == "signed_mean_residual"
+    assert all(entry["rms_residual"] >= 0 for entry in info["per_budget"])
+    assert all(abs(entry["signed_mean_residual"]) <= entry["rms_residual"] + 1e-12 for entry in info["per_budget"])
+
+
+def test_signed_deviation_never_exceeds_rms() -> None:
+    """|mean| <= rms is a mathematical identity; violating it means a mix-up."""
+
+    df = _synthetic_runs()
+    budgets = tuple(sorted(df["compute"].unique()))
+    info = study.estimate_deviation(df, budgets, sorted(df["intervention"].unique()))
+    for entry in info["per_budget"]:
+        assert abs(entry["signed_mean_residual"]) <= entry["rms_residual"] + 1e-12
+
+
+def test_oscillating_residual_gives_small_signed_deviation() -> None:
+    """The distinction that matters: RMS would call this large, signed does not.
+
+    Two interventions with equal and opposite residuals at every budget have
+    zero common-mode deviation and therefore bias no projection, while their RMS
+    residual is large. Getting this backwards manufactures a bias-variance
+    tradeoff the data does not support.
+    """
+
+    budgets = [1e16, 3e16, 1e17, 3e17, 1e18]
+    rows = []
+    for index, sign in enumerate((1.0, -1.0)):
+        for budget in budgets:
+            base = 2.0 + 50.0 * budget**-0.18
+            offset = sign * 0.05 * (1 if budgets.index(budget) % 2 == 0 else -1)
+            for seed in range(3):
+                rows.append(
+                    {
+                        "intervention": f"recipe_{index}",
+                        "intervention_class": "data",
+                        "compute": budget,
+                        "seed": seed,
+                        "bpb": base + offset,
+                        "metric_name": "bpb",
+                        "params_n": 1e7,
+                        "tokens_d": 1e9,
+                        "tokens_per_param": 100.0,
+                        "scale_label": f"S{budget:.0e}",
+                        "step": 1000,
+                        "seed_label": str(seed),
+                        "tuning_quality": "ok",
+                    }
+                )
+    df = pd.DataFrame(rows)
+    info = study.estimate_deviation(df, tuple(budgets), ["recipe_0", "recipe_1"])
+    signed = [abs(entry["signed_mean_residual"]) for entry in info["per_budget"]]
+    rms = [entry["rms_residual"] for entry in info["per_budget"]]
+    # Signed deviation is an order of magnitude smaller than RMS: the
+    # oscillation largely cancels in the mean but not in the magnitude. It is
+    # not exactly zero because each recipe is fitted separately, so the offsets
+    # perturb the fits asymmetrically.
+    assert max(signed) < 0.1 * max(rms)
 
 
 def test_estimate_deviation_is_small_for_well_specified_data() -> None:
@@ -85,7 +144,7 @@ def test_estimate_deviation_is_small_for_well_specified_data() -> None:
     df = _synthetic_runs()
     budgets = tuple(sorted(df["compute"].unique()))
     info = study.estimate_deviation(df, budgets, sorted(df["intervention"].unique()))
-    assert max(info["deviation"]) < 1e-2
+    assert max(abs(value) for value in info["deviation"]) < 1e-2
 
 
 def test_evaluate_allocation_refuses_two_point_design() -> None:

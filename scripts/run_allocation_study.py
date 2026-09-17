@@ -92,12 +92,29 @@ def estimate_deviation(
 ) -> dict[str, Any]:
     """Estimate the per-budget model deviation on the fitting range.
 
-    For each intervention we fit the two-parameter power law on ``budgets`` and
-    record the residual at each budget. The deviation used by the bias-aware
-    design is the RMS residual per budget, averaged across the supplied
-    interventions --- which must be the *training* interventions only.
+    For each intervention we fit the power law on ``budgets`` and record the
+    residual at each budget. Two summaries are computed per budget and both are
+    returned, because they answer different questions and only one of them is
+    the right input to a bias correction:
 
-    Returns the deviation vector plus the provenance needed to audit it.
+    * ``signed_mean`` --- the mean residual across interventions. This is the
+      *common-mode* component, and it is the only part that biases a projection:
+      weighted least squares carries the signed deviation into the estimate.
+      This is what ``deviation`` is set to.
+    * ``rms`` --- the root-mean-square residual. This measures deviation
+      *magnitude* and is the natural thing to reach for, but it is wrong for
+      this purpose: taking absolute magnitudes turns an oscillating residual
+      that largely cancels into a systematic offset that does not.
+
+    On DataDecide the distinction is large and in the direction that matters.
+    The signed residual oscillates with compute rather than trending (+0.045,
+    -0.040, +0.044, -0.043; correlation with log C of only -0.022), so it
+    produces a projection bias of -0.0017, while the RMS version produces
+    +0.0304 --- an eighteen-fold overstatement of the bias a design must fight.
+    Using RMS here would have manufactured a bias-variance tradeoff that the
+    data does not support.
+
+    Estimated on the *training* interventions only.
     """
 
     means = cell_means_and_sigma(df)
@@ -124,15 +141,34 @@ def estimate_deviation(
     for budget in budgets:
         values = residuals[budget]
         rms = float(np.sqrt(np.mean(np.square(values)))) if values else 0.0
-        deviation.append(rms)
-        per_budget.append({"compute": budget, "rms_residual": rms, "n": len(values)})
+        signed = float(np.mean(values)) if values else 0.0
+        deviation.append(signed)
+        per_budget.append(
+            {
+                "compute": budget,
+                "signed_mean_residual": signed,
+                "rms_residual": rms,
+                "n": len(values),
+            }
+        )
 
+    log_compute = np.log(np.asarray(budgets, dtype=float))
+    signed_values = np.asarray(deviation, dtype=float)
+    correlation = float(np.corrcoef(signed_values, log_compute)[0, 1]) if len(budgets) > 2 else float("nan")
     return {
         "deviation": deviation,
+        "deviation_summary": "signed_mean_residual",
         "per_budget": per_budget,
         "estimated_from": "train_interventions_only",
         "n_interventions_used": len(used),
         "interventions_used": sorted(used),
+        "corr_signed_deviation_with_log_compute": correlation,
+        "note": (
+            "deviation is the SIGNED mean residual, the common-mode component "
+            "that actually biases a projection. The RMS residual is recorded "
+            "alongside it but must not be used as a bias input: it converts an "
+            "oscillating residual into a spurious systematic offset."
+        ),
     }
 
 
