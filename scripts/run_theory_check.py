@@ -74,14 +74,32 @@ def leverage(budgets: tuple[float, ...], target: float) -> dict[str, float]:
 
 
 def log_space_sigma(df: pd.DataFrame, budgets: tuple[float, ...]) -> dict[str, Any]:
-    """Log-space noise on a cell mean, plus the per-budget spread that tests A2."""
+    """Log-space noise on a cell mean, plus the per-budget spread that tests A2.
+
+    ``sigma`` is pooled in VARIANCE space as ``sqrt(mean(relative**2))``, because
+    every downstream use squares it: ``expected_flip_rate`` forms
+    ``2 * sigma**2 * leverage`` and the variance diagnosis forms
+    ``sigma**2 * leverage``. Taking ``mean(relative)`` and squaring it is the
+    Jensen error -- it understates ``sigma**2`` by the squared coefficient of
+    variation of the relative standard errors, which on DataDecide is 2.06x.
+
+    ``sigma_mean_of_scales`` is reported alongside because it is the right
+    summary for the different question "what is a typical relative standard
+    error", and keeping both makes the distinction explicit rather than a
+    silent choice. It must never be squared.
+    """
 
     rows = df[df["compute"].isin(budgets)]
     stats = rows.groupby(["intervention", "compute"])["bpb"].agg(["mean", "std", "count"])
     relative = stats["std"] / stats["mean"] / np.sqrt(stats["count"])
     per_budget = relative.groupby("compute").mean()
+    sigma_rms = float(np.sqrt(np.mean(relative.to_numpy(dtype=float) ** 2)))
+    sigma_mean = float(relative.mean())
     return {
-        "sigma": float(relative.mean()),
+        "sigma": sigma_rms,
+        "sigma_pooling": "sqrt(mean(relative**2))",
+        "sigma_mean_of_scales": sigma_mean,
+        "sigma_variance_understatement_if_mean_used": float(sigma_rms**2 / sigma_mean**2),
         "per_budget": {f"{c:.4e}": float(v) for c, v in per_budget.items()},
         "min": float(per_budget.min()),
         "max": float(per_budget.max()),
@@ -246,11 +264,20 @@ def main(argv: list[str] | None = None) -> int:
         "ratio_empirical_over_theory": empirical_variance / theory_variance,
         "gap_sd_understated_by": float(np.sqrt(empirical_variance / theory_variance)),
         "n_bootstrap_draws": len(projections),
+        "sigma_pooling": noise["sigma_pooling"],
         "interpretation": (
             "The two-parameter derivation assumes the floor E is known (A1). In the audited pipeline E is "
-            "fitted, so the projection carries a third parameter's worth of variance that the derivation omits. "
-            "This single omission is the common cause of the T1, T2 and T3 misses: it under-states the gap "
-            "standard deviation, which under-states flip probabilities at every lever arm."
+            "fitted, so the projection carries a third parameter's worth of variance that the derivation "
+            "omits, which under-states the gap standard deviation and therefore flip probabilities at every "
+            "lever arm. Magnitude, corrected: this ratio was previously reported as 3.20 while sigma was "
+            "pooled as mean(relative_se) and then squared. Pooling in variance space as required by the "
+            "sigma**2 that consumes it (see log_space_sigma) raises theory_var by "
+            f"{noise['sigma_variance_understatement_if_mean_used']:.2f}x and leaves a residual ratio of "
+            f"{empirical_variance / theory_variance:.2f}. So roughly half of what was attributed to the "
+            "omitted third parameter was the pooling error; the omission is still real and still in the "
+            "direction that explains the misses, but it is a smaller effect than first reported, and it no "
+            "longer accounts for the T2 miss on its own (that ratio remains 0.08, far outside the "
+            "factor-of-two band)."
         ),
     }
 

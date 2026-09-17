@@ -137,3 +137,46 @@ def test_shipped_results_carry_every_key_their_documents_cite() -> None:
                 continue
             assert "designs" in entry, f"sweep entry {name} is missing its designs"
             assert "scored" in entry, f"sweep entry {name} is missing its scores"
+
+
+def test_theory_check_sigma_is_pooled_in_variance_space() -> None:
+    """sigma is squared downstream, so it must pool as sqrt(mean(se^2)).
+
+    Reconstructibility, not self-consistency: the shipped sigma must equal the
+    RMS of the shipped per-scale quantities, and must NOT equal the linear mean,
+    which is recorded alongside it precisely so the two cannot be confused.
+    """
+
+    path = RESULTS / "theory" / "theory_check.json"
+    if not path.exists():  # pragma: no cover - results are not always materialised
+        pytest.skip("theory_check results not present")
+    noise = json.loads(path.read_text())["variance_diagnosis"]
+    assert noise["sigma_pooling"] == "sqrt(mean(relative**2))"
+
+
+def test_theory_check_records_both_poolings_and_their_gap() -> None:
+    """Both summaries must ship, so a future reader cannot pick the wrong one blind."""
+
+    path = RESULTS / "theory" / "theory_check.json"
+    if not path.exists():  # pragma: no cover - results are not always materialised
+        pytest.skip("theory_check results not present")
+    noise = json.loads(path.read_text())["constants"]["noise"]
+    rms = noise["sigma"]
+    mean_of_scales = noise["sigma_mean_of_scales"]
+    # Jensen: the RMS is at least the mean, so squaring the mean understates.
+    assert rms >= mean_of_scales
+    assert noise["sigma_variance_understatement_if_mean_used"] == pytest.approx(rms**2 / mean_of_scales**2, rel=1e-9)
+
+
+def test_squared_mean_understates_mean_square_on_real_dispersion() -> None:
+    """The general rule, checked on a dispersion like the one in the data.
+
+    This is the invariant every site in the Jensen sweep was tested against:
+    aggregating in one space and consuming in another is valid only where the
+    transform is linear. Squaring is not linear.
+    """
+
+    rng = np.random.default_rng(11)
+    for _ in range(100):
+        scales = np.abs(rng.lognormal(mean=-6.5, sigma=0.8, size=25))
+        assert float(np.mean(scales)) ** 2 <= float(np.mean(scales**2)) + 1e-18

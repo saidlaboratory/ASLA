@@ -61,28 +61,28 @@
     "predicted_points": [
       {
         "arm": "150M",
-        "expected_flips": 4.05729010200526,
-        "flip_rate": 0.013524300340017534,
+        "expected_flips": 5.502640925065624,
+        "flip_rate": 0.018342136416885414,
         "leverage": 1.3230821551636183,
         "log10_L": 1.7205654939958746
       },
       {
         "arm": "300M",
-        "expected_flips": 3.2577025706936538,
-        "flip_rate": 0.010859008568978847,
+        "expected_flips": 4.437939112883521,
+        "flip_rate": 0.014793130376278404,
         "leverage": 0.795981806176633,
         "log10_L": 1.0959664975989203
       },
       {
         "arm": "530M",
-        "expected_flips": 2.6617051947688677,
-        "flip_rate": 0.008872350649229558,
+        "expected_flips": 3.712121913300478,
+        "flip_rate": 0.012373739711001594,
         "leverage": 0.5199320570626951,
         "log10_L": 0.6741434022429718
       }
     ],
-    "predicted_slope_flips_per_decade": 1.3295977284848985,
-    "ratio_predicted_over_measured": 0.06040989632652384,
+    "predicted_slope_flips_per_decade": 1.710594033103846,
+    "ratio_predicted_over_measured": 0.07772035555019176,
     "verdict": "MISSED",
     "within_factor": 2.0
   },
@@ -92,21 +92,21 @@
       64.9,
       69.8
     ],
-    "direction": "theory OVER-predicts the pooling benefit",
+    "direction": "theory UNDER-predicts the pooling benefit",
     "k_budgets": 11,
     "leverage_plain": 0.795981806176633,
     "leverage_pooled": 0.1191119995197926,
     "measured_plain": 0.05333333333333334,
     "measured_pooled": 0.02,
     "measured_reduction_pct": 62.50000000000001,
-    "miss_points": -4.6703785383373955,
-    "predicted_flip_rate_plain": 0.010859008568978847,
-    "predicted_flip_rate_pooled": 0.0035649714076852594,
+    "miss_points": 1.9876582862515804,
+    "predicted_flip_rate_plain": 0.014793130376278404,
+    "predicted_flip_rate_pooled": 0.005841460772824497,
     "predicted_interval_pct": [
       64.86249733406517,
       69.79321499260911
     ],
-    "predicted_mis_selection_reduction_pct": 67.1703785383374,
+    "predicted_mis_selection_reduction_pct": 60.51234171374843,
     "predicted_variance_ratio": 0.14964161064425252,
     "predicted_variance_reduction_pct": 85.03583893557474,
     "verdict": "MISSED"
@@ -169,7 +169,10 @@
         "5.8851e+16": 0.0013750134675251946,
         "8.4302e+15": 0.0013679255984413766
       },
-      "sigma": 0.0014467763297481223
+      "sigma": 0.0020774200142609535,
+      "sigma_mean_of_scales": 0.0014467763297481223,
+      "sigma_pooling": "sqrt(mean(relative**2))",
+      "sigma_variance_understatement_if_mean_used": 2.061796666749207
     },
     "primary": {
       "L": 12.472872921340302,
@@ -202,10 +205,11 @@
   },
   "variance_diagnosis": {
     "empirical_var_log_projection": 5.3294140762072994e-06,
-    "gap_sd_understated_by": 1.7884910326229873,
-    "interpretation": "The two-parameter derivation assumes the floor E is known (A1). In the audited pipeline E is fitted, so the projection carries a third parameter's worth of variance that the derivation omits. This single omission is the common cause of the T1, T2 and T3 misses: it under-states the gap standard deviation, which under-states flip probabilities at every lever arm.",
+    "gap_sd_understated_by": 1.2455576985890549,
+    "interpretation": "The two-parameter derivation assumes the floor E is known (A1). In the audited pipeline E is fitted, so the projection carries a third parameter's worth of variance that the derivation omits, which under-states the gap standard deviation and therefore flip probabilities at every lever arm. Magnitude, corrected: this ratio was previously reported as 3.20 while sigma was pooled as mean(relative_se) and then squared. Pooling in variance space as required by the sigma**2 that consumes it (see log_space_sigma) raises theory_var by 2.06x and leaves a residual ratio of 1.55. So roughly half of what was attributed to the omitted third parameter was the pooling error; the omission is still real and still in the direction that explains the misses, but it is a smaller effect than first reported, and it no longer accounts for the T2 miss on its own (that ratio remains 0.08, far outside the factor-of-two band).",
     "n_bootstrap_draws": 150,
-    "ratio_empirical_over_theory": 3.198700173772839,
-    "theory_var_two_parameter": 1.6661186690471531e-06
+    "ratio_empirical_over_theory": 1.5514139805144629,
+    "sigma_pooling": "sqrt(mean(relative**2))",
+    "theory_var_two_parameter": 3.4351979182500454e-06
   }
 }

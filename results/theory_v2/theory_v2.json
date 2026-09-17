@@ -107,7 +107,7 @@
     "modelled_variance": 2.6080174015153288e-05,
     "phi_used": 0.8761084833543724,
     "ratio": 4.973034052522051,
-    "two_parameter_ratio": 0.31262698773686837,
+    "two_parameter_ratio": 0.6445732812517204,
     "two_parameter_source": "results/theory/theory_check.json",
     "verdict": "UNINTERPRETABLE"
   },
@@ -128,11 +128,11 @@
       50.0,
       63.0
     ],
-    "closer_than_two_parameter": true,
+    "closer_than_two_parameter": false,
     "lower_than_two_parameter": true,
     "measured_reduction_pct": 62.50000000000001,
     "predicted_reduction_pct": 58.62345811469251,
-    "two_parameter_prediction_pct": 67.1703785383374,
+    "two_parameter_prediction_pct": 60.51234171374843,
     "two_parameter_source": "results/theory/theory_check.json",
     "verdict": "CONFIRMED"
   },
