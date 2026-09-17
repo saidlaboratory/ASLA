@@ -94,3 +94,46 @@ def test_superseded_figure_is_not_reintroduced() -> None:
     real = evidence["1_misspecification_is_real"]
     assert real["residual_scatter_over_seed_se"] != pytest.approx(4.22, abs=5e-3)
     assert real["variance_inflation"] != pytest.approx(17.8, abs=5e-2)
+
+
+def test_shipped_results_carry_every_key_their_documents_cite() -> None:
+    """Generated documents must be reproducible from the shipped JSON.
+
+    This caught a real gap: ``run_abstention_study.py`` defined
+    ``evaluate_single_scale`` but never called it, so the committed JSON carried
+    a single-scale baseline only because an ad-hoc run had written one. The
+    results document cited a number the script could not regenerate.
+    """
+
+    required = {
+        "abstention/abstention_1B.json": (
+            "coverage",
+            "abstention_by_scale",
+            "cost_of_correctness",
+            "scored",
+            "baseline_has_headroom",
+        ),
+        "allocation/allocation_1B.json": ("sweep", "scored", "deviation", "split"),
+        "curvature/curvature_gate.json": (
+            "gate",
+            "alternative_explanations",
+            "gate_adjudication",
+            "confound_scope",
+        ),
+    }
+    for relative, keys in required.items():
+        path = RESULTS / relative
+        if not path.exists():  # pragma: no cover - results are not always materialised
+            pytest.skip(f"{relative} not present")
+        payload = json.loads(path.read_text())
+        for key in keys:
+            assert key in payload, f"{relative} is missing {key!r}, which its document cites"
+
+    # Each allocation sweep entry must carry the per-arm designs its table reads.
+    allocation = RESULTS / "allocation" / "allocation_1B.json"
+    if allocation.exists():
+        for name, entry in json.loads(allocation.read_text())["sweep"].items():
+            if "error" in entry:
+                continue
+            assert "designs" in entry, f"sweep entry {name} is missing its designs"
+            assert "scored" in entry, f"sweep entry {name} is missing its scores"

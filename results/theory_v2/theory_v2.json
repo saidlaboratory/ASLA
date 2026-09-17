@@ -1,0 +1,165 @@
+{
+  "FINDING_misspecification_is_structured": {
+    "claim": "Model misspecification in scaling-law fits cannot be absorbed into a noise-inflation term. A constant multiplying squared residuals is the wrong functional object, because the misspecification is structured in compute rather than exchangeable across the ladder.",
+    "evidence": {
+      "1_misspecification_is_real": {
+        "design": "primary",
+        "max_fit_scale": "300M",
+        "n_interventions": 25,
+        "note": "the power law does not fit DataDecide cell means within seed noise; computed from the primary design's residual decomposition, not asserted",
+        "pooled_residual_var": 0.0013576895377836128,
+        "pooled_seed_var": 0.00016165417269298096,
+        "residual_scatter_over_seed_se": 2.8980560188379227,
+        "variance_inflation": 8.39872868832271
+      },
+      "2_a_shared_inflator_does_not_transfer_across_ladders": {
+        "modelled_over_empirical_by_design": {
+          "long": 2.6998840061219793,
+          "primary": 4.973034052522051,
+          "short": 8.868274549572451
+        },
+        "note": "one phi over-states variance by 2.7x to 8.9x depending on the ladder",
+        "spread_factor": 3.2846872419198987
+      },
+      "3_the_inflator_tracks_design_geometry": {
+        "monotone_in_k": true,
+        "monotone_in_log_L": true,
+        "note": "phi is not a property of the misspecification; it moves with the ladder it was fitted on",
+        "slope_phi_vs_k": 0.0535718780731287,
+        "slope_phi_vs_log_L": -0.045250581883941404
+      },
+      "4_it_does_not_predict_held_out_structure": {
+        "held_out_scale": "530M",
+        "note": "phi fitted on the ladder under-predicts residual structure at an unseen scale by ~12x",
+        "predicted_over_observed": 0.08025870087834358
+      }
+    },
+    "scope": "DataDecide 5xC ladder, C4-EN bits per token, three-parameter power law, three fit ranges",
+    "single_reading": "All four measurements say the same thing. If the residuals were exchangeable noise, one inflator would serve every ladder, would not track ladder geometry, and would extrapolate to a held-out scale. None of those hold. The residuals carry compute-dependent structure, so the correct object is a model of that structure, not a scalar.",
+    "why_it_matters": "Variance inflation is the first thing a practitioner reaches for when a fit does not match its nominal noise. This says that reflex fails here, and says why, which is more useful than the extension would have been had it worked."
+  },
+  "V0_phi_is_a_model": {
+    "V0a_pass": false,
+    "V0a_trend": {
+      "evidence_strength": "WEAKER: phi co-varies with design geometry",
+      "geometry": [
+        {
+          "design": "short",
+          "k": 12,
+          "log_L": 1.5522725485449556,
+          "phi": 0.904514066685098
+        },
+        {
+          "design": "primary",
+          "k": 11,
+          "log_L": 2.5235561197921683,
+          "phi": 0.8761084833543724
+        },
+        {
+          "design": "long",
+          "k": 10,
+          "log_L": 3.9617484579948368,
+          "phi": 0.7973703105388411
+        }
+      ],
+      "monotone_in_k": true,
+      "monotone_in_log_L": true,
+      "n_designs": 3,
+      "note": "three designs cannot support a significance test; direction and monotonicity are what is reported",
+      "slope_phi_vs_k": 0.0535718780731287,
+      "slope_phi_vs_log_L": -0.045250581883941404
+    },
+    "V0b_observed_heldout_relvar": 0.0004082396829163841,
+    "V0b_pass": false,
+    "V0b_predicted_heldout_relvar": 3.27647865978559e-05,
+    "V0b_ratio": 0.08025870087834358,
+    "held_out_scale": "530M",
+    "max_spread_threshold": 0.2,
+    "phi_by_design": {
+      "long": 0.7973703105388411,
+      "primary": 0.8761084833543724,
+      "short": 0.904514066685098
+    },
+    "shared_phi_check": {
+      "long": {
+        "ratio": 2.6998840061219793,
+        "within_factor_2": false
+      },
+      "primary": {
+        "ratio": 4.973034052522051,
+        "within_factor_2": false
+      },
+      "short": {
+        "ratio": 8.868274549572451,
+        "within_factor_2": false
+      }
+    },
+    "spread": 0.10714375614625693,
+    "verdict": "FAIL"
+  },
+  "V1_variance_calibration": {
+    "band": [
+      0.67,
+      1.5
+    ],
+    "empirical_variance": 5.2443184059692595e-06,
+    "improved_on_two_parameter": false,
+    "modelled_variance": 2.6080174015153288e-05,
+    "phi_used": 0.8761084833543724,
+    "ratio": 4.973034052522051,
+    "two_parameter_ratio": 0.31,
+    "verdict": "UNINTERPRETABLE"
+  },
+  "V2_lever_arm": {
+    "band": [
+      3.5,
+      7.0
+    ],
+    "direction": "under-predicts",
+    "measured_ratio": 5.275590551181102,
+    "predicted_ratio": 1.1857317859464633,
+    "two_parameter_prediction": 2.544721251923262,
+    "two_parameter_source": "results/theory/theory_check.json",
+    "verdict": "MISSED"
+  },
+  "V3_pooling": {
+    "band": [
+      50.0,
+      63.0
+    ],
+    "closer_than_two_parameter": true,
+    "lower_than_two_parameter": true,
+    "measured_reduction_pct": 62.50000000000001,
+    "predicted_reduction_pct": 58.62345811469251,
+    "two_parameter_prediction_pct": 67.1703785383374,
+    "two_parameter_source": "results/theory/theory_check.json",
+    "verdict": "CONFIRMED"
+  },
+  "V4_overall": {
+    "V0_verdict": "FAIL",
+    "V1_verdict": "UNINTERPRETABLE",
+    "V2_verdict": "MISSED",
+    "V3_verdict": "CONFIRMED",
+    "failure_mode": "V4.1 DEAD END: V0 failed, so the extra parameter is not a model of misspecification and V1 is uninterpretable. Reported as a dead end rather than tuned further, per the pre-registration.",
+    "gate_passed": true,
+    "methods_note_gate_found_a_shipped_error": "The phi=0 gate was installed to guard the new work. On its first run it failed at ratio 2.06 and stopped the script, and the cause was an error already present in the two-parameter theory we had reported: the analytic side squared a mean of relative standard errors while the numeric side averaged their squares. With a noise coefficient of variation near 1.0 those differ by ~2x. The numeric estimator was the correct one; the analytic constant was the loose one, and it was corrected to match, after which the gate passed at exactly 1.0000. A gate guarding new work found a defect in work already shipped.",
+    "next_step": "Modelling compute-structured misspecification properly is separate work, not a third derivation bolted onto this one. The theory line stops here: correct structure (quadratic in log L, correct signs, pooling via the leverage ratio), magnitudes wrong by 2-16x for an identified reason, and a demonstration that the obvious fix fails for a specific structural reason.",
+    "what_v3_confirming_does_and_does_not_mean": "V3 landed in its band and moved toward the measured value, but V3 is a comparison of two ratios that both use the same phi, so a mis-specified phi largely cancels. It is therefore NOT independent evidence that the variance model is right, and it does not rescue V1."
+  },
+  "gate": {
+    "analytic_two_parameter_variance": 3.4351979182500454e-06,
+    "band": [
+      0.9,
+      1.1
+    ],
+    "jensen_note": "The first gate run failed at ratio 2.06 because the analytic side squared a mean of relative standard errors while the numeric side averaged their squares. With a noise coefficient of variation near 1.0 these differ by ~2x. The numeric estimator is the correct one; the analytic constant was corrected to match. This is the gate working as intended.",
+    "jensen_ratio": 2.061796666749207,
+    "n_draws": 2000,
+    "note": "The numeric machinery must reproduce sigma^2 h* at phi=0. If this fails nothing downstream is computed or reportable.",
+    "numeric_at_phi_zero": 3.4351979182500446e-06,
+    "passed": true,
+    "ratio": 0.9999999999999998,
+    "sigma_squared_mean_of_squares": 4.31567391565198e-06,
+    "sigma_squared_square_of_mean": 2.0931617483194478e-06
+  }
+}

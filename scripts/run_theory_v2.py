@@ -347,6 +347,13 @@ def main(argv: list[str] | None = None) -> int:
     long_var = model_variance(designs["long"]["df"], designs["long"]["budgets"], designs["long"]["target"], phi_primary)
     short_var = model_variance(designs["short"]["df"], designs["short"]["budgets"], designs["short"]["target"], phi_primary)
     predicted_ratio = (n_pairs * flip_rate(long_var)) / (n_pairs * flip_rate(short_var))
+    # The two-parameter theory's own predictions, loaded rather than retyped, so
+    # the comparison cannot drift if that study is re-run.
+    two_parameter_path = REPO / "results" / "theory" / "theory_check.json"
+    two_parameter = json.loads(two_parameter_path.read_text(encoding="utf-8"))
+    two_parameter_ratio = float(two_parameter["T1_lever_arm_variance"]["predicted_variance_ratio"])
+    two_parameter_reduction = float(two_parameter["T3_pooling_retrodiction"]["predicted_mis_selection_reduction_pct"])
+
     dose = json.loads((REPO / "results" / "adversarial" / "a2_dose_response.json").read_text(encoding="utf-8"))
     by_arm = {f"{r['target']}|{r['max_fit_scale']}": r for r in dose["lever_arm_summary"]}
     measured_ratio = by_arm["1B|150M"]["mean_excess_flips"] / by_arm["1B|530M"]["mean_excess_flips"]
@@ -354,7 +361,8 @@ def main(argv: list[str] | None = None) -> int:
         "predicted_ratio": predicted_ratio,
         "measured_ratio": measured_ratio,
         "band": list(V2_BAND),
-        "two_parameter_prediction": 2.545,
+        "two_parameter_prediction": two_parameter_ratio,
+        "two_parameter_source": str(two_parameter_path.relative_to(REPO)),
         "verdict": "CONFIRMED" if V2_BAND[0] <= predicted_ratio <= V2_BAND[1] else "MISSED",
         "direction": "under-predicts" if predicted_ratio < measured_ratio else "over-predicts",
     }
@@ -381,9 +389,12 @@ def main(argv: list[str] | None = None) -> int:
         "predicted_reduction_pct": predicted_reduction,
         "measured_reduction_pct": measured_reduction,
         "band": list(V3_BAND),
-        "two_parameter_prediction_pct": 67.17,
-        "lower_than_two_parameter": bool(predicted_reduction < 67.17),
-        "closer_than_two_parameter": bool(abs(predicted_reduction - measured_reduction) < abs(67.17 - measured_reduction)),
+        "two_parameter_prediction_pct": two_parameter_reduction,
+        "two_parameter_source": str(two_parameter_path.relative_to(REPO)),
+        "lower_than_two_parameter": bool(predicted_reduction < two_parameter_reduction),
+        "closer_than_two_parameter": bool(
+            abs(predicted_reduction - measured_reduction) < abs(two_parameter_reduction - measured_reduction)
+        ),
         "verdict": "CONFIRMED" if V3_BAND[0] <= predicted_reduction <= V3_BAND[1] else "MISSED",
     }
     results["V3_pooling"] = v3

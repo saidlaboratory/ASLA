@@ -254,12 +254,28 @@ def main(argv: list[str] | None = None) -> int:
         ),
     }
 
+    # ---- A4: are projection errors independent across interventions?
+    # The bootstrap matrix above already carries this; it was previously
+    # asserted as "measured by seed bootstrap" while being a literal.
+    correlation_matrix = log_projections.corr().to_numpy(dtype=float)
+    offdiag = correlation_matrix[~np.eye(correlation_matrix.shape[0], dtype=bool)]
+    mean_cross_correlation = float(np.nanmean(offdiag))
+    # A gap between two independent projections has variance 2 * v; correlation
+    # rho changes that to 2 * v * (1 - rho), so the ratio to independence is
+    # (1 - mean rho). Values near 1 mean A4 cannot explain any miss.
+    var_gap_ratio = float(1.0 - mean_cross_correlation)
+
     # ---- T4: the pre-declared failure modes
+    floor_path = REPO / "results" / "adversarial" / "floor_identifiability.json"
+    floor = json.loads(floor_path.read_text(encoding="utf-8")) if floor_path.exists() else {}
+    c4_ssr_ratio = floor.get("c4_en_bits_per_token", {}).get("median_ssr_ratio_zero_over_best")
+    olmes_ssr_ratio = floor.get("olmes_macro_error", {}).get("median_ssr_ratio_zero_over_best")
     t4 = {
         "A1_scope": {
             "claim": "theory applies only where the floor is identifiable",
-            "c4_ssr_ratio": 10.03,
-            "olmes_ssr_ratio": 1.0,
+            "c4_ssr_ratio": c4_ssr_ratio,
+            "olmes_ssr_ratio": olmes_ssr_ratio,
+            "source": str(floor_path.relative_to(REPO)),
             "note": "read from results/adversarial/floor_identifiability.json; OLMES designs are out of scope",
         },
         "A2_measured": {
@@ -269,10 +285,12 @@ def main(argv: list[str] | None = None) -> int:
             "consistent_with_T1_miss": bool(measured_ratio > predicted_ratio),
         },
         "A4_measured": {
-            "mean_cross_intervention_correlation": -0.0042,
-            "var_gap_ratio_to_independence": 1.0022,
-            "holds": True,
-            "note": "measured by seed bootstrap; A4 cannot explain any miss",
+            "mean_cross_intervention_correlation": mean_cross_correlation,
+            "var_gap_ratio_to_independence": var_gap_ratio,
+            "n_bootstrap_draws": len(projections),
+            "n_interventions": int(correlation_matrix.shape[0]),
+            "holds": bool(abs(mean_cross_correlation) < 0.05),
+            "note": "measured by seed bootstrap from the projection matrix; A4 cannot explain any miss",
         },
     }
 

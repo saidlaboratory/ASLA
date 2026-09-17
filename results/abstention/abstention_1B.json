@@ -1,0 +1,3571 @@
+{
+  "abstention_by_scale": {
+    "10M": {
+      "compute": 5.88506060071895e+16,
+      "grid": [
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.2,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.2,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 0.9166666666666666,
+          "delta": 0.2,
+          "n_certified": 2,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.6666666666666666,
+          "delta": 0.2,
+          "n_certified": 8,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.5,
+          "delta": 0.2,
+          "n_certified": 12,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.4583333333333333,
+          "delta": 0.2,
+          "n_certified": 13,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.1,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.1,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 0.9166666666666666,
+          "delta": 0.1,
+          "n_certified": 2,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.7083333333333334,
+          "delta": 0.1,
+          "n_certified": 7,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.5,
+          "delta": 0.1,
+          "n_certified": 12,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.4583333333333333,
+          "delta": 0.1,
+          "n_certified": 13,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.05,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.05,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 0.9166666666666666,
+          "delta": 0.05,
+          "n_certified": 2,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.7916666666666666,
+          "delta": 0.05,
+          "n_certified": 5,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.5,
+          "delta": 0.05,
+          "n_certified": 12,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.4583333333333333,
+          "delta": 0.05,
+          "n_certified": 13,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.01,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.01,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 0.9583333333333334,
+          "delta": 0.01,
+          "n_certified": 1,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.7916666666666666,
+          "delta": 0.01,
+          "n_certified": 5,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.5416666666666666,
+          "delta": 0.01,
+          "n_certified": 11,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.4583333333333333,
+          "delta": 0.01,
+          "n_certified": 13,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        }
+      ],
+      "median_seeds_required": 13.0,
+      "n_entries": 25,
+      "n_never_resolvable": 1,
+      "seeds_required_adjacent": [
+        13,
+        54,
+        8,
+        59,
+        2,
+        41,
+        327,
+        833,
+        3089,
+        53,
+        1251,
+        182,
+        4,
+        131,
+        null,
+        12,
+        2,
+        68,
+        2,
+        3,
+        2,
+        9,
+        2,
+        2
+      ]
+    },
+    "14M": {
+      "compute": 1.2413398842290995e+17,
+      "grid": [
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.2,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.2,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 0.8333333333333334,
+          "delta": 0.2,
+          "n_certified": 4,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.4583333333333333,
+          "delta": 0.2,
+          "n_certified": 13,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.4166666666666667,
+          "delta": 0.2,
+          "n_certified": 14,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.4166666666666667,
+          "delta": 0.2,
+          "n_certified": 14,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.1,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.1,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 0.9166666666666666,
+          "delta": 0.1,
+          "n_certified": 2,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.5416666666666666,
+          "delta": 0.1,
+          "n_certified": 11,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.4166666666666667,
+          "delta": 0.1,
+          "n_certified": 14,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.4166666666666667,
+          "delta": 0.1,
+          "n_certified": 14,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.05,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.05,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.05,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.5416666666666666,
+          "delta": 0.05,
+          "n_certified": 11,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.4166666666666667,
+          "delta": 0.05,
+          "n_certified": 14,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.4166666666666667,
+          "delta": 0.05,
+          "n_certified": 14,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.01,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.01,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.01,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.6666666666666666,
+          "delta": 0.01,
+          "n_certified": 8,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.4583333333333333,
+          "delta": 0.01,
+          "n_certified": 13,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.4166666666666667,
+          "delta": 0.01,
+          "n_certified": 14,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        }
+      ],
+      "median_seeds_required": 5.5,
+      "n_entries": 25,
+      "n_never_resolvable": 2,
+      "seeds_required_adjacent": [
+        2,
+        70,
+        8,
+        251,
+        2,
+        8,
+        231,
+        null,
+        7,
+        162,
+        990,
+        2,
+        17,
+        2,
+        11,
+        9,
+        3,
+        2,
+        2,
+        null,
+        2,
+        2,
+        4,
+        2
+      ]
+    },
+    "150M": {
+      "compute": 1.3439040749568e+19,
+      "grid": [
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.2,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 0.9583333333333334,
+          "delta": 0.2,
+          "n_certified": 1,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 0.7083333333333334,
+          "delta": 0.2,
+          "n_certified": 7,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.3333333333333333,
+          "delta": 0.2,
+          "n_certified": 16,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.25,
+          "delta": 0.2,
+          "n_certified": 18,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.125,
+          "delta": 0.2,
+          "n_certified": 21,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.1,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 0.9583333333333334,
+          "delta": 0.1,
+          "n_certified": 1,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 0.75,
+          "delta": 0.1,
+          "n_certified": 6,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.375,
+          "delta": 0.1,
+          "n_certified": 15,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.25,
+          "delta": 0.1,
+          "n_certified": 18,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.125,
+          "delta": 0.1,
+          "n_certified": 21,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.05,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.05,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 0.7916666666666666,
+          "delta": 0.05,
+          "n_certified": 5,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.375,
+          "delta": 0.05,
+          "n_certified": 15,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.25,
+          "delta": 0.05,
+          "n_certified": 18,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.125,
+          "delta": 0.05,
+          "n_certified": 21,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.01,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.01,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 0.9166666666666666,
+          "delta": 0.01,
+          "n_certified": 2,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.5416666666666666,
+          "delta": 0.01,
+          "n_certified": 11,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.2916666666666667,
+          "delta": 0.01,
+          "n_certified": 17,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.20833333333333334,
+          "delta": 0.01,
+          "n_certified": 19,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        }
+      ],
+      "median_seeds_required": 2.0,
+      "n_entries": 25,
+      "n_never_resolvable": 0,
+      "seeds_required_adjacent": [
+        8,
+        2,
+        992,
+        82,
+        2,
+        2,
+        29,
+        5005,
+        2,
+        2,
+        3,
+        18,
+        2,
+        2,
+        15,
+        20,
+        8,
+        2,
+        3,
+        2,
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    "16M": {
+      "compute": 1.5375666115510272e+17,
+      "grid": [
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.2,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.2,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 0.9583333333333334,
+          "delta": 0.2,
+          "n_certified": 1,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.7083333333333334,
+          "delta": 0.2,
+          "n_certified": 7,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.5416666666666666,
+          "delta": 0.2,
+          "n_certified": 11,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.5,
+          "delta": 0.2,
+          "n_certified": 12,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.1,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.1,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 0.9583333333333334,
+          "delta": 0.1,
+          "n_certified": 1,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.7083333333333334,
+          "delta": 0.1,
+          "n_certified": 7,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.5416666666666666,
+          "delta": 0.1,
+          "n_certified": 11,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.5,
+          "delta": 0.1,
+          "n_certified": 12,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.05,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.05,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 0.9583333333333334,
+          "delta": 0.05,
+          "n_certified": 1,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.7916666666666666,
+          "delta": 0.05,
+          "n_certified": 5,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.5833333333333334,
+          "delta": 0.05,
+          "n_certified": 10,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.5,
+          "delta": 0.05,
+          "n_certified": 12,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.01,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.01,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.01,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.7916666666666666,
+          "delta": 0.01,
+          "n_certified": 5,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.625,
+          "delta": 0.01,
+          "n_certified": 9,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.5,
+          "delta": 0.01,
+          "n_certified": 12,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        }
+      ],
+      "median_seeds_required": 12.0,
+      "n_entries": 25,
+      "n_never_resolvable": 1,
+      "seeds_required_adjacent": [
+        10,
+        63,
+        251,
+        9,
+        9,
+        170,
+        106,
+        211,
+        null,
+        3653,
+        2090,
+        417,
+        12,
+        4,
+        47,
+        1766,
+        9,
+        2,
+        2,
+        14,
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    "1B": {
+      "compute": 7.06209840434774e+20,
+      "grid": [
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.2,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 0.7916666666666666,
+          "delta": 0.2,
+          "n_certified": 5,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 0.4166666666666667,
+          "delta": 0.2,
+          "n_certified": 14,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.20833333333333334,
+          "delta": 0.2,
+          "n_certified": 19,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.125,
+          "delta": 0.2,
+          "n_certified": 21,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.125,
+          "delta": 0.2,
+          "n_certified": 21,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.1,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 0.875,
+          "delta": 0.1,
+          "n_certified": 3,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 0.5,
+          "delta": 0.1,
+          "n_certified": 12,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.25,
+          "delta": 0.1,
+          "n_certified": 18,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.125,
+          "delta": 0.1,
+          "n_certified": 21,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.125,
+          "delta": 0.1,
+          "n_certified": 21,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.05,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 0.875,
+          "delta": 0.05,
+          "n_certified": 3,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 0.5416666666666666,
+          "delta": 0.05,
+          "n_certified": 11,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.2916666666666667,
+          "delta": 0.05,
+          "n_certified": 17,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.16666666666666666,
+          "delta": 0.05,
+          "n_certified": 20,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.125,
+          "delta": 0.05,
+          "n_certified": 21,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.01,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 0.9583333333333334,
+          "delta": 0.01,
+          "n_certified": 1,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 0.6666666666666666,
+          "delta": 0.01,
+          "n_certified": 8,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.2916666666666667,
+          "delta": 0.01,
+          "n_certified": 17,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.16666666666666666,
+          "delta": 0.01,
+          "n_certified": 20,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.125,
+          "delta": 0.01,
+          "n_certified": 21,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        }
+      ],
+      "median_seeds_required": 2.0,
+      "n_entries": 25,
+      "n_never_resolvable": 0,
+      "seeds_required_adjacent": [
+        2,
+        2,
+        2,
+        12,
+        2,
+        18,
+        10,
+        106,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    "20M": {
+      "compute": 2.1908574798505574e+17,
+      "grid": [
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.2,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.2,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.2,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.2,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.8333333333333334,
+          "delta": 0.2,
+          "n_certified": 4,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.7916666666666666,
+          "delta": 0.2,
+          "n_certified": 5,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.1,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.1,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.1,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.1,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.8333333333333334,
+          "delta": 0.1,
+          "n_certified": 4,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.8333333333333334,
+          "delta": 0.1,
+          "n_certified": 4,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.05,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.05,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.05,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.05,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.8333333333333334,
+          "delta": 0.05,
+          "n_certified": 4,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.8333333333333334,
+          "delta": 0.05,
+          "n_certified": 4,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.01,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.01,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.01,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.01,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.9583333333333334,
+          "delta": 0.01,
+          "n_certified": 1,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.8333333333333334,
+          "delta": 0.01,
+          "n_certified": 4,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        }
+      ],
+      "median_seeds_required": 131.0,
+      "n_entries": 25,
+      "n_never_resolvable": 1,
+      "seeds_required_adjacent": [
+        2,
+        834,
+        null,
+        581,
+        20,
+        9,
+        2376,
+        1422,
+        4546,
+        3,
+        131,
+        16,
+        1066,
+        517,
+        2430,
+        90,
+        464,
+        21,
+        1470,
+        4309,
+        15,
+        81,
+        16,
+        77
+      ]
+    },
+    "300M": {
+      "compute": 5.66196613152768e+19,
+      "grid": [
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.2,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.2,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 0.7916666666666666,
+          "delta": 0.2,
+          "n_certified": 5,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.5416666666666666,
+          "delta": 0.2,
+          "n_certified": 11,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.2916666666666667,
+          "delta": 0.2,
+          "n_certified": 17,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.20833333333333334,
+          "delta": 0.2,
+          "n_certified": 19,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.1,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.1,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 0.7916666666666666,
+          "delta": 0.1,
+          "n_certified": 5,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.5833333333333334,
+          "delta": 0.1,
+          "n_certified": 10,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.3333333333333333,
+          "delta": 0.1,
+          "n_certified": 16,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.20833333333333334,
+          "delta": 0.1,
+          "n_certified": 19,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.05,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.05,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 0.9166666666666666,
+          "delta": 0.05,
+          "n_certified": 2,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.5833333333333334,
+          "delta": 0.05,
+          "n_certified": 10,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.3333333333333333,
+          "delta": 0.05,
+          "n_certified": 16,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.20833333333333334,
+          "delta": 0.05,
+          "n_certified": 19,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.01,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.01,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.01,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.625,
+          "delta": 0.01,
+          "n_certified": 9,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.4166666666666667,
+          "delta": 0.01,
+          "n_certified": 14,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.20833333333333334,
+          "delta": 0.01,
+          "n_certified": 19,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        }
+      ],
+      "median_seeds_required": 3.0,
+      "n_entries": 25,
+      "n_never_resolvable": 1,
+      "seeds_required_adjacent": [
+        29,
+        2,
+        null,
+        10,
+        9,
+        20,
+        84,
+        914,
+        2,
+        2,
+        2,
+        2,
+        36,
+        7,
+        28,
+        29,
+        2,
+        2,
+        2,
+        3,
+        12,
+        2,
+        2,
+        2
+      ]
+    },
+    "4M": {
+      "compute": 8430221996851200.0,
+      "grid": [
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.2,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.2,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 0.9166666666666666,
+          "delta": 0.2,
+          "n_certified": 2,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.75,
+          "delta": 0.2,
+          "n_certified": 6,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.5833333333333334,
+          "delta": 0.2,
+          "n_certified": 10,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.4583333333333333,
+          "delta": 0.2,
+          "n_certified": 13,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.1,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.1,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 0.9583333333333334,
+          "delta": 0.1,
+          "n_certified": 1,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.75,
+          "delta": 0.1,
+          "n_certified": 6,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.5833333333333334,
+          "delta": 0.1,
+          "n_certified": 10,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.4583333333333333,
+          "delta": 0.1,
+          "n_certified": 13,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.05,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.05,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.05,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.75,
+          "delta": 0.05,
+          "n_certified": 6,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.625,
+          "delta": 0.05,
+          "n_certified": 9,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.5,
+          "delta": 0.05,
+          "n_certified": 12,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.01,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.01,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.01,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.7916666666666666,
+          "delta": 0.01,
+          "n_certified": 5,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.6666666666666666,
+          "delta": 0.01,
+          "n_certified": 8,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.5416666666666666,
+          "delta": 0.01,
+          "n_certified": 11,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        }
+      ],
+      "median_seeds_required": 8.0,
+      "n_entries": 25,
+      "n_never_resolvable": 2,
+      "seeds_required_adjacent": [
+        null,
+        2,
+        2,
+        294,
+        2,
+        295,
+        30,
+        30,
+        null,
+        188,
+        2859,
+        1440,
+        297,
+        8,
+        270,
+        18,
+        2,
+        2,
+        2,
+        2,
+        7,
+        8,
+        2,
+        2
+      ]
+    },
+    "530M": {
+      "compute": 1.4955135853658112e+20,
+      "grid": [
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.2,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.2,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 0.4583333333333333,
+          "delta": 0.2,
+          "n_certified": 13,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.2916666666666667,
+          "delta": 0.2,
+          "n_certified": 17,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.125,
+          "delta": 0.2,
+          "n_certified": 21,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.125,
+          "delta": 0.2,
+          "n_certified": 21,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.1,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.1,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 0.4583333333333333,
+          "delta": 0.1,
+          "n_certified": 13,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.2916666666666667,
+          "delta": 0.1,
+          "n_certified": 17,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.16666666666666666,
+          "delta": 0.1,
+          "n_certified": 20,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.125,
+          "delta": 0.1,
+          "n_certified": 21,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.05,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.05,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 0.5,
+          "delta": 0.05,
+          "n_certified": 12,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.2916666666666667,
+          "delta": 0.05,
+          "n_certified": 17,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.16666666666666666,
+          "delta": 0.05,
+          "n_certified": 20,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.125,
+          "delta": 0.05,
+          "n_certified": 21,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.01,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.01,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 0.7083333333333334,
+          "delta": 0.01,
+          "n_certified": 7,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.3333333333333333,
+          "delta": 0.01,
+          "n_certified": 16,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.20833333333333334,
+          "delta": 0.01,
+          "n_certified": 19,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.125,
+          "delta": 0.01,
+          "n_certified": 21,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        }
+      ],
+      "median_seeds_required": 2.0,
+      "n_entries": 25,
+      "n_never_resolvable": 0,
+      "seeds_required_adjacent": [
+        21,
+        2,
+        14,
+        9,
+        2,
+        8,
+        19,
+        86,
+        2,
+        2,
+        2,
+        2,
+        678,
+        2,
+        11,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    "60M": {
+      "compute": 1.955459382959407e+18,
+      "grid": [
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.2,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.2,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 0.9583333333333334,
+          "delta": 0.2,
+          "n_certified": 1,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.8333333333333334,
+          "delta": 0.2,
+          "n_certified": 4,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.6666666666666666,
+          "delta": 0.2,
+          "n_certified": 8,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.5416666666666666,
+          "delta": 0.2,
+          "n_certified": 11,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.1,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.1,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 0.9583333333333334,
+          "delta": 0.1,
+          "n_certified": 1,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.875,
+          "delta": 0.1,
+          "n_certified": 3,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.6666666666666666,
+          "delta": 0.1,
+          "n_certified": 8,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.5416666666666666,
+          "delta": 0.1,
+          "n_certified": 11,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.05,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.05,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.05,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.875,
+          "delta": 0.05,
+          "n_certified": 3,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.7083333333333334,
+          "delta": 0.05,
+          "n_certified": 7,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.5416666666666666,
+          "delta": 0.05,
+          "n_certified": 11,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.01,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.01,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.01,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.9166666666666666,
+          "delta": 0.01,
+          "n_certified": 2,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.8333333333333334,
+          "delta": 0.01,
+          "n_certified": 4,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.625,
+          "delta": 0.01,
+          "n_certified": 9,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        }
+      ],
+      "median_seeds_required": 29.0,
+      "n_entries": 25,
+      "n_never_resolvable": 1,
+      "seeds_required_adjacent": [
+        182,
+        133,
+        11,
+        null,
+        30,
+        144,
+        100,
+        734,
+        284,
+        21,
+        2,
+        9,
+        11,
+        3062,
+        5574,
+        12,
+        60,
+        29,
+        2,
+        55,
+        10,
+        22,
+        2,
+        2
+      ]
+    },
+    "6M": {
+      "compute": 2.170083624144077e+16,
+      "grid": [
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.2,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.2,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 0.9583333333333334,
+          "delta": 0.2,
+          "n_certified": 1,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.8333333333333334,
+          "delta": 0.2,
+          "n_certified": 4,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.6666666666666666,
+          "delta": 0.2,
+          "n_certified": 8,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.5,
+          "delta": 0.2,
+          "n_certified": 12,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.1,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.1,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.1,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.8333333333333334,
+          "delta": 0.1,
+          "n_certified": 4,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.7083333333333334,
+          "delta": 0.1,
+          "n_certified": 7,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.5416666666666666,
+          "delta": 0.1,
+          "n_certified": 11,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.05,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.05,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.05,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.8333333333333334,
+          "delta": 0.05,
+          "n_certified": 4,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.7083333333333334,
+          "delta": 0.05,
+          "n_certified": 7,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.5833333333333334,
+          "delta": 0.05,
+          "n_certified": 10,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.01,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.01,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.01,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.9166666666666666,
+          "delta": 0.01,
+          "n_certified": 2,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.7083333333333334,
+          "delta": 0.01,
+          "n_certified": 7,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.625,
+          "delta": 0.01,
+          "n_certified": 9,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        }
+      ],
+      "median_seeds_required": 24.0,
+      "n_entries": 25,
+      "n_never_resolvable": 0,
+      "seeds_required_adjacent": [
+        107,
+        10,
+        484,
+        18,
+        2,
+        7319,
+        9,
+        88,
+        8692,
+        1143,
+        8,
+        175,
+        61,
+        2,
+        17,
+        128,
+        30,
+        2,
+        31,
+        855,
+        7,
+        2,
+        2,
+        3
+      ]
+    },
+    "8M": {
+      "compute": 4.377678106853376e+16,
+      "grid": [
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.2,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.2,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 0.9583333333333334,
+          "delta": 0.2,
+          "n_certified": 1,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.7916666666666666,
+          "delta": 0.2,
+          "n_certified": 5,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.625,
+          "delta": 0.2,
+          "n_certified": 9,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.5416666666666666,
+          "delta": 0.2,
+          "n_certified": 11,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.1,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.1,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 0.9583333333333334,
+          "delta": 0.1,
+          "n_certified": 1,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.7916666666666666,
+          "delta": 0.1,
+          "n_certified": 5,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.625,
+          "delta": 0.1,
+          "n_certified": 9,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.5416666666666666,
+          "delta": 0.1,
+          "n_certified": 11,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.05,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.05,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 0.9583333333333334,
+          "delta": 0.05,
+          "n_certified": 1,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.8333333333333334,
+          "delta": 0.05,
+          "n_certified": 4,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.6666666666666666,
+          "delta": 0.05,
+          "n_certified": 8,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.5416666666666666,
+          "delta": 0.05,
+          "n_certified": 11,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.01,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.01,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.01,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.8333333333333334,
+          "delta": 0.01,
+          "n_certified": 4,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.7083333333333334,
+          "delta": 0.01,
+          "n_certified": 7,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.5833333333333334,
+          "delta": 0.01,
+          "n_certified": 10,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        }
+      ],
+      "median_seeds_required": 16.0,
+      "n_entries": 25,
+      "n_never_resolvable": 1,
+      "seeds_required_adjacent": [
+        2395,
+        3,
+        4611,
+        null,
+        2,
+        2781,
+        72,
+        4364,
+        101,
+        8,
+        16,
+        560,
+        14,
+        5147,
+        396,
+        45,
+        9,
+        2,
+        2,
+        960,
+        2,
+        7,
+        2,
+        2
+      ]
+    },
+    "90M": {
+      "compute": 5.758063377068851e+18,
+      "grid": [
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.2,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.2,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.2,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.6666666666666666,
+          "delta": 0.2,
+          "n_certified": 8,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.3333333333333333,
+          "delta": 0.2,
+          "n_certified": 16,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.3333333333333333,
+          "delta": 0.2,
+          "n_certified": 16,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.1,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.1,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.1,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.75,
+          "delta": 0.1,
+          "n_certified": 6,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.3333333333333333,
+          "delta": 0.1,
+          "n_certified": 16,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.3333333333333333,
+          "delta": 0.1,
+          "n_certified": 16,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.05,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.05,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.05,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.7916666666666666,
+          "delta": 0.05,
+          "n_certified": 5,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.375,
+          "delta": 0.05,
+          "n_certified": 15,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.3333333333333333,
+          "delta": 0.05,
+          "n_certified": 16,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.01,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "note": "one seed gives no variance estimate; nothing is certifiable",
+          "reference_distribution": "none",
+          "seed_budget": 1
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.01,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 2
+        },
+        {
+          "abstention_rate": 1.0,
+          "delta": 0.01,
+          "n_certified": 0,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 3
+        },
+        {
+          "abstention_rate": 0.9166666666666666,
+          "delta": 0.01,
+          "n_certified": 2,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 5
+        },
+        {
+          "abstention_rate": 0.4583333333333333,
+          "delta": 0.01,
+          "n_certified": 13,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 10
+        },
+        {
+          "abstention_rate": 0.3333333333333333,
+          "delta": 0.01,
+          "n_certified": 16,
+          "n_pairs": 24,
+          "reference_distribution": "student_t",
+          "seed_budget": 20
+        }
+      ],
+      "median_seeds_required": 10.0,
+      "n_entries": 25,
+      "n_never_resolvable": 0,
+      "seeds_required_adjacent": [
+        23,
+        16,
+        65,
+        105,
+        2,
+        54,
+        41,
+        64,
+        2,
+        2,
+        2,
+        13,
+        50,
+        3,
+        126,
+        1166,
+        2,
+        10,
+        10,
+        7,
+        9,
+        2,
+        2,
+        3
+      ]
+    }
+  },
+  "baseline_has_headroom": true,
+  "cost_of_correctness": [
+    {
+      "abstained_on_correct": 5,
+      "baseline_correct": 297,
+      "certified_correct": 292,
+      "certified_error_rate": 0.0,
+      "certified_wrong": 0,
+      "delta": 0.05,
+      "fraction_of_correct_calls_abstained": 0.016835016835016835,
+      "n_certified": 292,
+      "n_pairs": 300,
+      "rung": 1.4955135853658112e+20,
+      "seed_budget": 3,
+      "target": 7.06209840434774e+20
+    },
+    {
+      "abstained_on_correct": 1,
+      "baseline_correct": 297,
+      "certified_correct": 296,
+      "certified_error_rate": 0.003367003367003367,
+      "certified_wrong": 1,
+      "delta": 0.05,
+      "fraction_of_correct_calls_abstained": 0.003367003367003367,
+      "n_certified": 297,
+      "n_pairs": 300,
+      "rung": 1.4955135853658112e+20,
+      "seed_budget": 10,
+      "target": 7.06209840434774e+20
+    }
+  ],
+  "coverage": {
+    "bootstrap": {
+      "ci_hi": 0.1331922509932349,
+      "ci_lo": 0.0,
+      "coverage": 0.0,
+      "effective_error_at_nominal_delta_0_05": 0.5000000000000001,
+      "median_width": 0.018930286330782753,
+      "n": 25
+    },
+    "bootstrap_centring": {
+      "centring_error_in_seed_standard_errors": 118.61764271971163,
+      "error_to_width_ratio": 4.728205596776705,
+      "mean_absolute_error": 0.0927393915485568,
+      "mean_signed_error": 0.0876792683896719,
+      "mean_width": 0.019614077613667805,
+      "median_seed_standard_error_at_target": 0.0007818347205541421,
+      "n": 25,
+      "n_overshooting": 24
+    },
+    "conformal": {
+      "ci_hi": 0.958331828505276,
+      "ci_lo": 0.7004420607398656,
+      "coverage": 0.88,
+      "effective_error_at_nominal_delta_0_05": 0.06000000000000001,
+      "median_width": 0.28410615395413075,
+      "n": 25
+    },
+    "conformal_centring": {
+      "centring_error_in_seed_standard_errors": 118.63131574903728,
+      "error_to_width_ratio": 0.33578998765102736,
+      "mean_absolute_error": 0.09275008159761876,
+      "mean_signed_error": 0.08769214453042766,
+      "mean_width": 0.27621455376450976,
+      "median_seed_standard_error_at_target": 0.0007818347205541421,
+      "n": 25,
+      "n_overshooting": 24
+    },
+    "nominal_coverage": 0.9,
+    "per_interval": [
+      {
+        "covered": false,
+        "hi": 3.9627912178325104,
+        "intervention": "C4",
+        "lo": 3.9348400800386725,
+        "method": "bootstrap",
+        "true_target": 3.7957448366283515,
+        "width": 0.027951137793837955
+      },
+      {
+        "covered": false,
+        "hi": 4.098219986987667,
+        "intervention": "C4",
+        "lo": 3.7994216636995977,
+        "method": "conformal",
+        "true_target": 3.7957448366283515,
+        "width": 0.2987983232880693
+      },
+      {
+        "covered": false,
+        "hi": 4.142704369545965,
+        "intervention": "DCLM-Baseline",
+        "lo": 4.133829595883533,
+        "method": "bootstrap",
+        "true_target": 4.045208486795748,
+        "width": 0.008874773662431501
+      },
+      {
+        "covered": true,
+        "hi": 4.301142273058548,
+        "intervention": "DCLM-Baseline",
+        "lo": 3.97533498721969,
+        "method": "conformal",
+        "true_target": 4.045208486795748,
+        "width": 0.32580728583885765
+      },
+      {
+        "covered": false,
+        "hi": 4.351001144513146,
+        "intervention": "DCLM-Baseline (QC 10%)",
+        "lo": 4.327442672396247,
+        "method": "bootstrap",
+        "true_target": 4.278861327435873,
+        "width": 0.023558472116898876
+      },
+      {
+        "covered": true,
+        "hi": 4.448835783832608,
+        "intervention": "DCLM-Baseline (QC 10%)",
+        "lo": 4.2305304251993645,
+        "method": "conformal",
+        "true_target": 4.278861327435873,
+        "width": 0.21830535863324307
+      },
+      {
+        "covered": false,
+        "hi": 4.276562221267269,
+        "intervention": "DCLM-Baseline (QC 20%)",
+        "lo": 4.257954475966342,
+        "method": "bootstrap",
+        "true_target": 4.177380378011829,
+        "width": 0.018607745300927014
+      },
+      {
+        "covered": true,
+        "hi": 4.378249001162662,
+        "intervention": "DCLM-Baseline (QC 20%)",
+        "lo": 4.157188934699913,
+        "method": "conformal",
+        "true_target": 4.177380378011829,
+        "width": 0.22106006646274956
+      },
+      {
+        "covered": false,
+        "hi": 4.336519612485616,
+        "intervention": "DCLM-Baseline (QC 7%, FW2)",
+        "lo": 4.317436591474066,
+        "method": "bootstrap",
+        "true_target": 4.222813608046191,
+        "width": 0.019083021011550017
+      },
+      {
+        "covered": true,
+        "hi": 4.446050260951125,
+        "intervention": "DCLM-Baseline (QC 7%, FW2)",
+        "lo": 4.20680090953417,
+        "method": "conformal",
+        "true_target": 4.222813608046191,
+        "width": 0.23924935141695514
+      },
+      {
+        "covered": false,
+        "hi": 4.513633096103526,
+        "intervention": "DCLM-Baseline (QC 7%, FW3)",
+        "lo": 4.500477874877098,
+        "method": "bootstrap",
+        "true_target": 4.495884451012889,
+        "width": 0.013155221226427649
+      },
+      {
+        "covered": true,
+        "hi": 4.6273143028293395,
+        "intervention": "DCLM-Baseline (QC 7%, FW3)",
+        "lo": 4.386440055738345,
+        "method": "conformal",
+        "true_target": 4.495884451012889,
+        "width": 0.2408742470909946
+      },
+      {
+        "covered": false,
+        "hi": 4.433263373967978,
+        "intervention": "DCLM-Baseline (QC FW 10%)",
+        "lo": 4.412227037939625,
+        "method": "bootstrap",
+        "true_target": 4.364623436629086,
+        "width": 0.02103633602835231
+      },
+      {
+        "covered": true,
+        "hi": 4.525926380854963,
+        "intervention": "DCLM-Baseline (QC FW 10%)",
+        "lo": 4.3189137676277225,
+        "method": "conformal",
+        "true_target": 4.364623436629086,
+        "width": 0.2070126132272403
+      },
+      {
+        "covered": false,
+        "hi": 4.651850173785517,
+        "intervention": "DCLM-Baseline (QC FW 3%)",
+        "lo": 4.634155624864873,
+        "method": "bootstrap",
+        "true_target": 4.706254438811256,
+        "width": 0.017694548920643705
+      },
+      {
+        "covered": false,
+        "hi": 4.696253162777456,
+        "intervention": "DCLM-Baseline (QC FW 3%)",
+        "lo": 4.589807288165279,
+        "method": "conformal",
+        "true_target": 4.706254438811256,
+        "width": 0.10644587461217725
+      },
+      {
+        "covered": false,
+        "hi": 4.03513156530804,
+        "intervention": "DCLM-Baseline 25% / Dolma 75%",
+        "lo": 4.011011165785211,
+        "method": "bootstrap",
+        "true_target": 3.908666038796451,
+        "width": 0.02412039952282896
+      },
+      {
+        "covered": true,
+        "hi": 4.18208972758733,
+        "intervention": "DCLM-Baseline 25% / Dolma 75%",
+        "lo": 3.863749396331965,
+        "method": "conformal",
+        "true_target": 3.908666038796451,
+        "width": 0.3183403312553654
+      },
+      {
+        "covered": false,
+        "hi": 4.039432218895763,
+        "intervention": "DCLM-Baseline 50% / Dolma 50%",
+        "lo": 4.0223542190101815,
+        "method": "bootstrap",
+        "true_target": 3.935277934174342,
+        "width": 0.017077999885581896
+      },
+      {
+        "covered": true,
+        "hi": 4.196348880024289,
+        "intervention": "DCLM-Baseline 50% / Dolma 50%",
+        "lo": 3.865909493347057,
+        "method": "conformal",
+        "true_target": 3.935277934174342,
+        "width": 0.3304393866772326
+      },
+      {
+        "covered": false,
+        "hi": 4.065620428364174,
+        "intervention": "DCLM-Baseline 75% / Dolma 25%",
+        "lo": 4.046722117589611,
+        "method": "bootstrap",
+        "true_target": 3.9638728409524693,
+        "width": 0.018898310774563498
+      },
+      {
+        "covered": true,
+        "hi": 4.193965917424568,
+        "intervention": "DCLM-Baseline 75% / Dolma 25%",
+        "lo": 3.9173655962322877,
+        "method": "conformal",
+        "true_target": 3.9638728409524693,
+        "width": 0.27660032119228006
+      },
+      {
+        "covered": false,
+        "hi": 3.909397778257307,
+        "intervention": "Dolma1.6++",
+        "lo": 3.88452093758311,
+        "method": "bootstrap",
+        "true_target": 3.813030375487134,
+        "width": 0.02487684067419682
+      },
+      {
+        "covered": true,
+        "hi": 4.058071410538227,
+        "intervention": "Dolma1.6++",
+        "lo": 3.7366285532850547,
+        "method": "conformal",
+        "true_target": 3.813030375487134,
+        "width": 0.3214428572531727
+      },
+      {
+        "covered": false,
+        "hi": 3.989859898345045,
+        "intervention": "Dolma1.7",
+        "lo": 3.972470135340645,
+        "method": "bootstrap",
+        "true_target": 3.8996300284059124,
+        "width": 0.017389763004400205
+      },
+      {
+        "covered": true,
+        "hi": 4.118853205260898,
+        "intervention": "Dolma1.7",
+        "lo": 3.844114022520213,
+        "method": "conformal",
+        "true_target": 3.8996300284059124,
+        "width": 0.27473918274068465
+      },
+      {
+        "covered": false,
+        "hi": 3.9968679802806686,
+        "intervention": "Dolma1.7 (no Flan)",
+        "lo": 3.9638395393425383,
+        "method": "bootstrap",
+        "true_target": 3.8977995339357805,
+        "width": 0.03302844093813029
+      },
+      {
+        "covered": true,
+        "hi": 4.138095239498481,
+        "intervention": "Dolma1.7 (no Flan)",
+        "lo": 3.821556925767115,
+        "method": "conformal",
+        "true_target": 3.8977995339357805,
+        "width": 0.3165383137313662
+      },
+      {
+        "covered": false,
+        "hi": 4.001253845979907,
+        "intervention": "Dolma1.7 (no Reddit)",
+        "lo": 3.961283223769055,
+        "method": "bootstrap",
+        "true_target": 3.895541293937493,
+        "width": 0.03997062221085157
+      },
+      {
+        "covered": true,
+        "hi": 4.193922403542986,
+        "intervention": "Dolma1.7 (no Reddit)",
+        "lo": 3.7724487730852356,
+        "method": "conformal",
+        "true_target": 3.895541293937493,
+        "width": 0.42147363045775066
+      },
+      {
+        "covered": false,
+        "hi": 3.9852417255163095,
+        "intervention": "Dolma1.7 (no code)",
+        "lo": 3.9655226191893265,
+        "method": "bootstrap",
+        "true_target": 3.8687442800650316,
+        "width": 0.019719106326983038
+      },
+      {
+        "covered": true,
+        "hi": 4.139959095433035,
+        "intervention": "Dolma1.7 (no code)",
+        "lo": 3.8118101649083123,
+        "method": "conformal",
+        "true_target": 3.8687442800650316,
+        "width": 0.3281489305247227
+      },
+      {
+        "covered": false,
+        "hi": 3.9694772414226964,
+        "intervention": "Dolma1.7 (no math, code)",
+        "lo": 3.9587354558311016,
+        "method": "bootstrap",
+        "true_target": 3.8626649546343756,
+        "width": 0.010741785591594777
+      },
+      {
+        "covered": true,
+        "hi": 4.108309033404891,
+        "intervention": "Dolma1.7 (no math, code)",
+        "lo": 3.819535094271431,
+        "method": "conformal",
+        "true_target": 3.8626649546343756,
+        "width": 0.28877393913345983
+      },
+      {
+        "covered": false,
+        "hi": 4.017434328519179,
+        "intervention": "Falcon",
+        "lo": 3.998504042188396,
+        "method": "bootstrap",
+        "true_target": 3.893202256384909,
+        "width": 0.018930286330782753
+      },
+      {
+        "covered": true,
+        "hi": 4.198343598210136,
+        "intervention": "Falcon",
+        "lo": 3.816317130547101,
+        "method": "conformal",
+        "true_target": 3.893202256384909,
+        "width": 0.38202646766303516
+      },
+      {
+        "covered": false,
+        "hi": 3.9876553100409207,
+        "intervention": "Falcon+CC",
+        "lo": 3.96742499976198,
+        "method": "bootstrap",
+        "true_target": 3.8706926521844522,
+        "width": 0.02023031027894051
+      },
+      {
+        "covered": true,
+        "hi": 4.114423960580397,
+        "intervention": "Falcon+CC",
+        "lo": 3.8393809540529373,
+        "method": "conformal",
+        "true_target": 3.8706926521844522,
+        "width": 0.2750430065274596
+      },
+      {
+        "covered": false,
+        "hi": 4.172744270732666,
+        "intervention": "Falcon+CC (QC 10%)",
+        "lo": 4.160869337053164,
+        "method": "bootstrap",
+        "true_target": 4.078177853496864,
+        "width": 0.01187493367950232
+      },
+      {
+        "covered": false,
+        "hi": 4.240547274680331,
+        "intervention": "Falcon+CC (QC 10%)",
+        "lo": 4.092401936303286,
+        "method": "conformal",
+        "true_target": 4.078177853496864,
+        "width": 0.14814533837704502
+      },
+      {
+        "covered": false,
+        "hi": 4.102287975990289,
+        "intervention": "Falcon+CC (QC 20%)",
+        "lo": 4.090295412282465,
+        "method": "bootstrap",
+        "true_target": 4.001038117116736,
+        "width": 0.011992563707823756
+      },
+      {
+        "covered": true,
+        "hi": 4.208779023658349,
+        "intervention": "Falcon+CC (QC 20%)",
+        "lo": 3.983730260680061,
+        "method": "conformal",
+        "true_target": 4.001038117116736,
+        "width": 0.2250487629782878
+      },
+      {
+        "covered": false,
+        "hi": 4.14920658510587,
+        "intervention": "Falcon+CC (QC Orig 10%)",
+        "lo": 4.13516180366798,
+        "method": "bootstrap",
+        "true_target": 4.039053461993817,
+        "width": 0.014044781437889675
+      },
+      {
+        "covered": true,
+        "hi": 4.288857562835059,
+        "intervention": "Falcon+CC (QC Orig 10%)",
+        "lo": 3.995539450640374,
+        "method": "conformal",
+        "true_target": 4.039053461993817,
+        "width": 0.29331811219468484
+      },
+      {
+        "covered": false,
+        "hi": 4.1277419722811715,
+        "intervention": "Falcon+CC (QC Tulu 10%)",
+        "lo": 4.110892375343318,
+        "method": "bootstrap",
+        "true_target": 4.006927771450681,
+        "width": 0.016849596937853484
+      },
+      {
+        "covered": true,
+        "hi": 4.286388075723115,
+        "intervention": "Falcon+CC (QC Tulu 10%)",
+        "lo": 3.952223810385224,
+        "method": "conformal",
+        "true_target": 4.006927771450681,
+        "width": 0.33416426533789156
+      },
+      {
+        "covered": false,
+        "hi": 4.280702704708144,
+        "intervention": "FineWeb-Edu",
+        "lo": 4.261680049271322,
+        "method": "bootstrap",
+        "true_target": 4.157607210798197,
+        "width": 0.0190226554368218
+      },
+      {
+        "covered": true,
+        "hi": 4.41331775504405,
+        "intervention": "FineWeb-Edu",
+        "lo": 4.129211601089919,
+        "method": "conformal",
+        "true_target": 4.157607210798197,
+        "width": 0.28410615395413075
+      },
+      {
+        "covered": false,
+        "hi": 4.181708967332152,
+        "intervention": "FineWeb-Pro",
+        "lo": 4.160086679790271,
+        "method": "bootstrap",
+        "true_target": 4.0642347594833135,
+        "width": 0.02162228754188078
+      },
+      {
+        "covered": true,
+        "hi": 4.285654546085736,
+        "intervention": "FineWeb-Pro",
+        "lo": 4.056192822541849,
+        "method": "conformal",
+        "true_target": 4.0642347594833135,
+        "width": 0.22946172354388672
+      }
+    ]
+  },
+  "deltas": [
+    0.2,
+    0.1,
+    0.05,
+    0.01
+  ],
+  "excluded_scales": [
+    "750M"
+  ],
+  "fast": false,
+  "inputs": {
+    "data/datadecide_runs.parquet": "f61f9c58bb87309521ae62ff1b2585749d763ab110a3fd67998bbdd240e0767b"
+  },
+  "ladder": [
+    8430221996851200.0,
+    2.170083624144077e+16,
+    4.377678106853376e+16,
+    5.88506060071895e+16,
+    1.2413398842290995e+17,
+    1.5375666115510272e+17,
+    2.1908574798505574e+17,
+    1.955459382959407e+18,
+    5.758063377068851e+18,
+    1.3439040749568e+19,
+    5.66196613152768e+19,
+    1.4955135853658112e+20
+  ],
+  "matched_compute_note": {
+    "note": "The single-scale arm buys 3 seeds at the top rung. Abstention rates elsewhere in this file are budget-parameterised and not charged against this cost.",
+    "single_scale_cost_per_intervention": 4.4865407560974336e+20
+  },
+  "n_boot": 400,
+  "scored": {
+    "single_scale_top_rung": {
+      "ci_hi": 0.013333333333333334,
+      "ci_lo": 0.0033333333333333335,
+      "cost_flops": 1.1216351890243584e+22,
+      "mis_selection": 0.0078000000000000005,
+      "mis_selection_sd": 0.002439807251883566,
+      "n_pairs": 300,
+      "n_seeds": 3,
+      "rung": 1.4955135853658112e+20
+    }
+  },
+  "seed": 20260917,
+  "seed_budgets": [
+    1,
+    2,
+    3,
+    5,
+    10,
+    20
+  ],
+  "target_compute": 7.06209840434774e+20,
+  "target_scale": "1B"
+}

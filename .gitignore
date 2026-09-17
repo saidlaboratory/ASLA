@@ -8,14 +8,29 @@ dist/
 # Generated local audit artifacts.
 runs.parquet
 runs_audit.json
+# Results are committed: every generated document and every number in the README
+# is rendered from these files, so a clone must be able to reproduce them without
+# re-running multi-hour studies. Large intermediates are excluded individually
+# below rather than by excluding the tree.
 results/*
-!results/first_audit/
-!results/signal_and_noise/
-!results/known_answer/
-!results/task_b/
-!results/checkpoints/
+!results/abstention/
 !results/adversarial/
+!results/allocation/
+!results/checkpoints/
+!results/common_mode/
+!results/confidence/
+!results/consolidated/
+!results/curvature/
 !results/ensemble_check/
+!results/external/
+!results/first_audit/
+!results/first_audit_v1_fixed_alpha_bounds/
+!results/known_answer/
+!results/resolution/
+!results/signal_and_noise/
+!results/task_b/
+!results/theory/
+!results/theory_v2/
 .venv/
 logs/*.out
 logs/*.err
@@ -29,5 +44,4 @@ results/adversarial/_*.md
 
 # ColPret raw archive (64 MB, re-downloadable from github.com/IBM/ColPret)
 data/raw/colpret/
-!results/common_mode/
-!results/consolidated/
+

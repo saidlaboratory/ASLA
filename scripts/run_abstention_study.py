@@ -241,6 +241,55 @@ def sweep_abstention(
     return rows
 
 
+def evaluate_single_scale(
+    df: pd.DataFrame,
+    rung: float,
+    target: float,
+    interventions: list[str],
+    rng: np.random.Generator,
+    n_boot: int,
+    n_seeds: int,
+) -> dict[str, Any]:
+    """Score single-scale ranking at one rung: no fit, no extrapolation.
+
+    This is the baseline the abstention rule is measured against. It ranks
+    entries by their seed-resampled mean at ``rung`` and compares that ordering
+    to the observed truth at ``target``.
+    """
+
+    truth = df[np.isclose(df["compute"], target)].groupby("intervention")["bpb"].mean().reindex(interventions)
+    cells = {
+        name: df[(df["intervention"] == name) & (np.isclose(df["compute"], rung))]["bpb"].to_numpy(dtype=float)
+        for name in interventions
+    }
+    pairs = [(a, b) for i, a in enumerate(interventions) for b in interventions[i + 1 :]]
+    truth_sign = {(a, b): np.sign(truth[a] - truth[b]) for a, b in pairs}
+
+    rates = []
+    for _ in range(n_boot):
+        scores = {
+            name: float(np.mean(rng.choice(pool, size=n_seeds))) if pool.size else float("nan")
+            for name, pool in cells.items()
+        }
+        wrong = sum(
+            1
+            for a, b in pairs
+            if np.isfinite(scores[a]) and np.isfinite(scores[b]) and np.sign(scores[a] - scores[b]) != truth_sign[(a, b)]
+        )
+        rates.append(wrong / len(pairs))
+    values = np.asarray(rates, dtype=float)
+    return {
+        "mis_selection": float(values.mean()),
+        "mis_selection_sd": float(values.std(ddof=1)),
+        "ci_lo": float(np.percentile(values, 2.5)),
+        "ci_hi": float(np.percentile(values, 97.5)),
+        "rung": rung,
+        "n_seeds": n_seeds,
+        "n_pairs": len(pairs),
+        "cost_flops": float(rung * n_seeds * len(interventions)),
+    }
+
+
 def cost_of_correctness(
     df: pd.DataFrame,
     rung: float,
@@ -343,6 +392,41 @@ def main() -> None:
     # A1/A5: coverage on real data.
     if not (args.resume and "coverage" in payload):
         payload["coverage"] = measure_coverage(df, ladder, target, args.n_boot, np.random.default_rng(args.seed))
+        _write_json_atomically(args.out, payload)
+
+    # The single-scale baseline the abstention rule is compared against. This
+    # block was missing: evaluate_single_scale existed but was never called, so
+    # the shipped JSON carried a baseline only because an ad-hoc run had written
+    # one. Without it the results document cited a number the script could not
+    # reproduce.
+    if not (args.resume and "scored" in payload):
+        scored = {
+            "single_scale_top_rung": evaluate_single_scale(
+                df,
+                max(ladder),
+                target,
+                sorted(df["intervention"].unique()),
+                np.random.default_rng(args.seed + 7),
+                args.n_boot,
+                3,
+            )
+        }
+        payload["scored"] = scored
+        payload["baseline_has_headroom"] = bool(scored["single_scale_top_rung"]["mis_selection"] > 0.0)
+        if not payload["baseline_has_headroom"]:
+            payload["headroom_warning"] = (
+                "Single-scale ranking mis-selects zero pairs at this target. No method "
+                "can beat it here, so accuracy comparisons at this target are "
+                "uninformative and only the abstention results carry information."
+            )
+        payload["matched_compute_note"] = {
+            "single_scale_cost_per_intervention": float(max(ladder) * 3),
+            "note": (
+                "The single-scale arm buys 3 seeds at the top rung. Abstention rates "
+                "elsewhere in this file are budget-parameterised and not charged "
+                "against this cost."
+            ),
+        }
         _write_json_atomically(args.out, payload)
 
     # A2/A3: abstention over the (delta, budget) grid at every scale.

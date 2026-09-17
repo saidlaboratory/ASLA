@@ -6,10 +6,28 @@ authors:
   - name: "SAID Laboratory"
 abstract: >-
   ASLA audits whether small-compute scaling-law projections select the same
-  training intervention that measured target-budget runs would select. It
-  provides decision-level metrics with bootstrap confidence intervals,
-  FDR-controlled crossover detection, misspecification-aware ensemble
-  projections with an extrapolation reliability score, cost-aware sequential
-  selection (racing), conformal projection intervals, and a parameterized
-  benchmark (ASLA-Bench) with known ground truth.
+  training intervention that measured target-budget runs would select, and
+  formalises the question as transductive pure exploration: the arms trained
+  during exploration differ from the target-budget arms about which a decision
+  must be made. On DataDecide, no estimator, objective or compute allocation
+  we tested beats ranking at the largest single fitted scale, including a
+  cost-constrained decision-optimal design evaluated at matched compute. Under
+  the linear model, designing for the decision and designing for target-region
+  fit provably coincide, so the failure is localised to the model rather than
+  the objective. The constructive result is a delta-PAC selection rule with
+  abstention, which certifies most orderings at the top of the ladder with no
+  certified errors while showing that most small-scale leaderboard orderings
+  cannot be certified at any affordable seed budget. The package provides
+  decision-level metrics with bootstrap confidence intervals, FDR-controlled
+  crossover detection, misspecification-aware ensemble projections with an
+  extrapolation reliability score, cost-aware sequential selection (racing),
+  conformal projection intervals, transductive experimental design, and a
+  parameterized benchmark (ASLA-Bench) with known ground truth.
+keywords:
+  - scaling laws
+  - model selection
+  - transductive bandits
+  - pure exploration
+  - experimental design
+  - reproducibility
 repository-code: "https://github.com/esaran1/algorithm-selection-audit"

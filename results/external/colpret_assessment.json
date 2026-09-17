@@ -1,0 +1,74 @@
+{
+  "blocking_reasons": [
+    "shared_budgets",
+    "seeds_per_cell",
+    "cross_family_shared_ladder"
+  ],
+  "checks": {
+    "cross_family_shared_ladder": {
+      "note": "families with >=4 sizes share zero common sizes, so they cannot be compared on one ladder",
+      "passes": false,
+      "required": 4,
+      "value": 0
+    },
+    "interventions_available": {
+      "note": "the GPT2 subset varies pretraining data (c4 vs oscar, several mixes), a genuine intervention axis",
+      "passes": true,
+      "required": 3,
+      "value": 16
+    },
+    "seeds_per_cell": {
+      "note": "one model per (family, size) cell: no replicate structure",
+      "passes": false,
+      "required": 2,
+      "value": 1
+    },
+    "shared_budgets": {
+      "note": "3 shared model sizes; a projection needs >=3 fit budgets AND a held-out target",
+      "passes": false,
+      "required": 4,
+      "value": 3
+    }
+  },
+  "families_with_4plus_sizes": [
+    "OPT",
+    "chinchilla",
+    "t5-pile"
+  ],
+  "gpt2_subset": {
+    "families": [
+      "GPT2-c4-1.0",
+      "GPT2-c4-14.0",
+      "GPT2-c4-2.0",
+      "GPT2-c4-3.0",
+      "GPT2-c4-4.0",
+      "GPT2-c4-44.0",
+      "GPT2-c4-5.0",
+      "GPT2-c4-7.0",
+      "GPT2-oscar-1.0",
+      "GPT2-oscar-14.0",
+      "GPT2-oscar-2.0",
+      "GPT2-oscar-3.0",
+      "GPT2-oscar-4.0",
+      "GPT2-oscar-44.0",
+      "GPT2-oscar-5.0",
+      "GPT2-oscar-7.0"
+    ],
+    "grid_completeness": "48/48",
+    "n_families": 16,
+    "shared_sizes": [
+      2800000000.0,
+      4200000000.0,
+      8700000000.0
+    ]
+  },
+  "n_models": 184,
+  "n_rows_total": 1640103,
+  "n_rows_with_loss_params_tokens": 1640103,
+  "n_scaled_sets": 22,
+  "sizes_shared_by_those_families": [],
+  "source": "https://github.com/IBM/ColPret test_cache/data.csv.zst",
+  "url_provenance": "recovered from the PDF link annotations; it does not appear in the extracted PDF text",
+  "verdict": "NOT USABLE for the decomposition",
+  "what_it_could_support": "ColPret is built for fit-accuracy meta-analysis across heterogeneous families, which is what its paper does. It carries one model per (family, size) cell and no shared ladder across the families large enough to fit, so it cannot support a decision-level audit that needs replicate noise and a common compute axis. The 16-family GPT2 subset is the closest fit: a complete 16 x 3 grid varying pretraining data, but 3 budgets cannot support a projection with a held-out target, and single runs give no seed-noise band or crossover significance test."
+}

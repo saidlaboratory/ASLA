@@ -1,0 +1,1229 @@
+{
+  "baseline_has_headroom": true,
+  "budget_flops_per_intervention": 1.889204528631251e+18,
+  "budget_flops_total": 4.723011321578127e+19,
+  "classical_leverage_full_ladder": 1.6926556539798812,
+  "deviation": {
+    "corr_signed_deviation_with_log_compute": 0.006606940607627117,
+    "deviation": [
+      -0.00508829870143976,
+      0.01521958428199172,
+      -0.005815325647095663,
+      -0.0009871887089263212,
+      -0.00823327715231984,
+      -0.01066323211726401,
+      0.015567737518158223
+    ],
+    "deviation_summary": "signed_mean_residual",
+    "estimated_from": "train_interventions_only",
+    "interventions_used": [
+      "DCLM-Baseline",
+      "DCLM-Baseline (QC 10%)",
+      "DCLM-Baseline (QC 20%)",
+      "DCLM-Baseline (QC 7%, FW2)",
+      "DCLM-Baseline (QC 7%, FW3)",
+      "DCLM-Baseline (QC FW 10%)",
+      "DCLM-Baseline 25% / Dolma 75%",
+      "DCLM-Baseline 50% / Dolma 50%",
+      "DCLM-Baseline 75% / Dolma 25%",
+      "Dolma1.6++",
+      "Dolma1.7 (no Flan)",
+      "Dolma1.7 (no Reddit)",
+      "Dolma1.7 (no code)",
+      "Dolma1.7 (no math, code)",
+      "Falcon+CC",
+      "Falcon+CC (QC Orig 10%)",
+      "Falcon+CC (QC Tulu 10%)"
+    ],
+    "n_interventions_used": 17,
+    "note": "deviation is the SIGNED mean residual, the common-mode component that actually biases a projection. The RMS residual is recorded alongside it but must not be used as a bias input: it converts an oscillating residual into a spurious systematic offset.",
+    "per_budget": [
+      {
+        "compute": 8430221996851200.0,
+        "n": 17,
+        "rms_residual": 0.006298358749503038,
+        "signed_mean_residual": -0.00508829870143976
+      },
+      {
+        "compute": 2.170083624144077e+16,
+        "n": 17,
+        "rms_residual": 0.019241104125304078,
+        "signed_mean_residual": 0.01521958428199172
+      },
+      {
+        "compute": 4.377678106853376e+16,
+        "n": 17,
+        "rms_residual": 0.011647296962294393,
+        "signed_mean_residual": -0.005815325647095663
+      },
+      {
+        "compute": 5.88506060071895e+16,
+        "n": 17,
+        "rms_residual": 0.012078509260520814,
+        "signed_mean_residual": -0.0009871887089263212
+      },
+      {
+        "compute": 1.2413398842290995e+17,
+        "n": 17,
+        "rms_residual": 0.013244943249918414,
+        "signed_mean_residual": -0.00823327715231984
+      },
+      {
+        "compute": 1.5375666115510272e+17,
+        "n": 17,
+        "rms_residual": 0.01577002164905928,
+        "signed_mean_residual": -0.01066323211726401
+      },
+      {
+        "compute": 2.1908574798505574e+17,
+        "n": 17,
+        "rms_residual": 0.019960459694689677,
+        "signed_mean_residual": 0.015567737518158223
+      }
+    ]
+  },
+  "excluded_scales": [
+    "750M"
+  ],
+  "fast": false,
+  "inputs": {
+    "data/datadecide_runs.parquet": "f61f9c58bb87309521ae62ff1b2585749d763ab110a3fd67998bbdd240e0767b"
+  },
+  "ladder": [
+    8430221996851200.0,
+    2.170083624144077e+16,
+    4.377678106853376e+16,
+    5.88506060071895e+16,
+    1.2413398842290995e+17,
+    1.5375666115510272e+17,
+    2.1908574798505574e+17
+  ],
+  "lever_arm_full_ladder": 8.92554354148492,
+  "matched_compute_note": {
+    "full_ladder_cost_per_intervention": 1.889204528631251e+18,
+    "note": "Costs are per intervention in every arm. The single-scale arm buys 3 seeds at the top rung; each design arm buys what the same stated FLOP budget affords across the ladder. The full uniform ladder costs more than single-scale ranking, so equal-cost comparisons against single-scale sit at budget fractions below 1.",
+    "single_scale_cost_per_intervention": 6.572572439551672e+17
+  },
+  "max_runs_per_budget": 3.0,
+  "n_boot": 400,
+  "n_interventions": 25,
+  "scored": {
+    "single_scale_top_rung": {
+      "ci_hi": 0.09333333333333334,
+      "ci_lo": 0.04666666666666667,
+      "cost_flops": 1.643143109887918e+19,
+      "mis_selection": 0.07144166666666667,
+      "mis_selection_sd": 0.01239624441200393,
+      "n_seeds": 3,
+      "rung": 2.1908574798505574e+17
+    }
+  },
+  "seed": 20260917,
+  "split": {
+    "deviation_estimated_on": "train_interventions_only",
+    "heldout_from_deviation": [
+      "C4",
+      "DCLM-Baseline (QC FW 3%)",
+      "Dolma1.7",
+      "Falcon",
+      "Falcon+CC (QC 10%)",
+      "Falcon+CC (QC 20%)",
+      "FineWeb-Edu",
+      "FineWeb-Pro"
+    ],
+    "mis_selection_scored_on": "all_interventions",
+    "n_heldout_from_deviation": 8,
+    "n_train": 17,
+    "rationale": "The deviation function must not be fitted on data used to score decisions. Mis-selection is scored on all 25 interventions because a 8-intervention subset yields 28 pairs, too few to resolve rates of 1-5%: the baseline hits exactly 0.0000 and no method can differ.",
+    "split_seed": 20260917,
+    "train_interventions": [
+      "DCLM-Baseline",
+      "DCLM-Baseline (QC 10%)",
+      "DCLM-Baseline (QC 20%)",
+      "DCLM-Baseline (QC 7%, FW2)",
+      "DCLM-Baseline (QC 7%, FW3)",
+      "DCLM-Baseline (QC FW 10%)",
+      "DCLM-Baseline 25% / Dolma 75%",
+      "DCLM-Baseline 50% / Dolma 50%",
+      "DCLM-Baseline 75% / Dolma 25%",
+      "Dolma1.6++",
+      "Dolma1.7 (no Flan)",
+      "Dolma1.7 (no Reddit)",
+      "Dolma1.7 (no code)",
+      "Dolma1.7 (no math, code)",
+      "Falcon+CC",
+      "Falcon+CC (QC Orig 10%)",
+      "Falcon+CC (QC Tulu 10%)"
+    ]
+  },
+  "sweep": {
+    "frac_0.03": {
+      "budget_flops_per_intervention": 5.667613585893753e+16,
+      "budget_fraction": 0.03,
+      "cheap_rung_share_bias_aware": 0.1165401444315069,
+      "cheap_rung_share_decision": 0.1165410006918078,
+      "cost_relative_to_single_scale": 0.08623128368715784,
+      "designs": {
+        "bias_aware": {
+          "budgets": [
+            8430221996851200.0,
+            2.170083624144077e+16,
+            4.377678106853376e+16,
+            5.88506060071895e+16,
+            1.2413398842290995e+17,
+            1.5375666115510272e+17,
+            2.1908574798505574e+17
+          ],
+          "concentration_at_top": 0.0,
+          "cost": 5.667613586085291e+16,
+          "runs": [
+            0.7834959816610497,
+            0.0,
+            0.0,
+            0.0,
+            0.4033632644688985,
+            0.0,
+            0.0
+          ],
+          "support": [
+            8430221996851200.0,
+            1.2413398842290995e+17
+          ],
+          "target": 1.955459382959407e+18,
+          "total_runs": 1.186859246129948
+        },
+        "decision_optimal": {
+          "budgets": [
+            8430221996851200.0,
+            2.170083624144077e+16,
+            4.377678106853376e+16,
+            5.88506060071895e+16,
+            1.2413398842290995e+17,
+            1.5375666115510272e+17,
+            2.1908574798505574e+17
+          ],
+          "concentration_at_top": 0.0,
+          "cost": 5.667613628036225e+16,
+          "runs": [
+            0.7835017440733804,
+            0.0,
+            0.0,
+            0.0,
+            0.4033628765098354,
+            0.0,
+            0.0
+          ],
+          "support": [
+            8430221996851200.0,
+            1.2413398842290995e+17
+          ],
+          "target": 1.955459382959407e+18,
+          "total_runs": 1.1868646205832158
+        },
+        "estimation_optimal_sl2": {
+          "budgets": [
+            8430221996851200.0,
+            2.170083624144077e+16,
+            4.377678106853376e+16,
+            5.88506060071895e+16,
+            1.2413398842290995e+17,
+            1.5375666115510272e+17,
+            2.1908574798505574e+17
+          ],
+          "concentration_at_top": 0.0,
+          "cost": 5.667613586119429e+16,
+          "runs": [
+            0.8015688109923316,
+            0.0,
+            0.0,
+            0.0,
+            0.4021358974522723,
+            0.0,
+            0.0
+          ],
+          "support": [
+            8430221996851200.0,
+            1.2413398842290995e+17
+          ],
+          "target": 1.955459382959407e+18,
+          "total_runs": 1.203704708444604
+        },
+        "uniform_ladder": {
+          "budgets": [
+            8430221996851200.0,
+            2.170083624144077e+16,
+            4.377678106853376e+16,
+            5.88506060071895e+16,
+            1.2413398842290995e+17,
+            1.5375666115510272e+17,
+            2.1908574798505574e+17
+          ],
+          "concentration_at_top": 0.34790158185326664,
+          "cost": 5.667613585893753e+16,
+          "runs": [
+            0.09,
+            0.09,
+            0.09,
+            0.09,
+            0.09,
+            0.09,
+            0.09
+          ],
+          "support": [
+            8430221996851200.0,
+            2.170083624144077e+16,
+            4.377678106853376e+16,
+            5.88506060071895e+16,
+            1.2413398842290995e+17,
+            1.5375666115510272e+17,
+            2.1908574798505574e+17
+          ],
+          "target": 1.955459382959407e+18,
+          "total_runs": 0.6299999999999999
+        }
+      },
+      "max_cost_share_gap_decision_vs_estimation": 0.0026873644699774157,
+      "scored": {
+        "bias_aware": {
+          "error": "design has two support points; three-parameter fit is unidentifiable",
+          "mis_selection": null,
+          "n_support": 2,
+          "n_support_rounded": 2,
+          "rounded_cost": 4.699150223199437e+16,
+          "rounded_runs": [
+            3.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "support_budgets": [
+            8430221996851200.0,
+            2.170083624144077e+16
+          ]
+        },
+        "decision_optimal": {
+          "error": "design has two support points; three-parameter fit is unidentifiable",
+          "mis_selection": null,
+          "n_support": 2,
+          "n_support_rounded": 2,
+          "rounded_cost": 4.699150223199437e+16,
+          "rounded_runs": [
+            3.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "support_budgets": [
+            8430221996851200.0,
+            2.170083624144077e+16
+          ]
+        },
+        "estimation_optimal_sl2": {
+          "error": "design has two support points; three-parameter fit is unidentifiable",
+          "mis_selection": null,
+          "n_support": 2,
+          "n_support_rounded": 2,
+          "rounded_cost": 4.699150223199437e+16,
+          "rounded_runs": [
+            3.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "support_budgets": [
+            8430221996851200.0,
+            2.170083624144077e+16
+          ]
+        },
+        "uniform_ladder": {
+          "error": "design has two support points; three-parameter fit is unidentifiable",
+          "mis_selection": null,
+          "n_support": 2,
+          "n_support_rounded": 2,
+          "rounded_cost": 4.699150223199437e+16,
+          "rounded_runs": [
+            3.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "support_budgets": [
+            8430221996851200.0,
+            2.170083624144077e+16
+          ]
+        }
+      },
+      "top_rung_share_bias_aware": 0.0,
+      "top_rung_share_decision": 0.0,
+      "variance_factors": {
+        "bias_aware": 11.508168291249643,
+        "decision_optimal": 11.508168206008412,
+        "estimation_optimal_sl2": 11.508959802251745,
+        "uniform_ladder": 18.807285044227473
+      },
+      "variance_ratio_decision_over_uniform": 0.6118994942090601
+    },
+    "frac_0.1": {
+      "budget_flops_per_intervention": 1.8892045286312512e+17,
+      "budget_fraction": 0.1,
+      "cheap_rung_share_bias_aware": 0.11654066923748087,
+      "cheap_rung_share_decision": 0.11654103921574155,
+      "cost_relative_to_single_scale": 0.28743761229052617,
+      "designs": {
+        "bias_aware": {
+          "budgets": [
+            8430221996851200.0,
+            2.170083624144077e+16,
+            4.377678106853376e+16,
+            5.88506060071895e+16,
+            1.2413398842290995e+17,
+            1.5375666115510272e+17,
+            2.1908574798505574e+17
+          ],
+          "concentration_at_top": 0.0,
+          "cost": 1.889204528631279e+17,
+          "runs": [
+            2.6116650329659756,
+            0.0,
+            0.0,
+            0.0,
+            1.3445434161447405,
+            0.0,
+            0.0
+          ],
+          "support": [
+            8430221996851200.0,
+            1.2413398842290995e+17
+          ],
+          "target": 1.955459382959407e+18,
+          "total_runs": 3.956208449110716
+        },
+        "decision_optimal": {
+          "budgets": [
+            8430221996851200.0,
+            2.170083624144077e+16,
+            4.377678106853376e+16,
+            5.88506060071895e+16,
+            1.2413398842290995e+17,
+            1.5375666115510272e+17,
+            2.1908574798505574e+17
+          ],
+          "concentration_at_top": 0.0,
+          "cost": 1.8892045286312486e+17,
+          "runs": [
+            2.611673324142677,
+            0.0,
+            0.0,
+            0.0,
+            1.3445428530720147,
+            0.0,
+            0.0
+          ],
+          "support": [
+            8430221996851200.0,
+            1.2413398842290995e+17
+          ],
+          "target": 1.955459382959407e+18,
+          "total_runs": 3.9562161772146913
+        },
+        "estimation_optimal_sl2": {
+          "budgets": [
+            8430221996851200.0,
+            2.170083624144077e+16,
+            4.377678106853376e+16,
+            5.88506060071895e+16,
+            1.2413398842290995e+17,
+            1.5375666115510272e+17,
+            2.1908574798505574e+17
+          ],
+          "concentration_at_top": 0.0,
+          "cost": 1.8892045286312157e+17,
+          "runs": [
+            2.671901231904398,
+            0.0,
+            0.0,
+            0.0,
+            1.3404526386247781,
+            0.0,
+            0.0
+          ],
+          "support": [
+            8430221996851200.0,
+            1.2413398842290995e+17
+          ],
+          "target": 1.955459382959407e+18,
+          "total_runs": 4.012353870529176
+        },
+        "uniform_ladder": {
+          "budgets": [
+            8430221996851200.0,
+            2.170083624144077e+16,
+            4.377678106853376e+16,
+            5.88506060071895e+16,
+            1.2413398842290995e+17,
+            1.5375666115510272e+17,
+            2.1908574798505574e+17
+          ],
+          "concentration_at_top": 0.3479015818532667,
+          "cost": 1.8892045286312512e+17,
+          "runs": [
+            0.30000000000000004,
+            0.30000000000000004,
+            0.30000000000000004,
+            0.30000000000000004,
+            0.30000000000000004,
+            0.30000000000000004,
+            0.30000000000000004
+          ],
+          "support": [
+            8430221996851200.0,
+            2.170083624144077e+16,
+            4.377678106853376e+16,
+            5.88506060071895e+16,
+            1.2413398842290995e+17,
+            1.5375666115510272e+17,
+            2.1908574798505574e+17
+          ],
+          "target": 1.955459382959407e+18,
+          "total_runs": 2.1000000000000005
+        }
+      },
+      "max_cost_share_gap_decision_vs_estimation": 0.002687557779704461,
+      "scored": {
+        "bias_aware": {
+          "ci_hi": 0.37333333333333335,
+          "ci_lo": 0.22325,
+          "cost_flops": 1.7112549065490432e+17,
+          "excess_over_single_scale": 0.23165000000000002,
+          "fit_budgets": [
+            8430221996851200.0,
+            2.170083624144077e+16,
+            1.2413398842290995e+17
+          ],
+          "mis_selection": 0.3030916666666667,
+          "mis_selection_sd": 0.04077326152605422,
+          "n_boot_evaluable": 400,
+          "n_support_rounded": 3,
+          "rounded_cost": 1.7112549065490432e+17,
+          "rounded_runs": [
+            3.0,
+            1.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          "runs_per_budget": {
+            "1.2413398842290995e+17": 1,
+            "2.170083624144077e+16": 1,
+            "8430221996851200.0": 3
+          },
+          "total_runs": 5
+        },
+        "decision_optimal": {
+          "ci_hi": 0.37666666666666665,
+          "ci_lo": 0.22666666666666666,
+          "cost_flops": 1.7112549065490432e+17,
+          "excess_over_single_scale": 0.23454999999999998,
+          "fit_budgets": [
+            8430221996851200.0,
+            2.170083624144077e+16,
+            1.2413398842290995e+17
+          ],
+          "mis_selection": 0.30599166666666666,
+          "mis_selection_sd": 0.04008991477986116,
+          "n_boot_evaluable": 400,
+          "n_support_rounded": 3,
+          "rounded_cost": 1.7112549065490432e+17,
+          "rounded_runs": [
+            3.0,
+            1.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          "runs_per_budget": {
+            "1.2413398842290995e+17": 1,
+            "2.170083624144077e+16": 1,
+            "8430221996851200.0": 3
+          },
+          "total_runs": 5
+        },
+        "estimation_optimal_sl2": {
+          "ci_hi": 0.3867499999999999,
+          "ci_lo": 0.22333333333333333,
+          "cost_flops": 1.7112549065490432e+17,
+          "excess_over_single_scale": 0.23755833333333332,
+          "fit_budgets": [
+            8430221996851200.0,
+            2.170083624144077e+16,
+            1.2413398842290995e+17
+          ],
+          "mis_selection": 0.309,
+          "mis_selection_sd": 0.04240408443833855,
+          "n_boot_evaluable": 400,
+          "n_support_rounded": 3,
+          "rounded_cost": 1.7112549065490432e+17,
+          "rounded_runs": [
+            3.0,
+            1.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          "runs_per_budget": {
+            "1.2413398842290995e+17": 1,
+            "2.170083624144077e+16": 1,
+            "8430221996851200.0": 3
+          },
+          "total_runs": 5
+        },
+        "uniform_ladder": {
+          "ci_hi": 0.46,
+          "ci_lo": 0.25333333333333335,
+          "cost_flops": 1.7794673685194342e+17,
+          "excess_over_single_scale": 0.29407500000000003,
+          "fit_budgets": [
+            8430221996851200.0,
+            2.170083624144077e+16,
+            4.377678106853376e+16
+          ],
+          "mis_selection": 0.3655166666666667,
+          "mis_selection_sd": 0.05635063231396109,
+          "n_boot_evaluable": 400,
+          "n_support_rounded": 3,
+          "rounded_cost": 1.7794673685194342e+17,
+          "rounded_runs": [
+            3.0,
+            3.0,
+            2.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "runs_per_budget": {
+            "2.170083624144077e+16": 3,
+            "4.377678106853376e+16": 2,
+            "8430221996851200.0": 3
+          },
+          "total_runs": 8
+        }
+      },
+      "top_rung_share_bias_aware": 0.0,
+      "top_rung_share_decision": 0.0,
+      "variance_factors": {
+        "bias_aware": 3.452450487474649,
+        "decision_optimal": 3.4524504874750943,
+        "estimation_optimal_sl2": 3.4526879813819202,
+        "uniform_ladder": 5.64218551326532
+      },
+      "variance_ratio_decision_over_uniform": 0.6118994987594881
+    },
+    "frac_0.3": {
+      "budget_flops_per_intervention": 5.667613585893752e+17,
+      "budget_fraction": 0.3,
+      "cheap_rung_share_bias_aware": 0.0446231303656623,
+      "cheap_rung_share_decision": 0.04462313036566232,
+      "cost_relative_to_single_scale": 0.8623128368715782,
+      "designs": {
+        "bias_aware": {
+          "budgets": [
+            8430221996851200.0,
+            2.170083624144077e+16,
+            4.377678106853376e+16,
+            5.88506060071895e+16,
+            1.2413398842290995e+17,
+            1.5375666115510272e+17,
+            2.1908574798505574e+17
+          ],
+          "concentration_at_top": 0.1415070168741344,
+          "cost": 5.667613585893759e+17,
+          "runs": [
+            3.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            3.0,
+            0.36606995147390775
+          ],
+          "support": [
+            8430221996851200.0,
+            1.5375666115510272e+17,
+            2.1908574798505574e+17
+          ],
+          "target": 1.955459382959407e+18,
+          "total_runs": 6.366069951473908
+        },
+        "decision_optimal": {
+          "budgets": [
+            8430221996851200.0,
+            2.170083624144077e+16,
+            4.377678106853376e+16,
+            5.88506060071895e+16,
+            1.2413398842290995e+17,
+            1.5375666115510272e+17,
+            2.1908574798505574e+17
+          ],
+          "concentration_at_top": 0.14150701687413533,
+          "cost": 5.6676135858937574e+17,
+          "runs": [
+            3.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            2.999999999999996,
+            0.3660699514739101
+          ],
+          "support": [
+            8430221996851200.0,
+            1.5375666115510272e+17,
+            2.1908574798505574e+17
+          ],
+          "target": 1.955459382959407e+18,
+          "total_runs": 6.366069951473906
+        },
+        "estimation_optimal_sl2": {
+          "budgets": [
+            8430221996851200.0,
+            2.170083624144077e+16,
+            4.377678106853376e+16,
+            5.88506060071895e+16,
+            1.2413398842290995e+17,
+            1.5375666115510272e+17,
+            2.1908574798505574e+17
+          ],
+          "concentration_at_top": 0.14150701736046278,
+          "cost": 5.6676135891044096e+17,
+          "runs": [
+            3.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            2.9999999999999996,
+            0.36606995293938466
+          ],
+          "support": [
+            8430221996851200.0,
+            1.5375666115510272e+17,
+            2.1908574798505574e+17
+          ],
+          "target": 1.955459382959407e+18,
+          "total_runs": 6.366069952939385
+        },
+        "uniform_ladder": {
+          "budgets": [
+            8430221996851200.0,
+            2.170083624144077e+16,
+            4.377678106853376e+16,
+            5.88506060071895e+16,
+            1.2413398842290995e+17,
+            1.5375666115510272e+17,
+            2.1908574798505574e+17
+          ],
+          "concentration_at_top": 0.34790158185326664,
+          "cost": 5.667613585893752e+17,
+          "runs": [
+            0.8999999999999999,
+            0.8999999999999999,
+            0.8999999999999999,
+            0.8999999999999999,
+            0.8999999999999999,
+            0.8999999999999999,
+            0.8999999999999999
+          ],
+          "support": [
+            8430221996851200.0,
+            2.170083624144077e+16,
+            4.377678106853376e+16,
+            5.88506060071895e+16,
+            1.2413398842290995e+17,
+            1.5375666115510272e+17,
+            2.1908574798505574e+17
+          ],
+          "target": 1.955459382959407e+18,
+          "total_runs": 6.300000000000001
+        }
+      },
+      "max_cost_share_gap_decision_vs_estimation": 4.863274505328974e-10,
+      "scored": {
+        "bias_aware": {
+          "ci_hi": 0.22,
+          "ci_lo": 0.11325,
+          "cost_flops": 5.4541125546305126e+17,
+          "excess_over_single_scale": 0.093075,
+          "fit_budgets": [
+            8430221996851200.0,
+            5.88506060071895e+16,
+            1.5375666115510272e+17
+          ],
+          "mis_selection": 0.16451666666666667,
+          "mis_selection_sd": 0.029475877360023325,
+          "n_boot_evaluable": 400,
+          "n_support_rounded": 3,
+          "rounded_cost": 5.4541125546305126e+17,
+          "rounded_runs": [
+            3.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            3.0,
+            0.0
+          ],
+          "runs_per_budget": {
+            "1.5375666115510272e+17": 3,
+            "5.88506060071895e+16": 1,
+            "8430221996851200.0": 3
+          },
+          "total_runs": 7
+        },
+        "decision_optimal": {
+          "ci_hi": 0.19666666666666666,
+          "ci_lo": 0.08666666666666667,
+          "cost_flops": 5.5956536379939226e+17,
+          "excess_over_single_scale": 0.06749999999999999,
+          "fit_budgets": [
+            8430221996851200.0,
+            4.377678106853376e+16,
+            5.88506060071895e+16,
+            1.2413398842290995e+17,
+            1.5375666115510272e+17
+          ],
+          "mis_selection": 0.13894166666666666,
+          "mis_selection_sd": 0.02730372986823135,
+          "n_boot_evaluable": 400,
+          "n_support_rounded": 5,
+          "rounded_cost": 5.5956536379939226e+17,
+          "rounded_runs": [
+            3.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0,
+            2.0,
+            0.0
+          ],
+          "runs_per_budget": {
+            "1.2413398842290995e+17": 1,
+            "1.5375666115510272e+17": 2,
+            "4.377678106853376e+16": 1,
+            "5.88506060071895e+16": 1,
+            "8430221996851200.0": 3
+          },
+          "total_runs": 8
+        },
+        "estimation_optimal_sl2": {
+          "ci_hi": 0.2,
+          "ci_lo": 0.09,
+          "cost_flops": 5.5956536379939226e+17,
+          "excess_over_single_scale": 0.07312500000000001,
+          "fit_budgets": [
+            8430221996851200.0,
+            4.377678106853376e+16,
+            5.88506060071895e+16,
+            1.2413398842290995e+17,
+            1.5375666115510272e+17
+          ],
+          "mis_selection": 0.14456666666666668,
+          "mis_selection_sd": 0.02696844696526265,
+          "n_boot_evaluable": 400,
+          "n_support_rounded": 5,
+          "rounded_cost": 5.5956536379939226e+17,
+          "rounded_runs": [
+            3.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0,
+            2.0,
+            0.0
+          ],
+          "runs_per_budget": {
+            "1.2413398842290995e+17": 1,
+            "1.5375666115510272e+17": 2,
+            "4.377678106853376e+16": 1,
+            "5.88506060071895e+16": 1,
+            "8430221996851200.0": 3
+          },
+          "total_runs": 8
+        },
+        "uniform_ladder": {
+          "ci_hi": 0.2733333333333333,
+          "ci_lo": 0.17333333333333334,
+          "cost_flops": 5.659918705392353e+17,
+          "excess_over_single_scale": 0.15321666666666667,
+          "fit_budgets": [
+            8430221996851200.0,
+            2.170083624144077e+16,
+            4.377678106853376e+16,
+            5.88506060071895e+16,
+            1.2413398842290995e+17
+          ],
+          "mis_selection": 0.22465833333333332,
+          "mis_selection_sd": 0.026937739564883635,
+          "n_boot_evaluable": 400,
+          "n_support_rounded": 5,
+          "rounded_cost": 5.659918705392353e+17,
+          "rounded_runs": [
+            3.0,
+            2.0,
+            3.0,
+            2.0,
+            2.0,
+            0.0,
+            0.0
+          ],
+          "runs_per_budget": {
+            "1.2413398842290995e+17": 2,
+            "2.170083624144077e+16": 2,
+            "4.377678106853376e+16": 3,
+            "5.88506060071895e+16": 2,
+            "8430221996851200.0": 3
+          },
+          "total_runs": 12
+        }
+      },
+      "top_rung_share_bias_aware": 0.1415070168741344,
+      "top_rung_share_decision": 0.14150701687413533,
+      "variance_factors": {
+        "bias_aware": 1.256448116221411,
+        "decision_optimal": 1.2564481162213836,
+        "estimation_optimal_sl2": 1.2564481156249219,
+        "uniform_ladder": 1.8807285044222601
+      },
+      "variance_ratio_decision_over_uniform": 0.6680645894753168
+    },
+    "frac_1": {
+      "budget_flops_per_intervention": 1.889204528631251e+18,
+      "budget_fraction": 1.0,
+      "cheap_rung_share_bias_aware": 0.013386939109698705,
+      "cheap_rung_share_decision": 0.013386939109698709,
+      "cost_relative_to_single_scale": 2.874376122905261,
+      "designs": {
+        "bias_aware": {
+          "budgets": [
+            8430221996851200.0,
+            2.170083624144077e+16,
+            4.377678106853376e+16,
+            5.88506060071895e+16,
+            1.2413398842290995e+17,
+            1.5375666115510272e+17,
+            2.1908574798505574e+17
+          ],
+          "concentration_at_top": 0.3479015818532667,
+          "cost": 1.889204528631251e+18,
+          "runs": [
+            3.0,
+            3.0,
+            3.0,
+            3.0,
+            2.999999999999999,
+            3.0,
+            3.0
+          ],
+          "support": [
+            8430221996851200.0,
+            2.170083624144077e+16,
+            4.377678106853376e+16,
+            5.88506060071895e+16,
+            1.2413398842290995e+17,
+            1.5375666115510272e+17,
+            2.1908574798505574e+17
+          ],
+          "target": 1.955459382959407e+18,
+          "total_runs": 21.0
+        },
+        "decision_optimal": {
+          "budgets": [
+            8430221996851200.0,
+            2.170083624144077e+16,
+            4.377678106853376e+16,
+            5.88506060071895e+16,
+            1.2413398842290995e+17,
+            1.5375666115510272e+17,
+            2.1908574798505574e+17
+          ],
+          "concentration_at_top": 0.34790158185326675,
+          "cost": 1.8892045286312504e+18,
+          "runs": [
+            3.0,
+            3.0,
+            2.9999999999999876,
+            3.0,
+            3.0,
+            3.0,
+            3.0
+          ],
+          "support": [
+            8430221996851200.0,
+            2.170083624144077e+16,
+            4.377678106853376e+16,
+            5.88506060071895e+16,
+            1.2413398842290995e+17,
+            1.5375666115510272e+17,
+            2.1908574798505574e+17
+          ],
+          "target": 1.955459382959407e+18,
+          "total_runs": 20.999999999999986
+        },
+        "estimation_optimal_sl2": {
+          "budgets": [
+            8430221996851200.0,
+            2.170083624144077e+16,
+            4.377678106853376e+16,
+            5.88506060071895e+16,
+            1.2413398842290995e+17,
+            1.5375666115510272e+17,
+            2.1908574798505574e+17
+          ],
+          "concentration_at_top": 0.3479015818532667,
+          "cost": 1.889204528631251e+18,
+          "runs": [
+            3.0,
+            3.0,
+            3.0,
+            2.999999999999999,
+            3.0,
+            3.0,
+            3.0
+          ],
+          "support": [
+            8430221996851200.0,
+            2.170083624144077e+16,
+            4.377678106853376e+16,
+            5.88506060071895e+16,
+            1.2413398842290995e+17,
+            1.5375666115510272e+17,
+            2.1908574798505574e+17
+          ],
+          "target": 1.955459382959407e+18,
+          "total_runs": 21.0
+        },
+        "uniform_ladder": {
+          "budgets": [
+            8430221996851200.0,
+            2.170083624144077e+16,
+            4.377678106853376e+16,
+            5.88506060071895e+16,
+            1.2413398842290995e+17,
+            1.5375666115510272e+17,
+            2.1908574798505574e+17
+          ],
+          "concentration_at_top": 0.3479015818532667,
+          "cost": 1.889204528631251e+18,
+          "runs": [
+            3.0,
+            3.0,
+            3.0,
+            3.0,
+            3.0,
+            3.0,
+            3.0
+          ],
+          "support": [
+            8430221996851200.0,
+            2.170083624144077e+16,
+            4.377678106853376e+16,
+            5.88506060071895e+16,
+            1.2413398842290995e+17,
+            1.5375666115510272e+17,
+            2.1908574798505574e+17
+          ],
+          "target": 1.955459382959407e+18,
+          "total_runs": 21.0
+        }
+      },
+      "max_cost_share_gap_decision_vs_estimation": 2.7755575615628914e-16,
+      "scored": {
+        "bias_aware": {
+          "ci_hi": 0.22333333333333333,
+          "ci_lo": 0.10666666666666667,
+          "cost_flops": 1.889204528631251e+18,
+          "excess_over_single_scale": 0.09231666666666667,
+          "fit_budgets": [
+            8430221996851200.0,
+            2.170083624144077e+16,
+            4.377678106853376e+16,
+            5.88506060071895e+16,
+            1.2413398842290995e+17,
+            1.5375666115510272e+17,
+            2.1908574798505574e+17
+          ],
+          "mis_selection": 0.16375833333333334,
+          "mis_selection_sd": 0.02954990374727348,
+          "n_boot_evaluable": 400,
+          "n_support_rounded": 7,
+          "rounded_cost": 1.889204528631251e+18,
+          "rounded_runs": [
+            3.0,
+            3.0,
+            3.0,
+            3.0,
+            3.0,
+            3.0,
+            3.0
+          ],
+          "runs_per_budget": {
+            "1.2413398842290995e+17": 3,
+            "1.5375666115510272e+17": 3,
+            "2.170083624144077e+16": 3,
+            "2.1908574798505574e+17": 3,
+            "4.377678106853376e+16": 3,
+            "5.88506060071895e+16": 3,
+            "8430221996851200.0": 3
+          },
+          "total_runs": 21
+        },
+        "decision_optimal": {
+          "ci_hi": 0.21666666666666667,
+          "ci_lo": 0.10333333333333333,
+          "cost_flops": 1.889204528631251e+18,
+          "excess_over_single_scale": 0.08928333333333334,
+          "fit_budgets": [
+            8430221996851200.0,
+            2.170083624144077e+16,
+            4.377678106853376e+16,
+            5.88506060071895e+16,
+            1.2413398842290995e+17,
+            1.5375666115510272e+17,
+            2.1908574798505574e+17
+          ],
+          "mis_selection": 0.160725,
+          "mis_selection_sd": 0.02888153503535311,
+          "n_boot_evaluable": 400,
+          "n_support_rounded": 7,
+          "rounded_cost": 1.889204528631251e+18,
+          "rounded_runs": [
+            3.0,
+            3.0,
+            3.0,
+            3.0,
+            3.0,
+            3.0,
+            3.0
+          ],
+          "runs_per_budget": {
+            "1.2413398842290995e+17": 3,
+            "1.5375666115510272e+17": 3,
+            "2.170083624144077e+16": 3,
+            "2.1908574798505574e+17": 3,
+            "4.377678106853376e+16": 3,
+            "5.88506060071895e+16": 3,
+            "8430221996851200.0": 3
+          },
+          "total_runs": 21
+        },
+        "estimation_optimal_sl2": {
+          "ci_hi": 0.21674999999999994,
+          "ci_lo": 0.11,
+          "cost_flops": 1.889204528631251e+18,
+          "excess_over_single_scale": 0.09253333333333334,
+          "fit_budgets": [
+            8430221996851200.0,
+            2.170083624144077e+16,
+            4.377678106853376e+16,
+            5.88506060071895e+16,
+            1.2413398842290995e+17,
+            1.5375666115510272e+17,
+            2.1908574798505574e+17
+          ],
+          "mis_selection": 0.163975,
+          "mis_selection_sd": 0.028121438479285683,
+          "n_boot_evaluable": 400,
+          "n_support_rounded": 7,
+          "rounded_cost": 1.889204528631251e+18,
+          "rounded_runs": [
+            3.0,
+            3.0,
+            3.0,
+            3.0,
+            3.0,
+            3.0,
+            3.0
+          ],
+          "runs_per_budget": {
+            "1.2413398842290995e+17": 3,
+            "1.5375666115510272e+17": 3,
+            "2.170083624144077e+16": 3,
+            "2.1908574798505574e+17": 3,
+            "4.377678106853376e+16": 3,
+            "5.88506060071895e+16": 3,
+            "8430221996851200.0": 3
+          },
+          "total_runs": 21
+        },
+        "uniform_ladder": {
+          "ci_hi": 0.23,
+          "ci_lo": 0.10666666666666667,
+          "cost_flops": 1.889204528631251e+18,
+          "excess_over_single_scale": 0.09045833333333332,
+          "fit_budgets": [
+            8430221996851200.0,
+            2.170083624144077e+16,
+            4.377678106853376e+16,
+            5.88506060071895e+16,
+            1.2413398842290995e+17,
+            1.5375666115510272e+17,
+            2.1908574798505574e+17
+          ],
+          "mis_selection": 0.1619,
+          "mis_selection_sd": 0.030168024773612502,
+          "n_boot_evaluable": 400,
+          "n_support_rounded": 7,
+          "rounded_cost": 1.889204528631251e+18,
+          "rounded_runs": [
+            3.0,
+            3.0,
+            3.0,
+            3.0,
+            3.0,
+            3.0,
+            3.0
+          ],
+          "runs_per_budget": {
+            "1.2413398842290995e+17": 3,
+            "1.5375666115510272e+17": 3,
+            "2.170083624144077e+16": 3,
+            "2.1908574798505574e+17": 3,
+            "4.377678106853376e+16": 3,
+            "5.88506060071895e+16": 3,
+            "8430221996851200.0": 3
+          },
+          "total_runs": 21
+        }
+      },
+      "top_rung_share_bias_aware": 0.3479015818532667,
+      "top_rung_share_decision": 0.34790158185326675,
+      "variance_factors": {
+        "bias_aware": 0.5642185513264747,
+        "decision_optimal": 0.5642185513264016,
+        "estimation_optimal_sl2": 0.5642185513265535,
+        "uniform_ladder": 0.5642185513267509
+      },
+      "variance_ratio_decision_over_uniform": 0.9999999999993809
+    }
+  },
+  "target_compute": 1.955459382959407e+18,
+  "target_scale": "60M"
+}

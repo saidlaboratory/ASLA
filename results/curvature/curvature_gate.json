@@ -1,0 +1,405 @@
+{
+  "alternative_explanations": {
+    "absolute_error_reduction_from_tokens_per_param": 0.6001377737221423,
+    "fits": {
+      "log_log_quadratic": {
+        "mean_absolute_error": 0.07239187110956856,
+        "mean_signed_error": 0.06913244049914674,
+        "n": 25,
+        "n_overshooting": 24
+      },
+      "power_law": {
+        "mean_absolute_error": 0.09275008159761879,
+        "mean_signed_error": 0.08769214453042767,
+        "n": 25,
+        "n_overshooting": 24
+      },
+      "with_tokens_per_param": {
+        "mean_absolute_error": 0.03708725411507681,
+        "mean_signed_error": -0.03634682125828251,
+        "n": 25,
+        "n_overshooting": 1
+      }
+    },
+    "log_log_quadratic_coefficient": {
+      "mean": 0.002025137900504952,
+      "n": 25,
+      "n_positive": 25
+    },
+    "tokens_per_param": {
+      "corr_log_tpp_with_log_compute": -0.800658272435322,
+      "ladder_max": 100.1897014338694,
+      "ladder_min": 88.70836196324721,
+      "n_rungs_at_nominal_100": 9,
+      "n_rungs_drifted": 3,
+      "target": 84.98721078964542
+    }
+  },
+  "confound_scope": {
+    "interpretation": "The confound is common-mode: it shifts the projected LEVEL without reordering recipes. Selection conclusions (allocation, abstention rates) are unaffected; coverage and centring results are the ones it explains.",
+    "mis_selection_compute_only": 0.03,
+    "mis_selection_with_tokens_per_param": 0.02,
+    "n_pairs": 300,
+    "n_recipes": 25,
+    "spearman_between_projections": 0.9976923076923077
+  },
+  "excluded_scales": [
+    "750M"
+  ],
+  "fit_budgets": [
+    8430221996851200.0,
+    2.170083624144077e+16,
+    4.377678106853376e+16,
+    5.88506060071895e+16,
+    1.2413398842290995e+17,
+    1.5375666115510272e+17,
+    2.1908574798505574e+17,
+    1.955459382959407e+18,
+    5.758063377068851e+18,
+    1.3439040749568e+19,
+    5.66196613152768e+19,
+    1.4955135853658112e+20
+  ],
+  "gate": {
+    "C1_sign_consistency": {
+      "mean_quadratic_coef": -0.0010226431394069037,
+      "n_majority": 25,
+      "n_negative": 25,
+      "n_positive": 0,
+      "sign_test_p": 5.960464477539063e-08,
+      "verdict": "CONFIRMED"
+    },
+    "C2_curvature_predicts_overshoot": {
+      "spearman_p": 3.538707348743784e-09,
+      "spearman_rho": -0.8869230769230768,
+      "verdict": "CONFIRMED"
+    },
+    "C3_quantitative_recovery": {
+      "fraction_recovered": -0.381505624126569,
+      "mean_observed_overshoot": 0.08769214453042767,
+      "mean_quadratic_implied_overshoot": -0.033455046330078106,
+      "verdict": "REFUTED"
+    },
+    "gate_passes": true,
+    "gate_rule": "proceed to 4b-4d only if C1 and C2 both CONFIRMED",
+    "n_recipes": 25,
+    "next_step": "proceed to 4b-4d"
+  },
+  "gate_adjudication": {
+    "c1_c2_pass": true,
+    "c3_verdict": "REFUTED",
+    "curvature_absolute_error_reduction": 0.21949533776553454,
+    "curvature_superseded": true,
+    "next_step": "STOP as pre-registered. 4b-4d are not built on curvature. The cancellation question (4b) remains open and is now better posed against a tokens-per-parameter-aware fit.",
+    "reasoning": "C1 and C2 pass: the residual quadratic is signed 25/25 and correlates with the overshoot at rho=-0.887. But C3 refutes the mechanism quantitatively -- the fitted quadratic extrapolates to an UNDERSHOOT where an overshoot is observed -- and taking the curvature hypothesis at face value removes only 22% of the absolute error, against 60% for adding log(tokens per parameter). DataDecide's ladder holds ~100 tokens/parameter to 90M and then drifts to 85 at the 1B target, so tokens-per-parameter is confounded with compute at -0.80 and a compute-only fit attributes one effect to the other. The overshoot is a design confound in the ladder, not an intrinsic property of extrapolation.",
+    "tokens_per_param_absolute_error_reduction": 0.6001377737221423,
+    "verdict": "MECHANISM REFUTED, PHENOMENON REAL"
+  },
+  "inputs": {
+    "data/datadecide_runs.parquet": "f61f9c58bb87309521ae62ff1b2585749d763ab110a3fd67998bbdd240e0767b"
+  },
+  "per_recipe": [
+    {
+      "constant_coef": 0.012728421294974823,
+      "corr_residual_with_log_compute": -0.024057116924269657,
+      "intervention": "C4",
+      "linear_coef": 0.0014342990238083292,
+      "observed_overshoot": 0.15307598871528105,
+      "projection": 3.9488208253436325,
+      "quadratic_coef": -0.0013385360965664558,
+      "quadratic_implied_overshoot": -0.04383432350291604,
+      "residual_rms": 0.040219737586105433,
+      "truth": 3.7957448366283515
+    },
+    {
+      "constant_coef": 0.010489174433699365,
+      "corr_residual_with_log_compute": -0.017928916967297436,
+      "intervention": "DCLM-Baseline",
+      "linear_coef": 0.0011972830654822149,
+      "observed_overshoot": 0.09303014334337067,
+      "projection": 4.138238630139119,
+      "quadratic_coef": -0.0011030541773343879,
+      "quadratic_implied_overshoot": -0.03601468623236691,
+      "residual_rms": 0.041839123943677795,
+      "truth": 4.045208486795748
+    },
+    {
+      "constant_coef": 0.009404274238462296,
+      "corr_residual_with_log_compute": -0.02369653050230317,
+      "intervention": "DCLM-Baseline (QC 10%)",
+      "linear_coef": 0.0010604257050377693,
+      "observed_overshoot": 0.06082177708011294,
+      "projection": 4.339683104515986,
+      "quadratic_coef": -0.0009889647810328432,
+      "quadratic_implied_overshoot": -0.032381583727248614,
+      "residual_rms": 0.030076102976168695,
+      "truth": 4.278861327435873
+    },
+    {
+      "constant_coef": 0.00937787411543952,
+      "corr_residual_with_log_compute": -0.022543721518599846,
+      "intervention": "DCLM-Baseline (QC 20%)",
+      "linear_coef": 0.0010623020496854047,
+      "observed_overshoot": 0.0903385899194582,
+      "projection": 4.2677189679312875,
+      "quadratic_coef": -0.0009861885236387908,
+      "quadratic_implied_overshoot": -0.03225642536839678,
+      "residual_rms": 0.03086148529287561,
+      "truth": 4.177380378011829
+    },
+    {
+      "constant_coef": 0.011185463270446606,
+      "corr_residual_with_log_compute": -0.02506519371292665,
+      "intervention": "DCLM-Baseline (QC 7%, FW2)",
+      "linear_coef": 0.0012504753214638085,
+      "observed_overshoot": 0.1036119771964561,
+      "projection": 4.326425585242648,
+      "quadratic_coef": -0.0011762767751891381,
+      "quadratic_implied_overshoot": -0.038590934185006726,
+      "residual_rms": 0.03514760145608128,
+      "truth": 4.2228136080461915
+    },
+    {
+      "constant_coef": 0.008900070292031683,
+      "corr_residual_with_log_compute": -0.022365102110312066,
+      "intervention": "DCLM-Baseline (QC 7%, FW3)",
+      "linear_coef": 0.0009928681493048177,
+      "observed_overshoot": 0.010992728270954544,
+      "projection": 4.506877179283842,
+      "quadratic_coef": -0.0009359420966795418,
+      "quadratic_implied_overshoot": -0.03072101638530302,
+      "residual_rms": 0.031633878212728096,
+      "truth": 4.495884451012888
+    },
+    {
+      "constant_coef": 0.008958461434067748,
+      "corr_residual_with_log_compute": -0.023899574348643222,
+      "intervention": "DCLM-Baseline (QC FW 10%)",
+      "linear_coef": 0.0010045101508514185,
+      "observed_overshoot": 0.05779663761225695,
+      "projection": 4.422420074241343,
+      "quadratic_coef": -0.000942082579489444,
+      "quadratic_implied_overshoot": -0.03088637373409208,
+      "residual_rms": 0.02913538374369598,
+      "truth": 4.364623436629086
+    },
+    {
+      "constant_coef": 0.005741145675412438,
+      "corr_residual_with_log_compute": -0.023040295340964096,
+      "intervention": "DCLM-Baseline (QC FW 3%)",
+      "linear_coef": 0.0006311025416825977,
+      "observed_overshoot": -0.06322421333988881,
+      "projection": 4.643030225471367,
+      "quadratic_coef": -0.0006037457833100048,
+      "quadratic_implied_overshoot": -0.019883224988877388,
+      "residual_rms": 0.02106131444175423,
+      "truth": 4.706254438811256
+    },
+    {
+      "constant_coef": 0.011360916444318636,
+      "corr_residual_with_log_compute": -0.022878893475673304,
+      "intervention": "DCLM-Baseline 25% / Dolma 75%",
+      "linear_coef": 0.0012750762312046017,
+      "observed_overshoot": 0.11425352316319648,
+      "projection": 4.022919561959648,
+      "quadratic_coef": -0.0011947276483285831,
+      "quadratic_implied_overshoot": -0.03916107072087684,
+      "residual_rms": 0.038438244497469916,
+      "truth": 3.908666038796451
+    },
+    {
+      "constant_coef": 0.009728710235818838,
+      "corr_residual_with_log_compute": -0.019929598990624697,
+      "intervention": "DCLM-Baseline 50% / Dolma 50%",
+      "linear_coef": 0.0011067304135259114,
+      "observed_overshoot": 0.09585125251133109,
+      "projection": 4.031129186685673,
+      "quadratic_coef": -0.001023082871934225,
+      "quadratic_implied_overshoot": -0.033430092886012286,
+      "residual_rms": 0.03549037643190526,
+      "truth": 3.935277934174342
+    },
+    {
+      "constant_coef": 0.009122049050970759,
+      "corr_residual_with_log_compute": -0.01736081726353715,
+      "intervention": "DCLM-Baseline 75% / Dolma 25%",
+      "linear_coef": 0.0010437152259026093,
+      "observed_overshoot": 0.0917929158759585,
+      "projection": 4.055665756828428,
+      "quadratic_coef": -0.0009592856568926863,
+      "quadratic_implied_overshoot": -0.03130312848589714,
+      "residual_rms": 0.037135715109213305,
+      "truth": 3.9638728409524693
+    },
+    {
+      "constant_coef": 0.007875524373898584,
+      "corr_residual_with_log_compute": -0.017143047176737775,
+      "intervention": "Dolma1.6++",
+      "linear_coef": 0.0009064307186744218,
+      "observed_overshoot": 0.08431960642450687,
+      "projection": 3.897349981911641,
+      "quadratic_coef": -0.0008281996416046574,
+      "quadratic_implied_overshoot": -0.02698788520532255,
+      "residual_rms": 0.03150806821287757,
+      "truth": 3.813030375487134
+    },
+    {
+      "constant_coef": 0.0077501326479358255,
+      "corr_residual_with_log_compute": -0.01640667573814432,
+      "intervention": "Dolma1.7",
+      "linear_coef": 0.0008837530690224211,
+      "observed_overshoot": 0.08185358548464361,
+      "projection": 3.9814836138905556,
+      "quadratic_coef": -0.0008150132869003643,
+      "quadratic_implied_overshoot": -0.02661639314069326,
+      "residual_rms": 0.033947865377209646,
+      "truth": 3.899630028405912
+    },
+    {
+      "constant_coef": 0.008505270831424399,
+      "corr_residual_with_log_compute": -0.017433137165539417,
+      "intervention": "Dolma1.7 (no Flan)",
+      "linear_coef": 0.0009693454110482462,
+      "observed_overshoot": 0.08202654869701798,
+      "projection": 3.979826082632798,
+      "quadratic_coef": -0.0008944245500763264,
+      "quadratic_implied_overshoot": -0.029213422588073995,
+      "residual_rms": 0.035153371730876695,
+      "truth": 3.89779953393578
+    },
+    {
+      "constant_coef": 0.008876810937673915,
+      "corr_residual_with_log_compute": -0.016636181710419157,
+      "intervention": "Dolma1.7 (no Reddit)",
+      "linear_coef": 0.0010078390934865045,
+      "observed_overshoot": 0.0876442943766178,
+      "projection": 3.983185588314111,
+      "quadratic_coef": -0.0009334961170016055,
+      "quadratic_implied_overshoot": -0.03051674540540262,
+      "residual_rms": 0.03916034496860151,
+      "truth": 3.895541293937493
+    },
+    {
+      "constant_coef": 0.010485552795038322,
+      "corr_residual_with_log_compute": -0.02220851585302288,
+      "intervention": "Dolma1.7 (no code)",
+      "linear_coef": 0.0011874033312138745,
+      "observed_overshoot": 0.10714035010564205,
+      "projection": 3.9758846301706736,
+      "quadratic_coef": -0.001102673355652002,
+      "quadratic_implied_overshoot": -0.03606906990642082,
+      "residual_rms": 0.035079457474720376,
+      "truth": 3.8687442800650316
+    },
+    {
+      "constant_coef": 0.010056538930585876,
+      "corr_residual_with_log_compute": -0.01977919392854588,
+      "intervention": "Dolma1.7 (no math, code)",
+      "linear_coef": 0.0011459169784972109,
+      "observed_overshoot": 0.10125710920378506,
+      "projection": 3.9639220638381607,
+      "quadratic_coef": -0.0010575577478417828,
+      "quadratic_implied_overshoot": -0.03454322700956644,
+      "residual_rms": 0.03667013489646143,
+      "truth": 3.8626649546343756
+    },
+    {
+      "constant_coef": 0.011898084490918507,
+      "corr_residual_with_log_compute": -0.022922941053786935,
+      "intervention": "Falcon",
+      "linear_coef": 0.0013438915920099346,
+      "observed_overshoot": 0.11412810799370954,
+      "projection": 4.0073303643786184,
+      "quadratic_coef": -0.0012512168811148199,
+      "quadratic_implied_overshoot": -0.04095250112457348,
+      "residual_rms": 0.03903122985738274,
+      "truth": 3.893202256384909
+    },
+    {
+      "constant_coef": 0.0096672359006901,
+      "corr_residual_with_log_compute": -0.02155971413079576,
+      "intervention": "Falcon+CC",
+      "linear_coef": 0.001099163217375307,
+      "observed_overshoot": 0.1062098051322149,
+      "projection": 3.976902457316667,
+      "quadratic_coef": -0.0010166181555532744,
+      "quadratic_implied_overshoot": -0.03322290378693054,
+      "residual_rms": 0.03268175943487034,
+      "truth": 3.8706926521844522
+    },
+    {
+      "constant_coef": 0.0077953838440243785,
+      "corr_residual_with_log_compute": -0.016513128243583468,
+      "intervention": "Falcon+CC (QC 10%)",
+      "linear_coef": 0.0008917727800203734,
+      "observed_overshoot": 0.08829675199494513,
+      "projection": 4.166474605491809,
+      "quadratic_coef": -0.0008197719418114376,
+      "quadratic_implied_overshoot": -0.026751614512686744,
+      "residual_rms": 0.033391926787235675,
+      "truth": 4.078177853496864
+    },
+    {
+      "constant_coef": 0.0097436337075524,
+      "corr_residual_with_log_compute": -0.019262825443761525,
+      "intervention": "Falcon+CC (QC 20%)",
+      "linear_coef": 0.001112958079409385,
+      "observed_overshoot": 0.0952165250524688,
+      "projection": 4.096254642169205,
+      "quadratic_coef": -0.0010246522432008098,
+      "quadratic_implied_overshoot": -0.03344939915436808,
+      "residual_rms": 0.03604999941540259,
+      "truth": 4.001038117116736
+    },
+    {
+      "constant_coef": 0.01012434578398764,
+      "corr_residual_with_log_compute": -0.020149812076476176,
+      "intervention": "Falcon+CC (QC Orig 10%)",
+      "linear_coef": 0.001152231741259213,
+      "observed_overshoot": 0.10314504474389885,
+      "projection": 4.142198506737716,
+      "quadratic_coef": -0.00106468839499806,
+      "quadratic_implied_overshoot": -0.034786100732150056,
+      "residual_rms": 0.03645439651188797,
+      "truth": 4.039053461993817
+    },
+    {
+      "constant_coef": 0.011523858720384424,
+      "corr_residual_with_log_compute": -0.023603297744018457,
+      "intervention": "Falcon+CC (QC Tulu 10%)",
+      "linear_coef": 0.0013006131890070823,
+      "observed_overshoot": 0.1123781716034884,
+      "projection": 4.11930594305417,
+      "quadratic_coef": -0.0012118628495580773,
+      "quadratic_implied_overshoot": -0.03967156374146961,
+      "residual_rms": 0.036845810231586035,
+      "truth": 4.006927771450681
+    },
+    {
+      "constant_coef": 0.011992448675191862,
+      "corr_residual_with_log_compute": -0.0250127297796742,
+      "intervention": "FineWeb-Edu",
+      "linear_coef": 0.0013455961424071344,
+      "observed_overshoot": 0.11365746726878712,
+      "projection": 4.271264678066984,
+      "quadratic_coef": -0.0012611403275987533,
+      "quadratic_implied_overshoot": -0.041340496760546006,
+      "residual_rms": 0.03715778836358699,
+      "truth": 4.157607210798197
+    },
+    {
+      "constant_coef": 0.00982183531291586,
+      "corr_residual_with_log_compute": -0.021395520381233598,
+      "intervention": "FineWeb-Pro",
+      "linear_coef": 0.0011113903547001446,
+      "observed_overshoot": 0.1066889248304781,
+      "projection": 4.1709236843137925,
+      "quadratic_coef": -0.001032876001864521,
+      "quadratic_implied_overshoot": -0.033791974966754554,
+      "residual_rms": 0.03423042520616759,
+      "truth": 4.064234759483314
+    }
+  ],
+  "target_compute": 7.06209840434774e+20,
+  "target_scale": "1B"
+}
