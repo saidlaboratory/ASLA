@@ -55,6 +55,7 @@ class PairVerdict:
     statistic: float
     delta: float
     n_comparisons: int
+    n_seeds: int | None = None
 
     @property
     def abstained(self) -> bool:
@@ -70,6 +71,8 @@ class PairVerdict:
             "statistic": self.statistic,
             "delta": self.delta,
             "n_comparisons": self.n_comparisons,
+            "n_seeds": self.n_seeds,
+            "reference_distribution": "normal" if self.n_seeds is None else "student_t",
         }
 
 
@@ -88,17 +91,32 @@ def bonferroni_delta(delta: float, n_comparisons: int) -> float:
     return delta / float(n_comparisons)
 
 
-def glr_threshold(delta: float, n_comparisons: int = 1) -> float:
-    """Return the z threshold for a Gaussian generalised likelihood ratio test.
+def glr_threshold(delta: float, n_comparisons: int = 1, n_seeds: int | None = None) -> float:
+    """Return the threshold for a two-sided generalised likelihood ratio test.
 
-    For a two-sided test of ``mu_left == mu_right`` at family-wise level
-    ``delta``, the GLR statistic ``|gap| / se`` is compared against the normal
-    quantile at ``1 - delta/(2 m)``. Rejecting means the ordering is certified;
-    failing to reject means abstain.
+    The statistic ``|gap| / se`` is compared against the quantile at
+    ``1 - delta/(2 m)``. Rejecting certifies the ordering; failing to reject
+    abstains.
+
+    **Use the t quantile whenever sigma is estimated.** Pass ``n_seeds`` and the
+    threshold uses Student's t on ``2 n_seeds - 2`` degrees of freedom; omit it
+    and the Gaussian quantile is used, which assumes sigma is known exactly.
+
+    This is not a refinement. Leaderboards run 3 seeds, and under a Bonferroni
+    correction for 300 comparisons the t quantile at 4 degrees of freedom is
+    **13.65 against the normal's 3.76 --- 3.63x larger**. Using the normal there
+    would make the rule anti-conservative by that factor and the delta-PAC
+    guarantee would simply not hold. The gap closes slowly: the ratio is 1.76 at
+    5 seeds, 1.26 at 10, and only reaches 1.04 by 50.
     """
 
     per_comparison = bonferroni_delta(delta, n_comparisons)
-    return float(stats.norm.ppf(1.0 - per_comparison / 2.0))
+    if n_seeds is None:
+        return float(stats.norm.ppf(1.0 - per_comparison / 2.0))
+    if n_seeds < 2:
+        raise ValueError("certifying a gap requires at least 2 seeds per entry")
+    dof = max(2 * int(n_seeds) - 2, 1)
+    return float(stats.t.ppf(1.0 - per_comparison / 2.0, dof))
 
 
 def certify_pair(
@@ -110,6 +128,7 @@ def certify_pair(
     delta: float,
     n_comparisons: int = 1,
     lower_is_better: bool = True,
+    n_seeds: int | None = None,
 ) -> PairVerdict:
     """Certify an ordering or abstain.
 
@@ -122,7 +141,7 @@ def certify_pair(
 
     if standard_error < 0 or not np.isfinite(standard_error):
         raise ValueError("standard error must be finite and non-negative")
-    threshold = glr_threshold(delta, n_comparisons)
+    threshold = glr_threshold(delta, n_comparisons, n_seeds)
     gap = float(left_mean - right_mean)
     if standard_error == 0.0:
         statistic = float("inf") if gap != 0.0 else 0.0
@@ -145,6 +164,7 @@ def certify_pair(
         statistic=statistic,
         delta=delta,
         n_comparisons=n_comparisons,
+        n_seeds=n_seeds,
     )
 
 
@@ -154,6 +174,7 @@ def certify_leaderboard(
     delta: float,
     lower_is_better: bool = True,
     adjacent_only: bool = True,
+    n_seeds: int | None = None,
 ) -> list[PairVerdict]:
     """Certify a leaderboard's orderings, abstaining where evidence is short.
 
@@ -189,6 +210,7 @@ def certify_leaderboard(
                 delta,
                 n_comparisons,
                 lower_is_better,
+                n_seeds,
             )
         )
     return verdicts
@@ -209,6 +231,7 @@ def seeds_to_resolve(
     n_comparisons: int = 1,
     power: float = 0.8,
     max_seeds: int = 10_000,
+    use_t: bool = True,
 ) -> int | None:
     """Smallest per-entry seed count that would certify a gap of this size.
 
@@ -219,14 +242,24 @@ def seeds_to_resolve(
 
     if gap <= 0 or not np.isfinite(gap) or sigma <= 0:
         return None
-    threshold = glr_threshold(delta, n_comparisons)
-    power_z = float(stats.norm.ppf(power))
-    # se of the difference with n seeds each is sigma * sqrt(2/n)
-    needed = 2.0 * ((threshold + power_z) * sigma / gap) ** 2
+    per_comparison = bonferroni_delta(delta, n_comparisons)
+    # Start from the Gaussian solution, then iterate with the t quantile, whose
+    # degrees of freedom depend on the answer.
+    needed = 2.0 * ((stats.norm.ppf(1 - per_comparison / 2) + stats.norm.ppf(power)) * sigma / gap) ** 2
+    needed = max(needed, 2.0)
+    if use_t:
+        for _ in range(60):
+            dof = max(2.0 * needed - 2.0, 1.0)
+            critical = stats.t.ppf(1 - per_comparison / 2, dof) + stats.t.ppf(power, dof)
+            updated = max(2.0 * (critical * sigma / gap) ** 2, 2.0)
+            if abs(updated - needed) < 1e-6:
+                needed = updated
+                break
+            needed = updated
     seeds = int(np.ceil(needed))
     if seeds > max_seeds:
         return None
-    return max(seeds, 1)
+    return max(seeds, 2)
 
 
 def effective_error_rate(nominal_delta: float, empirical_coverage: float, nominal_coverage: float) -> float:
