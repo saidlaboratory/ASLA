@@ -183,6 +183,7 @@ def _solve(
     n_starts: int = 12,
     seed: int = 0,
     min_runs: float = 0.0,
+    max_runs: float | None = None,
     deviation: Sequence[float] | None = None,
 ) -> AllocationResult:
     """Minimise the chosen objective subject to the FLOP constraint.
@@ -215,7 +216,10 @@ def _solve(
     else:
         func = OBJECTIVES[objective]
     constraints = [{"type": "ineq", "fun": lambda n: budget_flops - float(costs @ n)}]
-    bounds = [(min_runs, budget_flops / c) for c in costs]
+    ceiling = float("inf") if max_runs is None else float(max_runs)
+    bounds = [(min_runs, min(budget_flops / c, ceiling)) for c in costs]
+    if max_runs is not None and float(costs.min()) * 2.0 > budget_flops:
+        raise ValueError("FLOP budget cannot afford two runs at the cheapest budget")
     rng = np.random.default_rng(seed)
 
     best: tuple[float, np.ndarray, bool] | None = None
@@ -269,10 +273,20 @@ def solve_decision_optimal(
     n_starts: int = 12,
     seed: int = 0,
     min_runs: float = 0.0,
+    max_runs: float | None = None,
 ) -> AllocationResult:
     """Allocation minimising target-gap variance: design for the decision."""
 
-    return _solve(budgets, target, budget_flops, "decision", n_starts=n_starts, seed=seed, min_runs=min_runs)
+    return _solve(
+        budgets,
+        target,
+        budget_flops,
+        "decision",
+        n_starts=n_starts,
+        seed=seed,
+        min_runs=min_runs,
+        max_runs=max_runs,
+    )
 
 
 def solve_estimation_optimal(
@@ -283,10 +297,20 @@ def solve_estimation_optimal(
     n_starts: int = 12,
     seed: int = 0,
     min_runs: float = 0.0,
+    max_runs: float | None = None,
 ) -> AllocationResult:
     """Allocation minimising target-region prediction variance: the SL2 criterion."""
 
-    return _solve(budgets, target, budget_flops, "estimation", n_starts=n_starts, seed=seed, min_runs=min_runs)
+    return _solve(
+        budgets,
+        target,
+        budget_flops,
+        "estimation",
+        n_starts=n_starts,
+        seed=seed,
+        min_runs=min_runs,
+        max_runs=max_runs,
+    )
 
 
 def solve_bias_aware(
@@ -298,6 +322,7 @@ def solve_bias_aware(
     n_starts: int = 12,
     seed: int = 0,
     min_runs: float = 0.0,
+    max_runs: float | None = None,
 ) -> AllocationResult:
     """Allocation minimising projection MSE under a per-budget model deviation."""
 
@@ -309,6 +334,7 @@ def solve_bias_aware(
         n_starts=n_starts,
         seed=seed,
         min_runs=min_runs,
+        max_runs=max_runs,
         deviation=deviation,
     )
 
@@ -331,7 +357,7 @@ def scale_to_budget(allocation: Allocation, budget_flops: float) -> Allocation:
     )
 
 
-def round_allocation(allocation: Allocation, budget_flops: float) -> Allocation:
+def round_allocation(allocation: Allocation, budget_flops: float, max_runs: float | None = None) -> Allocation:
     """Round fractional runs to integers without exceeding the FLOP budget.
 
     Floors every entry, then spends the remainder greedily on whichever budget
@@ -363,6 +389,8 @@ def round_allocation(allocation: Allocation, budget_flops: float) -> Allocation:
         current = _decision_objective(runs, allocation.budgets, allocation.target)
         for idx in range(len(budgets)):
             if spent + budgets[idx] > budget_flops:
+                continue
+            if max_runs is not None and runs[idx] + 1.0 > max_runs:
                 continue
             trial = runs.copy()
             trial[idx] += 1.0
