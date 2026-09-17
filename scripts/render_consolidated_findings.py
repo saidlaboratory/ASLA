@@ -46,7 +46,9 @@ def methods_practice() -> str:
     # The superseded pair, and the pooling factor that produced it. Both are
     # reconstructed from the committed inputs rather than quoted from memory:
     # the old denominator was mean(se), the correct one sqrt(mean(se^2)).
-    superseded_ratio, superseded_inflation = 4.22, 17.8
+    superseded = real["superseded"]
+    superseded_ratio = superseded["residual_scatter_over_seed_se"]
+    superseded_inflation = superseded["variance_inflation"]
     pooling_factor = superseded_ratio / real["residual_scatter_over_seed_se"]
     lines = [
         "# Methods practice: verify that the measurement can see what you think it sees",

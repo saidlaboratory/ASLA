@@ -441,6 +441,20 @@ def main(argv: list[str] | None = None) -> int:
                     "the power law does not fit DataDecide cell means within seed noise; "
                     "computed from the primary design's residual decomposition, not asserted"
                 ),
+                "superseded": {
+                    "residual_scatter_over_seed_se": 4.22,
+                    "variance_inflation": 17.8,
+                    "why_wrong": (
+                        "hardcoded literals whose denominator pooled per-cell standard "
+                        "errors as mean(se) against a dof-corrected residual scale; a "
+                        "ratio of scales requires sqrt(mean(se**2))"
+                    ),
+                    "note": (
+                        "kept so the correction can be quoted without retyping the wrong "
+                        "pair; these two are the only numeric literals in this file that "
+                        "are not computed, and they are values that are known to be wrong"
+                    ),
+                },
             },
             "2_a_shared_inflator_does_not_transfer_across_ladders": {
                 "modelled_over_empirical_by_design": {k: e["ratio"] for k, e in shared.items()},

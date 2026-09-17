@@ -62,7 +62,22 @@ RENDERERS: list[tuple[str, list[str], dict[str, str]]] = [
         ["--results", "results/curvature/curvature_gate.json", "--out", "{tmp}/curvature_RESULTS.md"],
         {"results/curvature/RESULTS.md": "{tmp}/curvature_RESULTS.md"},
     ),
+    (
+        "render_macros.py",
+        ["--out", "{tmp}/macros.tex"],
+        {"paper/macros.tex": "{tmp}/macros.tex"},
+    ),
 ]
+
+# Lines that legitimately differ between two renders of the same content.
+# macros.tex records when and from what commit it was generated; those lines are
+# the point of the header, not drift, so they are excluded from the comparison
+# while every \newcommand line is compared exactly.
+VOLATILE_PREFIXES = ("% generated:", "% source commit:")
+
+
+def _comparable(text: str) -> str:
+    return "\n".join(line for line in text.splitlines() if not line.startswith(VOLATILE_PREFIXES))
 
 
 def _run(script: str, arguments: list[str]) -> None:
@@ -113,7 +128,7 @@ def main() -> int:
                     else:
                         # Renderer writes in place; the snapshot is the reference.
                         produced = committed.read_text(encoding="utf-8")
-                    if produced != snapshot[committed]:
+                    if _comparable(produced) != _comparable(snapshot[committed]):
                         failures.append(f"{relative}: differs from committed copy")
                     elif args.verbose:
                         print(f"OK  {relative}")

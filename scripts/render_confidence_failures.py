@@ -23,6 +23,12 @@ from scipy import stats
 from asla.analysis.abstention import effective_error_rate, glr_threshold
 
 SEED_COUNTS = (3, 5, 10, 20, 50)
+# The 90M rung: the boundary above which certification stops being total. Named
+# rather than inlined so the table and the sentence beneath it cannot drift.
+SMALL_SCALE_CEILING_FLOPS = 5.8e18
+# A rate at or above this is reported as total abstention; below 1.0 only by
+# floating-point representation of an exact fraction.
+TOTAL_ABSTENTION = 0.999
 TYPICAL_COMPARISONS = 300
 TYPICAL_DELTA = 0.05
 
@@ -256,7 +262,7 @@ def certification_cost_section(payload: dict[str, Any]) -> str:
     small = [
         (name, entry)
         for name, entry in sorted(by_scale.items(), key=lambda kv: kv[1]["compute"])
-        if entry["compute"] <= 5.8e18
+        if entry["compute"] <= SMALL_SCALE_CEILING_FLOPS
     ]
     small_rates = []
     for name, entry in small:
@@ -268,7 +274,7 @@ def certification_cost_section(payload: dict[str, Any]) -> str:
             small_rates.append(rate)
     if small_rates:
         n_total = sum(1 for _, e in small if e["n_entries"] >= 2)
-        n_complete = sum(1 for r in small_rates if r >= 0.999)
+        n_complete = sum(1 for r in small_rates if r >= TOTAL_ABSTENTION)
         lines.append(
             f"Across the {n_total} scales at or below 90M, abstention runs from "
             f"**{min(small_rates):.3f} to {max(small_rates):.3f}**, and is total "
