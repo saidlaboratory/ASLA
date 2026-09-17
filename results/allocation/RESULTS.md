@@ -25,6 +25,16 @@ Target 7.062e+20 FLOPs, ladder of 12 rungs, lever arm 4.72x, 25 interventions, 4
 
 Single-scale ranking at the top rung: **0.0078** [0.0033, 0.0133], costing 1.122e+22 FLOPs.
 
+## Figures
+
+![variance and accuracy at matched compute](figures_1B/variance_and_accuracy.png)
+
+Left: the optimally-allocated designs cut target-gap variance well below the uniform ladder at every budget. Right: that variance reduction does not translate into decision accuracy - all three optimised arms sit far above the single-scale baseline, and they lie on top of each other, which is the decision/estimation equivalence.
+
+![allocation shape by budget](figures_1B/allocation_shape.png)
+
+The decision-optimal design's cost share by rung, as the exploration budget grows. The shape is budget-dependent: cheap rungs dominate when the budget is small, and the top rung only takes a majority of the cost at the full ladder budget.
+
 
 # Allocation study: 60M target
 
@@ -50,5 +60,15 @@ Target 1.955e+18 FLOPs, ladder of 7 rungs, lever arm 8.93x, 25 interventions, 40
 | 1x ladder | 2.874x | 0.1607 | 0.1640 | 0.1638 | 0.1619 |
 
 Single-scale ranking at the top rung: **0.0714** [0.0467, 0.0933], costing 1.643e+19 FLOPs.
+
+## Figures
+
+![variance and accuracy at matched compute](figures_60M/variance_and_accuracy.png)
+
+Left: the optimally-allocated designs cut target-gap variance well below the uniform ladder at every budget. Right: that variance reduction does not translate into decision accuracy - all three optimised arms sit far above the single-scale baseline, and they lie on top of each other, which is the decision/estimation equivalence.
+
+![allocation shape by budget](figures_60M/allocation_shape.png)
+
+The decision-optimal design's cost share by rung, as the exploration budget grows. The shape is budget-dependent: cheap rungs dominate when the budget is small, and the top rung only takes a majority of the cost at the full ladder budget.
 
 Apparent non-monotonicity in budget: 0.3x -> 1x: 0.1389 [0.0867, 0.1967] to 0.1607 [0.1033, 0.2167] (intervals overlap; not a real reversal).

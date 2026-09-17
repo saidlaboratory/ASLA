@@ -107,7 +107,8 @@
     "modelled_variance": 2.6080174015153288e-05,
     "phi_used": 0.8761084833543724,
     "ratio": 4.973034052522051,
-    "two_parameter_ratio": 0.31,
+    "two_parameter_ratio": 0.31262698773686837,
+    "two_parameter_source": "results/theory/theory_check.json",
     "verdict": "UNINTERPRETABLE"
   },
   "V2_lever_arm": {

@@ -205,6 +205,30 @@ def render(payload: dict[str, Any]) -> str:
             f"costing {single['cost_flops']:.3e} FLOPs."
         )
 
+    figures = Path(f"figures_{payload['target_scale']}")
+    if (Path("results/allocation") / figures).exists():
+        lines.append("")
+        lines.append("## Figures")
+        lines.append("")
+        lines.append(f"![variance and accuracy at matched compute]({figures}/variance_and_accuracy.png)")
+        lines.append("")
+        lines.append(
+            "Left: the optimally-allocated designs cut target-gap variance well below the"
+            " uniform ladder at every budget. Right: that variance reduction does not"
+            " translate into decision accuracy - all three optimised arms sit far above"
+            " the single-scale baseline, and they lie on top of each other, which is the"
+            " decision/estimation equivalence."
+        )
+        lines.append("")
+        lines.append(f"![allocation shape by budget]({figures}/allocation_shape.png)")
+        lines.append("")
+        lines.append(
+            "The decision-optimal design's cost share by rung, as the exploration budget"
+            " grows. The shape is budget-dependent: cheap rungs dominate when the budget"
+            " is small, and the top rung only takes a majority of the cost at the full"
+            " ladder budget."
+        )
+
     note = _monotonicity_note(payload)
     if note:
         lines.append("")

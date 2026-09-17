@@ -246,6 +246,7 @@ def build() -> str:
         "| `FORMULATION.md` | the problem as transductive pure exploration, with the `h*` recovery |",
         "| `results/allocation/RESULTS.md` | optimal allocation scored against pre-registered P1-P5 |",
         "| `results/abstention/RESULTS.md` | abstention versus delta and budget, scored against A1-A5 |",
+        "| `results/curvature/RESULTS.md` | the curvature gate and the tokens-per-parameter confound, C1-C7 |",
         "| `results/confidence/` | the Student-t defect and the two confidence failures |",
         "| `results/consolidated/` | the measurement-artifact practice and model-error structure |",
         "",

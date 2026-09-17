@@ -46,7 +46,9 @@ V1_BAND = (0.67, 1.5)
 V1_PARTIAL = (0.5, 2.0)
 V2_BAND = (3.5, 7.0)
 V3_BAND = (50.0, 63.0)
-TWO_PARAM_RATIO = 0.31
+# The two-parameter theory's own outputs, loaded rather than retyped so that
+# re-running that study cannot silently invalidate the comparisons here.
+TWO_PARAMETER_PATH = REPO / "results" / "theory" / "theory_check.json"
 
 
 def power_law(compute: np.ndarray, floor: float, amplitude: float, alpha: float) -> np.ndarray:
@@ -220,6 +222,16 @@ def main(argv: list[str] | None = None) -> int:
 
     designs = {"long": design("150M"), "primary": design("300M"), "short": design("530M")}
 
+    # The two-parameter theory's own outputs, loaded once and shared by V1, V2
+    # and V3, so re-running that study cannot leave a stale comparison here.
+    two_parameter = json.loads(TWO_PARAMETER_PATH.read_text(encoding="utf-8"))
+    two_parameter_ratio = float(two_parameter["T1_lever_arm_variance"]["predicted_variance_ratio"])
+    two_parameter_reduction = float(two_parameter["T3_pooling_retrodiction"]["predicted_mis_selection_reduction_pct"])
+    # V1 compares variance calibration, so it needs the inverse ratio: the
+    # two-parameter theory's modelled variance over the empirical one.
+    diagnosis = two_parameter["variance_diagnosis"]
+    two_parameter_ratio_v1 = float(diagnosis["theory_var_two_parameter"] / diagnosis["empirical_var_log_projection"])
+
     # ---------- 1. GATE, written before anything else exists ----------
     gate = run_gate(designs["primary"], GATE_DRAWS)
     _write_json_atomically({"gate": gate}, destination)
@@ -327,8 +339,9 @@ def main(argv: list[str] | None = None) -> int:
         "modelled_variance": modelled_primary,
         "empirical_variance": empirical["primary"],
         "ratio": v1_ratio,
-        "two_parameter_ratio": TWO_PARAM_RATIO,
-        "improved_on_two_parameter": bool(abs(np.log(v1_ratio)) < abs(np.log(TWO_PARAM_RATIO))),
+        "two_parameter_ratio": two_parameter_ratio_v1,
+        "two_parameter_source": str(TWO_PARAMETER_PATH.relative_to(REPO)),
+        "improved_on_two_parameter": bool(abs(np.log(v1_ratio)) < abs(np.log(two_parameter_ratio_v1))),
         "band": list(V1_BAND),
         "verdict": v1_verdict,
         "phi_used": phi_primary,
@@ -347,13 +360,6 @@ def main(argv: list[str] | None = None) -> int:
     long_var = model_variance(designs["long"]["df"], designs["long"]["budgets"], designs["long"]["target"], phi_primary)
     short_var = model_variance(designs["short"]["df"], designs["short"]["budgets"], designs["short"]["target"], phi_primary)
     predicted_ratio = (n_pairs * flip_rate(long_var)) / (n_pairs * flip_rate(short_var))
-    # The two-parameter theory's own predictions, loaded rather than retyped, so
-    # the comparison cannot drift if that study is re-run.
-    two_parameter_path = REPO / "results" / "theory" / "theory_check.json"
-    two_parameter = json.loads(two_parameter_path.read_text(encoding="utf-8"))
-    two_parameter_ratio = float(two_parameter["T1_lever_arm_variance"]["predicted_variance_ratio"])
-    two_parameter_reduction = float(two_parameter["T3_pooling_retrodiction"]["predicted_mis_selection_reduction_pct"])
-
     dose = json.loads((REPO / "results" / "adversarial" / "a2_dose_response.json").read_text(encoding="utf-8"))
     by_arm = {f"{r['target']}|{r['max_fit_scale']}": r for r in dose["lever_arm_summary"]}
     measured_ratio = by_arm["1B|150M"]["mean_excess_flips"] / by_arm["1B|530M"]["mean_excess_flips"]
@@ -362,7 +368,7 @@ def main(argv: list[str] | None = None) -> int:
         "measured_ratio": measured_ratio,
         "band": list(V2_BAND),
         "two_parameter_prediction": two_parameter_ratio,
-        "two_parameter_source": str(two_parameter_path.relative_to(REPO)),
+        "two_parameter_source": str(TWO_PARAMETER_PATH.relative_to(REPO)),
         "verdict": "CONFIRMED" if V2_BAND[0] <= predicted_ratio <= V2_BAND[1] else "MISSED",
         "direction": "under-predicts" if predicted_ratio < measured_ratio else "over-predicts",
     }
@@ -390,7 +396,7 @@ def main(argv: list[str] | None = None) -> int:
         "measured_reduction_pct": measured_reduction,
         "band": list(V3_BAND),
         "two_parameter_prediction_pct": two_parameter_reduction,
-        "two_parameter_source": str(two_parameter_path.relative_to(REPO)),
+        "two_parameter_source": str(TWO_PARAMETER_PATH.relative_to(REPO)),
         "lower_than_two_parameter": bool(predicted_reduction < two_parameter_reduction),
         "closer_than_two_parameter": bool(
             abs(predicted_reduction - measured_reduction) < abs(two_parameter_reduction - measured_reduction)

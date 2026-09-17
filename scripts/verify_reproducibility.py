@@ -57,6 +57,11 @@ RENDERERS: list[tuple[str, list[str], dict[str, str]]] = [
         ["--results", "results/abstention/abstention_1B.json", "--out", "{tmp}/abstention_RESULTS.md"],
         {"results/abstention/RESULTS.md": "{tmp}/abstention_RESULTS.md"},
     ),
+    (
+        "render_curvature_results.py",
+        ["--results", "results/curvature/curvature_gate.json", "--out", "{tmp}/curvature_RESULTS.md"],
+        {"results/curvature/RESULTS.md": "{tmp}/curvature_RESULTS.md"},
+    ),
 ]
 
 
