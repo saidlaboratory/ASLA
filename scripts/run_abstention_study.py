@@ -128,7 +128,26 @@ def measure_coverage(
                 }
             )
 
+    # Record the centring error alongside the widths. A zero coverage reading is
+    # only interpretable next to how far the point projection sits from truth:
+    # if the error dwarfs the width, the interval is precisely wrong rather than
+    # merely narrow, and that distinction is the whole finding.
     summary: dict[str, Any] = {"per_interval": rows, "nominal_coverage": NOMINAL_COVERAGE}
+    for method in ("bootstrap", "conformal"):
+        subset = [r for r in rows if r["method"] == method]
+        if not subset:
+            continue
+        centres = np.asarray([(r["lo"] + r["hi"]) / 2 for r in subset], dtype=float)
+        truths = np.asarray([r["true_target"] for r in subset], dtype=float)
+        widths = np.asarray([r["width"] for r in subset], dtype=float)
+        summary[f"{method}_centring"] = {
+            "mean_signed_error": float(np.mean(centres - truths)),
+            "mean_absolute_error": float(np.mean(np.abs(centres - truths))),
+            "mean_width": float(np.mean(widths)),
+            "error_to_width_ratio": float(np.mean(np.abs(centres - truths)) / np.mean(widths)),
+            "n_overshooting": int(np.sum(centres > truths)),
+            "n": len(subset),
+        }
     for method in ("bootstrap", "conformal"):
         subset = [r for r in rows if r["method"] == method]
         if not subset:
