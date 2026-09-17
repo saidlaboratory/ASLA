@@ -224,6 +224,12 @@ def _solve(
 
     best: tuple[float, np.ndarray, bool] | None = None
     for start in range(n_starts):
+        # Annotated because the three branches produce arrays whose shape types
+        # differ under numpy's shape-generic stubs: np.ones(k) is inferred as the
+        # precise 1-D tuple[int] while the other two are tuple[int, ...]. Without
+        # this, mypy binds the variable to the narrow type from the first branch
+        # and rejects the others.
+        weights: np.ndarray
         if start == 0:
             weights = np.ones(k)
         elif start == 1:
