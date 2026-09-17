@@ -140,6 +140,34 @@ SCORERS = {
 }
 
 
+def _monotonicity_note(payload: dict[str, Any]) -> str:
+    """Flag any budget increase that appears to worsen accuracy, with CI overlap.
+
+    More compute scoring worse is the kind of reading that should never be
+    reported without checking whether the intervals separate.
+    """
+
+    entries = _entries(payload)
+    reversals = []
+    for (lo_f, lo_e), (hi_f, hi_e) in zip(entries, entries[1:]):
+        low = lo_e.get("scored", {}).get("decision_optimal", {})
+        high = hi_e.get("scored", {}).get("decision_optimal", {})
+        if low.get("mis_selection") is None or high.get("mis_selection") is None:
+            continue
+        if high["mis_selection"] <= low["mis_selection"]:
+            continue
+        overlap = low["ci_hi"] >= high["ci_lo"] and high["ci_hi"] >= low["ci_lo"]
+        reversals.append(
+            f"{lo_f:g}x -> {hi_f:g}x: {low['mis_selection']:.4f} "
+            f"[{low['ci_lo']:.4f}, {low['ci_hi']:.4f}] to {high['mis_selection']:.4f} "
+            f"[{high['ci_lo']:.4f}, {high['ci_hi']:.4f}]"
+            + (" (intervals overlap; not a real reversal)" if overlap else " (intervals separate)")
+        )
+    if not reversals:
+        return ""
+    return "Apparent non-monotonicity in budget: " + "; ".join(reversals) + "."
+
+
 def render(payload: dict[str, Any]) -> str:
     lines: list[str] = []
     lines.append(f"# Allocation study: {payload['target_scale']} target")
@@ -176,6 +204,11 @@ def render(payload: dict[str, Any]) -> str:
             f"[{single['ci_lo']:.4f}, {single['ci_hi']:.4f}], "
             f"costing {single['cost_flops']:.3e} FLOPs."
         )
+
+    note = _monotonicity_note(payload)
+    if note:
+        lines.append("")
+        lines.append(note)
     lines.append("")
     return "\n".join(lines)
 
