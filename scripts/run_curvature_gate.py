@@ -282,6 +282,69 @@ def alternative_explanations(
     }
 
 
+def confound_scope(
+    means: pd.DataFrame,
+    interventions: list[str],
+    fit_budgets: tuple[float, ...],
+    target: float,
+    truth: pd.Series,
+    tokens_per_param: pd.Series,
+) -> dict[str, Any]:
+    """Does the tokens-per-parameter confound move the DECISION or only the LEVEL?
+
+    This scopes which committed results the confound touches. If the two
+    projection sets agree in rank order, then selection conclusions (Task 2's
+    allocation results, Task 3's abstention rates) are unaffected and only
+    level-based claims -- coverage, centring error, interval validity -- are
+    explained by it.
+    """
+
+    target_tpp = float(tokens_per_param[target])
+    compute_only: dict[str, float] = {}
+    with_ratio: dict[str, float] = {}
+    for name in interventions:
+        subset = means[(means["intervention"] == name) & (means["compute"].isin(fit_budgets))]
+        subset = subset.sort_values("compute")
+        if len(subset) < 4 or name not in truth.index:
+            continue
+        compute = subset["compute"].to_numpy(dtype=float)
+        observed = subset["bpb_mean"].to_numpy(dtype=float)
+        try:
+            params = fit_power_law(compute, observed)
+        except FitError:
+            continue
+        compute_only[name] = float(bpb_power_law(target, *params))
+        design = np.column_stack([np.ones_like(compute), np.log(compute), np.log(tokens_per_param[compute].to_numpy(float))])
+        beta, *_ = np.linalg.lstsq(design, np.log(observed), rcond=None)
+        with_ratio[name] = float(np.exp(beta @ np.array([1.0, np.log(target), np.log(target_tpp)])))
+
+    shared = sorted(set(compute_only) & set(with_ratio))
+    if len(shared) < 3:
+        return {"error": "too few recipes"}
+    pairs = [(a, b) for i, a in enumerate(shared) for b in shared[i + 1 :]]
+
+    def mis_selection(predictions: dict[str, float]) -> float:
+        wrong = sum(1 for a, b in pairs if np.sign(predictions[a] - predictions[b]) != np.sign(truth[a] - truth[b]))
+        return wrong / len(pairs)
+
+    rho = float(stats.spearmanr([compute_only[n] for n in shared], [with_ratio[n] for n in shared]).statistic)
+    return {
+        "n_recipes": len(shared),
+        "n_pairs": len(pairs),
+        "mis_selection_compute_only": mis_selection(compute_only),
+        "mis_selection_with_tokens_per_param": mis_selection(with_ratio),
+        "spearman_between_projections": rho,
+        "interpretation": (
+            "The confound is common-mode: it shifts the projected LEVEL without "
+            "reordering recipes. Selection conclusions (allocation, abstention "
+            "rates) are unaffected; coverage and centring results are the ones it "
+            "explains."
+            if rho > 0.99
+            else "The confound reorders recipes, so selection conclusions must be revisited."
+        ),
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data", type=Path, default=Path("data/datadecide_runs.parquet"))
@@ -314,6 +377,14 @@ def main() -> None:
     alternatives = alternative_explanations(df, means, interventions, fit_budgets, target, truth)
     payload["gate"] = gate
     payload["alternative_explanations"] = alternatives
+    payload["confound_scope"] = confound_scope(
+        means,
+        interventions,
+        fit_budgets,
+        target,
+        truth,
+        df.groupby("compute")["tokens_per_param"].first(),
+    )
 
     # A passing gate is not sufficient on its own. C1/C2 establish that residual
     # curvature is systematic and correlates with the overshoot, but a rival
@@ -355,6 +426,7 @@ def main() -> None:
     _write_json_atomically(args.out, payload)
     print(json.dumps(payload["gate"], indent=2, default=float))
     print(json.dumps(payload["gate_adjudication"], indent=2, default=float))
+    print(json.dumps(payload["confound_scope"], indent=2, default=float))
     print(f"wrote {args.out}")
 
 

@@ -140,7 +140,14 @@ def measure_coverage(
         centres = np.asarray([(r["lo"] + r["hi"]) / 2 for r in subset], dtype=float)
         truths = np.asarray([r["true_target"] for r in subset], dtype=float)
         widths = np.asarray([r["width"] for r in subset], dtype=float)
+        target_sd = df[np.isclose(df["compute"], target)].groupby("intervention")["bpb"].std(ddof=1)
+        seed_counts = df[np.isclose(df["compute"], target)].groupby("intervention")["bpb"].count()
+        median_seed_se = float((target_sd / np.sqrt(seed_counts)).median())
         summary[f"{method}_centring"] = {
+            "median_seed_standard_error_at_target": median_seed_se,
+            "centring_error_in_seed_standard_errors": (
+                float(np.mean(np.abs(centres - truths)) / median_seed_se) if median_seed_se > 0 else float("nan")
+            ),
             "mean_signed_error": float(np.mean(centres - truths)),
             "mean_absolute_error": float(np.mean(np.abs(centres - truths))),
             "mean_width": float(np.mean(widths)),
