@@ -106,7 +106,7 @@ def build() -> str:
         " corresponding script. Pre-registrations live in `PREDICTIONS_TASK_*.md`"
         " and were committed before the numbers they score.",
         "",
-        "### 1. Extrapolation never beats ranking at the top rung",
+        "### 1. On DataDecide, extrapolation never beat ranking at the top rung",
         "",
         f"Single-scale ranking at the largest fitted budget mis-selects"
         f" **{single_scale_rate:.2%}** of pairs on DataDecide ({headline_metric}). Across"
@@ -117,6 +117,12 @@ def build() -> str:
         f" Spearman **{rho['spearman_excess_vs_log_lever_arm']:+.3f}**"
         f" (p = {rho['spearman_excess_vs_log_lever_arm_p']:.1e}) against log lever arm,"
         f" versus {rho['spearman_excess_vs_budgets']:+.3f} against budget count.",
+        "",
+        "Scope: this is measured on DataDecide C4 bits-per-token with a 1B target,"
+        " across every design and estimator we tested. It is not a proof that"
+        " extrapolation can never help, and the regime where it should help --- a lever"
+        " arm large enough that no run near the target exists --- is exactly where the"
+        " ground truth needed to check it does not exist either.",
         "",
         "We then closed the space of correctable causes. Better estimators"
         " (shared-exponent, empirical-Bayes shrinkage, ensemble, checkpoint-augmented),"
