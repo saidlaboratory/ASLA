@@ -10,6 +10,14 @@ implementation in `asla/analysis/conformal.py`. Any hyperparameter introduced
 here (interval type, calibration set) has its provenance recorded as `lambda`
 does in `NOTES_SHRINKAGE_STRENGTH.md`.
 
+> **Post-hoc correction (recorded, not silently edited).** The scatter figures in
+> section 0 were written as 4.22x / 17.8x. A later audit found that ratio pooled
+> seed standard errors as `mean(se)` against a dof-corrected residual scale; a
+> ratio of scales requires `sqrt(mean(se^2))`. The corrected values are 2.90x and
+> 8.40x, now computed in `scripts/run_theory_v2.py`. Nothing in A1-A5 depends on
+> the magnitude --- the predictions turn on whether the error is compute-structured,
+> not on how large it is --- and no verdict changes.
+
 ## 0. Why this task, and what changed
 
 Tasks 1-2 closed the space of correctable causes for the projection failure:
@@ -35,8 +43,8 @@ extrapolation direction, so it barely biases the projection. Measured
 consequence: bias-aware and variance-only allocations are identical to five
 decimal places (P5, refuted).
 
-The variance channel is untouched by that finding. Residual scatter is 4.22x the
-seed standard error (17.8x variance inflation), and `phi` --- a pure
+The variance channel is untouched by that finding. Residual scatter is 2.90x the
+seed standard error (8.40x variance inflation), and `phi` --- a pure
 variance-inflation quantity --- varies 2.7-8.9x across ladders and under-predicts
 held-out structure by 12x. **So Task 4 is no longer about correcting the design.
 It is about correcting the confidence widths that this task's abstention rule

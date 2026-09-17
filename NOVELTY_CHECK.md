@@ -167,7 +167,7 @@ answers it cannot support; abstention is the formally correct output for those i
   asserted.
 - **Our linearity is a modelling assumption we have already refuted in part.** The
   two-parameter log-space form is linear in `x(C) = (1, −log C)`, which is what makes the
-  transductive theory apply — but our measurements show residual scatter at 4.22× seed SE,
+  transductive theory apply — but our measurements show residual scatter at 2.90× seed SE,
   compute-structured misspecification, and an unidentified floor on accuracy metrics. The
   honest framing is that the linear theory supplies the design and the guarantee *skeleton*,
   and Task 4 decides whether it survives contact with the measured error structure. If it

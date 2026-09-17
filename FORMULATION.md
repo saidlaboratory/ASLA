@@ -97,9 +97,15 @@ does not, and Section 4 is the honest accounting.
 This section exists so nothing downstream can quietly assume a well-specified
 model. These are measured, committed numbers, not concerns.
 
-1. **Residual scatter is 4.22x the seed standard error** --- a 17.8x variance
+1. **Residual scatter is 2.90x the seed standard error** --- an 8.40x variance
    inflation. The dominant term in projection error is functional-form error,
    which more seeds do not shrink.
+   *(Corrected. This was previously reported as 4.22x / 17.8x, which pooled the
+   seed standard errors as `mean(se)` while the numerator was a dof-corrected
+   residual scale. A ratio of scales needs `sqrt(mean(se^2))`; using the mean of
+   standard errors understates the denominator by 1.47x here. Same Jensen-gap
+   class as the phi=0 analytic-limit error recorded in the methods practice. The
+   figure is now computed in `scripts/run_theory_v2.py` rather than asserted.)*
 2. **The error is compute-structured, so no scalar can absorb it.** A constant
    variance inflation `phi` fails: it varies 2.7-8.9x across ladders, is monotone
    in lever arm and ladder length, and under-predicts held-out structure by 12x.

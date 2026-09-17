@@ -85,9 +85,7 @@ def cell_table(df: pd.DataFrame, budgets: tuple[float, ...]) -> pd.DataFrame:
 
 def fit_one(x: np.ndarray, y: np.ndarray) -> tuple[float, float, float] | None:
     try:
-        popt, _ = curve_fit(
-            power_law, x, y, p0=(y.min() * 0.9, y.max() - y.min() * 0.9, 0.15), maxfev=200000
-        )
+        popt, _ = curve_fit(power_law, x, y, p0=(y.min() * 0.9, y.max() - y.min() * 0.9, 0.15), maxfev=200000)
     except Exception:  # noqa: BLE001
         return None
     return (float(popt[0]), float(popt[1]), float(popt[2]))
@@ -234,8 +232,7 @@ def main(argv: list[str] | None = None) -> int:
     # ---------- 2. V0: is phi a model or a fudge factor? ----------
     components = {label: residual_components(b["df"], b["budgets"]) for label, b in designs.items()}
     empirical = {
-        label: empirical_variance(b["df"], b["budgets"], b["target"], args.draws, args.seed)
-        for label, b in designs.items()
+        label: empirical_variance(b["df"], b["budgets"], b["target"], args.draws, args.seed) for label, b in designs.items()
     }
     phi_by_design = {label: c["phi_mean"] for label, c in components.items()}
     spread = max(phi_by_design.values()) - min(phi_by_design.values())
@@ -375,24 +372,34 @@ def main(argv: list[str] | None = None) -> int:
     predicted_reduction = 100.0 * (rate_plain - rate_pooled) / rate_plain
     task_b = json.loads((REPO / "results" / "task_b" / "task_b.json").read_text(encoding="utf-8"))
     tb = task_b["designs"]["primary_4M-300M_target1B"]["rankers"]
-    measured_reduction = 100.0 * (
-        tb["plain_projection"]["mis_selection"]["point"] - tb["shared_exponent"]["mis_selection"]["point"]
-    ) / tb["plain_projection"]["mis_selection"]["point"]
+    measured_reduction = (
+        100.0
+        * (tb["plain_projection"]["mis_selection"]["point"] - tb["shared_exponent"]["mis_selection"]["point"])
+        / tb["plain_projection"]["mis_selection"]["point"]
+    )
     v3 = {
         "predicted_reduction_pct": predicted_reduction,
         "measured_reduction_pct": measured_reduction,
         "band": list(V3_BAND),
         "two_parameter_prediction_pct": 67.17,
         "lower_than_two_parameter": bool(predicted_reduction < 67.17),
-        "closer_than_two_parameter": bool(
-            abs(predicted_reduction - measured_reduction) < abs(67.17 - measured_reduction)
-        ),
+        "closer_than_two_parameter": bool(abs(predicted_reduction - measured_reduction) < abs(67.17 - measured_reduction)),
         "verdict": "CONFIRMED" if V3_BAND[0] <= predicted_reduction <= V3_BAND[1] else "MISSED",
     }
     results["V3_pooling"] = v3
 
     # The V0 failure is a positive finding, not four separate negatives.
     shared = v0["shared_phi_check"]
+
+    # Evidence item 1 is computed from the primary design's own residual
+    # decomposition, on the same convention as every phi in this study:
+    # residual_var uses ddof=3 for the three fitted parameters, and seed_var is
+    # the mean squared seed standard error of the cell means.
+    primary_components = components["primary"]["per_intervention"]
+    residual_vars = np.asarray([e["residual_var"] for e in primary_components], dtype=float)
+    seed_vars = np.asarray([e["seed_var"] for e in primary_components], dtype=float)
+    pooled_inflation = float(residual_vars.mean() / seed_vars.mean())
+    pooled_scatter_ratio = float(np.sqrt(pooled_inflation))
     results["FINDING_misspecification_is_structured"] = {
         "claim": (
             "Model misspecification in scaling-law fits cannot be absorbed into a noise-inflation term. A "
@@ -406,9 +413,17 @@ def main(argv: list[str] | None = None) -> int:
         ),
         "evidence": {
             "1_misspecification_is_real": {
-                "residual_scatter_over_seed_se": 4.22,
-                "variance_inflation": 17.8,
-                "note": "the power law does not fit DataDecide cell means within seed noise",
+                "residual_scatter_over_seed_se": pooled_scatter_ratio,
+                "variance_inflation": pooled_inflation,
+                "n_interventions": len(primary_components),
+                "pooled_residual_var": float(residual_vars.mean()),
+                "pooled_seed_var": float(seed_vars.mean()),
+                "design": "primary",
+                "max_fit_scale": designs["primary"]["max_fit"],
+                "note": (
+                    "the power law does not fit DataDecide cell means within seed noise; "
+                    "computed from the primary design's residual decomposition, not asserted"
+                ),
             },
             "2_a_shared_inflator_does_not_transfer_across_ladders": {
                 "modelled_over_empirical_by_design": {k: e["ratio"] for k, e in shared.items()},
@@ -472,9 +487,7 @@ def main(argv: list[str] | None = None) -> int:
         ),
     }
     _write_json_atomically(results, destination)
-    summary = {
-        k: v.get("verdict", v.get("failure_mode", "n/a")) for k, v in results.items() if isinstance(v, dict)
-    }
+    summary = {k: v.get("verdict", v.get("failure_mode", "n/a")) for k, v in results.items() if isinstance(v, dict)}
     print(json.dumps(summary, indent=2)[:1200])
     return 0
 

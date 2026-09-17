@@ -21,7 +21,7 @@ Two departures from the classical setting drive everything here:
    decision. Cost weighting inside a decision objective is the novel combination.
 
 2. **Misspecification.** The classical guarantee assumes the linear model holds.
-   Ours does not: residual scatter is 4.22x the seed standard error and the error
+   Ours does not: residual scatter is 2.90x the seed standard error and the error
    is compute-structured. Nothing in this module assumes otherwise; it computes
    the design quantities implied by the linear model, and
    :mod:`asla.analysis.misspec` is where the deviation is measured and the
