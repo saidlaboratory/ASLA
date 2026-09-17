@@ -134,13 +134,16 @@ def build() -> str:
         f" **{max(p4_gaps):.5f}** against a pre-registered threshold of 0.02. The"
         f" failure is localised to the model, not the objective.",
         "",
-        "### 2. Misspecification dominates, and is structured in compute",
+        "### 2. Model error dominates seed noise, and is structured in compute",
         "",
         f"Residual scatter of cell means about a fitted power law is"
         f" **{real['residual_scatter_over_seed_se']:.2f}x** the seed standard error, an"
         f" **{real['variance_inflation']:.2f}x** variance inflation, so the dominant"
-        f" term in projection error is functional-form error that more seeds do not"
-        f" shrink. A single variance-inflation scalar cannot absorb it: `phi` varies"
+        f" term in projection error is model error that more seeds do not shrink."
+        f" (Finding 3 below shows a large part of the *out-of-range* component is a"
+        f" ladder design confound rather than an inadequacy of the power law; this"
+        f" in-range scatter is not explained by that confound.) A single"
+        f" variance-inflation scalar cannot absorb it: `phi` varies"
         f" **2.7-8.9x** across ladders and under-predicts held-out structure by"
         f" **12x**.",
         "",

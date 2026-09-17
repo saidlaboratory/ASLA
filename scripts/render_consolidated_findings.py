@@ -198,8 +198,13 @@ def model_error_structure() -> str:
         f"seed standard error, "
         f"{'an' if str(int(evidence['1_misspecification_is_real']['variance_inflation']))[0] in '18' else 'a'} "
         f"**{evidence['1_misspecification_is_real']['variance_inflation']:.1f}x** variance inflation. The "
-        "dominant term in projection variance is therefore functional-form error, which more seeds do not "
-        "shrink - not parameter noise, which they would.",
+        "dominant term in projection variance is therefore model error, which more seeds do not shrink - not "
+        "parameter noise, which they would. *Model error* is the right label rather than *functional-form "
+        "error*: on DataDecide a large part of the out-of-range component turns out to be a ladder design "
+        "confound (tokens-per-parameter drifts from ~100 to 85 at the target), not an inadequacy of the power "
+        "law. The in-range scatter quoted here is not explained by that confound - adding tokens-per-parameter "
+        "as a regressor makes the in-range fit worse while improving extrapolation - so both statements hold "
+        "at once. See `results/curvature/RESULTS.md`.",
         "",
         "## 1. The error is compute-structured, so it cannot be absorbed into a noise term",
         "",

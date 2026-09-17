@@ -98,8 +98,11 @@ This section exists so nothing downstream can quietly assume a well-specified
 model. These are measured, committed numbers, not concerns.
 
 1. **Residual scatter is 2.90x the seed standard error** --- an 8.40x variance
-   inflation. The dominant term in projection error is functional-form error,
-   which more seeds do not shrink.
+   inflation. The dominant term in projection error is model error, which more
+   seeds do not shrink. Note the label: a large part of the *out-of-range*
+   component is a ladder design confound rather than an inadequacy of the power
+   law (see item 4), while this in-range scatter is not explained by that
+   confound.
    *(Corrected. This was previously reported as 4.22x / 17.8x, which pooled the
    seed standard errors as `mean(se)` while the numerator was a dof-corrected
    residual scale. A ratio of scales needs `sqrt(mean(se^2))`; using the mean of
@@ -112,7 +115,15 @@ model. These are measured, committed numbers, not concerns.
 3. **The floor `E` is unidentified on accuracy metrics** --- the profile
    likelihood is flat in `E`, so the three-parameter form is not identified from
    the ladder alone.
-4. **The deviation oscillates with compute rather than trending.** Signed mean
+4. **A large part of the extrapolation error is a design confound, not
+   misspecification.** DataDecide's tokens-per-parameter holds near 100 up to
+   90M and then drifts to 85.0 at the 1B target, correlating with log compute at
+   -0.80 on the fitting ladder. Adding `log(tokens/param)` as a second regressor
+   cuts absolute projection error by 60% and flips the overshoot from 24/25
+   recipes to 1/25. The confound is common-mode --- the two projection sets agree
+   at Spearman 0.9977 --- so it shifts the level without reordering, and the
+   selection results in this project are unaffected by it.
+5. **The deviation oscillates with compute rather than trending.** Signed mean
    residuals across the DataDecide ladder run +0.045, -0.040, +0.044, -0.043,
    with correlation to `log C` of only **-0.022**. This matters for what a
    bias-aware design can do: an oscillating deviation is largely absorbed into the

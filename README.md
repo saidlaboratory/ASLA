@@ -56,9 +56,9 @@ We then closed the space of correctable causes. Better estimators (shared-expone
 - **Optimal allocation.** Solving the cost-constrained transductive design and evaluating at matched compute leaves an excess over single-scale of **+0.028 to +0.117** at the 1B target. This is the load-bearing null: it removes the last alternative explanation, that the hand-picked ladders were simply bad.
 - **Design for decision = design for estimation.** Under the linear model the target-gap variance is exactly twice the target-level variance, so the two objectives share an argmin. Measured: maximum cost-share difference **0.00058** against a pre-registered threshold of 0.02. The failure is localised to the model, not the objective.
 
-### 2. Misspecification dominates, and is structured in compute
+### 2. Model error dominates seed noise, and is structured in compute
 
-Residual scatter of cell means about a fitted power law is **2.90x** the seed standard error, an **8.40x** variance inflation, so the dominant term in projection error is functional-form error that more seeds do not shrink. A single variance-inflation scalar cannot absorb it: `phi` varies **2.7-8.9x** across ladders and under-predicts held-out structure by **12x**.
+Residual scatter of cell means about a fitted power law is **2.90x** the seed standard error, an **8.40x** variance inflation, so the dominant term in projection error is model error that more seeds do not shrink. (Finding 3 below shows a large part of the *out-of-range* component is a ladder design confound rather than an inadequacy of the power law; this in-range scatter is not explained by that confound.) A single variance-inflation scalar cannot absorb it: `phi` varies **2.7-8.9x** across ladders and under-predicts held-out structure by **12x**.
 
 Whether that error cancels in a *pairwise gap* is metric-dependent and predictable in advance from the PC1 loading CV, which separates the suites with no overlap: **0.145-0.219** for offset-type metrics against **1.370-2.153** for scaled-type ones.
 
