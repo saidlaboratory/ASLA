@@ -1,0 +1,122 @@
+{
+  "coverage": {
+    "budgets_public": [
+      1e+19
+    ],
+    "budgets_reported": [
+      1e+17,
+      3.16e+17,
+      1e+18,
+      3.16e+18,
+      1e+19
+    ],
+    "cells_with_replicates": 15,
+    "corpora": [
+      "c4_english",
+      "falcon_refinedweb",
+      "fineweb_edu",
+      "olm_cc_2022",
+      "openwebtext",
+      "pile_original",
+      "ultra_fineweb_en"
+    ],
+    "fraction_of_campaign_public": 0.03579098067287044,
+    "has_usable_ladder": false,
+    "lever_arms_available": [],
+    "metrics_available": [
+      "native_heldout_nll",
+      "olmes10",
+      "heldout7_mean_nll",
+      "alt8"
+    ],
+    "n_budgets_public": 1,
+    "n_budgets_reported": 5,
+    "n_corpora": 7,
+    "n_recipes": 7,
+    "n_rows_public": 50,
+    "n_runs_reported_in_campaign": 1397,
+    "n_seeds": 3,
+    "recipes": [
+      "v2019_gpt2",
+      "v2020_gpt3",
+      "v2021_gptj",
+      "v2022_neox",
+      "v2023_llama",
+      "v2024_llama3",
+      "v2025_olmo2_control"
+    ],
+    "roles": {
+      "corner": 7,
+      "data_axis": 12,
+      "data_axis+corner": 10,
+      "model_axis": 18,
+      "model_axis+data_axis": 3
+    },
+    "seeds": [
+      6198,
+      6199,
+      6200
+    ]
+  },
+  "gate": {
+    "passes": false,
+    "reasoning": "The campaign ran five budgets (1e17 to 1e19) with three seeds per cell, which is exactly the ladder this task needs. The public artifact is the 50 final checkpoints at the top budget only: every released row sits at 1e19 FLOPs, so there is no compute ladder to fit and no held-out target above the fit range. The run record (runs.csv) is cited as living in the code release, but that repository returns 404 and the Lunar-Society organisation's two public repositories are unrelated. The per-run 'curve' field in each run.json is a within-run token-horizon trajectory at fixed model size, not a ladder across compute budgets, so it cannot substitute.",
+    "requirement": "a fit ladder of >=3 budgets plus a held-out target, with >=2 seeds, on the recipe axis",
+    "verdict": "STOP: only top-budget endpoints are public",
+    "what_would_unblock": "the released runs.csv covering all 1,397 runs across the five budgets, or any per-budget table with seeds preserved"
+  },
+  "metric_agreement_at_top_budget": {
+    "corpus": {
+      "max_pairwise_spearman": 0.8571428571428573,
+      "min_pairwise_spearman": -0.10714285714285716,
+      "n_candidates": 7,
+      "n_distinct_winners": 3,
+      "n_seeds_per_candidate": 3,
+      "pairwise_rank_spearman": {
+        "alt8|heldout7_mean_nll": 0.21428571428571433,
+        "alt8|native_heldout_nll": 0.21428571428571433,
+        "alt8|olmes10": 0.8571428571428573,
+        "heldout7_mean_nll|native_heldout_nll": 0.07142857142857144,
+        "heldout7_mean_nll|olmes10": 0.03571428571428572,
+        "native_heldout_nll|olmes10": -0.10714285714285716
+      },
+      "winner_by_metric": {
+        "alt8": "fineweb_edu",
+        "heldout7_mean_nll": "falcon_refinedweb",
+        "native_heldout_nll": "pile_original",
+        "olmes10": "fineweb_edu"
+      }
+    },
+    "recipe": {
+      "max_pairwise_spearman": 1.0,
+      "min_pairwise_spearman": 0.3571428571428572,
+      "n_candidates": 7,
+      "n_distinct_winners": 2,
+      "n_seeds_per_candidate": 3,
+      "pairwise_rank_spearman": {
+        "alt8|heldout7_mean_nll": 0.5714285714285715,
+        "alt8|native_heldout_nll": 0.5714285714285715,
+        "alt8|olmes10": 0.3571428571428572,
+        "heldout7_mean_nll|native_heldout_nll": 1.0,
+        "heldout7_mean_nll|olmes10": 0.9285714285714288,
+        "native_heldout_nll|olmes10": 0.9285714285714288
+      },
+      "winner_by_metric": {
+        "alt8": "v2021_gptj",
+        "heldout7_mean_nll": "v2025_olmo2_control",
+        "native_heldout_nll": "v2025_olmo2_control",
+        "olmes10": "v2025_olmo2_control"
+      }
+    }
+  },
+  "notes": {
+    "reportable_flag": "run.json carries experiment_stage=nonreportable_pilot and reportable=false. The model card documents these as launch-path labels rather than a verdict on the run; checked against the source rather than assumed.",
+    "weights_not_downloaded": "Only checkpoints.csv (19 KB), audit.jsonl (34 KB) and README.md (14 KB) were fetched. The 50 safetensors files are model weights and were not retrieved.",
+    "what_survives_the_gate": "Ranking agreement across metrics needs no ladder, so it is computed here and reported despite the STOP. It independently reproduces the write-up's ranking inversion, and locates it on the corpus axis rather than the recipe axis."
+  },
+  "source_http_status": {
+    "github_code_release": 404,
+    "github_runs_csv": 404,
+    "huggingface_model_repo": 200
+  }
+}
