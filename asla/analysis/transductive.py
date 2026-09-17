@@ -38,9 +38,11 @@ already derived; :func:`leverage_from_allocation` and the tests in
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Iterable, Sequence
+from typing import Iterable, Sequence, Union
 
 import numpy as np
+
+Weights = Union[Sequence[float], np.ndarray]
 
 # Numerical floor for allocation weights treated as "support" of a design.
 SUPPORT_TOLERANCE = 1e-9
@@ -69,7 +71,7 @@ def design_features(budgets: Iterable[float]) -> np.ndarray:
     return np.vstack([feature(b) for b in values])
 
 
-def information_matrix(budgets: Sequence[float], weights: Sequence[float]) -> np.ndarray:
+def information_matrix(budgets: Sequence[float], weights: Weights) -> np.ndarray:
     """Return ``A(lambda) = sum_j lambda_j x_j x_j'`` for a design over budgets.
 
     ``weights`` need not be normalised; callers that want the standard
@@ -107,7 +109,7 @@ def _solve_quadratic_form(matrix: np.ndarray, vector: np.ndarray) -> float:
 
 def target_variance_factor(
     budgets: Sequence[float],
-    weights: Sequence[float],
+    weights: Weights,
     target: float,
 ) -> float:
     """Return ``x(C*)' A(lambda)^{-1} x(C*)``.
@@ -122,7 +124,7 @@ def target_variance_factor(
 
 def pair_variance_factor(
     budgets: Sequence[float],
-    weights: Sequence[float],
+    weights: Weights,
     target: float,
 ) -> float:
     """Return the variance factor for a *difference* of two recipe projections.
@@ -138,7 +140,7 @@ def pair_variance_factor(
 
 def leverage_from_allocation(
     budgets: Sequence[float],
-    weights: Sequence[float],
+    weights: Weights,
     target: float,
 ) -> float:
     """Return the OLS prediction leverage ``h*`` implied by an allocation.
