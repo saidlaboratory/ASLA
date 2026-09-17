@@ -1,3 +1,24 @@
+> **Post-hoc correction (recorded, not silently edited).** The constants table
+> below defines `sigma = mean relative SE` = 0.00145. That definition is the
+> origin of what the methods practice records as instance 6: equation (1) and
+> everything downstream consume `sigma^2`, and squaring a linear mean of scales
+> understates the mean of their squares --- here by 2.06x, the same factor at
+> which the independent `phi = 0` gate in the v2 work failed. The correct pooling
+> is `sqrt(mean(relative^2))` = 0.00208, now computed in
+> `scripts/run_theory_check.py` and shipped beside the mean with the
+> understatement factor.
+>
+> **The defect was in this specification, not in the implementation** --- the code
+> did faithfully what this file asked for, which is why no test caught it and why
+> a sweep for the mathematical pattern was needed to find it.
+>
+> No verdict changes. T1 is sigma-free (a ratio of leverages); T2 and T3 compare
+> a measured quantity against a band committed here, and all three remain MISSED.
+> What weakens is the diagnosis: the empirical-over-theory variance ratio falls
+> from 3.20 to 1.55, so roughly half of what was attributed to the unmodelled
+> third parameter was this pooling error. The omission remains real and
+> directionally right, but it no longer accounts for the T2 miss on its own.
+
 # Pre-registered theory and predictions: variance of projected selection (Task 2)
 
 **Status: pre-registration. The derivation and every numeric prediction below were

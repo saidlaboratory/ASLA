@@ -53,7 +53,11 @@ ALLOWED_FLOATS: dict[str, frozenset[float]] = {
     "render_confidence_failures.py": frozenset({0.05, 5.0, 10.0, 20.0, 50.0, 300.0, 5.8e18, 0.999}),
     # The same stated scenario, quoted in the README's section 6.
     "render_readme_findings.py": frozenset({0.05, 50.0, 300.0}),
-    "render_consolidated_findings.py": frozenset(),
+    # N_INSTANCES and N_FLATTERING: counts of documented artifact instances in
+    # the section itself. Structural facts about the prose, not quantities read
+    # off the data, and centralised precisely so the four places that state them
+    # cannot drift apart.
+    "render_consolidated_findings.py": frozenset({5.0, 6.0}),
     "render_curvature_results.py": frozenset(),
     "render_macros.py": frozenset(),
 }

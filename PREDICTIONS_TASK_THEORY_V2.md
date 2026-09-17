@@ -1,5 +1,21 @@
 # Pre-registered extension: three-parameter variance (Task 2, version 2)
 
+> **Post-hoc correction (recorded, not silently edited).** This file states the
+> residual scatter as 4.22x the seed standard error and a 17.8x variance
+> inflation, including the inputs 0.03655 / 0.00866 at line 127. A later audit
+> found that ratio divided a dof-corrected residual *scale* by `mean(se)`, where
+> a ratio of scales requires `sqrt(mean(se^2))` = 0.01271. The corrected values
+> are **2.90x** and **8.40x**, now computed in `scripts/run_theory_v2.py` and
+> shipped with their inputs. A second instance of the same class was later found
+> in `scripts/run_theory_check.py`, where sigma was pooled as `mean(relative_se)`
+> and then squared; correcting it moves the variance diagnosis from 3.20 to 1.55.
+>
+> No pre-registered verdict in this file or in `PREDICTIONS_TASK_THEORY.md`
+> changes: V0-V4 and T1-T3 all turn on comparisons that are either sigma-free or
+> made against a committed band using a measured quantity. The text below is left
+> as written, because a pre-registration that is edited after seeing results is
+> no longer a pre-registration.
+
 **Status: pre-registration. Written and committed before computing the extension.**
 The two-parameter result and its three misses stand unchanged in
 `PREDICTIONS_TASK_THEORY.md` and `results/theory/theory_check.json`; this file
