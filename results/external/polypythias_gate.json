@@ -1,0 +1,105 @@
+{
+  "coverage": {
+    "decoupled_model_repos": {
+      "all_exist": true,
+      "contain_weights_only": true,
+      "expected": [
+        "EleutherAI/pythia-160m-data-seed1",
+        "EleutherAI/pythia-160m-data-seed2",
+        "EleutherAI/pythia-160m-data-seed3",
+        "EleutherAI/pythia-160m-weight-seed1",
+        "EleutherAI/pythia-160m-weight-seed2",
+        "EleutherAI/pythia-160m-weight-seed3"
+      ],
+      "http_status": {
+        "EleutherAI/pythia-160m-data-seed1": 200,
+        "EleutherAI/pythia-160m-data-seed2": 200,
+        "EleutherAI/pythia-160m-data-seed3": 200,
+        "EleutherAI/pythia-160m-weight-seed1": 200,
+        "EleutherAI/pythia-160m-weight-seed2": 200,
+        "EleutherAI/pythia-160m-weight-seed3": 200
+      },
+      "note": "The model cards state that evaluation results for all models live in the polypythias-evals dataset. For the decoupled variants that is not the case: the dataset contains exactly the 50 combined-seed runs and no data-seed or weight-seed directory. The repositories themselves hold pytorch_model.bin and a tokenizer, which are weights and are not downloaded here."
+    },
+    "evals_dataset": {
+      "checkpoints_per_run": 154,
+      "decoupled_files_present": 0,
+      "id": "EleutherAI/polypythias-evals",
+      "n_files": 19924,
+      "n_runs": 50,
+      "runs": [
+        "pythia-14m-seed0",
+        "pythia-14m-seed1",
+        "pythia-14m-seed2",
+        "pythia-14m-seed3",
+        "pythia-14m-seed4",
+        "pythia-14m-seed5",
+        "pythia-14m-seed6",
+        "pythia-14m-seed7",
+        "pythia-14m-seed8",
+        "pythia-14m-seed9",
+        "pythia-160m-seed0",
+        "pythia-160m-seed1",
+        "pythia-160m-seed2",
+        "pythia-160m-seed3",
+        "pythia-160m-seed4",
+        "pythia-160m-seed5",
+        "pythia-160m-seed6",
+        "pythia-160m-seed7",
+        "pythia-160m-seed8",
+        "pythia-160m-seed9",
+        "pythia-31m-seed0",
+        "pythia-31m-seed1",
+        "pythia-31m-seed2",
+        "pythia-31m-seed3",
+        "pythia-31m-seed4",
+        "pythia-31m-seed5",
+        "pythia-31m-seed6",
+        "pythia-31m-seed7",
+        "pythia-31m-seed8",
+        "pythia-31m-seed9",
+        "pythia-410m-seed0",
+        "pythia-410m-seed1",
+        "pythia-410m-seed2",
+        "pythia-410m-seed3",
+        "pythia-410m-seed4",
+        "pythia-410m-seed5",
+        "pythia-410m-seed6",
+        "pythia-410m-seed7",
+        "pythia-410m-seed8",
+        "pythia-410m-seed9",
+        "pythia-70m-seed0",
+        "pythia-70m-seed1",
+        "pythia-70m-seed2",
+        "pythia-70m-seed3",
+        "pythia-70m-seed4",
+        "pythia-70m-seed5",
+        "pythia-70m-seed6",
+        "pythia-70m-seed7",
+        "pythia-70m-seed8",
+        "pythia-70m-seed9"
+      ],
+      "sizes": {
+        "14m": 10,
+        "160m": 10,
+        "31m": 10,
+        "410m": 10,
+        "70m": 10
+      }
+    }
+  },
+  "guardrail": "Only evaluation JSON and API metadata were fetched. The decoupled variants' weights were deliberately not downloaded, which is what blocks Task 7.",
+  "task_7_common_random_numbers": {
+    "passes": false,
+    "reasoning": "All six decoupled repositories exist and are exactly as described --- three vary data order with initialisation fixed, three the converse, all at 160M on the Pile. But they ship only pytorch_model.bin. The evaluation dataset that their model cards point to contains the 50 combined-seed runs and nothing else, so the data-order share cannot be estimated from public evaluations. Obtaining it would require running evaluations on the six checkpoints, which means downloading model weights.",
+    "requirement": "decoupled seed variants (data ordering varied with init fixed, and the converse) with EVALUATION metrics, to estimate the data-order variance share",
+    "verdict": "STOP: the decoupled variants publish weights but no evaluations",
+    "what_would_unblock": "evaluation results for the six decoupled variants, or a reported variance decomposition in the paper itself"
+  },
+  "task_8_noise_model_validation": {
+    "passes": true,
+    "reasoning": "50 runs, {'14m': 10, '160m': 10, '31m': 10, '410m': 10, '70m': 10} seeds at each of 5 sizes, 154 evaluated checkpoints per run, all as evaluation JSON with no weights involved. This is enough to estimate sigma from ten seeds, compare against three-seed subsamples, and test how sigma scales with model size.",
+    "requirement": "a multi-seed panel with checkpoints across several model sizes",
+    "verdict": "PROCEED"
+  }
+}
