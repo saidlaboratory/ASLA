@@ -129,3 +129,82 @@ def test_shipped_gate_records_a_stop_with_its_reasoning() -> None:
     assert payload["coverage"]["n_budgets_public"] == 1
     # The suite is still worth citing for what it does answer.
     assert payload["metric_agreement_at_top_budget"]["corpus"]["n_distinct_winners"] >= 2
+
+
+# --- Chart harvest: the compute-scaling curves recovered from the write-up ---
+
+_CURVES_SPEC = importlib.util.spec_from_file_location(
+    "harvest_compute_multipliers_charts",
+    REPO / "scripts" / "harvest_compute_multipliers_charts.py",
+)
+assert _CURVES_SPEC is not None and _CURVES_SPEC.loader is not None
+curves = importlib.util.module_from_spec(_CURVES_SPEC)
+sys.modules["harvest_compute_multipliers_charts"] = curves
+_CURVES_SPEC.loader.exec_module(curves)
+
+
+def _curve_frame(values: dict[str, list[float]], sd: float = 0.001) -> pd.DataFrame:
+    """A scaling-curve frame in the chart's own layout, with +/-1 sd bands."""
+
+    data: dict[str, list[float]] = {"compute": [1e17, 3.16e17, 1e18, 3.16e18, 1e19]}
+    for name, series in values.items():
+        data[name] = series
+        data[f"{name} −1 sd"] = [v - sd for v in series]
+        data[f"{name} +1 sd"] = [v + sd for v in series]
+    return pd.DataFrame(data)
+
+
+def test_resolved_reversal_excludes_noise_sized_flips() -> None:
+    """A flip inside the seed band must not count as a crossover.
+
+    This is the distinction the whole estimand rests on: two candidates that
+    swap order by less than their noise have not crossed over.
+    """
+
+    # b overtakes a by 0.0002, far inside a 0.001 sd.
+    frame = _curve_frame({"a": [0.40, 0.40, 0.40, 0.40, 0.4000], "b": [0.3999] * 4 + [0.4002]}, sd=0.001)
+    report = curves.analyse_axis(frame, "synthetic")
+    last = report["by_fit_budget"][-1]
+    assert last["raw_reversals"] == 1
+    assert last["resolved_pairs"] == 0
+    assert last["resolved_reversal_rate"] is None
+
+
+def test_resolved_reversal_counts_a_real_crossover() -> None:
+    """A flip far outside the band must count."""
+
+    frame = _curve_frame({"a": [0.30, 0.32, 0.34, 0.36, 0.38], "b": [0.40, 0.41, 0.42, 0.43, 0.44]}, sd=0.0005)
+    # b leads throughout: no reversal.
+    assert curves.analyse_axis(frame, "synthetic")["by_fit_budget"][0]["resolved_reversals"] == 0
+
+    crossing = _curve_frame({"a": [0.30, 0.34, 0.38, 0.42, 0.50], "b": [0.40, 0.41, 0.42, 0.43, 0.44]}, sd=0.0005)
+    first = curves.analyse_axis(crossing, "synthetic")["by_fit_budget"][0]
+    assert first["resolved_pairs"] == 1
+    assert first["resolved_reversals"] == 1
+    assert first["resolved_reversal_rate"] == pytest.approx(1.0)
+
+
+def test_spread_in_seed_sds_is_scale_free() -> None:
+    """The power diagnostic must compare spread to noise, not report spread alone."""
+
+    tight = _curve_frame({"a": [0.40] * 5, "b": [0.402] * 5}, sd=0.001)
+    wide = _curve_frame({"a": [0.40] * 5, "b": [0.460] * 5}, sd=0.001)
+    assert (
+        curves.analyse_axis(wide, "w")["endpoint"]["spread_in_seed_sds"]
+        > curves.analyse_axis(tight, "t")["endpoint"]["spread_in_seed_sds"]
+    )
+
+
+def test_shipped_curves_record_the_underpowered_verdict() -> None:
+    path = REPO / "results" / "external" / "compute_multipliers_curves.json"
+    if not path.exists():  # pragma: no cover - results not always materialised
+        pytest.skip("curve results not present")
+    payload = json.loads(path.read_text())
+    contrast = payload["class_contrast"]
+    assert "UNDERPOWERED" in contrast["verdict"]
+    # The recipe axis must retain too few resolved pairs to support a rate.
+    assert contrast["resolved_reversals_total"]["recipe_resolved_pairs"] < 10
+    # And the corpus axis must have many, which is what makes the asymmetry real.
+    assert contrast["resolved_reversals_total"]["corpus_resolved_pairs"] > 20
+    assert payload["recipe_axis"]["budgets"] == payload["corpus_axis"]["budgets"]
+    assert len(payload["recipe_axis"]["budgets"]) == 5

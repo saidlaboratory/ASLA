@@ -1,0 +1,279 @@
+{
+  "class_contrast": {
+    "endpoint_spread_in_seed_sds": {
+      "corpus": 20.689655172413694,
+      "recipe": 5.35897435897437
+    },
+    "raw_reversals_at_max_lever_arm": {
+      "corpus": 7,
+      "n_pairs": 21,
+      "recipe": 11
+    },
+    "resolved_reversals_total": {
+      "corpus": 0,
+      "corpus_resolved_pairs": 40,
+      "recipe": 1,
+      "recipe_resolved_pairs": 3
+    },
+    "seeds_needed_for_half_the_pairs": {
+      "corpus": 5,
+      "recipe": 20
+    },
+    "verdict": "UNDERPOWERED on the recipe axis. Raw reversal counts favour H2's direction at the largest lever arm, but once restricted to pairs resolvable against seed noise at both ends the recipe axis retains at most one comparison per budget, which cannot support a rate. The cause is measurable: recipes span 5.4 seed standard deviations at the endpoint against the corpora's 20.7, so 15 of 21 recipe pairs sit inside the noise versus 4 of 21 corpus pairs. Six years of corpus work simply produced more spread than six years of recipe work, which is the write-up's own headline and is what makes the recipe axis hard to power at seven candidates."
+  },
+  "corpus_axis": {
+    "axis": "corpus (under OLMo-2)",
+    "budgets": [
+      1e+17,
+      3.16e+17,
+      1e+18,
+      3.16e+18,
+      1e+19
+    ],
+    "by_fit_budget": [
+      {
+        "fit_budget": 1e+17,
+        "lever_arm": 100.0,
+        "n_pairs": 21,
+        "raw_reversal_rate": 0.3333333333333333,
+        "raw_reversals": 7,
+        "resolved_pairs": 2,
+        "resolved_reversal_rate": 0.0,
+        "resolved_reversals": 0
+      },
+      {
+        "fit_budget": 3.16e+17,
+        "lever_arm": 31.645569620253166,
+        "n_pairs": 21,
+        "raw_reversal_rate": 0.19047619047619047,
+        "raw_reversals": 4,
+        "resolved_pairs": 12,
+        "resolved_reversal_rate": 0.0,
+        "resolved_reversals": 0
+      },
+      {
+        "fit_budget": 1e+18,
+        "lever_arm": 10.0,
+        "n_pairs": 21,
+        "raw_reversal_rate": 0.047619047619047616,
+        "raw_reversals": 1,
+        "resolved_pairs": 12,
+        "resolved_reversal_rate": 0.0,
+        "resolved_reversals": 0
+      },
+      {
+        "fit_budget": 3.16e+18,
+        "lever_arm": 3.1645569620253164,
+        "n_pairs": 21,
+        "raw_reversal_rate": 0.09523809523809523,
+        "raw_reversals": 2,
+        "resolved_pairs": 14,
+        "resolved_reversal_rate": 0.0,
+        "resolved_reversals": 0
+      }
+    ],
+    "candidates": [
+      "OpenWebText (2019)",
+      "C4 English (2020)",
+      "The Pile (2021)",
+      "OLM CC 2022 Snapshot (2022)",
+      "Falcon RefinedWeb (2023)",
+      "FineWeb Edu (2024)",
+      "Ultra FineWeb (2025)"
+    ],
+    "endpoint": {
+      "median_gap": 0.022399999999999975,
+      "median_se_of_difference": 0.0062227405538074635,
+      "median_seed_sd": 0.0029000000000000137,
+      "min_gap": 0.005599999999999994,
+      "pairs_inside_seed_noise": 4,
+      "spread": 0.06,
+      "spread_in_seed_sds": 20.689655172413694
+    },
+    "n_candidates": 7,
+    "seeds_required_curve": [
+      {
+        "fraction_resolvable": 0.19047619047619047,
+        "n_pairs": 21,
+        "resolvable_pairs": 4,
+        "seeds_per_cell": 3
+      },
+      {
+        "fraction_resolvable": 0.5238095238095238,
+        "n_pairs": 21,
+        "resolvable_pairs": 11,
+        "seeds_per_cell": 5
+      },
+      {
+        "fraction_resolvable": 0.8095238095238095,
+        "n_pairs": 21,
+        "resolvable_pairs": 17,
+        "seeds_per_cell": 10
+      },
+      {
+        "fraction_resolvable": 0.9523809523809523,
+        "n_pairs": 21,
+        "resolvable_pairs": 20,
+        "seeds_per_cell": 20
+      },
+      {
+        "fraction_resolvable": 0.9523809523809523,
+        "n_pairs": 21,
+        "resolvable_pairs": 20,
+        "seeds_per_cell": 30
+      }
+    ]
+  },
+  "limitations": {
+    "aggregate_not_per_run": "Each cell is a seed mean with a +/-1 sd band, not per-seed rows. This supports ranking, reversal and resolvability analysis, but NOT the cell-wise seed bootstrap our primary estimand uses, so mis-selection rates from this source are not comparable to the DataDecide numbers.",
+    "five_budgets_seven_candidates": "21 pairs per axis. Reversal counts on 21 pairs are coarse, and the resolved subset is smaller still.",
+    "one_metric": "OLMES only. The metric-conditional result in SELECTION_STABILITY.md shows the answer can depend on the endpoint, so a single metric is a real restriction."
+  },
+  "provenance": {
+    "bytes_per_chart": {
+      "Cnl63": 515,
+      "CzRR5": 643,
+      "KNa3I": 596,
+      "TrYq2": 794,
+      "djBI7": 1150,
+      "k03qL": 751,
+      "lm6Jz": 1297
+    },
+    "charts": {
+      "Cnl63": {
+        "plots": "7x7 interaction grid (single seed)",
+        "version": 2
+      },
+      "CzRR5": {
+        "plots": "recipe compute multipliers at 1e19",
+        "version": 2
+      },
+      "KNa3I": {
+        "plots": "7x7 interaction grid, alternate scoring",
+        "version": 6
+      },
+      "TrYq2": {
+        "plots": "OLMES vs compute, 2019/2025 corner 2x2",
+        "version": 2
+      },
+      "djBI7": {
+        "plots": "OLMES vs compute, seven recipes on FineWeb-Edu",
+        "version": 6
+      },
+      "k03qL": {
+        "plots": "corpus compute multipliers at 1e19",
+        "version": 1
+      },
+      "lm6Jz": {
+        "plots": "OLMES vs compute, seven corpora under OLMo-2",
+        "version": 6
+      }
+    },
+    "mechanism": "Datawrapper exposes each embedded chart's underlying table at datawrapper.dwcdn.net/<id>/<version>/dataset.csv. All seven embeds in the write-up resolve.",
+    "metric": "OLMES score (higher is better)",
+    "source": "https://www.dwarkesh.com/p/pretraining-progress-is-mostly-data"
+  },
+  "recipe_axis": {
+    "axis": "recipe (on FineWeb-Edu)",
+    "budgets": [
+      1e+17,
+      3.16e+17,
+      1e+18,
+      3.16e+18,
+      1e+19
+    ],
+    "by_fit_budget": [
+      {
+        "fit_budget": 1e+17,
+        "lever_arm": 100.0,
+        "n_pairs": 21,
+        "raw_reversal_rate": 0.5238095238095238,
+        "raw_reversals": 11,
+        "resolved_pairs": 0,
+        "resolved_reversal_rate": null,
+        "resolved_reversals": 0
+      },
+      {
+        "fit_budget": 3.16e+17,
+        "lever_arm": 31.645569620253166,
+        "n_pairs": 21,
+        "raw_reversal_rate": 0.6190476190476191,
+        "raw_reversals": 13,
+        "resolved_pairs": 1,
+        "resolved_reversal_rate": 1.0,
+        "resolved_reversals": 1
+      },
+      {
+        "fit_budget": 1e+18,
+        "lever_arm": 10.0,
+        "n_pairs": 21,
+        "raw_reversal_rate": 0.42857142857142855,
+        "raw_reversals": 9,
+        "resolved_pairs": 1,
+        "resolved_reversal_rate": 0.0,
+        "resolved_reversals": 0
+      },
+      {
+        "fit_budget": 3.16e+18,
+        "lever_arm": 3.1645569620253164,
+        "n_pairs": 21,
+        "raw_reversal_rate": 0.09523809523809523,
+        "raw_reversals": 2,
+        "resolved_pairs": 1,
+        "resolved_reversal_rate": 0.0,
+        "resolved_reversals": 0
+      }
+    ],
+    "candidates": [
+      "GPT-2 (2019)",
+      "GPT-3 (2020)",
+      "GPT-J (2021)",
+      "GPT NeoX (2022)",
+      "LLaMA (2023)",
+      "LLaMA 3 (2024)",
+      "OLMo-2 (2025)"
+    ],
+    "endpoint": {
+      "median_gap": 0.00720000000000004,
+      "median_se_of_difference": 0.005879625838435622,
+      "median_seed_sd": 0.003899999999999987,
+      "min_gap": 9.999999999998899e-05,
+      "pairs_inside_seed_noise": 15,
+      "spread": 0.020899999999999974,
+      "spread_in_seed_sds": 5.35897435897437
+    },
+    "n_candidates": 7,
+    "seeds_required_curve": [
+      {
+        "fraction_resolvable": 0.0,
+        "n_pairs": 21,
+        "resolvable_pairs": 0,
+        "seeds_per_cell": 3
+      },
+      {
+        "fraction_resolvable": 0.047619047619047616,
+        "n_pairs": 21,
+        "resolvable_pairs": 1,
+        "seeds_per_cell": 5
+      },
+      {
+        "fraction_resolvable": 0.38095238095238093,
+        "n_pairs": 21,
+        "resolvable_pairs": 8,
+        "seeds_per_cell": 10
+      },
+      {
+        "fraction_resolvable": 0.5714285714285714,
+        "n_pairs": 21,
+        "resolvable_pairs": 12,
+        "seeds_per_cell": 20
+      },
+      {
+        "fraction_resolvable": 0.6190476190476191,
+        "n_pairs": 21,
+        "resolvable_pairs": 13,
+        "seeds_per_cell": 30
+      }
+    ]
+  }
+}

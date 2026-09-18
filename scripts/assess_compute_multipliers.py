@@ -177,6 +177,15 @@ def main() -> None:
                 "the released runs.csv covering all 1,397 runs across the five budgets, or any "
                 "per-budget table with seeds preserved"
             ),
+            "partially_unblocked_after_this_ran": (
+                "The compute-scaling data turned out to be public by another route: the "
+                "write-up embeds Datawrapper charts, and Datawrapper serves each chart's "
+                "underlying table. That yields OLMES against compute across all five budgets "
+                "on both axes, with +/-1 sd bands. See "
+                "results/external/compute_multipliers_curves.json. It is aggregate rather than "
+                "per-run, so it does not restore the seed bootstrap our estimand needs, and "
+                "this gate's verdict on the PER-RUN record stands."
+            ),
         },
         "notes": {
             "reportable_flag": (

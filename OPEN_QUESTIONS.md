@@ -33,15 +33,47 @@ variation. It is reported as a limitation in `FIRST_AUDIT.md` and remains one.
 | suite | compute-multipliers (Han, Lunar Society, 2026) | seven recipes x seven corpora under one frozen protocol; the 2x2 this needs |
 | axes | recipe (7 candidates) and corpus (7), crossed | the class contrast under one protocol is the quantity, not either axis alone |
 | budgets | >= 4 of {1e17, 3.16e17, 1e18, 3.16e18, 1e19} | >= 3 to fit plus >= 1 held out above the fit range |
-| seeds | >= 3 per cell | to separate mis-selection from seed noise, as our estimand requires |
+| seeds | **20 per cell on the recipe axis**, 5 on the corpus axis | measured, not assumed: at the suite's 3 seeds, 0 of 21 recipe pairs clear a Bonferroni-corrected two-sided test at the endpoint. Half the pairs become resolvable at 20 seeds; the corpus axis reaches the same point at 5 |
 | lever arm | up to 100x (1e17 -> 1e19) | comparable to the 4.7x-8.9x we reach on DataDecide, and wider |
 | metrics | native NLL, OLMES10, held-out-7, Alt-8 | lets OQ2 be answered on the same runs |
 
-**Status.** The campaign ran exactly this (1,397 runs across five budgets, three
-seeds per cell). The public artifact is 50 runs at the top budget only
-(`results/external/compute_multipliers_gate.json`), and the cited code release
-holding `runs.csv` returns 404. **One email may close this**; a draft is in
-`docs/outreach/compute_multipliers_request.md`.
+**Status: partially answered.** The campaign ran exactly this (1,397 runs across
+five budgets, three seeds per cell). The per-run record is not released --- the
+public artifact is 50 runs at the top budget, and the cited code release holding
+`runs.csv` returns 404 --- but the *compute-scaling curves* are public by another
+route. The write-up embeds Datawrapper charts, and Datawrapper serves each
+chart's underlying table, which yields OLMES against compute across all five
+budgets on both axes with +/-1 sd bands
+(`results/external/compute_multipliers_curves.json`).
+
+What that buys, and what it does not:
+
+- **Answered:** ranking reversals between any fitting budget and the 1e19
+  endpoint, on both axes, up to a 100x lever arm, with seed dispersion recovered
+  from the plotted bands. The write-up's reported NeoX-over-GPT-2 reversal is
+  confirmed in the data as one of exactly two recipe-axis reversals between
+  3.16e18 and 1e19.
+- **Still blocked:** the per-run rows needed for the cell-wise seed bootstrap our
+  primary estimand uses, so mis-selection rates from this source are not
+  comparable to the DataDecide numbers.
+- **Newly measured, and it changes the ask:** the recipe axis is *underpowered by
+  construction* at seven candidates. Recipes span 5.4 seed standard deviations at
+  the endpoint against the corpora's 20.7, so 15 of 21 recipe pairs sit inside
+  the seed noise versus 4 of 21 corpus pairs. Restricting reversals to pairs
+  resolvable at both ends leaves at most one recipe comparison per budget. Six
+  years of recipe work simply produced less spread than six years of corpus work
+  --- the write-up's own headline --- so **more seeds, not just the per-run
+  record, are what this question needs.** Quantified: to resolve half the
+  endpoint pairs under a Bonferroni-corrected test, the corpus axis needs 5 seeds
+  per cell and the recipe axis needs 20. Returns flatten past 20 (13 of 21 pairs
+  at 30 seeds), because some recipe pairs are too close to separate at any
+  affordable budget --- which is itself an answer to "is the recipe axis
+  crossover-prone": several of its candidates are not distinguishable at all.
+
+**One email may still help**; a draft is in
+`docs/outreach/compute_multipliers_request.md`. It should now ask for seed counts
+as well as per-run metrics, since the power analysis above says three seeds is
+not enough on the recipe axis regardless of what else is shared.
 
 **What we would learn either way.** If the recipe axis shows higher crossover
 frequency and higher mis-selection than the corpus axis under one protocol, H2's
