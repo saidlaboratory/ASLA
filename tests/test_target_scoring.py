@@ -6,9 +6,16 @@ import pytest
 
 from asla.analysis.target_scoring import (
     benjamini_hochberg_threshold,
+    candidate_bootstrap,
+    candidates_for_power,
     decomposition,
+    expected_charges,
+    jackknife_standard_error,
     score_ranker,
     target_evidence,
+    u_statistic_components,
+    u_statistic_test,
+    u_statistic_variance,
     welch_pair,
 )
 
@@ -133,3 +140,94 @@ def test_bootstrap_p_value_never_exceeds_one() -> None:
     assert bootstrap_two_sided_p([1.0] * 100) == 0.0
     assert 0.0 < bootstrap_two_sided_p([1.0] * 90 + [-1.0] * 10) < 1.0
     assert np.isnan(bootstrap_two_sided_p([]))
+
+
+# --- Candidate-level inference on pair-mean statistics ---
+
+
+def _additive_kernel(n: int, sd_u: float, sd_e: float, seed: int) -> dict[tuple[str, str], float]:
+    """h(a, b) = u_a + u_b + e_ab: zeta1 = sd_u^2 and zeta2 = 2 sd_u^2 + sd_e^2 exactly."""
+
+    from itertools import combinations
+
+    import numpy as np
+
+    rng = np.random.default_rng(seed)
+    u = rng.normal(0.0, sd_u, size=n)
+    names = [f"c{i:02d}" for i in range(n)]
+    return {(names[i], names[j]): u[i] + u[j] + rng.normal(0.0, sd_e) for i, j in combinations(range(n), 2)}
+
+
+def test_expected_charges_sum_to_score_ranker_expected_errors() -> None:
+    evidence = target_evidence(
+        {"a": 1.0, "b": 1.1, "c": 1.3}, {"a": 0.1, "b": 0.1, "c": 0.1}, {"a": 3, "b": 3, "c": 3}
+    )
+    predictions = {("a", "b"): -1.0, ("a", "c"): 1.0, ("b", "c"): -1.0}
+    charges = expected_charges(predictions, evidence)
+    assert sum(charges.values()) == pytest.approx(score_ranker(predictions, evidence)["expected_errors"])
+
+
+def test_candidate_bootstrap_centres_on_the_full_sample_statistic() -> None:
+    import numpy as np
+
+    kernel = _additive_kernel(25, 1.0, 1.0, seed=0)
+    draws = candidate_bootstrap(kernel, np.random.default_rng(1), 2000)
+    assert np.mean(draws) == pytest.approx(np.mean(list(kernel.values())), abs=0.1)
+
+
+def test_u_statistic_components_recover_known_zetas_on_average() -> None:
+    import numpy as np
+
+    estimates = [u_statistic_components(_additive_kernel(40, 1.0, 2.0, seed=s)) for s in range(200)]
+    assert np.mean([e["zeta1"] for e in estimates]) == pytest.approx(1.0, rel=0.15)
+    assert np.mean([e["zeta2"] for e in estimates]) == pytest.approx(6.0, rel=0.1)
+
+
+def test_bootstrap_jackknife_and_formula_agree_on_the_standard_error() -> None:
+    """The defect this guards: a unique-set bootstrap overstated the spread."""
+
+    import numpy as np
+
+    kernel = _additive_kernel(25, 1.0, 1.0, seed=3)
+    components = u_statistic_components(kernel)
+    formula = np.sqrt(u_statistic_variance(components["zeta1"], components["zeta2"], 25))
+    boot = float(np.std(candidate_bootstrap(kernel, np.random.default_rng(4), 3000)))
+    jack = jackknife_standard_error(kernel)
+    assert boot == pytest.approx(formula, rel=0.2)
+    assert jack == pytest.approx(formula, rel=0.2)
+
+
+def test_u_statistic_variance_matches_simulation() -> None:
+    import numpy as np
+
+    values = [np.mean(list(_additive_kernel(25, 1.0, 1.0, seed=s).values())) for s in range(1500)]
+    assert np.var(values) == pytest.approx(u_statistic_variance(1.0, 3.0, 25), rel=0.15)
+
+
+def test_candidates_for_power_grows_as_the_effect_shrinks() -> None:
+    small = candidates_for_power(1.0, 3.0, delta=0.2)
+    large = candidates_for_power(1.0, 3.0, delta=0.5)
+    assert small is not None and large is not None and small > large
+    assert candidates_for_power(0.0, 0.0, delta=0.1) == 3
+
+
+def test_weighted_bootstrap_is_conservative_when_pair_noise_dominates() -> None:
+    """Why the U-statistic test is the headline: at zeta2/zeta1 near this project's
+    value the weighted bootstrap overstates the standard error, the formula does not."""
+
+    import numpy as np
+
+    truth = np.sqrt(u_statistic_variance(1.0, 38.0, 25))
+    boot, formula = [], []
+    for seed in range(25):
+        kernel = _additive_kernel(25, 1.0, 6.0, seed=seed)
+        boot.append(np.std(candidate_bootstrap(kernel, np.random.default_rng(seed), 600)))
+        formula.append(u_statistic_test(kernel)["standard_error"])
+    assert np.mean(boot) / truth > 1.15
+    assert np.mean(formula) / truth == pytest.approx(1.0, abs=0.1)
+
+
+def test_u_statistic_test_reports_zero_difference_as_p_one() -> None:
+    kernel = {("a", "b"): 0.0, ("a", "c"): 0.0, ("a", "d"): 0.0, ("b", "c"): 0.0, ("b", "d"): 0.0, ("c", "d"): 0.0}
+    result = u_statistic_test(kernel)
+    assert result["p_two_sided"] == 1.0 and not result["excludes_zero"]

@@ -22,7 +22,18 @@ import pandas as pd
 from scipy import stats
 
 from asla.analysis.fits import cell_means_and_sigma, normalize_budgets
-from asla.analysis.target_scoring import bootstrap_two_sided_p, score_ranker, target_evidence
+from asla.analysis.target_scoring import (
+    bootstrap_two_sided_p,
+    candidate_bootstrap,
+    candidates_for_power,
+    expected_charges,
+    jackknife_standard_error,
+    score_ranker,
+    target_evidence,
+    u_statistic_components,
+    u_statistic_test,
+    u_statistic_variance,
+)
 from asla.models import FitError, bpb_power_law, fit_power_law
 
 REPO = Path(__file__).resolve().parents[1]
@@ -115,7 +126,7 @@ def candidate_resampled_difference(
     correction is visible.
     """
 
-    def difference(subset: list[str]) -> float | None:
+    def unique_set_difference(subset: list[str]) -> float | None:
         pairs = [(a, b) for a, b in combinations(sorted(set(subset)), 2) if (a, b) in evidence_by_pair]
         if len(pairs) < 3:
             return None
@@ -126,22 +137,26 @@ def candidate_resampled_difference(
             return None
         return 100 * (left["expected_rate"] - right["expected_rate"])
 
-    point = difference(names)
-    candidate_draws = []
-    for _ in range(n_resamples):
-        drawn = list(rng.choice(names, size=len(names), replace=True))
-        value = difference(drawn)
-        if value is not None:
-            candidate_draws.append(value)
+    evidence = list(evidence_by_pair.values())
+    left_charges = expected_charges(_gaps(values["projection"], names), evidence)
+    right_charges = expected_charges(_gaps(values["single_scale"], names), evidence)
+    kernel = {pair: 100 * (left_charges[pair] - right_charges[pair]) for pair in left_charges if pair in right_charges}
+    point = float(np.mean(list(kernel.values())))
+    candidate_draws = list(candidate_bootstrap(kernel, rng, n_resamples))
 
-    all_pairs = sorted(evidence_by_pair)
-    pair_draws = []
-    for _ in range(n_resamples):
-        indices = rng.integers(0, len(all_pairs), size=len(all_pairs))
-        chosen = [evidence_by_pair[all_pairs[i]] for i in indices]
-        left = score_ranker(_gaps(values["projection"], names), chosen)
-        right = score_ranker(_gaps(values["single_scale"], names), chosen)
-        pair_draws.append(100 * (left["expected_rate"] - right["expected_rate"]))
+    # The superseded bootstrap, kept so the size of its error is on record
+    # (PREDICTIONS_TASK_POWER.md, Q1): it scored only the unique candidates drawn.
+    unique_draws = [
+        d
+        for d in (unique_set_difference(list(rng.choice(names, size=len(names)))) for _ in range(n_resamples))
+        if d is not None
+    ]
+
+    all_pairs = sorted(kernel)
+    pair_values = np.array([kernel[p] for p in all_pairs])
+    pair_draws = [
+        float(pair_values[rng.integers(0, len(all_pairs), size=len(all_pairs))].mean()) for _ in range(n_resamples)
+    ]
 
     def summarise(draws: list[float], label: str) -> dict[str, Any]:
         array = np.asarray(draws, dtype=float)
@@ -150,21 +165,96 @@ def candidate_resampled_difference(
             "unit": label,
             "n_draws": int(array.size),
             "mean": float(array.mean()),
+            "standard_error": float(array.std(ddof=1)),
             "ci_low_pp": low,
             "ci_high_pp": high,
             "excludes_zero": bool(low > 0 or high < 0),
             "p_two_sided": bootstrap_two_sided_p(array),
         }
 
+    candidate = summarise(candidate_draws, "candidate")
+    pairs = summarise(pair_draws, "pair (anti-conservative)")
+    unique = summarise(unique_draws, "candidate, unique-set (superseded: evaluates ~63% of candidates)")
+    components = u_statistic_components(kernel)
+    n = int(components["n_candidates"])
+    formula_se = float(np.sqrt(u_statistic_variance(components["zeta1"], components["zeta2"], n)))
     return {
         "point_difference_pp": point,
-        "candidate_resampling": summarise(candidate_draws, "candidate"),
-        "pair_resampling_naive": summarise(pair_draws, "pair (anti-conservative)"),
-        "dependence_correction_factor": (
-            (summarise(candidate_draws, "c")["ci_high_pp"] - summarise(candidate_draws, "c")["ci_low_pp"])
-            / (summarise(pair_draws, "p")["ci_high_pp"] - summarise(pair_draws, "p")["ci_low_pp"])
-        ),
+        "candidate_resampling": candidate,
+        "pair_resampling_naive": pairs,
+        "unique_set_candidate_resampling_superseded": unique,
+        "dependence_correction_factor": candidate["standard_error"] / pairs["standard_error"],
+        "unique_set_over_corrected_se": unique["standard_error"] / candidate["standard_error"],
+        # Headline (a declared deviation from the pre-registered primary): the
+        # unbiased U-statistic test. The weighted bootstrap is conservative here;
+        # see "estimator_calibration".
+        "u_statistic": {**u_statistic_test(kernel), "formula_standard_error": formula_se},
+        "jackknife_standard_error": jackknife_standard_error(kernel),
+        "power": power_analysis(components, point, rng),
+        "_kernel": kernel,
     }
+
+
+POWER_TARGET = 0.8
+POWER_DELTAS_PP = (0.5, 1.0, 2.0, 5.0)
+SUBSAMPLE_SIZES = (8, 12, 16, 20)
+N_SUBSAMPLES = 2000
+
+
+def power_analysis(components: dict[str, float], point: float, rng: np.random.Generator) -> dict[str, Any]:
+    """Candidates needed to detect a difference, from the Hoeffding components."""
+
+    zeta1, zeta2 = components["zeta1"], components["zeta2"]
+    return {
+        "power": POWER_TARGET,
+        "alpha": 0.05,
+        "test": "two-sided z on the pair-mean U-statistic, zeta1 and zeta2 held at their estimates",
+        "candidates_at_point_estimate": candidates_for_power(zeta1, zeta2, point, POWER_TARGET),
+        "candidates_by_delta_pp": {
+            f"{delta:g}": candidates_for_power(zeta1, zeta2, delta, POWER_TARGET) for delta in POWER_DELTAS_PP
+        },
+        "power_at_observed_count": _power_at(zeta1, zeta2, point, int(components["n_candidates"])),
+    }
+
+
+def _power_at(zeta1: float, zeta2: float, delta: float, n: int) -> float:
+    from scipy import stats
+
+    se = float(np.sqrt(u_statistic_variance(zeta1, zeta2, n)))
+    z = float(stats.norm.ppf(0.975))
+    return float(stats.norm.cdf(abs(delta) / se - z) + stats.norm.cdf(-abs(delta) / se - z))
+
+
+def subsampling_check(kernel: dict[tuple[str, str], float], rng: np.random.Generator) -> list[dict[str, float]]:
+    """Q4: does the formula's variance match subsampling m of the n candidates?
+
+    Subsampling without replacement from the observed candidates has variance
+    V(m) - V(n), since the full-sample statistic is the conditional mean of the
+    subsample one.
+    """
+
+    components = u_statistic_components(kernel)
+    n = int(components["n_candidates"])
+    names = sorted({name for pair in kernel for name in pair})
+    rows = []
+    for m in SUBSAMPLE_SIZES:
+        values = []
+        for _ in range(N_SUBSAMPLES):
+            chosen = sorted(rng.choice(names, size=m, replace=False))
+            values.append(np.mean([kernel[(a, b)] for a, b in combinations(chosen, 2)]))
+        predicted = u_statistic_variance(components["zeta1"], components["zeta2"], m) - u_statistic_variance(
+            components["zeta1"], components["zeta2"], n
+        )
+        empirical = float(np.std(values, ddof=1))
+        rows.append(
+            {
+                "m": m,
+                "empirical_sd": empirical,
+                "formula_sd": float(np.sqrt(max(predicted, 0.0))),
+                "ratio": empirical / float(np.sqrt(predicted)) if predicted > 0 else float("nan"),
+            }
+        )
+    return rows
 
 
 def published_estimators(frame: pd.DataFrame, focal: str, target_label: str) -> dict[str, Any]:
@@ -325,6 +415,84 @@ def dose_response(frame: pd.DataFrame) -> dict[str, Any]:
     return out
 
 
+CALIBRATION_REPLICATES = 60
+CALIBRATION_RESAMPLES = 800
+
+
+def estimator_calibration(zeta1: float, zeta2: float, n: int, rng: np.random.Generator) -> dict[str, Any]:
+    """How each candidate-level standard error compares with a known truth.
+
+    Simulates the additive kernel h(a, b) = u_a + u_b + e_ab at the measured
+    Hoeffding components, where zeta1 = Var(u) and zeta2 = 2 Var(u) + Var(e),
+    so the true standard error at n candidates is known exactly.
+    """
+
+    sd_u = float(np.sqrt(max(zeta1, 0.0)))
+    sd_e = float(np.sqrt(max(zeta2 - 2 * zeta1, 0.0)))
+    truth = float(np.sqrt(u_statistic_variance(zeta1, zeta2, n)))
+    names = [f"c{i:02d}" for i in range(n)]
+    ratios: dict[str, list[float]] = {
+        "weighted_bootstrap": [],
+        "jackknife": [],
+        "u_statistic": [],
+        "unique_set_bootstrap": [],
+    }
+    for _ in range(CALIBRATION_REPLICATES):
+        u = rng.normal(0.0, sd_u, size=n)
+        kernel = {(names[i], names[j]): u[i] + u[j] + rng.normal(0.0, sd_e) for i, j in combinations(range(n), 2)}
+        ratios["weighted_bootstrap"].append(float(np.std(candidate_bootstrap(kernel, rng, CALIBRATION_RESAMPLES))) / truth)
+        ratios["jackknife"].append(jackknife_standard_error(kernel) / truth)
+        ratios["u_statistic"].append(float(u_statistic_test(kernel)["standard_error"]) / truth)
+        unique = []
+        for _ in range(CALIBRATION_RESAMPLES):
+            chosen = sorted(set(rng.choice(names, size=n)))
+            unique.append(np.mean([kernel[pair] for pair in combinations(chosen, 2)]))
+        ratios["unique_set_bootstrap"].append(float(np.std(unique)) / truth)
+    return {
+        "zeta1": zeta1,
+        "zeta2": zeta2,
+        "n_candidates": n,
+        "true_standard_error": truth,
+        "replicates": CALIBRATION_REPLICATES,
+        "mean_se_over_truth": {name: float(np.mean(values)) for name, values in ratios.items()},
+    }
+
+
+def power_predictions(significance: dict[str, Any]) -> dict[str, Any]:
+    """Q1-Q4 of PREDICTIONS_TASK_POWER.md, scored on the C4 primary design."""
+
+    factor = significance["unique_set_over_corrected_se"]
+    needed = significance["power"]["candidates_at_point_estimate"]
+    ratios = [row["ratio"] for row in significance["subsampling_check"]]
+    return {
+        "Q1_unique_set_overstates_se": {
+            "measured": factor,
+            "band": [1.1, 1.4],
+            "confirmed": 1.1 <= factor <= 1.4,
+            "note": (
+                "Refuted in the opposite direction. The weighted bootstrap is itself conservative when "
+                "pair-level variance dominates; see estimator_calibration."
+            ),
+        },
+        "Q2_interval_includes_zero": {
+            "measured": [
+                significance["candidate_resampling"]["ci_low_pp"],
+                significance["candidate_resampling"]["ci_high_pp"],
+            ],
+            "confirmed": not significance["candidate_resampling"]["excludes_zero"],
+        },
+        "Q3_candidates_for_power": {
+            "measured": needed,
+            "band": [40, 120],
+            "confirmed": needed is not None and 40 <= needed <= 120,
+        },
+        "Q4_formula_matches_subsampling": {
+            "measured_ratios": ratios,
+            "confirmed": all(abs(r - 1) <= 0.2 for r in ratios),
+        },
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--seed", type=int, default=20260922)
@@ -380,9 +548,20 @@ def main() -> None:
                 entry["rankers"][name] = score_ranker(_gaps(per_candidate, names), evidence)
 
             if design_name == "primary_4M-300M_gate530M":
-                entry["significance"] = candidate_resampled_difference(values, evidence_by_pair, names, rng)
+                significance = candidate_resampled_difference(values, evidence_by_pair, names, rng)
+                significance["subsampling_check"] = subsampling_check(significance.pop("_kernel"), rng)
+                significance["estimator_calibration"] = estimator_calibration(
+                    significance["u_statistic"]["zeta1"],
+                    significance["u_statistic"]["zeta2"],
+                    int(significance["u_statistic"]["n_candidates"]),
+                    rng,
+                )
+                entry["significance"] = significance
             payload["regimes"][f"{metric}/{design_name}"] = entry
 
+    payload["power_predictions"] = power_predictions(
+        payload["regimes"]["c4_en_bits_per_token/primary_4M-300M_gate530M"]["significance"]
+    )
     payload["published_figure"] = published_estimators(load("olmes_macro_error"), "150M", "1B")
     payload["dose_response"] = dose_response(load("c4_en_bits_per_token"))
 

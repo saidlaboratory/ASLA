@@ -404,6 +404,41 @@
     "olmes_macro_error": "de17854d09b27d856d88fc9c2e9939f2a48db192137b384fa456da95b81e7616"
   },
   "n_resamples": 4000,
+  "power_predictions": {
+    "Q1_unique_set_overstates_se": {
+      "band": [
+        1.1,
+        1.4
+      ],
+      "confirmed": false,
+      "measured": 0.7773207761946828,
+      "note": "Refuted in the opposite direction. The weighted bootstrap is itself conservative when pair-level variance dominates; see estimator_calibration."
+    },
+    "Q2_interval_includes_zero": {
+      "confirmed": true,
+      "measured": [
+        -0.8342413056944794,
+        6.328802778763156
+      ]
+    },
+    "Q3_candidates_for_power": {
+      "band": [
+        40,
+        120
+      ],
+      "confirmed": true,
+      "measured": 83
+    },
+    "Q4_formula_matches_subsampling": {
+      "confirmed": true,
+      "measured_ratios": [
+        1.00442050963738,
+        0.9923086502532918,
+        1.0192302023794768,
+        0.9985911041020947
+      ]
+    }
+  },
   "primary_rule": "expected_error",
   "published_figure": {
     "assumptions": {
@@ -524,25 +559,103 @@
       "regime": "low_noise",
       "significance": {
         "candidate_resampling": {
-          "ci_high_pp": 4.980000281228868,
-          "ci_low_pp": -0.208118441980863,
+          "ci_high_pp": 6.328802778763156,
+          "ci_low_pp": -0.8342413056944794,
           "excludes_zero": false,
-          "mean": 1.9841789803555268,
+          "mean": 1.9661892951116082,
           "n_draws": 4000,
-          "p_two_sided": 0.1245,
+          "p_two_sided": 0.193,
+          "standard_error": 1.8106706719099095,
           "unit": "candidate"
         },
-        "dependence_correction_factor": 1.4734577425766033,
+        "dependence_correction_factor": 1.9793139704083116,
+        "estimator_calibration": {
+          "mean_se_over_truth": {
+            "jackknife": 1.204533204472112,
+            "u_statistic": 1.0264018428303792,
+            "unique_set_bootstrap": 0.9928257997537138,
+            "weighted_bootstrap": 1.2842576309573963
+          },
+          "n_candidates": 25,
+          "replicates": 60,
+          "true_standard_error": 1.4860322168899913,
+          "zeta1": 8.913007364799187,
+          "zeta2": 252.48918610973195
+        },
+        "jackknife_standard_error": 1.7488626679779804,
         "pair_resampling_naive": {
-          "ci_high_pp": 3.85131824331093,
-          "ci_low_pp": 0.33026801343641643,
+          "ci_high_pp": 3.91297545546862,
+          "ci_low_pp": 0.33026801383211046,
           "excludes_zero": true,
-          "mean": 1.985838822176153,
+          "mean": 1.9838810471607928,
           "n_draws": 4000,
-          "p_two_sided": 0.0175,
+          "p_two_sided": 0.019,
+          "standard_error": 0.914797095852553,
           "unit": "pair (anti-conservative)"
         },
-        "point_difference_pp": 1.9853927368845934
+        "point_difference_pp": 1.9853927368845938,
+        "power": {
+          "alpha": 0.05,
+          "candidates_at_point_estimate": 83,
+          "candidates_by_delta_pp": {
+            "0.5": 1133,
+            "1": 293,
+            "2": 82,
+            "5": 20
+          },
+          "power": 0.8,
+          "power_at_observed_count": 0.26682784410723276,
+          "test": "two-sided z on the pair-mean U-statistic, zeta1 and zeta2 held at their estimates"
+        },
+        "subsampling_check": [
+          {
+            "empirical_sd": 3.2746326093233296,
+            "formula_sd": 3.260220771980802,
+            "m": 8,
+            "ratio": 1.00442050963738
+          },
+          {
+            "empirical_sd": 2.0620482478200883,
+            "formula_sd": 2.0780311118861454,
+            "m": 12,
+            "ratio": 0.9923086502532918
+          },
+          {
+            "empirical_sd": 1.4325484519354725,
+            "formula_sd": 1.405520017549588,
+            "m": 16,
+            "ratio": 1.0192302023794768
+          },
+          {
+            "empirical_sd": 0.8983874394430369,
+            "formula_sd": 0.8996549596251829,
+            "m": 20,
+            "ratio": 0.9985911041020947
+          }
+        ],
+        "u_statistic": {
+          "ci_high": 4.897962361855191,
+          "ci_low": -0.9271768880860032,
+          "excludes_zero": false,
+          "formula_standard_error": 1.4860322168899913,
+          "mean": 1.9853927368845938,
+          "n_candidates": 25,
+          "p_two_sided": 0.18153746327653508,
+          "standard_error": 1.4860322168899913,
+          "zeta1": 8.913007364799187,
+          "zeta2": 252.48918610973195
+        },
+        "unique_set_candidate_resampling_superseded": {
+          "ci_high_pp": 4.980000281228867,
+          "ci_low_pp": -0.040772834003097495,
+          "excludes_zero": false,
+          "mean": 2.016215163091169,
+          "n_draws": 4000,
+          "p_two_sided": 0.1135,
+          "standard_error": 1.4074719321219586,
+          "unit": "candidate, unique-set (superseded: evaluates ~63% of candidates)"
+        },
+        "unique_set_over_corrected_se": 0.7773207761946828
       }
     },
     "c4_en_bits_per_token/short_4M-530M_gate1B": {
@@ -660,25 +773,103 @@
       "regime": "high_noise",
       "significance": {
         "candidate_resampling": {
-          "ci_high_pp": 8.686558684650418,
-          "ci_low_pp": -2.7979319892730365,
+          "ci_high_pp": 10.844552255583782,
+          "ci_low_pp": -4.032267077344421,
           "excludes_zero": false,
-          "mean": 2.552482497114664,
+          "mean": 2.490749384285983,
           "n_draws": 4000,
-          "p_two_sided": 0.406,
+          "p_two_sided": 0.5155,
+          "standard_error": 3.729954029136824,
           "unit": "candidate"
         },
-        "dependence_correction_factor": 1.749008212490972,
+        "dependence_correction_factor": 2.264628601321363,
+        "estimator_calibration": {
+          "mean_se_over_truth": {
+            "jackknife": 1.1279093686441184,
+            "u_statistic": 1.0052692912627703,
+            "unique_set_bootstrap": 0.9079556896476313,
+            "weighted_bootstrap": 1.1631250395698582
+          },
+          "n_candidates": 25,
+          "replicates": 60,
+          "true_standard_error": 3.2543029032565425,
+          "zeta1": 50.88089853275522,
+          "zeta2": 836.6248833364482
+        },
+        "jackknife_standard_error": 3.6404717826360216,
         "pair_resampling_naive": {
-          "ci_high_pp": 5.827386584324419,
-          "ci_low_pp": -0.7389008647019166,
+          "ci_high_pp": 5.729529329460092,
+          "ci_low_pp": -0.6356942239903923,
           "excludes_zero": false,
-          "mean": 2.53193550610345,
+          "mean": 2.5129532362560916,
           "n_draws": 4000,
-          "p_two_sided": 0.1315,
+          "p_two_sided": 0.117,
+          "standard_error": 1.647048892237992,
           "unit": "pair (anti-conservative)"
         },
-        "point_difference_pp": 2.5548821456978814
+        "point_difference_pp": 2.5548821456978845,
+        "power": {
+          "alpha": 0.05,
+          "candidates_at_point_estimate": 252,
+          "candidates_by_delta_pp": {
+            "0.5": 6397,
+            "1": 1605,
+            "2": 407,
+            "5": 71
+          },
+          "power": 0.8,
+          "power_at_observed_count": 0.12304535575876838,
+          "test": "two-sided z on the pair-mean U-statistic, zeta1 and zeta2 held at their estimates"
+        },
+        "subsampling_check": [
+          {
+            "empirical_sd": 6.475205838434237,
+            "formula_sd": 6.410543822812204,
+            "m": 8,
+            "ratio": 1.0100868221806596
+          },
+          {
+            "empirical_sd": 4.275925547292426,
+            "formula_sd": 4.183790304340999,
+            "m": 12,
+            "ratio": 1.0220219552724308
+          },
+          {
+            "empirical_sd": 2.856874420571146,
+            "formula_sd": 2.8729072904120407,
+            "m": 16,
+            "ratio": 0.994419287425528
+          },
+          {
+            "empirical_sd": 1.8706118182433995,
+            "formula_sd": 1.858330641857,
+            "m": 20,
+            "ratio": 1.0066087143535054
+          }
+        ],
+        "u_statistic": {
+          "ci_high": 8.933198630864844,
+          "ci_low": -3.8234343394690744,
+          "excludes_zero": false,
+          "formula_standard_error": 3.2543029032565425,
+          "mean": 2.5548821456978845,
+          "n_candidates": 25,
+          "p_two_sided": 0.4324077420242657,
+          "standard_error": 3.2543029032565425,
+          "zeta1": 50.88089853275522,
+          "zeta2": 836.6248833364482
+        },
+        "unique_set_candidate_resampling_superseded": {
+          "ci_high_pp": 8.688863113752232,
+          "ci_low_pp": -2.7429831454221736,
+          "excludes_zero": false,
+          "mean": 2.516638608970495,
+          "n_draws": 4000,
+          "p_two_sided": 0.401,
+          "standard_error": 2.9147937492162836,
+          "unit": "candidate, unique-set (superseded: evaluates ~63% of candidates)"
+        },
+        "unique_set_over_corrected_se": 0.7814556765169617
       }
     },
     "olmes_macro_correct_prob_per_char_deficit/short_4M-530M_gate1B": {
@@ -796,25 +987,103 @@
       "regime": "high_noise",
       "significance": {
         "candidate_resampling": {
-          "ci_high_pp": 3.3901755368511317,
-          "ci_low_pp": -2.564276089578242,
+          "ci_high_pp": 4.528508468221365,
+          "ci_low_pp": -3.441635278494515,
           "excludes_zero": false,
-          "mean": 0.495549469619829,
+          "mean": 0.5409096978748061,
           "n_draws": 4000,
-          "p_two_sided": 0.7305,
+          "p_two_sided": 0.766,
+          "standard_error": 1.9855864582209077,
           "unit": "candidate"
         },
-        "dependence_correction_factor": 1.4259962825638004,
+        "dependence_correction_factor": 1.8440626420491515,
+        "estimator_calibration": {
+          "mean_se_over_truth": {
+            "jackknife": 1.2452512612655378,
+            "u_statistic": 0.9549016630795222,
+            "unique_set_bootstrap": 1.055746376031888,
+            "weighted_bootstrap": 1.4012015906987143
+          },
+          "n_candidates": 25,
+          "replicates": 60,
+          "true_standard_error": 1.40823071536292,
+          "zeta1": 5.36260939443412,
+          "zeta2": 348.254092163499
+        },
+        "jackknife_standard_error": 1.7905430596118828,
         "pair_resampling_naive": {
-          "ci_high_pp": 2.607567464891487,
-          "ci_low_pp": -1.5680756971817393,
+          "ci_high_pp": 2.6807788704932194,
+          "ci_low_pp": -1.4858639679935883,
           "excludes_zero": false,
-          "mean": 0.5438657452355412,
+          "mean": 0.5493269564007996,
           "n_draws": 4000,
-          "p_two_sided": 0.612,
+          "p_two_sided": 0.608,
+          "standard_error": 1.076745666304748,
           "unit": "pair (anti-conservative)"
         },
-        "point_difference_pp": 0.5336671587850519
+        "point_difference_pp": 0.5336671587850519,
+        "power": {
+          "alpha": 0.05,
+          "candidates_at_point_estimate": 622,
+          "candidates_by_delta_pp": {
+            "0.5": 704,
+            "1": 196,
+            "2": 64,
+            "5": 19
+          },
+          "power": 0.8,
+          "power_at_observed_count": 0.06660850147580742,
+          "test": "two-sided z on the pair-mean U-statistic, zeta1 and zeta2 held at their estimates"
+        },
+        "subsampling_check": [
+          {
+            "empirical_sd": 3.536546355588573,
+            "formula_sd": 3.5711053708968077,
+            "m": 8,
+            "ratio": 0.9903225999462582
+          },
+          {
+            "empirical_sd": 2.2364004379561,
+            "formula_sd": 2.2177683729662503,
+            "m": 12,
+            "ratio": 1.0084012673356548
+          },
+          {
+            "empirical_sd": 1.5212530189467657,
+            "formula_sd": 1.4731867540716705,
+            "m": 16,
+            "ratio": 1.032627407721558
+          },
+          {
+            "empirical_sd": 0.9031643867562175,
+            "formula_sd": 0.9305245218684898,
+            "m": 20,
+            "ratio": 0.9705970831834358
+          }
+        ],
+        "u_statistic": {
+          "ci_high": 3.2937486428194513,
+          "ci_low": -2.226414325249348,
+          "excludes_zero": false,
+          "formula_standard_error": 1.40823071536292,
+          "mean": 0.5336671587850518,
+          "n_candidates": 25,
+          "p_two_sided": 0.7047154336073054,
+          "standard_error": 1.40823071536292,
+          "zeta1": 5.36260939443412,
+          "zeta2": 348.254092163499
+        },
+        "unique_set_candidate_resampling_superseded": {
+          "ci_high_pp": 3.4358617406723493,
+          "ci_low_pp": -2.4703842580663355,
+          "excludes_zero": false,
+          "mean": 0.5112433253627826,
+          "n_draws": 4000,
+          "p_two_sided": 0.75,
+          "standard_error": 1.5122498297375087,
+          "unit": "candidate, unique-set (superseded: evaluates ~63% of candidates)"
+        },
+        "unique_set_over_corrected_se": 0.7616136902406605
       }
     },
     "olmes_macro_error/short_4M-530M_gate1B": {

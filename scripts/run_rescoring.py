@@ -27,7 +27,15 @@ from asla.analysis.abstention import certify_leaderboard
 from asla.analysis.fits import normalize_budgets
 from asla.analysis.pooled import make_shrinkage_ranker, shared_exponent_ranker
 from asla.analysis.rankers import ensemble_ranker, projection_ranker, single_scale_ranker
-from asla.analysis.target_scoring import PairEvidence, bootstrap_two_sided_p, score_ranker, target_evidence
+from asla.analysis.target_scoring import (
+    PairEvidence,
+    bootstrap_two_sided_p,
+    candidate_bootstrap,
+    expected_charges,
+    score_ranker,
+    target_evidence,
+    u_statistic_test,
+)
 from asla.models import FitError
 from asla.provenance import Source
 
@@ -73,31 +81,34 @@ def paired_candidate_test(
     evidence: list[PairEvidence],
     rng: np.random.Generator,
 ) -> dict[str, Any]:
-    """Expected-error difference versus the baseline, resampling candidates."""
+    """Expected-error difference versus the baseline, with candidates as the unit.
 
-    by_pair = {(e.left, e.right): e for e in evidence}
-    names = sorted({n for pair in by_pair for n in pair})
+    The headline interval is the unbiased U-statistic test, which simulation at
+    this project's variance components puts within a few percent of the true
+    standard error (results/target_scoring/expected_error.json,
+    ``estimator_calibration``). The multiplicity-weighted candidate bootstrap is
+    reported alongside; it is conservative here. The first version of this test
+    scored only the unique candidates in each bootstrap draw.
+    """
 
-    def difference(subset: list[str]) -> float | None:
-        chosen = [by_pair[p] for p in combinations(sorted(set(subset)), 2) if p in by_pair]
-        if len(chosen) < 3:
-            return None
-        left = score_ranker(comparator, chosen)
-        right = score_ranker(baseline, chosen)
-        if not (np.isfinite(left["expected_rate"]) and np.isfinite(right["expected_rate"])):
-            return None
-        return 100 * (left["expected_rate"] - right["expected_rate"])
-
-    point = difference(names)
-    draws = [d for d in (difference(list(rng.choice(names, size=len(names)))) for _ in range(N_RESAMPLES)) if d is not None]
-    array = np.asarray(draws, dtype=float)
-    low, high = float(np.percentile(array, 2.5)), float(np.percentile(array, 97.5))
+    left = expected_charges(comparator, evidence)
+    right = expected_charges(baseline, evidence)
+    kernel = {pair: 100 * (left[pair] - right[pair]) for pair in left if pair in right}
+    u_test = u_statistic_test(kernel)
+    draws = candidate_bootstrap(kernel, rng, N_RESAMPLES)
     return {
-        "point_pp": point,
-        "ci_low_pp": low,
-        "ci_high_pp": high,
-        "excludes_zero": bool(low > 0 or high < 0),
-        "p_two_sided": bootstrap_two_sided_p(draws),
+        "point_pp": float(u_test["mean"]),
+        "standard_error_pp": float(u_test["standard_error"]),
+        "ci_low_pp": float(u_test["ci_low"]),
+        "ci_high_pp": float(u_test["ci_high"]),
+        "excludes_zero": bool(u_test["excludes_zero"]),
+        "p_two_sided": float(u_test["p_two_sided"]),
+        "n_pairs": len(kernel),
+        "weighted_bootstrap_conservative": {
+            "ci_low_pp": float(np.percentile(draws, 2.5)),
+            "ci_high_pp": float(np.percentile(draws, 97.5)),
+            "p_two_sided": bootstrap_two_sided_p(draws),
+        },
     }
 
 
@@ -105,7 +116,8 @@ def verdict(observed_pp: float, expected_pp: float, test: dict[str, Any]) -> str
     """SURVIVES / WEAKENS / VANISHES, decided mechanically.
 
     SURVIVES: expected-error keeps the sign and at least half the observed
-    magnitude, and the candidate-resampled interval excludes zero.
+    magnitude, and the candidate-level interval excludes zero. The interval is
+    the U-statistic one (see :func:`paired_candidate_test`).
     VANISHES: expected-error flips the sign or keeps under a quarter of it.
     WEAKENS: everything between, including a retained point estimate whose
     interval includes zero.

@@ -7,8 +7,8 @@
 %
 % Regenerate with:  python scripts/render_macros.py
 %
-% generated:      2026-09-22T19:49:50Z
-% source commit:  62b4a189f99f8efbea4696977cea4420f03318a4-dirty
+% generated:      2026-09-22T21:28:29Z
+% source commit:  111500bbec5026f82dc8cf407efe52c7e6e27b1d-dirty
 
 \newcommand{\residRatio}{2.90}  % theory_v2.json
 \newcommand{\varInflation}{8.40}  % theory_v2.json
@@ -64,13 +64,13 @@
 \newcommand{\targetScaleLabel}{1B}  % datadecide_known_answer.json
 \newcommand{\maxDfAtThreeSeeds}{4}  % target_scoring.json
 \newcommand{\expectedGap}{1.99}  % expected_error.json
-\newcommand{\expectedCandLow}{-0.21}  % expected_error.json
-\newcommand{\expectedCandHigh}{+4.98}  % expected_error.json
-\newcommand{\expectedCandP}{0.124}  % expected_error.json
+\newcommand{\expectedCandLow}{-0.93}  % expected_error.json
+\newcommand{\expectedCandHigh}{+4.90}  % expected_error.json
+\newcommand{\expectedCandP}{0.18}  % expected_error.json
 \newcommand{\expectedPairLow}{+0.33}  % expected_error.json
-\newcommand{\expectedPairHigh}{+3.85}  % expected_error.json
-\newcommand{\expectedPairP}{0.018}  % expected_error.json
-\newcommand{\dependenceFactor}{1.47}  % expected_error.json
+\newcommand{\expectedPairHigh}{+3.91}  % expected_error.json
+\newcommand{\expectedPairP}{0.019}  % expected_error.json
+\newcommand{\dependenceFactor}{1.62}  % expected_error.json
 \newcommand{\pubObserved}{0.830}  % expected_error.json
 \newcommand{\pubPosterior}{0.813}  % expected_error.json
 \newcommand{\pubDisattenuated}{0.858}  % expected_error.json
@@ -95,11 +95,27 @@
 \newcommand{\varDiagnosisRatio}{1.55}  % theory_check.json
 \newcommand{\gapSdUnderstated}{1.25}  % theory_check.json
 \newcommand{\sigmaJensenFactor}{2.06}  % theory_check.json
-\newcommand{\rescoreRowsLow}{Checkpoint-augmented & $+1.67$ & $+1.45$ & $[-0.95,\ +3.93]$ & weakens \\ Empirical-Bayes shrinkage & $+2.00$ & $+1.65$ & $[-0.90,\ +4.73]$ & weakens \\ Ensemble & $+9.00$ & $+8.66$ & $[+3.14,\ +14.13]$ & survives \\ Projection & $+2.33$ & $+1.99$ & $[-0.60,\ +4.84]$ & weakens \\ Shared exponent & $+0.00$ & $-0.22$ & $[-1.10,\ +0.38]$ & no observed difference \\}  % rescoring.json
-\newcommand{\rescoreRowsHigh}{Checkpoint-augmented & $-0.33$ & $+0.06$ & $[-2.89,\ +2.88]$ & vanishes \\ Empirical-Bayes shrinkage & $+0.33$ & $+0.53$ & $[-2.45,\ +3.43]$ & weakens \\ Ensemble & $-1.33$ & $-0.73$ & $[-3.41,\ +1.74]$ & weakens \\ Projection & $+0.33$ & $+0.53$ & $[-2.58,\ +3.48]$ & weakens \\ Shared exponent & $+1.00$ & $+1.20$ & $[-2.25,\ +4.55]$ & weakens \\}  % rescoring.json
+\newcommand{\nCandidates}{25}  % expected_error.json
+\newcommand{\expectedSE}{1.49}  % expected_error.json
+\newcommand{\bootCandLow}{-0.83}  % expected_error.json
+\newcommand{\bootCandHigh}{+6.33}  % expected_error.json
+\newcommand{\bootCandP}{0.19}  % expected_error.json
+\newcommand{\uniqueSetP}{0.11}  % expected_error.json
+\newcommand{\zetaRatio}{28}  % expected_error.json
+\newcommand{\calibU}{1.03}  % expected_error.json
+\newcommand{\calibBoot}{1.28}  % expected_error.json
+\newcommand{\calibJack}{1.20}  % expected_error.json
+\newcommand{\calibUnique}{0.99}  % expected_error.json
+\newcommand{\powerNeeded}{83}  % expected_error.json
+\newcommand{\powerNeededOne}{293}  % expected_error.json
+\newcommand{\powerNeededTwo}{82}  % expected_error.json
+\newcommand{\powerNeededFive}{20}  % expected_error.json
+\newcommand{\powerAtObserved}{27}  % expected_error.json
+\newcommand{\rescoreRowsLow}{Checkpoint-augmented & $+1.67$ & $+1.45$ & $[-0.27,\ +3.18]$ & weakens \\ Empirical-Bayes shrinkage & $+2.00$ & $+1.65$ & $[-1.32,\ +4.63]$ & weakens \\ Ensemble & $+9.00$ & $+8.66$ & $[+2.94,\ +14.38]$ & survives \\ Projection & $+2.33$ & $+1.99$ & $[-0.93,\ +4.90]$ & weakens \\ Shared exponent & $+0.00$ & $-0.22$ & $[-0.95,\ +0.51]$ & no observed difference \\}  % rescoring.json
+\newcommand{\rescoreRowsHigh}{Checkpoint-augmented & $-0.33$ & $+0.06$ & $[-2.61,\ +2.73]$ & vanishes \\ Empirical-Bayes shrinkage & $+0.33$ & $+0.53$ & $[-2.23,\ +3.29]$ & weakens \\ Ensemble & $-1.33$ & $-0.73$ & $[-3.26,\ +1.80]$ & weakens \\ Projection & $+0.33$ & $+0.53$ & $[-2.23,\ +3.29]$ & weakens \\ Shared exponent & $+1.00$ & $+1.20$ & $[-2.26,\ +4.66]$ & weakens \\}  % rescoring.json
 \newcommand{\rescoreDetLow}{82}  % rescoring.json
 \newcommand{\rescoreDetHigh}{3}  % rescoring.json
-\newcommand{\rescoreRowsAllocation}{0.01 of budget & $+10.00$ & $+9.88$ & $[+4.68,\ +16.08]$ & survives \\ 0.03 of budget & $+9.67$ & $+9.61$ & $[+3.81,\ +16.65]$ & survives \\ 0.1 of budget & $+8.00$ & $+7.94$ & $[+2.56,\ +15.15]$ & survives \\ 0.3 of budget & $+4.33$ & $+4.27$ & $[+0.83,\ +8.98]$ & survives \\ 0.5 of budget & $+4.33$ & $+4.27$ & $[+0.82,\ +9.01]$ & survives \\ 1 of budget & $+2.00$ & $+2.05$ & $[-0.68,\ +5.10]$ & weakens \\}  % rescoring.json
+\newcommand{\rescoreRowsAllocation}{0.01 of budget & $+10.00$ & $+9.88$ & $[+3.73,\ +16.02]$ & survives \\ 0.03 of budget & $+9.67$ & $+9.61$ & $[+2.32,\ +16.90]$ & survives \\ 0.1 of budget & $+8.00$ & $+7.94$ & $[+0.85,\ +15.03]$ & survives \\ 0.3 of budget & $+4.33$ & $+4.27$ & $[-0.08,\ +8.62]$ & weakens \\ 0.5 of budget & $+4.33$ & $+4.27$ & $[-0.08,\ +8.62]$ & weakens \\ 1 of budget & $+2.00$ & $+2.05$ & $[-0.57,\ +4.67]$ & weakens \\}  % rescoring.json
 \newcommand{\certNormalN}{292}  % rescoring.json
 \newcommand{\certNormalExpected}{0.18}  % rescoring.json
 \newcommand{\certStudentTN}{280}  % rescoring.json

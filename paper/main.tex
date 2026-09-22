@@ -4,7 +4,7 @@
 \input{macros}
 
 \title{The Reference Is Part of the Measurement:\\
-Uncertainty-Aware Decision Accuracy for Small-Scale Model Selection}
+What Decision-Accuracy Comparisons Can Resolve at Realistic Candidate Counts}
 \author{}
 \date{}
 
@@ -14,28 +14,37 @@ Uncertainty-Aware Decision Accuracy for Small-Scale Model Selection}
 \begin{abstract}
 Small-scale experiments are routinely used to choose between training
 interventions, and selection rules are compared by \emph{decision accuracy}:
-agreement with an ordering measured at a larger target scale. That target
-ordering is itself an estimate from a few seeds. We propagate its uncertainty
-with expected-error scoring, which charges each pair the probability that its
-reference ordering is wrong, and find two regimes. On a low-noise metric, where
-\determinedFracBonf\% of target pairs are resolved, projection's excess
-mis-selection over single-scale ranking survives propagation (\excessObserved\
-points observed, \expectedGap\ expected) but not inference. Resampling
-candidates, the independent unit, gives an interval of
-[\expectedCandLow, \expectedCandHigh] points. On accuracy metrics, where a
-published DataDecide figure sits, only \pubDetFrac\% of pairs are resolved.
-Two corrections of that figure then disagree in direction: posterior expected
-accuracy is \pubPosterior\ and disattenuated accuracy \pubDisattenuated, against
-\publishedOverall\ observed. Re-scoring every decision-level result, no estimator
-and no optimised allocation is reliably better than single-scale ranking in
-either regime. The dependence of projection error on the lever arm survives
-(Spearman \doseRhoObserved\ observed, \doseRhoExpected\ expected). Fit-level
-findings never use the reference and stand unchanged; we correct a
-floor-identifiability profile and prove the design equivalence under stated
-assumptions. Per-pair Welch degrees of freedom make Gaussian thresholds on
-three-seed grids anti-conservative by a median factor of \tRatioMedian. We also
-report a reproducibility failure in our own prior results.
+agreement with an ordering measured at a larger target scale. We ask what such
+comparisons can establish at the candidate counts they are actually run with.
+Two sources of uncertainty are usually ignored. The target ordering is a
+few-seed estimate, and the pairs being scored share candidates, so they are not
+independent observations. We propagate the first with expected-error scoring
+and handle the second by treating candidates as the unit of inference. On
+DataDecide, with \nCandidates\ candidates, projection's excess mis-selection
+over single-scale ranking survives reference-uncertainty propagation
+(\excessObserved\ points observed, \expectedGap\ expected) but is not
+established: the candidate-level interval is [\expectedCandLow, \expectedCandHigh]
+($p=\expectedCandP$). Resampling pairs instead would have reported it as
+significant. Detecting a true difference of that size with power 0.8 needs about  %% nolint: stated power level
+\powerNeededTwo\ candidates. What does survive the correct test: an ensemble is
+reliably worse than single-scale ranking; no estimator or optimised allocation
+is reliably better; projection error grows with the lever arm (Spearman
+\doseRhoObserved\ over \doseDesigns\ designs); and seven fit-level findings that
+never use the reference stand unchanged. The fraction of target pairs a
+reference resolves separates metrics sharply (\determinedFracBonf\% against
+\pubDetFrac\%), and on the high-noise metric a published decision-accuracy
+figure cannot be corrected without an assumption the data do not identify.
 \end{abstract}
+
+\paragraph{Contributions.} (i) A demonstration that pair-level resampling makes
+a non-significant selection-rule comparison look significant, with the
+candidate-level test that fixes it. (ii) A power calculation for decision-accuracy
+comparisons: at this variance, a two-point difference needs about
+\powerNeededTwo\ candidates, a one-point difference \powerNeededOne. (iii) An
+account of which published and project results survive the correct test.
+(iv) A warning, with its diagnosis, against applying a standard
+measurement-error correction to decision accuracy.
+
 
 \section{How selection rules are compared}
 \label{sec:setup}
@@ -82,36 +91,70 @@ the current commit: single-scale ranking at \focalScale\ predicting \targetScale
 the published figure to within band (per-seed \knownAnswerPerSeed, seed-mean
 \knownAnswerSeedMean, against a published \knownAnswerPublished).
 
-\section{Two regimes}
+\section{Two regimes, and where the split is not clean}
 \label{sec:regimes}
 
 The fraction of target pairs a reference resolves is a property of the metric,
-not of the selection rule, and it separates sharply. On the low-noise metric,
-\determinedFracBonf\% of pairs are resolved under a Bonferroni-corrected Welch
-test. On the accuracy metric used for the published figure below,
-\pubDetFrac\% are. Decision-accuracy comparisons mean different things in the
-two regimes, and we treat them separately.
+not of the selection rule, and it separates sharply. On the low-noise metric (C4
+bits per token), \determinedFracBonf\% of pairs are resolved under a
+Bonferroni-corrected Welch test. On the accuracy metric behind the published
+figure below, \pubDetFrac\% are. Decision-accuracy comparisons mean different
+things in the two regimes.
 
-\section{Low-noise regime: the difference survives propagation but not inference}
+The split is cleaner for the reference than for the fit. On the accuracy metric
+the power-law floor is unidentified: its profile-likelihood interval includes
+zero for every candidate and spans \floorErrWidthRel\% of the feasible range
+(\S\ref{sec:fit}). We pre-registered that correcting the profile would
+\emph{narrow} the C4 interval, and it widened it, from \floorOldWidth\ to
+\floorNewWidth. The reason is that C4 residuals run \floorMisspecCFour\ times
+the seed variance. The C4 floor still excludes zero for every candidate, but it
+is poorly determined, and the misspecification that widens it is the same one
+that dominates projection error. Low noise in the reference does not mean a
+well-determined fit. The regimes classify how well the \emph{reference}
+resolves decisions; they do not classify how well the extrapolation is
+specified.
+
+\section{Low-noise regime: what \nCandidates\ candidates can resolve}
 \label{sec:gap}
 
 On the primary design, projection's excess over single-scale ranking is
 \excessObserved\ points under observed-target scoring and \expectedGap\ points
-under expected-error scoring. Propagating reference uncertainty retains most of
-the observed difference: the comparison is not an artifact of a noisy label.
+under expected-error scoring. The point estimate favours single-scale ranking,
+and propagating reference uncertainty retains most of it, so the difference is
+not an artifact of noisy labels.
 
-Inference is a separate question. Pairs share candidates, so the pair outcomes
-are dependent and a bootstrap over pairs understates the standard error.
-Resampling pairs gives a 95\% interval of [\expectedPairLow,  %% nolint: confidence level, a stated definition
-\expectedPairHigh] ($p = \expectedPairP$), excluding zero. Resampling
-\emph{candidates}, the independent experimental unit, widens the interval by a
-factor of \dependenceFactor\ to [\expectedCandLow, \expectedCandHigh]
-($p = \expectedCandP$), which includes zero.
+Whether the difference is established is a separate question. Its unit is the
+candidate: all pairs are formed from \nCandidates\ candidates, and each
+candidate enters many of them. The statistic is a U-statistic of order two, and
+its variance has a candidate-level and a pair-level component. The
+candidate-level test gives a standard error of \expectedSE\ points and a 95\%  %% nolint: confidence level, a stated definition
+interval of [\expectedCandLow, \expectedCandHigh] ($p=\expectedCandP$). The
+comparison is underpowered, and no reliable difference is established.
 
-We report the candidate-level interval as the correct one. At this candidate
-count the difference between these two rules is a point estimate without
-inferential support, and the apparent significance under pair resampling is an
-artifact of treating overlapping pairs as independent observations.
+For contrast, treating the pairs as independent gives
+[\expectedPairLow, \expectedPairHigh] ($p=\expectedPairP$). This
+anti-conservative version understates the standard error by a factor of
+\dependenceFactor, and it would have reported a significant difference. The
+factor is the size of the dependence correction. Any decision-accuracy
+comparison that resamples or counts pairs as independent inherits it.
+
+\paragraph{Choosing the candidate-level estimator.} We pre-registered a candidate
+bootstrap weighted by draw multiplicity. It is conservative here, because
+pair-level variance is \zetaRatio\ times the candidate-level component. In
+simulation at these components with a known answer, it overstates the standard
+error by a factor of \calibBoot\ and the jackknife by \calibJack. The unbiased
+U-statistic standard error is within a factor of \calibU. We report the
+U-statistic test. The pre-registered bootstrap gives $p=\bootCandP$, and an
+earlier, unweighted bootstrap gave $p=\uniqueSetP$. The conclusion does not
+depend on the choice.
+
+\paragraph{Power.} With the variance components held at their estimates, a
+two-sided test at level 0.05 with power 0.8 needs \powerNeededTwo\ candidates to  %% nolint: stated test level and power
+detect a true two-point difference, \powerNeededOne\ for one point and
+\powerNeededFive\ for five. At \nCandidates\ candidates the power against the
+observed difference is \powerAtObserved\%. Published suites that compare
+selection rules typically have tens of candidates. Differences of a few points
+in decision accuracy are below what those suites can resolve.
 
 \paragraph{On the determined subset.} Scoring only on resolved pairs gives an
 excess of \excessDetermined\ points, but both rules make zero errors there, so
@@ -146,37 +189,38 @@ that fails here. Both err preferentially on small true gaps: mean reliability is
 largest.
 
 The two estimators bracket the published figure and disagree in direction. That
-disagreement is the finding. The direction of the correction depends on an
+disagreement is the finding. It is also a general warning. A standard
+measurement-error correction applied to decision accuracy assumes the rule and
+the reference err independently. Both err where true gaps are small, so the
+correction moves the figure the wrong way exactly where it matters. The direction of the correction depends on an
 assumption about how rule errors and reference errors co-occur, and the data do
 not identify it. The robust statement is the determined fraction: at this
 reference budget the published figure mostly grades decisions its reference
 cannot make.
 
-\section{What survives propagation}
+\section{What survives the correct test}
 \label{sec:survives}
 
-Uncertainty propagation removes an inferential claim, not the structural
-findings. The clearest case is the relationship between projection error and
-extrapolation distance. Measured against observed targets across \doseDesigns\
-designs, excess projection error rises with the logarithm of the lever arm at
-Spearman \doseRhoObserved. Recomputed under expected-error scoring it is
-\doseRhoExpected --- unchanged, and if anything marginally stronger. Had the
-relationship lived in pairs the reference could not resolve, discounting those
-pairs would have weakened it.
+The C4 null is the demonstration. What the data can support at this candidate
+count is a shorter list.
 
-Table~\ref{tab:rescore} re-scores every decision-level comparison against
-single-scale ranking, under observed and expected-error scoring, with the
-interval from resampling candidates. A comparison \emph{survives} if expected-error
-scoring keeps its sign and at least half its size and the interval excludes
-zero, \emph{vanishes} if the sign flips or less than a quarter remains, and
-\emph{weakens} otherwise. In the low-noise regime (\rescoreDetLow\% of pairs
-determined), no estimator is reliably better than single-scale; the ensemble is
-reliably worse. In the high-noise regime (\rescoreDetHigh\% determined) nothing
-is distinguishable from single-scale in either direction. The optimised
-allocation is reliably worse than single-scale at every reduced budget and
-indistinguishable at the full budget; it never does better. What propagation
-changes is whether a difference can be called significant, not which estimator
-is ahead.
+\emph{Lever-arm dependence.} Across \doseDesigns\ designs, excess projection
+error rises with the logarithm of the lever arm at Spearman \doseRhoObserved\
+against observed targets, and \doseRhoExpected\ under expected-error scoring.
+Had the relationship lived in pairs the reference could not resolve,
+discounting those pairs would have weakened it.
+
+\emph{Decision-level comparisons} (Table~\ref{tab:rescore}). Each comparison
+against single-scale ranking is scored under both rules, with a candidate-level
+interval. It \emph{survives} if expected-error scoring keeps its sign and at
+least half its size and the interval excludes zero. It \emph{vanishes} if the
+sign flips or less than a quarter remains, and \emph{weakens} otherwise. In the
+low-noise regime (\rescoreDetLow\% of pairs determined), the ensemble is
+reliably worse than single-scale ranking, and no estimator is reliably better.
+In the high-noise regime (\rescoreDetHigh\% determined), nothing is
+distinguishable from single-scale in either direction. The optimised allocation
+is reliably worse at the smallest budget fractions and indistinguishable at the
+larger ones. It never does better.
 
 \begin{table}[t]
 \centering
@@ -196,8 +240,9 @@ comparison vs.\ single-scale & observed (pp) & expected (pp) & candidate interva
 \bottomrule
 \end{tabular}
 \caption{Excess mis-selection over single-scale ranking, in percentage points;
-positive means worse than single-scale. Intervals resample candidates. The
-allocation baseline is single-scale at the top rung, not matched compute.}
+positive means worse than single-scale. Intervals are candidate-level
+(U-statistic). The allocation baseline is single-scale at the top rung, not
+matched compute.}
 \label{tab:rescore}
 \end{table}
 
@@ -230,10 +275,8 @@ profile interval (critical value \floorFCrit), the C4 floor excludes zero for
 \floorCFourExcl\ of \floorN\ candidates and the OLMES-error floor for
 \floorErrExcl\ of \floorN, where the interval spans \floorErrWidthRel\% of the
 feasible range. The information matrix is \floorCondRatio\ times worse
-conditioned on the accuracy metric. One pre-registered prediction failed: we
-expected the correction to narrow the C4 interval, and it widened it
-(\floorNewWidth\ against \floorOldWidth), because C4 residuals run
-\floorMisspecCFour\ times the seed variance and the earlier band ignored that.
+conditioned on the accuracy metric. The corrected C4 interval is wider than the
+earlier one, which complicates the two-regime reading (\S\ref{sec:regimes}).
 
 \section{Resolvability and the reference distribution}
 \label{sec:resolvability}
@@ -287,6 +330,16 @@ threshold curve rather than one cut precisely because that choice matters. The
 provenance failure in \S\ref{sec:provenance} is the eighth instance of a
 measurement artifact in this project; the practice record and its detection
 paths are maintained alongside the code.
+
+The power calculation holds the variance components at their estimates from
+one candidate pool and uses a normal approximation. It says what a comparison
+of this kind needs, not what every suite needs. The candidate-level estimator
+we report is a declared deviation from the pre-registered one, made after
+simulation showed the pre-registered bootstrap to be conservative here; both are
+reported. The allocation study's gradient solver stops \thmSolverExcess\% above
+the true optimum of the design problem on this ladder
+(Appendix~\ref{app:design}). We did not re-run the allocation study, because a
+variance difference of that size is far below the margins it reports.
 
 \appendix
 \section{Design for estimation and design for decision coincide}

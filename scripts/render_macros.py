@@ -38,6 +38,7 @@ def _source_commit() -> str:
 def _macro(name: str, value: str, origin: str) -> str:
     return f"\\newcommand{{\\{name}}}{{{value}}}  % {origin}"
 
+
 RANKER_LABELS = {
     "projection": "Projection",
     "shared_exponent": "Shared exponent",
@@ -113,6 +114,36 @@ def _rescoring_entries() -> list[tuple[str, str, str]]:
     return entries
 
 
+def _power_entries(expected: Source, base: str) -> list[tuple[str, str, str]]:
+    """Candidate-level inference on the C4 comparison, and what a comparison needs."""
+
+    origin = "expected_error.json"
+    calibration = base + ".estimator_calibration.mean_se_over_truth"
+    by_delta = base + ".power.candidates_by_delta_pp"
+    return [
+        ("nCandidates", f"{expected.integer(base + '.u_statistic.n_candidates')}", origin),
+        ("expectedSE", f"{expected.number(base + '.u_statistic.standard_error'):.2f}", origin),
+        ("bootCandLow", f"{expected.number(base + '.candidate_resampling.ci_low_pp'):+.2f}", origin),
+        ("bootCandHigh", f"{expected.number(base + '.candidate_resampling.ci_high_pp'):+.2f}", origin),
+        ("bootCandP", f"{expected.number(base + '.candidate_resampling.p_two_sided'):.2f}", origin),
+        ("uniqueSetP", f"{expected.number(base + '.unique_set_candidate_resampling_superseded.p_two_sided'):.2f}", origin),
+        (
+            "zetaRatio",
+            f"{expected.number(base + '.u_statistic.zeta2') / expected.number(base + '.u_statistic.zeta1'):.0f}",
+            origin,
+        ),
+        ("calibU", f"{expected.number(calibration + '.u_statistic'):.2f}", origin),
+        ("calibBoot", f"{expected.number(calibration + '.weighted_bootstrap'):.2f}", origin),
+        ("calibJack", f"{expected.number(calibration + '.jackknife'):.2f}", origin),
+        ("calibUnique", f"{expected.number(calibration + '.unique_set_bootstrap'):.2f}", origin),
+        ("powerNeeded", f"{expected.integer(base + '.power.candidates_at_point_estimate')}", origin),
+        ("powerNeededOne", f"{expected.integer(by_delta + '.1')}", origin),
+        ("powerNeededTwo", f"{expected.integer(by_delta + '.2')}", origin),
+        ("powerNeededFive", f"{expected.integer(by_delta + '.5')}", origin),
+        ("powerAtObserved", f"{100 * expected.number(base + '.power.power_at_observed_count'):.0f}", origin),
+    ]
+
+
 def _fit_structure_entries() -> list[tuple[str, str, str]]:
     """Floor profile likelihood and the design theorem."""
 
@@ -177,6 +208,8 @@ def build() -> str:
     robust = Source.load("target_scoring/robustness.json")
     expected = Source.load("target_scoring/expected_error.json")
     c4_primary = "regimes.c4_en_bits_per_token/primary_4M-300M_gate530M"
+    c4_sig = c4_primary + ".significance"
+    c4_pair_se = c4_sig + ".pair_resampling_naive.standard_error"
 
     real = "FINDING_misspecification_is_structured.evidence.1_misspecification_is_real"
 
@@ -438,17 +471,17 @@ def build() -> str:
         ),
         (
             "expectedCandLow",
-            f"{expected.number(c4_primary + '.significance.candidate_resampling.ci_low_pp'):+.2f}",
+            f"{expected.number(c4_primary + '.significance.u_statistic.ci_low'):+.2f}",
             "expected_error.json",
         ),
         (
             "expectedCandHigh",
-            f"{expected.number(c4_primary + '.significance.candidate_resampling.ci_high_pp'):+.2f}",
+            f"{expected.number(c4_primary + '.significance.u_statistic.ci_high'):+.2f}",
             "expected_error.json",
         ),
         (
             "expectedCandP",
-            f"{expected.number(c4_primary + '.significance.candidate_resampling.p_two_sided'):.3f}",
+            f"{expected.number(c4_primary + '.significance.u_statistic.p_two_sided'):.2f}",
             "expected_error.json",
         ),
         (
@@ -468,7 +501,7 @@ def build() -> str:
         ),
         (
             "dependenceFactor",
-            f"{expected.number(c4_primary + '.significance.dependence_correction_factor'):.2f}",
+            f"{expected.number(c4_sig + '.u_statistic.standard_error') / expected.number(c4_pair_se):.2f}",
             "expected_error.json",
         ),
         # --- Published figure: two estimators that bracket it ---
@@ -611,6 +644,7 @@ def build() -> str:
         f"% source commit:  {_source_commit()}",
         "",
     ]
+    entries.extend(_power_entries(expected, c4_primary + ".significance"))
     entries.extend(_rescoring_entries())
     entries.extend(_fit_structure_entries())
     lines.extend(_macro(name, value, origin) for name, value, origin in entries)
