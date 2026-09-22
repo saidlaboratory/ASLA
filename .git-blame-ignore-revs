@@ -1,3 +1,5 @@
 # Format-only commits (git config blame.ignoreRevsFile .git-blame-ignore-revs)
 # ruff format across asla, scripts and tests; ASTs identical to parent
 5b5d048fe4e288d2373097ccf5ebf165f9c90617
+# ruff format of the remaining 15 files; ASTs identical to parent
+dd4bafef0d728af9f9b47b54962efe20f278bb63
