@@ -140,7 +140,11 @@ def evaluate(
     df, budgets, target = built
     truth = ir.truth_scores(df, target)
     try:
-        proj = unconstrained_projection(df, budgets, target) if fit_bounds == "unconstrained" else bounded_projection(df, budgets, target)
+        proj = (
+            unconstrained_projection(df, budgets, target)
+            if fit_bounds == "unconstrained"
+            else bounded_projection(df, budgets, target)
+        )
     except Exception:  # noqa: BLE001 - a failed fit is a legitimate specification outcome
         return None
     largest = max(budgets)
@@ -200,7 +204,12 @@ def evaluate(
 
 
 def sweep() -> list[dict[str, Any]]:
-    metrics = ["c4_en_bits_per_token", "olmes_macro_error", "olmes_macro_correct_prob_per_char_deficit", "sn_c4_bits_per_byte"]
+    metrics = [
+        "c4_en_bits_per_token",
+        "olmes_macro_error",
+        "olmes_macro_correct_prob_per_char_deficit",
+        "sn_c4_bits_per_byte",
+    ]
     rows: list[dict[str, Any]] = []
     # Main sweep: metric x fit range x target x 750M x bounds, at the default ranking/FDR.
     for metric in metrics:
@@ -209,7 +218,9 @@ def sweep() -> list[dict[str, Any]]:
                 for min_fit in ("4M", "14M", "60M"):
                     for include_750m in (False, True):
                         for bounds in ("bounded", "unconstrained"):
-                            row = evaluate(metric, target_label, max_fit, min_fit, include_750m, bounds, "seed_mean", "BH", 0.05)
+                            row = evaluate(
+                                metric, target_label, max_fit, min_fit, include_750m, bounds, "seed_mean", "BH", 0.05
+                            )
                             if row is not None:
                                 rows.append(row)
     # FDR and ranking sweeps on the headline design only.
@@ -257,7 +268,15 @@ def main() -> int:
         "counterexamples": testable[~testable["excess_is_all_fit_error"]].to_dict("records"),
         "projection_better_specs": frame.loc[
             ~worse,
-            ["metric", "target", "fit_scales", "fit_bounds", "ranking", "projection_mis_selection", "single_scale_mis_selection"],
+            [
+                "metric",
+                "target",
+                "fit_scales",
+                "fit_bounds",
+                "ranking",
+                "projection_mis_selection",
+                "single_scale_mis_selection",
+            ],
         ].to_dict("records"),
     }
     (destination / "a2_specification_summary.json").write_text(
@@ -265,10 +284,29 @@ def main() -> int:
     )
     print(f"specifications: {summary['n_specifications']}")
     print(f"projection worse than single-scale in {summary['n_where_projection_worse']}")
-    print(f"excess is all fit error in {summary['n_excess_all_fit_error']}/{summary['n_with_positive_excess']} testable specs")
+    print(
+        f"excess is all fit error in {summary['n_excess_all_fit_error']}/{summary['n_with_positive_excess']} testable specs"
+    )
     print(f"counterexamples: {len(summary['counterexamples'])}")
     for row in summary["counterexamples"][:10]:
-        print("  ", {k: row[k] for k in ("metric", "target", "fit_scales", "fit_bounds", "ranking", "fdr", "excess_projection_flips", "n_fit_error", "n_inherited", "n_repaired")})
+        print(
+            "  ",
+            {
+                k: row[k]
+                for k in (
+                    "metric",
+                    "target",
+                    "fit_scales",
+                    "fit_bounds",
+                    "ranking",
+                    "fdr",
+                    "excess_projection_flips",
+                    "n_fit_error",
+                    "n_inherited",
+                    "n_repaired",
+                )
+            },
+        )
     return 0
 
 

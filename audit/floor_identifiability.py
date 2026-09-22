@@ -64,9 +64,7 @@ def profile_floor(df: pd.DataFrame, budgets: list[float], target: float, n_grid:
 
     rows: list[dict[str, Any]] = []
     seed_sd = float(
-        np.sqrt(
-            (df[df["compute"].isin(budgets)].groupby(["intervention", "compute"])["bpb"].std(ddof=1) ** 2).mean()
-        )
+        np.sqrt((df[df["compute"].isin(budgets)].groupby(["intervention", "compute"])["bpb"].std(ddof=1) ** 2).mean())
     )
     for name, (x, y) in _cells(df, budgets).items():
         y_min = float(np.min(y))
@@ -123,18 +121,18 @@ def run(metric: str) -> dict[str, Any]:
         "median_best_floor_relative_to_ymin": float(frame["best_floor_relative_to_ymin"].median()),
         "n_with_floor_at_zero": int((frame["best_floor"] <= 1e-9).sum()),
         "median_ssr_ratio_zero_over_best": float(frame["ssr_ratio_zero_over_best"].median()),
-        "median_admissible_floor_width": float(
-            (frame["admissible_floor_range"].apply(lambda r: r[1] - r[0])).median()
-        ),
+        "median_admissible_floor_width": float((frame["admissible_floor_range"].apply(lambda r: r[1] - r[0])).median()),
         "median_projection_spread_over_admissible_floors": float(frame["projection_spread_over_admissible"].median()),
         "target_seed_sd": target_sd,
         "target_between_intervention_sd": target_spread,
-        "projection_ambiguity_over_seed_noise": float(
-            frame["projection_spread_over_admissible"].median() / target_sd
-        ) if target_sd > 0 else None,
+        "projection_ambiguity_over_seed_noise": float(frame["projection_spread_over_admissible"].median() / target_sd)
+        if target_sd > 0
+        else None,
         "projection_ambiguity_over_between_spread": float(
             frame["projection_spread_over_admissible"].median() / target_spread
-        ) if target_spread > 0 else None,
+        )
+        if target_spread > 0
+        else None,
         "per_intervention": rows,
     }
 
@@ -212,7 +210,9 @@ def main() -> int:
         print(f"    interventions with floor == 0:      {row['n_with_floor_at_zero']}/{row['n_interventions']}")
         print(f"    SSR(zero floor)/SSR(best) median:   {row['median_ssr_ratio_zero_over_best']:.4f}")
         print(f"    admissible floor width (median):    {row['median_admissible_floor_width']:.4f}")
-        print(f"    target projection spread over those floors: {row['median_projection_spread_over_admissible_floors']:.4f}")
+        print(
+            f"    target projection spread over those floors: {row['median_projection_spread_over_admissible_floors']:.4f}"
+        )
         print(f"    that spread / target seed sd:       {row['projection_ambiguity_over_seed_noise']:.1f}x")
         print(f"    that spread / between-recipe sd:    {row['projection_ambiguity_over_between_spread']:.2f}x")
     return 0

@@ -123,15 +123,16 @@ def build_truth(
         base = _curvature_truths(n_interventions, floor_hi=0.35, alpha_hi=0.08)
         offsets = generator.normal(0.0, 0.05, n_interventions)
         truths = {
-            name: (e + float(offset), a, alpha)
-            for (name, (e, a, alpha)), offset in zip(sorted(base.items()), offsets)
+            name: (e + float(offset), a, alpha) for (name, (e, a, alpha)), offset in zip(sorted(base.items()), offsets)
         }
     else:
         raise ValueError(f"unknown family {family!r}")
     return truths
 
 
-def sample(truths: dict[str, tuple[float, float, float]], sigma: float, n_seeds: int, rng: np.random.Generator) -> pd.DataFrame:
+def sample(
+    truths: dict[str, tuple[float, float, float]], sigma: float, n_seeds: int, rng: np.random.Generator
+) -> pd.DataFrame:
     rows = []
     for name, (e, a, alpha) in truths.items():
         for compute in np.append(LADDER, TARGET):
@@ -154,9 +155,7 @@ def project_all(df: pd.DataFrame, adaptive: bool) -> dict[str, float]:
     fit_rows = df[df["compute"] < TARGET]
     for name, group in fit_rows.groupby("intervention", sort=True):
         cells = group.groupby("compute", sort=True)["bpb"].mean()
-        e, a, alpha = fit_power_law(
-            cells.index.to_numpy(dtype=float), cells.to_numpy(dtype=float), adaptive_bounds=adaptive
-        )
+        e, a, alpha = fit_power_law(cells.index.to_numpy(dtype=float), cells.to_numpy(dtype=float), adaptive_bounds=adaptive)
         out[str(name)] = float(e + a * TARGET ** (-alpha))
     return out
 
@@ -264,7 +263,9 @@ def main() -> int:
     (destination / "curvature_boundary_demo.json").write_text(
         json.dumps(results, indent=2, sort_keys=True, default=str) + "\n", encoding="utf-8"
     )
-    print(f"{'family':11s} {'pinned':>7s} {'acc(defect)':>12s} {'acc(fixed)':>11s} {'delta':>8s} {'same order':>11s} {'pairs reordered':>16s} {'spearman':>9s}")
+    print(
+        f"{'family':11s} {'pinned':>7s} {'acc(defect)':>12s} {'acc(fixed)':>11s} {'delta':>8s} {'same order':>11s} {'pairs reordered':>16s} {'spearman':>9s}"
+    )
     for family, row in results.items():
         if family == "contrast":
             continue

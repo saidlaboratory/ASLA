@@ -89,10 +89,14 @@ def main() -> int:
         print(f"=== {metric}")
         print(f"    old alpha {row['old_alpha_range']} (all pinned: {row['old_alpha_all_pinned_at_0.05']})")
         print(f"    new alpha {row['new_alpha_range']}")
-        print(f"    median |projection change| = {row['median_abs_projection_change']:.3e} "
-              f"({row['projection_change_relative_to_between_spread']:.1%} of the between-intervention spread)")
-        print(f"    spearman(old, new) = {row['spearman_old_vs_new_projection']:.6f}; "
-              f"ranking identical: {row['ranking_identical']}")
+        print(
+            f"    median |projection change| = {row['median_abs_projection_change']:.3e} "
+            f"({row['projection_change_relative_to_between_spread']:.1%} of the between-intervention spread)"
+        )
+        print(
+            f"    spearman(old, new) = {row['spearman_old_vs_new_projection']:.6f}; "
+            f"ranking identical: {row['ranking_identical']}"
+        )
     return 0
 
 

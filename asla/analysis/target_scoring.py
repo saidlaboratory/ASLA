@@ -301,9 +301,7 @@ def _weighted_pair_mean(matrix: np.ndarray, counts: np.ndarray) -> float:
     return float((weights[valid] * matrix[valid]).sum() / total) if total > 0 else float("nan")
 
 
-def candidate_bootstrap(
-    kernel: Mapping[tuple[str, str], float], rng: np.random.Generator, n_resamples: int
-) -> np.ndarray:
+def candidate_bootstrap(kernel: Mapping[tuple[str, str], float], rng: np.random.Generator, n_resamples: int) -> np.ndarray:
     """Bootstrap the mean of a pair kernel by resampling candidates.
 
     Each replicate draws candidates with replacement and weights every pair of

@@ -40,16 +40,25 @@ def lever_arm_table(frame: pd.DataFrame) -> pd.DataFrame:
     """
 
     scale_compute = {
-        "4M": 8.4302e15, "6M": 2.1701e16, "8M": 4.3777e16, "10M": 5.8851e16, "14M": 1.2413e17,
-        "16M": 1.5376e17, "20M": 2.1909e17, "60M": 1.9555e18, "90M": 5.7581e18, "150M": 1.3439e19,
-        "300M": 5.6620e19, "530M": 1.4955e20, "750M": 1.2658e20, "1B": 7.0621e20,
+        "4M": 8.4302e15,
+        "6M": 2.1701e16,
+        "8M": 4.3777e16,
+        "10M": 5.8851e16,
+        "14M": 1.2413e17,
+        "16M": 1.5376e17,
+        "20M": 2.1909e17,
+        "60M": 1.9555e18,
+        "90M": 5.7581e18,
+        "150M": 1.3439e19,
+        "300M": 5.6620e19,
+        "530M": 1.4955e20,
+        "750M": 1.2658e20,
+        "1B": 7.0621e20,
     }
     out = frame.copy()
     out["max_fit_scale"] = out["fit_scales"].str.split("-").str[1]
     out["min_fit_scale"] = out["fit_scales"].str.split("-").str[0]
-    out["lever_arm"] = [
-        scale_compute[t] / scale_compute[m] for t, m in zip(out["target"], out["max_fit_scale"])
-    ]
+    out["lever_arm"] = [scale_compute[t] / scale_compute[m] for t, m in zip(out["target"], out["max_fit_scale"])]
     return out
 
 
@@ -94,8 +103,18 @@ def rank_correlation(frame: pd.DataFrame) -> dict[str, float]:
 def winning_designs(frame: pd.DataFrame) -> pd.DataFrame:
     ties = frame[~frame["projection_worse"].astype(bool)]
     return ties[
-        ["metric", "target", "fit_scales", "fit_bounds", "n_fit_budgets", "projection_mis_selection",
-         "single_scale_mis_selection", "excess_projection_flips", "n_fit_error", "n_inherited"]
+        [
+            "metric",
+            "target",
+            "fit_scales",
+            "fit_bounds",
+            "n_fit_budgets",
+            "projection_mis_selection",
+            "single_scale_mis_selection",
+            "excess_projection_flips",
+            "n_fit_error",
+            "n_inherited",
+        ]
     ].drop_duplicates(["metric", "target", "fit_scales", "fit_bounds"])
 
 
@@ -162,15 +181,29 @@ def make_figures(frame: pd.DataFrame, table: pd.DataFrame) -> list[str]:
     ax1.set_ylabel("excess flips (projection - single-scale)")
     ax1.set_title("Dose-response: each line is one ladder\nextended upward, holding its start fixed")
 
-    ax2.plot(summary["lever_arm"], 100 * summary["mean_projection"], "o-", color="#c53030", lw=2,
-             label="projection (fits 3 parameters)")
-    ax2.plot(summary["lever_arm"], 100 * summary["mean_single_scale"], "s--", color="#2f855a", lw=2,
-             label="single-scale control (fits nothing)")
+    ax2.plot(
+        summary["lever_arm"],
+        100 * summary["mean_projection"],
+        "o-",
+        color="#c53030",
+        lw=2,
+        label="projection (fits 3 parameters)",
+    )
+    ax2.plot(
+        summary["lever_arm"],
+        100 * summary["mean_single_scale"],
+        "s--",
+        color="#2f855a",
+        lw=2,
+        label="single-scale control (fits nothing)",
+    )
     slope_p = np.polyfit(np.log10(summary["lever_arm"]), 100 * summary["mean_projection"], 1)[0]
     slope_s = np.polyfit(np.log10(summary["lever_arm"]), 100 * summary["mean_single_scale"], 1)[0]
     ax2.annotate(
         f"slope per decade of L:\nprojection {slope_p:+.1f} pts\ncontrol {slope_s:+.1f} pts",
-        xy=(0.05, 0.72), xycoords="axes fraction", fontsize=8,
+        xy=(0.05, 0.72),
+        xycoords="axes fraction",
+        fontsize=8,
     )
     ax2.set_xscale("log")
     ax2.set_xlabel("lever arm  L  (log scale)")
@@ -192,9 +225,13 @@ def make_figures(frame: pd.DataFrame, table: pd.DataFrame) -> list[str]:
     ax.set_xlabel("excess flips (projection - single-scale)")
     ax.set_ylabel("projection's margin over single-scale (points)")
     ax.set_title("When projection wins, it wins by making fewer fit errors\n(never by correcting a crossover)")
-    ax.annotate("no design lies right of 0:\nprojection never wins\nwith a positive excess",
-                xy=(0.0, float(margin.max())), xytext=(-2.6, float(margin.max()) * 0.72), fontsize=8,
-                arrowprops={"arrowstyle": "->", "color": "#c53030"})
+    ax.annotate(
+        "no design lies right of 0:\nprojection never wins\nwith a positive excess",
+        xy=(0.0, float(margin.max())),
+        xytext=(-2.6, float(margin.max()) * 0.72),
+        fontsize=8,
+        arrowprops={"arrowstyle": "->", "color": "#c53030"},
+    )
     fig2.tight_layout()
     for ext in ("png", "pdf"):
         path = OUT / f"fig_projection_wins.{ext}"
@@ -228,12 +265,18 @@ def main() -> int:
         "all_winning_have_nonpositive_excess": bool((wins["excess_projection_flips"] <= 0).all()),
         "figures": make_figures(frame, table),
     }
-    (OUT / "a2_dose_response.json").write_text(json.dumps(payload, indent=2, sort_keys=True, default=str) + "\n", encoding="utf-8")
+    (OUT / "a2_dose_response.json").write_text(
+        json.dumps(payload, indent=2, sort_keys=True, default=str) + "\n", encoding="utf-8"
+    )
     print(lever_arm_summary(frame).round(4).to_string(index=False))
-    print(f"\nmatched ladders monotone in the lever arm: {payload['n_monotone_in_lever_arm']}/{payload['n_matched_ladders']}")
+    print(
+        f"\nmatched ladders monotone in the lever arm: {payload['n_monotone_in_lever_arm']}/{payload['n_matched_ladders']}"
+    )
     print(json.dumps(corr, indent=2))
-    print(f"winning designs: {payload['n_winning_designs']}, max excess = {payload['max_excess_among_winning']}, "
-          f"all non-positive = {payload['all_winning_have_nonpositive_excess']}")
+    print(
+        f"winning designs: {payload['n_winning_designs']}, max excess = {payload['max_excess_among_winning']}, "
+        f"all non-positive = {payload['all_winning_have_nonpositive_excess']}"
+    )
     print("figures:", payload["figures"])
     return 0
 

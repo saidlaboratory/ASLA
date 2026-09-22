@@ -159,9 +159,7 @@ def _additive_kernel(n: int, sd_u: float, sd_e: float, seed: int) -> dict[tuple[
 
 
 def test_expected_charges_sum_to_score_ranker_expected_errors() -> None:
-    evidence = target_evidence(
-        {"a": 1.0, "b": 1.1, "c": 1.3}, {"a": 0.1, "b": 0.1, "c": 0.1}, {"a": 3, "b": 3, "c": 3}
-    )
+    evidence = target_evidence({"a": 1.0, "b": 1.1, "c": 1.3}, {"a": 0.1, "b": 0.1, "c": 0.1}, {"a": 3, "b": 3, "c": 3})
     predictions = {("a", "b"): -1.0, ("a", "c"): 1.0, ("b", "c"): -1.0}
     charges = expected_charges(predictions, evidence)
     assert sum(charges.values()) == pytest.approx(score_ranker(predictions, evidence)["expected_errors"])

@@ -72,9 +72,7 @@ def analyse_design(name: str, design: dict[str, Any]) -> dict[str, Any]:
         "strength_gap": float(best["strength"] - eb),
         "eb_inside_plateau": bool(any(abs(eb - r["strength"]) <= 0.1 for r in plateau)),
         "cost_of_eb_points": (
-            None
-            if eb_entry.get("point") is None
-            else 100.0 * (float(eb_entry["point"]) - best["mis_selection"])
+            None if eb_entry.get("point") is None else 100.0 * (float(eb_entry["point"]) - best["mis_selection"])
         ),
         "between_sd": vc["between_sd"],
         "within_sd": vc["within_sd"],
@@ -97,9 +95,7 @@ def main() -> int:
         "mean_cost_of_eb_points": float(np.mean(costs)) if costs else None,
         "designs": rows,
         "all_eb_inside_plateau": bool(all(r["eb_inside_plateau"] for r in usable)),
-        "plateau_spans_whole_sweep": bool(
-            all(len(r["plateau_strengths"]) == len(r["curve"]) for r in usable)
-        ),
+        "plateau_spans_whole_sweep": bool(all(len(r["plateau_strengths"]) == len(r["curve"]) for r in usable)),
         "interpretation": (
             "Empirical Bayes minimises squared error in the exponent; decision accuracy depends only on the "
             "ordering of projections. A systematic gap between the parameter-optimal and decision-optimal "
@@ -119,8 +115,10 @@ def main() -> int:
         json.dumps(summary, indent=2, sort_keys=True, default=str) + "\n", encoding="utf-8"
     )
     print(f"designs analysed: {summary['n_designs']}")
-    print(f"EB below the decision optimum in {summary['n_eb_below_decision_optimum']}/{summary['n_designs']} "
-          f"(consistent direction: {summary['consistent_direction']})")
+    print(
+        f"EB below the decision optimum in {summary['n_eb_below_decision_optimum']}/{summary['n_designs']} "
+        f"(consistent direction: {summary['consistent_direction']})"
+    )
     for row in usable:
         print(
             f"  {row['design']:32s} EB={row['eb_strength']:.3f} decision-optimal={row['decision_optimal_strength']:.1f} "

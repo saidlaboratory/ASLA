@@ -75,9 +75,7 @@ def test_decision_and_estimation_objectives_coincide() -> None:
     assert np.max(np.abs(dec_share - est_share)) < 0.02
 
     # And the estimation-optimal design is near-optimal for the decision too.
-    decision_variance_of_estimation_design = target_variance_factor(
-        LADDER, estimation.allocation.runs, TARGET
-    )
+    decision_variance_of_estimation_design = target_variance_factor(LADDER, estimation.allocation.runs, TARGET)
     assert decision_variance_of_estimation_design <= decision.objective_value * 1.01
 
 

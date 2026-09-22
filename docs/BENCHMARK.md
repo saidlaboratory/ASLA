@@ -64,7 +64,7 @@ python scripts/run_paper_experiments.py --out results/paper   # add --fast to sm
 from asla.data.benchmark import BenchmarkConfig, benchmark_grid, evaluate_configs, make_scenario
 
 problem = BenchmarkConfig(family="late_crossover", gap_to_noise=2.0, crossover_position=0.3, seed=0)
-scenario = make_scenario(problem)      # rng -> runs table with ScenarioTruth attrs
+scenario = make_scenario(problem)  # rng -> runs table with ScenarioTruth attrs
 table = evaluate_configs(benchmark_grid(), n_trials=100, n_boot=300)
 ```
 

@@ -205,15 +205,14 @@ def benjamini_hochberg(p_values: list[float | None], q: float = 0.05) -> list[bo
     return reject
 
 
-def target_pair_tests(df: pd.DataFrame, target: float, pairs: list[tuple[str, str]], q: float = 0.05) -> list[dict[str, Any]]:
+def target_pair_tests(
+    df: pd.DataFrame, target: float, pairs: list[tuple[str, str]], q: float = 0.05
+) -> list[dict[str, Any]]:
     rows = df[np.isclose(df["compute"], target)]
     by_name = {str(name): group["bpb"].to_numpy(dtype=float) for name, group in rows.groupby("intervention", sort=True)}
     p_values = [welch_p(by_name[a], by_name[b]) for a, b in pairs]
     rejected = benjamini_hochberg(p_values, q=q)
-    return [
-        {"a": a, "b": b, "p_value": p, "significant": bool(r)}
-        for (a, b), p, r in zip(pairs, p_values, rejected)
-    ]
+    return [{"a": a, "b": b, "p_value": p, "significant": bool(r)} for (a, b), p, r in zip(pairs, p_values, rejected)]
 
 
 # --------------------------------------------------------------------------- design
@@ -271,8 +270,12 @@ def audit_reference(metric: str) -> dict[str, Any]:
     dec = design["projection_error_decomposition"]
     cx = design["crossovers"]
     return {
-        "projection_mis_selection": design["pairwise_decisions"]["rankers"]["projection_ranker"]["mis_selection_rate"]["point"],
-        "single_scale_mis_selection": design["pairwise_decisions"]["rankers"]["single_scale_ranker"]["mis_selection_rate"]["point"],
+        "projection_mis_selection": design["pairwise_decisions"]["rankers"]["projection_ranker"]["mis_selection_rate"][
+            "point"
+        ],
+        "single_scale_mis_selection": design["pairwise_decisions"]["rankers"]["single_scale_ranker"]["mis_selection_rate"][
+            "point"
+        ],
         "projection_flips": cx["projection_vs_target"]["n_flipped_pairs"],
         "projection_flips_significant": cx["projection_vs_target"]["n_significant"],
         "single_scale_flips": cx["largest_fit_budget_vs_target"]["n_flipped_pairs"],
@@ -295,7 +298,14 @@ def compare(metric: str) -> dict[str, Any]:
     for key in sorted(theirs):
         if key.endswith("_pairs"):
             same = sorted(map(tuple, mine[key])) == sorted(map(tuple, theirs[key]))
-            rows.append({"quantity": key, "independent": f"{len(mine[key])} pairs", "audit": f"{len(theirs[key])} pairs", "match": same})
+            rows.append(
+                {
+                    "quantity": key,
+                    "independent": f"{len(mine[key])} pairs",
+                    "audit": f"{len(theirs[key])} pairs",
+                    "match": same,
+                }
+            )
             continue
         a, b = mine[key], theirs[key]
         same = bool(np.isclose(a, b, rtol=1e-9, atol=1e-12)) if isinstance(a, float) or isinstance(b, float) else a == b

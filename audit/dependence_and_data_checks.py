@@ -64,14 +64,14 @@ def recount_under_dependence(metric: str, q: float = 0.05) -> dict[str, Any]:
             "n_significant_BH": int(sum(bh)),
             "n_significant_BY": int(sum(by)),
             "n_significant_bonferroni_over_all_pairs": int(sum(bonf)),
-            "harmonic_factor": float(
-                np.sum(1.0 / np.arange(1, max(1, len(p_values)) + 1))
-            ),
+            "harmonic_factor": float(np.sum(1.0 / np.arange(1, max(1, len(p_values)) + 1))),
         }
     return out
 
 
-def null_dependence_simulation(n_interventions: int = 25, n_seeds: int = 3, n_trials: int = 2000, seed: int = 0) -> dict[str, Any]:
+def null_dependence_simulation(
+    n_interventions: int = 25, n_seeds: int = 3, n_trials: int = 2000, seed: int = 0
+) -> dict[str, Any]:
     """Realised FDR of BH and BY under the global null with shared-group dependence.
 
     Under the complete null every intervention has the same mean, so every
@@ -110,9 +110,7 @@ def data_integrity(metric: str) -> dict[str, Any]:
     checks["duplicate_full_rows"] = int(df.duplicated().sum())
     derived = 6.0 * df["params_n"].astype(float) * df["tokens_d"].astype(float)
     checks["compute_equals_6ND"] = bool(np.allclose(df["compute"].astype(float), derived, rtol=1e-9))
-    checks["max_abs_6ND_relative_error"] = float(
-        np.max(np.abs(df["compute"] - derived) / df["compute"])
-    )
+    checks["max_abs_6ND_relative_error"] = float(np.max(np.abs(df["compute"] - derived) / df["compute"]))
     cells = df.groupby(["intervention", "compute"])["seed"].nunique()
     checks["seeds_per_cell_min"] = int(cells.min())
     checks["seeds_per_cell_max"] = int(cells.max())
@@ -175,7 +173,9 @@ def main() -> int:
     out["raw_compute_cross_check"] = cross_check_raw_compute()
     destination = REPO / "results" / "adversarial"
     destination.mkdir(parents=True, exist_ok=True)
-    (destination / "a4_a6_checks.json").write_text(json.dumps(out, indent=2, sort_keys=True, default=str) + "\n", encoding="utf-8")
+    (destination / "a4_a6_checks.json").write_text(
+        json.dumps(out, indent=2, sort_keys=True, default=str) + "\n", encoding="utf-8"
+    )
     print("=== A4: significance counts under BH vs BY vs Bonferroni")
     for row in out["fdr_under_dependence"]:
         print(f"  {row['metric']}")
@@ -189,10 +189,12 @@ def main() -> int:
     print(f"  {json.dumps(out['null_simulation'], indent=2)}")
     print("\n=== A6: data integrity")
     for row in out["data_integrity"]:
-        print(f"  {row['metric']}: dup_identity={row['duplicate_identity_rows']} 6ND_ok={row['compute_equals_6ND']} "
-              f"seeds/cell={row['seeds_per_cell_min']}-{row['seeds_per_cell_max']} "
-              f"all_seeds_identical_cells={row['cells_where_all_seeds_identical']}/{row['cells_total']} "
-              f"target_leak={row['target_in_fit_budgets']} misaligned_scales={list(row['scales_with_misaligned_seed_labels'])}")
+        print(
+            f"  {row['metric']}: dup_identity={row['duplicate_identity_rows']} 6ND_ok={row['compute_equals_6ND']} "
+            f"seeds/cell={row['seeds_per_cell_min']}-{row['seeds_per_cell_max']} "
+            f"all_seeds_identical_cells={row['cells_where_all_seeds_identical']}/{row['cells_total']} "
+            f"target_leak={row['target_in_fit_budgets']} misaligned_scales={list(row['scales_with_misaligned_seed_labels'])}"
+        )
     print(f"\n=== A6: raw compute cross-check\n  {json.dumps(out['raw_compute_cross_check'], indent=2)}")
     return 0
 

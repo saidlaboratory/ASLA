@@ -97,7 +97,10 @@ def section_promoted(dose: dict[str, Any]) -> list[str]:
         "|---|---|---|---|---|---|---|---|",
     ]
     scale_compute = {
-        "150M": 1.3439e19, "300M": 5.6620e19, "530M": 1.4955e20, "1B": 7.0621e20,
+        "150M": 1.3439e19,
+        "300M": 5.6620e19,
+        "530M": 1.4955e20,
+        "1B": 7.0621e20,
     }
     for _, row in wins.iterrows():
         top = str(row["fit_scales"]).split("-")[1]

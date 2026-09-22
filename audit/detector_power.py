@@ -226,8 +226,12 @@ def main() -> int:
     print(
         frame[frame.n_seeds == 3][
             [
-                "true_crossover", "gap_over_sigma", "ladder_gap_over_sigma_small", "flip_rate",
-                "significance_rate", "flip_and_significant_rate",
+                "true_crossover",
+                "gap_over_sigma",
+                "ladder_gap_over_sigma_small",
+                "flip_rate",
+                "significance_rate",
+                "flip_and_significant_rate",
             ]
         ].to_string(index=False)
     )
