@@ -21,6 +21,8 @@ import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 
+import numpy as np
+
 from asla.provenance import Source
 
 REPO = Path(__file__).resolve().parents[1]
@@ -141,6 +143,61 @@ def _power_entries(expected: Source, base: str) -> list[tuple[str, str, str]]:
         ("powerNeededTwo", f"{expected.integer(by_delta + '.2')}", origin),
         ("powerNeededFive", f"{expected.integer(by_delta + '.5')}", origin),
         ("powerAtObserved", f"{100 * expected.number(base + '.power.power_at_observed_count'):.0f}", origin),
+    ]
+
+
+def _published_entries() -> list[tuple[str, str, str]]:
+    """Candidate-level re-tests of published comparisons, and the correction curve."""
+
+    out = Source.load("external/published_comparisons.json")
+    expected = Source.load("target_scoring/expected_error.json")
+    origin = "published_comparisons.json"
+    gate_rows = out.get("d1_scaling_laws_vs_single_scale.gate.rows")
+    exact = out.integer("d1_scaling_laws_vs_single_scale.gate.n_rows_exact")
+    d1 = out.get("d1_scaling_laws_vs_single_scale.comparisons")
+    macro_750 = {k: v for k, v in d1.items() if k.startswith("olmes_10_macro_avg|") and k.endswith("|750M|three_seed_mean")}
+    worst_key = min(macro_750, key=lambda k: macro_750[k]["difference_pp"])
+    worst = macro_750[worst_key]
+    others = [v for k, v in macro_750.items() if k != worst_key]
+    d2 = out.get("d2_correct_prob_vs_accuracy.comparisons")
+    d2_macro = [v for k, v in d2.items() if k.startswith("olmes_10_macro_avg|")]
+    curve = out.get("correction_curve_range.curve_by_percentile")
+    checks = out.get("correction_curve_c4.subsampling_check")
+    invariance = "regimes.c4_en_bits_per_token/primary_4M-300M_gate530M.significance.estimator_invariance"
+    signs = "d1_sign_breakdown_three_seed_target"
+    return [
+        ("gateExact", f"{exact}", origin),
+        ("gateRows", f"{len(gate_rows)}", origin),
+        ("gateMaxError", f"{out.number('d1_scaling_laws_vs_single_scale.gate.max_abs_error_released_target'):.2f}", origin),
+        ("dOneVariants", f"{len(macro_750)}", origin),
+        ("dOneMacroExcl", f"{sum(v['excludes_zero'] for v in macro_750.values())}", origin),
+        ("dOneWorstDiff", f"{worst['difference_pp']:+.1f}", origin),
+        ("dOneWorstLow", f"{worst['ci_low_pp']:+.1f}", origin),
+        ("dOneWorstHigh", f"{worst['ci_high_pp']:+.1f}", origin),
+        ("dOneTypicalHalfWidth", f"{np.median([(v['ci_high_pp'] - v['ci_low_pp']) / 2 for v in others]):.0f}", origin),
+        ("dOneAll", f"{out.integer(signs + '.n')}", origin),
+        ("dOneAllBetter", f"{out.integer(signs + '.law_reliably_better')}", origin),
+        ("dOneAllWorse", f"{out.integer(signs + '.law_reliably_worse')}", origin),
+        ("dTwoScales", f"{len(d2_macro)}", origin),
+        ("dTwoMacroBetter", f"{sum(v['excludes_zero'] and v['difference_pp'] > 0 for v in d2_macro)}", origin),
+        ("dTwoMacroWorse", f"{sum(v['excludes_zero'] and v['difference_pp'] < 0 for v in d2_macro)}", origin),
+        ("dTwoMacroPointWorse", f"{sum(v['difference_pp'] < 0 for v in d2_macro)}", origin),
+        ("dTwoAll", f"{len(d2)}", origin),
+        ("dTwoAllBetter", f"{sum(v['excludes_zero'] and v['difference_pp'] > 0 for v in d2.values())}", origin),
+        ("dTwoAllWorse", f"{sum(v['excludes_zero'] and v['difference_pp'] < 0 for v in d2.values())}", origin),
+        ("curveComparisons", f"{out.integer('correction_curve_range.n_comparisons')}", origin),
+        ("curveZetaMedian", f"{out.number('correction_curve_range.zeta1_over_zeta2_percentiles.50'):.3f}", origin),
+        ("curveMedTen", f"{curve['50']['10']:.2f}", origin),
+        ("curveMedTwentyFive", f"{curve['50']['25']:.2f}", origin),
+        ("curveMedHundred", f"{curve['50']['100']:.2f}", origin),
+        ("curveLowTwentyFive", f"{curve['10']['25']:.2f}", origin),
+        ("curveHighTwentyFive", f"{curve['90']['25']:.2f}", origin),
+        ("curveCFour", f"{out.number('correction_curve_c4.at_observed_n'):.2f}", origin),
+        ("curveCheckWorstLarge", f"{100 * max(abs(r['relative_error']) for r in checks[1:]):.0f}", origin),
+        ("curveCheckSmallest", f"{100 * abs(checks[0]['relative_error']):.0f}", origin),
+        ("curveCheckSmallestM", f"{checks[0]['m']}", origin),
+        ("pInvariantMin", f"{expected.number(invariance + '.p_min'):.2f}", "expected_error.json"),
+        ("pInvariantMax", f"{expected.number(invariance + '.p_max'):.2f}", "expected_error.json"),
     ]
 
 
@@ -646,6 +703,7 @@ def build() -> str:
     ]
     entries.extend(_power_entries(expected, c4_primary + ".significance"))
     entries.extend(_rescoring_entries())
+    entries.extend(_published_entries())
     entries.extend(_fit_structure_entries())
     lines.extend(_macro(name, value, origin) for name, value, origin in entries)
     lines.append("")

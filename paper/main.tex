@@ -43,7 +43,10 @@ comparisons: at this variance, a two-point difference needs about
 \powerNeededTwo\ candidates, a one-point difference \powerNeededOne. (iii) An
 account of which published and project results survive the correct test.
 (iv) A warning, with its diagnosis, against applying a standard
-measurement-error correction to decision accuracy.
+measurement-error correction to decision accuracy. (v) A closed-form correction
+$R(n)$ for intervals already computed by resampling pairs, validated on real
+data, and candidate-level re-tests of the published comparisons whose inputs
+were released.
 
 
 \section{How selection rules are compared}
@@ -139,14 +142,19 @@ factor is the size of the dependence correction. Any decision-accuracy
 comparison that resamples or counts pairs as independent inherits it.
 
 \paragraph{Choosing the candidate-level estimator.} We pre-registered a candidate
-bootstrap weighted by draw multiplicity. It is conservative here, because
-pair-level variance is \zetaRatio\ times the candidate-level component. In
-simulation at these components with a known answer, it overstates the standard
-error by a factor of \calibBoot\ and the jackknife by \calibJack. The unbiased
-U-statistic standard error is within a factor of \calibU. We report the
-U-statistic test. The pre-registered bootstrap gives $p=\bootCandP$, and an
-earlier, unweighted bootstrap gave $p=\uniqueSetP$. The conclusion does not
-depend on the choice.
+bootstrap weighted by draw multiplicity. We replaced it after computing it, and
+the reason and the order of events need stating. Here pair-level variance is
+\zetaRatio\ times the candidate-level component. At those components the true
+standard error is known in simulation. Against it, the weighted bootstrap
+overstates by a factor of \calibBoot, the jackknife by \calibJack, and the
+unbiased U-statistic standard error is within \calibU. We report the
+U-statistic test because it was closest to the known answer. That criterion
+comes from the simulation alone. The choice was not blind, however: every
+estimator's real-data result had been computed before the simulation was run.
+What makes this immaterial is that the conclusion does not depend on the
+estimator. Every candidate-level estimator we computed --- the U-statistic, the
+weighted and unweighted bootstraps, and the jackknife --- gives $p$ between
+\pInvariantMin\ and \pInvariantMax, and none gives an interval that excludes zero.
 
 \paragraph{Power.} With the variance components held at their estimates, a
 two-sided test at level 0.05 with power 0.8 needs \powerNeededTwo\ candidates to  %% nolint: stated test level and power
@@ -197,6 +205,79 @@ assumption about how rule errors and reference errors co-occur, and the data do
 not identify it. The robust statement is the determined fraction: at this
 reference budget the published figure mostly grades decisions its reference
 cannot make.
+
+\section{Published comparisons at the candidate level}
+\label{sec:published-comparisons}
+
+Neither DataDecide nor \emph{Signal and Noise} reports an interval on a difference
+between selection methods. DataDecide's shading is the standard deviation over
+three small-model seeds for single-scale ranking; its scaling-law predictions
+are single attempts. \emph{Signal and Noise} reports point estimates and
+resamples only over final checkpoints. Neither resampled pairs or candidates.
+The question is therefore not which unit their intervals used, but whether
+their conclusions hold with candidates as the unit. We re-tested the
+comparisons whose inputs were released.
+
+\paragraph{Scaling-law variants against single-scale ranking (DataDecide).} The
+released fits include per-recipe predictions and targets, and we pre-registered
+reproducing the released decision accuracies exactly before testing. They do
+not reproduce. Using the released target column, \gateExact\ of \gateRows\
+task--variant rows match, and the largest error is \gateMaxError. No
+convention we tried (prediction column, target column or seed mean, tie rule)
+recovers them all. The re-test below is therefore exploratory and makes no
+claim about the paper's numbers. Against single-scale ranking at the largest
+fitted size on the macro average, \dOneMacroExcl\ of \dOneVariants\ variants
+is reliably different: a five-parameter one-step fit, which is worse by
+\dOneWorstDiff\ points ([\dOneWorstLow, \dOneWorstHigh]). No variant is
+reliably better. The other intervals have a typical half-width of
+\dOneTypicalHalfWidth\ points. Across all tasks, variants and comparators,
+\dOneAllBetter\ of \dOneAll\ comparisons are reliably better and \dOneAllWorse\
+reliably worse. The published conclusion, that no scaling-law variant exceeds
+single-scale ranking, is consistent with these data. Equivalence is not
+established, and differences of several points in either direction are not
+excluded.
+
+\paragraph{Correct Prob against accuracy (DataDecide).} The paper reports that
+ranking by the probability of the correct answer is at least as good as
+accuracy ``for most small scales''. On the macro average, the candidate-level
+test establishes an advantage at \dTwoMacroBetter\ of \dTwoScales\ small scales
+and a disadvantage at \dTwoMacroWorse, and the point estimate favours accuracy
+at \dTwoMacroPointWorse. Per task the claim has more support: of \dTwoAll\
+task--scale cells, \dTwoAllBetter\ show a reliable advantage and
+\dTwoAllWorse\ a reliable disadvantage.
+
+\paragraph{Uncheckable.} \emph{Signal and Noise}'s headline BPB comparison (the
+30-task average) cannot be rebuilt: the paper names fifteen of the thirty tasks,  %% nolint: counts of named tasks in the source table
+and the released data does not identify the rest. Its checkpoint-averaging
+table does not state how source sizes are combined. Its high-SNR subsets and
+DataDecide's intermediate-checkpoint comparison have no released method
+outputs. We list these rather than re-implement them.
+
+\section{Correcting a pair-resampled interval}
+\label{sec:correction}
+
+A practitioner who has already bootstrapped over pairs can correct the
+interval without re-running anything. The pair-resampled variance of a pair
+mean over $n$ candidates is $\zeta_2/\binom{n}{2}$, and the candidate-level  %% nolint: mathematical constant
+variance is $2\bigl(2(n-2)\zeta_1+\zeta_2\bigr)/\bigl(n(n-1)\bigr)$. The  %% nolint: mathematical constant
+standard-error ratio is therefore
+\[
+R(n)=\sqrt{1+2(n-2)\,\zeta_1/\zeta_2}.  %% nolint: mathematical constant
+\]
+It grows without bound in $n$: more candidates make pair resampling
+\emph{more} anti-conservative, not less, because each candidate enters more
+pairs. On the C4 comparison $R(\nCandidates)=\curveCFour$. Across the
+\curveComparisons\ comparisons in this paper and the published re-tests, the
+median $\zeta_1/\zeta_2$ is \curveZetaMedian, which gives
+$R=\curveMedTen$, \curveMedTwentyFive\ and \curveMedHundred\ at ten,
+twenty-five and a hundred candidates. The 10th--90th percentile range at  %% nolint: names which percentiles, values are macros
+twenty-five candidates is \curveLowTwentyFive--\curveHighTwentyFive.  %% nolint: names which percentiles, values are macros
+Subsampling the real candidates reproduces $R(m)$ to within
+\curveCheckWorstLarge\% at twelve or more candidates. At \curveCheckSmallestM\
+it misses by \curveCheckSmallest\%, a pre-registered prediction that failed:
+with so few pairs the pair-resampled standard error is itself unstable. Where
+$\zeta_1$ and $\zeta_2$ cannot be estimated, a pair-resampled interval at
+twenty-five candidates should be widened by about a factor of two.
 
 \section{What survives the correct test}
 \label{sec:survives}
@@ -339,7 +420,9 @@ simulation showed the pre-registered bootstrap to be conservative here; both are
 reported. The allocation study's gradient solver stops \thmSolverExcess\% above
 the true optimum of the design problem on this ladder
 (Appendix~\ref{app:design}). We did not re-run the allocation study, because a
-variance difference of that size is far below the margins it reports.
+variance difference of that size is far below the margins it reports. The
+scaling-law re-test is exploratory, because the released decision accuracies do
+not reproduce from the released predictions.
 
 \appendix
 \section{Design for estimation and design for decision coincide}

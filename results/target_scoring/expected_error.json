@@ -582,6 +582,16 @@
           "zeta1": 8.913007364799187,
           "zeta2": 252.48918610973195
         },
+        "estimator_invariance": {
+          "p_max": 0.25627144918459677,
+          "p_min": 0.1135,
+          "p_values": {
+            "jackknife_normal": 0.25627144918459677,
+            "u_statistic": 0.18153746327653508,
+            "unique_set_bootstrap": 0.1135,
+            "weighted_bootstrap": 0.193
+          }
+        },
         "jackknife_standard_error": 1.7488626679779804,
         "pair_resampling_naive": {
           "ci_high_pp": 3.91297545546862,
@@ -796,6 +806,16 @@
           "zeta1": 50.88089853275522,
           "zeta2": 836.6248833364482
         },
+        "estimator_invariance": {
+          "p_max": 0.5155,
+          "p_min": 0.401,
+          "p_values": {
+            "jackknife_normal": 0.4828040617824916,
+            "u_statistic": 0.4324077420242657,
+            "unique_set_bootstrap": 0.401,
+            "weighted_bootstrap": 0.5155
+          }
+        },
         "jackknife_standard_error": 3.6404717826360216,
         "pair_resampling_naive": {
           "ci_high_pp": 5.729529329460092,
@@ -1009,6 +1029,16 @@
           "true_standard_error": 1.40823071536292,
           "zeta1": 5.36260939443412,
           "zeta2": 348.254092163499
+        },
+        "estimator_invariance": {
+          "p_max": 0.766,
+          "p_min": 0.7047154336073054,
+          "p_values": {
+            "jackknife_normal": 0.7656667926229845,
+            "u_statistic": 0.7047154336073054,
+            "unique_set_bootstrap": 0.75,
+            "weighted_bootstrap": 0.766
+          }
         },
         "jackknife_standard_error": 1.7905430596118828,
         "pair_resampling_naive": {

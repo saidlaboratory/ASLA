@@ -190,9 +190,28 @@ def candidate_resampled_difference(
         # see "estimator_calibration".
         "u_statistic": {**u_statistic_test(kernel), "formula_standard_error": formula_se},
         "jackknife_standard_error": jackknife_standard_error(kernel),
+        "estimator_invariance": _invariance(
+            point, candidate, unique, u_statistic_test(kernel), jackknife_standard_error(kernel)
+        ),
         "power": power_analysis(components, point, rng),
         "_kernel": kernel,
     }
+
+
+def _invariance(
+    point: float, boot: dict[str, Any], unique: dict[str, Any], u_test: dict[str, Any], jack_se: float
+) -> dict[str, Any]:
+    """Two-sided p from every candidate-level estimator, so the conclusion's dependence on the choice is visible."""
+
+    from scipy import stats
+
+    p_values = {
+        "u_statistic": float(u_test["p_two_sided"]),
+        "weighted_bootstrap": float(boot["p_two_sided"]),
+        "unique_set_bootstrap": float(unique["p_two_sided"]),
+        "jackknife_normal": float(2 * stats.norm.sf(abs(point) / jack_se)),
+    }
+    return {"p_values": p_values, "p_min": min(p_values.values()), "p_max": max(p_values.values())}
 
 
 POWER_TARGET = 0.8
