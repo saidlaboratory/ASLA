@@ -164,6 +164,32 @@ def main() -> None:
             "those counts --- the decomposition, the excess over single-scale, and the review's "
             "own 14-introduced/2-corrected arithmetic --- inherits the discrepancy."
         ),
+        "provenance_investigation": {
+            "writing_commit": "07ae133",
+            "counts_in_that_commit": {"projection_flips": 16, "single_scale_flips": 4},
+            "data_hash_identical_to_head": True,
+            "crossover_module_identical_to_head": True,
+            "recomputed_at_the_writing_commit": {"projection_flips": 10, "single_scale_flips": 3},
+            "conclusion": (
+                "The shipped file was not produced by the state it was committed with. At "
+                "07ae133, using that commit's own code and byte-identical parquet data, the "
+                "audit's detectors give 10 and 3. asla/analysis/crossover.py is unchanged "
+                "between 07ae133 and HEAD, and the DataDecide parquet hashes match exactly, so "
+                "neither the detector nor the input can explain the difference. The 16 and 4 "
+                "came from uncommitted working state that no longer exists."
+            ),
+            "which_counts_are_correct": (
+                "10 and 3. They are produced by the committed detectors at both the writing "
+                "commit and HEAD, by an independently written scorer in this module, and from "
+                "data whose hash is unchanged. The 16 and 4 cannot be regenerated from any "
+                "committed state."
+            ),
+            "instrument_check": (
+                "The DataDecide known-answer validation reproduces exactly at HEAD "
+                "(per-seed 0.803333, seed-mean 0.83, both within band), so the defect is "
+                "isolated to this file rather than the fitting or ranking path."
+            ),
+        },
     }
 
     primary = payload["by_multiplicity"]["bonferroni"]
