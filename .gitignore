@@ -26,8 +26,10 @@ results/*
 !results/first_audit/
 !results/first_audit_v1_fixed_alpha_bounds/
 !results/known_answer/
+!results/noise/
 !results/resolution/
 !results/signal_and_noise/
+!results/target_scoring/
 !results/task_b/
 !results/theory/
 !results/theory_v2/
@@ -45,3 +47,6 @@ results/adversarial/_*.md
 # ColPret raw archive (64 MB, re-downloadable from github.com/IBM/ColPret)
 data/raw/colpret/
 
+
+# Built by tectonic via scripts/verify_reproducibility.py; regenerated every run.
+paper/main.pdf

@@ -1,0 +1,164 @@
+{
+  "analysis": {
+    "N1_dispersion": {
+      "chi_squared_reference": 4.674863134550874,
+      "max": 7.583333333333334,
+      "median_p90_over_p10": 4.7178239801506905,
+      "min": 3.4477658735286054
+    },
+    "N2_bias": {
+      "c4_correction_at_three": 0.886226925452758,
+      "fraction_of_cells_underestimating": 1.0,
+      "median_ratio_three_over_ten": 0.7807856769145582
+    },
+    "N3_size_scaling": {
+      "n_sizes_available": 2,
+      "note": "lambada_openai was evaluated on a subset of the panel: 14M and 410M carry all ten seeds, 31M and 160M carry one run each, and 70M carries none at these steps. Two sizes cannot establish a scaling trend, so N3 is underpowered on this metric rather than answered.",
+      "sigma_by_size": {
+        "14m": 0.01268082705227431,
+        "410m": 0.015459356495876255
+      },
+      "sizes": [
+        "14m",
+        "410m"
+      ],
+      "spearman_size_vs_sigma": null,
+      "step": 50000,
+      "verdict": "UNDERPOWERED"
+    },
+    "N4_stage_pooling": {
+      "by_size": [
+        {
+          "early_step": 1000,
+          "late_step": 50000,
+          "ratio_late_over_early": 2.592413206215642,
+          "sigma_early": 0.005963307260899024,
+          "sigma_late": 0.015459356495876255,
+          "size": "410m"
+        }
+      ],
+      "excluded_degenerate_cells": [
+        {
+          "mean": 1.940617116242965e-05,
+          "size": "14m",
+          "step": 1000
+        }
+      ],
+      "median_ratio_late_over_early": 2.592413206215642
+    },
+    "n_cells": 6,
+    "per_cell": [
+      {
+        "coefficient_of_variation": 3.162277660168379,
+        "degenerate_floor_cell": true,
+        "dispersion_p90_over_p10": Infinity,
+        "mean": 1.940617116242965e-05,
+        "median_three_over_ten": 0.0,
+        "n_seeds": 10,
+        "sigma_ten_seeds": 6.136770153635511e-05,
+        "sigma_three_median": 0.0,
+        "sigma_three_p10": 0.0,
+        "sigma_three_p90": 0.00011204158144568712,
+        "size": "14m",
+        "step": 1000
+      },
+      {
+        "coefficient_of_variation": 0.13119419670176904,
+        "degenerate_floor_cell": false,
+        "dispersion_p90_over_p10": 3.4477658735286054,
+        "mean": 0.09512905103823016,
+        "median_three_over_ten": 0.9022639938726912,
+        "n_seeds": 10,
+        "sigma_ten_seeds": 0.012480379433962194,
+        "sigma_three_median": 0.011260596993133327,
+        "sigma_three_p10": 0.005282615016035785,
+        "sigma_three_p90": 0.018213219775277945,
+        "size": "14m",
+        "step": 10000
+      },
+      {
+        "coefficient_of_variation": 0.11191009042707574,
+        "degenerate_floor_cell": false,
+        "dispersion_p90_over_p10": 4.049775911270504,
+        "mean": 0.11331263341742674,
+        "median_three_over_ten": 0.9152753119918484,
+        "n_seeds": 10,
+        "sigma_ten_seeds": 0.01268082705227431,
+        "sigma_three_median": 0.011606447936585041,
+        "sigma_three_p10": 0.00506546916371095,
+        "sigma_three_p90": 0.020514014998480146,
+        "size": "14m",
+        "step": 50000
+      },
+      {
+        "coefficient_of_variation": 0.1710964494176652,
+        "degenerate_floor_cell": false,
+        "dispersion_p90_over_p10": 7.583333333333334,
+        "mean": 0.03485348340772366,
+        "median_three_over_ten": 0.6687754935927855,
+        "n_seeds": 10,
+        "sigma_ten_seeds": 0.005963307260899024,
+        "sigma_three_median": 0.003988113756853187,
+        "sigma_three_p10": 0.0013444989773482455,
+        "sigma_three_p90": 0.010195783911557529,
+        "size": "410m",
+        "step": 1000
+      },
+      {
+        "coefficient_of_variation": 0.018753124554059118,
+        "degenerate_floor_cell": false,
+        "dispersion_p90_over_p10": Infinity,
+        "mean": 0.38480496797981767,
+        "median_three_over_ten": 0.5899952543162635,
+        "n_seeds": 10,
+        "sigma_ten_seeds": 0.007216295493546251,
+        "sigma_three_median": 0.004257580094936127,
+        "sigma_three_p10": 0.0,
+        "sigma_three_p90": 0.012996823447699707,
+        "size": "410m",
+        "step": 10000
+      },
+      {
+        "coefficient_of_variation": 0.03418385857503019,
+        "degenerate_floor_cell": false,
+        "dispersion_p90_over_p10": 5.385872049030878,
+        "mean": 0.4522414127692606,
+        "median_three_over_ten": 0.892795860236331,
+        "n_seeds": 10,
+        "sigma_ten_seeds": 0.015459356495876255,
+        "sigma_three_median": 0.013802049481435952,
+        "sigma_three_p10": 0.004257580094936095,
+        "sigma_three_p90": 0.022930781629826546,
+        "size": "410m",
+        "step": 50000
+      }
+    ]
+  },
+  "source": {
+    "dataset": "EleutherAI/polypythias-evals",
+    "deduplication": {
+      "keys_total": 65,
+      "keys_with_duplicates": 19,
+      "max_rerun_spread": 0.04288763826896952,
+      "median_rerun_spread": 0.007180283330098972,
+      "policy": "keep the earliest evaluation pass per (run, step)"
+    },
+    "metric": "acc,none",
+    "n_files_considered": 660,
+    "n_records": 65,
+    "paper": "van der Wal et al., PolyPythias, ICLR 2025 (arXiv:2503.09543)",
+    "steps": [
+      "step1000",
+      "step10000",
+      "step50000"
+    ],
+    "task": "lambada_openai",
+    "weights_downloaded": false
+  },
+  "subsampling": {
+    "n_subsamples": 2000,
+    "seed": 20260918,
+    "subsample_size": 3,
+    "without_replacement": true
+  }
+}

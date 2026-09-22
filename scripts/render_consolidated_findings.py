@@ -33,9 +33,9 @@ def load(relative: str) -> Any:
 # The instance count is stated in four places in this section; deriving them
 # from one pair of constants is what stopped "five anecdotes" surviving the
 # addition of a sixth.
-N_INSTANCES = 6
-N_INSTANCES_WORD = "Six"
-N_FLATTERING = 5
+N_INSTANCES = 8
+N_INSTANCES_WORD = "Eight"
+N_FLATTERING = 6
 
 
 def methods_practice() -> str:
@@ -179,6 +179,47 @@ def methods_practice() -> str:
         f"had attributed to the unmodelled third parameter was our own pooling error --- we were partly "
         f"explaining our own bug. The omission is still real and still points the right way, but it no longer "
         f"accounts for the T2 miss on its own.",
+        "",
+        "## Instance 7: a test with no power, used to refute a claim",
+        "",
+        "A pre-registered scoring rule restricted a comparison to pairs whose reference ordering "
+        "was statistically resolved. On that subset two selection rules showed an identical error "
+        "rate, and the pre-registration had committed in advance to reading a difference below a "
+        "stated threshold as evidence that the original effect was reference noise. The reading "
+        "was wrong: on that subset *both rules made zero errors*, so the test could not have "
+        "detected any difference. A tie between two methods that never err is not evidence they "
+        "are equivalent.",
+        "",
+        "**How it was caught:** sweeping the determination threshold instead of reporting one "
+        "cut. The gap was zero only across thresholds where the error count was zero, and "
+        "reappeared at the first threshold admitting any error. An equivalence bound made it "
+        "explicit --- the rule of three on a zero-event count rules out only differences above "
+        "1.22 percentage points, a bound set by subset size rather than by observed agreement.",
+        "",
+        "**The general form:** before reading a null as evidence of no effect, check that the "
+        "comparison contained enough events to have shown one. This is the power question, and a "
+        "pre-registered threshold does not substitute for it.",
+        "",
+        "## Instance 8: a headline count produced by uncommitted state",
+        "",
+        "The project's decomposition rested on 16 projection ranking errors against 4 for the "
+        "baseline. Those counts do not regenerate. At the commit that wrote them, running that "
+        "commit's own detectors on byte-identical input data, the counts are 10 and 3. The "
+        "detector module is unchanged between that commit and now, and the input hashes match "
+        "exactly, so neither code nor data can explain the difference: the shipped file was "
+        "produced by working state that was never committed.",
+        "",
+        "**How it was caught:** an unrelated re-scoring produced 10 and 3 and did not match the "
+        "shipped file. The detection path was then mechanical --- run the committed detectors at "
+        "HEAD, run them again in a worktree at the writing commit, and hash the input data at "
+        "both ends. Two independent implementations agreeing with each other and disagreeing "
+        "with the file is what makes the conclusion safe.",
+        "",
+        "**Why it is the most consequential of the eight:** every downstream number inherited it, "
+        "including an external reviewer's own arithmetic about what the counts implied. The "
+        "direction of the finding survived; the magnitudes did not. A results file is not "
+        "evidence unless it can be regenerated from committed state, and nothing in the project "
+        "checked that until now.",
         "",
         "## A numerical fingerprint for this class",
         "",

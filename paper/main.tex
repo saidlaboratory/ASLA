@@ -77,26 +77,43 @@ the current commit: single-scale ranking at \focalScale\ predicting \targetScale
 the published figure to within band (per-seed \knownAnswerPerSeed, seed-mean
 \knownAnswerSeedMean, against a published \knownAnswerPublished).
 
-\section{Where the difference between two rules lives}
+\section{Two regimes}
+\label{sec:regimes}
+
+The fraction of target pairs a reference resolves is a property of the metric,
+not of the selection rule, and it separates sharply. On the low-noise metric,
+\determinedFracBonf\% of pairs are resolved under a Bonferroni-corrected Welch
+test. On the accuracy metric used for the published figure below,
+\pubDetFrac\% are. Decision-accuracy comparisons mean different things in the
+two regimes, and we treat them separately.
+
+\section{Low-noise regime: the difference survives propagation but not inference}
 \label{sec:gap}
 
 On the primary design, projection's excess over single-scale ranking is
-\excessObserved\ points under observed-target scoring and \excessExpected\
-points under expected-error scoring. On Bonferroni-determined pairs it is
-\excessDetermined.
+\excessObserved\ points under observed-target scoring and \expectedGap\ points
+under expected-error scoring. Propagating reference uncertainty retains most of
+the observed difference: the comparison is not an artifact of a noisy label.
 
-That last number is \emph{not} evidence of equivalence, and we report it as
-such. In every subset strict enough to give a zero gap, both rules make zero
-errors: the comparison is empty. The first threshold at which any error appears
-already shows a positive gap, which rises monotonically to the observed-target
-value as the threshold relaxes. The Bonferroni-determined subset rules out only
-differences above \equivBoundPP\ points, by the rule of three on a zero-event
-count --- a bound set by subset size, not by any observed agreement.
+Inference is a separate question. Pairs share candidates, so the pair outcomes
+are dependent and a bootstrap over pairs understates the standard error.
+Resampling pairs gives a 95\% interval of [\expectedPairLow,  %% nolint: confidence level, a stated definition
+\expectedPairHigh] ($p = \expectedPairP$), excluding zero. Resampling
+\emph{candidates}, the independent experimental unit, widens the interval by a
+factor of \dependenceFactor\ to [\expectedCandLow, \expectedCandHigh]
+($p = \expectedCandP$), which includes zero.
 
-The defensible claim is therefore narrower than equivalence: the measured
-difference between these two rules is concentrated in pairs near the reference's
-resolution boundary, and the strictest subsets contain too few errors to
-distinguish the rules at all.
+We report the candidate-level interval as the correct one. At this candidate
+count the difference between these two rules is a point estimate without
+inferential support, and the apparent significance under pair resampling is an
+artifact of treating overlapping pairs as independent observations.
+
+\paragraph{On the determined subset.} Scoring only on resolved pairs gives an
+excess of \excessDetermined\ points, but both rules make zero errors there, so
+the comparison is empty. That subset rules out only differences above
+\equivBoundPP\ points by the rule of three --- a bound set by subset size, not
+by observed agreement. We report it as a diagnostic and not as evidence of
+equivalence.
 
 \section{Application to a published figure}
 \label{sec:published}
@@ -112,6 +129,23 @@ The published figure \emph{understates} the method on the decisions its
 reference can actually resolve, because undetermined pairs drag any rule toward
 chance. This is the protocol's practical payoff: it changes a widely cited
 number, in the direction of the method looking better.
+
+\section{What survives propagation}
+\label{sec:survives}
+
+Uncertainty propagation removes an inferential claim, not the structural
+findings. The clearest case is the relationship between projection error and
+extrapolation distance. Measured against observed targets across \doseDesigns\
+designs, excess projection error rises with the logarithm of the lever arm at
+Spearman \doseRhoObserved. Recomputed under expected-error scoring it is
+\doseRhoExpected --- unchanged, and if anything marginally stronger. Had the
+relationship lived in pairs the reference could not resolve, discounting those
+pairs would have weakened it.
+
+The ordering of selection rules is also stable under both scoring rules and
+across all three metrics: projection is worst, while shared-exponent pooling and
+single-scale ranking are comparable. What propagation changes is whether the
+difference between them can be called significant, not which is larger.
 
 \section{Resolvability and the reference distribution}
 \label{sec:resolvability}

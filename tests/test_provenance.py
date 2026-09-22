@@ -57,7 +57,7 @@ ALLOWED_FLOATS: dict[str, frozenset[float]] = {
     # the section itself. Structural facts about the prose, not quantities read
     # off the data, and centralised precisely so the four places that state them
     # cannot drift apart.
-    "render_consolidated_findings.py": frozenset({5.0, 6.0}),
+    "render_consolidated_findings.py": frozenset({5.0, 6.0, 8.0}),
     "render_curvature_results.py": frozenset(),
     "render_macros.py": frozenset(),
 }
@@ -233,3 +233,21 @@ def test_paper_macros_are_all_defined() -> None:
     # Only flag macros that look like ours: camelCase and not a known builtin.
     missing = [m for m in missing if any(c.isupper() for c in m)]
     assert not missing, f"paper references undefined macros: {missing}"
+
+
+def test_every_results_directory_is_tracked() -> None:
+    """A results directory outside the .gitignore allowlist is silently untracked.
+
+    This has now happened twice. The second time it hid the provenance evidence
+    for the project's own headline correction, and the paper's macros read from
+    those files, so a clone could not regenerate the paper.
+    """
+
+    allowlist = {
+        line.strip()[len("!results/") :].rstrip("/")
+        for line in (REPO / ".gitignore").read_text(encoding="utf-8").splitlines()
+        if line.strip().startswith("!results/")
+    }
+    present = {p.name for p in RESULTS.iterdir() if p.is_dir() and not p.name.startswith((".", "_"))}
+    missing = sorted(present - allowlist)
+    assert not missing, f"results directories not allowlisted in .gitignore: {missing}"

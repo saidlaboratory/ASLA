@@ -1,0 +1,232 @@
+{
+  "assumption_not_addressed": "Both rules treat the observed target cell means as unbiased estimates of expected target performance. A systematic difference between them --- a different evaluation draw, a different checkpoint --- survives both rules and is not measured here.",
+  "by_multiplicity": {
+    "bh": {
+      "alpha": 0.05,
+      "decomposition": {
+        "both_correct": 289,
+        "corrected": 1,
+        "corrected_determined": 1,
+        "corrected_undetermined": 0,
+        "introduced": 8,
+        "net_introduced": 7,
+        "shared": 2,
+        "shared_determined": 1,
+        "shared_undetermined": 1
+      },
+      "determined_fraction": 0.98,
+      "determined_pairs": 294,
+      "excess_determined_pp": 1.3605442176870746,
+      "excess_expected_pp": 1.9853927368845934,
+      "excess_observed_pp": 2.333333333333333,
+      "n_pairs": 300,
+      "projection": {
+        "determined_errors": 6,
+        "determined_pairs": 294,
+        "determined_rate": 0.02040816326530612,
+        "expected_errors": 9.79579851896879,
+        "expected_rate": 0.03265266172989596,
+        "n_scored": 300,
+        "observed_errors": 10,
+        "observed_rate": 0.03333333333333333
+      },
+      "single_scale": {
+        "determined_errors": 2,
+        "determined_pairs": 294,
+        "determined_rate": 0.006802721088435374,
+        "expected_errors": 3.839620308315009,
+        "expected_rate": 0.012798734361050031,
+        "n_scored": 300,
+        "observed_errors": 3,
+        "observed_rate": 0.01
+      },
+      "test": "two-sided Welch t on target cell means",
+      "welch_df": {
+        "max": 3.9993382531688333,
+        "median": 2.9023627477270466,
+        "min": 2.003219627660322,
+        "note": "computed per pair; 4 is the maximum, not a constant"
+      }
+    },
+    "bonferroni": {
+      "alpha": 0.05,
+      "decomposition": {
+        "both_correct": 289,
+        "corrected": 1,
+        "corrected_determined": 0,
+        "corrected_undetermined": 1,
+        "introduced": 8,
+        "net_introduced": 7,
+        "shared": 2,
+        "shared_determined": 0,
+        "shared_undetermined": 2
+      },
+      "determined_fraction": 0.82,
+      "determined_pairs": 246,
+      "excess_determined_pp": 0.0,
+      "excess_expected_pp": 1.9853927368845934,
+      "excess_observed_pp": 2.333333333333333,
+      "n_pairs": 300,
+      "projection": {
+        "determined_errors": 0,
+        "determined_pairs": 246,
+        "determined_rate": 0.0,
+        "expected_errors": 9.79579851896879,
+        "expected_rate": 0.03265266172989596,
+        "n_scored": 300,
+        "observed_errors": 10,
+        "observed_rate": 0.03333333333333333
+      },
+      "single_scale": {
+        "determined_errors": 0,
+        "determined_pairs": 246,
+        "determined_rate": 0.0,
+        "expected_errors": 3.839620308315009,
+        "expected_rate": 0.012798734361050031,
+        "n_scored": 300,
+        "observed_errors": 3,
+        "observed_rate": 0.01
+      },
+      "test": "two-sided Welch t on target cell means",
+      "welch_df": {
+        "max": 3.9993382531688333,
+        "median": 2.9023627477270466,
+        "min": 2.003219627660322,
+        "note": "computed per pair; 4 is the maximum, not a constant"
+      }
+    },
+    "none": {
+      "alpha": 0.05,
+      "decomposition": {
+        "both_correct": 289,
+        "corrected": 1,
+        "corrected_determined": 1,
+        "corrected_undetermined": 0,
+        "introduced": 8,
+        "net_introduced": 7,
+        "shared": 2,
+        "shared_determined": 1,
+        "shared_undetermined": 1
+      },
+      "determined_fraction": 0.98,
+      "determined_pairs": 294,
+      "excess_determined_pp": 1.3605442176870746,
+      "excess_expected_pp": 1.9853927368845934,
+      "excess_observed_pp": 2.333333333333333,
+      "n_pairs": 300,
+      "projection": {
+        "determined_errors": 6,
+        "determined_pairs": 294,
+        "determined_rate": 0.02040816326530612,
+        "expected_errors": 9.79579851896879,
+        "expected_rate": 0.03265266172989596,
+        "n_scored": 300,
+        "observed_errors": 10,
+        "observed_rate": 0.03333333333333333
+      },
+      "single_scale": {
+        "determined_errors": 2,
+        "determined_pairs": 294,
+        "determined_rate": 0.006802721088435374,
+        "expected_errors": 3.839620308315009,
+        "expected_rate": 0.012798734361050031,
+        "n_scored": 300,
+        "observed_errors": 3,
+        "observed_rate": 0.01
+      },
+      "test": "two-sided Welch t on target cell means",
+      "welch_df": {
+        "max": 3.9993382531688333,
+        "median": 2.9023627477270466,
+        "min": 2.003219627660322,
+        "note": "computed per pair; 4 is the maximum, not a constant"
+      }
+    }
+  },
+  "design": "full_ladder_4M-300M_gate530M",
+  "fit_budgets": [
+    8430221996851200.0,
+    2.170083624144077e+16,
+    4.377678106853376e+16,
+    5.88506060071895e+16,
+    1.2413398842290995e+17,
+    1.5375666115510272e+17,
+    2.1908574798505574e+17,
+    1.955459382959407e+18,
+    5.758063377068851e+18,
+    1.3439040749568e+19,
+    5.66196613152768e+19
+  ],
+  "headline": {
+    "determined_fraction_bh": 0.98,
+    "determined_fraction_bonferroni": 0.82,
+    "direction_preserved": false,
+    "excess_determined_pp": 0.0,
+    "excess_expected_pp": 1.9853927368845934,
+    "excess_observed_pp": 2.333333333333333
+  },
+  "inputs": {
+    "/Users/Evan/ASLA/data/datadecide_runs.parquet": "f61f9c58bb87309521ae62ff1b2585749d763ab110a3fd67998bbdd240e0767b"
+  },
+  "max_fit_scale": "300M",
+  "n_candidates": 25,
+  "reproduction_check": {
+    "committed_first_audit": {
+      "projection_flips": 16,
+      "single_scale_flips": 4
+    },
+    "inputs_varied_without_recovering_the_committed_counts": [
+      "750M excluded and included",
+      "index reset and not reset",
+      "the committed budget list used verbatim",
+      "crossover q at 0.05, 0.10 and 0.20 (flip detection is q-independent)",
+      "the committed metric table (c4_en_bits_per_token)"
+    ],
+    "note": "The audit's own detect_crossovers_fdr and detect_single_scale_flips_fdr, run on the same design, do not reproduce the committed 16 and 4. Every number derived from those counts --- the decomposition, the excess over single-scale, and the review's own 14-introduced/2-corrected arithmetic --- inherits the discrepancy.",
+    "provenance_investigation": {
+      "conclusion": "The shipped file was not produced by the state it was committed with. At 07ae133, using that commit's own code and byte-identical parquet data, the audit's detectors give 10 and 3. asla/analysis/crossover.py is unchanged between 07ae133 and HEAD, and the DataDecide parquet hashes match exactly, so neither the detector nor the input can explain the difference. The 16 and 4 came from uncommitted working state that no longer exists.",
+      "counts_in_that_commit": {
+        "projection_flips": 16,
+        "single_scale_flips": 4
+      },
+      "crossover_module_identical_to_head": true,
+      "data_hash_identical_to_head": true,
+      "instrument_check": "The DataDecide known-answer validation reproduces exactly at HEAD (per-seed 0.803333, seed-mean 0.83, both within band), so the defect is isolated to this file rather than the fitting or ranking path.",
+      "recomputed_at_the_writing_commit": {
+        "projection_flips": 10,
+        "single_scale_flips": 3
+      },
+      "which_counts_are_correct": "10 and 3. They are produced by the committed detectors at both the writing commit and HEAD, by an independently written scorer in this module, and from data whose hash is unchanged. The 16 and 4 cannot be regenerated from any committed state.",
+      "writing_commit": "07ae133"
+    },
+    "recomputed_in_this_script": {
+      "projection_flips": 10,
+      "single_scale_flips": 3
+    },
+    "recomputed_with_audit_detectors": {
+      "projection_flips": 10,
+      "single_scale_flips": 3
+    },
+    "reproduces": false
+  },
+  "seeds_per_target_cell": [
+    3
+  ],
+  "student_t_recomputed": {
+    "assumed_df": 4.0,
+    "n_comparisons": 300,
+    "normal_quantile": 3.764823649533926,
+    "note": "The 3.63x figure assumed 4 degrees of freedom, which is the MAXIMUM at three seeds and is attained only when both cells have equal variance. With per-pair Welch df the normal quantile is anti-conservative by a median factor of 6.77, ranging to 20.5 on the least-balanced pairs. The direction of the original finding strengthens.",
+    "per_comparison_alpha": 0.0001666666666666667,
+    "ratio_at_assumed_df": 3.6264971961298595,
+    "ratio_at_measured_df": {
+      "max": 20.450137418743946,
+      "median": 6.768910327075777,
+      "p10": 3.693143044609567,
+      "p90": 18.265686237643965
+    }
+  },
+  "target_compute": 1.4955135853658112e+20,
+  "target_scale": "530M",
+  "top_rung": 5.66196613152768e+19
+}

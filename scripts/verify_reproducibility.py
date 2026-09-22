@@ -13,6 +13,7 @@ generated from.
 from __future__ import annotations
 
 import argparse
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -96,6 +97,34 @@ def _run(script: str, arguments: list[str]) -> None:
         raise SystemExit(f"{script} failed:\n{result.stdout}\n{result.stderr}")
 
 
+def _compile_paper(failures: list[str], verbose: bool) -> None:
+    """Compile the paper if a toolchain is available.
+
+    A draft whose macros resolve but which does not typeset is not verified, so
+    compilation is part of reproducibility rather than a separate step. Absence
+    of a toolchain is reported, not silently passed.
+    """
+
+    paper = REPO / "paper" / "main.tex"
+    if not paper.exists():
+        return
+    if shutil.which("tectonic") is None:
+        if verbose:
+            print("SKIP paper/main.tex (no tectonic on PATH)")
+        return
+    result = subprocess.run(
+        ["tectonic", "--outdir", str(REPO / "paper"), str(paper)],
+        cwd=REPO / "paper",
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode != 0:
+        tail = (result.stderr or result.stdout).strip().splitlines()[-6:]
+        failures.append("paper/main.tex: does not compile\n    " + "\n    ".join(tail))
+    elif verbose:
+        print("OK  paper/main.tex compiles")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--verbose", action="store_true")
@@ -140,6 +169,8 @@ def main() -> int:
         finally:
             for path, text in snapshot.items():
                 path.write_text(text, encoding="utf-8")
+
+    _compile_paper(failures, args.verbose)
 
     if failures:
         print(f"{len(failures)} document(s) did not reproduce:")

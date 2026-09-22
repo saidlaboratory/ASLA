@@ -51,6 +51,8 @@ def build() -> str:
     scoring = Source.load("target_scoring/target_scoring.json")
     known = Source.load("known_answer/datadecide_known_answer.json")
     robust = Source.load("target_scoring/robustness.json")
+    expected = Source.load("target_scoring/expected_error.json")
+    c4_primary = "regimes.c4_en_bits_per_token/primary_4M-300M_gate530M"
 
     real = "FINDING_misspecification_is_structured.evidence.1_misspecification_is_real"
 
@@ -303,6 +305,98 @@ def build() -> str:
             "maxDfAtThreeSeeds",
             f"{scoring.number('student_t_recomputed.assumed_df'):.0f}",
             "target_scoring.json",
+        ),
+        # --- Expected-error significance (the C4 headline) ---
+        (
+            "expectedGap",
+            f"{expected.number(c4_primary + '.significance.point_difference_pp'):.2f}",
+            "expected_error.json",
+        ),
+        (
+            "expectedCandLow",
+            f"{expected.number(c4_primary + '.significance.candidate_resampling.ci_low_pp'):+.2f}",
+            "expected_error.json",
+        ),
+        (
+            "expectedCandHigh",
+            f"{expected.number(c4_primary + '.significance.candidate_resampling.ci_high_pp'):+.2f}",
+            "expected_error.json",
+        ),
+        (
+            "expectedCandP",
+            f"{expected.number(c4_primary + '.significance.candidate_resampling.p_two_sided'):.3f}",
+            "expected_error.json",
+        ),
+        (
+            "expectedPairLow",
+            f"{expected.number(c4_primary + '.significance.pair_resampling_naive.ci_low_pp'):+.2f}",
+            "expected_error.json",
+        ),
+        (
+            "expectedPairHigh",
+            f"{expected.number(c4_primary + '.significance.pair_resampling_naive.ci_high_pp'):+.2f}",
+            "expected_error.json",
+        ),
+        (
+            "expectedPairP",
+            f"{expected.number(c4_primary + '.significance.pair_resampling_naive.p_two_sided'):.3f}",
+            "expected_error.json",
+        ),
+        (
+            "dependenceFactor",
+            f"{expected.number(c4_primary + '.significance.dependence_correction_factor'):.2f}",
+            "expected_error.json",
+        ),
+        # --- Published figure: two estimators that bracket it ---
+        (
+            "pubObserved",
+            f"{expected.number('published_figure.observed_accuracy'):.3f}",
+            "expected_error.json",
+        ),
+        (
+            "pubPosterior",
+            f"{expected.number('published_figure.posterior_expected_accuracy'):.3f}",
+            "expected_error.json",
+        ),
+        (
+            "pubDisattenuated",
+            f"{expected.number('published_figure.disattenuated_accuracy'):.3f}",
+            "expected_error.json",
+        ),
+        (
+            "pubReliability",
+            f"{expected.number('published_figure.mean_reference_reliability'):.3f}",
+            "expected_error.json",
+        ),
+        (
+            "pubDetFrac",
+            f"{100 * expected.number('published_figure.determined_fraction_bonferroni'):.0f}",
+            "expected_error.json",
+        ),
+        (
+            "relSmallGaps",
+            f"{expected.number('published_figure.by_true_gap_stratum.0.mean_reference_reliability'):.3f}",
+            "expected_error.json",
+        ),
+        (
+            "relLargeGaps",
+            f"{expected.number('published_figure.by_true_gap_stratum.2.mean_reference_reliability'):.3f}",
+            "expected_error.json",
+        ),
+        (
+            "doseRhoObserved",
+            f"{expected.number('dose_response.observed_excess_pp.spearman_vs_log_lever_arm'):+.3f}",
+            "expected_error.json",
+        ),
+        (
+            "doseRhoExpected",
+            f"{expected.number('dose_response.expected_excess_pp.spearman_vs_log_lever_arm'):+.3f}",
+            "expected_error.json",
+        ),
+        (
+            "doseDesigns",
+            f"{expected.integer('dose_response.n_designs')}",
+            "expected_error.json",
         ),
         # --- Provenance ---
         (

@@ -1,0 +1,860 @@
+{
+  "dose_response": {
+    "designs": [
+      {
+        "expected_excess_pp": 0.853343461298494,
+        "lever_arm": 1.3443337899846326,
+        "max_fit": "8M",
+        "observed_excess_pp": 0.6666666666666667,
+        "target": "10M"
+      },
+      {
+        "expected_excess_pp": 4.255505995122051,
+        "lever_arm": 2.835612518622024,
+        "max_fit": "8M",
+        "observed_excess_pp": 4.0,
+        "target": "14M"
+      },
+      {
+        "expected_excess_pp": 3.5351215287840536,
+        "lever_arm": 2.1093068847540004,
+        "max_fit": "10M",
+        "observed_excess_pp": 4.0,
+        "target": "14M"
+      },
+      {
+        "expected_excess_pp": 8.938184900457042,
+        "lever_arm": 3.512287961839689,
+        "max_fit": "8M",
+        "observed_excess_pp": 9.666666666666666,
+        "target": "16M"
+      },
+      {
+        "expected_excess_pp": 5.102641049964827,
+        "lever_arm": 2.612660626405767,
+        "max_fit": "10M",
+        "observed_excess_pp": 5.333333333333333,
+        "target": "16M"
+      },
+      {
+        "expected_excess_pp": 0.6133586192902808,
+        "lever_arm": 1.2386346649176516,
+        "max_fit": "14M",
+        "observed_excess_pp": 1.0000000000000002,
+        "target": "16M"
+      },
+      {
+        "expected_excess_pp": 10.741523544022657,
+        "lever_arm": 5.004610723709241,
+        "max_fit": "8M",
+        "observed_excess_pp": 10.333333333333334,
+        "target": "20M"
+      },
+      {
+        "expected_excess_pp": 9.147202305537935,
+        "lever_arm": 3.7227441287230087,
+        "max_fit": "10M",
+        "observed_excess_pp": 9.000000000000002,
+        "target": "20M"
+      },
+      {
+        "expected_excess_pp": 1.5131270991369836,
+        "lever_arm": 1.7649134678461815,
+        "max_fit": "14M",
+        "observed_excess_pp": 1.3333333333333335,
+        "target": "20M"
+      },
+      {
+        "expected_excess_pp": 0.4663939636421241,
+        "lever_arm": 1.4248862217686427,
+        "max_fit": "16M",
+        "observed_excess_pp": 1.0000000000000002,
+        "target": "20M"
+      },
+      {
+        "expected_excess_pp": 34.14657970007518,
+        "lever_arm": 44.66887092264919,
+        "max_fit": "8M",
+        "observed_excess_pp": 35.333333333333336,
+        "target": "60M"
+      },
+      {
+        "expected_excess_pp": 35.31465362398083,
+        "lever_arm": 33.22751481472456,
+        "max_fit": "10M",
+        "observed_excess_pp": 36.333333333333336,
+        "target": "60M"
+      },
+      {
+        "expected_excess_pp": 15.34936225588881,
+        "lever_arm": 15.752812004214238,
+        "max_fit": "14M",
+        "observed_excess_pp": 16.0,
+        "target": "60M"
+      },
+      {
+        "expected_excess_pp": 10.871526558333422,
+        "lever_arm": 12.717884014057958,
+        "max_fit": "16M",
+        "observed_excess_pp": 11.666666666666666,
+        "target": "60M"
+      },
+      {
+        "expected_excess_pp": 4.005879585473224,
+        "lever_arm": 8.92554354148492,
+        "max_fit": "20M",
+        "observed_excess_pp": 3.9999999999999996,
+        "target": "60M"
+      },
+      {
+        "expected_excess_pp": 39.94708064744289,
+        "lever_arm": 131.53236114035985,
+        "max_fit": "8M",
+        "observed_excess_pp": 40.33333333333333,
+        "target": "90M"
+      },
+      {
+        "expected_excess_pp": 44.34397235296528,
+        "lever_arm": 97.84204051128064,
+        "max_fit": "10M",
+        "observed_excess_pp": 45.00000000000001,
+        "target": "90M"
+      },
+      {
+        "expected_excess_pp": 21.975271319551247,
+        "lever_arm": 46.38587263829632,
+        "max_fit": "14M",
+        "observed_excess_pp": 22.333333333333336,
+        "target": "90M"
+      },
+      {
+        "expected_excess_pp": 16.911000721772822,
+        "lever_arm": 37.44919624171846,
+        "max_fit": "16M",
+        "observed_excess_pp": 17.333333333333336,
+        "target": "90M"
+      },
+      {
+        "expected_excess_pp": 10.864730871614046,
+        "lever_arm": 26.28223620215414,
+        "max_fit": "20M",
+        "observed_excess_pp": 10.999999999999998,
+        "target": "90M"
+      },
+      {
+        "expected_excess_pp": 0.6585412169206172,
+        "lever_arm": 2.944609040334325,
+        "max_fit": "60M",
+        "observed_excess_pp": 0.6666666666666666,
+        "target": "90M"
+      },
+      {
+        "expected_excess_pp": 41.3146478761138,
+        "lever_arm": 306.9901537193612,
+        "max_fit": "8M",
+        "observed_excess_pp": 41.333333333333336,
+        "target": "150M"
+      },
+      {
+        "expected_excess_pp": 48.7351505529001,
+        "lever_arm": 228.3585788042049,
+        "max_fit": "10M",
+        "observed_excess_pp": 49.0,
+        "target": "150M"
+      },
+      {
+        "expected_excess_pp": 25.756151108736347,
+        "lever_arm": 108.26237777668726,
+        "max_fit": "14M",
+        "observed_excess_pp": 26.0,
+        "target": "150M"
+      },
+      {
+        "expected_excess_pp": 19.692806233627163,
+        "lever_arm": 87.40460835066722,
+        "max_fit": "16M",
+        "observed_excess_pp": 20.0,
+        "target": "150M"
+      },
+      {
+        "expected_excess_pp": 16.603321787409865,
+        "lever_arm": 61.34146503443347,
+        "max_fit": "20M",
+        "observed_excess_pp": 16.666666666666668,
+        "target": "150M"
+      },
+      {
+        "expected_excess_pp": 1.723492153491911,
+        "lever_arm": 6.872574734448973,
+        "max_fit": "60M",
+        "observed_excess_pp": 1.6666666666666667,
+        "target": "150M"
+      },
+      {
+        "expected_excess_pp": 1.6325898976556144,
+        "lever_arm": 2.333951516249055,
+        "max_fit": "90M",
+        "observed_excess_pp": 1.6666666666666667,
+        "target": "150M"
+      },
+      {
+        "expected_excess_pp": 42.620453785261816,
+        "lever_arm": 1293.3719641614846,
+        "max_fit": "8M",
+        "observed_excess_pp": 43.00000000000001,
+        "target": "300M"
+      },
+      {
+        "expected_excess_pp": 50.9553987339484,
+        "lever_arm": 962.0913896512781,
+        "max_fit": "10M",
+        "observed_excess_pp": 51.0,
+        "target": "300M"
+      },
+      {
+        "expected_excess_pp": 28.522493824278804,
+        "lever_arm": 456.1173135143314,
+        "max_fit": "14M",
+        "observed_excess_pp": 28.666666666666664,
+        "target": "300M"
+      },
+      {
+        "expected_excess_pp": 23.797851027085095,
+        "lever_arm": 368.24200584169466,
+        "max_fit": "16M",
+        "observed_excess_pp": 24.0,
+        "target": "300M"
+      },
+      {
+        "expected_excess_pp": 23.483199139381732,
+        "lever_arm": 258.43607736245326,
+        "max_fit": "20M",
+        "observed_excess_pp": 23.666666666666664,
+        "target": "300M"
+      },
+      {
+        "expected_excess_pp": 4.167647757414345,
+        "lever_arm": 28.954659865953428,
+        "max_fit": "60M",
+        "observed_excess_pp": 4.333333333333334,
+        "target": "300M"
+      },
+      {
+        "expected_excess_pp": 3.591548901391502,
+        "lever_arm": 9.833108392096078,
+        "max_fit": "90M",
+        "observed_excess_pp": 4.000000000000001,
+        "target": "300M"
+      },
+      {
+        "expected_excess_pp": 2.1758499969589584,
+        "lever_arm": 4.213073118116474,
+        "max_fit": "150M",
+        "observed_excess_pp": 2.666666666666667,
+        "target": "300M"
+      },
+      {
+        "expected_excess_pp": 42.65522321441742,
+        "lever_arm": 3416.225562643684,
+        "max_fit": "8M",
+        "observed_excess_pp": 43.0,
+        "target": "530M"
+      },
+      {
+        "expected_excess_pp": 54.72753868659118,
+        "lever_arm": 2541.203373815915,
+        "max_fit": "10M",
+        "observed_excess_pp": 55.00000000000001,
+        "target": "530M"
+      },
+      {
+        "expected_excess_pp": 31.727957599936335,
+        "lever_arm": 1204.7575401112317,
+        "max_fit": "14M",
+        "observed_excess_pp": 32.0,
+        "target": "530M"
+      },
+      {
+        "expected_excess_pp": 25.873456753982794,
+        "lever_arm": 972.6496231972709,
+        "max_fit": "16M",
+        "observed_excess_pp": 26.0,
+        "target": "530M"
+      },
+      {
+        "expected_excess_pp": 31.53995491694937,
+        "lever_arm": 682.6156421036676,
+        "max_fit": "20M",
+        "observed_excess_pp": 31.66666666666667,
+        "target": "530M"
+      },
+      {
+        "expected_excess_pp": 6.214901224996951,
+        "lever_arm": 76.47888769249144,
+        "max_fit": "60M",
+        "observed_excess_pp": 6.0,
+        "target": "530M"
+      },
+      {
+        "expected_excess_pp": 6.985389223726789,
+        "lever_arm": 25.972509981769324,
+        "max_fit": "90M",
+        "observed_excess_pp": 7.333333333333333,
+        "target": "530M"
+      },
+      {
+        "expected_excess_pp": 3.985557743254654,
+        "lever_arm": 11.128127470064296,
+        "max_fit": "150M",
+        "observed_excess_pp": 4.333333333333334,
+        "target": "530M"
+      },
+      {
+        "expected_excess_pp": 1.9853927368845934,
+        "lever_arm": 2.6413326230234797,
+        "max_fit": "300M",
+        "observed_excess_pp": 2.333333333333333,
+        "target": "530M"
+      },
+      {
+        "expected_excess_pp": 42.999853566027724,
+        "lever_arm": 16132.064149010477,
+        "max_fit": "8M",
+        "observed_excess_pp": 43.0,
+        "target": "1B"
+      },
+      {
+        "expected_excess_pp": 55.99629348481392,
+        "lever_arm": 12000.04364183607,
+        "max_fit": "10M",
+        "observed_excess_pp": 56.00000000000001,
+        "target": "1B"
+      },
+      {
+        "expected_excess_pp": 35.32962965186838,
+        "lever_arm": 5689.093288687381,
+        "max_fit": "14M",
+        "observed_excess_pp": 35.333333333333336,
+        "target": "1B"
+      },
+      {
+        "expected_excess_pp": 28.599873510821507,
+        "lever_arm": 4593.035743162904,
+        "max_fit": "16M",
+        "observed_excess_pp": 28.666666666666668,
+        "target": "1B"
+      },
+      {
+        "expected_excess_pp": 35.27026948976487,
+        "lever_arm": 3223.4403512315457,
+        "max_fit": "20M",
+        "observed_excess_pp": 35.333333333333336,
+        "target": "1B"
+      },
+      {
+        "expected_excess_pp": 7.929442837796163,
+        "lever_arm": 361.1477929886688,
+        "max_fit": "60M",
+        "observed_excess_pp": 8.0,
+        "target": "1B"
+      },
+      {
+        "expected_excess_pp": 8.992216104922987,
+        "lever_arm": 122.64711139637906,
+        "max_fit": "90M",
+        "observed_excess_pp": 9.000000000000002,
+        "target": "1B"
+      },
+      {
+        "expected_excess_pp": 7.876140333822089,
+        "lever_arm": 52.54912561058163,
+        "max_fit": "150M",
+        "observed_excess_pp": 8.0,
+        "target": "1B"
+      },
+      {
+        "expected_excess_pp": 3.8761403167243325,
+        "lever_arm": 12.472872921340285,
+        "max_fit": "300M",
+        "observed_excess_pp": 4.0,
+        "target": "1B"
+      },
+      {
+        "expected_excess_pp": 2.05227313854168,
+        "lever_arm": 4.722189402659495,
+        "max_fit": "530M",
+        "observed_excess_pp": 1.9999999999999998,
+        "target": "1B"
+      }
+    ],
+    "expected_excess_pp": {
+      "p_value": 1.2510753053697593e-17,
+      "spearman_vs_log_lever_arm": 0.8665945165945169
+    },
+    "n_designs": 55,
+    "observed_excess_pp": {
+      "p_value": 4.140666096238983e-17,
+      "spearman_vs_log_lever_arm": 0.8599729678944038
+    },
+    "verdict": "SURVIVES"
+  },
+  "inputs": {
+    "c4_en_bits_per_token": "f61f9c58bb87309521ae62ff1b2585749d763ab110a3fd67998bbdd240e0767b",
+    "olmes_macro_correct_prob_per_char_deficit": "df1e0fa704d6f90e2415d9d4bf197aee92e86600181c7aefdc944d66a2c419f9",
+    "olmes_macro_error": "de17854d09b27d856d88fc9c2e9939f2a48db192137b384fa456da95b81e7616"
+  },
+  "n_resamples": 4000,
+  "primary_rule": "expected_error",
+  "published_figure": {
+    "assumptions": {
+      "disattenuated_accuracy": "Extrapolates to unresolved pairs assuming ranker errors and reference errors are INDEPENDENT. That is doubtful here, because both err preferentially on small true gaps, so the pooled value is reported as a bound and the per-stratum values show how much it leans on the assumption.",
+      "posterior_expected_accuracy": "Pair-conditional. Charges each pair by the probability its target order is correct. Makes no claim about unresolved pairs, which contribute near 0.5 and therefore pull the average toward chance."
+    },
+    "by_true_gap_stratum": [
+      {
+        "disattenuated_accuracy": 0.7961365677160256,
+        "mean_reference_reliability": 0.883729589738924,
+        "n_pairs": 99,
+        "observed_accuracy": 0.7272727272727273,
+        "posterior_accuracy": 0.6764116474373084,
+        "stratum": "small gaps"
+      },
+      {
+        "disattenuated_accuracy": 0.8544260772927352,
+        "mean_reference_reliability": 0.9979052037684567,
+        "n_pairs": 102,
+        "observed_accuracy": 0.8529411764705882,
+        "posterior_accuracy": 0.851297252037983,
+        "stratum": "medium gaps"
+      },
+      {
+        "disattenuated_accuracy": 0.9091009526123923,
+        "mean_reference_reliability": 0.999987724886218,
+        "n_pairs": 99,
+        "observed_accuracy": 0.9090909090909091,
+        "posterior_accuracy": 0.9090786339771272,
+        "stratum": "large gaps"
+      }
+    ],
+    "determined_fraction_bonferroni": 0.04,
+    "disattenuated_accuracy": 0.8579839776080347,
+    "focal_scale": "150M",
+    "mean_reference_reliability": 0.9609144831075721,
+    "n_pairs": 300,
+    "observed_accuracy": 0.83,
+    "posterior_expected_accuracy": 0.8126528585596781,
+    "target_scale": "1B",
+    "withdrawn": "The previous 'accuracy on determined pairs' figure is withdrawn as selection-biased: determined pairs are the well-separated ones, where any ranker scores near 1, so it measures an easier population rather than correcting the same quantity. The determined fraction itself is kept as a finding."
+  },
+  "regimes": {
+    "c4_en_bits_per_token/long_4M-150M_gate300M": {
+      "design": "long_4M-150M_gate300M",
+      "determined_fraction_bonferroni": 0.54,
+      "metric": "c4_en_bits_per_token",
+      "rankers": {
+        "projection": {
+          "determined_errors": 0,
+          "determined_pairs": 162,
+          "determined_rate": 0.0,
+          "expected_errors": 11.359557344409616,
+          "expected_rate": 0.03786519114803205,
+          "n_scored": 300,
+          "observed_errors": 13,
+          "observed_rate": 0.043333333333333335
+        },
+        "shared_exponent": {
+          "determined_errors": 0,
+          "determined_pairs": 162,
+          "determined_rate": 0.0,
+          "expected_errors": 7.547813278331664,
+          "expected_rate": 0.02515937759443888,
+          "n_scored": 300,
+          "observed_errors": 7,
+          "observed_rate": 0.023333333333333334
+        },
+        "single_scale": {
+          "determined_errors": 0,
+          "determined_pairs": 162,
+          "determined_rate": 0.0,
+          "expected_errors": 4.83200735353274,
+          "expected_rate": 0.016106691178442465,
+          "n_scored": 300,
+          "observed_errors": 5,
+          "observed_rate": 0.016666666666666666
+        }
+      },
+      "regime": "low_noise"
+    },
+    "c4_en_bits_per_token/primary_4M-300M_gate530M": {
+      "design": "primary_4M-300M_gate530M",
+      "determined_fraction_bonferroni": 0.82,
+      "metric": "c4_en_bits_per_token",
+      "rankers": {
+        "projection": {
+          "determined_errors": 0,
+          "determined_pairs": 246,
+          "determined_rate": 0.0,
+          "expected_errors": 9.79579851896879,
+          "expected_rate": 0.03265266172989596,
+          "n_scored": 300,
+          "observed_errors": 10,
+          "observed_rate": 0.03333333333333333
+        },
+        "shared_exponent": {
+          "determined_errors": 0,
+          "determined_pairs": 246,
+          "determined_rate": 0.0,
+          "expected_errors": 3.1866819407573863,
+          "expected_rate": 0.010622273135857955,
+          "n_scored": 300,
+          "observed_errors": 3,
+          "observed_rate": 0.01
+        },
+        "single_scale": {
+          "determined_errors": 0,
+          "determined_pairs": 246,
+          "determined_rate": 0.0,
+          "expected_errors": 3.839620308315009,
+          "expected_rate": 0.012798734361050031,
+          "n_scored": 300,
+          "observed_errors": 3,
+          "observed_rate": 0.01
+        }
+      },
+      "regime": "low_noise",
+      "significance": {
+        "candidate_resampling": {
+          "ci_high_pp": 4.980000281228868,
+          "ci_low_pp": -0.208118441980863,
+          "excludes_zero": false,
+          "mean": 1.9841789803555268,
+          "n_draws": 4000,
+          "p_two_sided": 0.1245,
+          "unit": "candidate"
+        },
+        "dependence_correction_factor": 1.4734577425766033,
+        "pair_resampling_naive": {
+          "ci_high_pp": 3.85131824331093,
+          "ci_low_pp": 0.33026801343641643,
+          "excludes_zero": true,
+          "mean": 1.985838822176153,
+          "n_draws": 4000,
+          "p_two_sided": 0.0175,
+          "unit": "pair (anti-conservative)"
+        },
+        "point_difference_pp": 1.9853927368845934
+      }
+    },
+    "c4_en_bits_per_token/short_4M-530M_gate1B": {
+      "design": "short_4M-530M_gate1B",
+      "determined_fraction_bonferroni": 0.8633333333333333,
+      "metric": "c4_en_bits_per_token",
+      "rankers": {
+        "projection": {
+          "determined_errors": 0,
+          "determined_pairs": 259,
+          "determined_rate": 0.0,
+          "expected_errors": 9.158147893289044,
+          "expected_rate": 0.030527159644296812,
+          "n_scored": 300,
+          "observed_errors": 9,
+          "observed_rate": 0.03
+        },
+        "shared_exponent": {
+          "determined_errors": 0,
+          "determined_pairs": 259,
+          "determined_rate": 0.0,
+          "expected_errors": 5.347346741305425,
+          "expected_rate": 0.01782448913768475,
+          "n_scored": 300,
+          "observed_errors": 5,
+          "observed_rate": 0.016666666666666666
+        },
+        "single_scale": {
+          "determined_errors": 0,
+          "determined_pairs": 259,
+          "determined_rate": 0.0,
+          "expected_errors": 3.0013284776640043,
+          "expected_rate": 0.010004428258880014,
+          "n_scored": 300,
+          "observed_errors": 3,
+          "observed_rate": 0.01
+        }
+      },
+      "regime": "low_noise"
+    },
+    "olmes_macro_correct_prob_per_char_deficit/long_4M-150M_gate300M": {
+      "design": "long_4M-150M_gate300M",
+      "determined_fraction_bonferroni": 0.04666666666666667,
+      "metric": "olmes_macro_correct_prob_per_char_deficit",
+      "rankers": {
+        "projection": {
+          "determined_errors": 0,
+          "determined_pairs": 14,
+          "determined_rate": 0.0,
+          "expected_errors": 35.983682462916505,
+          "expected_rate": 0.11994560820972168,
+          "n_scored": 300,
+          "observed_errors": 36,
+          "observed_rate": 0.12
+        },
+        "shared_exponent": {
+          "determined_errors": 0,
+          "determined_pairs": 14,
+          "determined_rate": 0.0,
+          "expected_errors": 24.47311604363072,
+          "expected_rate": 0.08157705347876908,
+          "n_scored": 300,
+          "observed_errors": 25,
+          "observed_rate": 0.08333333333333333
+        },
+        "single_scale": {
+          "determined_errors": 0,
+          "determined_pairs": 14,
+          "determined_rate": 0.0,
+          "expected_errors": 27.565087880104894,
+          "expected_rate": 0.09188362626701631,
+          "n_scored": 300,
+          "observed_errors": 25,
+          "observed_rate": 0.08333333333333333
+        }
+      },
+      "regime": "high_noise"
+    },
+    "olmes_macro_correct_prob_per_char_deficit/primary_4M-300M_gate530M": {
+      "design": "primary_4M-300M_gate530M",
+      "determined_fraction_bonferroni": 0.05,
+      "metric": "olmes_macro_correct_prob_per_char_deficit",
+      "rankers": {
+        "projection": {
+          "determined_errors": 1,
+          "determined_pairs": 15,
+          "determined_rate": 0.06666666666666667,
+          "expected_errors": 39.96705335267297,
+          "expected_rate": 0.13322351117557657,
+          "n_scored": 300,
+          "observed_errors": 39,
+          "observed_rate": 0.13
+        },
+        "shared_exponent": {
+          "determined_errors": 0,
+          "determined_pairs": 15,
+          "determined_rate": 0.0,
+          "expected_errors": 33.53108512873664,
+          "expected_rate": 0.11177028376245547,
+          "n_scored": 300,
+          "observed_errors": 31,
+          "observed_rate": 0.10333333333333333
+        },
+        "single_scale": {
+          "determined_errors": 0,
+          "determined_pairs": 15,
+          "determined_rate": 0.0,
+          "expected_errors": 32.302406915579326,
+          "expected_rate": 0.10767468971859775,
+          "n_scored": 300,
+          "observed_errors": 31,
+          "observed_rate": 0.10333333333333333
+        }
+      },
+      "regime": "high_noise",
+      "significance": {
+        "candidate_resampling": {
+          "ci_high_pp": 8.686558684650418,
+          "ci_low_pp": -2.7979319892730365,
+          "excludes_zero": false,
+          "mean": 2.552482497114664,
+          "n_draws": 4000,
+          "p_two_sided": 0.406,
+          "unit": "candidate"
+        },
+        "dependence_correction_factor": 1.749008212490972,
+        "pair_resampling_naive": {
+          "ci_high_pp": 5.827386584324419,
+          "ci_low_pp": -0.7389008647019166,
+          "excludes_zero": false,
+          "mean": 2.53193550610345,
+          "n_draws": 4000,
+          "p_two_sided": 0.1315,
+          "unit": "pair (anti-conservative)"
+        },
+        "point_difference_pp": 2.5548821456978814
+      }
+    },
+    "olmes_macro_correct_prob_per_char_deficit/short_4M-530M_gate1B": {
+      "design": "short_4M-530M_gate1B",
+      "determined_fraction_bonferroni": 0.14,
+      "metric": "olmes_macro_correct_prob_per_char_deficit",
+      "rankers": {
+        "projection": {
+          "determined_errors": 4,
+          "determined_pairs": 42,
+          "determined_rate": 0.09523809523809523,
+          "expected_errors": 45.22236979867859,
+          "expected_rate": 0.15074123266226197,
+          "n_scored": 300,
+          "observed_errors": 43,
+          "observed_rate": 0.14333333333333334
+        },
+        "shared_exponent": {
+          "determined_errors": 7,
+          "determined_pairs": 42,
+          "determined_rate": 0.16666666666666666,
+          "expected_errors": 42.79969818181649,
+          "expected_rate": 0.14266566060605496,
+          "n_scored": 300,
+          "observed_errors": 41,
+          "observed_rate": 0.13666666666666666
+        },
+        "single_scale": {
+          "determined_errors": 1,
+          "determined_pairs": 42,
+          "determined_rate": 0.023809523809523808,
+          "expected_errors": 23.49801882245032,
+          "expected_rate": 0.07832672940816773,
+          "n_scored": 300,
+          "observed_errors": 21,
+          "observed_rate": 0.07
+        }
+      },
+      "regime": "high_noise"
+    },
+    "olmes_macro_error/long_4M-150M_gate300M": {
+      "design": "long_4M-150M_gate300M",
+      "determined_fraction_bonferroni": 0.013333333333333334,
+      "metric": "olmes_macro_error",
+      "rankers": {
+        "projection": {
+          "determined_errors": 0,
+          "determined_pairs": 4,
+          "determined_rate": 0.0,
+          "expected_errors": 26.461242483289663,
+          "expected_rate": 0.08820414161096554,
+          "n_scored": 300,
+          "observed_errors": 25,
+          "observed_rate": 0.08333333333333333
+        },
+        "shared_exponent": {
+          "determined_errors": 0,
+          "determined_pairs": 4,
+          "determined_rate": 0.0,
+          "expected_errors": 25.481837331003295,
+          "expected_rate": 0.08493945777001098,
+          "n_scored": 300,
+          "observed_errors": 24,
+          "observed_rate": 0.08
+        },
+        "single_scale": {
+          "determined_errors": 0,
+          "determined_pairs": 4,
+          "determined_rate": 0.0,
+          "expected_errors": 27.72167935125459,
+          "expected_rate": 0.0924055978375153,
+          "n_scored": 300,
+          "observed_errors": 23,
+          "observed_rate": 0.07666666666666666
+        }
+      },
+      "regime": "high_noise"
+    },
+    "olmes_macro_error/primary_4M-300M_gate530M": {
+      "design": "primary_4M-300M_gate530M",
+      "determined_fraction_bonferroni": 0.03333333333333333,
+      "metric": "olmes_macro_error",
+      "rankers": {
+        "projection": {
+          "determined_errors": 0,
+          "determined_pairs": 10,
+          "determined_rate": 0.0,
+          "expected_errors": 28.558817999344587,
+          "expected_rate": 0.09519605999781529,
+          "n_scored": 300,
+          "observed_errors": 24,
+          "observed_rate": 0.08
+        },
+        "shared_exponent": {
+          "determined_errors": 0,
+          "determined_pairs": 10,
+          "determined_rate": 0.0,
+          "expected_errors": 28.558817999344587,
+          "expected_rate": 0.09519605999781529,
+          "n_scored": 300,
+          "observed_errors": 24,
+          "observed_rate": 0.08
+        },
+        "single_scale": {
+          "determined_errors": 0,
+          "determined_pairs": 10,
+          "determined_rate": 0.0,
+          "expected_errors": 26.95781652298943,
+          "expected_rate": 0.08985938840996477,
+          "n_scored": 300,
+          "observed_errors": 23,
+          "observed_rate": 0.07666666666666666
+        }
+      },
+      "regime": "high_noise",
+      "significance": {
+        "candidate_resampling": {
+          "ci_high_pp": 3.3901755368511317,
+          "ci_low_pp": -2.564276089578242,
+          "excludes_zero": false,
+          "mean": 0.495549469619829,
+          "n_draws": 4000,
+          "p_two_sided": 0.7305,
+          "unit": "candidate"
+        },
+        "dependence_correction_factor": 1.4259962825638004,
+        "pair_resampling_naive": {
+          "ci_high_pp": 2.607567464891487,
+          "ci_low_pp": -1.5680756971817393,
+          "excludes_zero": false,
+          "mean": 0.5438657452355412,
+          "n_draws": 4000,
+          "p_two_sided": 0.612,
+          "unit": "pair (anti-conservative)"
+        },
+        "point_difference_pp": 0.5336671587850519
+      }
+    },
+    "olmes_macro_error/short_4M-530M_gate1B": {
+      "design": "short_4M-530M_gate1B",
+      "determined_fraction_bonferroni": 0.04,
+      "metric": "olmes_macro_error",
+      "rankers": {
+        "projection": {
+          "determined_errors": 1,
+          "determined_pairs": 12,
+          "determined_rate": 0.08333333333333333,
+          "expected_errors": 50.48390281600446,
+          "expected_rate": 0.1682796760533482,
+          "n_scored": 300,
+          "observed_errors": 48,
+          "observed_rate": 0.16
+        },
+        "shared_exponent": {
+          "determined_errors": 1,
+          "determined_pairs": 12,
+          "determined_rate": 0.08333333333333333,
+          "expected_errors": 49.37836030197926,
+          "expected_rate": 0.16459453433993085,
+          "n_scored": 300,
+          "observed_errors": 46,
+          "observed_rate": 0.15333333333333332
+        },
+        "single_scale": {
+          "determined_errors": 0,
+          "determined_pairs": 12,
+          "determined_rate": 0.0,
+          "expected_errors": 39.363091080058496,
+          "expected_rate": 0.13121030360019498,
+          "n_scored": 300,
+          "observed_errors": 35,
+          "observed_rate": 0.11666666666666667
+        }
+      },
+      "regime": "high_noise"
+    }
+  },
+  "why": "Determined-subset scoring is vacuous on the primary design: both rankers make zero errors there, so it cannot distinguish them. Expected-error charges every pair in expectation and retains a measurable difference."
+}

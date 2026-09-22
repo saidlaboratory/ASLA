@@ -1,0 +1,2011 @@
+{
+  "cells": {
+    "c4_en_bits_per_token/long_4M-150M_gate300M": {
+      "design": "long_4M-150M_gate300M",
+      "determined": {
+        "bh": {
+          "fraction": 0.9666666666666667,
+          "pairs": 290
+        },
+        "bonferroni": {
+          "fraction": 0.54,
+          "pairs": 162
+        },
+        "none": {
+          "fraction": 0.9666666666666667,
+          "pairs": 290
+        }
+      },
+      "equivalence_bonferroni": {
+        "ci_high_pp": 1.8518518518518516,
+        "ci_low_pp": -1.8518518518518516,
+        "difference_pp": 0.0,
+        "largest_difference_ruled_out_pp": 1.8518518518518516,
+        "method": "rule of three (zero events on both sides)",
+        "n_pairs": 162,
+        "note": "Neither method errs on this subset, so the data cannot distinguish them. The bound is set by the subset size alone, not by any observed difference.",
+        "vacuous": true
+      },
+      "metric": "c4_en_bits_per_token",
+      "n_fit_budgets": 10,
+      "rankers": {
+        "projection": {
+          "bh": {
+            "determined_errors": 4,
+            "determined_pairs": 290,
+            "determined_rate": 0.013793103448275862,
+            "expected_errors": 11.359557344409616,
+            "expected_rate": 0.03786519114803205,
+            "n_scored": 300,
+            "observed_errors": 13,
+            "observed_rate": 0.043333333333333335
+          },
+          "bonferroni": {
+            "determined_errors": 0,
+            "determined_pairs": 162,
+            "determined_rate": 0.0,
+            "expected_errors": 11.359557344409616,
+            "expected_rate": 0.03786519114803205,
+            "n_scored": 300,
+            "observed_errors": 13,
+            "observed_rate": 0.043333333333333335
+          },
+          "none": {
+            "determined_errors": 4,
+            "determined_pairs": 290,
+            "determined_rate": 0.013793103448275862,
+            "expected_errors": 11.359557344409616,
+            "expected_rate": 0.03786519114803205,
+            "n_scored": 300,
+            "observed_errors": 13,
+            "observed_rate": 0.043333333333333335
+          }
+        },
+        "shared_exponent": {
+          "bh": {
+            "determined_errors": 4,
+            "determined_pairs": 290,
+            "determined_rate": 0.013793103448275862,
+            "expected_errors": 7.547813278331664,
+            "expected_rate": 0.02515937759443888,
+            "n_scored": 300,
+            "observed_errors": 7,
+            "observed_rate": 0.023333333333333334
+          },
+          "bonferroni": {
+            "determined_errors": 0,
+            "determined_pairs": 162,
+            "determined_rate": 0.0,
+            "expected_errors": 7.547813278331664,
+            "expected_rate": 0.02515937759443888,
+            "n_scored": 300,
+            "observed_errors": 7,
+            "observed_rate": 0.023333333333333334
+          },
+          "none": {
+            "determined_errors": 4,
+            "determined_pairs": 290,
+            "determined_rate": 0.013793103448275862,
+            "expected_errors": 7.547813278331664,
+            "expected_rate": 0.02515937759443888,
+            "n_scored": 300,
+            "observed_errors": 7,
+            "observed_rate": 0.023333333333333334
+          }
+        },
+        "single_scale": {
+          "bh": {
+            "determined_errors": 2,
+            "determined_pairs": 290,
+            "determined_rate": 0.006896551724137931,
+            "expected_errors": 4.83200735353274,
+            "expected_rate": 0.016106691178442465,
+            "n_scored": 300,
+            "observed_errors": 5,
+            "observed_rate": 0.016666666666666666
+          },
+          "bonferroni": {
+            "determined_errors": 0,
+            "determined_pairs": 162,
+            "determined_rate": 0.0,
+            "expected_errors": 4.83200735353274,
+            "expected_rate": 0.016106691178442465,
+            "n_scored": 300,
+            "observed_errors": 5,
+            "observed_rate": 0.016666666666666666
+          },
+          "none": {
+            "determined_errors": 2,
+            "determined_pairs": 290,
+            "determined_rate": 0.006896551724137931,
+            "expected_errors": 4.83200735353274,
+            "expected_rate": 0.016106691178442465,
+            "n_scored": 300,
+            "observed_errors": 5,
+            "observed_rate": 0.016666666666666666
+          }
+        }
+      },
+      "threshold_curve": [
+        {
+          "comparison_is_vacuous": true,
+          "determined_fraction": 0.05,
+          "determined_pairs": 15,
+          "gap_pp": 0.0,
+          "per_comparison_alpha": 1e-06,
+          "projection_errors": 0,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 0
+        },
+        {
+          "comparison_is_vacuous": true,
+          "determined_fraction": 0.16333333333333333,
+          "determined_pairs": 49,
+          "gap_pp": 0.0,
+          "per_comparison_alpha": 1e-05,
+          "projection_errors": 0,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 0
+        },
+        {
+          "comparison_is_vacuous": true,
+          "determined_fraction": 0.54,
+          "determined_pairs": 162,
+          "gap_pp": 0.0,
+          "per_comparison_alpha": 0.0001666666666666667,
+          "projection_errors": 0,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 0
+        },
+        {
+          "comparison_is_vacuous": true,
+          "determined_fraction": 0.7966666666666666,
+          "determined_pairs": 239,
+          "gap_pp": 0.0,
+          "per_comparison_alpha": 0.001,
+          "projection_errors": 0,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 0
+        },
+        {
+          "comparison_is_vacuous": true,
+          "determined_fraction": 0.9233333333333333,
+          "determined_pairs": 277,
+          "gap_pp": 0.0,
+          "per_comparison_alpha": 0.01,
+          "projection_errors": 0,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 0
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 0.9666666666666667,
+          "determined_pairs": 290,
+          "gap_pp": 0.6896551724137931,
+          "per_comparison_alpha": 0.05,
+          "projection_errors": 4,
+          "single_scale_errors": 2,
+          "total_errors_in_subset": 6
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 0.98,
+          "determined_pairs": 294,
+          "gap_pp": 1.7006802721088434,
+          "per_comparison_alpha": 0.2,
+          "projection_errors": 7,
+          "single_scale_errors": 2,
+          "total_errors_in_subset": 9
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 0.99,
+          "determined_pairs": 297,
+          "gap_pp": 2.3569023569023564,
+          "per_comparison_alpha": 0.5,
+          "projection_errors": 10,
+          "single_scale_errors": 3,
+          "total_errors_in_subset": 13
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 1.0,
+          "determined_pairs": 300,
+          "gap_pp": 2.666666666666667,
+          "per_comparison_alpha": 1.0,
+          "projection_errors": 13,
+          "single_scale_errors": 5,
+          "total_errors_in_subset": 18
+        }
+      ]
+    },
+    "c4_en_bits_per_token/primary_4M-300M_gate530M": {
+      "design": "primary_4M-300M_gate530M",
+      "determined": {
+        "bh": {
+          "fraction": 0.98,
+          "pairs": 294
+        },
+        "bonferroni": {
+          "fraction": 0.82,
+          "pairs": 246
+        },
+        "none": {
+          "fraction": 0.98,
+          "pairs": 294
+        }
+      },
+      "equivalence_bonferroni": {
+        "ci_high_pp": 1.2195121951219512,
+        "ci_low_pp": -1.2195121951219512,
+        "difference_pp": 0.0,
+        "largest_difference_ruled_out_pp": 1.2195121951219512,
+        "method": "rule of three (zero events on both sides)",
+        "n_pairs": 246,
+        "note": "Neither method errs on this subset, so the data cannot distinguish them. The bound is set by the subset size alone, not by any observed difference.",
+        "vacuous": true
+      },
+      "metric": "c4_en_bits_per_token",
+      "n_fit_budgets": 11,
+      "rankers": {
+        "projection": {
+          "bh": {
+            "determined_errors": 6,
+            "determined_pairs": 294,
+            "determined_rate": 0.02040816326530612,
+            "expected_errors": 9.79579851896879,
+            "expected_rate": 0.03265266172989596,
+            "n_scored": 300,
+            "observed_errors": 10,
+            "observed_rate": 0.03333333333333333
+          },
+          "bonferroni": {
+            "determined_errors": 0,
+            "determined_pairs": 246,
+            "determined_rate": 0.0,
+            "expected_errors": 9.79579851896879,
+            "expected_rate": 0.03265266172989596,
+            "n_scored": 300,
+            "observed_errors": 10,
+            "observed_rate": 0.03333333333333333
+          },
+          "none": {
+            "determined_errors": 6,
+            "determined_pairs": 294,
+            "determined_rate": 0.02040816326530612,
+            "expected_errors": 9.79579851896879,
+            "expected_rate": 0.03265266172989596,
+            "n_scored": 300,
+            "observed_errors": 10,
+            "observed_rate": 0.03333333333333333
+          }
+        },
+        "shared_exponent": {
+          "bh": {
+            "determined_errors": 1,
+            "determined_pairs": 294,
+            "determined_rate": 0.003401360544217687,
+            "expected_errors": 3.1866819407573863,
+            "expected_rate": 0.010622273135857955,
+            "n_scored": 300,
+            "observed_errors": 3,
+            "observed_rate": 0.01
+          },
+          "bonferroni": {
+            "determined_errors": 0,
+            "determined_pairs": 246,
+            "determined_rate": 0.0,
+            "expected_errors": 3.1866819407573863,
+            "expected_rate": 0.010622273135857955,
+            "n_scored": 300,
+            "observed_errors": 3,
+            "observed_rate": 0.01
+          },
+          "none": {
+            "determined_errors": 1,
+            "determined_pairs": 294,
+            "determined_rate": 0.003401360544217687,
+            "expected_errors": 3.1866819407573863,
+            "expected_rate": 0.010622273135857955,
+            "n_scored": 300,
+            "observed_errors": 3,
+            "observed_rate": 0.01
+          }
+        },
+        "single_scale": {
+          "bh": {
+            "determined_errors": 2,
+            "determined_pairs": 294,
+            "determined_rate": 0.006802721088435374,
+            "expected_errors": 3.839620308315009,
+            "expected_rate": 0.012798734361050031,
+            "n_scored": 300,
+            "observed_errors": 3,
+            "observed_rate": 0.01
+          },
+          "bonferroni": {
+            "determined_errors": 0,
+            "determined_pairs": 246,
+            "determined_rate": 0.0,
+            "expected_errors": 3.839620308315009,
+            "expected_rate": 0.012798734361050031,
+            "n_scored": 300,
+            "observed_errors": 3,
+            "observed_rate": 0.01
+          },
+          "none": {
+            "determined_errors": 2,
+            "determined_pairs": 294,
+            "determined_rate": 0.006802721088435374,
+            "expected_errors": 3.839620308315009,
+            "expected_rate": 0.012798734361050031,
+            "n_scored": 300,
+            "observed_errors": 3,
+            "observed_rate": 0.01
+          }
+        }
+      },
+      "threshold_curve": [
+        {
+          "comparison_is_vacuous": true,
+          "determined_fraction": 0.25333333333333335,
+          "determined_pairs": 76,
+          "gap_pp": 0.0,
+          "per_comparison_alpha": 1e-06,
+          "projection_errors": 0,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 0
+        },
+        {
+          "comparison_is_vacuous": true,
+          "determined_fraction": 0.48333333333333334,
+          "determined_pairs": 145,
+          "gap_pp": 0.0,
+          "per_comparison_alpha": 1e-05,
+          "projection_errors": 0,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 0
+        },
+        {
+          "comparison_is_vacuous": true,
+          "determined_fraction": 0.82,
+          "determined_pairs": 246,
+          "gap_pp": 0.0,
+          "per_comparison_alpha": 0.0001666666666666667,
+          "projection_errors": 0,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 0
+        },
+        {
+          "comparison_is_vacuous": true,
+          "determined_fraction": 0.92,
+          "determined_pairs": 276,
+          "gap_pp": 0.0,
+          "per_comparison_alpha": 0.001,
+          "projection_errors": 0,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 0
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 0.96,
+          "determined_pairs": 288,
+          "gap_pp": 0.6944444444444444,
+          "per_comparison_alpha": 0.01,
+          "projection_errors": 2,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 2
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 0.98,
+          "determined_pairs": 294,
+          "gap_pp": 1.3605442176870746,
+          "per_comparison_alpha": 0.05,
+          "projection_errors": 6,
+          "single_scale_errors": 2,
+          "total_errors_in_subset": 8
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 0.99,
+          "determined_pairs": 297,
+          "gap_pp": 1.6835016835016834,
+          "per_comparison_alpha": 0.2,
+          "projection_errors": 8,
+          "single_scale_errors": 3,
+          "total_errors_in_subset": 11
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 0.9933333333333333,
+          "determined_pairs": 298,
+          "gap_pp": 2.0134228187919465,
+          "per_comparison_alpha": 0.5,
+          "projection_errors": 9,
+          "single_scale_errors": 3,
+          "total_errors_in_subset": 12
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 1.0,
+          "determined_pairs": 300,
+          "gap_pp": 2.333333333333333,
+          "per_comparison_alpha": 1.0,
+          "projection_errors": 10,
+          "single_scale_errors": 3,
+          "total_errors_in_subset": 13
+        }
+      ]
+    },
+    "c4_en_bits_per_token/short_4M-530M_gate1B": {
+      "design": "short_4M-530M_gate1B",
+      "determined": {
+        "bh": {
+          "fraction": 0.9833333333333333,
+          "pairs": 295
+        },
+        "bonferroni": {
+          "fraction": 0.8633333333333333,
+          "pairs": 259
+        },
+        "none": {
+          "fraction": 0.9833333333333333,
+          "pairs": 295
+        }
+      },
+      "equivalence_bonferroni": {
+        "ci_high_pp": 1.1583011583011582,
+        "ci_low_pp": -1.1583011583011582,
+        "difference_pp": 0.0,
+        "largest_difference_ruled_out_pp": 1.1583011583011582,
+        "method": "rule of three (zero events on both sides)",
+        "n_pairs": 259,
+        "note": "Neither method errs on this subset, so the data cannot distinguish them. The bound is set by the subset size alone, not by any observed difference.",
+        "vacuous": true
+      },
+      "metric": "c4_en_bits_per_token",
+      "n_fit_budgets": 12,
+      "rankers": {
+        "projection": {
+          "bh": {
+            "determined_errors": 6,
+            "determined_pairs": 295,
+            "determined_rate": 0.020338983050847456,
+            "expected_errors": 9.158147893289044,
+            "expected_rate": 0.030527159644296812,
+            "n_scored": 300,
+            "observed_errors": 9,
+            "observed_rate": 0.03
+          },
+          "bonferroni": {
+            "determined_errors": 0,
+            "determined_pairs": 259,
+            "determined_rate": 0.0,
+            "expected_errors": 9.158147893289044,
+            "expected_rate": 0.030527159644296812,
+            "n_scored": 300,
+            "observed_errors": 9,
+            "observed_rate": 0.03
+          },
+          "none": {
+            "determined_errors": 6,
+            "determined_pairs": 295,
+            "determined_rate": 0.020338983050847456,
+            "expected_errors": 9.158147893289044,
+            "expected_rate": 0.030527159644296812,
+            "n_scored": 300,
+            "observed_errors": 9,
+            "observed_rate": 0.03
+          }
+        },
+        "shared_exponent": {
+          "bh": {
+            "determined_errors": 3,
+            "determined_pairs": 295,
+            "determined_rate": 0.010169491525423728,
+            "expected_errors": 5.347346741305425,
+            "expected_rate": 0.01782448913768475,
+            "n_scored": 300,
+            "observed_errors": 5,
+            "observed_rate": 0.016666666666666666
+          },
+          "bonferroni": {
+            "determined_errors": 0,
+            "determined_pairs": 259,
+            "determined_rate": 0.0,
+            "expected_errors": 5.347346741305425,
+            "expected_rate": 0.01782448913768475,
+            "n_scored": 300,
+            "observed_errors": 5,
+            "observed_rate": 0.016666666666666666
+          },
+          "none": {
+            "determined_errors": 3,
+            "determined_pairs": 295,
+            "determined_rate": 0.010169491525423728,
+            "expected_errors": 5.347346741305425,
+            "expected_rate": 0.01782448913768475,
+            "n_scored": 300,
+            "observed_errors": 5,
+            "observed_rate": 0.016666666666666666
+          }
+        },
+        "single_scale": {
+          "bh": {
+            "determined_errors": 1,
+            "determined_pairs": 295,
+            "determined_rate": 0.003389830508474576,
+            "expected_errors": 3.0013284776640043,
+            "expected_rate": 0.010004428258880014,
+            "n_scored": 300,
+            "observed_errors": 3,
+            "observed_rate": 0.01
+          },
+          "bonferroni": {
+            "determined_errors": 0,
+            "determined_pairs": 259,
+            "determined_rate": 0.0,
+            "expected_errors": 3.0013284776640043,
+            "expected_rate": 0.010004428258880014,
+            "n_scored": 300,
+            "observed_errors": 3,
+            "observed_rate": 0.01
+          },
+          "none": {
+            "determined_errors": 1,
+            "determined_pairs": 295,
+            "determined_rate": 0.003389830508474576,
+            "expected_errors": 3.0013284776640043,
+            "expected_rate": 0.010004428258880014,
+            "n_scored": 300,
+            "observed_errors": 3,
+            "observed_rate": 0.01
+          }
+        }
+      },
+      "threshold_curve": [
+        {
+          "comparison_is_vacuous": true,
+          "determined_fraction": 0.3933333333333333,
+          "determined_pairs": 118,
+          "gap_pp": 0.0,
+          "per_comparison_alpha": 1e-06,
+          "projection_errors": 0,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 0
+        },
+        {
+          "comparison_is_vacuous": true,
+          "determined_fraction": 0.6466666666666666,
+          "determined_pairs": 194,
+          "gap_pp": 0.0,
+          "per_comparison_alpha": 1e-05,
+          "projection_errors": 0,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 0
+        },
+        {
+          "comparison_is_vacuous": true,
+          "determined_fraction": 0.8633333333333333,
+          "determined_pairs": 259,
+          "gap_pp": 0.0,
+          "per_comparison_alpha": 0.0001666666666666667,
+          "projection_errors": 0,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 0
+        },
+        {
+          "comparison_is_vacuous": true,
+          "determined_fraction": 0.9166666666666666,
+          "determined_pairs": 275,
+          "gap_pp": 0.0,
+          "per_comparison_alpha": 0.001,
+          "projection_errors": 0,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 0
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 0.9633333333333334,
+          "determined_pairs": 289,
+          "gap_pp": 1.0380622837370241,
+          "per_comparison_alpha": 0.01,
+          "projection_errors": 3,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 3
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 0.9833333333333333,
+          "determined_pairs": 295,
+          "gap_pp": 1.694915254237288,
+          "per_comparison_alpha": 0.05,
+          "projection_errors": 6,
+          "single_scale_errors": 1,
+          "total_errors_in_subset": 7
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 0.99,
+          "determined_pairs": 297,
+          "gap_pp": 2.356902356902357,
+          "per_comparison_alpha": 0.2,
+          "projection_errors": 8,
+          "single_scale_errors": 1,
+          "total_errors_in_subset": 9
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 1.0,
+          "determined_pairs": 300,
+          "gap_pp": 1.9999999999999998,
+          "per_comparison_alpha": 0.5,
+          "projection_errors": 9,
+          "single_scale_errors": 3,
+          "total_errors_in_subset": 12
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 1.0,
+          "determined_pairs": 300,
+          "gap_pp": 1.9999999999999998,
+          "per_comparison_alpha": 1.0,
+          "projection_errors": 9,
+          "single_scale_errors": 3,
+          "total_errors_in_subset": 12
+        }
+      ]
+    },
+    "olmes_macro_correct_prob_per_char_deficit/long_4M-150M_gate300M": {
+      "design": "long_4M-150M_gate300M",
+      "determined": {
+        "bh": {
+          "fraction": 0.6466666666666666,
+          "pairs": 194
+        },
+        "bonferroni": {
+          "fraction": 0.04666666666666667,
+          "pairs": 14
+        },
+        "none": {
+          "fraction": 0.72,
+          "pairs": 216
+        }
+      },
+      "equivalence_bonferroni": {
+        "ci_high_pp": 21.428571428571427,
+        "ci_low_pp": -21.428571428571427,
+        "difference_pp": 0.0,
+        "largest_difference_ruled_out_pp": 21.428571428571427,
+        "method": "rule of three (zero events on both sides)",
+        "n_pairs": 14,
+        "note": "Neither method errs on this subset, so the data cannot distinguish them. The bound is set by the subset size alone, not by any observed difference.",
+        "vacuous": true
+      },
+      "metric": "olmes_macro_correct_prob_per_char_deficit",
+      "n_fit_budgets": 10,
+      "rankers": {
+        "projection": {
+          "bh": {
+            "determined_errors": 6,
+            "determined_pairs": 194,
+            "determined_rate": 0.030927835051546393,
+            "expected_errors": 35.983682462916505,
+            "expected_rate": 0.11994560820972168,
+            "n_scored": 300,
+            "observed_errors": 36,
+            "observed_rate": 0.12
+          },
+          "bonferroni": {
+            "determined_errors": 0,
+            "determined_pairs": 14,
+            "determined_rate": 0.0,
+            "expected_errors": 35.983682462916505,
+            "expected_rate": 0.11994560820972168,
+            "n_scored": 300,
+            "observed_errors": 36,
+            "observed_rate": 0.12
+          },
+          "none": {
+            "determined_errors": 6,
+            "determined_pairs": 216,
+            "determined_rate": 0.027777777777777776,
+            "expected_errors": 35.983682462916505,
+            "expected_rate": 0.11994560820972168,
+            "n_scored": 300,
+            "observed_errors": 36,
+            "observed_rate": 0.12
+          }
+        },
+        "shared_exponent": {
+          "bh": {
+            "determined_errors": 0,
+            "determined_pairs": 194,
+            "determined_rate": 0.0,
+            "expected_errors": 24.47311604363072,
+            "expected_rate": 0.08157705347876908,
+            "n_scored": 300,
+            "observed_errors": 25,
+            "observed_rate": 0.08333333333333333
+          },
+          "bonferroni": {
+            "determined_errors": 0,
+            "determined_pairs": 14,
+            "determined_rate": 0.0,
+            "expected_errors": 24.47311604363072,
+            "expected_rate": 0.08157705347876908,
+            "n_scored": 300,
+            "observed_errors": 25,
+            "observed_rate": 0.08333333333333333
+          },
+          "none": {
+            "determined_errors": 0,
+            "determined_pairs": 216,
+            "determined_rate": 0.0,
+            "expected_errors": 24.47311604363072,
+            "expected_rate": 0.08157705347876908,
+            "n_scored": 300,
+            "observed_errors": 25,
+            "observed_rate": 0.08333333333333333
+          }
+        },
+        "single_scale": {
+          "bh": {
+            "determined_errors": 0,
+            "determined_pairs": 194,
+            "determined_rate": 0.0,
+            "expected_errors": 27.565087880104894,
+            "expected_rate": 0.09188362626701631,
+            "n_scored": 300,
+            "observed_errors": 25,
+            "observed_rate": 0.08333333333333333
+          },
+          "bonferroni": {
+            "determined_errors": 0,
+            "determined_pairs": 14,
+            "determined_rate": 0.0,
+            "expected_errors": 27.565087880104894,
+            "expected_rate": 0.09188362626701631,
+            "n_scored": 300,
+            "observed_errors": 25,
+            "observed_rate": 0.08333333333333333
+          },
+          "none": {
+            "determined_errors": 0,
+            "determined_pairs": 216,
+            "determined_rate": 0.0,
+            "expected_errors": 27.565087880104894,
+            "expected_rate": 0.09188362626701631,
+            "n_scored": 300,
+            "observed_errors": 25,
+            "observed_rate": 0.08333333333333333
+          }
+        }
+      },
+      "threshold_curve": [
+        {
+          "comparison_is_vacuous": true,
+          "determined_fraction": 0.0033333333333333335,
+          "determined_pairs": 1,
+          "gap_pp": 0.0,
+          "per_comparison_alpha": 1e-06,
+          "projection_errors": 0,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 0
+        },
+        {
+          "comparison_is_vacuous": true,
+          "determined_fraction": 0.013333333333333334,
+          "determined_pairs": 4,
+          "gap_pp": 0.0,
+          "per_comparison_alpha": 1e-05,
+          "projection_errors": 0,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 0
+        },
+        {
+          "comparison_is_vacuous": true,
+          "determined_fraction": 0.04666666666666667,
+          "determined_pairs": 14,
+          "gap_pp": 0.0,
+          "per_comparison_alpha": 0.0001666666666666667,
+          "projection_errors": 0,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 0
+        },
+        {
+          "comparison_is_vacuous": true,
+          "determined_fraction": 0.16,
+          "determined_pairs": 48,
+          "gap_pp": 0.0,
+          "per_comparison_alpha": 0.001,
+          "projection_errors": 0,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 0
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 0.45,
+          "determined_pairs": 135,
+          "gap_pp": 2.2222222222222223,
+          "per_comparison_alpha": 0.01,
+          "projection_errors": 3,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 3
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 0.72,
+          "determined_pairs": 216,
+          "gap_pp": 2.7777777777777777,
+          "per_comparison_alpha": 0.05,
+          "projection_errors": 6,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 6
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 0.8533333333333334,
+          "determined_pairs": 256,
+          "gap_pp": 3.125,
+          "per_comparison_alpha": 0.2,
+          "projection_errors": 14,
+          "single_scale_errors": 6,
+          "total_errors_in_subset": 20
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 0.92,
+          "determined_pairs": 276,
+          "gap_pp": 2.8985507246376807,
+          "per_comparison_alpha": 0.5,
+          "projection_errors": 24,
+          "single_scale_errors": 16,
+          "total_errors_in_subset": 40
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 1.0,
+          "determined_pairs": 300,
+          "gap_pp": 3.6666666666666665,
+          "per_comparison_alpha": 1.0,
+          "projection_errors": 36,
+          "single_scale_errors": 25,
+          "total_errors_in_subset": 61
+        }
+      ]
+    },
+    "olmes_macro_correct_prob_per_char_deficit/primary_4M-300M_gate530M": {
+      "design": "primary_4M-300M_gate530M",
+      "determined": {
+        "bh": {
+          "fraction": 0.72,
+          "pairs": 216
+        },
+        "bonferroni": {
+          "fraction": 0.05,
+          "pairs": 15
+        },
+        "none": {
+          "fraction": 0.77,
+          "pairs": 231
+        }
+      },
+      "equivalence_bonferroni": {
+        "ci_high_pp": 17.26053048910663,
+        "ci_low_pp": -3.9271971557732974,
+        "difference_pp": 6.666666666666667,
+        "largest_difference_ruled_out_pp": 17.26053048910663,
+        "method": "normal approximation, 90% CI",
+        "n_pairs": 15,
+        "vacuous": false
+      },
+      "metric": "olmes_macro_correct_prob_per_char_deficit",
+      "n_fit_budgets": 11,
+      "rankers": {
+        "projection": {
+          "bh": {
+            "determined_errors": 12,
+            "determined_pairs": 216,
+            "determined_rate": 0.05555555555555555,
+            "expected_errors": 39.96705335267297,
+            "expected_rate": 0.13322351117557657,
+            "n_scored": 300,
+            "observed_errors": 39,
+            "observed_rate": 0.13
+          },
+          "bonferroni": {
+            "determined_errors": 1,
+            "determined_pairs": 15,
+            "determined_rate": 0.06666666666666667,
+            "expected_errors": 39.96705335267297,
+            "expected_rate": 0.13322351117557657,
+            "n_scored": 300,
+            "observed_errors": 39,
+            "observed_rate": 0.13
+          },
+          "none": {
+            "determined_errors": 13,
+            "determined_pairs": 231,
+            "determined_rate": 0.05627705627705628,
+            "expected_errors": 39.96705335267297,
+            "expected_rate": 0.13322351117557657,
+            "n_scored": 300,
+            "observed_errors": 39,
+            "observed_rate": 0.13
+          }
+        },
+        "shared_exponent": {
+          "bh": {
+            "determined_errors": 4,
+            "determined_pairs": 216,
+            "determined_rate": 0.018518518518518517,
+            "expected_errors": 33.53108512873664,
+            "expected_rate": 0.11177028376245547,
+            "n_scored": 300,
+            "observed_errors": 31,
+            "observed_rate": 0.10333333333333333
+          },
+          "bonferroni": {
+            "determined_errors": 0,
+            "determined_pairs": 15,
+            "determined_rate": 0.0,
+            "expected_errors": 33.53108512873664,
+            "expected_rate": 0.11177028376245547,
+            "n_scored": 300,
+            "observed_errors": 31,
+            "observed_rate": 0.10333333333333333
+          },
+          "none": {
+            "determined_errors": 5,
+            "determined_pairs": 231,
+            "determined_rate": 0.021645021645021644,
+            "expected_errors": 33.53108512873664,
+            "expected_rate": 0.11177028376245547,
+            "n_scored": 300,
+            "observed_errors": 31,
+            "observed_rate": 0.10333333333333333
+          }
+        },
+        "single_scale": {
+          "bh": {
+            "determined_errors": 5,
+            "determined_pairs": 216,
+            "determined_rate": 0.023148148148148147,
+            "expected_errors": 32.302406915579326,
+            "expected_rate": 0.10767468971859775,
+            "n_scored": 300,
+            "observed_errors": 31,
+            "observed_rate": 0.10333333333333333
+          },
+          "bonferroni": {
+            "determined_errors": 0,
+            "determined_pairs": 15,
+            "determined_rate": 0.0,
+            "expected_errors": 32.302406915579326,
+            "expected_rate": 0.10767468971859775,
+            "n_scored": 300,
+            "observed_errors": 31,
+            "observed_rate": 0.10333333333333333
+          },
+          "none": {
+            "determined_errors": 7,
+            "determined_pairs": 231,
+            "determined_rate": 0.030303030303030304,
+            "expected_errors": 32.302406915579326,
+            "expected_rate": 0.10767468971859775,
+            "n_scored": 300,
+            "observed_errors": 31,
+            "observed_rate": 0.10333333333333333
+          }
+        }
+      },
+      "threshold_curve": [
+        {
+          "comparison_is_vacuous": true,
+          "determined_fraction": 0.0033333333333333335,
+          "determined_pairs": 1,
+          "gap_pp": 0.0,
+          "per_comparison_alpha": 1e-06,
+          "projection_errors": 0,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 0
+        },
+        {
+          "comparison_is_vacuous": true,
+          "determined_fraction": 0.006666666666666667,
+          "determined_pairs": 2,
+          "gap_pp": 0.0,
+          "per_comparison_alpha": 1e-05,
+          "projection_errors": 0,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 0
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 0.05,
+          "determined_pairs": 15,
+          "gap_pp": 6.666666666666667,
+          "per_comparison_alpha": 0.0001666666666666667,
+          "projection_errors": 1,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 1
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 0.13,
+          "determined_pairs": 39,
+          "gap_pp": 2.564102564102564,
+          "per_comparison_alpha": 0.001,
+          "projection_errors": 1,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 1
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 0.43666666666666665,
+          "determined_pairs": 131,
+          "gap_pp": 1.5267175572519083,
+          "per_comparison_alpha": 0.01,
+          "projection_errors": 4,
+          "single_scale_errors": 2,
+          "total_errors_in_subset": 6
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 0.77,
+          "determined_pairs": 231,
+          "gap_pp": 2.5974025974025974,
+          "per_comparison_alpha": 0.05,
+          "projection_errors": 13,
+          "single_scale_errors": 7,
+          "total_errors_in_subset": 20
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 0.9133333333333333,
+          "determined_pairs": 274,
+          "gap_pp": 3.2846715328467155,
+          "per_comparison_alpha": 0.2,
+          "projection_errors": 29,
+          "single_scale_errors": 20,
+          "total_errors_in_subset": 49
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 0.95,
+          "determined_pairs": 285,
+          "gap_pp": 2.1052631578947363,
+          "per_comparison_alpha": 0.5,
+          "projection_errors": 32,
+          "single_scale_errors": 26,
+          "total_errors_in_subset": 58
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 1.0,
+          "determined_pairs": 300,
+          "gap_pp": 2.666666666666667,
+          "per_comparison_alpha": 1.0,
+          "projection_errors": 39,
+          "single_scale_errors": 31,
+          "total_errors_in_subset": 70
+        }
+      ]
+    },
+    "olmes_macro_correct_prob_per_char_deficit/short_4M-530M_gate1B": {
+      "design": "short_4M-530M_gate1B",
+      "determined": {
+        "bh": {
+          "fraction": 0.74,
+          "pairs": 222
+        },
+        "bonferroni": {
+          "fraction": 0.14,
+          "pairs": 42
+        },
+        "none": {
+          "fraction": 0.7866666666666666,
+          "pairs": 236
+        }
+      },
+      "equivalence_bonferroni": {
+        "ci_high_pp": 15.538075098084214,
+        "ci_low_pp": -1.252360812369928,
+        "difference_pp": 7.142857142857142,
+        "largest_difference_ruled_out_pp": 15.538075098084214,
+        "method": "normal approximation, 90% CI",
+        "n_pairs": 42,
+        "vacuous": false
+      },
+      "metric": "olmes_macro_correct_prob_per_char_deficit",
+      "n_fit_budgets": 12,
+      "rankers": {
+        "projection": {
+          "bh": {
+            "determined_errors": 27,
+            "determined_pairs": 222,
+            "determined_rate": 0.12162162162162163,
+            "expected_errors": 45.22236979867859,
+            "expected_rate": 0.15074123266226197,
+            "n_scored": 300,
+            "observed_errors": 43,
+            "observed_rate": 0.14333333333333334
+          },
+          "bonferroni": {
+            "determined_errors": 4,
+            "determined_pairs": 42,
+            "determined_rate": 0.09523809523809523,
+            "expected_errors": 45.22236979867859,
+            "expected_rate": 0.15074123266226197,
+            "n_scored": 300,
+            "observed_errors": 43,
+            "observed_rate": 0.14333333333333334
+          },
+          "none": {
+            "determined_errors": 29,
+            "determined_pairs": 236,
+            "determined_rate": 0.1228813559322034,
+            "expected_errors": 45.22236979867859,
+            "expected_rate": 0.15074123266226197,
+            "n_scored": 300,
+            "observed_errors": 43,
+            "observed_rate": 0.14333333333333334
+          }
+        },
+        "shared_exponent": {
+          "bh": {
+            "determined_errors": 23,
+            "determined_pairs": 222,
+            "determined_rate": 0.1036036036036036,
+            "expected_errors": 42.79969818181649,
+            "expected_rate": 0.14266566060605496,
+            "n_scored": 300,
+            "observed_errors": 41,
+            "observed_rate": 0.13666666666666666
+          },
+          "bonferroni": {
+            "determined_errors": 7,
+            "determined_pairs": 42,
+            "determined_rate": 0.16666666666666666,
+            "expected_errors": 42.79969818181649,
+            "expected_rate": 0.14266566060605496,
+            "n_scored": 300,
+            "observed_errors": 41,
+            "observed_rate": 0.13666666666666666
+          },
+          "none": {
+            "determined_errors": 25,
+            "determined_pairs": 236,
+            "determined_rate": 0.1059322033898305,
+            "expected_errors": 42.79969818181649,
+            "expected_rate": 0.14266566060605496,
+            "n_scored": 300,
+            "observed_errors": 41,
+            "observed_rate": 0.13666666666666666
+          }
+        },
+        "single_scale": {
+          "bh": {
+            "determined_errors": 10,
+            "determined_pairs": 222,
+            "determined_rate": 0.04504504504504504,
+            "expected_errors": 23.49801882245032,
+            "expected_rate": 0.07832672940816773,
+            "n_scored": 300,
+            "observed_errors": 21,
+            "observed_rate": 0.07
+          },
+          "bonferroni": {
+            "determined_errors": 1,
+            "determined_pairs": 42,
+            "determined_rate": 0.023809523809523808,
+            "expected_errors": 23.49801882245032,
+            "expected_rate": 0.07832672940816773,
+            "n_scored": 300,
+            "observed_errors": 21,
+            "observed_rate": 0.07
+          },
+          "none": {
+            "determined_errors": 11,
+            "determined_pairs": 236,
+            "determined_rate": 0.046610169491525424,
+            "expected_errors": 23.49801882245032,
+            "expected_rate": 0.07832672940816773,
+            "n_scored": 300,
+            "observed_errors": 21,
+            "observed_rate": 0.07
+          }
+        }
+      },
+      "threshold_curve": [
+        {
+          "comparison_is_vacuous": true,
+          "determined_fraction": 0.0,
+          "determined_pairs": 0,
+          "gap_pp": NaN,
+          "per_comparison_alpha": 1e-06,
+          "projection_errors": 0,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 0
+        },
+        {
+          "comparison_is_vacuous": true,
+          "determined_fraction": 0.023333333333333334,
+          "determined_pairs": 7,
+          "gap_pp": 0.0,
+          "per_comparison_alpha": 1e-05,
+          "projection_errors": 0,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 0
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 0.14,
+          "determined_pairs": 42,
+          "gap_pp": 7.142857142857142,
+          "per_comparison_alpha": 0.0001666666666666667,
+          "projection_errors": 4,
+          "single_scale_errors": 1,
+          "total_errors_in_subset": 5
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 0.22333333333333333,
+          "determined_pairs": 67,
+          "gap_pp": 8.955223880597016,
+          "per_comparison_alpha": 0.001,
+          "projection_errors": 9,
+          "single_scale_errors": 3,
+          "total_errors_in_subset": 12
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 0.46,
+          "determined_pairs": 138,
+          "gap_pp": 9.420289855072465,
+          "per_comparison_alpha": 0.01,
+          "projection_errors": 21,
+          "single_scale_errors": 8,
+          "total_errors_in_subset": 29
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 0.7866666666666666,
+          "determined_pairs": 236,
+          "gap_pp": 7.627118644067797,
+          "per_comparison_alpha": 0.05,
+          "projection_errors": 29,
+          "single_scale_errors": 11,
+          "total_errors_in_subset": 40
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 0.9166666666666666,
+          "determined_pairs": 275,
+          "gap_pp": 7.636363636363636,
+          "per_comparison_alpha": 0.2,
+          "projection_errors": 35,
+          "single_scale_errors": 14,
+          "total_errors_in_subset": 49
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 0.9733333333333334,
+          "determined_pairs": 292,
+          "gap_pp": 7.534246575342467,
+          "per_comparison_alpha": 0.5,
+          "projection_errors": 41,
+          "single_scale_errors": 19,
+          "total_errors_in_subset": 60
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 1.0,
+          "determined_pairs": 300,
+          "gap_pp": 7.333333333333333,
+          "per_comparison_alpha": 1.0,
+          "projection_errors": 43,
+          "single_scale_errors": 21,
+          "total_errors_in_subset": 64
+        }
+      ]
+    },
+    "olmes_macro_error/long_4M-150M_gate300M": {
+      "design": "long_4M-150M_gate300M",
+      "determined": {
+        "bh": {
+          "fraction": 0.55,
+          "pairs": 165
+        },
+        "bonferroni": {
+          "fraction": 0.013333333333333334,
+          "pairs": 4
+        },
+        "none": {
+          "fraction": 0.6333333333333333,
+          "pairs": 190
+        }
+      },
+      "equivalence_bonferroni": {
+        "ci_high_pp": 75.0,
+        "ci_low_pp": -75.0,
+        "difference_pp": 0.0,
+        "largest_difference_ruled_out_pp": 75.0,
+        "method": "rule of three (zero events on both sides)",
+        "n_pairs": 4,
+        "note": "Neither method errs on this subset, so the data cannot distinguish them. The bound is set by the subset size alone, not by any observed difference.",
+        "vacuous": true
+      },
+      "metric": "olmes_macro_error",
+      "n_fit_budgets": 10,
+      "rankers": {
+        "projection": {
+          "bh": {
+            "determined_errors": 0,
+            "determined_pairs": 165,
+            "determined_rate": 0.0,
+            "expected_errors": 26.461242483289663,
+            "expected_rate": 0.08820414161096554,
+            "n_scored": 300,
+            "observed_errors": 25,
+            "observed_rate": 0.08333333333333333
+          },
+          "bonferroni": {
+            "determined_errors": 0,
+            "determined_pairs": 4,
+            "determined_rate": 0.0,
+            "expected_errors": 26.461242483289663,
+            "expected_rate": 0.08820414161096554,
+            "n_scored": 300,
+            "observed_errors": 25,
+            "observed_rate": 0.08333333333333333
+          },
+          "none": {
+            "determined_errors": 0,
+            "determined_pairs": 190,
+            "determined_rate": 0.0,
+            "expected_errors": 26.461242483289663,
+            "expected_rate": 0.08820414161096554,
+            "n_scored": 300,
+            "observed_errors": 25,
+            "observed_rate": 0.08333333333333333
+          }
+        },
+        "shared_exponent": {
+          "bh": {
+            "determined_errors": 0,
+            "determined_pairs": 165,
+            "determined_rate": 0.0,
+            "expected_errors": 25.481837331003295,
+            "expected_rate": 0.08493945777001098,
+            "n_scored": 300,
+            "observed_errors": 24,
+            "observed_rate": 0.08
+          },
+          "bonferroni": {
+            "determined_errors": 0,
+            "determined_pairs": 4,
+            "determined_rate": 0.0,
+            "expected_errors": 25.481837331003295,
+            "expected_rate": 0.08493945777001098,
+            "n_scored": 300,
+            "observed_errors": 24,
+            "observed_rate": 0.08
+          },
+          "none": {
+            "determined_errors": 0,
+            "determined_pairs": 190,
+            "determined_rate": 0.0,
+            "expected_errors": 25.481837331003295,
+            "expected_rate": 0.08493945777001098,
+            "n_scored": 300,
+            "observed_errors": 24,
+            "observed_rate": 0.08
+          }
+        },
+        "single_scale": {
+          "bh": {
+            "determined_errors": 0,
+            "determined_pairs": 165,
+            "determined_rate": 0.0,
+            "expected_errors": 27.72167935125459,
+            "expected_rate": 0.0924055978375153,
+            "n_scored": 300,
+            "observed_errors": 23,
+            "observed_rate": 0.07666666666666666
+          },
+          "bonferroni": {
+            "determined_errors": 0,
+            "determined_pairs": 4,
+            "determined_rate": 0.0,
+            "expected_errors": 27.72167935125459,
+            "expected_rate": 0.0924055978375153,
+            "n_scored": 300,
+            "observed_errors": 23,
+            "observed_rate": 0.07666666666666666
+          },
+          "none": {
+            "determined_errors": 2,
+            "determined_pairs": 190,
+            "determined_rate": 0.010526315789473684,
+            "expected_errors": 27.72167935125459,
+            "expected_rate": 0.0924055978375153,
+            "n_scored": 300,
+            "observed_errors": 23,
+            "observed_rate": 0.07666666666666666
+          }
+        }
+      },
+      "threshold_curve": [
+        {
+          "comparison_is_vacuous": true,
+          "determined_fraction": 0.0,
+          "determined_pairs": 0,
+          "gap_pp": NaN,
+          "per_comparison_alpha": 1e-06,
+          "projection_errors": 0,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 0
+        },
+        {
+          "comparison_is_vacuous": true,
+          "determined_fraction": 0.0,
+          "determined_pairs": 0,
+          "gap_pp": NaN,
+          "per_comparison_alpha": 1e-05,
+          "projection_errors": 0,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 0
+        },
+        {
+          "comparison_is_vacuous": true,
+          "determined_fraction": 0.013333333333333334,
+          "determined_pairs": 4,
+          "gap_pp": 0.0,
+          "per_comparison_alpha": 0.0001666666666666667,
+          "projection_errors": 0,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 0
+        },
+        {
+          "comparison_is_vacuous": true,
+          "determined_fraction": 0.11333333333333333,
+          "determined_pairs": 34,
+          "gap_pp": 0.0,
+          "per_comparison_alpha": 0.001,
+          "projection_errors": 0,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 0
+        },
+        {
+          "comparison_is_vacuous": true,
+          "determined_fraction": 0.43333333333333335,
+          "determined_pairs": 130,
+          "gap_pp": 0.0,
+          "per_comparison_alpha": 0.01,
+          "projection_errors": 0,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 0
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 0.6333333333333333,
+          "determined_pairs": 190,
+          "gap_pp": -1.0526315789473684,
+          "per_comparison_alpha": 0.05,
+          "projection_errors": 0,
+          "single_scale_errors": 2,
+          "total_errors_in_subset": 2
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 0.7966666666666666,
+          "determined_pairs": 239,
+          "gap_pp": 0.0,
+          "per_comparison_alpha": 0.2,
+          "projection_errors": 4,
+          "single_scale_errors": 4,
+          "total_errors_in_subset": 8
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 0.9233333333333333,
+          "determined_pairs": 277,
+          "gap_pp": -1.0830324909747286,
+          "per_comparison_alpha": 0.5,
+          "projection_errors": 11,
+          "single_scale_errors": 14,
+          "total_errors_in_subset": 25
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 1.0,
+          "determined_pairs": 300,
+          "gap_pp": 0.6666666666666667,
+          "per_comparison_alpha": 1.0,
+          "projection_errors": 25,
+          "single_scale_errors": 23,
+          "total_errors_in_subset": 48
+        }
+      ]
+    },
+    "olmes_macro_error/primary_4M-300M_gate530M": {
+      "design": "primary_4M-300M_gate530M",
+      "determined": {
+        "bh": {
+          "fraction": 0.43333333333333335,
+          "pairs": 130
+        },
+        "bonferroni": {
+          "fraction": 0.03333333333333333,
+          "pairs": 10
+        },
+        "none": {
+          "fraction": 0.6066666666666667,
+          "pairs": 182
+        }
+      },
+      "equivalence_bonferroni": {
+        "ci_high_pp": 30.0,
+        "ci_low_pp": -30.0,
+        "difference_pp": 0.0,
+        "largest_difference_ruled_out_pp": 30.0,
+        "method": "rule of three (zero events on both sides)",
+        "n_pairs": 10,
+        "note": "Neither method errs on this subset, so the data cannot distinguish them. The bound is set by the subset size alone, not by any observed difference.",
+        "vacuous": true
+      },
+      "metric": "olmes_macro_error",
+      "n_fit_budgets": 11,
+      "rankers": {
+        "projection": {
+          "bh": {
+            "determined_errors": 0,
+            "determined_pairs": 130,
+            "determined_rate": 0.0,
+            "expected_errors": 28.558817999344587,
+            "expected_rate": 0.09519605999781529,
+            "n_scored": 300,
+            "observed_errors": 24,
+            "observed_rate": 0.08
+          },
+          "bonferroni": {
+            "determined_errors": 0,
+            "determined_pairs": 10,
+            "determined_rate": 0.0,
+            "expected_errors": 28.558817999344587,
+            "expected_rate": 0.09519605999781529,
+            "n_scored": 300,
+            "observed_errors": 24,
+            "observed_rate": 0.08
+          },
+          "none": {
+            "determined_errors": 0,
+            "determined_pairs": 182,
+            "determined_rate": 0.0,
+            "expected_errors": 28.558817999344587,
+            "expected_rate": 0.09519605999781529,
+            "n_scored": 300,
+            "observed_errors": 24,
+            "observed_rate": 0.08
+          }
+        },
+        "shared_exponent": {
+          "bh": {
+            "determined_errors": 0,
+            "determined_pairs": 130,
+            "determined_rate": 0.0,
+            "expected_errors": 28.558817999344587,
+            "expected_rate": 0.09519605999781529,
+            "n_scored": 300,
+            "observed_errors": 24,
+            "observed_rate": 0.08
+          },
+          "bonferroni": {
+            "determined_errors": 0,
+            "determined_pairs": 10,
+            "determined_rate": 0.0,
+            "expected_errors": 28.558817999344587,
+            "expected_rate": 0.09519605999781529,
+            "n_scored": 300,
+            "observed_errors": 24,
+            "observed_rate": 0.08
+          },
+          "none": {
+            "determined_errors": 0,
+            "determined_pairs": 182,
+            "determined_rate": 0.0,
+            "expected_errors": 28.558817999344587,
+            "expected_rate": 0.09519605999781529,
+            "n_scored": 300,
+            "observed_errors": 24,
+            "observed_rate": 0.08
+          }
+        },
+        "single_scale": {
+          "bh": {
+            "determined_errors": 0,
+            "determined_pairs": 130,
+            "determined_rate": 0.0,
+            "expected_errors": 26.95781652298943,
+            "expected_rate": 0.08985938840996477,
+            "n_scored": 300,
+            "observed_errors": 23,
+            "observed_rate": 0.07666666666666666
+          },
+          "bonferroni": {
+            "determined_errors": 0,
+            "determined_pairs": 10,
+            "determined_rate": 0.0,
+            "expected_errors": 26.95781652298943,
+            "expected_rate": 0.08985938840996477,
+            "n_scored": 300,
+            "observed_errors": 23,
+            "observed_rate": 0.07666666666666666
+          },
+          "none": {
+            "determined_errors": 0,
+            "determined_pairs": 182,
+            "determined_rate": 0.0,
+            "expected_errors": 26.95781652298943,
+            "expected_rate": 0.08985938840996477,
+            "n_scored": 300,
+            "observed_errors": 23,
+            "observed_rate": 0.07666666666666666
+          }
+        }
+      },
+      "threshold_curve": [
+        {
+          "comparison_is_vacuous": true,
+          "determined_fraction": 0.0,
+          "determined_pairs": 0,
+          "gap_pp": NaN,
+          "per_comparison_alpha": 1e-06,
+          "projection_errors": 0,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 0
+        },
+        {
+          "comparison_is_vacuous": true,
+          "determined_fraction": 0.0,
+          "determined_pairs": 0,
+          "gap_pp": NaN,
+          "per_comparison_alpha": 1e-05,
+          "projection_errors": 0,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 0
+        },
+        {
+          "comparison_is_vacuous": true,
+          "determined_fraction": 0.03333333333333333,
+          "determined_pairs": 10,
+          "gap_pp": 0.0,
+          "per_comparison_alpha": 0.0001666666666666667,
+          "projection_errors": 0,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 0
+        },
+        {
+          "comparison_is_vacuous": true,
+          "determined_fraction": 0.08333333333333333,
+          "determined_pairs": 25,
+          "gap_pp": 0.0,
+          "per_comparison_alpha": 0.001,
+          "projection_errors": 0,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 0
+        },
+        {
+          "comparison_is_vacuous": true,
+          "determined_fraction": 0.31,
+          "determined_pairs": 93,
+          "gap_pp": 0.0,
+          "per_comparison_alpha": 0.01,
+          "projection_errors": 0,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 0
+        },
+        {
+          "comparison_is_vacuous": true,
+          "determined_fraction": 0.6066666666666667,
+          "determined_pairs": 182,
+          "gap_pp": 0.0,
+          "per_comparison_alpha": 0.05,
+          "projection_errors": 0,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 0
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 0.8033333333333333,
+          "determined_pairs": 241,
+          "gap_pp": 1.659751037344398,
+          "per_comparison_alpha": 0.2,
+          "projection_errors": 6,
+          "single_scale_errors": 2,
+          "total_errors_in_subset": 8
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 0.9066666666666666,
+          "determined_pairs": 272,
+          "gap_pp": 0.7352941176470583,
+          "per_comparison_alpha": 0.5,
+          "projection_errors": 13,
+          "single_scale_errors": 11,
+          "total_errors_in_subset": 24
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 1.0,
+          "determined_pairs": 300,
+          "gap_pp": 0.3333333333333341,
+          "per_comparison_alpha": 1.0,
+          "projection_errors": 24,
+          "single_scale_errors": 23,
+          "total_errors_in_subset": 47
+        }
+      ]
+    },
+    "olmes_macro_error/short_4M-530M_gate1B": {
+      "design": "short_4M-530M_gate1B",
+      "determined": {
+        "bh": {
+          "fraction": 0.6233333333333333,
+          "pairs": 187
+        },
+        "bonferroni": {
+          "fraction": 0.04,
+          "pairs": 12
+        },
+        "none": {
+          "fraction": 0.67,
+          "pairs": 201
+        }
+      },
+      "equivalence_bonferroni": {
+        "ci_high_pp": 21.456895422788918,
+        "ci_low_pp": -4.7902287561222545,
+        "difference_pp": 8.333333333333332,
+        "largest_difference_ruled_out_pp": 21.456895422788918,
+        "method": "normal approximation, 90% CI",
+        "n_pairs": 12,
+        "vacuous": false
+      },
+      "metric": "olmes_macro_error",
+      "n_fit_budgets": 12,
+      "rankers": {
+        "projection": {
+          "bh": {
+            "determined_errors": 22,
+            "determined_pairs": 187,
+            "determined_rate": 0.11764705882352941,
+            "expected_errors": 50.48390281600446,
+            "expected_rate": 0.1682796760533482,
+            "n_scored": 300,
+            "observed_errors": 48,
+            "observed_rate": 0.16
+          },
+          "bonferroni": {
+            "determined_errors": 1,
+            "determined_pairs": 12,
+            "determined_rate": 0.08333333333333333,
+            "expected_errors": 50.48390281600446,
+            "expected_rate": 0.1682796760533482,
+            "n_scored": 300,
+            "observed_errors": 48,
+            "observed_rate": 0.16
+          },
+          "none": {
+            "determined_errors": 24,
+            "determined_pairs": 201,
+            "determined_rate": 0.11940298507462686,
+            "expected_errors": 50.48390281600446,
+            "expected_rate": 0.1682796760533482,
+            "n_scored": 300,
+            "observed_errors": 48,
+            "observed_rate": 0.16
+          }
+        },
+        "shared_exponent": {
+          "bh": {
+            "determined_errors": 22,
+            "determined_pairs": 187,
+            "determined_rate": 0.11764705882352941,
+            "expected_errors": 49.37836030197926,
+            "expected_rate": 0.16459453433993085,
+            "n_scored": 300,
+            "observed_errors": 46,
+            "observed_rate": 0.15333333333333332
+          },
+          "bonferroni": {
+            "determined_errors": 1,
+            "determined_pairs": 12,
+            "determined_rate": 0.08333333333333333,
+            "expected_errors": 49.37836030197926,
+            "expected_rate": 0.16459453433993085,
+            "n_scored": 300,
+            "observed_errors": 46,
+            "observed_rate": 0.15333333333333332
+          },
+          "none": {
+            "determined_errors": 23,
+            "determined_pairs": 201,
+            "determined_rate": 0.11442786069651742,
+            "expected_errors": 49.37836030197926,
+            "expected_rate": 0.16459453433993085,
+            "n_scored": 300,
+            "observed_errors": 46,
+            "observed_rate": 0.15333333333333332
+          }
+        },
+        "single_scale": {
+          "bh": {
+            "determined_errors": 13,
+            "determined_pairs": 187,
+            "determined_rate": 0.06951871657754011,
+            "expected_errors": 39.363091080058496,
+            "expected_rate": 0.13121030360019498,
+            "n_scored": 300,
+            "observed_errors": 35,
+            "observed_rate": 0.11666666666666667
+          },
+          "bonferroni": {
+            "determined_errors": 0,
+            "determined_pairs": 12,
+            "determined_rate": 0.0,
+            "expected_errors": 39.363091080058496,
+            "expected_rate": 0.13121030360019498,
+            "n_scored": 300,
+            "observed_errors": 35,
+            "observed_rate": 0.11666666666666667
+          },
+          "none": {
+            "determined_errors": 13,
+            "determined_pairs": 201,
+            "determined_rate": 0.06467661691542288,
+            "expected_errors": 39.363091080058496,
+            "expected_rate": 0.13121030360019498,
+            "n_scored": 300,
+            "observed_errors": 35,
+            "observed_rate": 0.11666666666666667
+          }
+        }
+      },
+      "threshold_curve": [
+        {
+          "comparison_is_vacuous": true,
+          "determined_fraction": 0.0,
+          "determined_pairs": 0,
+          "gap_pp": NaN,
+          "per_comparison_alpha": 1e-06,
+          "projection_errors": 0,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 0
+        },
+        {
+          "comparison_is_vacuous": true,
+          "determined_fraction": 0.01,
+          "determined_pairs": 3,
+          "gap_pp": 0.0,
+          "per_comparison_alpha": 1e-05,
+          "projection_errors": 0,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 0
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 0.04,
+          "determined_pairs": 12,
+          "gap_pp": 8.333333333333332,
+          "per_comparison_alpha": 0.0001666666666666667,
+          "projection_errors": 1,
+          "single_scale_errors": 0,
+          "total_errors_in_subset": 1
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 0.14,
+          "determined_pairs": 42,
+          "gap_pp": 14.285714285714285,
+          "per_comparison_alpha": 0.001,
+          "projection_errors": 8,
+          "single_scale_errors": 2,
+          "total_errors_in_subset": 10
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 0.43666666666666665,
+          "determined_pairs": 131,
+          "gap_pp": 6.870229007633588,
+          "per_comparison_alpha": 0.01,
+          "projection_errors": 16,
+          "single_scale_errors": 7,
+          "total_errors_in_subset": 23
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 0.67,
+          "determined_pairs": 201,
+          "gap_pp": 5.472636815920398,
+          "per_comparison_alpha": 0.05,
+          "projection_errors": 24,
+          "single_scale_errors": 13,
+          "total_errors_in_subset": 37
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 0.8366666666666667,
+          "determined_pairs": 251,
+          "gap_pp": 3.9840637450199208,
+          "per_comparison_alpha": 0.2,
+          "projection_errors": 31,
+          "single_scale_errors": 21,
+          "total_errors_in_subset": 52
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 0.9233333333333333,
+          "determined_pairs": 277,
+          "gap_pp": 3.971119133574008,
+          "per_comparison_alpha": 0.5,
+          "projection_errors": 39,
+          "single_scale_errors": 28,
+          "total_errors_in_subset": 67
+        },
+        {
+          "comparison_is_vacuous": false,
+          "determined_fraction": 1.0,
+          "determined_pairs": 300,
+          "gap_pp": 4.333333333333334,
+          "per_comparison_alpha": 1.0,
+          "projection_errors": 48,
+          "single_scale_errors": 35,
+          "total_errors_in_subset": 83
+        }
+      ]
+    }
+  },
+  "inputs": {
+    "c4_en_bits_per_token": "f61f9c58bb87309521ae62ff1b2585749d763ab110a3fd67998bbdd240e0767b",
+    "olmes_macro_correct_prob_per_char_deficit": "df1e0fa704d6f90e2415d9d4bf197aee92e86600181c7aefdc944d66a2c419f9",
+    "olmes_macro_error": "de17854d09b27d856d88fc9c2e9939f2a48db192137b384fa456da95b81e7616"
+  },
+  "note_on_df": "per-pair Welch-Satterthwaite throughout; 4 df is the maximum, not a constant",
+  "published_figure": {
+    "bh": {
+      "accuracy_expected": 0.8126528585596781,
+      "accuracy_on_determined": 0.8609625668449198,
+      "accuracy_overall": 0.83,
+      "determined_fraction": 0.6233333333333333,
+      "determined_pairs": 187,
+      "n_pairs": 300,
+      "shift_pp": 3.0962566844919825
+    },
+    "bonferroni": {
+      "accuracy_expected": 0.8126528585596781,
+      "accuracy_on_determined": 0.9166666666666666,
+      "accuracy_overall": 0.83,
+      "determined_fraction": 0.04,
+      "determined_pairs": 12,
+      "n_pairs": 300,
+      "shift_pp": 8.666666666666668
+    },
+    "focal_scale": "150M",
+    "target_scale": "1B"
+  },
+  "thresholds_swept": [
+    1e-06,
+    1e-05,
+    0.0001666666666666667,
+    0.001,
+    0.01,
+    0.05,
+    0.2,
+    0.5,
+    1.0
+  ]
+}
