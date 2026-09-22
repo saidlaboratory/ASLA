@@ -52,6 +52,21 @@ class PairEvidence:
         }
 
 
+def bootstrap_two_sided_p(draws: Sequence[float]) -> float:
+    """Two-sided bootstrap p-value for a difference being zero, clipped to 1.
+
+    ``2 * min(P(d <= 0), P(d >= 0))`` exceeds 1 when many draws equal zero
+    exactly, because both tail proportions then include the ties. A value above
+    1 is not a probability; it was shipped once (1.236) before this helper
+    existed, which is why every caller now goes through it.
+    """
+
+    array = np.asarray(list(draws), dtype=float)
+    if array.size == 0:
+        return float("nan")
+    return float(min(1.0, 2.0 * min((array <= 0).mean(), (array >= 0).mean())))
+
+
 def welch_pair(
     mean_a: float,
     sd_a: float,
@@ -250,6 +265,7 @@ def decomposition(
 
 __all__ = [
     "PairEvidence",
+    "bootstrap_two_sided_p",
     "benjamini_hochberg_threshold",
     "decomposition",
     "score_ranker",

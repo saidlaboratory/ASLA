@@ -22,7 +22,7 @@ import pandas as pd
 from scipy import stats
 
 from asla.analysis.fits import cell_means_and_sigma, normalize_budgets
-from asla.analysis.target_scoring import score_ranker, target_evidence
+from asla.analysis.target_scoring import bootstrap_two_sided_p, score_ranker, target_evidence
 from asla.models import FitError, bpb_power_law, fit_power_law
 
 REPO = Path(__file__).resolve().parents[1]
@@ -153,7 +153,7 @@ def candidate_resampled_difference(
             "ci_low_pp": low,
             "ci_high_pp": high,
             "excludes_zero": bool(low > 0 or high < 0),
-            "p_two_sided": float(2 * min((array <= 0).mean(), (array >= 0).mean())),
+            "p_two_sided": bootstrap_two_sided_p(array),
         }
 
     return {

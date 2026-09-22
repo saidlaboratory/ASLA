@@ -1,0 +1,287 @@
+{
+  "cells": {
+    "c4_en_bits_per_token": {
+      "determined_fraction_bonferroni": 0.82,
+      "failures": {},
+      "metric": "c4_en_bits_per_token",
+      "rankers": {
+        "checkpoint_augmented": {
+          "candidate_test": {
+            "ci_high_pp": 3.930367157223259,
+            "ci_low_pp": -0.9511742704554952,
+            "excludes_zero": false,
+            "p_two_sided": 0.1635,
+            "point_pp": 1.4548639040643572
+          },
+          "excess_expected_pp": 1.4548639040643572,
+          "excess_observed_pp": 1.666666666666667,
+          "expected_rate": 0.027347373401693603,
+          "observed_rate": 0.02666666666666667,
+          "verdict": "WEAKENS"
+        },
+        "eb_shrinkage": {
+          "candidate_test": {
+            "ci_high_pp": 4.728927780150281,
+            "ci_low_pp": -0.8973870019972296,
+            "excludes_zero": false,
+            "p_two_sided": 0.251,
+            "point_pp": 1.6520594035513794
+          },
+          "excess_expected_pp": 1.6520594035513794,
+          "excess_observed_pp": 1.9999999999999998,
+          "expected_rate": 0.029319328396563826,
+          "observed_rate": 0.03,
+          "verdict": "WEAKENS"
+        },
+        "ensemble": {
+          "candidate_test": {
+            "ci_high_pp": 14.125166092837956,
+            "ci_low_pp": 3.1367399891906604,
+            "excludes_zero": true,
+            "p_two_sided": 0.001,
+            "point_pp": 8.6583181636554
+          },
+          "excess_expected_pp": 8.6583181636554,
+          "excess_observed_pp": 9.000000000000002,
+          "expected_rate": 0.09938191599760403,
+          "observed_rate": 0.1,
+          "verdict": "SURVIVES"
+        },
+        "projection": {
+          "candidate_test": {
+            "ci_high_pp": 4.8372190444928815,
+            "ci_low_pp": -0.6004574792775583,
+            "excludes_zero": false,
+            "p_two_sided": 0.133,
+            "point_pp": 1.9853927368845934
+          },
+          "excess_expected_pp": 1.9853927368845934,
+          "excess_observed_pp": 2.333333333333333,
+          "expected_rate": 0.03265266172989596,
+          "observed_rate": 0.03333333333333333,
+          "verdict": "WEAKENS"
+        },
+        "shared_exponent": {
+          "candidate_test": {
+            "ci_high_pp": 0.38000537627168385,
+            "ci_low_pp": -1.0975200658954445,
+            "excludes_zero": false,
+            "p_two_sided": 1.0,
+            "point_pp": -0.21764612251920762
+          },
+          "excess_expected_pp": -0.21764612251920762,
+          "excess_observed_pp": 0.0,
+          "expected_rate": 0.010622273135857955,
+          "observed_rate": 0.01,
+          "verdict": "NO OBSERVED DIFFERENCE"
+        }
+      },
+      "regime": "low_noise",
+      "single_scale": {
+        "expected_rate": 0.012798734361050031,
+        "n_scored": 300,
+        "observed_rate": 0.01
+      }
+    },
+    "olmes_macro_error": {
+      "determined_fraction_bonferroni": 0.03333333333333333,
+      "failures": {},
+      "metric": "olmes_macro_error",
+      "rankers": {
+        "checkpoint_augmented": {
+          "candidate_test": {
+            "ci_high_pp": 2.8835243634747503,
+            "ci_low_pp": -2.8854104935958103,
+            "excludes_zero": false,
+            "p_two_sided": 0.955,
+            "point_pp": 0.05806804461875176
+          },
+          "excess_expected_pp": 0.05806804461875176,
+          "excess_observed_pp": -0.3333333333333327,
+          "expected_rate": 0.09044006885615229,
+          "observed_rate": 0.07333333333333333,
+          "verdict": "VANISHES"
+        },
+        "eb_shrinkage": {
+          "candidate_test": {
+            "ci_high_pp": 3.4342898816954546,
+            "ci_low_pp": -2.445601163638731,
+            "excludes_zero": false,
+            "p_two_sided": 0.747,
+            "point_pp": 0.5336671587850519
+          },
+          "excess_expected_pp": 0.5336671587850519,
+          "excess_observed_pp": 0.3333333333333341,
+          "expected_rate": 0.09519605999781529,
+          "observed_rate": 0.08,
+          "verdict": "WEAKENS"
+        },
+        "ensemble": {
+          "candidate_test": {
+            "ci_high_pp": 1.7428206889147455,
+            "ci_low_pp": -3.4056226499440894,
+            "excludes_zero": false,
+            "p_two_sided": 0.602,
+            "point_pp": -0.7327003089475383
+          },
+          "excess_expected_pp": -0.7327003089475383,
+          "excess_observed_pp": -1.3333333333333321,
+          "expected_rate": 0.08253238532048938,
+          "observed_rate": 0.06333333333333334,
+          "verdict": "WEAKENS"
+        },
+        "projection": {
+          "candidate_test": {
+            "ci_high_pp": 3.479182158012242,
+            "ci_low_pp": -2.581124415951479,
+            "excludes_zero": false,
+            "p_two_sided": 0.714,
+            "point_pp": 0.5336671587850519
+          },
+          "excess_expected_pp": 0.5336671587850519,
+          "excess_observed_pp": 0.3333333333333341,
+          "expected_rate": 0.09519605999781529,
+          "observed_rate": 0.08,
+          "verdict": "WEAKENS"
+        },
+        "shared_exponent": {
+          "candidate_test": {
+            "ci_high_pp": 4.553006314056674,
+            "ci_low_pp": -2.2458863527912722,
+            "excludes_zero": false,
+            "p_two_sided": 0.5265,
+            "point_pp": 1.1990339760095046
+          },
+          "excess_expected_pp": 1.1990339760095046,
+          "excess_observed_pp": 1.0000000000000009,
+          "expected_rate": 0.10184972817005981,
+          "observed_rate": 0.08666666666666667,
+          "verdict": "WEAKENS"
+        }
+      },
+      "regime": "high_noise",
+      "single_scale": {
+        "expected_rate": 0.08985938840996477,
+        "n_scored": 300,
+        "observed_rate": 0.07666666666666666
+      }
+    }
+  },
+  "certification": {
+    "delta": 0.05,
+    "note": "Zero observed certified errors was never evidence of a guarantee. Under expected-error scoring the certified set carries this many errors in expectation; it is the reference's residual uncertainty on certified pairs, not a property of the rule.",
+    "rules": {
+      "normal": {
+        "certified_errors_expected": 0.17970998691304518,
+        "certified_errors_observed": 0,
+        "min_target_order_probability_on_certified": 0.8258863177020181,
+        "n_certified": 292,
+        "verdict": "SURVIVES"
+      },
+      "student_t": {
+        "certified_errors_expected": 0.0,
+        "certified_errors_observed": 0,
+        "min_target_order_probability_on_certified": 1.0,
+        "n_certified": 280,
+        "verdict": "SURVIVES"
+      }
+    },
+    "rung_compute": 1.4955135853658112e+20,
+    "seed_budget": 3,
+    "target_compute": 7.06209840434774e+20
+  },
+  "design": "4M-300M fit, 530M target (the audit's primary design)",
+  "eb_strength_provenance": "estimated on Task B training interventions only (results/task_b/task_b.json)",
+  "optimal_allocation": {
+    "by_budget_fraction": [
+      {
+        "budget_fraction": 0.01,
+        "candidate_test": {
+          "ci_high_pp": 16.075103360151388,
+          "ci_low_pp": 4.681102408085056,
+          "excludes_zero": true,
+          "p_two_sided": 0.0,
+          "point_pp": 9.87611466881483
+        },
+        "excess_expected_pp": 9.87611466881483,
+        "excess_observed_pp": 10.0,
+        "n_support_budgets": 8,
+        "verdict": "SURVIVES"
+      },
+      {
+        "budget_fraction": 0.03,
+        "candidate_test": {
+          "ci_high_pp": 16.65242775031006,
+          "ci_low_pp": 3.809523760673075,
+          "excludes_zero": true,
+          "p_two_sided": 0.0005,
+          "point_pp": 9.605725521640887
+        },
+        "excess_expected_pp": 9.605725521640887,
+        "excess_observed_pp": 9.666666666666668,
+        "n_support_budgets": 9,
+        "verdict": "SURVIVES"
+      },
+      {
+        "budget_fraction": 0.1,
+        "candidate_test": {
+          "ci_high_pp": 15.150143110896408,
+          "ci_low_pp": 2.563746469130333,
+          "excludes_zero": true,
+          "p_two_sided": 0.001,
+          "point_pp": 7.939058872071976
+        },
+        "excess_expected_pp": 7.939058872071976,
+        "excess_observed_pp": 8.0,
+        "n_support_budgets": 10,
+        "verdict": "SURVIVES"
+      },
+      {
+        "budget_fraction": 0.3,
+        "candidate_test": {
+          "ci_high_pp": 8.975746990869693,
+          "ci_low_pp": 0.8333331808893543,
+          "excludes_zero": true,
+          "p_two_sided": 0.0085,
+          "point_pp": 4.26953068367636
+        },
+        "excess_expected_pp": 4.26953068367636,
+        "excess_observed_pp": 4.333333333333334,
+        "n_support_budgets": 11,
+        "verdict": "SURVIVES"
+      },
+      {
+        "budget_fraction": 0.5,
+        "candidate_test": {
+          "ci_high_pp": 9.007102063254028,
+          "ci_low_pp": 0.8240635978704047,
+          "excludes_zero": true,
+          "p_two_sided": 0.0135,
+          "point_pp": 4.26953068367636
+        },
+        "excess_expected_pp": 4.26953068367636,
+        "excess_observed_pp": 4.333333333333334,
+        "n_support_budgets": 11,
+        "verdict": "SURVIVES"
+      },
+      {
+        "budget_fraction": 1.0,
+        "candidate_test": {
+          "ci_high_pp": 5.0981849545833775,
+          "ci_low_pp": -0.683184651527442,
+          "excludes_zero": false,
+          "p_two_sided": 0.0925,
+          "point_pp": 2.05227313854168
+        },
+        "excess_expected_pp": 2.05227313854168,
+        "excess_observed_pp": 1.9999999999999998,
+        "n_support_budgets": 12,
+        "verdict": "WEAKENS"
+      }
+    ],
+    "note": "point fit on supported budgets; the study's run-count weighting is not reproduced here",
+    "target_compute": 7.06209840434774e+20
+  },
+  "primary_rule": "expected_error",
+  "verdict_rule": "SURVIVES / WEAKENS / VANISHES, decided mechanically.\n\n    SURVIVES: expected-error keeps the sign and at least half the observed\n    magnitude, and the candidate-resampled interval excludes zero.\n    VANISHES: expected-error flips the sign or keeps under a quarter of it.\n    WEAKENS: everything between, including a retained point estimate whose\n    interval includes zero.\n    "
+}

@@ -120,3 +120,16 @@ def test_shipped_reproduction_check_is_recorded() -> None:
         check["recomputed_with_audit_detectors"]["projection_flips"]
         == check["recomputed_in_this_script"]["projection_flips"]
     )
+
+
+def test_bootstrap_p_value_never_exceeds_one() -> None:
+    """Ties at zero must not push the p-value above 1."""
+
+    import numpy as np
+
+    from asla.analysis.target_scoring import bootstrap_two_sided_p
+
+    assert bootstrap_two_sided_p([0.0] * 90 + [0.1] * 5 + [-0.1] * 5) == 1.0
+    assert bootstrap_two_sided_p([1.0] * 100) == 0.0
+    assert 0.0 < bootstrap_two_sided_p([1.0] * 90 + [-1.0] * 10) < 1.0
+    assert np.isnan(bootstrap_two_sided_p([]))
