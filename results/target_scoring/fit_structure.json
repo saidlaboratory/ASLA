@@ -1,0 +1,128 @@
+{
+  "all_stand": true,
+  "design_theorem": {
+    "identity_check_pair_over_level": {
+      "max": 2.0,
+      "min": 2.0
+    },
+    "n_budgets": 11,
+    "n_random_designs": 2000,
+    "point_optimal_cost_shares": [
+      0.16581162790302634,
+      0.0,
+      0.0,
+      0.0,
+      0.8341883720969661,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      7.693762842465693e-15,
+      0.0
+    ],
+    "project_solver_excess_point_variance": 0.017673041260397593,
+    "proof": "paper/main.tex, appendix: design theorem",
+    "region_optimal_designs": {
+      "1_decades": {
+        "excess_point_variance_of_region_optimal_design": 3.261926686537464e-07,
+        "region_gain_over_point_optimal_design": -3.2663408311428554e-07
+      },
+      "3_decades": {
+        "excess_point_variance_of_region_optimal_design": 2.4136536993291102e-05,
+        "region_gain_over_point_optimal_design": -2.4349318328509284e-05
+      }
+    },
+    "region_over_point_ratio_relative_range": 0.014405307191155783,
+    "region_vs_point_correlation": 0.9999974482853591,
+    "statement": "Recipes fitted independently by least squares on one shared design, with homoscedastic noise and a well-specified linear log-space model: Var(gap at C*) = 2 Var(level at C*) for every design, so the two point objectives share an argmin and, under Gaussian noise, that design minimises every pair's mis-selection probability simultaneously.",
+    "target_compute": 7.06209840434774e+20,
+    "uses_target_labels": false
+  },
+  "findings": {
+    "amplitude_sharing": {
+      "criterion": "shared amplitude cancels (range below 0.1) and per-intervention amplitude does not (above 1)",
+      "evidence": {
+        "c4_cancellation_ratio": 0.23380508341489886,
+        "synthetic_per_intervention_amplitude_cancellation_range": [
+          1.0135057579399884,
+          1.0291330990911876
+        ],
+        "synthetic_shared_amplitude_cancellation_range": [
+          1.4883637346235013e-05,
+          0.0016791371576596133
+        ]
+      },
+      "stands": true,
+      "uses_target_labels": false
+    },
+    "checkpoint_critique": {
+      "criterion": "correlated checkpoints carry fewer independent observations than they count, and a uniform weight is a no-op",
+      "decision_claim_rescored": {
+        "c4_en_bits_per_token": "WEAKENS",
+        "olmes_macro_error": "VANISHES"
+      },
+      "evidence": {
+        "information_deflation_factor": {
+          "c4_en_bits_per_token": 2.4756213262972038,
+          "olmes_macro_error": 8.764236297218352
+        },
+        "largest_uniform_weight_effect": 0.0013396319858607914,
+        "largest_varying_weight_effect": 0.9986758235281075
+      },
+      "stands": true,
+      "uses_target_labels": false
+    },
+    "floor_identifiability": {
+      "criterion": "pre-registered F1-F3 (PREDICTIONS_TASK_FIT_STRUCTURE.md)",
+      "evidence": {
+        "c4_interval_excludes_zero": 25.0,
+        "condition_ratio": 183.6868340564857,
+        "olmes_error_interval_excludes_zero": 0.0,
+        "olmes_error_width_relative_to_ymin": 0.9012336013307604
+      },
+      "refuted": [
+        "F4_fix_tightens_c4"
+      ],
+      "stands": true,
+      "uses_target_labels": false
+    },
+    "metric_instability": {
+      "criterion": "evaluation metrics disagree on the winner at the same budget",
+      "evidence": {
+        "corpus_distinct_winners": 3.0,
+        "corpus_min_pairwise_spearman": -0.10714285714285716
+      },
+      "stands": true,
+      "uses_target_labels": false
+    },
+    "misspecification": {
+      "criterion": "residual scatter exceeds seed standard error, on two independent computations",
+      "evidence": {
+        "floor_profile_c4_dispersion_over_seed_variance": 8.432102649922037,
+        "residual_scatter_over_seed_se": 2.8980560188379227
+      },
+      "stands": true,
+      "uses_target_labels": false
+    },
+    "monotone_distortion": {
+      "criterion": "a large shared distortion leaves the projection ranking identical, and does not under curvature geometry",
+      "evidence": {
+        "olmes_error_projection_change_over_between_spread": 0.23813489769600213,
+        "olmes_error_spearman_old_vs_new_projection": 1.0,
+        "reordering_ratio_curvature_over_level": 69.0
+      },
+      "note": "ranking identity is between two fits' projections, not against the target reference",
+      "stands": true,
+      "uses_target_labels": false
+    },
+    "resolvability": {
+      "criterion": "most adjacent orderings are not resolvable at the seed budget used",
+      "evidence": {
+        "adjacent_pairs": 468.0,
+        "unresolved_at_3_seeds": 437.0
+      },
+      "stands": true,
+      "uses_target_labels": false
+    }
+  }
+}
