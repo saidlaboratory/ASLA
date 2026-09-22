@@ -98,6 +98,12 @@ def build() -> str:
     t_ratio = Source.load("target_scoring/target_scoring.json")
     t_key = "student_t_recomputed.ratio_at_measured_df"
     t_fifty = glr_threshold(0.05, 300, n_seeds=50)
+    rescoring = Source.load("target_scoring/rescoring.json")
+    c4_rankers = rescoring.get("cells.c4_en_bits_per_token.rankers")
+    reliably_different = sorted(name for name, row in c4_rankers.items() if row["verdict"] == "SURVIVES")
+    within_noise = sorted(name for name, row in c4_rankers.items() if row["verdict"] != "SURVIVES")
+    allocation_rows = rescoring.get("optimal_allocation.by_budget_fraction")
+    allocation_within_noise = [row["budget_fraction"] for row in allocation_rows if row["verdict"] != "SURVIVES"]
 
     lines: list[str] = [
         START,
@@ -127,21 +133,25 @@ def build() -> str:
         " arm large enough that no run near the target exists --- is exactly where the"
         " ground truth needed to check it does not exist either.",
         "",
-        "We then closed the space of correctable causes. Better estimators"
-        " (shared-exponent, empirical-Bayes shrinkage, ensemble, checkpoint-augmented),"
-        " a better objective, and a better *ladder* all fail to beat a baseline that"
-        " fits nothing and extrapolates nothing:",
+        "None of the alternatives we built beat a baseline that fits nothing and"
+        " extrapolates nothing: better estimators (shared-exponent, empirical-Bayes"
+        " shrinkage, ensemble, checkpoint-augmented), a better objective, and a better"
+        " *ladder*. That is a statement about point estimates. Under expected-error"
+        " scoring with candidates resampled (`results/target_scoring/rescoring.json`),"
+        f" {', '.join(within_noise)} are indistinguishable from single-scale on C4;"
+        f" only {', '.join(reliably_different)} differs reliably, and it is worse.",
         "",
         f"- **Optimal allocation.** Solving the cost-constrained transductive design"
         f" and evaluating at matched compute leaves an excess over single-scale of"
-        f" **{min(excesses):+.3f} to {max(excesses):+.3f}** at the 1B target. This is"
-        f" the load-bearing null: it removes the last alternative explanation, that the"
-        f" hand-picked ladders were simply bad.",
+        f" **{min(excesses):+.3f} to {max(excesses):+.3f}** at the 1B target. Under"
+        f" expected-error scoring the excess is reliable at reduced budgets and within"
+        f" noise at budget fraction {', '.join(f'{v:g}' for v in allocation_within_noise)};"
+        f" the optimised design never does better than single-scale.",
         f"- **Design for decision = design for estimation.** Under the linear model the"
         f" target-gap variance is exactly twice the target-level variance, so the two"
         f" objectives share an argmin. Measured: maximum cost-share difference"
-        f" **{max(p4_gaps):.5f}** against a pre-registered threshold of 0.02. The"
-        f" failure is localised to the model, not the objective.",
+        f" **{max(p4_gaps):.5f}** against a pre-registered threshold of 0.02. Changing"
+        f" the design objective cannot change the design chosen, so it is not a lever.",
         "",
         "### 2. Model error dominates seed noise, and is structured in compute",
         "",

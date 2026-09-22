@@ -41,7 +41,7 @@ Writing each intervention's curve as `y_i(C) = f_i(C) + m(C) + e_i(C)`, a shared
 
 What governs it is **whether the misspecification amplitude is shared across interventions.** The correlation between loadings and fitted exponents on the real suites (r = -0.81 and -0.85) is a symptom rather than a cause: a per-intervention amplitude biases each intervention's fitted exponent, so loadings and exponents co-vary without either causing the other.
 
-**Consequence.** A differenced estimator, which models the gap rather than the levels, is correctly specified only where the amplitude is shared. That is checkable before building anything, from the loading CV. It is also why we did not build one: its advantage is largest where single-scale ranking is already near-optimal, and it fails where amplitudes differ - which is where fitted trends diverge, where crossovers live, and where beating the baseline would matter.
+**Consequence.** A differenced estimator, which models the gap rather than the levels, is correctly specified only where the amplitude is shared. That is checkable before building anything, from the loading CV. It is also why we did not build one: its advantage is largest where single-scale ranking is already near-optimal, and it fails where amplitudes differ, which is where fitted trends diverge. This is a statement about the fit. Whether it is also where a decision-level gap arises is not established: that gap is not significant once candidates are resampled (`results/target_scoring/expected_error.json`).
 
 ## 3. When the error is shared and interventions differ in level, a badly biased fit still orders correctly
 

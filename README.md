@@ -53,10 +53,10 @@ Single-scale ranking at the largest fitted budget mis-selects **1.33%** of pairs
 
 Scope: this is measured on DataDecide C4 bits-per-token with a 1B target, across every design and estimator we tested. It is not a proof that extrapolation can never help, and the regime where it should help --- a lever arm large enough that no run near the target exists --- is exactly where the ground truth needed to check it does not exist either.
 
-We then closed the space of correctable causes. Better estimators (shared-exponent, empirical-Bayes shrinkage, ensemble, checkpoint-augmented), a better objective, and a better *ladder* all fail to beat a baseline that fits nothing and extrapolates nothing:
+None of the alternatives we built beat a baseline that fits nothing and extrapolates nothing: better estimators (shared-exponent, empirical-Bayes shrinkage, ensemble, checkpoint-augmented), a better objective, and a better *ladder*. That is a statement about point estimates. Under expected-error scoring with candidates resampled (`results/target_scoring/rescoring.json`), checkpoint_augmented, eb_shrinkage, projection, shared_exponent are indistinguishable from single-scale on C4; only ensemble differs reliably, and it is worse.
 
-- **Optimal allocation.** Solving the cost-constrained transductive design and evaluating at matched compute leaves an excess over single-scale of **+0.028 to +0.117** at the 1B target. This is the load-bearing null: it removes the last alternative explanation, that the hand-picked ladders were simply bad.
-- **Design for decision = design for estimation.** Under the linear model the target-gap variance is exactly twice the target-level variance, so the two objectives share an argmin. Measured: maximum cost-share difference **0.00058** against a pre-registered threshold of 0.02. The failure is localised to the model, not the objective.
+- **Optimal allocation.** Solving the cost-constrained transductive design and evaluating at matched compute leaves an excess over single-scale of **+0.028 to +0.117** at the 1B target. Under expected-error scoring the excess is reliable at reduced budgets and within noise at budget fraction 1; the optimised design never does better than single-scale.
+- **Design for decision = design for estimation.** Under the linear model the target-gap variance is exactly twice the target-level variance, so the two objectives share an argmin. Measured: maximum cost-share difference **0.00058** against a pre-registered threshold of 0.02. Changing the design objective cannot change the design chosen, so it is not a lever.
 
 ### 2. Model error dominates seed noise, and is structured in compute
 

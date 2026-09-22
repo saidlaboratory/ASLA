@@ -97,8 +97,8 @@ def _estimation_objective(runs: np.ndarray, budgets: Sequence[float], target: fl
     **This objective is near-identical to the decision objective, and that is a
     result, not a defect of this implementation.** Under a shared homoscedastic
     design the gap variance is exactly twice the level variance, so the two have
-    the same argmin; even a three-decade target region costs only ~0.1% excess
-    variance at ``C*``. Design-for-estimation and design-for-decision provably
+    the same argmin; even a three-decade target region costs a negligible excess
+    variance at ``C*`` (measured in ``results/target_scoring/fit_structure.json``). Design-for-estimation and design-for-decision provably
     coincide in the well-specified linear model. The contrast that *does* matter
     is :func:`_bias_aware_objective`.
     """
@@ -190,7 +190,10 @@ def _solve(
 
     Multi-start SLSQP. The problem is convex, so any local optimum is global;
     multiple starts guard against the solver stalling on the boundary rather
-    than against local minima, and we keep the best.
+    than against local minima, and we keep the best. Run counts span orders of
+    magnitude across a ladder, so this can stop short of the optimum: on the
+    DataDecide ladder at 1B it sits about 2% above the exhaustive small-support
+    optimum computed in ``scripts/run_fit_structure_check.py``.
     """
 
     values = tuple(sorted(float(b) for b in budgets))

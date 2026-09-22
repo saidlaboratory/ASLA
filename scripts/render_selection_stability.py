@@ -226,7 +226,9 @@ def render() -> str:
         f"pairs ({tightest['fraction_unresolved']:.1%})** on DataDecide at 1B. Applied "
         f"independently per candidate, an error bound that good would still leave those "
         f"orderings undetermined --- and our measured mis-selection rate is smaller than that "
-        f"fraction, which is only possible because the error is substantially common-mode. "
+        f"fraction. That is consistent with the error being substantially common-mode, which "
+        f"the loading diagnostic measures directly, but it does not require it: a bound that "
+        f"is loose relative to the typical error gives the same result. "
         f"Whether it cancels is the question this project measures, and the answer is "
         f"metric-dependent, which is the same axis this section is about."
     )

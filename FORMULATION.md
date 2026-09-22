@@ -147,10 +147,12 @@ and minimising target-region prediction error selects the **same allocation** as
 minimising target-gap variance. The framing "design for estimation versus design
 for decision" has no content in the well-specified homoscedastic case.
 
-Measured, to confirm the algebra is not hiding a numerical caveat: the two
-objectives correlate at **0.99995** over random designs with their ratio varying
-by **0.6%**, and an estimation-optimal design whose target region spans three
-decades costs only **0.11%** excess variance at `C*`.
+The region-averaged (SL2) objective departs from the point objective only
+negligibly; the correlation over random designs and the excess variance at `C*`
+of one- and three-decade region-optimal designs are computed by
+`scripts/run_fit_structure_check.py` into
+`results/target_scoring/fit_structure.json` (`design_theorem`). An earlier
+version of this paragraph quoted figures that no committed script produced.
 
 **What breaks the equivalence.** The equality above uses (i) one design shared by
 all recipes, (ii) homoscedastic noise, and (iii) an unbiased estimator. Relaxing
