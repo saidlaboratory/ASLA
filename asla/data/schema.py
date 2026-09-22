@@ -129,8 +129,7 @@ def validate(df: pd.DataFrame) -> None:
         if bool(duplicates.any()):
             examples = df.loc[duplicates, identity_columns].head(5).to_dict("records")
             errors.append(
-                "columns ('intervention', 'compute', 'seed') must uniquely identify runs; "
-                f"duplicate examples: {examples}"
+                f"columns ('intervention', 'compute', 'seed') must uniquely identify runs; duplicate examples: {examples}"
             )
     if all(col in df.columns for col in ("intervention", "intervention_class")):
         class_counts = df.groupby("intervention", dropna=False)["intervention_class"].nunique(dropna=False)

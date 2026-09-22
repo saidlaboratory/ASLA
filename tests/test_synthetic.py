@@ -12,4 +12,3 @@ def test_scenarios_validate_and_have_truth():
         assert len(ranking) >= 2
         assert ranking.is_monotonic_increasing
         assert df.attrs["scenario_truth"].name == name
-

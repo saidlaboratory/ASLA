@@ -123,7 +123,6 @@ def _check_sigma(sigma: np.ndarray | None, n: int) -> np.ndarray | None:
     return s
 
 
-
 @dataclass(frozen=True)
 class BoundPin:
     """A fitted parameter sitting on one of its optimizer bounds."""
@@ -410,8 +409,7 @@ def fit_chinchilla(
     log_design = np.column_stack((np.ones(len(n)), np.log(n), np.log(d)))
     if np.linalg.matrix_rank(log_design) < 3:
         raise FitError(
-            "fit_chinchilla requires independently varied params_n and tokens_d; "
-            "their logged values are perfectly collinear"
+            "fit_chinchilla requires independently varied params_n and tokens_d; their logged values are perfectly collinear"
         )
     y_min = float(np.min(y))
     if not np.isfinite(y_min) or y_min <= 0:
@@ -487,8 +485,7 @@ def bootstrap_projection(
 
     if len(projections) < min_successes:
         raise FitError(
-            f"too few stratified bootstrap resamples fit successfully: {len(projections)}/{n_boot} "
-            f"(minimum {min_successes})"
+            f"too few stratified bootstrap resamples fit successfully: {len(projections)}/{n_boot} (minimum {min_successes})"
         )
     arr = np.asarray(projections, dtype=float)
     std = float(np.std(arr, ddof=1)) if len(arr) > 1 else 0.0

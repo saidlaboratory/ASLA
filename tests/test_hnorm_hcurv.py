@@ -62,9 +62,7 @@ def test_a_shared_amplitude_cancels_and_a_varying_one_does_not():
     log_x = np.log(x)
     wiggle = 0.02 * np.sin(2 * np.pi * (log_x - log_x.min()) / (log_x.max() - log_x.min()))
     rng = np.random.default_rng(0)
-    shared = pd.DataFrame(
-        {f"r{i}": (0.55 + 0.01 * i + 3.0 * x ** (-0.15)) * (1 + wiggle) for i in range(15)}, index=x
-    ).T
+    shared = pd.DataFrame({f"r{i}": (0.55 + 0.01 * i + 3.0 * x ** (-0.15)) * (1 + wiggle) for i in range(15)}, index=x).T
     varying = pd.DataFrame(
         {f"r{i}": (0.55 + 0.01 * i + 3.0 * x ** (-0.15)) * (1 + rng.normal(0, 1) * wiggle) for i in range(15)},
         index=x,

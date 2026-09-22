@@ -137,9 +137,7 @@ def harvest(entity_project: str, field_map: Mapping[str, str], out_path: str | P
     df, coerced_dropped = _coerce_harvested_rows(rows)
     dropped += coerced_dropped
     if df.empty:
-        LOGGER.warning(
-            "zero rows survived harvesting; this is a real finding that runs do not log the required fields"
-        )
+        LOGGER.warning("zero rows survived harvesting; this is a real finding that runs do not log the required fields")
         print("Zero rows survived harvesting; the runs do not log what is needed.")
         return df
     validate(df)

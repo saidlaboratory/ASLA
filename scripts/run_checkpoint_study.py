@@ -239,10 +239,9 @@ def evaluate(design: dict[str, Any], n_boot: int, seed: int, include_ensemble: b
 
     plain_flips = flips(project_ranking(final_table, budgets, target), truth)
     rankers: dict[str, Any] = {}
-    for name, ranker, table, bud in (
-        [(n, r, final_table, budgets) for n, r in final_rankers.items()]
-        + [(n, r, ckpt_table, ckpt_budgets) for n, r in ckpt_rankers.items()]
-    ):
+    for name, ranker, table, bud in [(n, r, final_table, budgets) for n, r in final_rankers.items()] + [
+        (n, r, ckpt_table, ckpt_budgets) for n, r in ckpt_rankers.items()
+    ]:
         audit = audit_final if name in final_rankers else audit_ckpt
         scores = ranker(table, bud, target)
         f = flips(scores, truth)
@@ -481,9 +480,7 @@ def main(argv: list[str] | None = None) -> int:
         if label in results["designs"]:
             print(f"skipping {label} (already computed)", flush=True)
             continue
-        results["designs"][label] = evaluate(
-            built, n_boot=n_boot, seed=args.seed, include_ensemble=(label == "primary")
-        )
+        results["designs"][label] = evaluate(built, n_boot=n_boot, seed=args.seed, include_ensemble=(label == "primary"))
         print(f"done {label}", flush=True)
         _write_json_atomically(results, out / "checkpoint_study.json")
     results["correction_effect"] = correction_effect(builds["primary"])

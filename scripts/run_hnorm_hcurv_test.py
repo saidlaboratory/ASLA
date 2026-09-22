@@ -108,9 +108,7 @@ def loading_correlations(cells: pd.DataFrame) -> dict[str, Any]:
     loadings = u[:, 0] * sv[0]
     level = cells.loc[names].mean(axis=1).to_numpy(dtype=float)
     x = cells.columns.to_numpy(dtype=float)
-    alphas = np.asarray(
-        [(fit_one(x, cells.loc[n].to_numpy(dtype=float)) or (np.nan,) * 3)[2] for n in names], dtype=float
-    )
+    alphas = np.asarray([(fit_one(x, cells.loc[n].to_numpy(dtype=float)) or (np.nan,) * 3)[2] for n in names], dtype=float)
     finite = np.isfinite(alphas)
     return {
         "n_interventions": len(names),

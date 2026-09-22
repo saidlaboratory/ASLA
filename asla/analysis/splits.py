@@ -17,6 +17,7 @@ from asla.data.schema import validate
 
 SPLIT_COLUMN = "__asla_split"
 
+
 class Split(TypedDict):
     """Serialized train/test split with dataset identity and held-out groups."""
 
@@ -55,8 +56,7 @@ def _check_split_matches(df: pd.DataFrame, split: Split, path: Path) -> None:
     expected_fingerprint = split.get("table_fingerprint")
     if expected_fingerprint is None:
         raise ValueError(
-            f"persisted split at {path} predates dataset fingerprinting; "
-            "delete it and create a split for the current table"
+            f"persisted split at {path} predates dataset fingerprinting; delete it and create a split for the current table"
         )
     if expected_fingerprint != _table_fingerprint(df):
         raise ValueError(

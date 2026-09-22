@@ -178,10 +178,7 @@ def ensemble_projection(
         raise FitError(f"no curve family could be fit; failures: {failed}")
 
     weights = pseudo_bma_weights(np.asarray([fam.llbo_loss for fam in fits]))
-    fits = [
-        FamilyFit(fam.name, fam.params, fam.llbo_loss, float(w), fam.projection)
-        for fam, w in zip(fits, weights)
-    ]
+    fits = [FamilyFit(fam.name, fam.params, fam.llbo_loss, float(w), fam.projection) for fam, w in zip(fits, weights)]
     projections = np.asarray([fam.projection for fam in fits], dtype=float)
     point = float(np.sum(weights * projections))
     disagreement = float(np.sqrt(np.sum(weights * (projections - point) ** 2)))

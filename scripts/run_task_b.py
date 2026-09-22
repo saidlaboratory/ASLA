@@ -123,9 +123,7 @@ def strength_sensitivity(
     rng = np.random.default_rng(seed)
     draws: list[dict[str, Any]] = []
     for i in range(n_resplits):
-        subset = sorted(
-            str(name) for name in rng.choice(np.asarray(names, dtype=object), size=len(training), replace=False)
-        )
+        subset = sorted(str(name) for name in rng.choice(np.asarray(names, dtype=object), size=len(training), replace=False))
         rows = df[df["intervention"].astype(str).isin(subset)]
         between, within, _ = exponent_variance_components(
             rows, budgets, n_boot=n_boot_inner, rng=np.random.default_rng(seed + 100 + i)
@@ -192,9 +190,7 @@ def evaluate_design(
     suite = rankers_for(STRENGTH_SWEEP, n_boot_inner, seed, strength_interventions)
     if include_ensemble:
         suite["ensemble"] = ensemble_ranker
-    audit = audit_with_ci(
-        df, budgets, target, suite, n_boot, np.random.default_rng(seed), estimand="pairwise_decisions"
-    )
+    audit = audit_with_ci(df, budgets, target, suite, n_boot, np.random.default_rng(seed), estimand="pairwise_decisions")
     truth = truth_ranking(df, target)
     plain_scores = project_ranking(df, budgets, target)
     plain_flips = flip_pairs(plain_scores, truth)
@@ -590,9 +586,7 @@ def main(argv: list[str] | None = None) -> int:
         "n_training_interventions": len(train_names),
         "training_interventions": train_names,
         "n_total_interventions": int(primary[0]["intervention"].nunique()),
-        "held_out_interventions": sorted(
-            set(primary[0]["intervention"].astype(str).unique()) - set(train_names)
-        ),
+        "held_out_interventions": sorted(set(primary[0]["intervention"].astype(str).unique()) - set(train_names)),
         "note": (
             "The empirical-Bayes shrinkage strength is estimated ONLY from the training interventions listed "
             "here. Every ranker still fits and projects all interventions; only the hyperparameter is restricted. "
@@ -601,7 +595,11 @@ def main(argv: list[str] | None = None) -> int:
     }
     if not already_done("primary_4M-300M_target1B"):
         results["designs"]["primary_4M-300M_target1B"] = evaluate_design(
-            *primary, n_boot=n_boot, n_boot_inner=n_boot_inner, seed=args.seed, include_ensemble=True,
+            *primary,
+            n_boot=n_boot,
+            n_boot_inner=n_boot_inner,
+            seed=args.seed,
+            include_ensemble=True,
             strength_interventions=train_names,
         )
         print("done primary", flush=True)
@@ -620,7 +618,11 @@ def main(argv: list[str] | None = None) -> int:
             print(f"skipping {label} (already computed)", flush=True)
             continue
         results["designs"][label] = evaluate_design(
-            *built, n_boot=max(3, n_boot // 2), n_boot_inner=n_boot_inner, seed=args.seed, include_ensemble=False,
+            *built,
+            n_boot=max(3, n_boot // 2),
+            n_boot_inner=n_boot_inner,
+            seed=args.seed,
+            include_ensemble=False,
             strength_interventions=train_names,
         )
         print(f"done {label}", flush=True)

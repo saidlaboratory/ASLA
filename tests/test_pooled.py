@@ -136,9 +136,7 @@ def test_shrinkage_strength_can_be_restricted_to_training_interventions():
     df = _grid({"a": 0.10, "b": 0.14, "c": 0.18, "d": 0.22}, noise=0.02, seed=3)
     train = ["a", "b"]
     leaky = fit_shrunk(df, BUDGETS, n_boot=10, rng=np.random.default_rng(0))
-    split = fit_shrunk(
-        df, BUDGETS, n_boot=10, rng=np.random.default_rng(0), strength_df=df[df["intervention"].isin(train)]
-    )
+    split = fit_shrunk(df, BUDGETS, n_boot=10, rng=np.random.default_rng(0), strength_df=df[df["intervention"].isin(train)])
     assert leaky.strength_estimated_from == "same_rows_as_evaluation"
     assert leaky.strength_source == ("a", "b", "c", "d")
     assert split.strength_estimated_from == "separate_strength_rows"

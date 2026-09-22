@@ -28,8 +28,14 @@ def _synthetic_artifacts():
                     acc = 0.3 + 0.2 * np.log10(n) / 10 + rng.normal(0, 0.005)
                     eval_rows.append(
                         {
-                            "params": scale, "data": recipe, "task": "olmes_10_macro_avg", "step": step, "seed": seed,
-                            "chinchilla": "5xC", "tokens": int(tokens), "compute": 6.0 * n * tokens,
+                            "params": scale,
+                            "data": recipe,
+                            "task": "olmes_10_macro_avg",
+                            "step": step,
+                            "seed": seed,
+                            "chinchilla": "5xC",
+                            "tokens": int(tokens),
+                            "compute": 6.0 * n * tokens,
                             "metrics": json.dumps({"primary_metric": acc, "correct_prob_per_char": acc + 0.1}),
                         }
                     )

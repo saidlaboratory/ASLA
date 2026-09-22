@@ -31,9 +31,13 @@ def _synthetic(flip_pairs: int = 0) -> pd.DataFrame:
                 large_value = 1.0 + 0.1 * (len(names) - 1 - i) if (flip_pairs and compute == 100.0) else small_value
                 rows.append(
                     {
-                        "intervention": name, "intervention_class": "data", "compute": compute, "seed": seed,
+                        "intervention": name,
+                        "intervention_class": "data",
+                        "compute": compute,
+                        "seed": seed,
                         "bpb": (large_value if compute == 100.0 else small_value) + rng.normal(0, 1e-4),
-                        "metric_name": "olmes_macro_error", "scale_label": scale_label,
+                        "metric_name": "olmes_macro_error",
+                        "scale_label": scale_label,
                     }
                 )
     return pd.DataFrame(rows)

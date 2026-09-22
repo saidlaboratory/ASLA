@@ -58,6 +58,7 @@ def build_command(
     """
 
     fields = _template_fields(template)
+
     def _uses(name: str) -> bool:
         return name in fields or f"{name}_q" in fields
 

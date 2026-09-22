@@ -19,10 +19,19 @@ def _core():
                 score = 1.0 + 0.1 * len(slug) / 10 - 0.05 * (n > 1e8) - 0.001 * step / 1000
                 rows.append(
                     {
-                        "task": "paloma_c4_en", "model": f"{mix}-{size}-5xC{seed}", "model_type": "datadecide",
-                        "model_path": f"allenai/DataDecide-{slug}-{size}", "model_revision": f"step{int(step)}-seed-default",
-                        "primary_score": score, "primary_metric": "logits_per_byte_corr", "model_params": n,
-                        "model_tokens": tokens, "flops": 6 * n * tokens, "step": step, "mix": mix, "size": size,
+                        "task": "paloma_c4_en",
+                        "model": f"{mix}-{size}-5xC{seed}",
+                        "model_type": "datadecide",
+                        "model_path": f"allenai/DataDecide-{slug}-{size}",
+                        "model_revision": f"step{int(step)}-seed-default",
+                        "primary_score": score,
+                        "primary_metric": "logits_per_byte_corr",
+                        "model_params": n,
+                        "model_tokens": tokens,
+                        "flops": 6 * n * tokens,
+                        "step": step,
+                        "mix": mix,
+                        "size": size,
                         "bits_per_byte": score,
                     }
                 )

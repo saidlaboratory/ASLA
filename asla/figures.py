@@ -25,9 +25,7 @@ def _save(fig: Any, out_dir: Path, name: str) -> None:
         fig.savefig(out_dir / f"{name}.{ext}", bbox_inches="tight", dpi=160)
 
 
-def _ensemble_disagreement_figure(
-    df: pd.DataFrame, budgets: tuple[float, ...], target: float, out: Path, plt: Any
-) -> None:
+def _ensemble_disagreement_figure(df: pd.DataFrame, budgets: tuple[float, ...], target: float, out: Path, plt: Any) -> None:
     """Plot per-family target projections against the measured target band."""
 
     from asla.analysis.audit import seed_noise_report
@@ -58,8 +56,15 @@ def _ensemble_disagreement_figure(
         ax.scatter([i], [entry["point"]], marker="_", s=400, color="C3", label="ensemble" if i == 0 else None)
         if name in measured.index and band is not None:
             center = float(measured.loc[name])
-            ax.errorbar([i], [center], yerr=[[band], [band]], fmt="*", color="C2", capsize=4,
-                        label="measured target ± noise band" if i == 0 else None)
+            ax.errorbar(
+                [i],
+                [center],
+                yerr=[[band], [band]],
+                fmt="*",
+                color="C2",
+                capsize=4,
+                label="measured target ± noise band" if i == 0 else None,
+            )
     ax.set_xticks(range(len(names)), names, rotation=20, ha="right", fontsize="small")
     ax.set_ylabel("projected target BPB")
     ax.legend(fontsize="small")
@@ -219,9 +224,7 @@ def make_figures(
     class_sizes = counts["intervention_class"].astype(str).value_counts().to_dict()
     total_interventions = len(counts)
     class_frequency = {
-        name: float(class_counts.get(name, 0) / (size * (total_interventions - 1)))
-        if total_interventions > 1
-        else 0.0
+        name: float(class_counts.get(name, 0) / (size * (total_interventions - 1))) if total_interventions > 1 else 0.0
         for name, size in class_sizes.items()
     }
     fig, ax = plt.subplots()

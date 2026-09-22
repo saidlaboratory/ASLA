@@ -163,11 +163,7 @@ def load_results(cache_dir: str | Path = DEFAULT_CACHE_DIR) -> pd.DataFrame:
         payload = json.loads(path.read_text(encoding="utf-8"))
         result = payload.get("result") or {}
         baseline = _finite(result.get("Baseline"))
-        ablations = [
-            value
-            for key, raw in result.items()
-            if key != "Baseline" and (value := _finite(raw)) is not None
-        ]
+        ablations = [value for key, raw in result.items() if key != "Baseline" and (value := _finite(raw)) is not None]
         min_loss = _finite(payload.get("min_loss"))
         observed = [v for v in ablations + ([baseline] if baseline is not None else []) if v is not None]
         if min_loss is None and observed:

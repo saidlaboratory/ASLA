@@ -90,6 +90,4 @@ def test_harder_positions_are_not_easier_for_plain_projection():
     hard = BenchmarkConfig(family="late_crossover", gap_to_noise=2.0, crossover_position=0.30, seed=2)
     table = evaluate_configs([easy, hard], n_trials=8, n_boot=25, seed=4)
     plain = table[table["rule"] == "plain"].set_index("crossover_position")
-    assert (
-        plain.loc[0.30, "wrong_pick_rate"] >= plain.loc[-0.30, "wrong_pick_rate"]
-    )
+    assert plain.loc[0.30, "wrong_pick_rate"] >= plain.loc[-0.30, "wrong_pick_rate"]

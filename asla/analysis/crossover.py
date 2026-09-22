@@ -80,14 +80,8 @@ def pairwise_target_tests(df: pd.DataFrame, target: float) -> list[dict[str, Any
     target_df = df[np.isclose(df["compute"].astype(float), float(target))]
     if target_df.empty:
         raise ValueError(f"no rows found at target budget {target}")
-    groups = {
-        str(name): group["bpb"].to_numpy(dtype=float)
-        for name, group in target_df.groupby("intervention", sort=True)
-    }
-    seeds = {
-        str(name): int(group["seed"].nunique())
-        for name, group in target_df.groupby("intervention", sort=True)
-    }
+    groups = {str(name): group["bpb"].to_numpy(dtype=float) for name, group in target_df.groupby("intervention", sort=True)}
+    seeds = {str(name): int(group["seed"].nunique()) for name, group in target_df.groupby("intervention", sort=True)}
     results: list[dict[str, Any]] = []
     for a, b in itertools.combinations(sorted(groups), 2):
         gap = float(np.mean(groups[a]) - np.mean(groups[b]))

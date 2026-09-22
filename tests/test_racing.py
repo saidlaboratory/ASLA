@@ -92,9 +92,7 @@ def test_monte_carlo_selection_reports_costs_and_race_competitiveness():
 
     cfg = AuditConfig()
     cfg = replace(cfg, gate=replace(cfg.gate, n_boot=60))
-    result = monte_carlo_selection(
-        noise_close_call, cfg, n_trials=12, rng=np.random.default_rng(13)
-    )
+    result = monte_carlo_selection(noise_close_call, cfg, n_trials=12, rng=np.random.default_rng(13))
     assert set(result) == {"plain", "largest", "gate", "race"}
     for stats in result.values():
         assert set(stats) == {"mean_regret", "wrong_pick_rate", "mean_compute"}

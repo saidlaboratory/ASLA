@@ -29,9 +29,7 @@ def _read_interventions(path: str) -> pd.DataFrame:
         raise SystemExit("intervention file contains missing intervention or intervention_class values")
     if df["intervention"].astype(str).str.strip().eq("").any():
         raise SystemExit("intervention names must be non-empty")
-    unsafe = sorted(
-        name for name in df["intervention"].astype(str).unique() if SAFE_IDENTIFIER.fullmatch(name) is None
-    )
+    unsafe = sorted(name for name in df["intervention"].astype(str).unique() if SAFE_IDENTIFIER.fullmatch(name) is None)
     if unsafe:
         raise SystemExit(
             "intervention names must be path-safe identifiers containing only letters, numbers, '.', '_', '+', or '-'; "

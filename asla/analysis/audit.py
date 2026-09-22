@@ -307,8 +307,14 @@ def audit_with_ci(
         point_metrics[name] = metrics
         boot_metrics[name] = {metric_name: [] for metric_name in metrics}
         all_ranking_metrics = {
-            "top1_acc", "regret", "mis_selection_rate", "mean_regret",
-            "topk_recall", "pairwise_acc", "kendall_tau", "spearman",
+            "top1_acc",
+            "regret",
+            "mis_selection_rate",
+            "mean_regret",
+            "topk_recall",
+            "pairwise_acc",
+            "kendall_tau",
+            "spearman",
         }
         reported = sorted(metrics)
         omitted = sorted(all_ranking_metrics - set(reported))

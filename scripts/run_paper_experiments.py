@@ -57,15 +57,49 @@ print("wrote scenario tables to {scenario_dir}")
     for scenario in ("clean_crossover", "saturation_crossover", "noise_close_call", "negative_controls_only"):
         _run(
             py
-            + ["-m", "asla.cli", "audit", "--runs", str(scenario_dir / f"{scenario}.parquet"), "--target", "64",
-               "--budgets", "1", "2", "4", "8", "--intermediate-budget", "16", "--estimand", args.estimand,
-               "--seed", str(args.seed), "--report", "--out", str(scenario_dir / f"{scenario}_audit.json")]
+            + [
+                "-m",
+                "asla.cli",
+                "audit",
+                "--runs",
+                str(scenario_dir / f"{scenario}.parquet"),
+                "--target",
+                "64",
+                "--budgets",
+                "1",
+                "2",
+                "4",
+                "8",
+                "--intermediate-budget",
+                "16",
+                "--estimand",
+                args.estimand,
+                "--seed",
+                str(args.seed),
+                "--report",
+                "--out",
+                str(scenario_dir / f"{scenario}_audit.json"),
+            ]
             + fast
         )
         _run(
             py
-            + ["-m", "asla.cli", "figures", "--runs", str(scenario_dir / f"{scenario}.parquet"), "--target", "64",
-               "--budgets", "1", "2", "4", "8", "--out", str(scenario_dir / f"{scenario}_figures")]
+            + [
+                "-m",
+                "asla.cli",
+                "figures",
+                "--runs",
+                str(scenario_dir / f"{scenario}.parquet"),
+                "--target",
+                "64",
+                "--budgets",
+                "1",
+                "2",
+                "4",
+                "8",
+                "--out",
+                str(scenario_dir / f"{scenario}_figures"),
+            ]
         )
 
     # 2. Benchmark sweep.

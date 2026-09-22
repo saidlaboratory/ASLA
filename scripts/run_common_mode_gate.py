@@ -57,8 +57,8 @@ SUITES = {
 }
 LADDER = ["4M", "6M", "8M", "10M", "14M", "16M", "20M", "60M", "90M", "150M", "300M", "530M"]
 # Gate thresholds, fixed before the measurement is read.
-GATE_PROCEED_BELOW = 0.70   # cancellation ratio below this: material common-mode, proceed
-GATE_STOP_ABOVE = 0.90      # at or above this: premise false, stop and report
+GATE_PROCEED_BELOW = 0.70  # cancellation ratio below this: material common-mode, proceed
+GATE_STOP_ABOVE = 0.90  # at or above this: premise false, stop and report
 N_BOOTSTRAP = 400
 
 
@@ -68,9 +68,7 @@ def power_law(compute: np.ndarray, floor: float, amplitude: float, alpha: float)
 
 def fit_one(x: np.ndarray, y: np.ndarray) -> tuple[float, float, float] | None:
     try:
-        popt, _ = curve_fit(
-            power_law, x, y, p0=(y.min() * 0.9, y.max() - y.min() * 0.9, 0.15), maxfev=200000
-        )
+        popt, _ = curve_fit(power_law, x, y, p0=(y.min() * 0.9, y.max() - y.min() * 0.9, 0.15), maxfev=200000)
     except Exception:  # noqa: BLE001 - a failed fit is recorded by omission
         return None
     return (float(popt[0]), float(popt[1]), float(popt[2]))
@@ -329,13 +327,21 @@ def gate(assessments: list[dict[str, Any]]) -> dict[str, Any]:
                 "interventions."
             ),
             "suites_with_offset_structure": [
-                {"suite": a["suite"], "fit_to": a["fit_scales"][-1], "loading_cv": a["shared_component_shape"]["loading_cv"],
-                 "cancellation": a["cancellation"]["mean_ratio"]}
+                {
+                    "suite": a["suite"],
+                    "fit_to": a["fit_scales"][-1],
+                    "loading_cv": a["shared_component_shape"]["loading_cv"],
+                    "cancellation": a["cancellation"]["mean_ratio"],
+                }
                 for a in offsets
             ],
             "suites_with_scaled_structure": [
-                {"suite": a["suite"], "fit_to": a["fit_scales"][-1], "loading_cv": a["shared_component_shape"]["loading_cv"],
-                 "cancellation": a["cancellation"]["mean_ratio"]}
+                {
+                    "suite": a["suite"],
+                    "fit_to": a["fit_scales"][-1],
+                    "loading_cv": a["shared_component_shape"]["loading_cv"],
+                    "cancellation": a["cancellation"]["mean_ratio"],
+                }
                 for a in scaled
             ],
             "why_it_matters": (

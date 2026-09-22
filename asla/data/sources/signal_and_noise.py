@@ -124,8 +124,20 @@ def load_datadecide_c4(cache_dir: str | Path = DEFAULT_CACHE_DIR) -> pd.DataFram
     table = pq.read_table(
         _local_path(cache_dir),
         columns=[
-            "task", "model", "model_type", "model_path", "model_revision", "primary_score", "primary_metric",
-            "model_params", "model_tokens", "flops", "step", "mix", "size", "metrics",
+            "task",
+            "model",
+            "model_type",
+            "model_path",
+            "model_revision",
+            "primary_score",
+            "primary_metric",
+            "model_params",
+            "model_tokens",
+            "flops",
+            "step",
+            "mix",
+            "size",
+            "metrics",
         ],
         filters=[("task", "==", TASK), ("model_type", "==", "datadecide")],
     )

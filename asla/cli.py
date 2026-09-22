@@ -200,10 +200,7 @@ def _print_interval_report(results: dict[str, object]) -> None:
                 continue
             interval = metrics[metric_name]
             assert isinstance(interval, dict)
-            print(
-                f"  {metric_name}: {interval['point']:.6f} "
-                f"[{interval['lo']:.6f}, {interval['hi']:.6f}]"
-            )
+            print(f"  {metric_name}: {interval['point']:.6f} [{interval['lo']:.6f}, {interval['hi']:.6f}]")
         entry = availability[ranker_name]
         assert isinstance(entry, dict)
         omitted = entry.get("omitted", {})
@@ -312,9 +309,7 @@ def _audit(args: argparse.Namespace) -> int:
     _assert_fit_form_available(df, args.fit_form)
     budgets = _resolve_audit_budgets(df, args.target, args.budgets, args.intermediate_budget)
     rankers = _default_rankers(args.fit_form, weighted=bool(args.weighted), n_fit_budgets=len(budgets))
-    ranker_availability: dict[str, dict[str, object]] = {
-        name: {"included": True} for name in rankers
-    }
+    ranker_availability: dict[str, dict[str, object]] = {name: {"included": True} for name in rankers}
     if "ensemble_ranker" not in rankers:
         ranker_availability["ensemble_ranker"] = {
             "included": False,
@@ -732,9 +727,7 @@ def build_parser() -> argparse.ArgumentParser:
     bench.add_argument("--families", nargs="+", choices=list(BENCHMARK_FAMILIES), default=list(BENCHMARK_FAMILIES))
     bench.add_argument("--trials", type=_positive_int, default=100)
     bench.add_argument("--n-boot", type=_positive_int, default=300)
-    bench.add_argument(
-        "--problem-seeds", type=_positive_int, default=1, help="Curve-sampling seeds per knob setting."
-    )
+    bench.add_argument("--problem-seeds", type=_positive_int, default=1, help="Curve-sampling seeds per knob setting.")
     bench.add_argument("--seed", type=int, default=1729)
     bench.add_argument("--beta", type=float, default=1.0, help="Race interval-width multiplier.")
     bench.add_argument("--fast", action="store_true")

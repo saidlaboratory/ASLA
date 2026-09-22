@@ -48,16 +48,12 @@ def run_study(
     for tau in taus:
         if np.isclose(tau, cfg.gate.tau):
             continue
-        result = monte_carlo_selection(
-            scenario_fn, cfg, n_trials=n_trials, rng=np.random.default_rng(seed), tau=tau
-        )
+        result = monte_carlo_selection(scenario_fn, cfg, n_trials=n_trials, rng=np.random.default_rng(seed), tau=tau)
         rows.append({"rule": "gate", "parameter": f"tau={tau}", **result["gate"]})
     for beta in betas:
         if np.isclose(beta, 1.0):
             continue
-        result = monte_carlo_selection(
-            scenario_fn, cfg, n_trials=n_trials, rng=np.random.default_rng(seed), beta=beta
-        )
+        result = monte_carlo_selection(scenario_fn, cfg, n_trials=n_trials, rng=np.random.default_rng(seed), beta=beta)
         rows.append({"rule": "race", "parameter": f"beta={beta}", **result["race"]})
     return rows
 
@@ -66,9 +62,7 @@ def write_outputs(rows: list[dict[str, object]], out_dir: Path) -> None:
     out_dir.mkdir(parents=True, exist_ok=True)
     csv_path = out_dir / "pareto_regret_cost.csv"
     with csv_path.open("w", newline="", encoding="utf-8") as fh:
-        writer = csv.DictWriter(
-            fh, fieldnames=["rule", "parameter", "mean_regret", "wrong_pick_rate", "mean_compute"]
-        )
+        writer = csv.DictWriter(fh, fieldnames=["rule", "parameter", "mean_regret", "wrong_pick_rate", "mean_compute"])
         writer.writeheader()
         writer.writerows(rows)
     print(f"wrote {csv_path}")

@@ -559,7 +559,6 @@ def add_derived_analyses(results: dict[str, Any]) -> dict[str, Any]:
     return results
 
 
-
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--out", default="results/first_audit")
@@ -864,8 +863,9 @@ def _ensemble_evidence(results: dict[str, Any], c4: dict[str, Any]) -> list[str]
         lines[-1] += (
             check_text + noiseless_text + "The implementation is sound (it reproduces the plain fit exactly when the "
             "fitting data are noise-free), but at realistic seed noise the ensemble is worse than the plain fit even "
-            "when the power law is the true family" + ("" if helps else ", and it does not help under the saturating "
-            "misspecification it was designed for") + ". Its excess is therefore variance from weighting flexible "
+            "when the power law is the true family"
+            + ("" if helps else ", and it does not help under the saturating misspecification it was designed for")
+            + ". Its excess is therefore variance from weighting flexible "
             "families on noisy leave-one-out losses - the same fit-variance mechanism as H1, now reproduced on synthetic "
             "data with a known answer - but because the ensemble fails the 'roughly matches the plain fit when "
             "well-specified' criterion it is reported as **consistent with the mechanism, not as independent "
@@ -908,8 +908,10 @@ def _optimizer_sections(results: dict[str, Any]) -> list[str]:
         rows = [r for r in size_rows if r["table"] == table]
         first, last = rows[0], rows[-1]
         if first["range_nats"] > 0:
-            trend.append(f"{table}: {first['level']} range {first['range_nats']:.4f} -> {last['level']} range "
-                         f"{last['range_nats']:.4f} ({last['range_nats'] / first['range_nats']:.2f}x)")
+            trend.append(
+                f"{table}: {first['level']} range {first['range_nats']:.4f} -> {last['level']} range "
+                f"{last['range_nats']:.4f} ({last['range_nats'] / first['range_nats']:.2f}x)"
+            )
     lines += ["", "Scale trend of the range on the size ladders: " + "; ".join(trend) + ".", ""]
     one_b_rows = [r for r in power["rows"] if r["level"] == "1.2b"]
     unident = [r for r in one_b_rows if not r["smallest_gap_identifiable"]]
@@ -1147,9 +1149,7 @@ def render_report(results: dict[str, Any]) -> str:
             from collections import Counter
 
             which = Counter(
-                f"{entry['parameter']}@{entry['side']}"
-                for entries in pins["pinned"].values()
-                for entry in entries
+                f"{entry['parameter']}@{entry['side']}" for entries in pins["pinned"].values() for entry in entries
             )
             detail = ", ".join(f"{count}x {name}" for name, count in sorted(which.items()))
             lines += [

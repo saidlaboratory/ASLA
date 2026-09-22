@@ -64,10 +64,7 @@ class SelectionResult:
 def cell_cost(df: pd.DataFrame, intervention: str, budget: float) -> float:
     """Return ``budget x number_of_runs`` for one intervention-budget cell."""
 
-    rows = df[
-        (df["intervention"].astype(str) == str(intervention))
-        & np.isclose(df["compute"].astype(float), float(budget))
-    ]
+    rows = df[(df["intervention"].astype(str) == str(intervention)) & np.isclose(df["compute"].astype(float), float(budget))]
     return float(budget) * int(len(rows))
 
 
@@ -208,9 +205,7 @@ def race_pick(
             continue
         leader = min(intervals, key=lambda name: (intervals[name][0], name))
         leader_hi = intervals[leader][2]
-        eliminated = tuple(
-            iv for iv in survivors if iv in intervals and iv != leader and intervals[iv][1] > leader_hi
-        )
+        eliminated = tuple(iv for iv in survivors if iv in intervals and iv != leader and intervals[iv][1] > leader_hi)
         survivors = [iv for iv in survivors if iv not in eliminated]
         records.append(
             RungRecord(budget=float(rung), survivors=tuple(survivors), eliminated=eliminated, intervals=intervals)

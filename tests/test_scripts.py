@@ -158,9 +158,7 @@ def test_prepare_runs_table_drops_noncanonical_columns():
 def test_manifest_plan_rejects_duplicate_interventions(tmp_path):
     path = tmp_path / "interventions.csv"
     path.write_text(
-        "intervention,intervention_class\n"
-        "baseline,recipe\n"
-        "baseline,recipe\n",
+        "intervention,intervention_class\nbaseline,recipe\nbaseline,recipe\n",
         encoding="utf-8",
     )
 
@@ -171,11 +169,7 @@ def test_manifest_plan_rejects_duplicate_interventions(tmp_path):
 def test_manifest_plan_rejects_fit_budget_at_or_above_target(tmp_path):
     path = tmp_path / "budgets.csv"
     path.write_text(
-        "compute,role\n"
-        "1,fit\n"
-        "2,fit\n"
-        "4,fit\n"
-        "4,target\n",
+        "compute,role\n1,fit\n2,fit\n4,fit\n4,target\n",
         encoding="utf-8",
     )
 
@@ -183,11 +177,7 @@ def test_manifest_plan_rejects_fit_budget_at_or_above_target(tmp_path):
         _read_budgets(str(path))
 
     path.write_text(
-        "compute,role\n"
-        "1,fit\n"
-        "2,fit\n"
-        "4,fit\n"
-        "3,target\n",
+        "compute,role\n1,fit\n2,fit\n4,fit\n3,target\n",
         encoding="utf-8",
     )
     with pytest.raises(SystemExit, match="below"):
@@ -298,8 +288,7 @@ def test_collect_results_rejects_result_manifest_identity_mismatch(tmp_path):
     result_dir = tmp_path / "results" / "a__c1__s0"
     result_dir.mkdir(parents=True)
     (result_dir / "result.json").write_text(
-        '{"bpb": 1.2, "status": "completed", "run_id": "wrong", '
-        '"intervention": "a", "compute": 1.0, "seed": 0}',
+        '{"bpb": 1.2, "status": "completed", "run_id": "wrong", "intervention": "a", "compute": 1.0, "seed": 0}',
         encoding="utf-8",
     )
     with pytest.raises(ValueError, match="does not match"):
@@ -554,9 +543,7 @@ def test_hpc_preflight_mock_trainer_writes_metrics(tmp_path):
 def test_hpc_preflight_rejects_slurm_array_manifest_mismatch(tmp_path):
     manifest = tmp_path / "manifest.csv"
     manifest.write_text(
-        "run_id,intervention,compute,seed,status\n"
-        "a0,a,1,0,pending\n"
-        "a1,a,1,1,pending\n",
+        "run_id,intervention,compute,seed,status\na0,a,1,0,pending\na1,a,1,1,pending\n",
         encoding="utf-8",
     )
     slurm = tmp_path / "job.sh"
@@ -608,7 +595,11 @@ def test_first_audit_run_design_and_report_on_synthetic_table(tmp_path):
     assert "gate_ranker" in entry["single_design_seed_sensitivity"]["rankers"]
     assert entry["crossovers"]["projection_vs_target"]["n_flipped_pairs"] == 0
     results = {
-        "fast": True, "counts": {"pairwise": 1, "single": 1}, "seed": 0, "inputs": {"x": "0" * 64}, "designs": [entry]
+        "fast": True,
+        "counts": {"pairwise": 1, "single": 1},
+        "seed": 0,
+        "inputs": {"x": "0" * 64},
+        "designs": [entry],
     }
     text = module.render_report(results)
     assert "synthetic" in text and "flipped pairs" in text and "sha256" in text
@@ -625,15 +616,29 @@ def test_signal_and_noise_check_helpers_on_synthetic_tables():
         for label, compute in (("1", 1.0), ("2", 2.0), ("4", 4.0), ("8", 8.0)):
             sn_value = 1.0 + 0.1 * i + 1.0 / compute
             rows_sn.append(
-                {"intervention": name, "intervention_class": "data", "compute": compute, "seed": 0, "bpb": sn_value,
-                 "metric_name": "bpb_sn", "scale_label": label}
+                {
+                    "intervention": name,
+                    "intervention_class": "data",
+                    "compute": compute,
+                    "seed": 0,
+                    "bpb": sn_value,
+                    "metric_name": "bpb_sn",
+                    "scale_label": label,
+                }
             )
             for seed in range(2):
                 # DataDecide table disagrees with S&N about the order of A and B at the largest scale only
                 dd_value = sn_value + (0.5 if (name == "A" and compute == 8.0) else 0.0) + 0.001 * seed
                 rows_dd.append(
-                    {"intervention": name, "intervention_class": "data", "compute": compute, "seed": seed,
-                     "bpb": dd_value, "metric_name": "bpt_dd", "scale_label": label}
+                    {
+                        "intervention": name,
+                        "intervention_class": "data",
+                        "compute": compute,
+                        "seed": seed,
+                        "bpb": dd_value,
+                        "metric_name": "bpt_dd",
+                        "scale_label": label,
+                    }
                 )
     sn, dd = pd.DataFrame(rows_sn), pd.DataFrame(rows_dd)
     agreement = module.metric_agreement(sn, dd)
@@ -648,8 +653,13 @@ def test_signal_and_noise_check_helpers_on_synthetic_tables():
     check = module.projection_check(sn, target_label="8")
     assert check["fit_budget_labels"] == ["1", "2", "4"] and check["true_winner"] == "A"
     text = module.render(
-        {"inputs": {"x": "0" * 64}, "metric_agreement": agreement, "duplicate_check": dup, "flip_profile": profile,
-         "projection_check": check}
+        {
+            "inputs": {"x": "0" * 64},
+            "metric_agreement": agreement,
+            "duplicate_check": dup,
+            "flip_profile": profile,
+            "projection_check": check,
+        }
     )
     assert "Signal-and-Noise" in text and "sha256" in text
 
@@ -692,8 +702,15 @@ def test_first_audit_derived_analyses():
     for name, offset in (("A", 0.0), ("B", 0.01), ("C", 0.03)):
         for label, compute in (("s", 1.0), ("l", 8.0)):
             rows.append(
-                {"intervention": name, "intervention_class": "optimizer", "compute": compute, "seed": 0,
-                 "bpb": 3.0 + offset * (1 if compute == 1.0 else 0.1), "scale_label": label, "chinchilla_ratio": 1}
+                {
+                    "intervention": name,
+                    "intervention_class": "optimizer",
+                    "compute": compute,
+                    "seed": 0,
+                    "bpb": 3.0 + offset * (1 if compute == 1.0 else 0.1),
+                    "scale_label": label,
+                    "chinchilla_ratio": 1,
+                }
             )
     conv = module.optimizer_convergence({"size_ladder_1xC": pd.DataFrame(rows)})
     assert [c["level"] for c in conv] == ["s", "l"]
@@ -704,8 +721,15 @@ def test_first_audit_derived_analyses():
     for name in ("A", "B"):
         for seed, value in enumerate((1.0, 1.02, 0.98)):
             noise_rows.append(
-                {"intervention": name, "intervention_class": "data", "compute": 1.0, "seed": seed, "bpb": value,
-                 "scale_label": "1B", "metric_name": "c4_en_bits_per_token"}
+                {
+                    "intervention": name,
+                    "intervention_class": "data",
+                    "compute": 1.0,
+                    "seed": seed,
+                    "bpb": value,
+                    "scale_label": "1B",
+                    "metric_name": "c4_en_bits_per_token",
+                }
             )
     noise = module.seed_noise_reference(pd.DataFrame(noise_rows), scales=("1B",))
     assert noise[0]["pooled_within_cell_sd"] == pytest.approx(0.02) and noise[0]["seeds_per_cell"] == 3
@@ -726,14 +750,27 @@ def test_compute_ask_arithmetic_and_exclusion():
         tokens = ratio * 20 * n
         tables[f"size_ladder_{ratio}xC"] = pd.DataFrame(
             [
-                {"intervention": opt, "intervention_class": "optimizer", "compute": 6 * n * tokens, "seed": 0,
-                 "bpb": 2.7, "scale_label": "1.2b", "chinchilla_ratio": ratio, "tokens_d": tokens}
+                {
+                    "intervention": opt,
+                    "intervention_class": "optimizer",
+                    "compute": 6 * n * tokens,
+                    "seed": 0,
+                    "bpb": 2.7,
+                    "scale_label": "1.2b",
+                    "chinchilla_ratio": ratio,
+                    "tokens_d": tokens,
+                }
                 for opt in ("AdamW", "Muon", "NAdamW", "SOAP")
             ]
         )
         power_rows.append(
-            {"table": f"size_ladder_{ratio}xC", "level": "1.2b", "seeds_to_resolve_range_bonferroni": 2,
-             "seeds_to_resolve_smallest_gap": 9 if gap_ident else 10**6, "smallest_gap_identifiable": gap_ident}
+            {
+                "table": f"size_ladder_{ratio}xC",
+                "level": "1.2b",
+                "seeds_to_resolve_range_bonferroni": 2,
+                "seeds_to_resolve_smallest_gap": 9 if gap_ident else 10**6,
+                "smallest_gap_identifiable": gap_ident,
+            }
         )
     ask = module.compute_ask({"rows": power_rows}, tables, peak_flops_per_second=1e15, mfu=0.5)
     per_run_1x = 6 * n * 20 * n / (1e15 * 0.5) / 3600
@@ -767,12 +804,32 @@ def test_ensemble_sanity_grid_and_pilot_helpers():
     gap9 = audit.min_detectable_gap(9, 0.0014)
     assert gap9 < gap4
     assert audit.seeds_needed(gap9, 0.0014) in (9, 10)
-    power = {"rows": [{"table": "size_ladder_1xC", "level": "1.2b", "sigma_nats": 0.0014, "range_nats": 0.018,
-                       "smallest_adjacent_gap_nats": 0.0021, "smallest_gap_identifiable": True},
-                      {"table": "size_ladder_8xC", "level": "1.2b", "sigma_nats": 0.0014, "range_nats": 0.004,
-                       "smallest_adjacent_gap_nats": 7e-6, "smallest_gap_identifiable": False}]}
-    ask = {"rows": [{"chinchilla_ratio": 1, "n_optimizers": 4, "gpu_hours_per_run": 100.0},
-                    {"chinchilla_ratio": 8, "n_optimizers": 4, "gpu_hours_per_run": 800.0}]}
+    power = {
+        "rows": [
+            {
+                "table": "size_ladder_1xC",
+                "level": "1.2b",
+                "sigma_nats": 0.0014,
+                "range_nats": 0.018,
+                "smallest_adjacent_gap_nats": 0.0021,
+                "smallest_gap_identifiable": True,
+            },
+            {
+                "table": "size_ladder_8xC",
+                "level": "1.2b",
+                "sigma_nats": 0.0014,
+                "range_nats": 0.004,
+                "smallest_adjacent_gap_nats": 7e-6,
+                "smallest_gap_identifiable": False,
+            },
+        ]
+    }
+    ask = {
+        "rows": [
+            {"chinchilla_ratio": 1, "n_optimizers": 4, "gpu_hours_per_run": 100.0},
+            {"chinchilla_ratio": 8, "n_optimizers": 4, "gpu_hours_per_run": 800.0},
+        ]
+    }
     tranches = audit.pilot_tranches(power, ask, seed_options=(4, 9))
     assert [t["ratio"] for t in tranches] == [1, 1] and tranches[0]["gpu_hours"] == 1600.0
     assert tranches[0]["resolves_best_vs_worst"] and not tranches[0]["resolves_smallest_adjacent_gap"]

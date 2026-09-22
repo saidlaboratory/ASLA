@@ -128,9 +128,7 @@ def main(argv: list[str] | None = None) -> int:
             "n_external_designs": len(testable),
             "n_replicating": len(replicated),
             "all_replicate": bool(testable and len(replicated) == len(testable)),
-            "headline": (
-                "the excess of projection over single-scale ranking is entirely fit error, not crossover"
-            ),
+            "headline": ("the excess of projection over single-scale ranking is entirely fit error, not crossover"),
             "scope_note": (
                 "Signal-and-Noise re-evaluates the SAME DataDecide models through a different pipeline and "
                 "metric (Paloma C4-EN bits per byte). It therefore replicates across the evaluation and metric "
@@ -149,7 +147,7 @@ def main(argv: list[str] | None = None) -> int:
     for d in designs:
         print(
             f"{d['suite']:22s} fit<={d['fit_scales'][-1]:>4s} k={d['n_fit_budgets']:2d} seeds={d['min_seeds_per_cell']} "
-            f"| proj {d['projection_mis_selection']*100:5.2f}% vs single {d['single_scale_mis_selection']*100:5.2f}% "
+            f"| proj {d['projection_mis_selection'] * 100:5.2f}% vs single {d['single_scale_mis_selection'] * 100:5.2f}% "
             f"| flips {d['projection_flips']:3d}/{d['single_scale_flips']:3d} "
             f"| fit_err={d['n_fit_error']:3d} inherited={d['n_inherited_crossover']:3d} "
             f"excess={d['excess_projection_flips']:+3d} -> all_fit_error={d['excess_is_all_fit_error']}"

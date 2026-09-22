@@ -29,4 +29,3 @@ def test_naive_predictor_recovers_genuine_crossing_budget():
 def test_mechanism_predictor_is_explicit_stub():
     with pytest.raises(NotImplementedError):
         mechanism_crossover_budget()
-

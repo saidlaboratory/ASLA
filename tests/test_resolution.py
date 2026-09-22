@@ -77,16 +77,12 @@ def test_sensitivity_spans_noise_and_budget_and_is_monotone():
     assert len(rows) == 6
     # more seeds never make the detectable gap larger at fixed noise
     for multiplier in (0.5, 1.0, 2.0):
-        at_multiplier = sorted(
-            [r for r in rows if r["sigma_multiplier"] == multiplier], key=lambda r: r["seed_budget"]
-        )
+        at_multiplier = sorted([r for r in rows if r["sigma_multiplier"] == multiplier], key=lambda r: r["seed_budget"])
         gaps = [r["minimum_detectable_gap"] for r in at_multiplier]
         assert gaps == sorted(gaps, reverse=True)
     # more noise never makes it smaller at fixed budget
     at_budget = sorted([r for r in rows if r["seed_budget"] == 3], key=lambda r: r["sigma_multiplier"])
-    assert [r["minimum_detectable_gap"] for r in at_budget] == sorted(
-        [r["minimum_detectable_gap"] for r in at_budget]
-    )
+    assert [r["minimum_detectable_gap"] for r in at_budget] == sorted([r["minimum_detectable_gap"] for r in at_budget])
 
 
 def test_report_requires_at_least_two_entries():

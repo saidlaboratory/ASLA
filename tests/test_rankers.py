@@ -15,4 +15,3 @@ def test_single_scale_ranker_uses_best_mean_at_largest_budget():
     )
     ranking = single_scale_ranker(df, (1.0, 2.0), 4.0)
     assert ranking.index[0] == "a"
-

@@ -106,9 +106,7 @@ def known_answer_report(
         raise ValueError("known-answer validation needs the DataDecide 'scale_label' column")
     metric_name = str(df["metric_name"].iloc[0]) if "metric_name" in df.columns else None
     if metric_name != published["metric"]:
-        raise ValueError(
-            f"known answer is defined on metric {published['metric']!r}; table carries {metric_name!r}"
-        )
+        raise ValueError(f"known answer is defined on metric {published['metric']!r}; table carries {metric_name!r}")
     target = _compute_for_scale(df, target_label)
     scales = [
         label

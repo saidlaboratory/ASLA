@@ -45,9 +45,7 @@ def conformal_projection_interval(
     y = np.asarray(bpb, dtype=float)
     distinct = np.unique(x)
     if len(distinct) < 4:
-        raise FitError(
-            f"conformal interval requires at least 4 distinct compute budgets, got {len(distinct)}"
-        )
+        raise FitError(f"conformal interval requires at least 4 distinct compute budgets, got {len(distinct)}")
     params = fit_power_law(x, y)
     point = float(bpb_power_law(float(target), *params))
     scores: list[float] = []

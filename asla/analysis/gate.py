@@ -70,13 +70,9 @@ def gate_pick_detailed(
     gap = float(ranking.iloc[1] - ranking.iloc[0])
     contender_fit_rows = df[
         df["intervention"].astype(str).isin([top1, top2])
-        & df["compute"].astype(float).apply(
-            lambda value: any(np.isclose(value, float(budget)) for budget in fit_budgets)
-        )
+        & df["compute"].astype(float).apply(lambda value: any(np.isclose(value, float(budget)) for budget in fit_budgets))
     ]
-    under_seeded = bool(
-        (contender_fit_rows.groupby(["intervention", "compute"])["seed"].nunique() < 2).any()
-    )
+    under_seeded = bool((contender_fit_rows.groupby(["intervention", "compute"])["seed"].nunique() < 2).any())
     g = 0.0 if under_seeded else np.inf if denom == 0.0 and gap > 0 else gap / denom if denom > 0 else 0.0
     if g >= tau:
         return {"pick": top1, "escalated": False, "top_pair": (top1, top2)}

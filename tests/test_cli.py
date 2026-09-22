@@ -178,9 +178,7 @@ def test_resolution_cli_reports_unresolvable_orderings(tmp_path, capsys):
     )
     out = tmp_path / "resolution.json"
     parser = build_parser()
-    args = parser.parse_args(
-        ["resolution", "--entries", str(entries), "--sigma", "0.0014312", "--out", str(out)]
-    )
+    args = parser.parse_args(["resolution", "--entries", str(entries), "--sigma", "0.0014312", "--out", str(out)])
     assert args.func(args) == 0
     captured = capsys.readouterr().out
     assert "not resolvable" in captured

@@ -83,8 +83,7 @@ def render_report(result: dict[str, Any]) -> str:
         ]
         for name, metrics in rankers.items():
             cells = [
-                _interval(metrics.get(key, {}))
-                for key in ("mis_selection_rate", "mean_regret", "top1_acc", "pairwise_acc")
+                _interval(metrics.get(key, {})) for key in ("mis_selection_rate", "mean_regret", "top1_acc", "pairwise_acc")
             ]
             lines.append(f"| {name} | " + " | ".join(cells) + " |")
         lines.append("")
@@ -112,9 +111,7 @@ def render_report(result: dict[str, Any]) -> str:
             weights = ", ".join(
                 f"{family}: {_fmt(info.get('weight'), 2)}" for family, info in entry.get("families", {}).items()
             )
-            lines.append(
-                f"| {name} | {_fmt(entry.get('reliability'), 2)} | {_fmt(entry.get('point'))} | {weights} |"
-            )
+            lines.append(f"| {name} | {_fmt(entry.get('reliability'), 2)} | {_fmt(entry.get('point'))} | {weights} |")
         lines.append("")
 
     diagnostics = result.get("fit_diagnostics", {})
