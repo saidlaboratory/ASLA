@@ -38,6 +38,129 @@ def _source_commit() -> str:
 def _macro(name: str, value: str, origin: str) -> str:
     return f"\\newcommand{{\\{name}}}{{{value}}}  % {origin}"
 
+RANKER_LABELS = {
+    "projection": "Projection",
+    "shared_exponent": "Shared exponent",
+    "eb_shrinkage": "Empirical-Bayes shrinkage",
+    "ensemble": "Ensemble",
+    "checkpoint_augmented": "Checkpoint-augmented",
+}
+
+
+def _row(label: str, observed: float, expected: float, test: dict[str, float], verdict: str) -> str:
+    return (
+        f"{label} & ${observed:+.2f}$ & ${expected:+.2f}$ & "
+        f"$[{test['ci_low_pp']:+.2f},\\ {test['ci_high_pp']:+.2f}]$ & {verdict.lower()} \\\\"
+    )
+
+
+def _rescoring_entries() -> list[tuple[str, str, str]]:
+    """Table bodies and scalars for the re-scoring section."""
+
+    rescoring = Source.load("target_scoring/rescoring.json")
+    entries: list[tuple[str, str, str]] = []
+    for macro, metric in (("rescoreRowsLow", "c4_en_bits_per_token"), ("rescoreRowsHigh", "olmes_macro_error")):
+        rankers = rescoring.get(f"cells.{metric}.rankers")
+        rows = [
+            _row(
+                RANKER_LABELS[name],
+                float(row["excess_observed_pp"]),
+                float(row["excess_expected_pp"]),
+                row["candidate_test"],
+                str(row["verdict"]),
+            )
+            for name, row in sorted(rankers.items(), key=lambda kv: RANKER_LABELS[kv[0]])
+        ]
+        entries.append((macro, " ".join(rows), "rescoring.json"))
+    entries.append(
+        (
+            "rescoreDetLow",
+            f"{100 * rescoring.number('cells.c4_en_bits_per_token.determined_fraction_bonferroni'):.0f}",
+            "rescoring.json",
+        )
+    )
+    entries.append(
+        (
+            "rescoreDetHigh",
+            f"{100 * rescoring.number('cells.olmes_macro_error.determined_fraction_bonferroni'):.0f}",
+            "rescoring.json",
+        )
+    )
+    allocation = [
+        _row(
+            f"{float(row['budget_fraction']):g} of budget",
+            float(row["excess_observed_pp"]),
+            float(row["excess_expected_pp"]),
+            row["candidate_test"],
+            str(row["verdict"]),
+        )
+        for row in rescoring.get("optimal_allocation.by_budget_fraction")
+    ]
+    entries.append(("rescoreRowsAllocation", " ".join(allocation), "rescoring.json"))
+    for name, rule in (("Normal", "normal"), ("StudentT", "student_t")):
+        base = f"certification.rules.{rule}"
+        entries.append((f"cert{name}N", f"{rescoring.integer(base + '.n_certified')}", "rescoring.json"))
+        entries.append(
+            (f"cert{name}Expected", f"{rescoring.number(base + '.certified_errors_expected'):.2f}", "rescoring.json")
+        )
+    entries.append(
+        (
+            "certNormalMinP",
+            f"{rescoring.number('certification.rules.normal.min_target_order_probability_on_certified'):.2f}",
+            "rescoring.json",
+        )
+    )
+    return entries
+
+
+def _fit_structure_entries() -> list[tuple[str, str, str]]:
+    """Floor profile likelihood and the design theorem."""
+
+    floor = Source.load("adversarial/floor_profile.json")
+    old_floor = Source.load("adversarial/floor_identifiability.json")
+    fit = Source.load("target_scoring/fit_structure.json")
+    theorem = "design_theorem"
+    return [
+        ("floorN", f"{floor.integer('c4_en_bits_per_token.n_interventions')}", "floor_profile.json"),
+        ("floorCFourExcl", f"{floor.integer('c4_en_bits_per_token.n_interval_excludes_zero')}", "floor_profile.json"),
+        ("floorErrExcl", f"{floor.integer('olmes_macro_error.n_interval_excludes_zero')}", "floor_profile.json"),
+        (
+            "floorErrWidthRel",
+            f"{100 * floor.number('olmes_macro_error.median_interval_width_relative_to_ymin'):.0f}",
+            "floor_profile.json",
+        ),
+        (
+            "floorCFourWidthRel",
+            f"{100 * floor.number('c4_en_bits_per_token.median_interval_width_relative_to_ymin'):.0f}",
+            "floor_profile.json",
+        ),
+        ("floorCondRatio", f"{floor.number('predictions.F3_conditioning.measured_ratio'):.0f}", "floor_profile.json"),
+        (
+            "floorMisspecCFour",
+            f"{floor.number('c4_en_bits_per_token.median_misspecification_ratio'):.1f}",
+            "floor_profile.json",
+        ),
+        ("floorNewWidth", f"{floor.number('c4_en_bits_per_token.median_interval_width'):.2f}", "floor_profile.json"),
+        (
+            "floorOldWidth",
+            f"{old_floor.number('c4_en_bits_per_token.median_admissible_floor_width'):.2f}",
+            "floor_identifiability.json",
+        ),
+        ("floorFCrit", f"{floor.number('c4_en_bits_per_token.per_intervention.0.f_critical'):.2f}", "floor_profile.json"),
+        ("thmDesigns", f"{fit.integer(theorem + '.n_random_designs')}", "fit_structure.json"),
+        ("thmCorr", f"{fit.number(theorem + '.region_vs_point_correlation'):.6f}", "fit_structure.json"),
+        (
+            "thmExcessThree",
+            f"{100 * fit.number(theorem + '.region_optimal_designs.3_decades.excess_point_variance_of_region_optimal_design'):.4f}",
+            "fit_structure.json",
+        ),
+        (
+            "thmSolverExcess",
+            f"{100 * fit.number(theorem + '.project_solver_excess_point_variance'):.1f}",
+            "fit_structure.json",
+        ),
+    ]
+
 
 def build() -> str:
     theory_v2 = Source.load("theory_v2/theory_v2.json")
@@ -487,6 +610,8 @@ def build() -> str:
         f"% source commit:  {_source_commit()}",
         "",
     ]
+    entries.extend(_rescoring_entries())
+    entries.extend(_fit_structure_entries())
     lines.extend(_macro(name, value, origin) for name, value, origin in entries)
     lines.append("")
     return "\n".join(lines)

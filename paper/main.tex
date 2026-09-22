@@ -142,10 +142,76 @@ Spearman \doseRhoObserved. Recomputed under expected-error scoring it is
 relationship lived in pairs the reference could not resolve, discounting those
 pairs would have weakened it.
 
-The ordering of selection rules is also stable under both scoring rules and
-across all three metrics: projection is worst, while shared-exponent pooling and
-single-scale ranking are comparable. What propagation changes is whether the
-difference between them can be called significant, not which is larger.
+Table~\ref{tab:rescore} re-scores every decision-level comparison against
+single-scale ranking, under observed and expected-error scoring, with the
+interval from resampling candidates. A comparison \emph{survives} if expected-error
+scoring keeps its sign and at least half its size and the interval excludes
+zero, \emph{vanishes} if the sign flips or less than a quarter remains, and
+\emph{weakens} otherwise. In the low-noise regime (\rescoreDetLow\% of pairs
+determined), no estimator is reliably better than single-scale; the ensemble is
+reliably worse. In the high-noise regime (\rescoreDetHigh\% determined) nothing
+is distinguishable from single-scale in either direction. The optimised
+allocation is reliably worse than single-scale at every reduced budget and
+indistinguishable at the full budget; it never does better. What propagation
+changes is whether a difference can be called significant, not which estimator
+is ahead.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{lrrll}
+\toprule
+comparison vs.\ single-scale & observed (pp) & expected (pp) & candidate interval & verdict \\
+\midrule
+\multicolumn{5}{l}{\emph{Low noise: C4 bits per token}} \\  %% nolint: column count
+\rescoreRowsLow
+\midrule
+\multicolumn{5}{l}{\emph{High noise: OLMES macro error}} \\  %% nolint: column count
+\rescoreRowsHigh
+\midrule
+\multicolumn{5}{l}{\emph{Optimised allocation, C4, by fraction of the ladder's compute}} \\  %% nolint: column count
+\rescoreRowsAllocation
+\bottomrule
+\end{tabular}
+\caption{Excess mis-selection over single-scale ranking, in percentage points;
+positive means worse than single-scale. Intervals resample candidates. The
+allocation baseline is single-scale at the top rung, not matched compute.}
+\label{tab:rescore}
+\end{table}
+
+Certification is unaffected. The abstention rule certifies \certNormalN\ orderings
+with no observed errors; under expected-error scoring those carry
+\certNormalExpected\ errors in expectation, concentrated on the one certified pair
+the reference itself resolves least well (probability \certNormalMinP). With the
+Student-t critical value the rule certifies \certStudentTN\ and the expected
+count is \certStudentTExpected.
+
+\section{Fit structure, independent of the reference}
+\label{sec:fit}
+
+A separate set of findings concerns the fit itself: misspecification (residual
+scatter \residRatio\ times the seed standard error), whether the misspecification
+amplitude is shared across candidates, the insensitivity of rankings to a shared
+monotone distortion, floor identifiability, the information content of
+correlated checkpoints, resolvability, and disagreement between evaluation
+metrics. None of these uses target-scale reference labels, so none is touched
+by uncertainty propagation, and each still meets the criterion its source
+states. Earlier drafts offered several of them as causes of the decision gap.
+That gap is not significant once candidates are resampled, so we make no
+causal claim; they are statements about the fit.
+
+The floor result needed a correction of its own. The earlier profile fitted
+$(A,\alpha)$ in log space at each fixed floor, so its residual was not
+minimised on the response scale, and its admissibility band used run-level
+rather than cell-mean variance. Refitting properly and taking the F-based
+profile interval (critical value \floorFCrit), the C4 floor excludes zero for
+\floorCFourExcl\ of \floorN\ candidates and the OLMES-error floor for
+\floorErrExcl\ of \floorN, where the interval spans \floorErrWidthRel\% of the
+feasible range. The information matrix is \floorCondRatio\ times worse
+conditioned on the accuracy metric. One pre-registered prediction failed: we
+expected the correction to narrow the C4 interval, and it widened it
+(\floorNewWidth\ against \floorOldWidth), because C4 residuals run
+\floorMisspecCFour\ times the seed variance and the earlier band ignored that.
 
 \section{Resolvability and the reference distribution}
 \label{sec:resolvability}
@@ -199,5 +265,69 @@ threshold curve rather than one cut precisely because that choice matters. The
 provenance failure in \S\ref{sec:provenance} is the eighth instance of a
 measurement artifact in this project; the practice record and its detection
 paths are maintained alongside the code.
+
+\appendix
+\section{Design for estimation and design for decision coincide}
+\label{app:design}
+
+\paragraph{Setting.} Candidates $i$ are fitted on one shared design: budgets
+$C_1,\dots,C_k$ with $n_j$ runs each. Write $x_j=(1,-\log C_j)^\top$ and  %% nolint: mathematical constant
+$A(n)=\sum_j n_j x_j x_j^\top$, assumed nonsingular. Observations are
+$y_{ijr}=x_j^\top\theta_i+\varepsilon_{ijr}$ in log space, with $\theta_i$
+estimated by least squares.
+
+\paragraph{Assumptions.} (A1) Every candidate uses the same design $n$.
+(A2) The errors have mean zero and variance $\sigma^2$, are independent across  %% nolint: mathematical constant
+runs, and are independent across candidates. (A3) The model is well specified:
+there is no deviation $b(C)$ from the linear form.
+
+\paragraph{Theorem.} Under (A1)--(A3), for every pair $(i,i')$ and every design $n$,
+\[
+\operatorname{Var}\bigl(x_*^\top(\hat\theta_i-\hat\theta_{i'})\bigr)
+ = 2\operatorname{Var}\bigl(x_*^\top\hat\theta_i\bigr)  %% nolint: mathematical constant
+ = 2\sigma^2 v(n),\qquad v(n)=x_*^\top A(n)^{-1}x_*,  %% nolint: mathematical constant
+\]
+so over any feasible set of designs the variance of the target gap and the
+variance of the target level have the same minimisers, for all pairs at once. If
+the errors are also Gaussian, the probability that the estimated gap has the
+wrong sign is $\Phi\bigl(-|\Delta_{ii'}|/\sqrt{2\sigma^2 v(n)}\bigr)$, which is  %% nolint: mathematical constant
+increasing in $v(n)$. The level-optimal design therefore minimises every pair's
+mis-selection probability simultaneously.
+
+\paragraph{Proof.} Least squares gives
+$\hat\theta_i-\theta_i=A(n)^{-1}\sum_j x_j\sum_r\varepsilon_{ijr}$, so by (A2)  %% nolint: mathematical constant
+\[  %% nolint: mathematical constant
+\operatorname{Cov}(\hat\theta_i)=\sigma^2A(n)^{-1}\bigl(\sum_j n_jx_jx_j^\top\bigr)A(n)^{-1}=\sigma^2A(n)^{-1}.  %% nolint: mathematical constant
+\]
+Independence across candidates gives
+$\operatorname{Cov}(\hat\theta_i-\hat\theta_{i'})=2\sigma^2A(n)^{-1}$. The pair  %% nolint: mathematical constant
+variance is therefore twice the level variance, a factor that does not depend on
+$n$, so the minimisers coincide. By (A3) the estimated gap is unbiased for
+$\Delta_{ii'}$. Under Gaussian errors it is distributed
+$\mathcal N(\Delta_{ii'},2\sigma^2v(n))$, and the wrong-sign probability is as  %% nolint: mathematical constant
+stated. $\Phi$ is increasing and $|\Delta_{ii'}|$ does not depend on $n$, so
+that probability is increasing in $v(n)$. \hfill$\square$
+
+\paragraph{What the assumptions exclude.} Budget-dependent variance shared by
+all candidates is harmless: it changes $A$ to a weighted matrix, the same for
+every candidate. The conclusion fails when (A1) fails, because candidates on
+different designs have different $A$. It fails when the correlation between
+candidates' errors varies with budget, because the factor $2$ becomes a  %% nolint: mathematical constant
+design-dependent matrix. A constant correlation $\rho$ only rescales the factor
+to $2(1-\rho)$. It also fails when (A3) fails: a deviation $b(C)$ adds the bias  %% nolint: mathematical constant
+$x_*^\top A(n)^{-1}X^\top W b$, which depends on $n$. That last case is the one  %% nolint: mathematical constant
+the measurements in \S\ref{sec:fit} show holds in practice. The theorem is about
+design; it says nothing about whether projection should beat single-scale
+ranking.
+
+\paragraph{The region objective.} A target-region criterion that averages the
+prediction variance over a region around $C_*$ is not covered by the theorem.
+Numerically it is nearly equivalent. On the DataDecide ladder, its correlation
+with the point objective over \thmDesigns\ random designs is \thmCorr, and the
+design optimal for a region spanning three decades costs \thmExcessThree\% extra
+point variance at $C_*$. These optima come from an exhaustive search over two-
+and three-point supports. A gradient solver in run-count space stops
+\thmSolverExcess\% short of the optimum on the same ladder, because run counts
+span orders of magnitude across the budgets.
 
 \end{document}
