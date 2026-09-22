@@ -73,7 +73,7 @@ def test_certify_pair_rejects_bad_standard_error() -> None:
 
 
 def test_t_threshold_far_exceeds_normal_at_small_seed_counts() -> None:
-    """At 3 seeds the Gaussian quantile is anti-conservative by 3.6x.
+    """At 3 seeds the Gaussian quantile is anti-conservative by at least 3.6x.
 
     This is the difference between a guarantee that holds and one that does not,
     at exactly the seed count leaderboards actually use.

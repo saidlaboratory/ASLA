@@ -12,7 +12,7 @@ With `n` seeds per entry, the standard deviation is estimated from `n` points, s
 | 20 | 38 | 4.177 | 3.765 | **1.11x** |
 | 50 | 98 | 3.916 | 3.765 | **1.04x** |
 
-At three seeds --- the count DataDecide uses, and a common choice across published suites --- the Gaussian threshold is anti-conservative by **3.63x**. A procedure using it does not hold its stated error rate. The approximation only becomes adequate at seed counts nobody runs: the ratio is still 1.26x at ten seeds and reaches 1.04x only at fifty.
+The table's `2n-2` degrees of freedom is the best case: it assumes the two entries have equal variance. At three seeds it gives **3.63x**, and that is a floor, not the typical factor. With the Welch--Satterthwaite degrees of freedom measured pair by pair on DataDecide at the 530M target, the Gaussian threshold is anti-conservative by a median of **6.77x** (3.69x to 18.27x between the 10th and 90th percentiles, and up to 20.5x on the least balanced pair). A procedure using it does not hold its stated error rate. The approximation only becomes adequate at seed counts nobody runs: even the best-case ratio is still 1.26x at ten seeds and reaches 1.04x only at fifty.
 
 The multiplicity correction is what makes this bite. At a single comparison the t and normal quantiles differ by only 1.42x at the same degrees of freedom; it is pushing into the far tail, where the t distribution's heavier tail dominates, that opens the gap.
 

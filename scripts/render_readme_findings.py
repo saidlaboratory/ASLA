@@ -16,6 +16,7 @@ from typing import Any
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from asla.analysis.abstention import glr_threshold  # noqa: E402
+from asla.provenance import Source  # noqa: E402
 
 REPO = Path(__file__).resolve().parents[1]
 RESULTS = REPO / "results"
@@ -94,6 +95,8 @@ def build() -> str:
 
     z_threshold = glr_threshold(0.05, 300)
     t_three = glr_threshold(0.05, 300, n_seeds=3)
+    t_ratio = Source.load("target_scoring/target_scoring.json")
+    t_key = "student_t_recomputed.ratio_at_measured_df"
     t_fifty = glr_threshold(0.05, 300, n_seeds=50)
 
     lines: list[str] = [
@@ -226,11 +229,16 @@ def build() -> str:
         f"With `n` seeds the standard deviation is estimated from `n` points, so the"
         f" reference distribution is Student's t on `2n-2` degrees of freedom. Under a"
         f" Bonferroni correction over 300 comparisons at delta = 0.05, the t quantile"
-        f" at 3 seeds is **{t_three:.2f}** against the normal's **{z_threshold:.2f}** —"
-        f" anti-conservative by **{t_three / z_threshold:.2f}x** at exactly the seed"
-        f" count leaderboards use, closing to {t_fifty / z_threshold:.2f}x only by 50"
-        f" seeds. Anyone reporting significance on a 3-seed grid with a Gaussian"
-        f" threshold inherits this. See `results/confidence/STUDENT_T_DEFECT.md`.",
+        f" at 3 seeds is **{t_three:.2f}** against the normal's **{z_threshold:.2f}**,"
+        f" a factor of {t_three / z_threshold:.2f}x even in the equal-variance best case."
+        f" With the Welch degrees of freedom measured per pair on DataDecide, the"
+        f" Gaussian threshold is anti-conservative by a median of"
+        f" **{t_ratio.number(t_key + '.median'):.2f}x**"
+        f" ({t_ratio.number(t_key + '.p10'):.2f}x to {t_ratio.number(t_key + '.p90'):.2f}x,"
+        f" 10th to 90th percentile) at exactly the seed count leaderboards use. The"
+        f" best case closes to {t_fifty / z_threshold:.2f}x only by 50 seeds. Anyone"
+        f" reporting significance on a 3-seed grid with a Gaussian threshold inherits"
+        f" this. See `results/confidence/STUDENT_T_DEFECT.md`.",
         "",
         "### Reproducing these numbers",
         "",

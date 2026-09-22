@@ -85,7 +85,7 @@ The complement is the constraint. Across the audited leaderboards, **437 of 468*
 
 ### 6. A reference-distribution defect in standard practice
 
-With `n` seeds the standard deviation is estimated from `n` points, so the reference distribution is Student's t on `2n-2` degrees of freedom. Under a Bonferroni correction over 300 comparisons at delta = 0.05, the t quantile at 3 seeds is **13.65** against the normal's **3.76** — anti-conservative by **3.63x** at exactly the seed count leaderboards use, closing to 1.04x only by 50 seeds. Anyone reporting significance on a 3-seed grid with a Gaussian threshold inherits this. See `results/confidence/STUDENT_T_DEFECT.md`.
+With `n` seeds the standard deviation is estimated from `n` points, so the reference distribution is Student's t on `2n-2` degrees of freedom. Under a Bonferroni correction over 300 comparisons at delta = 0.05, the t quantile at 3 seeds is **13.65** against the normal's **3.76**, a factor of 3.63x even in the equal-variance best case. With the Welch degrees of freedom measured per pair on DataDecide, the Gaussian threshold is anti-conservative by a median of **6.77x** (3.69x to 18.27x, 10th to 90th percentile) at exactly the seed count leaderboards use. The best case closes to 1.04x only by 50 seeds. Anyone reporting significance on a 3-seed grid with a Gaussian threshold inherits this. See `results/confidence/STUDENT_T_DEFECT.md`.
 
 ### Reproducing these numbers
 

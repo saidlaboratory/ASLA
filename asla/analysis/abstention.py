@@ -105,8 +105,11 @@ def glr_threshold(delta: float, n_comparisons: int = 1, n_seeds: int | None = No
     This is not a refinement. Leaderboards run 3 seeds, and under a Bonferroni
     correction for 300 comparisons the t quantile at 4 degrees of freedom is
     **13.65 against the normal's 3.76 --- 3.63x larger**. Using the normal there
-    would make the rule anti-conservative by that factor and the delta-PAC
-    guarantee would simply not hold. The gap closes slowly: the ratio is 1.76 at
+    would make the rule anti-conservative by at least that factor and the
+    delta-PAC guarantee would simply not hold. Four degrees of freedom is the
+    equal-variance ceiling; with unequal variances the Welch df is lower and the
+    factor larger (the per-pair measurement is in
+    ``results/target_scoring/target_scoring.json``). The gap closes slowly: the ratio is 1.76 at
     5 seeds, 1.26 at 10, and only reaches 1.04 by 50.
     """
 

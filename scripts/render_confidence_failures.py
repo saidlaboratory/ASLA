@@ -21,6 +21,7 @@ from typing import Any
 from scipy import stats
 
 from asla.analysis.abstention import effective_error_rate, glr_threshold
+from asla.provenance import Source
 
 SEED_COUNTS = (3, 5, 10, 20, 50)
 # The 90M rung: the boundary above which certification stops being total. Named
@@ -60,12 +61,21 @@ def student_t_section() -> str:
         lines.append(f"| {seeds} | {2 * seeds - 2} | {student:.3f} | {normal:.3f} | **{student / normal:.2f}x** |")
     lines.append("")
     three = glr_threshold(TYPICAL_DELTA, TYPICAL_COMPARISONS, n_seeds=3)
+    measured = Source.load("target_scoring/target_scoring.json")
+    ratio = "student_t_recomputed.ratio_at_measured_df"
     lines.append(
-        f"At three seeds --- the count DataDecide uses, and a common choice across "
-        f"published suites --- the Gaussian threshold is anti-conservative by "
-        f"**{three / normal:.2f}x**. A procedure using it does not hold its stated error "
-        f"rate. The approximation only becomes adequate at seed counts nobody runs: the "
-        f"ratio is still {glr_threshold(TYPICAL_DELTA, TYPICAL_COMPARISONS, n_seeds=10) / normal:.2f}x "
+        f"The table's `2n-2` degrees of freedom is the best case: it assumes the two "
+        f"entries have equal variance. At three seeds it gives **{three / normal:.2f}x**, "
+        f"and that is a floor, not the typical factor. With the Welch--Satterthwaite "
+        f"degrees of freedom measured pair by pair on DataDecide at the 530M target, the "
+        f"Gaussian threshold is anti-conservative by a median of "
+        f"**{measured.number(ratio + '.median'):.2f}x** "
+        f"({measured.number(ratio + '.p10'):.2f}x to {measured.number(ratio + '.p90'):.2f}x "
+        f"between the 10th and 90th percentiles, and up to "
+        f"{measured.number(ratio + '.max'):.1f}x on the least balanced pair). A procedure "
+        f"using it does not hold its stated error rate. The approximation only becomes "
+        f"adequate at seed counts nobody runs: even the best-case ratio is still "
+        f"{glr_threshold(TYPICAL_DELTA, TYPICAL_COMPARISONS, n_seeds=10) / normal:.2f}x "
         f"at ten seeds and reaches "
         f"{glr_threshold(TYPICAL_DELTA, TYPICAL_COMPARISONS, n_seeds=50) / normal:.2f}x only at fifty."
     )
