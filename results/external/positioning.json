@@ -1,0 +1,18 @@
+{
+  "closest_prior_art": {
+    "pervasive_label_errors": {
+      "cite": "Northcutt, Athalye and Mueller, Pervasive Label Errors in Test Sets Destabilize Machine Learning Benchmarks (arXiv:2103.14749, NeurIPS 2021 Datasets and Benchmarks)",
+      "the_delta": "Same structure, different source of reference error. Theirs is systematic mislabelling of a fixed test set, correctable in principle by relabelling. Ours is sampling uncertainty in a finite-seed reference that cannot be corrected, only quantified: with three seeds the reference simply does not determine some orderings at any labelling effort. Their remedy is to fix the labels; ours is to report which comparisons the reference can support.",
+      "verified_against_source": true,
+      "what_they_do": "Show that corrected test-set labels can invert model rankings --- ResNet-18 overtakes ResNet-50 on ImageNet once mislabelled examples are corrected, at error rates as low as 6% --- and that higher-capacity models are hurt more because they fit systematic label error."
+    },
+    "signal_and_noise": {
+      "cite": "Signal and Noise: A Framework for Reducing Uncertainty in Language Model Evaluation (arXiv:2508.13144, NeurIPS 2025)",
+      "quoted_formula": "Decision Accuracy = (1/|P|) sum_{(a,b) in P} I[sign(B(s_a)-B(s_b)) = sign(B(m_a)-B(m_b))]",
+      "the_delta": "Their decision-accuracy estimator treats the large-scale ranking as ground truth: the formula is an indicator on sign agreement, with no filtering of pairs whose reference ordering is unresolved and no weighting by the probability that it is correct. So reference noise is measured as a property of the benchmark and used to PREDICT decision accuracy, but is never propagated INTO the decision-accuracy figure itself. That propagation is what this work adds.",
+      "verified_against_source": true,
+      "what_they_do": "Define decision accuracy as pairwise agreement between a small-scale ranking and a large-scale reference ranking, and show a benchmark's signal-to-noise ratio predicts it (R=0.791). They MEASURE reference noise --- the relative standard deviation over the final 30 checkpoints of the 13B run --- and report that ARC Challenge varies by 1.7% accuracy across the final 30 checkpoints at 1B."
+    }
+  },
+  "precise_delta_of_this_work": "Decision-accuracy comparisons between small-scale selection rules score against a finite-seed reference whose own ordering is uncertain for some pairs. Prior work measures that uncertainty (Signal and Noise) or corrects a different kind of reference error (Northcutt et al.), but neither propagates reference uncertainty into the comparison. We give two estimators that do --- determined-subset and expected-error scoring --- and apply them to a published figure."
+}

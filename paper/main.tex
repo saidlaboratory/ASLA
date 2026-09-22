@@ -1,0 +1,169 @@
+\documentclass[11pt]{article}  %% nolint
+\usepackage[margin=1in]{geometry}  %% nolint
+\usepackage{amsmath,amssymb,booktabs,hyperref}
+\input{macros}
+
+\title{The Reference Is Part of the Measurement:\\
+Uncertainty-Aware Decision Accuracy for Small-Scale Model Selection}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Small-scale experiments are routinely used to choose between training
+interventions, and the resulting selection rules are compared by \emph{decision
+accuracy}: how often a rule's ordering of candidates agrees with an ordering
+measured at a larger target scale. That target ordering is itself an estimate
+from finitely many seeds. We show that its uncertainty is a material and
+unreported component of the comparison. We give two estimators that propagate
+it --- determined-subset scoring, which restricts to pairs the reference
+resolves, and expected-error scoring, which weights each pair by the probability
+its reference ordering is correct --- and apply them to DataDecide. On the
+primary design, \determinedFracBonf\% of target pairs are resolved under a
+Bonferroni-corrected Welch test and \determinedFracBH\% under
+Benjamini--Hochberg; per-pair Welch degrees of freedom run \welchDfMin\ to
+\welchDfMax\ (median \welchDfMedian), not the \maxDfAtThreeSeeds\ a three-seed
+comparison is often assumed to have. Applying the protocol to a published decision-accuracy
+figure moves it from \publishedOverall\ to \publishedDeterminedBonf\ on
+resolved pairs, a shift of \publishedShiftBonf\ points. We also report a
+reproducibility failure in our own prior results and the provenance
+investigation that resolved it.
+\end{abstract}
+
+\section{How selection rules are compared}
+\label{sec:setup}
+
+A selection rule observes candidates at small compute and predicts their
+ordering at a target budget. Its decision accuracy is the fraction of candidate
+pairs whose predicted ordering matches a reference ordering measured at the
+target. Writing $B(\cdot)$ for a benchmark score, the standard estimator is an
+indicator on sign agreement between the small-scale and target gaps, averaged
+over pairs.
+
+The reference is a finite-seed estimate. For a pair whose target gap is small
+relative to seed noise, the reference ordering is a coin flip, and every rule is
+graded against that flip. The estimator does not distinguish such a pair from
+one the reference resolves cleanly.
+
+\section{Uncertainty-aware decision accuracy}
+\label{sec:protocol}
+
+For each pair we compute the target gap, its standard error from the seeds, and
+a two-sided Welch $t$ test with Satterthwaite degrees of freedom computed per
+pair. Two scoring rules follow.
+
+\paragraph{Determined-subset scoring.} A pair is \emph{determined} if the test
+rejects equality at a stated level with stated multiplicity control. Rules are
+scored only on determined pairs. Assumption: cell means are approximately
+Gaussian with unknown, possibly unequal variances.
+
+\paragraph{Expected-error scoring.} Each pair is charged in expectation: a rule
+predicting the observed order is charged $1-p$ and one predicting the opposite  %% nolint: algebra, not a measured value
+is charged $p$, where $p$ is the probability the observed order is correct under
+a Gaussian approximation to the difference in cell means. No prior beyond the
+observed gap is used.
+
+\paragraph{What neither rule fixes.} Both treat target cell means as unbiased
+estimates of expected target performance. A systematic difference between them
+--- a different evaluation draw, a different checkpoint --- survives both.
+
+\section{Instrument validation}
+\label{sec:instrument}
+
+Before reporting any comparison we re-ran the DataDecide known-answer check at
+the current commit: single-scale ranking at \focalScale\ predicting \targetScaleLabel\ reproduces
+the published figure to within band (per-seed \knownAnswerPerSeed, seed-mean
+\knownAnswerSeedMean, against a published \knownAnswerPublished).
+
+\section{Where the difference between two rules lives}
+\label{sec:gap}
+
+On the primary design, projection's excess over single-scale ranking is
+\excessObserved\ points under observed-target scoring and \excessExpected\
+points under expected-error scoring. On Bonferroni-determined pairs it is
+\excessDetermined.
+
+That last number is \emph{not} evidence of equivalence, and we report it as
+such. In every subset strict enough to give a zero gap, both rules make zero
+errors: the comparison is empty. The first threshold at which any error appears
+already shows a positive gap, which rises monotonically to the observed-target
+value as the threshold relaxes. The Bonferroni-determined subset rules out only
+differences above \equivBoundPP\ points, by the rule of three on a zero-event
+count --- a bound set by subset size, not by any observed agreement.
+
+The defensible claim is therefore narrower than equivalence: the measured
+difference between these two rules is concentrated in pairs near the reference's
+resolution boundary, and the strictest subsets contain too few errors to
+distinguish the rules at all.
+
+\section{Application to a published figure}
+\label{sec:published}
+
+DataDecide reports a published pairwise decision accuracy of
+\knownAnswerPublished\ for ranking at a single small scale. Reproduced here it is \publishedOverall. Of its pairs,
+\publishedDetFracBonf\% are determined under Bonferroni and
+\publishedDetFracBH\% under Benjamini--Hochberg. On determined pairs accuracy is
+\publishedDeterminedBonf\ (Bonferroni) and \publishedDeterminedBH\ (BH), shifts
+of \publishedShiftBonf\ and \publishedShiftBH\ points.
+
+The published figure \emph{understates} the method on the decisions its
+reference can actually resolve, because undetermined pairs drag any rule toward
+chance. This is the protocol's practical payoff: it changes a widely cited
+number, in the direction of the method looking better.
+
+\section{Resolvability and the reference distribution}
+\label{sec:resolvability}
+
+A three-seed comparison does not have \maxDfAtThreeSeeds\ degrees of freedom except when the two
+cells have equal variance; \maxDfAtThreeSeeds\ is the maximum. With per-pair Welch degrees of
+freedom, the normal quantile under Bonferroni correction is anti-conservative by
+a median factor of \tRatioMedian\ (10th--90th percentile \tRatioPTen--%  %% nolint: names which percentiles, values are macros
+\tRatioPNinety), against \tRatioAssumed\ under the assumed
+\maxDfAtThreeSeeds\ df. Reporting
+significance on a three-seed grid with a Gaussian threshold is worse than
+previously stated.
+
+\section{A reproducibility failure in our own results}
+\label{sec:provenance}
+
+An earlier version of this work reported \shippedProjFlips\ projection ranking
+errors and a corresponding single-scale count on the primary design. Those
+counts do not regenerate. At the commit that wrote them, using that commit's own
+code and byte-identical input data, the same detectors give
+\recomputedProjFlips\ and \recomputedSingleFlips; the detector module is
+unchanged since, and the input hashes match. The shipped file was produced by
+uncommitted working state. We report the reproducible counts and state the
+failure rather than quietly substituting them.
+
+\section{Related work}
+\label{sec:related}
+
+\emph{Signal and Noise} (arXiv:2508.13144) defines decision accuracy as pairwise
+agreement with a large-scale reference and shows a benchmark's signal-to-noise
+ratio predicts it. They measure reference noise --- reporting a measured
+accuracy range across the final checkpoints of its reference run --- but their
+decision-accuracy estimator treats the reference ranking as ground truth, with
+no filtering or weighting of pairs by whether the reference resolves them.
+Reference uncertainty there predicts decision accuracy; here it is propagated
+into it.
+
+Northcutt et al.\ (arXiv:2103.14749) show corrected test-set labels can invert
+model rankings. The structure is the same and the source of reference error is
+not: theirs is systematic mislabelling, correctable by relabelling; ours is
+sampling uncertainty in a finite-seed reference, which cannot be corrected at
+any labelling effort, only quantified.
+
+\section{Limitations}
+\label{sec:limitations}
+
+Evidence is one model suite and one intervention class (data recipes). Both
+scoring rules assume unbiased target cell means. The determined-subset rule
+inherits whatever multiplicity convention is chosen, and we report the whole
+threshold curve rather than one cut precisely because that choice matters. The
+provenance failure in \S\ref{sec:provenance} is the eighth instance of a
+measurement artifact in this project; the practice record and its detection
+paths are maintained alongside the code.
+
+\end{document}

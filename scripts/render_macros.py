@@ -48,6 +48,9 @@ def build() -> str:
     abstention = Source.load("abstention/abstention_1B.json")
     allocation = Source.load("allocation/allocation_1B.json")
     curvature = Source.load("curvature/curvature_gate.json")
+    scoring = Source.load("target_scoring/target_scoring.json")
+    known = Source.load("known_answer/datadecide_known_answer.json")
+    robust = Source.load("target_scoring/robustness.json")
 
     real = "FINDING_misspecification_is_structured.evidence.1_misspecification_is_real"
 
@@ -209,6 +212,154 @@ def build() -> str:
             "confoundSpearman",
             f"{curvature.number('confound_scope.spearman_between_projections'):.4f}",
             "curvature_gate.json",
+        ),
+        # --- Uncertainty-aware decision accuracy (the new headline) ---
+        (
+            "determinedFracBonf",
+            f"{100 * scoring.number('by_multiplicity.bonferroni.determined_fraction'):.0f}",
+            "target_scoring.json",
+        ),
+        (
+            "determinedFracBH",
+            f"{100 * scoring.number('by_multiplicity.bh.determined_fraction'):.0f}",
+            "target_scoring.json",
+        ),
+        (
+            "excessObserved",
+            f"{scoring.number('by_multiplicity.bonferroni.excess_observed_pp'):.2f}",
+            "target_scoring.json",
+        ),
+        (
+            "excessDetermined",
+            f"{scoring.number('by_multiplicity.bonferroni.excess_determined_pp'):.2f}",
+            "target_scoring.json",
+        ),
+        (
+            "excessExpected",
+            f"{scoring.number('by_multiplicity.bonferroni.excess_expected_pp'):.2f}",
+            "target_scoring.json",
+        ),
+        (
+            "welchDfMedian",
+            f"{scoring.number('by_multiplicity.bonferroni.welch_df.median'):.2f}",
+            "target_scoring.json",
+        ),
+        (
+            "welchDfMin",
+            f"{scoring.number('by_multiplicity.bonferroni.welch_df.min'):.2f}",
+            "target_scoring.json",
+        ),
+        (
+            "welchDfMax",
+            f"{scoring.number('by_multiplicity.bonferroni.welch_df.max'):.2f}",
+            "target_scoring.json",
+        ),
+        (
+            "tRatioAssumed",
+            f"{scoring.number('student_t_recomputed.ratio_at_assumed_df'):.2f}",
+            "target_scoring.json (superseded: assumed 4 df)",
+        ),
+        (
+            "tRatioMedian",
+            f"{scoring.number('student_t_recomputed.ratio_at_measured_df.median'):.2f}",
+            "target_scoring.json",
+        ),
+        (
+            "tRatioPTen",
+            f"{scoring.number('student_t_recomputed.ratio_at_measured_df.p10'):.2f}",
+            "target_scoring.json",
+        ),
+        (
+            "tRatioPNinety",
+            f"{scoring.number('student_t_recomputed.ratio_at_measured_df.p90'):.2f}",
+            "target_scoring.json",
+        ),
+        (
+            "knownAnswerPerSeed",
+            f"{known.number('checks.per_seed.computed'):.4f}",
+            "datadecide_known_answer.json",
+        ),
+        (
+            "knownAnswerSeedMean",
+            f"{known.number('checks.seed_mean.computed'):.2f}",
+            "datadecide_known_answer.json",
+        ),
+        (
+            "knownAnswerPublished",
+            f"{known.number('published.value'):.2f}",
+            "datadecide_known_answer.json",
+        ),
+        (
+            "focalScale",
+            known.text("focal_scale"),
+            "datadecide_known_answer.json",
+        ),
+        (
+            "targetScaleLabel",
+            known.text("target_label"),
+            "datadecide_known_answer.json",
+        ),
+        (
+            "maxDfAtThreeSeeds",
+            f"{scoring.number('student_t_recomputed.assumed_df'):.0f}",
+            "target_scoring.json",
+        ),
+        # --- Provenance ---
+        (
+            "shippedProjFlips",
+            f"{scoring.integer('reproduction_check.committed_first_audit.projection_flips')}",
+            "target_scoring.json (superseded; does not reproduce)",
+        ),
+        (
+            "recomputedProjFlips",
+            f"{scoring.integer('reproduction_check.recomputed_with_audit_detectors.projection_flips')}",
+            "target_scoring.json",
+        ),
+        (
+            "recomputedSingleFlips",
+            f"{scoring.integer('reproduction_check.recomputed_with_audit_detectors.single_scale_flips')}",
+            "target_scoring.json",
+        ),
+        # --- Equivalence bound and the published figure ---
+        (
+            "equivBoundPP",
+            f"{robust.number('cells.c4_en_bits_per_token/primary_4M-300M_gate530M.equivalence_bonferroni.largest_difference_ruled_out_pp'):.2f}",
+            "robustness.json",
+        ),
+        (
+            "publishedOverall",
+            f"{robust.number('published_figure.bonferroni.accuracy_overall'):.3f}",
+            "robustness.json",
+        ),
+        (
+            "publishedDeterminedBonf",
+            f"{robust.number('published_figure.bonferroni.accuracy_on_determined'):.3f}",
+            "robustness.json",
+        ),
+        (
+            "publishedShiftBonf",
+            f"{robust.number('published_figure.bonferroni.shift_pp'):.1f}",
+            "robustness.json",
+        ),
+        (
+            "publishedDeterminedBH",
+            f"{robust.number('published_figure.bh.accuracy_on_determined'):.3f}",
+            "robustness.json",
+        ),
+        (
+            "publishedShiftBH",
+            f"{robust.number('published_figure.bh.shift_pp'):.1f}",
+            "robustness.json",
+        ),
+        (
+            "publishedDetFracBonf",
+            f"{100 * robust.number('published_figure.bonferroni.determined_fraction'):.0f}",
+            "robustness.json",
+        ),
+        (
+            "publishedDetFracBH",
+            f"{100 * robust.number('published_figure.bh.determined_fraction'):.0f}",
+            "robustness.json",
         ),
         # --- Two-parameter theory diagnosis (corrected pooling) ---
         (

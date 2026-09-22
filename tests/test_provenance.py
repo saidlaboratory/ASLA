@@ -171,3 +171,65 @@ def test_every_shipped_top_level_key_is_written_by_its_producer(relative: str, s
 def test_keys_written_by_walks_nested_paths() -> None:
     payload = {"a": {"b": 1, "c": {"d": 2}}, "e": 3}
     assert keys_written_by(payload) == {"a", "a.b", "a.c", "a.c.d", "e"}
+
+
+# --- The paper itself: no hand-typed numbers, no undefined macros ---
+
+PAPER = REPO / "paper" / "main.tex"
+MACROS = REPO / "paper" / "macros.tex"
+
+# Numerals that are structural rather than reported quantities: section numbers
+# in citation identifiers, LaTeX sizing, and the arXiv ids of cited work.
+PAPER_ALLOWED_CONTEXTS = (
+    "arXiv:",
+    "%% nolint",
+)
+
+
+def _paper_numeric_literals(text: str) -> list[tuple[int, str]]:
+    import re
+
+    offenders = []
+    for number, line in enumerate(text.splitlines(), start=1):
+        if line.strip().startswith("%"):
+            continue
+        if any(token in line for token in PAPER_ALLOWED_CONTEXTS):
+            continue
+        for match in re.finditer(r"(?<![\w\\.])\d+(?:\.\d+)?%?", line):
+            offenders.append((number, match.group(0)))
+    return offenders
+
+
+def test_paper_has_no_hand_typed_numbers() -> None:
+    """Every figure in the paper must arrive through a generated macro.
+
+    A retyped 4.22 survived into five documents and a draft before it was found
+    to be wrong. This is the check that would have caught it at the paper.
+    """
+
+    if not PAPER.exists():  # pragma: no cover - paper not always present
+        pytest.skip("paper not present")
+    offenders = _paper_numeric_literals(PAPER.read_text(encoding="utf-8"))
+    assert not offenders, (
+        f"paper/main.tex contains hand-typed numbers {offenders[:10]}; route them through scripts/render_macros.py"
+    )
+
+
+def test_paper_macros_are_all_defined() -> None:
+    """A macro the paper uses must exist in the generated file."""
+
+    import re
+
+    if not PAPER.exists() or not MACROS.exists():  # pragma: no cover
+        pytest.skip("paper or macros not present")
+    defined = set(re.findall(r"\\newcommand\{\\(\w+)\}", MACROS.read_text(encoding="utf-8")))
+    latex_builtins = set(
+        """documentclass usepackage input title author date begin end maketitle section
+        label paragraph emph ref cdot textbf textit item cite footnote hyperref
+        includegraphics caption centering toprule midrule bottomrule S """.split()
+    )
+    used = set(re.findall(r"\\(\w+)", PAPER.read_text(encoding="utf-8")))
+    missing = sorted((used - latex_builtins) & {u for u in used if u not in latex_builtins} - defined)
+    # Only flag macros that look like ours: camelCase and not a known builtin.
+    missing = [m for m in missing if any(c.isupper() for c in m)]
+    assert not missing, f"paper references undefined macros: {missing}"

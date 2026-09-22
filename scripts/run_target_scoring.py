@@ -192,6 +192,39 @@ def main() -> None:
         },
     }
 
+    # Priority 6: the anti-conservativeness of the normal quantile, recomputed
+    # with the per-pair Welch df rather than the assumed 4. The published 3.63x
+    # was the BEST case; at the measured median df of ~2.9 it is far larger.
+    from scipy import stats as _stats
+
+    pair_dfs = np.asarray(
+        [e.welch_df for e in target_evidence(means, sds, counts, multiplicity="none") if np.isfinite(e.welch_df)]
+    )
+    n_pairs = len(means) * (len(means) - 1) // 2
+    per_comparison = 0.05 / n_pairs
+    normal_quantile = float(_stats.norm.ppf(1 - per_comparison / 2))
+    ratios = _stats.t.ppf(1 - per_comparison / 2, pair_dfs) / normal_quantile
+    payload["student_t_recomputed"] = {
+        "n_comparisons": n_pairs,
+        "per_comparison_alpha": per_comparison,
+        "normal_quantile": normal_quantile,
+        "assumed_df": 4.0,
+        "ratio_at_assumed_df": float(_stats.t.ppf(1 - per_comparison / 2, 4.0) / normal_quantile),
+        "ratio_at_measured_df": {
+            "p10": float(np.percentile(ratios, 10)),
+            "median": float(np.median(ratios)),
+            "p90": float(np.percentile(ratios, 90)),
+            "max": float(ratios.max()),
+        },
+        "note": (
+            "The 3.63x figure assumed 4 degrees of freedom, which is the MAXIMUM at three seeds "
+            "and is attained only when both cells have equal variance. With per-pair Welch df "
+            "the normal quantile is anti-conservative by a median factor of "
+            f"{float(np.median(ratios)):.2f}, ranging to {float(ratios.max()):.1f} on the "
+            "least-balanced pairs. The direction of the original finding strengthens."
+        ),
+    }
+
     primary = payload["by_multiplicity"]["bonferroni"]
     payload["headline"] = {
         "determined_fraction_bonferroni": primary["determined_fraction"],
