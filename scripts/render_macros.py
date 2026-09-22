@@ -120,6 +120,7 @@ def _fit_structure_entries() -> list[tuple[str, str, str]]:
     old_floor = Source.load("adversarial/floor_identifiability.json")
     fit = Source.load("target_scoring/fit_structure.json")
     theorem = "design_theorem"
+    three_decades = theorem + ".region_optimal_designs.3_decades"
     return [
         ("floorN", f"{floor.integer('c4_en_bits_per_token.n_interventions')}", "floor_profile.json"),
         ("floorCFourExcl", f"{floor.integer('c4_en_bits_per_token.n_interval_excludes_zero')}", "floor_profile.json"),
@@ -151,7 +152,7 @@ def _fit_structure_entries() -> list[tuple[str, str, str]]:
         ("thmCorr", f"{fit.number(theorem + '.region_vs_point_correlation'):.6f}", "fit_structure.json"),
         (
             "thmExcessThree",
-            f"{100 * fit.number(theorem + '.region_optimal_designs.3_decades.excess_point_variance_of_region_optimal_design'):.4f}",
+            f"{100 * fit.number(three_decades + '.excess_point_variance_of_region_optimal_design'):.4f}",
             "fit_structure.json",
         ),
         (

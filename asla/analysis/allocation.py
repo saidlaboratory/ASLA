@@ -98,8 +98,9 @@ def _estimation_objective(runs: np.ndarray, budgets: Sequence[float], target: fl
     result, not a defect of this implementation.** Under a shared homoscedastic
     design the gap variance is exactly twice the level variance, so the two have
     the same argmin; even a three-decade target region costs a negligible excess
-    variance at ``C*`` (measured in ``results/target_scoring/fit_structure.json``). Design-for-estimation and design-for-decision provably
-    coincide in the well-specified linear model. The contrast that *does* matter
+    variance at ``C*`` (measured in ``results/target_scoring/fit_structure.json``).
+    Design-for-estimation and design-for-decision provably coincide in the
+    well-specified linear model (proof: the paper's appendix). The contrast that *does* matter
     is :func:`_bias_aware_objective`.
     """
 
