@@ -13,23 +13,28 @@ Uncertainty-Aware Decision Accuracy for Small-Scale Model Selection}
 
 \begin{abstract}
 Small-scale experiments are routinely used to choose between training
-interventions, and the resulting selection rules are compared by \emph{decision
-accuracy}: how often a rule's ordering of candidates agrees with an ordering
-measured at a larger target scale. That target ordering is itself an estimate
-from finitely many seeds. We show that its uncertainty is a material and
-unreported component of the comparison. We give two estimators that propagate
-it --- determined-subset scoring, which restricts to pairs the reference
-resolves, and expected-error scoring, which weights each pair by the probability
-its reference ordering is correct --- and apply them to DataDecide. On the
-primary design, \determinedFracBonf\% of target pairs are resolved under a
-Bonferroni-corrected Welch test and \determinedFracBH\% under
-Benjamini--Hochberg; per-pair Welch degrees of freedom run \welchDfMin\ to
-\welchDfMax\ (median \welchDfMedian), not the \maxDfAtThreeSeeds\ a three-seed
-comparison is often assumed to have. Applying the protocol to a published decision-accuracy
-figure moves it from \publishedOverall\ to \publishedDeterminedBonf\ on
-resolved pairs, a shift of \publishedShiftBonf\ points. We also report a
-reproducibility failure in our own prior results and the provenance
-investigation that resolved it.
+interventions, and selection rules are compared by \emph{decision accuracy}:
+agreement with an ordering measured at a larger target scale. That target
+ordering is itself an estimate from a few seeds. We propagate its uncertainty
+with expected-error scoring, which charges each pair the probability that its
+reference ordering is wrong, and find two regimes. On a low-noise metric, where
+\determinedFracBonf\% of target pairs are resolved, projection's excess
+mis-selection over single-scale ranking survives propagation (\excessObserved\
+points observed, \expectedGap\ expected) but not inference. Resampling
+candidates, the independent unit, gives an interval of
+[\expectedCandLow, \expectedCandHigh] points. On accuracy metrics, where a
+published DataDecide figure sits, only \pubDetFrac\% of pairs are resolved.
+Two corrections of that figure then disagree in direction: posterior expected
+accuracy is \pubPosterior\ and disattenuated accuracy \pubDisattenuated, against
+\publishedOverall\ observed. Re-scoring every decision-level result, no estimator
+and no optimised allocation is reliably better than single-scale ranking in
+either regime. The dependence of projection error on the lever arm survives
+(Spearman \doseRhoObserved\ observed, \doseRhoExpected\ expected). Fit-level
+findings never use the reference and stand unchanged; we correct a
+floor-identifiability profile and prove the design equivalence under stated
+assumptions. Per-pair Welch degrees of freedom make Gaussian thresholds on
+three-seed grids anti-conservative by a median factor of \tRatioMedian. We also
+report a reproducibility failure in our own prior results.
 \end{abstract}
 
 \section{How selection rules are compared}
@@ -115,20 +120,37 @@ the comparison is empty. That subset rules out only differences above
 by observed agreement. We report it as a diagnostic and not as evidence of
 equivalence.
 
-\section{Application to a published figure}
+\section{High-noise regime: a published figure}
 \label{sec:published}
 
-DataDecide reports a published pairwise decision accuracy of
-\knownAnswerPublished\ for ranking at a single small scale. Reproduced here it is \publishedOverall. Of its pairs,
-\publishedDetFracBonf\% are determined under Bonferroni and
-\publishedDetFracBH\% under Benjamini--Hochberg. On determined pairs accuracy is
-\publishedDeterminedBonf\ (Bonferroni) and \publishedDeterminedBH\ (BH), shifts
-of \publishedShiftBonf\ and \publishedShiftBH\ points.
+DataDecide reports a pairwise decision accuracy of \knownAnswerPublished\ for
+ranking at a single small scale; reproduced here it is \publishedOverall. Only
+\pubDetFrac\% of its reference pairs are determined under Bonferroni. The
+reference does not resolve most of the decisions the figure grades.
 
-The published figure \emph{understates} the method on the decisions its
-reference can actually resolve, because undetermined pairs drag any rule toward
-chance. This is the protocol's practical payoff: it changes a widely cited
-number, in the direction of the method looking better.
+An earlier version of this work reported accuracy on the determined pairs as a
+corrected figure. We withdraw it because it is selection-biased. Determined
+pairs are the well-separated ones, where any rule scores near one, so the figure
+measures an easier population rather than correcting the same quantity. We
+report two estimators of the same quantity instead.
+
+\emph{Posterior expected accuracy} charges each pair the probability that its
+reference ordering is correct. It gives \pubPosterior, below the observed
+figure: unresolved pairs contribute near one half and pull the average toward
+chance. \emph{Disattenuated accuracy} inverts
+$\text{observed}=ar+(1-a)(1-r)$ for the rule's accuracy $a$ at mean reference  %% nolint: mathematical constant
+reliability $r=\pubReliability$. It gives \pubDisattenuated, above the observed
+figure. It assumes the rule's errors are independent of the reference's, and
+that fails here. Both err preferentially on small true gaps: mean reliability is
+\relSmallGaps\ on the smallest-gap third of pairs and \relLargeGaps\ on the
+largest.
+
+The two estimators bracket the published figure and disagree in direction. That
+disagreement is the finding. The direction of the correction depends on an
+assumption about how rule errors and reference errors co-occur, and the data do
+not identify it. The robust statement is the determined fraction: at this
+reference budget the published figure mostly grades decisions its reference
+cannot make.
 
 \section{What survives propagation}
 \label{sec:survives}
