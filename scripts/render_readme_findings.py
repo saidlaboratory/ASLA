@@ -98,12 +98,18 @@ def build() -> str:
     t_ratio = Source.load("target_scoring/target_scoring.json")
     t_key = "student_t_recomputed.ratio_at_measured_df"
     t_fifty = glr_threshold(0.05, 300, n_seeds=50)
-    rescoring = Source.load("target_scoring/rescoring.json")
-    c4_rankers = rescoring.get("cells.c4_en_bits_per_token.rankers")
-    reliably_different = sorted(name for name, row in c4_rankers.items() if row["verdict"] == "SURVIVES")
-    within_noise = sorted(name for name, row in c4_rankers.items() if row["verdict"] != "SURVIVES")
-    allocation_rows = rescoring.get("optimal_allocation.by_budget_fraction")
-    allocation_within_noise = [row["budget_fraction"] for row in allocation_rows if row["verdict"] != "SURVIVES"]
+    restated = Source.load("target_scoring/restated_claims.json")
+    primary = restated.get("primary_family_random_candidate")
+    fixed_family = restated.get("fixed_candidate_family")
+    c4_claims = [c for c in primary["claims"] if c["claim"].endswith(", c4_en_bits_per_token")]
+    c4_nominal = sorted(c["claim"].split(" vs ")[0] for c in c4_claims if c["nominal_reject"])
+    c4_fixed_corrected = sorted(
+        c["claim"].split(" vs ")[0]
+        for c in fixed_family["claims"]
+        if "c4_en_bits_per_token" in c["claim"] and c["by_reject"]
+    )
+    allocation_nominal = [c for c in primary["claims"] if c["family"] == "allocation" and c["nominal_reject"]]
+    survivors = [c["claim"] for c in primary["claims"] if c["by_reject"]]
 
     lines: list[str] = [
         START,
@@ -136,17 +142,20 @@ def build() -> str:
         "None of the alternatives we built beat a baseline that fits nothing and"
         " extrapolates nothing: better estimators (shared-exponent, empirical-Bayes"
         " shrinkage, ensemble, checkpoint-augmented), a better objective, and a better"
-        " *ladder*. That is a statement about point estimates. Under expected-error"
-        " scoring with candidates resampled (`results/target_scoring/rescoring.json`),"
-        f" {', '.join(within_noise)} are indistinguishable from single-scale on C4;"
-        f" only {', '.join(reliably_different)} differs reliably, and it is worse.",
+        " *ladder*. That is a statement about point estimates. Under the calibrated"
+        " procedure (`results/target_scoring/restated_claims.json`), with recipes as a"
+        f" sample and corrected across the paper's {primary['m']} inferential claims, no"
+        f" C4 estimator comparison survives; {', '.join(c4_nominal) or 'none'} is nominally"
+        " worse than single-scale. Conditional on these 25 recipes,"
+        f" {', '.join(c4_fixed_corrected) or 'none'} is worse after correction. The only"
+        f" claim that survives the paper-level correction: {'; '.join(survivors)}.",
         "",
         f"- **Optimal allocation.** Solving the cost-constrained transductive design"
         f" and evaluating at matched compute leaves an excess over single-scale of"
-        f" **{min(excesses):+.3f} to {max(excesses):+.3f}** at the 1B target. Under"
-        f" expected-error scoring the excess is reliable at reduced budgets and within"
-        f" noise at budget fraction {', '.join(f'{v:g}' for v in allocation_within_noise)};"
-        f" the optimised design never does better than single-scale.",
+        f" **{min(excesses):+.3f} to {max(excesses):+.3f}** at the 1B target. Under the"
+        f" calibrated procedure the excess is nominally significant at"
+        f" {len(allocation_nominal)} reduced budget fractions and survives correction at"
+        " none; the optimised design never does better than single-scale.",
         f"- **Design for decision = design for estimation.** Under the linear model the"
         f" target-gap variance is exactly twice the target-level variance, so the two"
         f" objectives share an argmin. Measured: maximum cost-share difference"

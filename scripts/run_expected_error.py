@@ -22,6 +22,7 @@ import pandas as pd
 from scipy import stats
 
 from asla.analysis.fits import cell_means_and_sigma, normalize_budgets
+from asla.analysis.moderation import calibrated_target_evidence
 from asla.analysis.target_scoring import (
     bootstrap_two_sided_p,
     candidate_bootstrap,
@@ -29,7 +30,6 @@ from asla.analysis.target_scoring import (
     expected_charges,
     jackknife_standard_error,
     score_ranker,
-    target_evidence,
     u_statistic_components,
     u_statistic_test,
     u_statistic_variance,
@@ -292,7 +292,7 @@ def published_estimators(frame: pd.DataFrame, focal: str, target_label: str) -> 
     counts = {str(k): int(v) for k, v in cells.count().items()}
     focal_means = frame[np.isclose(frame["compute"], focal_compute)].groupby("intervention")["bpb"].mean()
 
-    evidence = target_evidence(means, sds, counts, alpha=0.05, multiplicity="bonferroni")
+    evidence = calibrated_target_evidence(means, sds, counts, alpha=0.05, multiplicity="bonferroni")
     predictions = {(a, b): float(focal_means[a] - focal_means[b]) for a, b in combinations(sorted(focal_means.index), 2)}
     scored = score_ranker(predictions, evidence)
 
@@ -390,7 +390,7 @@ def dose_response(frame: pd.DataFrame) -> dict[str, Any]:
             means = {str(k): float(v) for k, v in cells.mean().items()}
             sds = {str(k): float(v) for k, v in cells.std(ddof=1).items()}
             counts = {str(k): int(v) for k, v in cells.count().items()}
-            evidence = target_evidence(means, sds, counts, multiplicity="bonferroni")
+            evidence = calibrated_target_evidence(means, sds, counts, multiplicity="bonferroni")
 
             top = max(fit_budgets)
             projected: dict[str, float] = {}
@@ -477,6 +477,34 @@ def estimator_calibration(zeta1: float, zeta2: float, n: int, rng: np.random.Gen
     }
 
 
+def dose_response_jackknife(frame: pd.DataFrame) -> dict[str, Any]:
+    """Candidate-level test of the lever-arm association.
+
+    The Spearman p-value treats the designs as independent, but every design
+    scores the same 25 recipes on nested ladders. This deletes one recipe at a
+    time, recomputes the whole dose-response, and jackknifes the Fisher z of the
+    expected-error Spearman correlation.
+    """
+
+    recipes = sorted(frame["intervention"].astype(str).unique())
+    rhos = []
+    for recipe in recipes:
+        reduced = dose_response(frame[frame["intervention"].astype(str) != recipe])
+        rhos.append(reduced["expected_excess_pp"]["spearman_vs_log_lever_arm"])
+    z_values = np.arctanh(np.clip(np.asarray(rhos), -0.999999, 0.999999))
+    n = len(recipes)
+    se = float(np.sqrt((n - 1) / n * np.sum((z_values - z_values.mean()) ** 2)))
+    full = float(np.arctanh(dose_response(frame)["expected_excess_pp"]["spearman_vs_log_lever_arm"]))
+    return {
+        "method": "delete-one-recipe jackknife of the Fisher z of the expected-error Spearman correlation",
+        "leave_one_out_rho": [float(r) for r in rhos],
+        "fisher_z": full,
+        "se_fisher_z": se,
+        "p_two_sided": float(2 * stats.norm.sf(abs(full) / se)) if se > 0 else 0.0,
+        "rho_ci": [float(np.tanh(full - 1.959963984540054 * se)), float(np.tanh(full + 1.959963984540054 * se))],
+    }
+
+
 def power_predictions(significance: dict[str, Any]) -> dict[str, Any]:
     """Q1-Q4 of PREDICTIONS_TASK_POWER.md, scored on the C4 primary design."""
 
@@ -549,7 +577,7 @@ def main() -> None:
             means = {str(k): float(v) for k, v in cells.mean().items()}
             sds = {str(k): float(v) for k, v in cells.std(ddof=1).items()}
             counts = {str(k): int(v) for k, v in cells.count().items()}
-            evidence = target_evidence(means, sds, counts, alpha=0.05, multiplicity="bonferroni")
+            evidence = calibrated_target_evidence(means, sds, counts, alpha=0.05, multiplicity="bonferroni")
             determined_fraction = sum(1 for e in evidence if e.determined) / len(evidence)
 
             values = predictions_for(frame, fit_budgets, target)
@@ -583,6 +611,7 @@ def main() -> None:
     )
     payload["published_figure"] = published_estimators(load("olmes_macro_error"), "150M", "1B")
     payload["dose_response"] = dose_response(load("c4_en_bits_per_token"))
+    payload["dose_response"]["candidate_jackknife"] = dose_response_jackknife(load("c4_en_bits_per_token"))
 
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(payload, indent=2, sort_keys=True), encoding="utf-8")

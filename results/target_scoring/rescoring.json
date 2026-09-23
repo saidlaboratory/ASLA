@@ -7,113 +7,118 @@
       "rankers": {
         "checkpoint_augmented": {
           "candidate_test": {
-            "ci_high_pp": 3.17734433104363,
-            "ci_low_pp": -0.2676165229149152,
+            "ci_high_pp": 3.145010125459595,
+            "ci_low_pp": -0.26161816572950225,
             "excludes_zero": false,
+            "jackknife_se_pp": 1.3777858826699936,
             "n_pairs": 300,
-            "p_two_sided": 0.09783317647914816,
-            "point_pp": 1.4548639040643574,
-            "standard_error_pp": 0.8788326931341487,
+            "p_two_sided": 0.0971306958638978,
+            "point_pp": 1.4416959798650462,
+            "standard_error_pp": 0.8690537984524579,
             "weighted_bootstrap_conservative": {
-              "ci_high_pp": 5.23282027669462,
-              "ci_low_pp": -1.6929127706895437,
-              "p_two_sided": 0.295
+              "ci_high_pp": 5.12281091138932,
+              "ci_low_pp": -1.515651026946231,
+              "p_two_sided": 0.304
             }
           },
-          "excess_expected_pp": 1.4548639040643572,
+          "excess_expected_pp": 1.441695979865045,
           "excess_observed_pp": 1.666666666666667,
-          "expected_rate": 0.027347373401693603,
+          "expected_rate": 0.028037677818015326,
           "observed_rate": 0.02666666666666667,
           "verdict": "WEAKENS"
         },
         "eb_shrinkage": {
           "candidate_test": {
-            "ci_high_pp": 4.625644208212158,
-            "ci_low_pp": -1.3215254011093998,
+            "ci_high_pp": 4.26768923691953,
+            "ci_low_pp": -1.2964224076978828,
             "excludes_zero": false,
+            "jackknife_se_pp": 1.6232888201391056,
             "n_pairs": 300,
-            "p_two_sided": 0.27619198878226925,
-            "point_pp": 1.6520594035513794,
-            "standard_error_pp": 1.517162982644598,
+            "p_two_sided": 0.2952694470601229,
+            "point_pp": 1.4856334146108239,
+            "standard_error_pp": 1.419442318457486,
             "weighted_bootstrap_conservative": {
-              "ci_high_pp": 6.09823579480157,
-              "ci_low_pp": -1.109733765843816,
-              "p_two_sided": 0.3105
+              "ci_high_pp": 5.630309960588199,
+              "ci_low_pp": -1.153054992227282,
+              "p_two_sided": 0.324
             }
           },
-          "excess_expected_pp": 1.6520594035513794,
+          "excess_expected_pp": 1.4856334146108243,
           "excess_observed_pp": 1.9999999999999998,
-          "expected_rate": 0.029319328396563826,
+          "expected_rate": 0.028477052165473117,
           "observed_rate": 0.03,
           "verdict": "WEAKENS"
         },
         "ensemble": {
           "candidate_test": {
-            "ci_high_pp": 14.379529802334872,
-            "ci_low_pp": 2.9371065249759285,
+            "ci_high_pp": 14.055550093300491,
+            "ci_low_pp": 2.9979199279574917,
             "excludes_zero": true,
+            "jackknife_se_pp": 3.338468526124997,
             "n_pairs": 300,
-            "p_two_sided": 0.0030154996998351426,
-            "point_pp": 8.6583181636554,
-            "standard_error_pp": 2.9190391679682173,
+            "p_two_sided": 0.002505088859661069,
+            "point_pp": 8.526735010628991,
+            "standard_error_pp": 2.8208758560269924,
             "weighted_bootstrap_conservative": {
-              "ci_high_pp": 16.391282085951175,
-              "ci_low_pp": 2.0038319523671233,
-              "p_two_sided": 0.0095
+              "ci_high_pp": 16.074488088097983,
+              "ci_low_pp": 2.072608832238006,
+              "p_two_sided": 0.0085
             }
           },
-          "excess_expected_pp": 8.6583181636554,
+          "excess_expected_pp": 8.526735010628997,
           "excess_observed_pp": 9.000000000000002,
-          "expected_rate": 0.09938191599760403,
+          "expected_rate": 0.09888806812565484,
           "observed_rate": 0.1,
           "verdict": "SURVIVES"
         },
         "projection": {
           "candidate_test": {
-            "ci_high_pp": 4.897962361855191,
-            "ci_low_pp": -0.9271768880860032,
+            "ci_high_pp": 4.549850318861094,
+            "ci_low_pp": -0.9126429471498467,
             "excludes_zero": false,
+            "jackknife_se_pp": 1.6391782073434074,
             "n_pairs": 300,
-            "p_two_sided": 0.18153746327653508,
-            "point_pp": 1.9853927368845938,
-            "standard_error_pp": 1.4860322168899913,
+            "p_two_sided": 0.19187777896866265,
+            "point_pp": 1.8186036858556236,
+            "standard_error_pp": 1.3935187863395426,
             "weighted_bootstrap_conservative": {
-              "ci_high_pp": 6.369382747114148,
-              "ci_low_pp": -0.770375179545959,
-              "p_two_sided": 0.198
+              "ci_high_pp": 5.8940248921480904,
+              "ci_low_pp": -0.8357494809754223,
+              "p_two_sided": 0.211
             }
           },
-          "excess_expected_pp": 1.9853927368845934,
+          "excess_expected_pp": 1.818603685855625,
           "excess_observed_pp": 2.333333333333333,
-          "expected_rate": 0.03265266172989596,
+          "expected_rate": 0.031806754877921124,
           "observed_rate": 0.03333333333333333,
           "verdict": "WEAKENS"
         },
         "shared_exponent": {
           "candidate_test": {
-            "ci_high_pp": 0.5114407290789084,
-            "ci_low_pp": -0.9467329741173233,
+            "ci_high_pp": 0.47281993595884353,
+            "ci_low_pp": -0.9334423731070604,
             "excludes_zero": false,
+            "jackknife_se_pp": 0.5054032546095024,
             "n_pairs": 300,
-            "p_two_sided": 0.5584898441090578,
-            "point_pp": -0.21764612251920748,
-            "standard_error_pp": 0.37198992295218686,
+            "p_two_sided": 0.5208810391654652,
+            "point_pp": -0.23031121857410844,
+            "standard_error_pp": 0.3587469770256805,
             "weighted_bootstrap_conservative": {
-              "ci_high_pp": 0.4905033934854359,
-              "ci_low_pp": -1.9339519777983523,
+              "ci_high_pp": 0.414293876549017,
+              "ci_low_pp": -1.9200237887827487,
               "p_two_sided": 1.0
             }
           },
-          "excess_expected_pp": -0.21764612251920762,
+          "excess_expected_pp": -0.2303112185741082,
           "excess_observed_pp": 0.0,
-          "expected_rate": 0.010622273135857955,
+          "expected_rate": 0.011317605833623793,
           "observed_rate": 0.01,
           "verdict": "NO OBSERVED DIFFERENCE"
         }
       },
       "regime": "low_noise",
       "single_scale": {
-        "expected_rate": 0.012798734361050031,
+        "expected_rate": 0.013620718019364875,
         "n_scored": 300,
         "observed_rate": 0.01
       }
@@ -125,113 +130,118 @@
       "rankers": {
         "checkpoint_augmented": {
           "candidate_test": {
-            "ci_high_pp": 2.7283089189603142,
-            "ci_low_pp": -2.612172829722809,
+            "ci_high_pp": 2.559365504455425,
+            "ci_low_pp": -2.5799012434243784,
             "excludes_zero": false,
+            "jackknife_se_pp": 1.6523191785430242,
             "n_pairs": 300,
-            "p_two_sided": 0.9660027774871535,
-            "point_pp": 0.05806804461875269,
-            "standard_error_pp": 1.3623928273193187,
+            "p_two_sided": 0.9937512537605158,
+            "point_pp": -0.010267869484476838,
+            "standard_error_pp": 1.3110615267468393,
             "weighted_bootstrap_conservative": {
-              "ci_high_pp": 4.100961042954651,
-              "ci_low_pp": -3.8549504281334377,
-              "p_two_sided": 0.9425
+              "ci_high_pp": 3.7072676690475834,
+              "ci_low_pp": -3.573874190974312,
+              "p_two_sided": 0.9845
             }
           },
-          "excess_expected_pp": 0.05806804461875176,
+          "excess_expected_pp": -0.010267869484476,
           "excess_observed_pp": -0.3333333333333327,
-          "expected_rate": 0.09044006885615229,
+          "expected_rate": 0.10654623028489897,
           "observed_rate": 0.07333333333333333,
           "verdict": "VANISHES"
         },
         "eb_shrinkage": {
           "candidate_test": {
-            "ci_high_pp": 3.2937486428194513,
-            "ci_low_pp": -2.226414325249348,
+            "ci_high_pp": 2.7580300443648587,
+            "ci_low_pp": -2.0266822282356904,
             "excludes_zero": false,
+            "jackknife_se_pp": 1.5456515796226251,
             "n_pairs": 300,
-            "p_two_sided": 0.7047154336073054,
-            "point_pp": 0.5336671587850518,
-            "standard_error_pp": 1.40823071536292,
+            "p_two_sided": 0.7644957435385801,
+            "point_pp": 0.3656739080645842,
+            "standard_error_pp": 1.2206122944966717,
             "weighted_bootstrap_conservative": {
-              "ci_high_pp": 4.69596029774054,
-              "ci_low_pp": -3.4323156245207755,
-              "p_two_sided": 0.777
+              "ci_high_pp": 4.0335018334069535,
+              "ci_low_pp": -3.062189671468357,
+              "p_two_sided": 0.826
             }
           },
-          "excess_expected_pp": 0.5336671587850519,
+          "excess_expected_pp": 0.36567390806458155,
           "excess_observed_pp": 0.3333333333333341,
-          "expected_rate": 0.09519605999781529,
+          "expected_rate": 0.11030564806038955,
           "observed_rate": 0.08,
           "verdict": "WEAKENS"
         },
         "ensemble": {
           "candidate_test": {
-            "ci_high_pp": 1.798876770015232,
-            "ci_low_pp": -3.2642773879103073,
+            "ci_high_pp": 1.693278527784964,
+            "ci_low_pp": -2.783204636147587,
             "excludes_zero": false,
+            "jackknife_se_pp": 1.3811294139929318,
             "n_pairs": 300,
-            "p_two_sided": 0.5705365284615682,
-            "point_pp": -0.7327003089475377,
-            "standard_error_pp": 1.2916446929288123,
+            "p_two_sided": 0.633213642715885,
+            "point_pp": -0.5449630541813115,
+            "standard_error_pp": 1.1419809749675196,
             "weighted_bootstrap_conservative": {
-              "ci_high_pp": 2.5237216816347043,
-              "ci_low_pp": -4.335976436238953,
-              "p_two_sided": 0.633
+              "ci_high_pp": 2.3858810037899754,
+              "ci_low_pp": -3.6942242382025867,
+              "p_two_sided": 0.667
             }
           },
-          "excess_expected_pp": -0.7327003089475383,
+          "excess_expected_pp": -0.544963054181312,
           "excess_observed_pp": -1.3333333333333321,
-          "expected_rate": 0.08253238532048938,
+          "expected_rate": 0.10119927843793061,
           "observed_rate": 0.06333333333333334,
           "verdict": "WEAKENS"
         },
         "projection": {
           "candidate_test": {
-            "ci_high_pp": 3.2937486428194513,
-            "ci_low_pp": -2.226414325249348,
+            "ci_high_pp": 2.7580300443648587,
+            "ci_low_pp": -2.0266822282356904,
             "excludes_zero": false,
+            "jackknife_se_pp": 1.5456515796226251,
             "n_pairs": 300,
-            "p_two_sided": 0.7047154336073054,
-            "point_pp": 0.5336671587850518,
-            "standard_error_pp": 1.40823071536292,
+            "p_two_sided": 0.7644957435385801,
+            "point_pp": 0.3656739080645842,
+            "standard_error_pp": 1.2206122944966717,
             "weighted_bootstrap_conservative": {
-              "ci_high_pp": 4.635429508107441,
-              "ci_low_pp": -3.446509205389894,
-              "p_two_sided": 0.785
+              "ci_high_pp": 3.967081718682383,
+              "ci_low_pp": -3.2062602066314994,
+              "p_two_sided": 0.832
             }
           },
-          "excess_expected_pp": 0.5336671587850519,
+          "excess_expected_pp": 0.36567390806458155,
           "excess_observed_pp": 0.3333333333333341,
-          "expected_rate": 0.09519605999781529,
+          "expected_rate": 0.11030564806038955,
           "observed_rate": 0.08,
           "verdict": "WEAKENS"
         },
         "shared_exponent": {
           "candidate_test": {
-            "ci_high_pp": 4.658076750916644,
-            "ci_low_pp": -2.2600087988976334,
+            "ci_high_pp": 4.167580661405555,
+            "ci_low_pp": -2.1682952116094207,
             "excludes_zero": false,
+            "jackknife_se_pp": 1.9202977753719312,
             "n_pairs": 300,
-            "p_two_sided": 0.49688632731565796,
-            "point_pp": 1.1990339760095055,
-            "standard_error_pp": 1.7648501718356189,
+            "p_two_sided": 0.5362678217660818,
+            "point_pp": 0.9996427248980674,
+            "standard_error_pp": 1.6163245659082406,
             "weighted_bootstrap_conservative": {
-              "ci_high_pp": 6.184392752182625,
-              "ci_low_pp": -3.3116832772341818,
-              "p_two_sided": 0.608
+              "ci_high_pp": 5.5459711335828485,
+              "ci_low_pp": -2.9794626172481196,
+              "p_two_sided": 0.64
             }
           },
-          "excess_expected_pp": 1.1990339760095046,
+          "excess_expected_pp": 0.999642724898063,
           "excess_observed_pp": 1.0000000000000009,
-          "expected_rate": 0.10184972817005981,
+          "expected_rate": 0.11664533622872436,
           "observed_rate": 0.08666666666666667,
           "verdict": "WEAKENS"
         }
       },
       "regime": "high_noise",
       "single_scale": {
-        "expected_rate": 0.08985938840996477,
+        "expected_rate": 0.10664890897974373,
         "n_scored": 300,
         "observed_rate": 0.07666666666666666
       }
@@ -242,16 +252,16 @@
     "note": "Zero observed certified errors was never evidence of a guarantee. Under expected-error scoring the certified set carries this many errors in expectation; it is the reference's residual uncertainty on certified pairs, not a property of the rule.",
     "rules": {
       "normal": {
-        "certified_errors_expected": 0.17970998691304518,
+        "certified_errors_expected": 0.2634809665560748,
         "certified_errors_observed": 0,
-        "min_target_order_probability_on_certified": 0.8258863177020181,
+        "min_target_order_probability_on_certified": 0.8259447771339178,
         "n_certified": 292,
         "verdict": "SURVIVES"
       },
       "student_t": {
-        "certified_errors_expected": 0.0,
+        "certified_errors_expected": 0.012790129207866818,
         "certified_errors_observed": 0,
-        "min_target_order_probability_on_certified": 1.0,
+        "min_target_order_probability_on_certified": 0.9964934324435146,
         "n_certified": 280,
         "verdict": "SURVIVES"
       }
@@ -267,20 +277,21 @@
       {
         "budget_fraction": 0.01,
         "candidate_test": {
-          "ci_high_pp": 16.0183508635046,
-          "ci_low_pp": 3.73387847412506,
+          "ci_high_pp": 15.72488367158747,
+          "ci_low_pp": 3.714777092290169,
           "excludes_zero": true,
+          "jackknife_se_pp": 3.495115055299049,
           "n_pairs": 300,
-          "p_two_sided": 0.0016247295295266748,
-          "point_pp": 9.87611466881483,
-          "standard_error_pp": 3.1338515621403995,
+          "p_two_sided": 0.0015117712251578226,
+          "point_pp": 9.71983038193882,
+          "standard_error_pp": 3.0638589979284037,
           "weighted_bootstrap_conservative": {
-            "ci_high_pp": 18.181288163599824,
-            "ci_low_pp": 3.7157579637027176,
+            "ci_high_pp": 17.899817293217847,
+            "ci_low_pp": 3.588285635772968,
             "p_two_sided": 0.0
           }
         },
-        "excess_expected_pp": 9.87611466881483,
+        "excess_expected_pp": 9.71983038193882,
         "excess_observed_pp": 10.0,
         "n_support_budgets": 8,
         "verdict": "SURVIVES"
@@ -288,20 +299,21 @@
       {
         "budget_fraction": 0.03,
         "candidate_test": {
-          "ci_high_pp": 16.895369145905747,
-          "ci_low_pp": 2.3160818973760247,
+          "ci_high_pp": 16.667650196612893,
+          "ci_low_pp": 2.330724757469663,
           "excludes_zero": true,
+          "jackknife_se_pp": 4.0438796653828355,
           "n_pairs": 300,
-          "p_two_sided": 0.009803389670674756,
-          "point_pp": 9.605725521640885,
-          "standard_error_pp": 3.7192742732849378,
+          "p_two_sided": 0.009398206759592468,
+          "point_pp": 9.499187477041279,
+          "standard_error_pp": 3.6574461449881404,
           "weighted_bootstrap_conservative": {
-            "ci_high_pp": 18.989702579545387,
-            "ci_low_pp": 2.749079658946505,
+            "ci_high_pp": 18.759923851299067,
+            "ci_low_pp": 2.779810997071547,
             "p_two_sided": 0.003
           }
         },
-        "excess_expected_pp": 9.605725521640887,
+        "excess_expected_pp": 9.499187477041282,
         "excess_observed_pp": 9.666666666666668,
         "n_support_budgets": 9,
         "verdict": "SURVIVES"
@@ -309,20 +321,21 @@
       {
         "budget_fraction": 0.1,
         "candidate_test": {
-          "ci_high_pp": 15.02884194069501,
-          "ci_low_pp": 0.8492758034489407,
+          "ci_high_pp": 14.843174654024647,
+          "ci_low_pp": 0.8384116121986764,
           "excludes_zero": true,
+          "jackknife_se_pp": 3.905345681372527,
           "n_pairs": 300,
-          "p_two_sided": 0.028181859157099944,
-          "point_pp": 7.939058872071975,
-          "standard_error_pp": 3.6173027282880392,
+          "p_two_sided": 0.028189784824447964,
+          "point_pp": 7.840793133111662,
+          "standard_error_pp": 3.5727092824903304,
           "weighted_bootstrap_conservative": {
-            "ci_high_pp": 17.555580612407436,
-            "ci_low_pp": 1.7362179061600447,
+            "ci_high_pp": 17.389827227934383,
+            "ci_low_pp": 1.770499593653481,
             "p_two_sided": 0.0045
           }
         },
-        "excess_expected_pp": 7.939058872071976,
+        "excess_expected_pp": 7.840793133111662,
         "excess_observed_pp": 8.0,
         "n_support_budgets": 10,
         "verdict": "SURVIVES"
@@ -330,20 +343,21 @@
       {
         "budget_fraction": 0.3,
         "candidate_test": {
-          "ci_high_pp": 8.620644974379207,
-          "ci_low_pp": -0.08158360702648881,
+          "ci_high_pp": 8.3789428297377,
+          "ci_low_pp": -0.018727182637594986,
           "excludes_zero": false,
+          "jackknife_se_pp": 2.4889825872887803,
           "n_pairs": 300,
-          "p_two_sided": 0.054453109024620444,
-          "point_pp": 4.269530683676359,
-          "standard_error_pp": 2.2199970637337634,
+          "p_two_sided": 0.05103059919916489,
+          "point_pp": 4.180107823550053,
+          "standard_error_pp": 2.1423021235632507,
           "weighted_bootstrap_conservative": {
-            "ci_high_pp": 10.347209152734651,
-            "ci_low_pp": 5.332960676580082e-05,
-            "p_two_sided": 0.049
+            "ci_high_pp": 10.101188578748056,
+            "ci_low_pp": 0.051975556996767765,
+            "p_two_sided": 0.044
           }
         },
-        "excess_expected_pp": 4.26953068367636,
+        "excess_expected_pp": 4.180107823550053,
         "excess_observed_pp": 4.333333333333334,
         "n_support_budgets": 11,
         "verdict": "WEAKENS"
@@ -351,20 +365,21 @@
       {
         "budget_fraction": 0.5,
         "candidate_test": {
-          "ci_high_pp": 8.620644974379207,
-          "ci_low_pp": -0.08158360702648881,
+          "ci_high_pp": 8.3789428297377,
+          "ci_low_pp": -0.018727182637594986,
           "excludes_zero": false,
+          "jackknife_se_pp": 2.4889825872887803,
           "n_pairs": 300,
-          "p_two_sided": 0.054453109024620444,
-          "point_pp": 4.269530683676359,
-          "standard_error_pp": 2.2199970637337634,
+          "p_two_sided": 0.05103059919916489,
+          "point_pp": 4.180107823550053,
+          "standard_error_pp": 2.1423021235632507,
           "weighted_bootstrap_conservative": {
-            "ci_high_pp": 10.923608870412544,
-            "ci_low_pp": 8.091832753741044e-05,
-            "p_two_sided": 0.047
+            "ci_high_pp": 10.650764406200233,
+            "ci_low_pp": 0.043859065074335034,
+            "p_two_sided": 0.043
           }
         },
-        "excess_expected_pp": 4.26953068367636,
+        "excess_expected_pp": 4.180107823550053,
         "excess_observed_pp": 4.333333333333334,
         "n_support_budgets": 11,
         "verdict": "WEAKENS"
@@ -372,20 +387,21 @@
       {
         "budget_fraction": 1.0,
         "candidate_test": {
-          "ci_high_pp": 4.672950232134678,
-          "ci_low_pp": -0.5684039550513167,
+          "ci_high_pp": 4.300390430830425,
+          "ci_low_pp": -0.3721746072206049,
           "excludes_zero": false,
+          "jackknife_se_pp": 1.5514409132802043,
           "n_pairs": 300,
-          "p_two_sided": 0.12481737759914976,
-          "point_pp": 2.0522731385416804,
-          "standard_error_pp": 1.337104719405338,
+          "p_two_sided": 0.09940650958897891,
+          "point_pp": 1.9641079118049098,
+          "standard_error_pp": 1.1920027803846465,
           "weighted_bootstrap_conservative": {
-            "ci_high_pp": 5.943534428923448,
-            "ci_low_pp": -1.2541640453015177,
-            "p_two_sided": 0.21
+            "ci_high_pp": 5.644676882578045,
+            "ci_low_pp": -1.0313780353203468,
+            "p_two_sided": 0.1945
           }
         },
-        "excess_expected_pp": 2.05227313854168,
+        "excess_expected_pp": 1.9641079118049118,
         "excess_observed_pp": 1.9999999999999998,
         "n_support_budgets": 12,
         "verdict": "WEAKENS"

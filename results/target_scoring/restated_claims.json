@@ -1,0 +1,1286 @@
+{
+  "alpha": 0.05,
+  "correction_note": "Holm controls the family-wise error rate under any dependence; Benjamini-Yekutieli controls the false discovery rate under arbitrary dependence. Every claim shares the 25 DataDecide recipes.",
+  "fixed_candidate_family": {
+    "claims": [
+      {
+        "by_reject": false,
+        "ci_pp": [
+          0.0688517249889351,
+          3.5683556467223645
+        ],
+        "claim": "projection vs single-scale, c4_en_bits_per_token (these 25 recipes)",
+        "estimate_pp": 1.8186036858556498,
+        "family": "ranker comparison, fixed-candidate",
+        "holm_reject": false,
+        "method": "parametric resampling, calibrated critical value",
+        "nominal_reject": true,
+        "p": 0.038302241425123174
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          -1.6822331947375913,
+          1.2216107575893769
+        ],
+        "claim": "shared_exponent vs single-scale, c4_en_bits_per_token (these 25 recipes)",
+        "estimate_pp": -0.2303112185741072,
+        "family": "ranker comparison, fixed-candidate",
+        "holm_reject": false,
+        "method": "parametric resampling, calibrated critical value",
+        "nominal_reject": false,
+        "p": 0.7369517977905615
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          0.2352977540717529,
+          2.7359690751499466
+        ],
+        "claim": "eb_shrinkage vs single-scale, c4_en_bits_per_token (these 25 recipes)",
+        "estimate_pp": 1.4856334146108496,
+        "family": "ranker comparison, fixed-candidate",
+        "holm_reject": false,
+        "method": "parametric resampling, calibrated critical value",
+        "nominal_reject": true,
+        "p": 0.019252597476342337
+      },
+      {
+        "by_reject": true,
+        "ci_pp": [
+          5.126191249955821,
+          11.927278771302227
+        ],
+        "claim": "ensemble vs single-scale, c4_en_bits_per_token (these 25 recipes)",
+        "estimate_pp": 8.526735010629023,
+        "family": "ranker comparison, fixed-candidate",
+        "holm_reject": true,
+        "method": "parametric resampling, calibrated critical value",
+        "nominal_reject": true,
+        "p": 0.0007407407407407407
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          0.3532267338426902,
+          2.5301652258873384
+        ],
+        "claim": "checkpoint_augmented vs single-scale, c4_en_bits_per_token (these 25 recipes)",
+        "estimate_pp": 1.4416959798650142,
+        "family": "ranker comparison, fixed-candidate",
+        "holm_reject": false,
+        "method": "parametric resampling, calibrated critical value",
+        "nominal_reject": true,
+        "p": 0.0076025089915048305
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          -2.1073274406655838,
+          2.838675256794752
+        ],
+        "claim": "projection vs single-scale, olmes_macro_error (these 25 recipes)",
+        "estimate_pp": 0.36567390806458416,
+        "family": "ranker comparison, fixed-candidate",
+        "holm_reject": false,
+        "method": "parametric resampling, calibrated critical value (critical value transported from the C4 benchmark)",
+        "nominal_reject": false,
+        "p": 0.7529685200958098
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          -1.510035173027788,
+          3.509320622823923
+        ],
+        "claim": "shared_exponent vs single-scale, olmes_macro_error (these 25 recipes)",
+        "estimate_pp": 0.9996427248980674,
+        "family": "ranker comparison, fixed-candidate",
+        "holm_reject": false,
+        "method": "parametric resampling, calibrated critical value (critical value transported from the C4 benchmark)",
+        "nominal_reject": false,
+        "p": 0.4130302178770666
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          -2.098084707190919,
+          2.8294325233200874
+        ],
+        "claim": "eb_shrinkage vs single-scale, olmes_macro_error (these 25 recipes)",
+        "estimate_pp": 0.36567390806458416,
+        "family": "ranker comparison, fixed-candidate",
+        "holm_reject": false,
+        "method": "parametric resampling, calibrated critical value (critical value transported from the C4 benchmark)",
+        "nominal_reject": false,
+        "p": 0.7518675664748184
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          -3.891775463374181,
+          2.801849355011557
+        ],
+        "claim": "ensemble vs single-scale, olmes_macro_error (these 25 recipes)",
+        "estimate_pp": -0.5449630541813122,
+        "family": "ranker comparison, fixed-candidate",
+        "holm_reject": false,
+        "method": "parametric resampling, calibrated critical value (critical value transported from the C4 benchmark)",
+        "nominal_reject": false,
+        "p": 0.7314885371220883
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          -3.09762785064621,
+          3.077092111677256
+        ],
+        "claim": "checkpoint_augmented vs single-scale, olmes_macro_error (these 25 recipes)",
+        "estimate_pp": -0.010267869484477027,
+        "family": "ranker comparison, fixed-candidate",
+        "holm_reject": false,
+        "method": "parametric resampling, calibrated critical value (critical value transported from the C4 benchmark)",
+        "nominal_reject": false,
+        "p": 0.995954085572704
+      }
+    ],
+    "m": 10,
+    "n_by": 1,
+    "n_holm": 1,
+    "n_nominal": 4
+  },
+  "primary_family_random_candidate": {
+    "claims": [
+      {
+        "by_reject": false,
+        "ci_pp": [
+          -1.0154887177532286,
+          4.652696089464528
+        ],
+        "claim": "projection vs single-scale, c4_en_bits_per_token",
+        "estimate_pp": 1.8186036858556498,
+        "family": "ranker comparison",
+        "holm_reject": false,
+        "method": "random_jackknife",
+        "nominal_reject": false,
+        "p": 0.1827852113291939
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          -1.10413904170596,
+          0.6435166045577457
+        ],
+        "claim": "shared_exponent vs single-scale, c4_en_bits_per_token",
+        "estimate_pp": -0.2303112185741072,
+        "family": "ranker comparison",
+        "holm_reject": false,
+        "method": "random_jackknife",
+        "nominal_reject": false,
+        "p": 0.5935028803918527
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          -1.3209866913723194,
+          4.292253520594018
+        ],
+        "claim": "eb_shrinkage vs single-scale, c4_en_bits_per_token",
+        "estimate_pp": 1.4856334146108496,
+        "family": "ranker comparison",
+        "holm_reject": false,
+        "method": "random_jackknife",
+        "nominal_reject": false,
+        "p": 0.2787898051149147
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          2.7546180759409014,
+          14.298851945317146
+        ],
+        "claim": "ensemble vs single-scale, c4_en_bits_per_token",
+        "estimate_pp": 8.526735010629023,
+        "family": "ranker comparison",
+        "holm_reject": false,
+        "method": "random_jackknife",
+        "nominal_reject": true,
+        "p": 0.012135009509747663
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          -0.9404565441141601,
+          3.8238485038441885
+        ],
+        "claim": "checkpoint_augmented vs single-scale, c4_en_bits_per_token",
+        "estimate_pp": 1.4416959798650142,
+        "family": "ranker comparison",
+        "holm_reject": false,
+        "method": "random_jackknife",
+        "nominal_reject": false,
+        "p": 0.21739049735401117
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          -2.30671362174172,
+          3.0380614378708883
+        ],
+        "claim": "projection vs single-scale, olmes_macro_error",
+        "estimate_pp": 0.36567390806458416,
+        "family": "ranker comparison",
+        "holm_reject": false,
+        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "nominal_reject": false,
+        "p": 0.784072604885206
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          -2.3204973998716256,
+          4.31978284966776
+        ],
+        "claim": "shared_exponent vs single-scale, olmes_macro_error",
+        "estimate_pp": 0.9996427248980674,
+        "family": "ranker comparison",
+        "holm_reject": false,
+        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "nominal_reject": false,
+        "p": 0.5293355159777668
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          -2.3067136217417197,
+          3.038061437870888
+        ],
+        "claim": "eb_shrinkage vs single-scale, olmes_macro_error",
+        "estimate_pp": 0.36567390806458416,
+        "family": "ranker comparison",
+        "holm_reject": false,
+        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "nominal_reject": false,
+        "p": 0.784072604885206
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          -2.9328964485265923,
+          1.842970340163968
+        ],
+        "claim": "ensemble vs single-scale, olmes_macro_error",
+        "estimate_pp": -0.5449630541813122,
+        "family": "ranker comparison",
+        "holm_reject": false,
+        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "nominal_reject": false,
+        "p": 0.6449546274657514
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          -2.8670806377774865,
+          2.8465448988085322
+        ],
+        "claim": "checkpoint_augmented vs single-scale, olmes_macro_error",
+        "estimate_pp": -0.010267869484477027,
+        "family": "ranker comparison",
+        "holm_reject": false,
+        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "nominal_reject": false,
+        "p": 0.9945419481222607
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          3.676876062764312,
+          15.762784701113329
+        ],
+        "claim": "optimised allocation at 0.01 of budget vs single-scale, c4",
+        "estimate_pp": 9.71983038193882,
+        "family": "allocation",
+        "holm_reject": false,
+        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "nominal_reject": true,
+        "p": 0.007716814909868308
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          2.5074347869266767,
+          16.49094016715588
+        ],
+        "claim": "optimised allocation at 0.03 of budget vs single-scale, c4",
+        "estimate_pp": 9.499187477041279,
+        "family": "allocation",
+        "holm_reject": false,
+        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "nominal_reject": true,
+        "p": 0.019099084719608528
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          1.08856175310624,
+          14.593024513117083
+        ],
+        "claim": "optimised allocation at 0.1 of budget vs single-scale, c4",
+        "estimate_pp": 7.840793133111662,
+        "family": "allocation",
+        "holm_reject": false,
+        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "nominal_reject": true,
+        "p": 0.029137480009270078
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          -0.12327213339959275,
+          8.483487780499697
+        ],
+        "claim": "optimised allocation at 0.3 of budget vs single-scale, c4",
+        "estimate_pp": 4.180107823550053,
+        "family": "allocation",
+        "holm_reject": false,
+        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "nominal_reject": false,
+        "p": 0.05689336134580192
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          -0.12327213339959275,
+          8.483487780499697
+        ],
+        "claim": "optimised allocation at 0.5 of budget vs single-scale, c4",
+        "estimate_pp": 4.180107823550053,
+        "family": "allocation",
+        "holm_reject": false,
+        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "nominal_reject": false,
+        "p": 0.05689336134580192
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          -0.718289210898247,
+          4.646505034508067
+        ],
+        "claim": "optimised allocation at 1 of budget vs single-scale, c4",
+        "estimate_pp": 1.9641079118049098,
+        "family": "allocation",
+        "holm_reject": false,
+        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "nominal_reject": false,
+        "p": 0.1308241809396008
+      },
+      {
+        "by_reject": true,
+        "ci_pp": null,
+        "claim": "projection excess rises with log lever arm (expected-error scoring)",
+        "estimate_pp": null,
+        "family": "dose-response",
+        "holm_reject": true,
+        "method": "delete-one-recipe jackknife of the Spearman correlation's Fisher z",
+        "nominal_reject": true,
+        "p": 8.19949184257004e-20
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          -19.509884945469025,
+          3.065440501024584
+        ],
+        "claim": "DataDecide 2_param-default vs single-scale at 750M (exploratory: open discrepancy)",
+        "estimate_pp": -8.22222222222222,
+        "family": "published re-test, scaling laws",
+        "holm_reject": false,
+        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "nominal_reject": false,
+        "p": 0.13254331777447537
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          -6.433946641767601,
+          8.656168863989825
+        ],
+        "claim": "DataDecide 3_param-1_step vs single-scale at 750M (exploratory: open discrepancy)",
+        "estimate_pp": 1.1111111111111123,
+        "family": "published re-test, scaling laws",
+        "holm_reject": false,
+        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "nominal_reject": false,
+        "p": 0.7679099785692748
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          -10.106120601072618,
+          6.995009489961511
+        ],
+        "claim": "DataDecide 3_param-default-helper_points-step2=0.5 vs single-scale at 750M (exploratory: open discrepancy)",
+        "estimate_pp": -1.5555555555555538,
+        "family": "published re-test, scaling laws",
+        "holm_reject": false,
+        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "nominal_reject": false,
+        "p": 0.7101194293565697
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          -8.23082464047995,
+          6.453046862702175
+        ],
+        "claim": "DataDecide 3_param-default-helper_points vs single-scale at 750M (exploratory: open discrepancy)",
+        "estimate_pp": -0.8888888888888876,
+        "family": "published re-test, scaling laws",
+        "holm_reject": false,
+        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "nominal_reject": false,
+        "p": 0.8101668597707168
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          -10.40295398354109,
+          6.6251762057633155
+        ],
+        "claim": "DataDecide 3_param-default-step2=0.5 vs single-scale at 750M (exploratory: open discrepancy)",
+        "estimate_pp": -1.8888888888888873,
+        "family": "published re-test, scaling laws",
+        "holm_reject": false,
+        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "nominal_reject": false,
+        "p": 0.6534373045045759
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          -10.592582744655608,
+          6.814804966877833
+        ],
+        "claim": "DataDecide 3_param-default vs single-scale at 750M (exploratory: open discrepancy)",
+        "estimate_pp": -1.8888888888888877,
+        "family": "published re-test, scaling laws",
+        "holm_reject": false,
+        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "nominal_reject": false,
+        "p": 0.6629425502420596
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          -27.769296570660085,
+          -2.675147873784354
+        ],
+        "claim": "DataDecide 5_param-1_step-ai2 vs single-scale at 750M (exploratory: open discrepancy)",
+        "estimate_pp": -15.22222222222222,
+        "family": "published re-test, scaling laws",
+        "holm_reject": false,
+        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "nominal_reject": true,
+        "p": 0.026551920237743998
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          -11.266114772617671,
+          6.821670328173228
+        ],
+        "claim": "DataDecide 5_param-ai2 vs single-scale at 750M (exploratory: open discrepancy)",
+        "estimate_pp": -2.222222222222221,
+        "family": "published re-test, scaling laws",
+        "holm_reject": false,
+        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "nominal_reject": false,
+        "p": 0.611748618010312
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          -17.808159427672997,
+          6.919270538784112
+        ],
+        "claim": "Correct Prob vs accuracy at 10M, OLMES macro",
+        "estimate_pp": -5.444444444444443,
+        "family": "published re-test, proxy metric",
+        "holm_reject": false,
+        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "nominal_reject": false,
+        "p": 0.35795592115061514
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          -8.770379064213035,
+          13.437045730879706
+        ],
+        "claim": "Correct Prob vs accuracy at 14M, OLMES macro",
+        "estimate_pp": 2.333333333333335,
+        "family": "published re-test, proxy metric",
+        "holm_reject": false,
+        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "nominal_reject": false,
+        "p": 0.6742497416252862
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          -5.5269405018142415,
+          2.193607168480909
+        ],
+        "claim": "Correct Prob vs accuracy at 150M, OLMES macro",
+        "estimate_pp": -1.6666666666666665,
+        "family": "published re-test, proxy metric",
+        "holm_reject": false,
+        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "nominal_reject": false,
+        "p": 0.3669578153846118
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          -3.354224877830175,
+          16.243113766719063
+        ],
+        "claim": "Correct Prob vs accuracy at 16M, OLMES macro",
+        "estimate_pp": 6.444444444444445,
+        "family": "published re-test, proxy metric",
+        "holm_reject": false,
+        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "nominal_reject": false,
+        "p": 0.17234858096453753
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          -5.850522698444612,
+          14.739411587333505
+        ],
+        "claim": "Correct Prob vs accuracy at 20M, OLMES macro",
+        "estimate_pp": 4.444444444444446,
+        "family": "published re-test, proxy metric",
+        "holm_reject": false,
+        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "nominal_reject": false,
+        "p": 0.36701273531839096
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          -4.747018885131748,
+          6.74701888513175
+        ],
+        "claim": "Correct Prob vs accuracy at 300M, OLMES macro",
+        "estimate_pp": 1.0000000000000004,
+        "family": "published re-test, proxy metric",
+        "holm_reject": false,
+        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "nominal_reject": false,
+        "p": 0.7234578796164124
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          17.200711425787947,
+          41.021510796434285
+        ],
+        "claim": "Correct Prob vs accuracy at 4M, OLMES macro",
+        "estimate_pp": 29.111111111111114,
+        "family": "published re-test, proxy metric",
+        "holm_reject": false,
+        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "nominal_reject": true,
+        "p": 0.002139287556615521
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          -4.505823053324028,
+          5.616934164435141
+        ],
+        "claim": "Correct Prob vs accuracy at 530M, OLMES macro",
+        "estimate_pp": 0.555555555555556,
+        "family": "published re-test, proxy metric",
+        "holm_reject": false,
+        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "nominal_reject": false,
+        "p": 0.8273830775350949
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          -2.9821466325093935,
+          10.982146632509394
+        ],
+        "claim": "Correct Prob vs accuracy at 60M, OLMES macro",
+        "estimate_pp": 4.0,
+        "family": "published re-test, proxy metric",
+        "holm_reject": false,
+        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "nominal_reject": false,
+        "p": 0.24485743146278227
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          -16.154342028279896,
+          5.932119806057678
+        ],
+        "claim": "Correct Prob vs accuracy at 6M, OLMES macro",
+        "estimate_pp": -5.111111111111109,
+        "family": "published re-test, proxy metric",
+        "holm_reject": false,
+        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "nominal_reject": false,
+        "p": 0.3385294352074887
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          -3.948142412284019,
+          6.392586856728464
+        ],
+        "claim": "Correct Prob vs accuracy at 750M, OLMES macro",
+        "estimate_pp": 1.2222222222222223,
+        "family": "published re-test, proxy metric",
+        "holm_reject": false,
+        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "nominal_reject": false,
+        "p": 0.630081352784553
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          -25.54476715795707,
+          -2.010788397598475
+        ],
+        "claim": "Correct Prob vs accuracy at 8M, OLMES macro",
+        "estimate_pp": -13.777777777777773,
+        "family": "published re-test, proxy metric",
+        "holm_reject": false,
+        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "nominal_reject": true,
+        "p": 0.028658131866300063
+      },
+      {
+        "by_reject": false,
+        "ci_pp": [
+          -5.7115865391168965,
+          2.600475428005786
+        ],
+        "claim": "Correct Prob vs accuracy at 90M, OLMES macro",
+        "estimate_pp": -1.5555555555555551,
+        "family": "published re-test, proxy metric",
+        "holm_reject": false,
+        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "nominal_reject": false,
+        "p": 0.4364864272792398
+      }
+    ],
+    "m": 38,
+    "n_by": 1,
+    "n_holm": 1,
+    "n_nominal": 8
+  },
+  "random_candidate_se": "random_jackknife",
+  "ranker_detail": {
+    "c4_en_bits_per_token": {
+      "bootstrap_draws": 400,
+      "comparisons": {
+        "checkpoint_augmented": {
+          "calibrated_fixed_candidate": {
+            "ci_high": 2.5301652258873384,
+            "ci_low": 0.3532267338426902,
+            "critical_value": 2.2590775822890277,
+            "p_two_sided": 0.0076025089915048305,
+            "se": 0.481820214832739
+          },
+          "calibrated_random_candidate": {
+            "ci_high": 3.8238485038441885,
+            "ci_low": -0.9404565441141601,
+            "critical_value": 1.7289714998116024,
+            "p_two_sided": 0.21739049735401117,
+            "se": 1.3777858826699838,
+            "se_method": "random_jackknife"
+          },
+          "estimate_pp": 1.4416959798650142,
+          "fixed_candidate": {
+            "ci_high": 2.386046247960534,
+            "ci_low": 0.49734571176949416,
+            "p_two_sided": 0.0027698692158503128,
+            "se": 0.481820214832739
+          },
+          "kernel_jackknife_se": 1.3777858826699838,
+          "random_candidate": {
+            "ci_high": 3.145010125459547,
+            "ci_low": -0.26161816572951824,
+            "p_two_sided": 0.09713069586390202,
+            "se": 0.8690537984524497
+          }
+        },
+        "eb_shrinkage": {
+          "calibrated_fixed_candidate": {
+            "ci_high": 2.7359690751499466,
+            "ci_low": 0.2352977540717529,
+            "critical_value": 2.2590775822890277,
+            "p_two_sided": 0.019252597476342337,
+            "se": 0.5534717666810648
+          },
+          "calibrated_random_candidate": {
+            "ci_high": 4.292253520594018,
+            "ci_low": -1.3209866913723194,
+            "critical_value": 1.7289714998116024,
+            "p_two_sided": 0.2787898051149147,
+            "se": 1.6232888201390208,
+            "se_method": "random_jackknife"
+          },
+          "estimate_pp": 1.4856334146108496,
+          "fixed_candidate": {
+            "ci_high": 2.5704181437654925,
+            "ci_low": 0.4008486854562068,
+            "p_two_sided": 0.007270183200637488,
+            "se": 0.5534717666810648
+          },
+          "kernel_jackknife_se": 1.623288820139021,
+          "random_candidate": {
+            "ci_high": 4.267689236919382,
+            "ci_low": -1.2964224076976825,
+            "p_two_sided": 0.2952694470600844,
+            "se": 1.419442318457397
+          },
+          "random_candidate_jackknife": {
+            "ci_high": 4.667221038589847,
+            "ci_low": -1.6959542093681486,
+            "p_two_sided": 0.36008681071453785,
+            "se": 1.6232888201390208
+          }
+        },
+        "ensemble": {
+          "calibrated_fixed_candidate": {
+            "ci_high": 11.927278771302227,
+            "ci_low": 5.126191249955821,
+            "critical_value": 2.2590775822890277,
+            "p_two_sided": 0.0007407407407407407,
+            "se": 1.5052797599042949
+          },
+          "calibrated_random_candidate": {
+            "ci_high": 14.298851945317146,
+            "ci_low": 2.7546180759409014,
+            "critical_value": 1.7289714998116024,
+            "p_two_sided": 0.012135009509747663,
+            "se": 3.338468526124972,
+            "se_method": "random_jackknife"
+          },
+          "estimate_pp": 8.526735010629023,
+          "fixed_candidate": {
+            "ci_high": 11.477029126698541,
+            "ci_low": 5.576440894559505,
+            "p_two_sided": 1.4740942071022067e-08,
+            "se": 1.5052797599042949
+          },
+          "kernel_jackknife_se": 3.338468526124972,
+          "random_candidate": {
+            "ci_high": 14.055550093300472,
+            "ci_low": 2.997919927957576,
+            "p_two_sided": 0.002505088859660741,
+            "se": 2.8208758560269658
+          }
+        },
+        "projection": {
+          "calibrated_fixed_candidate": {
+            "ci_high": 3.5683556467223645,
+            "ci_low": 0.0688517249889351,
+            "critical_value": 2.2590775822890277,
+            "p_two_sided": 0.038302241425123174,
+            "se": 0.7745426605020643
+          },
+          "calibrated_random_candidate": {
+            "ci_high": 4.652696089464528,
+            "ci_low": -1.0154887177532286,
+            "critical_value": 1.7289714998116024,
+            "p_two_sided": 0.1827852113291939,
+            "se": 1.6391782073433228,
+            "se_method": "random_jackknife"
+          },
+          "estimate_pp": 1.8186036858556498,
+          "fixed_candidate": {
+            "ci_high": 3.33667940492953,
+            "ci_low": 0.3005279667817695,
+            "p_two_sided": 0.01887599216000646,
+            "se": 0.7745426605020643
+          },
+          "kernel_jackknife_se": 1.6391782073433228,
+          "random_candidate": {
+            "ci_high": 4.54985031886094,
+            "ci_low": -0.9126429471496402,
+            "p_two_sided": 0.191877778968627,
+            "se": 1.3935187863394507
+          }
+        },
+        "shared_exponent": {
+          "calibrated_fixed_candidate": {
+            "ci_high": 1.2216107575893769,
+            "ci_low": -1.6822331947375913,
+            "critical_value": 2.2590775822890277,
+            "p_two_sided": 0.7369517977905615,
+            "se": 0.6427056722382739
+          },
+          "calibrated_random_candidate": {
+            "ci_high": 0.6435166045577457,
+            "ci_low": -1.10413904170596,
+            "critical_value": 1.7289714998116024,
+            "p_two_sided": 0.5935028803918527,
+            "se": 0.5054032546095003,
+            "se_method": "random_jackknife"
+          },
+          "estimate_pp": -0.2303112185741072,
+          "fixed_candidate": {
+            "ci_high": 1.029368751672514,
+            "ci_low": -1.4899911888207285,
+            "p_two_sided": 0.7200841510755427,
+            "se": 0.6427056722382739
+          },
+          "kernel_jackknife_se": 0.5054032546095003,
+          "random_candidate": {
+            "ci_high": 0.47281993595884186,
+            "ci_low": -0.9334423731070562,
+            "p_two_sided": 0.5208810391654657,
+            "se": 0.358746977025679
+          },
+          "random_candidate_jackknife": {
+            "ci_high": 0.7602609581298405,
+            "ci_low": -1.220883395278055,
+            "p_two_sided": 0.6486072084075292,
+            "se": 0.5054032546095003
+          }
+        },
+        "single_scale_150M": {
+          "calibrated_fixed_candidate": {
+            "ci_high": 0.5266233226920681,
+            "ci_low": -1.5651909614914472,
+            "critical_value": 2.2590775822890277,
+            "p_two_sided": 0.30616171513693113,
+            "se": 0.4629797357521401
+          },
+          "calibrated_random_candidate": {
+            "ci_high": 0.8571486115323096,
+            "ci_low": -1.8957162503316884,
+            "critical_value": 1.7289714998116024,
+            "p_two_sided": 0.43091294140503444,
+            "se": 0.796098970446871,
+            "se_method": "random_jackknife"
+          },
+          "estimate_pp": -0.5192838193996895,
+          "fixed_candidate": {
+            "ci_high": 0.3881397882463763,
+            "ci_low": -1.4267074270457551,
+            "p_two_sided": 0.2620272707662379,
+            "se": 0.4629797357521401
+          },
+          "kernel_jackknife_se": 0.796098970446871,
+          "random_candidate": {
+            "ci_high": 0.3293537009771177,
+            "ci_low": -1.3679213397764967,
+            "p_two_sided": 0.23040828959115145,
+            "se": 0.43298628294741726
+          }
+        },
+        "single_scale_20M": {
+          "calibrated_fixed_candidate": {
+            "ci_high": 10.04423527793146,
+            "ci_low": 4.143556598947331,
+            "critical_value": 2.2590775822890277,
+            "p_two_sided": 0.0007407407407407407,
+            "se": 1.3059929249984457
+          },
+          "calibrated_random_candidate": {
+            "ci_high": 11.296793459935856,
+            "ci_low": 2.890998416942935,
+            "critical_value": 1.7289714998116024,
+            "p_two_sided": 0.0070138950507748765,
+            "se": 2.4308657036593315,
+            "se_method": "random_jackknife"
+          },
+          "estimate_pp": 7.093895938439395,
+          "fixed_candidate": {
+            "ci_high": 9.65359503550047,
+            "ci_low": 4.534196841378321,
+            "p_two_sided": 5.578757465399522e-08,
+            "se": 1.3059929249984457
+          },
+          "kernel_jackknife_se": 2.4308657036593315,
+          "random_candidate": {
+            "ci_high": 10.58109084817482,
+            "ci_low": 3.606701028703973,
+            "p_two_sided": 6.688699252298631e-05,
+            "se": 1.7792137698661672
+          }
+        },
+        "single_scale_60M": {
+          "calibrated_fixed_candidate": {
+            "ci_high": 3.170924206365107,
+            "ci_low": -0.5359237345948116,
+            "critical_value": 2.2590775822890277,
+            "p_two_sided": 0.15628076640624067,
+            "se": 0.8204339616357768
+          },
+          "calibrated_random_candidate": {
+            "ci_high": 3.248977011067508,
+            "ci_low": -0.6139765392972125,
+            "critical_value": 1.7289714998116024,
+            "p_two_sided": 0.16200942119681028,
+            "se": 1.1171247041335406,
+            "se_method": "random_jackknife"
+          },
+          "estimate_pp": 1.3175002358851478,
+          "fixed_candidate": {
+            "ci_high": 2.9255212523847867,
+            "ci_low": -0.29052078061449116,
+            "p_two_sided": 0.10830516838239078,
+            "se": 0.8204339616357768
+          },
+          "kernel_jackknife_se": 1.1171247041335406,
+          "random_candidate": {
+            "ci_high": 2.57283693063589,
+            "ci_low": 0.06216354113440614,
+            "p_two_sided": 0.03968427724586373,
+            "se": 0.6404896746331451
+          }
+        },
+        "single_scale_90M": {
+          "calibrated_fixed_candidate": {
+            "ci_high": 1.3446440899067607,
+            "ci_low": -1.1267049363490995,
+            "critical_value": 2.2590775822890277,
+            "p_two_sided": 0.8507252768287734,
+            "se": 0.5469818844715698
+          },
+          "calibrated_random_candidate": {
+            "ci_high": 1.7921113718100283,
+            "ci_low": -1.5741722182523672,
+            "critical_value": 1.7289714998116024,
+            "p_two_sided": 0.9012149518862698,
+            "se": 0.97349308257227,
+            "se_method": "random_jackknife"
+          },
+          "estimate_pp": 0.10896957677883047,
+          "fixed_candidate": {
+            "ci_high": 1.181034370538956,
+            "ci_low": -0.9630952169812951,
+            "p_two_sided": 0.8420908758247947,
+            "se": 0.5469818844715698
+          },
+          "kernel_jackknife_se": 0.97349308257227,
+          "random_candidate": {
+            "ci_high": 1.1457170333113305,
+            "ci_low": -0.9277778797536697,
+            "p_two_sided": 0.8367860366236799,
+            "se": 0.5289625037552893
+          }
+        }
+      },
+      "design": "c4_en_bits_per_token, fit to 300M, target 530M"
+    },
+    "olmes_macro_error": {
+      "bootstrap_draws": 400,
+      "comparisons": {
+        "checkpoint_augmented": {
+          "calibrated_fixed_candidate": {
+            "ci_high": 3.077092111677256,
+            "ci_low": -3.09762785064621,
+            "critical_value": 2.2590775822890277,
+            "p_two_sided": 0.995954085572704,
+            "se": 1.3666462831406798
+          },
+          "calibrated_random_candidate": {
+            "ci_high": 2.8465448988085322,
+            "ci_low": -2.8670806377774865,
+            "critical_value": 1.7289714998116024,
+            "p_two_sided": 0.9945419481222607,
+            "se": 1.6523191785430253,
+            "se_method": "random_jackknife"
+          },
+          "estimate_pp": -0.010267869484477027,
+          "fixed_candidate": {
+            "ci_high": 2.668309625076785,
+            "ci_low": -2.688845364045739,
+            "p_two_sided": 0.9940054002560851,
+            "se": 1.3666462831406798
+          },
+          "kernel_jackknife_se": 1.6523191785430253,
+          "random_candidate": {
+            "ci_high": 2.5593655044554264,
+            "ci_low": -2.5799012434243807,
+            "p_two_sided": 0.9937512537605157,
+            "se": 1.3110615267468402
+          }
+        },
+        "eb_shrinkage": {
+          "calibrated_fixed_candidate": {
+            "ci_high": 2.8294325233200874,
+            "ci_low": -2.098084707190919,
+            "critical_value": 2.2590775822890277,
+            "p_two_sided": 0.7518675664748184,
+            "se": 1.0906038086390468
+          },
+          "calibrated_random_candidate": {
+            "ci_high": 3.038061437870888,
+            "ci_low": -2.3067136217417197,
+            "critical_value": 1.7289714998116024,
+            "p_two_sided": 0.784072604885206,
+            "se": 1.5456515796226258,
+            "se_method": "random_jackknife"
+          },
+          "estimate_pp": 0.36567390806458416,
+          "fixed_candidate": {
+            "ci_high": 2.5032180943993287,
+            "ci_low": -1.7718702782701605,
+            "p_two_sided": 0.7374026314465301,
+            "se": 1.0906038086390468
+          },
+          "kernel_jackknife_se": 1.545651579622626,
+          "random_candidate": {
+            "ci_high": 2.758030044364861,
+            "ci_low": -2.0266822282356927,
+            "p_two_sided": 0.7644957435385803,
+            "se": 1.2206122944966729
+          },
+          "random_candidate_jackknife": {
+            "ci_high": 3.3950953367723744,
+            "ci_low": -2.663747520643206,
+            "p_two_sided": 0.8129808016002705,
+            "se": 1.5456515796226258
+          }
+        },
+        "ensemble": {
+          "calibrated_fixed_candidate": {
+            "ci_high": 2.801849355011557,
+            "ci_low": -3.891775463374181,
+            "critical_value": 2.2590775822890277,
+            "p_two_sided": 0.7314885371220883,
+            "se": 1.4814951179329068
+          },
+          "calibrated_random_candidate": {
+            "ci_high": 1.842970340163968,
+            "ci_low": -2.9328964485265923,
+            "critical_value": 1.7289714998116024,
+            "p_two_sided": 0.6449546274657514,
+            "se": 1.3811294139929327,
+            "se_method": "random_jackknife"
+          },
+          "estimate_pp": -0.5449630541813122,
+          "fixed_candidate": {
+            "ci_high": 2.3587140202391055,
+            "ci_low": -3.4486401286017294,
+            "p_two_sided": 0.7129875631847054,
+            "se": 1.4814951179329068
+          },
+          "kernel_jackknife_se": 1.3811294139929327,
+          "random_candidate": {
+            "ci_high": 1.6932785277849647,
+            "ci_low": -2.7832046361475893,
+            "p_two_sided": 0.6332136427158848,
+            "se": 1.1419809749675203
+          }
+        },
+        "projection": {
+          "calibrated_fixed_candidate": {
+            "ci_high": 2.838675256794752,
+            "ci_low": -2.1073274406655838,
+            "critical_value": 2.2590775822890277,
+            "p_two_sided": 0.7529685200958098,
+            "se": 1.0946951836086922
+          },
+          "calibrated_random_candidate": {
+            "ci_high": 3.0380614378708883,
+            "ci_low": -2.30671362174172,
+            "critical_value": 1.7289714998116024,
+            "p_two_sided": 0.784072604885206,
+            "se": 1.545651579622626,
+            "se_method": "random_jackknife"
+          },
+          "estimate_pp": 0.36567390806458416,
+          "fixed_candidate": {
+            "ci_high": 2.5112370419870826,
+            "ci_low": -1.7798892258579144,
+            "p_two_sided": 0.7383480452877577,
+            "se": 1.0946951836086922
+          },
+          "kernel_jackknife_se": 1.545651579622626,
+          "random_candidate": {
+            "ci_high": 2.758030044364861,
+            "ci_low": -2.0266822282356927,
+            "p_two_sided": 0.7644957435385803,
+            "se": 1.2206122944966729
+          }
+        },
+        "shared_exponent": {
+          "calibrated_fixed_candidate": {
+            "ci_high": 3.509320622823923,
+            "ci_low": -1.510035173027788,
+            "critical_value": 2.2590775822890277,
+            "p_two_sided": 0.4130302178770666,
+            "se": 1.110930371582416
+          },
+          "calibrated_random_candidate": {
+            "ci_high": 4.31978284966776,
+            "ci_low": -2.3204973998716256,
+            "critical_value": 1.7289714998116024,
+            "p_two_sided": 0.5293355159777668,
+            "se": 1.9202977753719321,
+            "se_method": "random_jackknife"
+          },
+          "estimate_pp": 0.9996427248980674,
+          "fixed_candidate": {
+            "ci_high": 3.1770262425313023,
+            "ci_low": -1.1777407927351673,
+            "p_two_sided": 0.368213482110495,
+            "se": 1.110930371582416
+          },
+          "kernel_jackknife_se": 1.9202977753719321,
+          "random_candidate": {
+            "ci_high": 4.167580661405557,
+            "ci_low": -2.168295211609423,
+            "p_two_sided": 0.536267821766082,
+            "se": 1.6163245659082415
+          },
+          "random_candidate_jackknife": {
+            "ci_high": 4.763357204219441,
+            "ci_low": -2.7640717544233064,
+            "p_two_sided": 0.6026687792692069,
+            "se": 1.9202977753719321
+          }
+        },
+        "single_scale_150M": {
+          "calibrated_fixed_candidate": {
+            "ci_high": 5.001009410170667,
+            "ci_low": -1.7941165336535143,
+            "critical_value": 2.2590775822890277,
+            "p_two_sided": 0.32971343727574265,
+            "se": 1.5039602882825671
+          },
+          "calibrated_random_candidate": {
+            "ci_high": 5.223622739547587,
+            "ci_low": -2.0167298630304344,
+            "critical_value": 1.7289714998116024,
+            "p_two_sided": 0.3548352977074123,
+            "se": 2.093832259053133,
+            "se_method": "random_jackknife"
+          },
+          "estimate_pp": 1.6034464382585762,
+          "fixed_candidate": {
+            "ci_high": 4.551154437470885,
+            "ci_low": -1.3442615609537325,
+            "p_two_sided": 0.2863560876518688,
+            "se": 1.5039602882825671
+          },
+          "kernel_jackknife_se": 2.093832259053133,
+          "random_candidate": {
+            "ci_high": 5.230456301281431,
+            "ci_low": -2.023563424764279,
+            "p_two_sided": 0.38623216372221847,
+            "se": 1.8505492405127066
+          }
+        },
+        "single_scale_20M": {
+          "calibrated_fixed_candidate": {
+            "ci_high": 19.606401540724875,
+            "ci_low": 4.388727045009048,
+            "critical_value": 2.2590775822890277,
+            "p_two_sided": 0.002915180740192813,
+            "se": 3.3681168400370742
+          },
+          "calibrated_random_candidate": {
+            "ci_high": 18.77381501416759,
+            "ci_low": 5.221313571566333,
+            "critical_value": 1.7289714998116024,
+            "p_two_sided": 0.004943452309675411,
+            "se": 3.9192379527592003,
+            "se_method": "random_jackknife"
+          },
+          "estimate_pp": 11.997564292866961,
+          "fixed_candidate": {
+            "ci_high": 18.59895199506248,
+            "ci_low": 5.396176590671441,
+            "p_two_sided": 0.0003679021464252743,
+            "se": 3.3681168400370742
+          },
+          "kernel_jackknife_se": 3.9192379527592003,
+          "random_candidate": {
+            "ci_high": 18.726865529460028,
+            "ci_low": 5.268263056273893,
+            "p_two_sided": 0.0004751487551049818,
+            "se": 3.4333800466094972
+          }
+        },
+        "single_scale_60M": {
+          "calibrated_fixed_candidate": {
+            "ci_high": 11.307465062177917,
+            "ci_low": -1.4069823930946637,
+            "critical_value": 2.2590775822890277,
+            "p_two_sided": 0.12398257843107052,
+            "se": 2.8140794178457496
+          },
+          "calibrated_random_candidate": {
+            "ci_high": 9.510931938790748,
+            "ci_low": 0.3895507302925063,
+            "critical_value": 1.7289714998116024,
+            "p_two_sided": 0.03693239884951671,
+            "se": 2.637805542049754,
+            "se_method": "random_jackknife"
+          },
+          "estimate_pp": 4.9502413345416265,
+          "fixed_candidate": {
+            "ci_high": 10.465735643154737,
+            "ci_low": -0.5652529740714849,
+            "p_two_sided": 0.07856087309215397,
+            "se": 2.8140794178457496
+          },
+          "kernel_jackknife_se": 2.637805542049754,
+          "random_candidate": {
+            "ci_high": 8.992551269309505,
+            "ci_low": 0.9079313997737453,
+            "p_two_sided": 0.01638675382562279,
+            "se": 2.062440925778793
+          }
+        },
+        "single_scale_90M": {
+          "calibrated_fixed_candidate": {
+            "ci_high": 7.172291562927668,
+            "ci_low": -0.7246892316334126,
+            "critical_value": 2.2590775822890277,
+            "p_two_sided": 0.1106527716368344,
+            "se": 1.7478330218653677
+          },
+          "calibrated_random_candidate": {
+            "ci_high": 6.664468995977407,
+            "ci_low": -0.21686666468315208,
+            "critical_value": 1.7289714998116024,
+            "p_two_sided": 0.06500066045849506,
+            "se": 1.9900084129236326,
+            "se_method": "random_jackknife"
+          },
+          "estimate_pp": 3.2238011656471275,
+          "fixed_candidate": {
+            "ci_high": 6.649490939493057,
+            "ci_low": -0.20188860819880183,
+            "p_two_sided": 0.06511670743270903,
+            "se": 1.7478330218653677
+          },
+          "kernel_jackknife_se": 1.9900084129236326,
+          "random_candidate": {
+            "ci_high": 6.229806290812572,
+            "ci_low": 0.21779604048168277,
+            "p_two_sided": 0.03555585764408492,
+            "se": 1.5337042664438887
+          }
+        }
+      },
+      "design": "olmes_macro_error, fit to 300M, target 530M"
+    }
+  }
+}

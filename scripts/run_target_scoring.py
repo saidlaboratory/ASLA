@@ -23,6 +23,7 @@ import pandas as pd
 
 from asla.analysis.crossover import detect_crossovers_fdr, detect_single_scale_flips_fdr
 from asla.analysis.fits import cell_means_and_sigma, normalize_budgets
+from asla.analysis.moderation import calibrated_target_evidence
 from asla.analysis.target_scoring import decomposition, score_ranker, target_evidence
 from asla.models import FitError, bpb_power_law, fit_power_law
 
@@ -104,7 +105,7 @@ def main() -> None:
     }
 
     for multiplicity in ("bonferroni", "bh", "none"):
-        evidence = target_evidence(means, sds, counts, alpha=args.alpha, multiplicity=multiplicity)
+        evidence = calibrated_target_evidence(means, sds, counts, alpha=args.alpha, multiplicity=multiplicity)
         determined = sum(1 for e in evidence if e.determined)
         dfs = [e.welch_df for e in evidence if np.isfinite(e.welch_df)]
 

@@ -58,6 +58,8 @@ from asla.analysis.calibration import (  # noqa: E402
 CACHE = REPO / "data" / "cache" / "calibration_worlds.jsonl"
 OUT = REPO / "results" / "target_scoring" / "calibration.json"
 METRIC = "c4_en_bits_per_token"
+# The metric the benchmark is built on; other metrics transport its critical values.
+CALIBRATED_METRIC = "c4_en_bits_per_token"
 MAX_FIT, TARGET_LABEL = "300M", "530M"
 BASELINE = "single_scale"
 CHECKPOINT_RANKERS = ("checkpoint_augmented",)
@@ -161,11 +163,22 @@ def _procedure(
 
 def run_world(kind: str, index: int) -> dict[str, Any]:
     ctx = _context()
-    rng = np.random.default_rng([SEED, ["fixed", "random", "mc_fixed", "mc_random", "coupled"].index(kind), index])
+    # ``random_jk`` regenerates exactly the ``random`` world (same seed) to add the kernel jackknife.
+    seed_kind = "random" if kind == "random_jk" else kind
+    rng = np.random.default_rng([SEED, ["fixed", "random", "mc_fixed", "mc_random", "coupled"].index(seed_kind), index])
     truth = (
         ctx["base"] if kind in ("fixed", "mc_fixed", "coupled") else random_truth(ctx["base"], rng, BANDWIDTH, ctx["params"])
     )
     final, ckpt = simulate(truth, rng, coupling=COUPLING if kind == "coupled" else None)
+    if kind == "random_jk":
+        evidence = evidence_at_target(final, TARGET_LABEL)
+        preds = predict(final, ckpt, ctx["rankers"], CHECKPOINT_RANKERS, ctx["budgets"], ctx["target"])
+        comps = compare(preds, evidence, gaps(truth.target_truth()), BASELINE, with_interval=True)
+        return {
+            "kind": kind,
+            "index": index,
+            "comparisons": {n: {"estimate": c.estimate, "kjk_se": c.kjk_se, "u_se": c.u_se} for n, c in comps.items()},
+        }
     if kind in ("mc_fixed", "mc_random", "coupled"):
         evidence = evidence_at_target(final, TARGET_LABEL)
         preds = predict(final, ckpt, ctx["rankers"], CHECKPOINT_RANKERS, ctx["budgets"], ctx["target"])
@@ -188,6 +201,7 @@ def real_data(rng: np.random.Generator) -> dict[str, Any]:
     for name, row in result.items():
         entry = {
             "estimate_pp": row["estimate"],
+            "kernel_jackknife_se": row["kjk_se"],
             "random_candidate": {"ci_low": row["u_low"], "ci_high": row["u_high"], "se": row["u_se"]},
             "fixed_candidate": {
                 "se": row["boot_se"],
@@ -210,6 +224,45 @@ def real_data(rng: np.random.Generator) -> dict[str, Any]:
             }
         out[name] = entry
     return {"design": f"{METRIC}, fit to {MAX_FIT}, target {TARGET_LABEL}", "bootstrap_draws": B_REAL, "comparisons": out}
+
+
+def apply_calibration(real: dict[str, Any], calibrated: dict[str, Any]) -> dict[str, Any]:
+    """Calibrated intervals and p-values for the real-data comparisons, under both estimands."""
+
+    fixed = calibrated["fixed_bootstrap"]
+    random_label = calibrated["random_adopted"]
+    random = calibrated[random_label]
+    for name, entry in real["comparisons"].items():
+        estimate = entry["estimate_pp"]
+        se_f = entry["fixed_candidate"]["se"]
+        if random_label == "random_jackknife":
+            se_r = (
+                entry["random_candidate_jackknife"]["se"]
+                if "random_candidate_jackknife" in entry
+                else entry["kernel_jackknife_se"]
+            )
+        else:
+            se_r = entry["random_candidate"]["se"]
+        entry["calibrated_fixed_candidate"] = {
+            "se": se_f,
+            "critical_value": fixed["critical_value"],
+            "ci_low": estimate - fixed["critical_value"] * se_f,
+            "ci_high": estimate + fixed["critical_value"] * se_f,
+            "p_two_sided": calibrated_p(abs(estimate) / se_f, fixed["null_quantiles_of_abs_t"], fixed["n_statistics"])
+            if se_f > 0
+            else None,
+        }
+        entry["calibrated_random_candidate"] = {
+            "se": se_r,
+            "se_method": random_label,
+            "critical_value": random["critical_value"],
+            "ci_low": estimate - random["critical_value"] * se_r,
+            "ci_high": estimate + random["critical_value"] * se_r,
+            "p_two_sided": calibrated_p(abs(estimate) / se_r, random["null_quantiles_of_abs_t"], random["n_statistics"])
+            if se_r > 0
+            else None,
+        }
+    return real
 
 
 def _load_cache() -> dict[tuple[str, int], dict[str, Any]]:
@@ -272,6 +325,97 @@ def summarise(rows: list[dict[str, Any]]) -> dict[str, Any]:
     return {"by_comparator": out, "coupling_sensitivity_shift_pp": sensitivity, "coupling": list(COUPLING)}
 
 
+CALIBRATION_LEVEL = 0.95
+NULL_GRID = 2001
+
+
+def _quantile_grid(values: np.ndarray) -> list[float]:
+    finite_cap = np.where(np.isfinite(values), values, np.nanmax(values[np.isfinite(values)]) * 10)
+    return [float(v) for v in np.quantile(finite_cap, np.linspace(0, 1, NULL_GRID))]
+
+
+def calibrated_procedures(rows: list[dict[str, Any]], summary: dict[str, Any]) -> dict[str, Any]:
+    """Addendum 2: simulation-calibrated critical values, the U-versus-jackknife choice, cross-fit coverage."""
+
+    by_kind: dict[str, dict[int, dict[str, Any]]] = {}
+    for row in rows:
+        by_kind.setdefault(row["kind"], {})[row["index"]] = row["comparisons"]
+    names = sorted(summary["by_comparator"])
+    theta_f = {n: summary["by_comparator"][n]["theta_fixed"] for n in names}
+    theta_r = {n: summary["by_comparator"][n]["theta_random"] for n in names}
+    mismatch = max(
+        abs(by_kind["random"][i][n]["estimate"] - by_kind["random_jk"][i][n]["estimate"])
+        for i in by_kind["random_jk"]
+        for n in names
+    )
+    if mismatch > 1e-9:
+        raise ValueError(f"random_jk worlds do not reproduce the random worlds (max estimate gap {mismatch})")
+
+    def jk_se(i: int, n: str) -> float:
+        return by_kind["random"][i][n]["jk_se"] if n in JACKKNIFE_RANKERS else by_kind["random_jk"][i][n]["kjk_se"]
+
+    def ratio(dev: float, se: float) -> float:
+        return abs(dev) / se if se > 0 else (0.0 if dev == 0 else float("inf"))
+
+    procedures = {
+        "fixed_bootstrap": {
+            i: {n: (w[n]["estimate"] - theta_f[n], w[n]["boot_se"]) for n in names} for i, w in by_kind["fixed"].items()
+        },
+        "random_u": {
+            i: {n: (w[n]["estimate"] - theta_r[n], w[n]["u_se"]) for n in names} for i, w in by_kind["random"].items()
+        },
+        "random_jackknife": {
+            i: {n: (w[n]["estimate"] - theta_r[n], jk_se(i, n)) for n in names} for i, w in by_kind["random"].items()
+        },
+    }
+    out: dict[str, Any] = {"level": CALIBRATION_LEVEL, "pooled_over": names}
+    for label, worlds in procedures.items():
+        stats_all = np.array([ratio(d, se) for w in worlds.values() for d, se in w.values()])
+        k = float(np.quantile(stats_all, CALIBRATION_LEVEL))
+        half_widths = np.array([k * se for w in worlds.values() for _, se in w.values()])
+        held_out: dict[str, float] = {}
+        for n in names:
+            covered = []
+            for parity in (0, 1):
+                train = np.array([ratio(*w[m]) for i, w in worlds.items() if i % 2 == parity for m in names])
+                k_train = float(np.quantile(train, CALIBRATION_LEVEL))
+                covered += [ratio(*w[n]) <= k_train for i, w in worlds.items() if i % 2 != parity]
+            held_out[n] = float(np.mean(covered))
+        # Power at the calibrated critical value: how often the interval excludes zero.
+        est_by_comparator = {
+            n: [(w[n][0] + (theta_f[n] if label == "fixed_bootstrap" else theta_r[n]), w[n][1]) for w in worlds.values()]
+            for n in names
+        }
+        power = {n: float(np.mean([ratio(e, se) > k for e, se in est_by_comparator[n]])) for n in names}
+        out[label] = {
+            "power_at_critical_value": power,
+            "critical_value": k,
+            "median_half_width_pp": float(np.median(half_widths)),
+            "coverage_at_1_96": {
+                n: float(np.mean([ratio(*w[n]) <= 1.959963984540054 for w in worlds.values()])) for n in names
+            },
+            "cross_fit_coverage": held_out,
+            "cross_fit_within_0_93_0_97": all(0.93 <= v <= 0.97 for v in held_out.values()),
+            "null_quantiles_of_abs_t": _quantile_grid(stats_all),
+            "n_statistics": int(stats_all.size),
+        }
+    u, jk = out["random_u"], out["random_jackknife"]
+    out["random_adopted"] = "random_jackknife" if jk["median_half_width_pp"] <= u["median_half_width_pp"] else "random_u"
+    return out
+
+
+def calibrated_p(abs_t: float, null_quantiles: list[float], n_statistics: int) -> float:
+    """P(|T| >= abs_t) under the calibrated null distribution of the studentized deviation.
+
+    Floored at 1/n_statistics: the simulation cannot resolve a smaller tail
+    probability than one in the number of simulated statistics.
+    """
+
+    grid = np.asarray(null_quantiles)
+    probability_below = float(np.interp(abs_t, grid, np.linspace(0, 1, grid.size), left=0.0, right=1.0))
+    return max(1.0 - probability_below, 1.0 / n_statistics)
+
+
 def predictions(summary: dict[str, Any]) -> dict[str, Any]:
     rows = summary["by_comparator"]
     c1_names = ["projection", "ensemble", "checkpoint_augmented"] + [f"single_scale_{r}" for r in PLANTED_RUNGS]
@@ -304,6 +448,7 @@ def main() -> None:
     plan = [("fixed", i) for i in range(N_FIXED)] + [("random", i) for i in range(N_RANDOM)]
     plan += [("mc_fixed", i) for i in range(N_MC_FIXED)] + [("mc_random", i) for i in range(N_MC_RANDOM)]
     plan += [("coupled", i) for i in range(N_COUPLED)]
+    plan += [("random_jk", i) for i in range(N_RANDOM)]
     todo = [task for task in plan if task not in done]
     print(f"{len(done)} worlds cached, {len(todo)} to run", flush=True)
     with ProcessPoolExecutor(max_workers=args.workers) as pool, CACHE.open("a", encoding="utf-8") as sink:
@@ -341,6 +486,8 @@ def main() -> None:
         "calibration": summary,
     }
     out["predictions"] = predictions(summary)
+    out["calibrated"] = calibrated_procedures(rows, summary)
+    out["real_data"] = apply_calibration(out["real_data"], out["calibrated"])
     OUT.write_text(json.dumps(out, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(json.dumps(out["predictions"], indent=1))
     print(f"wrote {OUT}")

@@ -27,9 +27,10 @@ from typing import Any
 import numpy as np
 import pandas as pd
 
+from asla.analysis.moderation import calibrated_target_evidence
 from asla.analysis.target_scoring import (
     expected_charges,
-    target_evidence,
+    jackknife_standard_error,
     u_statistic_components,
     u_statistic_test,
     u_statistic_variance,
@@ -139,6 +140,7 @@ def summarise(kernel: dict[tuple[str, str], float], baseline_rate: float) -> dic
         "excludes_zero": bool(test["excludes_zero"]),
         "candidate_se_pp": float(test["standard_error"]),
         "pair_resampled_se_pp": pair_se,
+        "candidate_jackknife_se_pp": jackknife_standard_error({pair: 100 * value for pair, value in kernel.items()}),
         "zeta1_over_zeta2": float(test["zeta1"] / test["zeta2"]) if test["zeta2"] > 0 else float("nan"),
     }
 
@@ -215,7 +217,7 @@ def c4_kernel() -> dict[tuple[str, str], float]:
     max_compute = float(frame[frame["scale_label"] == "300M"]["compute"].iloc[0])
     budgets = ee.normalize_budgets(sorted(float(c) for c in frame["compute"].unique() if c <= max_compute), target=target)
     cells = frame[np.isclose(frame["compute"], target)].groupby("intervention")["bpb"]
-    evidence = target_evidence(
+    evidence = calibrated_target_evidence(
         {str(k): float(v) for k, v in cells.mean().items()},
         {str(k): float(v) for k, v in cells.std(ddof=1).items()},
         {str(k): int(v) for k, v in cells.count().items()},

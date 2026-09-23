@@ -29,7 +29,7 @@ import numpy as np
 import pandas as pd
 
 from asla.analysis.moderation import evidence_from_cells, fit_prior, moderate
-from asla.analysis.target_scoring import PairEvidence, expected_charges, u_statistic_test
+from asla.analysis.target_scoring import PairEvidence, expected_charges, jackknife_standard_error, u_statistic_test
 
 Ranker = Callable[[pd.DataFrame, tuple[float, ...], float], pd.Series]
 KEYS = ["intervention", "scale_label", "seed", "step"]
@@ -209,6 +209,7 @@ class Comparison:
     u_low: float
     u_high: float
     u_se: float
+    kjk_se: float = float("nan")  # delete-one-candidate jackknife on the pair kernel
 
 
 def predict(
@@ -246,7 +247,12 @@ def compare(
         if with_interval:
             test = u_statistic_test(kernel)
             out[name] = Comparison(
-                estimate, truth_diff, float(test["ci_low"]), float(test["ci_high"]), float(test["standard_error"])
+                estimate,
+                truth_diff,
+                float(test["ci_low"]),
+                float(test["ci_high"]),
+                float(test["standard_error"]),
+                jackknife_standard_error(kernel),
             )
         else:
             out[name] = Comparison(estimate, truth_diff, float("nan"), float("nan"), float("nan"))

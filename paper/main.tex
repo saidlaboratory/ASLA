@@ -14,40 +14,38 @@ What Decision-Accuracy Comparisons Can Resolve at Realistic Candidate Counts}
 \begin{abstract}
 Small-scale experiments are routinely used to choose between training
 interventions, and selection rules are compared by \emph{decision accuracy}:
-agreement with an ordering measured at a larger target scale. We ask what such
-comparisons can establish at the candidate counts they are actually run with.
-Two sources of uncertainty are usually ignored. The target ordering is a
-few-seed estimate, and the pairs being scored share candidates, so they are not
-independent observations. We propagate the first with expected-error scoring
-and handle the second by treating candidates as the unit of inference. On
-DataDecide, with \nCandidates\ candidates, projection's excess mis-selection
-over single-scale ranking survives reference-uncertainty propagation
-(\excessObserved\ points observed, \expectedGap\ expected) but is not
-established: the candidate-level interval is [\expectedCandLow, \expectedCandHigh]
-($p=\expectedCandP$). Resampling pairs instead would have reported it as
-significant. Detecting a true difference of that size with power 0.8 needs about  %% nolint: stated power level
-\powerNeededTwo\ candidates. What does survive the correct test: an ensemble is
-reliably worse than single-scale ranking; no estimator or optimised allocation
-is reliably better; projection error grows with the lever arm (Spearman
-\doseRhoObserved\ over \doseDesigns\ designs); and seven fit-level findings that
-never use the reference stand unchanged. The fraction of target pairs a
-reference resolves separates metrics sharply (\determinedFracBonf\% against
-\pubDetFrac\%), and on the high-noise metric a published decision-accuracy
-figure cannot be corrected without an assumption the data do not identify.
+agreement with an ordering measured at a larger target scale. We give a
+calibrated inference procedure for such comparisons and ask what it can
+establish at realistic candidate counts. The procedure has three parts. The
+target reference's uncertainty is propagated with expected-error scoring, using
+variances moderated by empirical Bayes and validated against ten-seed ground
+truth. The unit of inference is the candidate, not the pair. And two estimands
+are separated: a fixed-candidate estimand for these recipes and a
+random-candidate estimand for recipes in general. Critical values come from an
+end-to-end semi-synthetic benchmark built from DataDecide. Validation changed
+the procedure twice. The textbook moderated $t$ test is anti-conservative on
+real few-seed data, by a factor of \nullModBonf\ at a Bonferroni level. Wald
+intervals from unbiased candidate-level standard errors undercover, because
+those standard errors are noisy at \nCandidates\ candidates. Under the calibrated
+procedure, projection's excess mis-selection over single-scale ranking on C4
+(\headEstimate\ points) is significant for these recipes ($p=\headFixedP$) but
+not as a claim about recipes in general ($p=\headRandomP$). Across the paper's
+\restatedPrimaryM\ inferential claims, \restatedPrimaryNominal\ are nominally
+significant and \restatedPrimaryBY\ survives correction for dependent tests: the
+growth of projection error with the extrapolation lever arm. A closed-form
+correction converts pair-resampled intervals to candidate-level ones.
 \end{abstract}
 
-\paragraph{Contributions.} (i) A demonstration that pair-level resampling makes
-a non-significant selection-rule comparison look significant, with the
-candidate-level test that fixes it. (ii) A power calculation for decision-accuracy
-comparisons: at this variance, a two-point difference needs about
-\powerNeededTwo\ candidates, a one-point difference \powerNeededOne. (iii) An
-account of which published and project results survive the correct test.
-(iv) A warning, with its diagnosis, against applying a standard
-measurement-error correction to decision accuracy. (v) A closed-form correction
-$R(n)$ for intervals already computed by resampling pairs, validated on real
-data, and candidate-level re-tests of the published comparisons whose inputs
-were released.
-
+\paragraph{Contributions.} (i) A calibrated procedure for comparing selection
+rules: moderated reference variances, candidate-level inference, and two
+explicit estimands, each validated against known answers. (ii) Two negative
+results about standard tools: the moderated $t$ test is anti-conservative on
+real few-seed data, and unbiased candidate-level standard errors give
+undercovering Wald intervals at realistic candidate counts. (iii) A power
+calculation: a two-point difference needs about \powerNeededTwo\ candidates.
+(iv) A closed-form correction $R(n)$ for intervals already computed by
+resampling pairs. (v) Candidate-level re-tests of published comparisons, and an
+account of which of this paper's own claims survive correction.
 
 \section{How selection rules are compared}
 \label{sec:setup}
@@ -85,6 +83,106 @@ observed gap is used.
 \paragraph{What neither rule fixes.} Both treat target cell means as unbiased
 estimates of expected target performance. A systematic difference between them
 --- a different evaluation draw, a different checkpoint --- survives both.
+
+\paragraph{The noise model.} Three decisions determine every standard error in
+this paper, and each was tested against a known answer before it was adopted.
+
+\emph{Seeds are independent across scales.} DataDecide's seeds control
+initialization and data order. If a seed label fixed the same order at every
+size, single-scale ranking and the target would share noise, which would
+flatter single-scale ranking. Across \couplingPairs\ pairs of scales, the
+correlation between a seed's deviations at two scales has median
+\couplingMedianCFour\ on C4 and \couplingMedianErr\ on OLMES error. Permutation
+tests reject at \couplingRejectCFour\% and \couplingRejectErr\% of pairs, which
+is what chance produces. The one pair that bears on the headline, 300M against  %% nolint: scale labels, not measured values
+530M on C4, has $\rho=\couplingFocusRho$ ($p=\couplingFocusP$). Planting that  %% nolint: scale label, not a measured value
+coupling in the benchmark below moves no estimate by more than
+\calCouplingShift\ points.
+
+\emph{Variances are moderated, but tail probabilities are not.} Three seeds give
+a poor variance. Following Smyth (2004), we moderate each recipe's variance  %% nolint: citation year
+toward a prior fitted across recipes at the same scale. We checked this on
+PolyPythias, which has ten seeds per model. There, the tasks at each size and
+step play the role of recipes, and three-seed estimates are compared with the
+ten-seed truth. Moderation reduces the error in log standard deviation at
+\polyBetter\ of \polyCells\ cells (median \polyRmseRaw\ to \polyRmseMod). It
+only partly removes the low bias of a three-seed standard deviation, from
+\polyRatioRaw\ to \polyRatioMod\ of the truth; we had predicted it would
+remove it. The moderated $t$ test itself fails. Splitting ten seeds three
+against three, so that the null is true by construction, it rejects at
+\nullModFive\ times its nominal rate at $0.05$ and \nullModBonf\ times at the  %% nolint: stated test level
+Bonferroni level for this design, over \nullTests\ tests. Raw Welch rejects at
+\nullRawFive\ and \nullRawBonf\ times nominal. Target determination therefore
+stays with the raw Welch test. Adopting the moderated $t$ test would have raised
+the determined fraction on OLMES error from \detRawErrFiveThirty\% to
+\detModErr\%, most of which would be false. The expected-error weight uses the
+moderated standard error with the raw Welch degrees of freedom. Of three
+candidate weights, that one scored the lowest Brier score against held-out
+seeds (\brierAdopted, against \brierRaw\ for the unmoderated normal weight).
+
+\section{Two estimands, and a calibrated test for each}
+\label{sec:estimands}
+
+A difference in decision accuracy between two rules answers one of two
+questions, and they need different uncertainty.
+
+\emph{Fixed-candidate: is the difference real for these recipes?} The recipes
+are fixed; only seed noise is random. We resample every cell mean and
+checkpoint parametrically from the moderated noise model around the observed
+means, re-run every rule and the scoring on each draw, and take the spread.
+Resampling three seeds instead would give about ten distinct multisets per cell.
+
+\emph{Random-candidate: would the difference hold for new recipes?} The recipes
+are a sample. The statistic is a mean over pairs of candidates, and its
+uncertainty is candidate-level, as in \S\ref{sec:gap}.
+
+\paragraph{End-to-end calibration.} To check both procedures we built a
+semi-synthetic benchmark from DataDecide. It keeps DataDecide's candidates and
+ladder, uses the observed seed-mean trajectories as the truth, and draws noise
+from the moderated scale-dependent model, with AR(1) noise along each run's  %% nolint: model name AR(1)
+checkpoints. Fixed-candidate worlds (\calFixedWorlds) hold the truth and
+redraw the noise. Random-candidate worlds (\calRandomWorlds) draw a new set of
+recipes by a smoothed bootstrap over the recipes' curves. In each world the true
+difference in mis-selection is computed from the noiseless curves, and the full
+procedure is run on the noisy data. Planted comparators, single-scale ranking at
+lower rungs, supply known effects for power.
+
+Table~\ref{tab:calibration} gives the results. Expected-error scoring is close
+to unbiased for the true difference, with no bias larger than \calMaxBias\
+points. The intervals are not calibrated at the textbook critical value. The
+candidate-level standard errors are right on average but noisy at
+\nCandidates\ candidates, so Wald intervals at 1.96 undercover: the U-statistic  %% nolint: the textbook critical value
+covers \calUCovMin--\calUCovMax. We therefore calibrate the critical value on the
+benchmark itself: \calFixedK\ for the fixed-candidate estimand and \calJackK\ for
+the random-candidate one. For the random-candidate estimand the delete-one
+jackknife gives narrower calibrated intervals than the U-statistic (median
+half-width \calJackHalf\ against \calUHalf\ points), so we adopt it. For
+shared-exponent and EB shrinkage, whose fits couple candidates, the jackknife
+refits the whole rule. Calibration is imperfect by comparator. On held-out
+worlds, calibrated coverage runs \calFixedCovMin--\calFixedCovMax\ for the
+fixed-candidate estimand and \calJackCovMin--\calJackCovMax\ for the
+random-candidate one. For projection, the fixed-candidate coverage is
+\calProjFixedCov.
+
+\begin{table}[t]
+\centering
+\scriptsize
+\begin{tabular}{lrrrrrrrrr}
+\toprule
+& \multicolumn{2}{c}{true effect (pp)} & & \multicolumn{2}{c}{coverage at 1.96} & \multicolumn{2}{c}{calibrated, held out} & \multicolumn{2}{c}{calibrated power} \\  %% nolint: the textbook critical value
+comparator & fixed & random & bias & fixed & random & fixed & random & fixed & random \\
+\midrule
+\calibrationRows
+\bottomrule
+\end{tabular}
+\caption{End-to-end calibration on semi-synthetic DataDecide worlds (C4, fit to
+300M, target 530M). Comparisons are against single-scale ranking at the top  %% nolint: scale labels
+rung; positive means worse. Coverage at 1.96 uses the parametric bootstrap  %% nolint: the textbook critical value
+(fixed) and the U-statistic (random); calibrated columns use the critical
+values in the text, with the jackknife for the random-candidate estimand.
+Planted comparators rank at a lower rung.}
+\label{tab:calibration}
+\end{table}
 
 \section{Instrument validation}
 \label{sec:instrument}
@@ -131,8 +229,10 @@ candidate: all pairs are formed from \nCandidates\ candidates, and each
 candidate enters many of them. The statistic is a U-statistic of order two, and
 its variance has a candidate-level and a pair-level component. The
 candidate-level test gives a standard error of \expectedSE\ points and a 95\%  %% nolint: confidence level, a stated definition
-interval of [\expectedCandLow, \expectedCandHigh] ($p=\expectedCandP$). The
-comparison is underpowered, and no reliable difference is established.
+interval of [\expectedCandLow, \expectedCandHigh] ($p=\expectedCandP$). As a
+claim about recipes in general the comparison is underpowered, and no
+difference is established. The calibrated procedure below reaches the same
+conclusion for that question and a different one for these recipes.
 
 For contrast, treating the pairs as independent gives
 [\expectedPairLow, \expectedPairHigh] ($p=\expectedPairP$). This
@@ -141,28 +241,36 @@ anti-conservative version understates the standard error by a factor of
 factor is the size of the dependence correction. Any decision-accuracy
 comparison that resamples or counts pairs as independent inherits it.
 
-\paragraph{Choosing the candidate-level estimator.} We pre-registered a candidate
-bootstrap weighted by draw multiplicity. We replaced it after computing it, and
-the reason and the order of events need stating. Here pair-level variance is
-\zetaRatio\ times the candidate-level component. At those components the true
-standard error is known in simulation. Against it, the weighted bootstrap
-overstates by a factor of \calibBoot, the jackknife by \calibJack, and the
-unbiased U-statistic standard error is within \calibU. We report the
-U-statistic test because it was closest to the known answer. That criterion
-comes from the simulation alone. The choice was not blind, however: every
-estimator's real-data result had been computed before the simulation was run.
-What makes this immaterial is that the conclusion does not depend on the
-estimator. Every candidate-level estimator we computed --- the U-statistic, the
-weighted and unweighted bootstraps, and the jackknife --- gives $p$ between
-\pInvariantMin\ and \pInvariantMax, and none gives an interval that excludes zero.
+\paragraph{Under the calibrated procedure.} With the calibrated weights the
+estimate is \headEstimate\ points. For these \nCandidates\ recipes the difference
+is significant: the fixed-candidate interval is [\headFixedLow, \headFixedHigh]
+($p=\headFixedP$). The caveat is that this estimand's held-out coverage for
+projection is \calProjFixedCov, below nominal, so the interval is somewhat
+optimistic. As a claim about recipes in general it is not established: the
+random-candidate interval is [\headRandomLow, \headRandomHigh]
+($p=\headRandomP$). Single-scale ranking is better than projection on these
+recipes, and the data cannot say whether that transfers.
+
+\paragraph{Why the estimator changed twice.} We pre-registered a candidate
+bootstrap weighted by draw multiplicity. Simulation at this comparison's
+variance components ($\zeta_2/\zeta_1=\zetaRatio$) showed it overstates the
+standard error by a factor of \calibBoot. The unbiased U-statistic standard
+error is within \calibU. The end-to-end benchmark then showed that even an
+unbiased standard error gives undercovering intervals at this candidate count,
+which led to the calibrated jackknife of \S\ref{sec:estimands}. Neither choice
+was blind to the real-data results. The random-candidate conclusion does not
+depend on it: every candidate-level estimator we computed gives $p$ between
+\pInvariantMin\ and \pInvariantMax.
 
 \paragraph{Power.} With the variance components held at their estimates, a
 two-sided test at level 0.05 with power 0.8 needs \powerNeededTwo\ candidates to  %% nolint: stated test level and power
 detect a true two-point difference, \powerNeededOne\ for one point and
 \powerNeededFive\ for five. At \nCandidates\ candidates the power against the
-observed difference is \powerAtObserved\%. Published suites that compare
-selection rules typically have tens of candidates. Differences of a few points
-in decision accuracy are below what those suites can resolve.
+observed difference is \powerAtObserved\%. This assumes a known standard error.
+The calibrated procedure pays for estimating it, so these counts are lower
+bounds. Published suites that compare selection rules typically have tens of
+candidates. Differences of a few points in decision accuracy are below what
+those suites can resolve.
 
 \paragraph{On the determined subset.} Scoring only on resolved pairs gives an
 excess of \excessDetermined\ points, but both rules make zero errors there, so
@@ -228,12 +336,13 @@ we tried (prediction column, target column or seed mean, tie rule) matches them
 all. Until it is resolved, the re-test below is exploratory and makes no claim
 about the paper's numbers. Against single-scale ranking at the largest
 fitted size on the macro average, \dOneMacroExcl\ of \dOneVariants\ variants
-is reliably different: a five-parameter one-step fit, which is worse by
-\dOneWorstDiff\ points ([\dOneWorstLow, \dOneWorstHigh]). No variant is
-reliably better. The other intervals have a typical half-width of
+is nominally different: a five-parameter one-step fit, which is worse by
+\dOneWorstDiff\ points ([\dOneWorstLow, \dOneWorstHigh]). It does not survive
+correction across the paper's claims (\S\ref{sec:survives}). No variant is
+better, even nominally. The other intervals have a typical half-width of
 \dOneTypicalHalfWidth\ points. Across all tasks, variants and comparators,
-\dOneAllBetter\ of \dOneAll\ comparisons are reliably better and \dOneAllWorse\
-reliably worse. The published conclusion, that no scaling-law variant exceeds
+\dOneAllBetter\ of \dOneAll\ comparisons are nominally better and \dOneAllWorse\
+nominally worse, uncorrected across comparisons. The published conclusion, that no scaling-law variant exceeds
 single-scale ranking, is consistent with these data. Equivalence is not
 established, and differences of several points in either direction are not
 excluded.
@@ -241,11 +350,11 @@ excluded.
 \paragraph{Correct Prob against accuracy (DataDecide).} The paper reports that
 ranking by the probability of the correct answer is at least as good as
 accuracy ``for most small scales''. On the macro average, the candidate-level
-test establishes an advantage at \dTwoMacroBetter\ of \dTwoScales\ small scales
-and a disadvantage at \dTwoMacroWorse, and the point estimate favours accuracy
-at \dTwoMacroPointWorse. Per task the claim has more support: of \dTwoAll\
-task--scale cells, \dTwoAllBetter\ show a reliable advantage and
-\dTwoAllWorse\ a reliable disadvantage.
+test gives a nominal advantage at \dTwoMacroBetter\ of \dTwoScales\ small scales
+and a nominal disadvantage at \dTwoMacroWorse, and neither survives correction.
+The point estimate favours accuracy at \dTwoMacroPointWorse. Per task the claim has more support: of \dTwoAll\
+task--scale cells, \dTwoAllBetter\ show a nominal advantage and
+\dTwoAllWorse\ a nominal disadvantage, uncorrected across cells.
 
 \paragraph{Uncheckable.} \emph{Signal and Noise}'s headline BPB comparison (the
 30-task average) cannot be rebuilt: the paper names fifteen of the thirty tasks,  %% nolint: counts of named tasks in the source table
@@ -283,50 +392,32 @@ twenty-five candidates should be widened by about a factor of two.
 \section{What survives the correct test}
 \label{sec:survives}
 
-The C4 null is the demonstration. What the data can support at this candidate
-count is a shorter list.
+The paper makes \restatedPrimaryM\ inferential claims about selection methods:
+comparisons of estimators and allocations against single-scale ranking on two
+metrics, the lever-arm association, and the re-tests of published comparisons.
+Each is restated under the calibrated random-candidate procedure, and the
+family is corrected with Holm and with Benjamini--Yekutieli. BY is the right
+one here, because every claim rests on the same \nCandidates\ recipes.
+Appendix~\ref{app:claims} lists them all. Of the \restatedPrimaryM,
+\restatedPrimaryNominal\ are nominally significant and \restatedPrimaryBY\
+survives correction.
 
-\emph{Lever-arm dependence.} Across \doseDesigns\ designs, excess projection
-error rises with the logarithm of the lever arm at Spearman \doseRhoObserved\
-against observed targets, and \doseRhoExpected\ under expected-error scoring.
-Had the relationship lived in pairs the reference could not resolve,
-discounting those pairs would have weakened it.
+\emph{The survivor is the lever-arm dependence.} Excess projection error rises
+with the logarithm of the lever arm: Spearman \doseRhoObserved\ against
+observed targets and \doseRhoExpected\ under expected-error scoring, over
+\doseDesigns\ designs. Those designs share recipes, so the design-level
+$p$-value is not a valid test. A delete-one-recipe jackknife of the correlation
+gives [\doseJackLow, \doseJackHigh] ($p=\doseJackP$).
 
-\emph{Decision-level comparisons} (Table~\ref{tab:rescore}). Each comparison
-against single-scale ranking is scored under both rules, with a candidate-level
-interval. It \emph{survives} if expected-error scoring keeps its sign and at
-least half its size and the interval excludes zero. It \emph{vanishes} if the
-sign flips or less than a quarter remains, and \emph{weakens} otherwise. In the
-low-noise regime (\rescoreDetLow\% of pairs determined), the ensemble is
-reliably worse than single-scale ranking, and no estimator is reliably better.
-In the high-noise regime (\rescoreDetHigh\% determined), nothing is
-distinguishable from single-scale in either direction. The optimised allocation
-is reliably worse at the smallest budget fractions and indistinguishable at the
-larger ones. It never does better.
-
-\begin{table}[t]
-\centering
-\small
-\begin{tabular}{lrrll}
-\toprule
-comparison vs.\ single-scale & observed (pp) & expected (pp) & candidate interval & verdict \\
-\midrule
-\multicolumn{5}{l}{\emph{Low noise: C4 bits per token}} \\  %% nolint: column count
-\rescoreRowsLow
-\midrule
-\multicolumn{5}{l}{\emph{High noise: OLMES macro error}} \\  %% nolint: column count
-\rescoreRowsHigh
-\midrule
-\multicolumn{5}{l}{\emph{Optimised allocation, C4, by fraction of the ladder's compute}} \\  %% nolint: column count
-\rescoreRowsAllocation
-\bottomrule
-\end{tabular}
-\caption{Excess mis-selection over single-scale ranking, in percentage points;
-positive means worse than single-scale. Intervals are candidate-level
-(U-statistic). The allocation baseline is single-scale at the top rung, not
-matched compute.}
-\label{tab:rescore}
-\end{table}
+\emph{What does not survive.} The ensemble's inferiority to single-scale ranking
+is nominally significant for recipes in general but does not survive the
+family correction. For these \nCandidates\ recipes it is the one ranker
+comparison that survives correction in the fixed-candidate family
+(\restatedFixedBY\ of \restatedFixedM; $p=\ensFixedP$). The optimised
+allocation's excess at small budget fractions, one DataDecide scaling-law
+variant, and Correct Prob at the two smallest scales are nominal only. No
+comparison favours any estimator or allocation over single-scale ranking, even
+nominally.
 
 Certification is unaffected. The abstention rule certifies \certNormalN\ orderings
 with no observed errors; under expected-error scoring those carry
@@ -426,6 +517,17 @@ scaling-law re-test is exploratory while the discrepancy between the released
 decision accuracies and our recomputation from the released predictions is
 under investigation.
 
+The calibration benchmark is only as good as its assumptions. Its truth is the
+observed seed-mean trajectories and its noise is Gaussian. Its random-candidate
+worlds come from a smoothed bootstrap over only \nCandidates\ recipes, and its
+critical values are estimated from \calFixedWorlds\ and \calRandomWorlds\
+worlds. They were calibrated on C4. For OLMES error and the published re-tests
+they are transported, not re-estimated. EB shrinkage enters the benchmark with
+its strength frozen at the real-data estimate, which omits the variability of
+estimating it. Pooled calibration leaves per-comparator held-out coverage
+between \calFixedCovMin\ and \calJackCovMax, not uniformly at nominal. Every
+p-value in Appendix~\ref{app:claims} inherits these assumptions.
+
 Resolvability figures for suites without seed replicates transfer a seed
 standard deviation from another scale. Whether seed noise changes with model
 size is untested, and cannot be tested on current public infrastructure. A
@@ -497,4 +599,38 @@ and three-point supports. A gradient solver in run-count space stops
 \thmSolverExcess\% short of the optimum on the same ladder, because run counts
 span orders of magnitude across the budgets.
 
+
+\section{Every inferential claim, restated}
+\label{app:claims}
+
+\begin{table}[h]
+\centering
+\scriptsize
+\begin{tabular}{p{7.2cm}rrrl}  %% nolint: column width
+\toprule
+claim (random-candidate estimand) & estimate & calibrated interval & $p$ & verdict \\
+\midrule
+\restatedPrimaryRows
+\bottomrule
+\end{tabular}
+\caption{The paper's inferential claims under the calibrated random-candidate
+procedure. Verdict: Holm or BY if the claim survives that correction across the
+family, nominal if only $p<0.05$, otherwise a dash.}  %% nolint: the stated significance level
+\label{tab:claims}
+\end{table}
+
+\begin{table}[h]
+\centering
+\scriptsize
+\begin{tabular}{p{7.2cm}rrrl}  %% nolint: column width
+\toprule
+claim (fixed-candidate estimand) & estimate & calibrated interval & $p$ & verdict \\
+\midrule
+\restatedFixedRows
+\bottomrule
+\end{tabular}
+\caption{Ranker comparisons under the fixed-candidate estimand, scoped to these
+recipes, corrected within their own family.}
+\label{tab:claims-fixed}
+\end{table}
 \end{document}

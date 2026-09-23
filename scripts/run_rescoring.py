@@ -25,6 +25,7 @@ import pandas as pd
 
 from asla.analysis.abstention import certify_leaderboard
 from asla.analysis.fits import normalize_budgets
+from asla.analysis.moderation import calibrated_target_evidence
 from asla.analysis.pooled import make_shrinkage_ranker, shared_exponent_ranker
 from asla.analysis.rankers import ensemble_ranker, projection_ranker, single_scale_ranker
 from asla.analysis.target_scoring import (
@@ -32,8 +33,8 @@ from asla.analysis.target_scoring import (
     bootstrap_two_sided_p,
     candidate_bootstrap,
     expected_charges,
+    jackknife_standard_error,
     score_ranker,
-    target_evidence,
     u_statistic_test,
 )
 from asla.models import FitError
@@ -66,7 +67,7 @@ def _gaps(series: pd.Series) -> dict[tuple[str, str], float]:
 
 def _evidence(table: pd.DataFrame, target: float) -> list[PairEvidence]:
     cells = table[np.isclose(table["compute"], target)].groupby("intervention")["bpb"]
-    return target_evidence(
+    return calibrated_target_evidence(
         {str(k): float(v) for k, v in cells.mean().items()},
         {str(k): float(v) for k, v in cells.std(ddof=1).items()},
         {str(k): int(v) for k, v in cells.count().items()},
@@ -104,6 +105,7 @@ def paired_candidate_test(
         "excludes_zero": bool(u_test["excludes_zero"]),
         "p_two_sided": float(u_test["p_two_sided"]),
         "n_pairs": len(kernel),
+        "jackknife_se_pp": jackknife_standard_error(kernel),
         "weighted_bootstrap_conservative": {
             "ci_low_pp": float(np.percentile(draws, 2.5)),
             "ci_high_pp": float(np.percentile(draws, 97.5)),

@@ -201,6 +201,171 @@ def _published_entries() -> list[tuple[str, str, str]]:
     ]
 
 
+def _noise_model_entries() -> list[tuple[str, str, str]]:
+    """Seed coupling, moderated variance and its known-answer tests."""
+
+    coupling = Source.load("target_scoring/seed_coupling.json")
+    moderated = Source.load("target_scoring/moderated_variance.json")
+    c4 = "metrics.c4_en_bits_per_token.all_labels_below_1B.summary"
+    err = "metrics.olmes_macro_error.all_labels_below_1B.summary"
+    focus = "metrics.c4_en_bits_per_token.focus_pairs.300M|530M"
+    null = "polypythias_null_test.rates_over_nominal"
+    rates = moderated.get(null)
+    bonferroni_level = min(rates["moderated_t"], key=float)
+    brier = moderated.get("polypythias_weight_calibration.brier")
+    det = "metrics.{}.determination.530M.bonferroni.{}"
+    return [
+        ("couplingPairs", f"{coupling.integer(c4 + '.n_scale_pairs')}", "seed_coupling.json"),
+        ("couplingMedianCFour", f"{coupling.number(c4 + '.median_rho'):+.3f}", "seed_coupling.json"),
+        ("couplingMedianErr", f"{coupling.number(err + '.median_rho'):+.3f}", "seed_coupling.json"),
+        ("couplingRejectCFour", f"{100 * coupling.number(c4 + '.fraction_p_below_0_05'):.1f}", "seed_coupling.json"),
+        ("couplingRejectErr", f"{100 * coupling.number(err + '.fraction_p_below_0_05'):.1f}", "seed_coupling.json"),
+        ("couplingFocusRho", f"{coupling.number(focus + '.rho'):.2f}", "seed_coupling.json"),
+        ("couplingFocusP", f"{coupling.number(focus + '.p_two_sided'):.2f}", "seed_coupling.json"),
+        ("polyCells", f"{moderated.integer('polypythias.n_cells')}", "moderated_variance.json"),
+        ("polyBetter", f"{moderated.integer('polypythias.n_cells_moderation_better')}", "moderated_variance.json"),
+        ("polyRatioRaw", f"{moderated.number('polypythias.median_ratio_raw'):.3f}", "moderated_variance.json"),
+        ("polyRatioMod", f"{moderated.number('polypythias.median_ratio_moderated'):.3f}", "moderated_variance.json"),
+        ("polyRmseRaw", f"{moderated.number('polypythias.median_rmse_log_raw'):.2f}", "moderated_variance.json"),
+        ("polyRmseMod", f"{moderated.number('polypythias.median_rmse_log_moderated'):.2f}", "moderated_variance.json"),
+        ("nullTests", f"{moderated.integer('polypythias_null_test.n_tests')}", "moderated_variance.json"),
+        ("nullModFive", f"{rates['moderated_t']['0.05']:.2f}", "moderated_variance.json"),
+        ("nullModBonf", f"{rates['moderated_t'][bonferroni_level]:.1f}", "moderated_variance.json"),
+        ("nullRawFive", f"{rates['raw_welch']['0.05']:.2f}", "moderated_variance.json"),
+        ("nullRawBonf", f"{rates['raw_welch'][bonferroni_level]:.2f}", "moderated_variance.json"),
+        ("brierRaw", f"{brier['a_normal_raw_se']:.4f}", "moderated_variance.json"),
+        ("brierModT", f"{brier['b_t_moderated_se_prior_df']:.4f}", "moderated_variance.json"),
+        ("brierAdopted", f"{brier['c_t_moderated_se_raw_df']:.4f}", "moderated_variance.json"),
+        (
+            "detModCFour",
+            f"{100 * moderated.number(det.format('c4_en_bits_per_token', 'moderated_determined_fraction')):.0f}",
+            "moderated_variance.json",
+        ),
+        (
+            "detModErr",
+            f"{100 * moderated.number(det.format('olmes_macro_error', 'moderated_determined_fraction')):.0f}",
+            "moderated_variance.json",
+        ),
+        (
+            "detRawErrFiveThirty",
+            f"{100 * moderated.number(det.format('olmes_macro_error', 'raw_determined_fraction')):.0f}",
+            "moderated_variance.json",
+        ),
+    ]
+
+
+COMPARATOR_LABELS = {
+    "projection": "Projection",
+    "shared_exponent": "Shared exponent",
+    "eb_shrinkage": "EB shrinkage",
+    "ensemble": "Ensemble",
+    "checkpoint_augmented": "Checkpoint-aug.",
+    "single_scale_150M": "Top rung 150M (planted)",
+    "single_scale_90M": "Top rung 90M (planted)",
+    "single_scale_60M": "Top rung 60M (planted)",
+    "single_scale_20M": "Top rung 20M (planted)",
+}
+
+
+def _tex(text: str) -> str:
+    return text.replace("\\", "/").replace("_", "\\_").replace("%", "\\%").replace("#", "\\#")
+
+
+def _calibration_entries() -> list[tuple[str, str, str]]:
+    """The end-to-end calibration benchmark and the two estimands on the real C4 data."""
+
+    cal = Source.load("target_scoring/calibration.json")
+    by = cal.get("calibration.by_comparator")
+    procedures = cal.get("calibrated")
+    fixed, jack, u_stat = procedures["fixed_bootstrap"], procedures["random_jackknife"], procedures["random_u"]
+    rows = []
+    for name, label in COMPARATOR_LABELS.items():
+        row = by[name]
+        rows.append(
+            f"{label} & ${row['theta_fixed']:+.2f}$ & ${row['theta_random']:+.2f}$ & ${row['bias_fixed']:+.2f}$ & "
+            f"{row['fixed_candidate_coverage']:.2f} & {row['random_candidate_coverage_u']:.2f} & "
+            f"{fixed['cross_fit_coverage'][name]:.2f} & {jack['cross_fit_coverage'][name]:.2f} & "
+            f"{fixed['power_at_critical_value'][name]:.2f} & {jack['power_at_critical_value'][name]:.2f} \\\\"
+        )
+    real = cal.get("real_data.comparisons")
+    head = real["projection"]
+    fixed_ci, random_ci = head["calibrated_fixed_candidate"], head["calibrated_random_candidate"]
+    origin = "calibration.json"
+    return [
+        ("calibrationRows", " ".join(rows), origin),
+        ("calFixedWorlds", f"{cal.integer('design.worlds.fixed')}", origin),
+        ("calRandomWorlds", f"{cal.integer('design.worlds.random')}", origin),
+        ("calBootDraws", f"{cal.integer('design.bootstrap_draws_per_fixed_world')}", origin),
+        ("calFixedK", f"{fixed['critical_value']:.2f}", origin),
+        ("calJackK", f"{jack['critical_value']:.2f}", origin),
+        ("calUK", f"{u_stat['critical_value']:.2f}", origin),
+        ("calJackHalf", f"{jack['median_half_width_pp']:.2f}", origin),
+        ("calUHalf", f"{u_stat['median_half_width_pp']:.2f}", origin),
+        ("calFixedCovMin", f"{min(fixed['cross_fit_coverage'].values()):.2f}", origin),
+        ("calFixedCovMax", f"{max(fixed['cross_fit_coverage'].values()):.2f}", origin),
+        ("calJackCovMin", f"{min(jack['cross_fit_coverage'].values()):.2f}", origin),
+        ("calJackCovMax", f"{max(jack['cross_fit_coverage'].values()):.2f}", origin),
+        ("calUCovMin", f"{min(by[n]['random_candidate_coverage_u'] for n in COMPARATOR_LABELS):.2f}", origin),
+        ("calUCovMax", f"{max(by[n]['random_candidate_coverage_u'] for n in COMPARATOR_LABELS):.2f}", origin),
+        ("calProjFixedCov", f"{fixed['cross_fit_coverage']['projection']:.2f}", origin),
+        ("calMaxBias", f"{max(abs(by[n]['bias_fixed']) for n in COMPARATOR_LABELS):.2f}", origin),
+        (
+            "calCouplingShift",
+            f"{max(abs(v) for v in cal.get('calibration.coupling_sensitivity_shift_pp').values()):.2f}",
+            origin,
+        ),
+        ("headEstimate", f"{head['estimate_pp']:.2f}", origin),
+        ("headFixedLow", f"{fixed_ci['ci_low']:+.2f}", origin),
+        ("headFixedHigh", f"{fixed_ci['ci_high']:+.2f}", origin),
+        ("headFixedP", f"{fixed_ci['p_two_sided']:.3f}", origin),
+        ("headRandomLow", f"{random_ci['ci_low']:+.2f}", origin),
+        ("headRandomHigh", f"{random_ci['ci_high']:+.2f}", origin),
+        ("headRandomP", f"{random_ci['p_two_sided']:.2f}", origin),
+        ("ensFixedP", f"{real['ensemble']['calibrated_fixed_candidate']['p_two_sided']:.4f}", origin),
+        ("ensRandomP", f"{real['ensemble']['calibrated_random_candidate']['p_two_sided']:.3f}", origin),
+    ]
+
+
+def _dose_jackknife_entries() -> list[tuple[str, str, str]]:
+    expected = Source.load("target_scoring/expected_error.json")
+    base = "dose_response.candidate_jackknife"
+    ci = expected.get(base + ".rho_ci")
+    return [
+        ("doseJackP", f"{expected.number(base + '.p_two_sided'):.2g}", "expected_error.json"),
+        ("doseJackLow", f"{ci[0]:+.2f}", "expected_error.json"),
+        ("doseJackHigh", f"{ci[1]:+.2f}", "expected_error.json"),
+    ]
+
+
+def _restated_entries() -> list[tuple[str, str, str]]:
+    """Every inferential claim under the calibrated procedure, with Holm and BY."""
+
+    restated = Source.load("target_scoring/restated_claims.json")
+    origin = "restated_claims.json"
+    out = []
+    for key, macro in (("primary_family_random_candidate", "Primary"), ("fixed_candidate_family", "Fixed")):
+        block = restated.get(key)
+        rows = []
+        for claim in block["claims"]:
+            ci = claim["ci_pp"]
+            ci_text = f"$[{ci[0]:+.1f},\\ {ci[1]:+.1f}]$" if ci else "---"
+            est = f"${claim['estimate_pp']:+.2f}$" if claim["estimate_pp"] is not None else "---"
+            verdict = (
+                "Holm"
+                if claim["holm_reject"]
+                else ("BY" if claim["by_reject"] else ("nominal" if claim["nominal_reject"] else "---"))
+            )
+            rows.append(f"{_tex(claim['claim'])} & {est} & {ci_text} & {claim['p']:.2g} & {verdict} \\\\")
+        out += [
+            (f"restated{macro}Rows", " ".join(rows), origin),
+            (f"restated{macro}M", f"{block['m']}", origin),
+            (f"restated{macro}Nominal", f"{block['n_nominal']}", origin),
+            (f"restated{macro}Holm", f"{block['n_holm']}", origin),
+            (f"restated{macro}BY", f"{block['n_by']}", origin),
+        ]
+    return out
+
+
 def _fit_structure_entries() -> list[tuple[str, str, str]]:
     """Floor profile likelihood and the design theorem."""
 
@@ -705,6 +870,10 @@ def build() -> str:
     entries.extend(_rescoring_entries())
     entries.extend(_published_entries())
     entries.extend(_fit_structure_entries())
+    entries.extend(_noise_model_entries())
+    entries.extend(_calibration_entries())
+    entries.extend(_restated_entries())
+    entries.extend(_dose_jackknife_entries())
     lines.extend(_macro(name, value, origin) for name, value, origin in entries)
     lines.append("")
     return "\n".join(lines)

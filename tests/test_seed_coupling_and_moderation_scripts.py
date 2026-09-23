@@ -48,3 +48,20 @@ def test_weights_are_probabilities_and_handle_zero_variance() -> None:
     for w in weights.values():
         assert np.all((w >= 0.5) & (w <= 1.0)) and np.all(np.isfinite(w))
     assert gap.shape == (6,)
+
+
+restated = importlib.import_module("scripts.run_restated_claims")
+
+
+def test_holm_and_by_on_known_p_values() -> None:
+    p = [0.001, 0.01, 0.02, 0.04, 0.5]
+    # Holm: 0.001 <= 0.05/5, 0.01 <= 0.05/4, 0.02 > 0.05/3 stops.
+    assert restated.holm(p) == [True, True, False, False, False]
+    # BY with m = 5, c(m) = 2.2833: thresholds 0.00438 k; only k = 1 passes (0.001 <= 0.00438; 0.01 > 0.00876).
+    assert restated.benjamini_yekutieli(p) == [True, False, False, False, False]
+
+
+def test_holm_steps_down_and_stops_at_the_first_failure() -> None:
+    assert restated.holm([0.01, 0.012, 0.3]) == [True, True, False]
+    assert restated.holm([0.02, 0.03]) == [True, True]
+    assert restated.holm([0.03, 0.04]) == [False, False]

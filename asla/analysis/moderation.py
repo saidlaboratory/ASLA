@@ -237,8 +237,27 @@ def evidence_from_cells(values_by_recipe: Mapping[str, Sequence[float]], **kwarg
     return calibrated_evidence(means, s2, counts, prior, **kwargs)  # type: ignore[arg-type]
 
 
+def calibrated_target_evidence(
+    means: Mapping[str, float],
+    sds: Mapping[str, float],
+    counts: Mapping[str, int],
+    alpha: float = 0.05,
+    multiplicity: str = "bonferroni",
+) -> list[PairEvidence]:
+    """Drop-in replacement for ``target_evidence`` with the calibrated procedure.
+
+    Same signature and determination; the expected-error weights use moderated
+    variances, with the prior fitted across the given recipes at this scale.
+    """
+
+    s2 = {name: float(sd) ** 2 for name, sd in sds.items()}
+    prior = fit_prior(list(s2.values()), min(counts.values()) - 1)
+    return calibrated_evidence(means, s2, counts, prior, alpha, multiplicity)
+
+
 __all__ = [
     "calibrated_evidence",
+    "calibrated_target_evidence",
     "evidence_from_cells",
     "VariancePrior",
     "fit_prior",
