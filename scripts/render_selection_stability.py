@@ -209,7 +209,7 @@ def render() -> str:
     accuracy = counter.get("level_accuracy_does_not_imply_decision_accuracy")
     tightest = accuracy["by_accuracy"][0]
     lines.append(
-        f"The same distinction explains why Open Athena's Delphi result and ours are compatible. "
+        f"The same distinction explains why the Delphi result (Held and Marin Community, 2026) and ours are compatible. "
         f"They predict a single configuration's loss at 1e23 FLOPs within "
         f"{counter.number('source.reported_accuracy_at_target'):.1%}, extrapolating "
         f"{counter.integer('source.extrapolation_factor')}x past their fit. They never rank "

@@ -101,7 +101,7 @@ No new training compute is required.
 
 ## OQ3. Does hyperparameter-transfer quality moderate extrapolation success?
 
-**The gap.** Open Athena's Delphi result extrapolates 300x past its fit to within
+**The gap.** The Delphi result (Held and Marin Community, 2026) extrapolates 300x past its fit to within
 0.2%, and its stated enabler is a token-horizon correction to the learning rate
 plus an optimizer that removes weight decay from the search
 (`results/external/counterexample_delphi.json`). That is a claim about

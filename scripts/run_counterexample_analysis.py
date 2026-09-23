@@ -1,6 +1,6 @@
-"""Task 3: reconcile our extrapolation null with Open Athena's 300x success.
+"""Task 3: reconcile our extrapolation null with Delphi's 300x success (Held and Marin Community, 2026).
 
-Open Athena's Delphi suite (openathena.ai/blog/delphi) fits seven IsoFLOP optima
+The Delphi suite (Held and Marin Community, 2026; openathena.ai/blog/delphi) fits seven IsoFLOP optima
 from 3e18 to 3e20 FLOPs and predicts a 1e23 FLOP run's loss within 0.2%, with
 held-out runs at 1e21 and 1e22 within 0.5% and three seeds at each landing inside
 the bootstrap 95% interval. A paper claiming extrapolation-based selection fails
@@ -37,7 +37,7 @@ from asla.provenance import Source
 REPO = Path(__file__).resolve().parents[1]
 OFF_TRAJECTORY_SCALES = ("750M",)
 
-# Accuracy levels Open Athena reports, as fractions of the loss level.
+# Accuracy levels the Delphi post reports, as fractions of the loss level.
 REPORTED_ACCURACIES = (0.002, 0.005, 0.010)
 
 
@@ -107,7 +107,14 @@ def main() -> None:
 
     payload: dict[str, Any] = {
         "source": {
-            "name": "Open Athena, Scaling Laws That Extrapolate 300x Past the Fit (Delphi)",
+            "name": "Held, Will and Marin Community (2026), Scaling Laws That Extrapolate 300x Past the Fit (Delphi)",
+            "citation": {
+                "authors": "Held, Will and Marin Community",
+                "year": 2026,
+                "title": "Scaling Laws That Extrapolate 300x Past the Fit",
+                "url": "https://openathena.ai/blog/delphi",
+                "as_given_by": "the Citation section of the marin-community/delphi-* model cards on Hugging Face",
+            },
             "url": "https://openathena.ai/blog/delphi/",
             "verified_against_source": True,
             "fit_range_flops": [3e18, 3e20],

@@ -45,6 +45,13 @@
     }
   },
   "source": {
+    "citation": {
+      "as_given_by": "the Citation section of the marin-community/delphi-* model cards on Hugging Face",
+      "authors": "Held, Will and Marin Community",
+      "title": "Scaling Laws That Extrapolate 300x Past the Fit",
+      "url": "https://openathena.ai/blog/delphi",
+      "year": 2026
+    },
     "enablers": [
       "token-horizon learning-rate correction eta ~ (T0/T)^0.3",
       "AdamH optimizer, which removes weight decay from the search"
@@ -60,7 +67,7 @@
     ],
     "metric": "pretraining loss",
     "n_isoflop_optima_in_fit": 7,
-    "name": "Open Athena, Scaling Laws That Extrapolate 300x Past the Fit (Delphi)",
+    "name": "Held, Will and Marin Community (2026), Scaling Laws That Extrapolate 300x Past the Fit (Delphi)",
     "reported_accuracy_at_target": 0.002,
     "reported_accuracy_heldout": 0.005,
     "seeds_per_heldout_budget": 3,
