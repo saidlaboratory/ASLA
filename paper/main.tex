@@ -426,6 +426,13 @@ scaling-law re-test is exploratory while the discrepancy between the released
 decision accuracies and our recomputation from the released predictions is
 under investigation.
 
+Resolvability figures for suites without seed replicates transfer a seed
+standard deviation from another scale. Whether seed noise changes with model
+size is untested, and cannot be tested on current public infrastructure. A
+trend needs replicates at three or more sizes on one recipe. Marin's Delphi
+ladder, the newest public suite, has them only at 1e21 and 1e22 FLOPs (three  %% nolint: compute-budget labels and a seed count read from the model listing, not measured values
+seeds each); every other budget, including its largest, has a single run.
+
 \appendix
 \section{Design for estimation and design for decision coincide}
 \label{app:design}

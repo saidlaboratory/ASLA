@@ -127,9 +127,62 @@ learning rate and check whether the 87%-to-76% agreement drop narrows.
 
 ---
 
+## OQ4. Does seed noise shrink with model size (N3)?
+
+**The gap.** The 207x non-identifiability result transfers a seed standard
+deviation across scales. Whether that transfer holds is prediction N3 in
+`PREDICTIONS_TASK_NOISE_VALIDATION.md`, which remains UNDERPOWERED
+(`results/noise/noise_validation.json`): the panel there has seeds at two sizes.
+
+**Why it is still untestable.** Testing a trend needs seed replicates at three or
+more sizes on one recipe. Marin's Delphi suite, the newest public compute
+ladder, does not supply them. Of its 88 released models
+(`marin-community/delphi-*`, 3e18 to 1e23 FLOPs), only two budgets carry seed
+replicates: 1e21 (3.4B parameters) and 1e22 (9.7B), with three seeds each
+(`default`, `42`, `62746`). Every other budget, including 1e23, has one run. The
+`lucky-seeds` table in `marin-community/delphi-blog-data` holds exactly those
+six runs plus the 1e23 run. Checked 2026-09-23.
+
+**The experiment that settles it.** Seed replicates at a third Delphi budget,
+at or below 3e20 so that three sizes span the fit range, evaluated on the
+same metrics as the existing replicates.
+
+---
+
+## OQ5. Does extrapolation-based selection hold on a flagship pipeline?
+
+**The gap.** Every selection result here compares candidates at scales where the
+target-scale ranking is observed. The test that matters most is a recipe chosen
+by extrapolation and then validated at a held-out flagship scale. Marin planned
+exactly that: #4511 ("Predictions for Post-training") and its sub-project #4507
+describe a midtraining recipe sweep on the 1e21 and 1e22 Delphi parents, with
+the choice validated on the held-out 1e23 model and scored by selection regret.
+
+**Why we cannot test it here.** It is unpublished: #4507 and #4511 are closed
+with no results. The only 1e23 midtraining run is a single p33m67 run, which
+failed at 38% of its budget (#6279). The one multi-scale candidate set with
+public results, the p33m67 / p50m50 / p67m33 midtraining mixes of #6279, cannot
+stand in for it: three candidates with one run per cell cannot separate
+agreement from luck; Marin's own loss forecasts for these mixes missed by 12.9%
+to 18.6% at 1e22 (#6742), attributed to validation contamination; and 28.2% of
+MATH-500 items appear in the midtraining math corpus (#6742), which favours the
+most math-heavy mix, the one ranked first.
+
+**The experiment that settles it.** The #4507 design as planned: several
+midtraining recipes on the smaller Delphi parents, a recipe chosen from
+extrapolated forecasts, and every candidate run at 1e23. The analysis pipeline
+here is ready for it without modification: `asla.analysis.target_scoring` scores
+the choice against a finite-seed reference, `u_statistic_test` gives the
+candidate-level interval, and `scripts/run_rescoring.py` shows the per-comparison
+layout.
+
+---
+
 ## What these have in common
 
-All three are blocked on the same artifact: a seeded compute ladder on the recipe
+OQ1 to OQ3 are blocked on the same artifact: a seeded compute ladder on the recipe
 axis. That is one request away, and until it is answered our claims are scoped to
-the data axis, to loss-like metrics, and to a fixed-recipe regime. Those scopes
-are stated wherever the claims appear.
+the data axis, to loss-like metrics, and to a fixed-recipe regime. OQ4 needs seed
+replicates at a third size of an existing ladder. OQ5 needs a held-out flagship
+run that has been planned but not published. All of these scopes are stated
+wherever the claims appear.
