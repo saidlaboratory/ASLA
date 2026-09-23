@@ -149,3 +149,33 @@ Moderated variances are still used wherever a variance level rather than a tail
 probability is needed: in the parametric noise model for the fixed-candidate
 estimand and in the calibration benchmark. There they beat raw variances at
 10 of 10 PolyPythias cells.
+
+## Addendum 2 (written after the calibration coverage results, before the kernel-jackknife pass)
+
+**Result that prompted it.** C1 is refuted: the U-statistic's random-candidate
+coverage is 0.85 to 0.90 for every uncoupled comparator. C3 is refuted in part:
+fixed-candidate coverage is 0.86 to 0.96. In both cases the standard error is
+unbiased on average. The spread of estimate minus truth matches the root mean
+square of the estimated SEs to within 10%. But the SE is noisy (coefficient of
+variation 0.35 to 0.49 for the U-statistic, 0.14 for the parametric bootstrap),
+and the fixed-candidate estimate carries a plug-in bias of up to 0.44 points. C2
+is confirmed: the refit jackknife covers the coupled rankers at 0.98 to 0.99.
+
+**Repair, fixed now.** Both estimands use a simulation-calibrated critical value
+in place of 1.96: the 95th percentile of |estimate - truth| / SE across the
+benchmark's worlds, pooled over comparators. p-values come from the same
+calibrated distribution.
+
+- **Random-candidate.** Two SEs are compared. One is the U-statistic. The other
+  is the delete-one-candidate jackknife: on the pair kernel for rankers that fit
+  each candidate independently (single-scale, projection, ensemble,
+  checkpoint-augmented), which equals the whole-ranker refit, and by
+  whole-ranker refit for shared-exponent and EB shrinkage. Each gets its own
+  calibrated critical value. The SE with the smaller median calibrated
+  half-width is adopted.
+- **Fixed-candidate.** The parametric-bootstrap SE with its calibrated critical
+  value.
+- **Validation.** Two-fold cross-fitting: calibrate on even-indexed worlds and
+  measure coverage on odd, then the reverse. The repair is accepted if held-out
+  coverage is between 0.93 and 0.97 for every comparator. If it is not, the
+  per-comparator held-out coverage is reported as the procedure's calibration.
