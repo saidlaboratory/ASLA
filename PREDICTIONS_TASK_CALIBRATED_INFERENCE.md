@@ -117,3 +117,35 @@ random-candidate estimand.
 
 **Decision rule.** Every refutation is reported alongside the confirmations. If a
 result invalidates the procedure itself, work stops and it is reported.
+
+## Addendum (written after the type-I null test, before the weight-calibration test)
+
+**Result that prompted it.** The PolyPythias null test used 25 units per draw,
+3 against 3 seeds of the same model, and 1,000,000 tests. The pre-registered
+moderated t (posterior variance, d + d0 degrees of freedom) is anti-conservative.
+Its rejection rate is 1.22x nominal at 0.05, 1.60x at 0.01, 2.83x at 0.001 and
+4.92x at the Bonferroni level 0.05/300, in all ten (size, step) cells. Raw Welch
+is conservative (0.44x to 0.69x), and so is moderated SE with raw Welch degrees
+of freedom (0.02x to 0.54x). The moderated t is therefore **not adopted for
+target determination**. Determination stays with raw Welch, the only procedure
+tested that never exceeds nominal while staying reasonably close to it.
+
+**Rule for the expected-error weights, fixed now.** The weights are the
+probability that the observed order is correct. They are chosen by a
+known-answer calibration test on PolyPythias:
+
+- Per draw, 25 tasks in a (size, step) and 3 of the 10 seeds give each pair's
+  observed order and weight.
+- The true order is taken from the other 7 seeds.
+- Candidates:
+  - (a) normal CDF at the raw Welch standard error (the current procedure);
+  - (b) Student-t at the moderated standard error with d + d0 degrees of freedom;
+  - (c) Student-t at the moderated standard error with raw Welch degrees of
+    freedom.
+- The variant with the lowest Brier score against the held-out order is adopted,
+  and its calibration curve is reported.
+
+Moderated variances are still used wherever a variance level rather than a tail
+probability is needed: in the parametric noise model for the fixed-candidate
+estimand and in the calibration benchmark. There they beat raw variances at
+10 of 10 PolyPythias cells.
