@@ -50,3 +50,6 @@ data/raw/colpret/
 
 # Built by tectonic via scripts/verify_reproducibility.py; regenerated every run.
 paper/main.pdf
+
+# resumable caches for long runs; results are summarised into results/
+data/cache/

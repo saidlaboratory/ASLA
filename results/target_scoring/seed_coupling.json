@@ -1,0 +1,1022 @@
+{
+  "decision": {
+    "consequence": "independent noise across scales",
+    "coupling_detected": false,
+    "rule": "median permutation p < 0.05 with positive median rho, on either metric"
+  },
+  "documentation": "arXiv:2504.11393v2: '3 random seeds for initialization and data order'. Labels below 1B are default / small aux 2 / small aux 3; at 1B default / large aux 2 / large aux 3. The paper does not say whether a label fixes order or initialization across sizes.",
+  "method": "correlation of within-cell seed deviations across (recipe, label); null permutes labels within recipe",
+  "metrics": {
+    "c4_en_bits_per_token": {
+      "all_labels_below_1B": {
+        "pairs": {
+          "10M|14M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.4656,
+            "rho": 0.15948129298903266
+          },
+          "10M|150M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.1542,
+            "rho": -0.1322604117542768
+          },
+          "10M|16M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.0058,
+            "rho": -0.6184395744672212
+          },
+          "10M|20M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.7152,
+            "rho": -0.03486599716912506
+          },
+          "10M|300M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.4522,
+            "rho": 0.05623392725908808
+          },
+          "10M|4M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.984,
+            "rho": 0.004072727440943203
+          },
+          "10M|530M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.6962,
+            "rho": -0.04671331383666794
+          },
+          "10M|60M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.2518,
+            "rho": -0.13945852237781345
+          },
+          "10M|6M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.4308,
+            "rho": 0.20440983411764152
+          },
+          "10M|8M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.139,
+            "rho": -0.3365880479232443
+          },
+          "10M|90M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.7102,
+            "rho": 0.03161872357963873
+          },
+          "14M|150M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.5578,
+            "rho": -0.0555473470350939
+          },
+          "14M|16M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.5558,
+            "rho": -0.13458334580266204
+          },
+          "14M|20M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.9248,
+            "rho": 0.009290835331167155
+          },
+          "14M|300M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.2414,
+            "rho": -0.12091993378226194
+          },
+          "14M|4M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.7128,
+            "rho": -0.1040890712252892
+          },
+          "14M|530M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.7412,
+            "rho": 0.03921854267651793
+          },
+          "14M|60M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.0408,
+            "rho": 0.22367396774537782
+          },
+          "14M|6M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.7348,
+            "rho": 0.1408947072353957
+          },
+          "14M|8M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.7306,
+            "rho": -0.12333331289661652
+          },
+          "14M|90M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.372,
+            "rho": 0.09596513015785646
+          },
+          "150M|16M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.2048,
+            "rho": 0.14071250630860785
+          },
+          "150M|20M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.1828,
+            "rho": -0.17577695069750557
+          },
+          "150M|300M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.7644,
+            "rho": 0.04150777024355933
+          },
+          "150M|4M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.5704,
+            "rho": 0.08711205742710597
+          },
+          "150M|530M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.59,
+            "rho": 0.07915134144593415
+          },
+          "150M|60M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.5986,
+            "rho": 0.06802938740305907
+          },
+          "150M|6M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.0082,
+            "rho": -0.2713680853992119
+          },
+          "150M|8M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.5374,
+            "rho": 0.06228669845246353
+          },
+          "150M|90M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.9886,
+            "rho": 0.0029978870038444906
+          },
+          "16M|20M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.3904,
+            "rho": -0.07460676750113354
+          },
+          "16M|300M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.7234,
+            "rho": 0.027178859523366003
+          },
+          "16M|4M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.602,
+            "rho": 0.12258571394117121
+          },
+          "16M|530M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.9628,
+            "rho": -0.003718719091227986
+          },
+          "16M|60M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.2402,
+            "rho": 0.1489763128726629
+          },
+          "16M|6M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.961,
+            "rho": 0.011169789314214154
+          },
+          "16M|8M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.1458,
+            "rho": 0.40938536070158427
+          },
+          "16M|90M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.0744,
+            "rho": -0.14942667569252638
+          },
+          "20M|300M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.1644,
+            "rho": -0.22468147384582451
+          },
+          "20M|4M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.685,
+            "rho": -0.04088732964745056
+          },
+          "20M|530M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.5832,
+            "rho": -0.08153460415556828
+          },
+          "20M|60M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.8864,
+            "rho": -0.020210768333954052
+          },
+          "20M|6M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.954,
+            "rho": -0.004083326574347758
+          },
+          "20M|8M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.7248,
+            "rho": -0.03235748698041798
+          },
+          "20M|90M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.1884,
+            "rho": -0.181800116760977
+          },
+          "300M|4M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.3156,
+            "rho": 0.09700609667805488
+          },
+          "300M|530M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.1294,
+            "rho": 0.30332914014035495
+          },
+          "300M|60M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.8074,
+            "rho": -0.041183970048321014
+          },
+          "300M|6M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.2658,
+            "rho": -0.08232800020431913
+          },
+          "300M|8M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.5136,
+            "rho": -0.05215380222230249
+          },
+          "300M|90M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.8214,
+            "rho": 0.040078526593577836
+          },
+          "4M|530M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.7122,
+            "rho": 0.03546744070568579
+          },
+          "4M|60M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.8442,
+            "rho": -0.034845124559306766
+          },
+          "4M|6M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.6828,
+            "rho": 0.08209927741907487
+          },
+          "4M|8M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.5166,
+            "rho": -0.13275730480753326
+          },
+          "4M|90M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.4748,
+            "rho": -0.10521619327076298
+          },
+          "530M|60M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.4868,
+            "rho": 0.09084419189450023
+          },
+          "530M|6M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.4914,
+            "rho": -0.05970014911152605
+          },
+          "530M|8M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.6022,
+            "rho": 0.037862053314786814
+          },
+          "530M|90M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.1112,
+            "rho": -0.223853244527648
+          },
+          "60M|6M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.1348,
+            "rho": -0.17197526676440295
+          },
+          "60M|8M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.1702,
+            "rho": 0.16230946401505245
+          },
+          "60M|90M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.9056,
+            "rho": -0.017790357000564805
+          },
+          "6M|8M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.6386,
+            "rho": 0.13826697165962665
+          },
+          "6M|90M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.86,
+            "rho": 0.020311004514972
+          },
+          "8M|90M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.649,
+            "rho": -0.04103139436366112
+          }
+        },
+        "summary": {
+          "fraction_p_below_0_05": 0.045454545454545456,
+          "mean_rho": -0.013584218935224964,
+          "median_p": 0.5641,
+          "median_rho": -0.003901022832787872,
+          "n_scale_pairs": 66
+        }
+      },
+      "focus_pairs": {
+        "150M|530M": {
+          "distinct_permutations_per_recipe": 6,
+          "labels_matched": 3,
+          "n_observations": 75,
+          "p_two_sided": 0.5902,
+          "rho": 0.07915134144593415
+        },
+        "300M|1B": {
+          "labels_matched": 1,
+          "n_observations": 25,
+          "p_two_sided": 0.44183984686606825,
+          "rho": -0.1625166634780991,
+          "test": "Fisher z across recipes (default label only)"
+        },
+        "300M|530M": {
+          "distinct_permutations_per_recipe": 6,
+          "labels_matched": 3,
+          "n_observations": 75,
+          "p_two_sided": 0.129,
+          "rho": 0.30332914014035495
+        },
+        "530M|1B": {
+          "labels_matched": 1,
+          "n_observations": 25,
+          "p_two_sided": 0.9143067541164307,
+          "rho": 0.022938050654125665,
+          "test": "Fisher z across recipes (default label only)"
+        }
+      }
+    },
+    "olmes_macro_error": {
+      "all_labels_below_1B": {
+        "pairs": {
+          "10M|14M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.8478,
+            "rho": -0.028265215063656524
+          },
+          "10M|150M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.851,
+            "rho": 0.027163775375435212
+          },
+          "10M|16M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.4112,
+            "rho": -0.1281458742868755
+          },
+          "10M|20M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.442,
+            "rho": -0.12487345724384212
+          },
+          "10M|300M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.3496,
+            "rho": -0.13155223817353334
+          },
+          "10M|4M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.3112,
+            "rho": 0.14097850643816304
+          },
+          "10M|530M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.2038,
+            "rho": -0.1903007080952163
+          },
+          "10M|60M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.5674,
+            "rho": -0.08465826072264712
+          },
+          "10M|6M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.7598,
+            "rho": 0.04493182981772021
+          },
+          "10M|8M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.0848,
+            "rho": 0.2987403901381223
+          },
+          "10M|90M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.2944,
+            "rho": 0.1679558065191507
+          },
+          "14M|150M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.788,
+            "rho": -0.041000757777138096
+          },
+          "14M|16M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.86,
+            "rho": 0.026335895231759138
+          },
+          "14M|20M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.0766,
+            "rho": -0.26982730614055084
+          },
+          "14M|300M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.3994,
+            "rho": 0.13529362796528324
+          },
+          "14M|4M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.1,
+            "rho": 0.25254123764328157
+          },
+          "14M|530M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.4894,
+            "rho": -0.10158499681212614
+          },
+          "14M|60M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.1022,
+            "rho": 0.19096972043155622
+          },
+          "14M|6M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.9692,
+            "rho": 0.005938436385974869
+          },
+          "14M|8M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.605,
+            "rho": -0.0671629375503739
+          },
+          "14M|90M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.7286,
+            "rho": 0.04543807344518305
+          },
+          "150M|16M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.9448,
+            "rho": 0.00912815984509463
+          },
+          "150M|20M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.088,
+            "rho": 0.23340798395136414
+          },
+          "150M|300M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.4878,
+            "rho": -0.0958205808552133
+          },
+          "150M|4M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.3124,
+            "rho": 0.14173012053650033
+          },
+          "150M|530M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.3346,
+            "rho": 0.14028960654536832
+          },
+          "150M|60M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.6066,
+            "rho": 0.08110499531208923
+          },
+          "150M|6M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.289,
+            "rho": 0.1653159385833285
+          },
+          "150M|8M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.4942,
+            "rho": -0.09187144977950441
+          },
+          "150M|90M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.0856,
+            "rho": 0.239777896462729
+          },
+          "16M|20M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.7346,
+            "rho": 0.0582689261771144
+          },
+          "16M|300M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.7568,
+            "rho": -0.04560078564779936
+          },
+          "16M|4M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.1714,
+            "rho": -0.21581548646150522
+          },
+          "16M|530M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.4252,
+            "rho": -0.11509364353633725
+          },
+          "16M|60M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.1404,
+            "rho": 0.20563042767319692
+          },
+          "16M|6M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.2702,
+            "rho": -0.12019579912572996
+          },
+          "16M|8M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.4408,
+            "rho": 0.13455002224334445
+          },
+          "16M|90M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.1764,
+            "rho": -0.18076114584775047
+          },
+          "20M|300M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.4114,
+            "rho": -0.11934564141684365
+          },
+          "20M|4M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.767,
+            "rho": -0.04495921205198328
+          },
+          "20M|530M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.8072,
+            "rho": -0.029971752689914945
+          },
+          "20M|60M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.6938,
+            "rho": -0.05624645251665887
+          },
+          "20M|6M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.1634,
+            "rho": -0.18294074873241728
+          },
+          "20M|8M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.3504,
+            "rho": 0.1293238599394746
+          },
+          "20M|90M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.3192,
+            "rho": 0.1562248628842509
+          },
+          "300M|4M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.1218,
+            "rho": 0.21084203665592202
+          },
+          "300M|530M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.4434,
+            "rho": 0.11802697497131799
+          },
+          "300M|60M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.5656,
+            "rho": -0.08288219910380891
+          },
+          "300M|6M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.6822,
+            "rho": -0.05933756295268255
+          },
+          "300M|8M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.5436,
+            "rho": 0.07578118746332801
+          },
+          "300M|90M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.9888,
+            "rho": -0.002164430599373082
+          },
+          "4M|530M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.3466,
+            "rho": -0.10452898599870887
+          },
+          "4M|60M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.934,
+            "rho": -0.010287716021102835
+          },
+          "4M|6M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.8764,
+            "rho": 0.016582816825827195
+          },
+          "4M|8M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.7334,
+            "rho": 0.049709041221051194
+          },
+          "4M|90M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.8444,
+            "rho": 0.022226694910249516
+          },
+          "530M|60M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.3944,
+            "rho": 0.11778580959684234
+          },
+          "530M|6M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.6576,
+            "rho": 0.0797400816964467
+          },
+          "530M|8M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.6598,
+            "rho": -0.07289390106335784
+          },
+          "530M|90M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.7892,
+            "rho": 0.04841865488588676
+          },
+          "60M|6M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.7494,
+            "rho": 0.05812282643022187
+          },
+          "60M|8M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.9864,
+            "rho": -0.0028582084823522372
+          },
+          "60M|90M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.376,
+            "rho": -0.13531960714511915
+          },
+          "6M|8M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.6194,
+            "rho": -0.07478804235200877
+          },
+          "6M|90M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.3452,
+            "rho": -0.14970625317310152
+          },
+          "8M|90M": {
+            "distinct_permutations_per_recipe": 6,
+            "labels_matched": 3,
+            "n_observations": 75,
+            "p_two_sided": 0.7136,
+            "rho": 0.05103821296332003
+          }
+        },
+        "summary": {
+          "fraction_p_below_0_05": 0.0,
+          "mean_rho": 0.010887167874949472,
+          "median_p": 0.48860000000000003,
+          "median_rho": 0.007533298115534749,
+          "n_scale_pairs": 66
+        }
+      },
+      "focus_pairs": {
+        "150M|530M": {
+          "distinct_permutations_per_recipe": 6,
+          "labels_matched": 3,
+          "n_observations": 75,
+          "p_two_sided": 0.3332,
+          "rho": 0.14028960654536832
+        },
+        "300M|1B": {
+          "labels_matched": 1,
+          "n_observations": 25,
+          "p_two_sided": 0.3296371601635063,
+          "rho": -0.2048958495203223,
+          "test": "Fisher z across recipes (default label only)"
+        },
+        "300M|530M": {
+          "distinct_permutations_per_recipe": 6,
+          "labels_matched": 3,
+          "n_observations": 75,
+          "p_two_sided": 0.4498,
+          "rho": 0.11802697497131799
+        },
+        "530M|1B": {
+          "labels_matched": 1,
+          "n_observations": 25,
+          "p_two_sided": 0.2486345998509688,
+          "rho": 0.24112077674556884,
+          "test": "Fisher z across recipes (default label only)"
+        }
+      }
+    }
+  },
+  "n_permutations": 5000
+}
