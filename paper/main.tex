@@ -220,12 +220,13 @@ comparisons whose inputs were released.
 
 \paragraph{Scaling-law variants against single-scale ranking (DataDecide).} The
 released fits include per-recipe predictions and targets, and we pre-registered
-reproducing the released decision accuracies exactly before testing. They do
-not reproduce. Using the released target column, \gateExact\ of \gateRows\
-task--variant rows match, and the largest error is \gateMaxError. No
-convention we tried (prediction column, target column or seed mean, tie rule)
-recovers them all. The re-test below is therefore exploratory and makes no
-claim about the paper's numbers. Against single-scale ranking at the largest
+reproducing the released decision accuracies exactly before testing. There is
+an open discrepancy, which we are investigating with the authors. Using the
+released target column, \gateExact\ of \gateRows\ task--variant rows match
+our recomputation, and the largest difference is \gateMaxError. No convention
+we tried (prediction column, target column or seed mean, tie rule) matches them
+all. Until it is resolved, the re-test below is exploratory and makes no claim
+about the paper's numbers. Against single-scale ranking at the largest
 fitted size on the macro average, \dOneMacroExcl\ of \dOneVariants\ variants
 is reliably different: a five-parameter one-step fit, which is worse by
 \dOneWorstDiff\ points ([\dOneWorstLow, \dOneWorstHigh]). No variant is
@@ -421,8 +422,9 @@ reported. The allocation study's gradient solver stops \thmSolverExcess\% above
 the true optimum of the design problem on this ladder
 (Appendix~\ref{app:design}). We did not re-run the allocation study, because a
 variance difference of that size is far below the margins it reports. The
-scaling-law re-test is exploratory, because the released decision accuracies do
-not reproduce from the released predictions.
+scaling-law re-test is exploratory while the discrepancy between the released
+decision accuracies and our recomputation from the released predictions is
+under investigation.
 
 \appendix
 \section{Design for estimation and design for decision coincide}

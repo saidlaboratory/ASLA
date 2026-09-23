@@ -353,8 +353,9 @@ def main() -> None:
             "datadecide_intermediate_checkpoints": "figure-only, no released per-method outputs",
         },
         "d1_gate_note": (
-            "The released decision_acc is not reproduced by any convention tried (prediction column, target "
-            "column or seed mean, tie rule); D1 is therefore exploratory and makes no claim about the paper's numbers."
+            "Open discrepancy under investigation with the authors: no convention tried (prediction column, target "
+            "column or seed mean, tie rule) matches every released decision_acc. D1 is exploratory until it is "
+            "resolved and makes no claim about the paper's numbers. Reproduction package: repro/datadecide_decision_acc."
         ),
         "d1_sign_breakdown_three_seed_target": _signs(d1_out["comparisons"], "three_seed_mean"),
     }

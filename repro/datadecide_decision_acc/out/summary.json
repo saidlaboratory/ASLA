@@ -1,0 +1,47 @@
+{
+  "inputs": {
+    "repo": "allenai/DataDecide-eval-results",
+    "fit": "data/scaling_law_fit-00000-of-00001.parquet",
+    "macro": "data/macro_avg-00000-of-00001.parquet",
+    "fit_sha256": "bcdd5646751fd8a21ea557e601760c073f17b4c45b42c663e3c925b7ec6f50c3",
+    "macro_sha256": "b5012e963952ba2b5814bc07c260f8389c288db0ad7558e312db49fa1ab57fdf",
+    "fit_bytes": 6422662,
+    "macro_bytes": 138871626
+  },
+  "rows": 88,
+  "reference_convention": "stacked_pred|stacked_y|higher|tie=0.5",
+  "rows_matching_reference_convention": 30,
+  "rows_not_matching_reference_convention": 58,
+  "rows_matched_by_no_convention": 11,
+  "best_single_convention": {
+    "convention": "stacked_pred|one_b_default_seed|higher|tie=1",
+    "rows_matched": 52
+  },
+  "max_abs_error_reference_convention": 0.8800000000000001,
+  "target_seed_check": {
+    "fields": "scaling_law_fit parquet: stacked_y (setup 3_param-default, metric primary_metric) against macro_avg parquet: metrics['primary_metric'] at params='1B', final step common to seeds 'default', 'large aux 2', 'large aux 3'",
+    "name_mapping": "exact equality on task olmes_10_macro_avg",
+    "max_abs_stacked_y_minus_default_seed": 5.551115123125783e-17,
+    "tasks_where_stacked_y_equals_default_seed_exactly": [
+      "arc_challenge",
+      "arc_easy",
+      "boolq",
+      "csqa",
+      "hellaswag",
+      "mmlu",
+      "olmes_10_macro_avg",
+      "openbookqa",
+      "piqa",
+      "socialiqa",
+      "winogrande"
+    ],
+    "tasks_where_it_does_not": [],
+    "max_abs_stacked_y_minus_three_seed_mean": 0.11274209989806322,
+    "paper_definition": "arXiv:2504.11393v2 section 2.3: 'We define the target-scale winner based on mean downstream performance over 3 random seeds'"
+  },
+  "setups_whose_stacked_y_differs_from_3_param_default": [
+    "3_param-1_step",
+    "5_param-1_step-ai2",
+    "5_param-ai2"
+  ]
+}
