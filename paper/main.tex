@@ -31,9 +31,14 @@ procedure, projection's excess mis-selection over single-scale ranking on C4
 (\headEstimate\ points) is significant for these recipes ($p=\headFixedP$) but
 not as a claim about recipes in general ($p=\headRandomP$). Across the paper's
 \restatedPrimaryM\ inferential claims, \restatedPrimaryNominal\ are nominally
-significant and \restatedPrimaryBY\ survives correction for dependent tests: the
-growth of projection error with the extrapolation lever arm. A closed-form
-correction converts pair-resampled intervals to candidate-level ones.
+significant, and \restatedPrimaryHolm\ survives Holm correction
+(\restatedPrimaryBY\ survives Benjamini--Yekutieli). The finding that stands is
+a regularity: projection's error relative to top-rung ranking grows with
+extrapolation distance, as the leverage term of a least-squares projection
+predicts (Spearman \leverRealRho\ across designs, calibrated interval
+[\leverRealLow, \leverRealHigh]), and no tested alternative beats top-rung
+ranking. A closed-form correction converts pair-resampled intervals to
+candidate-level ones.
 \end{abstract}
 
 \paragraph{Contributions.} (i) A calibrated procedure for comparing selection
@@ -42,7 +47,8 @@ explicit estimands, each validated against known answers. (ii) Two negative
 results about standard tools: the moderated $t$ test is anti-conservative on
 real few-seed data, and unbiased candidate-level standard errors give
 undercovering Wald intervals at realistic candidate counts. (iii) A power
-calculation: a two-point difference needs about \powerNeededTwo\ candidates.
+calculation: under the calibrated test a two-point difference needs about
+\candShrunkTwo\ candidates (\powerNeededTwo\ if the standard error were known).
 (iv) A closed-form correction $R(n)$ for intervals already computed by
 resampling pairs. (v) Candidate-level re-tests of published comparisons, and an
 account of which of this paper's own claims survive correction.
@@ -119,6 +125,9 @@ the determined fraction on OLMES error from \detRawErrFiveThirty\% to
 moderated standard error with the raw Welch degrees of freedom. Of three
 candidate weights, that one scored the lowest Brier score against held-out
 seeds (\brierAdopted, against \brierRaw\ for the unmoderated normal weight).
+This choice was not pre-registered. The rule was written down after the null
+test had failed the pre-registered moderated $t$ and before the calibration
+test was run, but it was a data-dependent deviation, not a planned decision.
 
 \section{Two estimands, and a calibrated test for each}
 \label{sec:estimands}
@@ -138,7 +147,10 @@ uncertainty is candidate-level, as in \S\ref{sec:gap}.
 
 \paragraph{End-to-end calibration.} To check both procedures we built a
 semi-synthetic benchmark from DataDecide. It keeps DataDecide's candidates and
-ladder, uses the observed seed-mean trajectories as the truth, and draws noise
+ladder. Its truth is each recipe's seed-mean trajectory shrunk toward the
+across-recipe mean by empirical Bayes, so that simulated candidates spread as
+much as the true spread is estimated to be, not as much as the noisy means do.
+It draws noise
 from the moderated scale-dependent model, with AR(1) noise along each run's  %% nolint: model name AR(1)
 checkpoints. Fixed-candidate worlds (\calFixedWorlds) hold the truth and
 redraw the noise. Random-candidate worlds (\calRandomWorlds) draw a new set of
@@ -153,16 +165,81 @@ points. The intervals are not calibrated at the textbook critical value. The
 candidate-level standard errors are right on average but noisy at
 \nCandidates\ candidates, so Wald intervals at 1.96 undercover: the U-statistic  %% nolint: the textbook critical value
 covers \calUCovMin--\calUCovMax. We therefore calibrate the critical value on the
-benchmark itself: \calFixedK\ for the fixed-candidate estimand and \calJackK\ for
-the random-candidate one. For the random-candidate estimand the delete-one
-jackknife gives narrower calibrated intervals than the U-statistic (median
-half-width \calJackHalf\ against \calUHalf\ points), so we adopt it. For
-shared-exponent and EB shrinkage, whose fits couple candidates, the jackknife
-refits the whole rule. Calibration is imperfect by comparator. On held-out
-worlds, calibrated coverage runs \calFixedCovMin--\calFixedCovMax\ for the
-fixed-candidate estimand and \calJackCovMin--\calJackCovMax\ for the
-random-candidate one. For projection, the fixed-candidate coverage is
-\calProjFixedCov.
+benchmark: \calFixedK\ for the fixed-candidate estimand and \calJackK\ for the
+random-candidate one. Held-out calibrated coverage runs
+\calFixedCovMin--\calFixedCovMax\ and \calJackCovMin--\calJackCovMax\
+respectively. For projection, the fixed-candidate coverage is \calProjFixedCov.
+
+\paragraph{The estimator is chosen by coverage.} For the random-candidate
+estimand we compared the U-statistic with a delete-one-candidate jackknife.
+For shared-exponent and EB shrinkage, whose fits couple candidates, the
+jackknife refits the whole rule. Each was given its own calibrated critical
+value, and the jackknife was kept only if its held-out coverage was at least
+the U-statistic's for every comparator (Table~\ref{tab:estimator}). It falls
+short at \estimatorRuleFailures\ comparators, so the random-candidate
+procedure is the \calRandomAdopted\ with a critical value of \calJackK. An
+earlier draft preferred the jackknife because its calibrated intervals were
+narrower; that criterion is withdrawn.
+
+\paragraph{Disclosure.} Calibrating the critical value on the benchmark was not
+pre-registered. We adopted it after the benchmark showed intervals at 1.96  %% nolint: the textbook critical value
+undercovering, so it is a data-dependent deviation, as is the rule that chose
+the expected-error weights (\S\ref{sec:protocol}). Both rules were written down
+before being applied, and neither was chosen by its effect on a real-data
+$p$-value.
+
+\paragraph{Per-metric calibration.} Critical values are estimated separately for
+each family of claims, on a benchmark built from that family's own data. For
+OLMES error the fixed-candidate critical value is \olmesFixedK\ and the
+random-candidate one \olmesRandomK\ (\olmesRandomAdopted). The published
+re-tests are calibrated on DataDecide's macro-average accuracy. For Correct
+Prob against accuracy, the two metrics share each run and get correlated noise;
+for the scaling-law variants, the released predictions are held fixed. The
+coverage rule selects the \pubCpAdopted\ in both, with critical values
+\pubCpK\ and \pubSlK. Held-out coverage runs \pubCpCovMin--\pubCpCovMax\ and
+\pubSlCovMin--\pubSlCovMax.
+
+\paragraph{Truth and power.} Replacing the shrunk truth with the raw seed means
+changes the planted effects and their power as Table~\ref{tab:truth} shows. The
+number of candidates needed to detect a two-point difference with power 0.8  %% nolint: stated power level
+under the calibrated test is \candShrunkTwo\ with shrunk truth and
+\candObsTwo\ with raw means. A known-variance calculation gives \powerNeededTwo;
+the calibrated procedure's larger critical value accounts for the difference.
+For one and five points the calibrated figures are \candShrunkOne\ and
+\candShrunkFive.
+
+\begin{table}[t]
+\centering
+\scriptsize
+\begin{tabular}{lrrl}
+\toprule
+comparator & U-statistic & jackknife & jackknife $\geq$ U \\
+\midrule
+\estimatorRuleRows
+\bottomrule
+\end{tabular}
+\caption{Held-out calibrated coverage of the random-candidate procedures, each
+at its own critical value. The jackknife is kept only if it covers at least as
+well as the U-statistic at every comparator.}
+\label{tab:estimator}
+\end{table}
+
+\begin{table}[t]
+\centering
+\scriptsize
+\begin{tabular}{lrrrrrrrr}
+\toprule
+& \multicolumn{4}{c}{fixed-candidate} & \multicolumn{4}{c}{random-candidate} \\  %% nolint: column counts
+& \multicolumn{2}{c}{true effect (pp)} & \multicolumn{2}{c}{power} & \multicolumn{2}{c}{true effect (pp)} & \multicolumn{2}{c}{power} \\  %% nolint: column counts
+planted comparator & raw & shrunk & raw & shrunk & raw & shrunk & raw & shrunk \\
+\midrule
+\truthComparisonRows
+\bottomrule
+\end{tabular}
+\caption{Planted effects and calibrated power under the two simulation truths:
+raw seed means and empirical-Bayes-shrunk means.}
+\label{tab:truth}
+\end{table}
 
 \begin{table}[t]
 \centering
@@ -179,7 +256,7 @@ comparator & fixed & random & bias & fixed & random & fixed & random & fixed & r
 300M, target 530M). Comparisons are against single-scale ranking at the top  %% nolint: scale labels
 rung; positive means worse. Coverage at 1.96 uses the parametric bootstrap  %% nolint: the textbook critical value
 (fixed) and the U-statistic (random); calibrated columns use the critical
-values in the text, with the jackknife for the random-candidate estimand.
+values in the text, with the \calRandomAdopted\ for the random-candidate estimand.
 Planted comparators rank at a lower rung.}
 \label{tab:calibration}
 \end{table}
@@ -257,8 +334,11 @@ variance components ($\zeta_2/\zeta_1=\zetaRatio$) showed it overstates the
 standard error by a factor of \calibBoot. The unbiased U-statistic standard
 error is within \calibU. The end-to-end benchmark then showed that even an
 unbiased standard error gives undercovering intervals at this candidate count,
-which led to the calibrated jackknife of \S\ref{sec:estimands}. Neither choice
-was blind to the real-data results. The random-candidate conclusion does not
+which led to the calibrated critical values of \S\ref{sec:estimands}. A
+jackknife was briefly preferred for its narrower intervals. It was dropped when
+it failed the coverage rule, and the U-statistic, with a calibrated critical
+value, is the procedure reported. None of these choices was blind to the
+real-data results. The random-candidate conclusion does not
 depend on it: every candidate-level estimator we computed gives $p$ between
 \pInvariantMin\ and \pInvariantMax.
 
@@ -402,22 +482,45 @@ Appendix~\ref{app:claims} lists them all. Of the \restatedPrimaryM,
 \restatedPrimaryNominal\ are nominally significant and \restatedPrimaryBY\
 survives correction.
 
-\emph{The survivor is the lever-arm dependence.} Excess projection error rises
-with the logarithm of the lever arm: Spearman \doseRhoObserved\ against
-observed targets and \doseRhoExpected\ under expected-error scoring, over
-\doseDesigns\ designs. Those designs share recipes, so the design-level
-$p$-value is not a valid test. A delete-one-recipe jackknife of the correlation
-gives [\doseJackLow, \doseJackHigh] ($p=\doseJackP$).
+\emph{The regularity that survives.} Projection's error relative to top-rung
+ranking grows with extrapolation distance, as the leverage term of a
+least-squares projection predicts (Appendix~\ref{app:design}): Spearman
+\doseRhoObserved\ against observed targets and \leverRealRho\ under
+expected-error scoring, over \doseDesigns\ designs. The designs share recipes
+and rungs, so the design-level $p$-value is not a valid test. Two checks
+replace it.
+\begin{itemize}
+\item \emph{Recipes as the unit.} A leave-one-recipe-out jackknife of the
+correlation's Fisher $z$ gives [\leverRealLow, \leverRealHigh] at a calibrated
+critical value of \leverK. In \leverWorlds\ random-candidate worlds, the
+interval at 1.96 covers the true correlation (\leverRhoTrue\ in the simulated  %% nolint: the textbook critical value
+population) \leverCov\ of the time, more than nominal. The calibrated
+interval covers \leverCrossCov\ on held-out worlds.
+\item \emph{Designs that share rungs.} In every world a replicate comparator ranks
+by the top rung of an independent noise draw. Its true excess is zero at every
+design, but designs that share a rung share its noise. At level 0.05 the test  %% nolint: stated test level
+rejects it in \leverNullRate\ of \leverNullN\ draws. The real statistic
+($|t|=\leverAbsT$) exceeds every one of them ($p=\leverRealP$).
+\end{itemize}
+The simulated population's true correlation is lower than the real estimate,
+so the benchmark does not certify the size of the real effect, only that the
+test is not anti-conservative under design overlap.
 
 \emph{What does not survive.} The ensemble's inferiority to single-scale ranking
 is nominally significant for recipes in general but does not survive the
 family correction. For these \nCandidates\ recipes it is the one ranker
 comparison that survives correction in the fixed-candidate family
 (\restatedFixedBY\ of \restatedFixedM; $p=\ensFixedP$). The optimised
-allocation's excess at small budget fractions, one DataDecide scaling-law
-variant, and Correct Prob at the two smallest scales are nominal only. No
-comparison favours any estimator or allocation over single-scale ranking, even
-nominally.
+allocation's excess at small budget fractions and Correct Prob at the smallest
+scale are nominal only.
+
+\emph{A direction pattern, stated descriptively.} No comparison favours any
+estimator or allocation over single-scale ranking, even nominally: every
+nominally significant ranker or allocation comparison has single-scale ranking
+ahead. Some point estimates favour an alternative, but none of those reaches
+nominal significance. We do not attach a
+test to this pattern. Every comparison uses the same recipes, so the signs are
+not independent, and a sign test would overstate the evidence.
 
 Certification is unaffected. The abstention rule certifies \certNormalN\ orderings
 with no observed errors; under expected-error scoring those carry
@@ -517,16 +620,22 @@ scaling-law re-test is exploratory while the discrepancy between the released
 decision accuracies and our recomputation from the released predictions is
 under investigation.
 
-The calibration benchmark is only as good as its assumptions. Its truth is the
-observed seed-mean trajectories and its noise is Gaussian. Its random-candidate
-worlds come from a smoothed bootstrap over only \nCandidates\ recipes, and its
-critical values are estimated from \calFixedWorlds\ and \calRandomWorlds\
-worlds. They were calibrated on C4. For OLMES error and the published re-tests
-they are transported, not re-estimated. EB shrinkage enters the benchmark with
-its strength frozen at the real-data estimate, which omits the variability of
-estimating it. Pooled calibration leaves per-comparator held-out coverage
-between \calFixedCovMin\ and \calJackCovMax, not uniformly at nominal. Every
-p-value in Appendix~\ref{app:claims} inherits these assumptions.
+The calibration benchmarks are only as good as their assumptions. Their truth
+is the empirical-Bayes-shrunk seed-mean trajectories and their noise is
+Gaussian. Their random-candidate worlds come from a smoothed bootstrap over only
+\nCandidates\ recipes. Critical values are estimated from a few hundred worlds
+per family. Each family is calibrated on its own metric, but the allocation
+claims use the C4 calibration from a different design. The scaling-law re-test
+holds the released predictions fixed, because they cannot be regenerated. EB
+shrinkage enters the benchmark with its strength frozen at the real-data
+estimate, which omits the variability of estimating it. Pooled calibration
+leaves per-comparator held-out coverage between \calFixedCovMin\ and
+\calJackCovMax, not uniformly at nominal. The lever-arm benchmark's population
+has a lower true correlation than the real estimate, so it validates the test's
+behaviour, not the size of the real effect. Every $p$-value in
+Appendix~\ref{app:claims} inherits these assumptions. Fixed-candidate $p$-values also carry Monte Carlo error from their
+parametric bootstrap. A second bootstrap of the C4 projection comparison gave
+$p=0.042$ against the reported \headFixedP.  %% nolint: a stated rerun value, not a reported result
 
 Resolvability figures for suites without seed replicates transfer a seed
 standard deviation from another scale. Whether seed noise changes with model

@@ -1,147 +1,153 @@
 {
   "alpha": 0.05,
+  "calibration_sources": {
+    "c4_en_bits_per_token": "target_scoring/calibration.json",
+    "lever_arm": "target_scoring/lever_arm_calibration.json",
+    "olmes_macro_error": "target_scoring/calibration_olmes_macro_error.json",
+    "published": "external/published_calibration.json"
+  },
   "correction_note": "Holm controls the family-wise error rate under any dependence; Benjamini-Yekutieli controls the false discovery rate under arbitrary dependence. Every claim shares the 25 DataDecide recipes.",
   "fixed_candidate_family": {
     "claims": [
       {
         "by_reject": false,
         "ci_pp": [
-          0.0688517249889351,
-          3.5683556467223645
+          0.16878795904172317,
+          3.4684194126695767
         ],
         "claim": "projection vs single-scale, c4_en_bits_per_token (these 25 recipes)",
         "estimate_pp": 1.8186036858556498,
         "family": "ranker comparison, fixed-candidate",
         "holm_reject": false,
-        "method": "parametric resampling, calibrated critical value",
+        "method": "parametric resampling, calibrated critical value (calibrated on c4_en_bits_per_token)",
         "nominal_reject": true,
-        "p": 0.038302241425123174
+        "p": 0.030488651472475925
       },
       {
         "by_reject": false,
         "ci_pp": [
-          -1.6822331947375913,
-          1.2216107575893769
+          -1.7890320931546941,
+          1.3284096560064798
         ],
         "claim": "shared_exponent vs single-scale, c4_en_bits_per_token (these 25 recipes)",
         "estimate_pp": -0.2303112185741072,
         "family": "ranker comparison, fixed-candidate",
         "holm_reject": false,
-        "method": "parametric resampling, calibrated critical value",
+        "method": "parametric resampling, calibrated critical value (calibrated on c4_en_bits_per_token)",
         "nominal_reject": false,
-        "p": 0.7369517977905615
+        "p": 0.7534842306291055
       },
       {
         "by_reject": false,
         "ci_pp": [
-          0.2352977540717529,
-          2.7359690751499466
+          0.2809270622310631,
+          2.690339766990636
         ],
         "claim": "eb_shrinkage vs single-scale, c4_en_bits_per_token (these 25 recipes)",
         "estimate_pp": 1.4856334146108496,
         "family": "ranker comparison, fixed-candidate",
         "holm_reject": false,
-        "method": "parametric resampling, calibrated critical value",
+        "method": "parametric resampling, calibrated critical value (calibrated on c4_en_bits_per_token)",
         "nominal_reject": true,
-        "p": 0.019252597476342337
+        "p": 0.01430944830830827
       },
       {
         "by_reject": true,
         "ci_pp": [
-          5.126191249955821,
-          11.927278771302227
+          5.356306446599691,
+          11.697163574658356
         ],
         "claim": "ensemble vs single-scale, c4_en_bits_per_token (these 25 recipes)",
         "estimate_pp": 8.526735010629023,
         "family": "ranker comparison, fixed-candidate",
         "holm_reject": true,
-        "method": "parametric resampling, calibrated critical value",
+        "method": "parametric resampling, calibrated critical value (calibrated on c4_en_bits_per_token)",
         "nominal_reject": true,
         "p": 0.0007407407407407407
       },
       {
         "by_reject": false,
         "ci_pp": [
-          0.3532267338426902,
-          2.5301652258873384
+          0.2991902858543263,
+          2.584201673875702
         ],
         "claim": "checkpoint_augmented vs single-scale, c4_en_bits_per_token (these 25 recipes)",
         "estimate_pp": 1.4416959798650142,
         "family": "ranker comparison, fixed-candidate",
         "holm_reject": false,
-        "method": "parametric resampling, calibrated critical value",
+        "method": "parametric resampling, calibrated critical value (calibrated on c4_en_bits_per_token)",
         "nominal_reject": true,
-        "p": 0.0076025089915048305
+        "p": 0.012683510959465405
       },
       {
         "by_reject": false,
         "ci_pp": [
-          -2.1073274406655838,
-          2.838675256794752
+          -2.0870219704472466,
+          2.818369786576415
         ],
         "claim": "projection vs single-scale, olmes_macro_error (these 25 recipes)",
         "estimate_pp": 0.36567390806458416,
         "family": "ranker comparison, fixed-candidate",
         "holm_reject": false,
-        "method": "parametric resampling, calibrated critical value (critical value transported from the C4 benchmark)",
+        "method": "parametric resampling, calibrated critical value (calibrated on olmes_macro_error)",
         "nominal_reject": false,
-        "p": 0.7529685200958098
+        "p": 0.7673186014006872
       },
       {
         "by_reject": false,
         "ci_pp": [
-          -1.510035173027788,
-          3.509320622823923
+          -1.5094073075704246,
+          3.5086927573665596
         ],
         "claim": "shared_exponent vs single-scale, olmes_macro_error (these 25 recipes)",
         "estimate_pp": 0.9996427248980674,
         "family": "ranker comparison, fixed-candidate",
         "holm_reject": false,
-        "method": "parametric resampling, calibrated critical value (critical value transported from the C4 benchmark)",
+        "method": "parametric resampling, calibrated critical value (calibrated on olmes_macro_error)",
         "nominal_reject": false,
-        "p": 0.4130302178770666
+        "p": 0.40091030838029096
       },
       {
         "by_reject": false,
         "ci_pp": [
-          -2.098084707190919,
-          2.8294325233200874
+          -2.0891649923290534,
+          2.8205128084582216
         ],
         "claim": "eb_shrinkage vs single-scale, olmes_macro_error (these 25 recipes)",
         "estimate_pp": 0.36567390806458416,
         "family": "ranker comparison, fixed-candidate",
         "holm_reject": false,
-        "method": "parametric resampling, calibrated critical value (critical value transported from the C4 benchmark)",
+        "method": "parametric resampling, calibrated critical value (calibrated on olmes_macro_error)",
         "nominal_reject": false,
-        "p": 0.7518675664748184
+        "p": 0.7676033029968186
       },
       {
         "by_reject": false,
         "ci_pp": [
-          -3.891775463374181,
-          2.801849355011557
+          -3.658041673134691,
+          2.568115564772066
         ],
         "claim": "ensemble vs single-scale, olmes_macro_error (these 25 recipes)",
         "estimate_pp": -0.5449630541813122,
         "family": "ranker comparison, fixed-candidate",
         "holm_reject": false,
-        "method": "parametric resampling, calibrated critical value (critical value transported from the C4 benchmark)",
+        "method": "parametric resampling, calibrated critical value (calibrated on olmes_macro_error)",
         "nominal_reject": false,
-        "p": 0.7314885371220883
+        "p": 0.7247651845474932
       },
       {
         "by_reject": false,
         "ci_pp": [
-          -3.09762785064621,
-          3.077092111677256
+          -2.9750525809786494,
+          2.954516842009695
         ],
         "claim": "checkpoint_augmented vs single-scale, olmes_macro_error (these 25 recipes)",
         "estimate_pp": -0.010267869484477027,
         "family": "ranker comparison, fixed-candidate",
         "holm_reject": false,
-        "method": "parametric resampling, calibrated critical value (critical value transported from the C4 benchmark)",
+        "method": "parametric resampling, calibrated critical value (calibrated on olmes_macro_error)",
         "nominal_reject": false,
-        "p": 0.995954085572704
+        "p": 0.9968306096229452
       }
     ],
     "m": 10,
@@ -154,565 +160,567 @@
       {
         "by_reject": false,
         "ci_pp": [
-          -1.0154887177532286,
-          4.652696089464528
+          -2.34674403897085,
+          5.98395141068215
         ],
         "claim": "projection vs single-scale, c4_en_bits_per_token",
         "estimate_pp": 1.8186036858556498,
         "family": "ranker comparison",
         "holm_reject": false,
-        "method": "random_jackknife",
+        "method": "random_u (calibrated on c4_en_bits_per_token)",
         "nominal_reject": false,
-        "p": 0.1827852113291939
+        "p": 0.2611737271424318
       },
       {
         "by_reject": false,
         "ci_pp": [
-          -1.10413904170596,
-          0.6435166045577457
+          -1.302636844314394,
+          0.8420144071661797
         ],
         "claim": "shared_exponent vs single-scale, c4_en_bits_per_token",
         "estimate_pp": -0.2303112185741072,
         "family": "ranker comparison",
         "holm_reject": false,
-        "method": "random_jackknife",
+        "method": "random_u (calibrated on c4_en_bits_per_token)",
         "nominal_reject": false,
-        "p": 0.5935028803918527
+        "p": 0.5743365738264098
       },
       {
         "by_reject": false,
         "ci_pp": [
-          -1.3209866913723194,
-          4.292253520594018
+          -2.757201981415693,
+          5.728468810637392
         ],
         "claim": "eb_shrinkage vs single-scale, c4_en_bits_per_token",
         "estimate_pp": 1.4856334146108496,
         "family": "ranker comparison",
         "holm_reject": false,
-        "method": "random_jackknife",
+        "method": "random_u (calibrated on c4_en_bits_per_token)",
         "nominal_reject": false,
-        "p": 0.2787898051149147
+        "p": 0.357461019063814
       },
       {
         "by_reject": false,
         "ci_pp": [
-          2.7546180759409014,
-          14.298851945317146
+          0.09489401637511996,
+          16.95857600488293
         ],
         "claim": "ensemble vs single-scale, c4_en_bits_per_token",
         "estimate_pp": 8.526735010629023,
         "family": "ranker comparison",
         "holm_reject": false,
-        "method": "random_jackknife",
+        "method": "random_u (calibrated on c4_en_bits_per_token)",
         "nominal_reject": true,
-        "p": 0.012135009509747663
+        "p": 0.047724158034113895
       },
       {
         "by_reject": false,
         "ci_pp": [
-          -0.9404565441141601,
-          3.8238485038441885
+          -1.1559807056748075,
+          4.039372665404835
         ],
         "claim": "checkpoint_augmented vs single-scale, c4_en_bits_per_token",
         "estimate_pp": 1.4416959798650142,
         "family": "ranker comparison",
         "holm_reject": false,
-        "method": "random_jackknife",
+        "method": "random_u (calibrated on c4_en_bits_per_token)",
         "nominal_reject": false,
-        "p": 0.21739049735401117
+        "p": 0.16899640744800748
       },
       {
         "by_reject": false,
         "ci_pp": [
-          -2.30671362174172,
-          3.0380614378708883
+          -3.266077688995996,
+          3.997425505125164
         ],
         "claim": "projection vs single-scale, olmes_macro_error",
         "estimate_pp": 0.36567390806458416,
         "family": "ranker comparison",
         "holm_reject": false,
-        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "method": "random_u (calibrated on olmes_macro_error)",
         "nominal_reject": false,
-        "p": 0.784072604885206
+        "p": 0.8123483143956919
       },
       {
         "by_reject": false,
         "ci_pp": [
-          -2.3204973998716256,
-          4.31978284966776
+          -3.8094922887928053,
+          5.80877773858894
         ],
         "claim": "shared_exponent vs single-scale, olmes_macro_error",
         "estimate_pp": 0.9996427248980674,
         "family": "ranker comparison",
         "holm_reject": false,
-        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "method": "random_u (calibrated on olmes_macro_error)",
         "nominal_reject": false,
-        "p": 0.5293355159777668
+        "p": 0.6131528251953209
       },
       {
         "by_reject": false,
         "ci_pp": [
-          -2.3067136217417197,
-          3.038061437870888
+          -3.266077688995996,
+          3.997425505125164
         ],
         "claim": "eb_shrinkage vs single-scale, olmes_macro_error",
         "estimate_pp": 0.36567390806458416,
         "family": "ranker comparison",
         "holm_reject": false,
-        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "method": "random_u (calibrated on olmes_macro_error)",
         "nominal_reject": false,
-        "p": 0.784072604885206
+        "p": 0.8123483143956919
       },
       {
         "by_reject": false,
         "ci_pp": [
-          -2.9328964485265923,
-          1.842970340163968
+          -3.9427587738789356,
+          2.8528326655163116
         ],
         "claim": "ensemble vs single-scale, olmes_macro_error",
         "estimate_pp": -0.5449630541813122,
         "family": "ranker comparison",
         "holm_reject": false,
-        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "method": "random_u (calibrated on olmes_macro_error)",
         "nominal_reject": false,
-        "p": 0.6449546274657514
+        "p": 0.6969315045958078
       },
       {
         "by_reject": false,
         "ci_pp": [
-          -2.8670806377774865,
-          2.8465448988085322
+          -3.9111377976961483,
+          3.890602058727194
         ],
         "claim": "checkpoint_augmented vs single-scale, olmes_macro_error",
         "estimate_pp": -0.010267869484477027,
         "family": "ranker comparison",
         "holm_reject": false,
-        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "method": "random_u (calibrated on olmes_macro_error)",
         "nominal_reject": false,
-        "p": 0.9945419481222607
+        "p": 0.992975260987779
       },
       {
         "by_reject": false,
         "ci_pp": [
-          3.676876062764312,
-          15.762784701113329
+          0.5616918399145003,
+          18.877968923963138
         ],
         "claim": "optimised allocation at 0.01 of budget vs single-scale, c4",
         "estimate_pp": 9.71983038193882,
         "family": "allocation",
         "holm_reject": false,
-        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "method": "random_u (calibrated on c4_en_bits_per_token at the primary design, applied to the 1B allocation design)",
         "nominal_reject": true,
-        "p": 0.007716814909868308
+        "p": 0.03922131760585812
       },
       {
         "by_reject": false,
         "ci_pp": [
-          2.5074347869266767,
-          16.49094016715588
+          -1.4332341939434894,
+          20.431609148026048
         ],
         "claim": "optimised allocation at 0.03 of budget vs single-scale, c4",
         "estimate_pp": 9.499187477041279,
         "family": "allocation",
         "holm_reject": false,
-        "method": "random_jackknife (critical value transported from the C4 benchmark)",
-        "nominal_reject": true,
-        "p": 0.019099084719608528
+        "method": "random_u (calibrated on c4_en_bits_per_token at the primary design, applied to the 1B allocation design)",
+        "nominal_reject": false,
+        "p": 0.06807207785157487
       },
       {
         "by_reject": false,
         "ci_pp": [
-          1.08856175310624,
-          14.593024513117083
+          -2.8383427545207667,
+          18.51992902074409
         ],
         "claim": "optimised allocation at 0.1 of budget vs single-scale, c4",
         "estimate_pp": 7.840793133111662,
         "family": "allocation",
         "holm_reject": false,
-        "method": "random_jackknife (critical value transported from the C4 benchmark)",
-        "nominal_reject": true,
-        "p": 0.029137480009270078
+        "method": "random_u (calibrated on c4_en_bits_per_token at the primary design, applied to the 1B allocation design)",
+        "nominal_reject": false,
+        "p": 0.09894780619537435
       },
       {
         "by_reject": false,
         "ci_pp": [
-          -0.12327213339959275,
-          8.483487780499697
+          -2.223417815107168,
+          10.583633462207274
         ],
         "claim": "optimised allocation at 0.3 of budget vs single-scale, c4",
         "estimate_pp": 4.180107823550053,
         "family": "allocation",
         "holm_reject": false,
-        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "method": "random_u (calibrated on c4_en_bits_per_token at the primary design, applied to the 1B allocation design)",
         "nominal_reject": false,
-        "p": 0.05689336134580192
+        "p": 0.12382701533038143
       },
       {
         "by_reject": false,
         "ci_pp": [
-          -0.12327213339959275,
-          8.483487780499697
+          -2.223417815107168,
+          10.583633462207274
         ],
         "claim": "optimised allocation at 0.5 of budget vs single-scale, c4",
         "estimate_pp": 4.180107823550053,
         "family": "allocation",
         "holm_reject": false,
-        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "method": "random_u (calibrated on c4_en_bits_per_token at the primary design, applied to the 1B allocation design)",
         "nominal_reject": false,
-        "p": 0.05689336134580192
+        "p": 0.12382701533038143
       },
       {
         "by_reject": false,
         "ci_pp": [
-          -0.718289210898247,
-          4.646505034508067
+          -1.5988911076088026,
+          5.527106931218622
         ],
         "claim": "optimised allocation at 1 of budget vs single-scale, c4",
         "estimate_pp": 1.9641079118049098,
         "family": "allocation",
         "holm_reject": false,
-        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "method": "random_u (calibrated on c4_en_bits_per_token at the primary design, applied to the 1B allocation design)",
         "nominal_reject": false,
-        "p": 0.1308241809396008
+        "p": 0.17143374446425952
       },
       {
         "by_reject": true,
-        "ci_pp": null,
+        "ci_pp": [
+          0.8016662674536721,
+          0.9140426016545453
+        ],
         "claim": "projection excess rises with log lever arm (expected-error scoring)",
         "estimate_pp": null,
         "family": "dose-response",
         "holm_reject": true,
-        "method": "delete-one-recipe jackknife of the Spearman correlation's Fisher z",
+        "method": "leave-one-recipe-out Fisher-z jackknife; p against the correlated-design null comparator",
         "nominal_reject": true,
-        "p": 8.19949184257004e-20
+        "p": 0.00012048192771084337
       },
       {
         "by_reject": false,
         "ci_pp": [
-          -19.509884945469025,
-          3.065440501024584
+          -20.44607268632867,
+          4.001628241884228
         ],
         "claim": "DataDecide 2_param-default vs single-scale at 750M (exploratory: open discrepancy)",
         "estimate_pp": -8.22222222222222,
         "family": "published re-test, scaling laws",
         "holm_reject": false,
-        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "method": "random_u (calibrated on the scaling-law re-test)",
         "nominal_reject": false,
-        "p": 0.13254331777447537
+        "p": 0.184209555664395
       },
       {
         "by_reject": false,
         "ci_pp": [
-          -6.433946641767601,
-          8.656168863989825
+          -7.100356662353281,
+          9.322578884575506
         ],
         "claim": "DataDecide 3_param-1_step vs single-scale at 750M (exploratory: open discrepancy)",
         "estimate_pp": 1.1111111111111123,
         "family": "published re-test, scaling laws",
         "holm_reject": false,
-        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "method": "random_u (calibrated on the scaling-law re-test)",
         "nominal_reject": false,
-        "p": 0.7679099785692748
+        "p": 0.7795758523545363
       },
       {
         "by_reject": false,
         "ci_pp": [
-          -10.106120601072618,
-          6.995009489961511
+          -10.377628892227591,
+          7.266517781116484
         ],
         "claim": "DataDecide 3_param-default-helper_points-step2=0.5 vs single-scale at 750M (exploratory: open discrepancy)",
         "estimate_pp": -1.5555555555555538,
         "family": "published re-test, scaling laws",
         "holm_reject": false,
-        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "method": "random_u (calibrated on the scaling-law re-test)",
         "nominal_reject": false,
-        "p": 0.7101194293565697
+        "p": 0.7185697827799012
       },
       {
         "by_reject": false,
         "ci_pp": [
-          -8.23082464047995,
-          6.453046862702175
+          -8.105207718724271,
+          6.327429940946495
         ],
         "claim": "DataDecide 3_param-default-helper_points vs single-scale at 750M (exploratory: open discrepancy)",
         "estimate_pp": -0.8888888888888876,
         "family": "published re-test, scaling laws",
         "holm_reject": false,
-        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "method": "random_u (calibrated on the scaling-law re-test)",
         "nominal_reject": false,
-        "p": 0.8101668597707168
+        "p": 0.8009082316860725
       },
       {
         "by_reject": false,
         "ci_pp": [
-          -10.40295398354109,
-          6.6251762057633155
+          -10.67097795447186,
+          6.893200176694085
         ],
         "claim": "DataDecide 3_param-default-step2=0.5 vs single-scale at 750M (exploratory: open discrepancy)",
         "estimate_pp": -1.8888888888888873,
         "family": "published re-test, scaling laws",
         "holm_reject": false,
-        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "method": "random_u (calibrated on the scaling-law re-test)",
         "nominal_reject": false,
-        "p": 0.6534373045045759
+        "p": 0.6565955195234157
       },
       {
         "by_reject": false,
         "ci_pp": [
-          -10.592582744655608,
-          6.814804966877833
+          -10.794799145888632,
+          7.017021368110857
         ],
         "claim": "DataDecide 3_param-default vs single-scale at 750M (exploratory: open discrepancy)",
         "estimate_pp": -1.8888888888888877,
         "family": "published re-test, scaling laws",
         "holm_reject": false,
-        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "method": "random_u (calibrated on the scaling-law re-test)",
         "nominal_reject": false,
-        "p": 0.6629425502420596
+        "p": 0.6609400769557691
       },
       {
         "by_reject": false,
         "ci_pp": [
-          -27.769296570660085,
-          -2.675147873784354
+          -28.620072557945385,
+          -1.8243718864990566
         ],
         "claim": "DataDecide 5_param-1_step-ai2 vs single-scale at 750M (exploratory: open discrepancy)",
         "estimate_pp": -15.22222222222222,
         "family": "published re-test, scaling laws",
         "holm_reject": false,
-        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "method": "random_u (calibrated on the scaling-law re-test)",
         "nominal_reject": true,
-        "p": 0.026551920237743998
+        "p": 0.028069910693886757
       },
       {
         "by_reject": false,
         "ci_pp": [
-          -11.266114772617671,
-          6.821670328173228
+          -11.599345050508907,
+          7.154900606064464
         ],
         "claim": "DataDecide 5_param-ai2 vs single-scale at 750M (exploratory: open discrepancy)",
         "estimate_pp": -2.222222222222221,
         "family": "published re-test, scaling laws",
         "holm_reject": false,
-        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "method": "random_u (calibrated on the scaling-law re-test)",
         "nominal_reject": false,
-        "p": 0.611748618010312
+        "p": 0.6229834232248141
       },
       {
         "by_reject": false,
         "ci_pp": [
-          -17.808159427672997,
-          6.919270538784112
+          -20.343826632537706,
+          9.454937743648818
         ],
         "claim": "Correct Prob vs accuracy at 10M, OLMES macro",
         "estimate_pp": -5.444444444444443,
         "family": "published re-test, proxy metric",
         "holm_reject": false,
-        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "method": "random_u (calibrated on the Correct Prob re-test)",
         "nominal_reject": false,
-        "p": 0.35795592115061514
+        "p": 0.4378683822057491
       },
       {
         "by_reject": false,
         "ci_pp": [
-          -8.770379064213035,
-          13.437045730879706
+          -10.809477470844989,
+          15.476144137511657
         ],
         "claim": "Correct Prob vs accuracy at 14M, OLMES macro",
         "estimate_pp": 2.333333333333335,
         "family": "published re-test, proxy metric",
         "holm_reject": false,
-        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "method": "random_u (calibrated on the Correct Prob re-test)",
         "nominal_reject": false,
-        "p": 0.6742497416252862
+        "p": 0.6949837489786983
       },
       {
         "by_reject": false,
         "ci_pp": [
-          -5.5269405018142415,
-          2.193607168480909
+          -5.636981773340596,
+          2.3036484400072625
         ],
         "claim": "Correct Prob vs accuracy at 150M, OLMES macro",
         "estimate_pp": -1.6666666666666665,
         "family": "published re-test, proxy metric",
         "holm_reject": false,
-        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "method": "random_u (calibrated on the Correct Prob re-test)",
         "nominal_reject": false,
-        "p": 0.3669578153846118
+        "p": 0.37339622868466504
       },
       {
         "by_reject": false,
         "ci_pp": [
-          -3.354224877830175,
-          16.243113766719063
+          -5.289795994346951,
+          18.17868488323584
         ],
         "claim": "Correct Prob vs accuracy at 16M, OLMES macro",
         "estimate_pp": 6.444444444444445,
         "family": "published re-test, proxy metric",
         "holm_reject": false,
-        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "method": "random_u (calibrated on the Correct Prob re-test)",
         "nominal_reject": false,
-        "p": 0.17234858096453753
+        "p": 0.2478201646341649
       },
       {
         "by_reject": false,
         "ci_pp": [
-          -5.850522698444612,
-          14.739411587333505
+          -7.489108674328488,
+          16.37799756321738
         ],
         "claim": "Correct Prob vs accuracy at 20M, OLMES macro",
         "estimate_pp": 4.444444444444446,
         "family": "published re-test, proxy metric",
         "holm_reject": false,
-        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "method": "random_u (calibrated on the Correct Prob re-test)",
         "nominal_reject": false,
-        "p": 0.36701273531839096
+        "p": 0.42951262519313127
       },
       {
         "by_reject": false,
         "ci_pp": [
-          -4.747018885131748,
-          6.74701888513175
+          -5.6724885147195945,
+          7.672488514719596
         ],
         "claim": "Correct Prob vs accuracy at 300M, OLMES macro",
         "estimate_pp": 1.0000000000000004,
         "family": "published re-test, proxy metric",
         "holm_reject": false,
-        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "method": "random_u (calibrated on the Correct Prob re-test)",
         "nominal_reject": false,
-        "p": 0.7234578796164124
+        "p": 0.741076112471728
       },
       {
         "by_reject": false,
         "ci_pp": [
-          17.200711425787947,
-          41.021510796434285
+          15.412501768449953,
+          42.80972045377227
         ],
         "claim": "Correct Prob vs accuracy at 4M, OLMES macro",
         "estimate_pp": 29.111111111111114,
         "family": "published re-test, proxy metric",
         "holm_reject": false,
-        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "method": "random_u (calibrated on the Correct Prob re-test)",
         "nominal_reject": true,
-        "p": 0.002139287556615521
+        "p": 0.0020300655529409406
       },
       {
         "by_reject": false,
         "ci_pp": [
-          -4.505823053324028,
-          5.616934164435141
+          -5.069331777374264,
+          6.180442888485376
         ],
         "claim": "Correct Prob vs accuracy at 530M, OLMES macro",
         "estimate_pp": 0.555555555555556,
         "family": "published re-test, proxy metric",
         "holm_reject": false,
-        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "method": "random_u (calibrated on the Correct Prob re-test)",
         "nominal_reject": false,
-        "p": 0.8273830775350949
+        "p": 0.8323621122308026
       },
       {
         "by_reject": false,
         "ci_pp": [
-          -2.9821466325093935,
-          10.982146632509394
+          -4.213289202888575,
+          12.213289202888575
         ],
         "claim": "Correct Prob vs accuracy at 60M, OLMES macro",
         "estimate_pp": 4.0,
         "family": "published re-test, proxy metric",
         "holm_reject": false,
-        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "method": "random_u (calibrated on the Correct Prob re-test)",
         "nominal_reject": false,
-        "p": 0.24485743146278227
+        "p": 0.3030372870819249
       },
       {
         "by_reject": false,
         "ci_pp": [
-          -16.154342028279896,
-          5.932119806057678
+          -18.293301825504173,
+          8.071079603281953
         ],
         "claim": "Correct Prob vs accuracy at 6M, OLMES macro",
         "estimate_pp": -5.111111111111109,
         "family": "published re-test, proxy metric",
         "holm_reject": false,
-        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "method": "random_u (calibrated on the Correct Prob re-test)",
         "nominal_reject": false,
-        "p": 0.3385294352074887
+        "p": 0.4073967425559838
       },
       {
         "by_reject": false,
         "ci_pp": [
-          -3.948142412284019,
-          6.392586856728464
+          -4.471499240808937,
+          6.9159436852533815
         ],
         "claim": "Correct Prob vs accuracy at 750M, OLMES macro",
         "estimate_pp": 1.2222222222222223,
         "family": "published re-test, proxy metric",
         "holm_reject": false,
-        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "method": "random_u (calibrated on the Correct Prob re-test)",
         "nominal_reject": false,
-        "p": 0.630081352784553
+        "p": 0.6386544179788471
       },
       {
         "by_reject": false,
         "ci_pp": [
-          -25.54476715795707,
-          -2.010788397598475
+          -27.531593949410084,
+          -0.02396160614546261
         ],
         "claim": "Correct Prob vs accuracy at 8M, OLMES macro",
         "estimate_pp": -13.777777777777773,
         "family": "published re-test, proxy metric",
         "holm_reject": false,
-        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "method": "random_u (calibrated on the Correct Prob re-test)",
         "nominal_reject": true,
-        "p": 0.028658131866300063
+        "p": 0.04939083171409031
       },
       {
         "by_reject": false,
         "ci_pp": [
-          -5.7115865391168965,
-          2.600475428005786
+          -5.930836680602117,
+          2.8197255694910064
         ],
         "claim": "Correct Prob vs accuracy at 90M, OLMES macro",
         "estimate_pp": -1.5555555555555551,
         "family": "published re-test, proxy metric",
         "holm_reject": false,
-        "method": "random_jackknife (critical value transported from the C4 benchmark)",
+        "method": "random_u (calibrated on the Correct Prob re-test)",
         "nominal_reject": false,
-        "p": 0.4364864272792398
+        "p": 0.44909795040804934
       }
     ],
     "m": 38,
     "n_by": 1,
     "n_holm": 1,
-    "n_nominal": 8
+    "n_nominal": 6
   },
-  "random_candidate_se": "random_jackknife",
   "ranker_detail": {
     "c4_en_bits_per_token": {
       "bootstrap_draws": 400,
       "comparisons": {
         "checkpoint_augmented": {
           "calibrated_fixed_candidate": {
-            "ci_high": 2.5301652258873384,
-            "ci_low": 0.3532267338426902,
-            "critical_value": 2.2590775822890277,
-            "p_two_sided": 0.0076025089915048305,
-            "se": 0.481820214832739
+            "ci_high": 2.584201673875702,
+            "ci_low": 0.2991902858543263,
+            "critical_value": 2.2359097649243167,
+            "p_two_sided": 0.012683510959465405,
+            "se": 0.5109802336094545
           },
           "calibrated_random_candidate": {
-            "ci_high": 3.8238485038441885,
-            "ci_low": -0.9404565441141601,
-            "critical_value": 1.7289714998116024,
-            "p_two_sided": 0.21739049735401117,
-            "se": 1.3777858826699838,
-            "se_method": "random_jackknife"
+            "ci_high": 4.039372665404835,
+            "ci_low": -1.1559807056748075,
+            "critical_value": 2.9890861649366043,
+            "p_two_sided": 0.16899640744800748,
+            "se": 0.8690537984524497,
+            "se_method": "random_u"
           },
           "estimate_pp": 1.4416959798650142,
           "fixed_candidate": {
-            "ci_high": 2.386046247960534,
-            "ci_low": 0.49734571176949416,
-            "p_two_sided": 0.0027698692158503128,
-            "se": 0.481820214832739
+            "ci_high": 2.443198834551408,
+            "ci_low": 0.44019312517861997,
+            "p_two_sided": 0.004780977298313298,
+            "se": 0.5109802336094545
           },
           "kernel_jackknife_se": 1.3777858826699838,
           "random_candidate": {
@@ -724,26 +732,26 @@
         },
         "eb_shrinkage": {
           "calibrated_fixed_candidate": {
-            "ci_high": 2.7359690751499466,
-            "ci_low": 0.2352977540717529,
-            "critical_value": 2.2590775822890277,
-            "p_two_sided": 0.019252597476342337,
-            "se": 0.5534717666810648
+            "ci_high": 2.690339766990636,
+            "ci_low": 0.2809270622310631,
+            "critical_value": 2.2359097649243167,
+            "p_two_sided": 0.01430944830830827,
+            "se": 0.5387991820057034
           },
           "calibrated_random_candidate": {
-            "ci_high": 4.292253520594018,
-            "ci_low": -1.3209866913723194,
-            "critical_value": 1.7289714998116024,
-            "p_two_sided": 0.2787898051149147,
-            "se": 1.6232888201390208,
-            "se_method": "random_jackknife"
+            "ci_high": 5.728468810637392,
+            "ci_low": -2.757201981415693,
+            "critical_value": 2.9890861649366043,
+            "p_two_sided": 0.357461019063814,
+            "se": 1.419442318457397,
+            "se_method": "random_u"
           },
           "estimate_pp": 1.4856334146108496,
           "fixed_candidate": {
-            "ci_high": 2.5704181437654925,
-            "ci_low": 0.4008486854562068,
-            "p_two_sided": 0.007270183200637488,
-            "se": 0.5534717666810648
+            "ci_high": 2.54166040624167,
+            "ci_low": 0.4296064229800294,
+            "p_two_sided": 0.0058280049912002715,
+            "se": 0.5387991820057034
           },
           "kernel_jackknife_se": 1.623288820139021,
           "random_candidate": {
@@ -761,26 +769,26 @@
         },
         "ensemble": {
           "calibrated_fixed_candidate": {
-            "ci_high": 11.927278771302227,
-            "ci_low": 5.126191249955821,
-            "critical_value": 2.2590775822890277,
+            "ci_high": 11.697163574658356,
+            "ci_low": 5.356306446599691,
+            "critical_value": 2.2359097649243167,
             "p_two_sided": 0.0007407407407407407,
-            "se": 1.5052797599042949
+            "se": 1.417959084827669
           },
           "calibrated_random_candidate": {
-            "ci_high": 14.298851945317146,
-            "ci_low": 2.7546180759409014,
-            "critical_value": 1.7289714998116024,
-            "p_two_sided": 0.012135009509747663,
-            "se": 3.338468526124972,
-            "se_method": "random_jackknife"
+            "ci_high": 16.95857600488293,
+            "ci_low": 0.09489401637511996,
+            "critical_value": 2.9890861649366043,
+            "p_two_sided": 0.047724158034113895,
+            "se": 2.8208758560269658,
+            "se_method": "random_u"
           },
           "estimate_pp": 8.526735010629023,
           "fixed_candidate": {
-            "ci_high": 11.477029126698541,
-            "ci_low": 5.576440894559505,
-            "p_two_sided": 1.4740942071022067e-08,
-            "se": 1.5052797599042949
+            "ci_high": 11.30588374844263,
+            "ci_low": 5.747586272815417,
+            "p_two_sided": 1.816879507179102e-09,
+            "se": 1.417959084827669
           },
           "kernel_jackknife_se": 3.338468526124972,
           "random_candidate": {
@@ -792,26 +800,26 @@
         },
         "projection": {
           "calibrated_fixed_candidate": {
-            "ci_high": 3.5683556467223645,
-            "ci_low": 0.0688517249889351,
-            "critical_value": 2.2590775822890277,
-            "p_two_sided": 0.038302241425123174,
-            "se": 0.7745426605020643
+            "ci_high": 3.4684194126695767,
+            "ci_low": 0.16878795904172317,
+            "critical_value": 2.2359097649243167,
+            "p_two_sided": 0.030488651472475925,
+            "se": 0.7378722311138398
           },
           "calibrated_random_candidate": {
-            "ci_high": 4.652696089464528,
-            "ci_low": -1.0154887177532286,
-            "critical_value": 1.7289714998116024,
-            "p_two_sided": 0.1827852113291939,
-            "se": 1.6391782073433228,
-            "se_method": "random_jackknife"
+            "ci_high": 5.98395141068215,
+            "ci_low": -2.34674403897085,
+            "critical_value": 2.9890861649366043,
+            "p_two_sided": 0.2611737271424318,
+            "se": 1.3935187863394507,
+            "se_method": "random_u"
           },
           "estimate_pp": 1.8186036858556498,
           "fixed_candidate": {
-            "ci_high": 3.33667940492953,
-            "ci_low": 0.3005279667817695,
-            "p_two_sided": 0.01887599216000646,
-            "se": 0.7745426605020643
+            "ci_high": 3.264806684030991,
+            "ci_low": 0.37240068768030876,
+            "p_two_sided": 0.013714357078744277,
+            "se": 0.7378722311138398
           },
           "kernel_jackknife_se": 1.6391782073433228,
           "random_candidate": {
@@ -823,26 +831,26 @@
         },
         "shared_exponent": {
           "calibrated_fixed_candidate": {
-            "ci_high": 1.2216107575893769,
-            "ci_low": -1.6822331947375913,
-            "critical_value": 2.2590775822890277,
-            "p_two_sided": 0.7369517977905615,
-            "se": 0.6427056722382739
+            "ci_high": 1.3284096560064798,
+            "ci_low": -1.7890320931546941,
+            "critical_value": 2.2359097649243167,
+            "p_two_sided": 0.7534842306291055,
+            "se": 0.6971304920408307
           },
           "calibrated_random_candidate": {
-            "ci_high": 0.6435166045577457,
-            "ci_low": -1.10413904170596,
-            "critical_value": 1.7289714998116024,
-            "p_two_sided": 0.5935028803918527,
-            "se": 0.5054032546095003,
-            "se_method": "random_jackknife"
+            "ci_high": 0.8420144071661797,
+            "ci_low": -1.302636844314394,
+            "critical_value": 2.9890861649366043,
+            "p_two_sided": 0.5743365738264098,
+            "se": 0.358746977025679,
+            "se_method": "random_u"
           },
           "estimate_pp": -0.2303112185741072,
           "fixed_candidate": {
-            "ci_high": 1.029368751672514,
-            "ci_low": -1.4899911888207285,
-            "p_two_sided": 0.7200841510755427,
-            "se": 0.6427056722382739
+            "ci_high": 1.1360394383506076,
+            "ci_low": -1.596661875498822,
+            "p_two_sided": 0.7411201705243122,
+            "se": 0.6971304920408307
           },
           "kernel_jackknife_se": 0.5054032546095003,
           "random_candidate": {
@@ -860,26 +868,26 @@
         },
         "single_scale_150M": {
           "calibrated_fixed_candidate": {
-            "ci_high": 0.5266233226920681,
-            "ci_low": -1.5651909614914472,
-            "critical_value": 2.2590775822890277,
-            "p_two_sided": 0.30616171513693113,
-            "se": 0.4629797357521401
+            "ci_high": 0.6203178485192756,
+            "ci_low": -1.6588854873186545,
+            "critical_value": 2.2359097649243167,
+            "p_two_sided": 0.3554376699464846,
+            "se": 0.5096814217623579
           },
           "calibrated_random_candidate": {
-            "ci_high": 0.8571486115323096,
-            "ci_low": -1.8957162503316884,
-            "critical_value": 1.7289714998116024,
-            "p_two_sided": 0.43091294140503444,
-            "se": 0.796098970446871,
-            "se_method": "random_jackknife"
+            "ci_high": 0.7749494885657614,
+            "ci_low": -1.8135171273651403,
+            "critical_value": 2.9890861649366043,
+            "p_two_sided": 0.29465629920958925,
+            "se": 0.43298628294741726,
+            "se_method": "random_u"
           },
           "estimate_pp": -0.5192838193996895,
           "fixed_candidate": {
-            "ci_high": 0.3881397882463763,
-            "ci_low": -1.4267074270457551,
-            "p_two_sided": 0.2620272707662379,
-            "se": 0.4629797357521401
+            "ci_high": 0.4796734108437013,
+            "ci_low": -1.5182410496430803,
+            "p_two_sided": 0.30827893267034345,
+            "se": 0.5096814217623579
           },
           "kernel_jackknife_se": 0.796098970446871,
           "random_candidate": {
@@ -891,26 +899,26 @@
         },
         "single_scale_20M": {
           "calibrated_fixed_candidate": {
-            "ci_high": 10.04423527793146,
-            "ci_low": 4.143556598947331,
-            "critical_value": 2.2590775822890277,
+            "ci_high": 10.12856564522041,
+            "ci_low": 4.05922623165838,
+            "critical_value": 2.2359097649243167,
             "p_two_sided": 0.0007407407407407407,
-            "se": 1.3059929249984457
+            "se": 1.3572415821010269
           },
           "calibrated_random_candidate": {
-            "ci_high": 11.296793459935856,
-            "ci_low": 2.890998416942935,
-            "critical_value": 1.7289714998116024,
-            "p_two_sided": 0.0070138950507748765,
-            "se": 2.4308657036593315,
-            "se_method": "random_jackknife"
+            "ci_high": 12.412119202411056,
+            "ci_low": 1.775672674467736,
+            "critical_value": 2.9890861649366043,
+            "p_two_sided": 0.02782028738527731,
+            "se": 1.7792137698661672,
+            "se_method": "random_u"
           },
           "estimate_pp": 7.093895938439395,
           "fixed_candidate": {
-            "ci_high": 9.65359503550047,
-            "ci_low": 4.534196841378321,
-            "p_two_sided": 5.578757465399522e-08,
-            "se": 1.3059929249984457
+            "ci_high": 9.754040557677571,
+            "ci_low": 4.433751319201219,
+            "p_two_sided": 1.7256120981474238e-07,
+            "se": 1.3572415821010269
           },
           "kernel_jackknife_se": 2.4308657036593315,
           "random_candidate": {
@@ -922,26 +930,26 @@
         },
         "single_scale_60M": {
           "calibrated_fixed_candidate": {
-            "ci_high": 3.170924206365107,
-            "ci_low": -0.5359237345948116,
-            "critical_value": 2.2590775822890277,
-            "p_two_sided": 0.15628076640624067,
-            "se": 0.8204339616357768
+            "ci_high": 3.120275623986558,
+            "ci_low": -0.4852751522162624,
+            "critical_value": 2.2359097649243167,
+            "p_two_sided": 0.14926050597803997,
+            "se": 0.8062827115755418
           },
           "calibrated_random_candidate": {
-            "ci_high": 3.248977011067508,
-            "ci_low": -0.6139765392972125,
-            "critical_value": 1.7289714998116024,
-            "p_two_sided": 0.16200942119681028,
-            "se": 1.1171247041335406,
-            "se_method": "random_jackknife"
+            "ci_high": 3.2319790611158288,
+            "ci_low": -0.5969785893455335,
+            "critical_value": 2.9890861649366043,
+            "p_two_sided": 0.11504729530001256,
+            "se": 0.6404896746331451,
+            "se_method": "random_u"
           },
           "estimate_pp": 1.3175002358851478,
           "fixed_candidate": {
-            "ci_high": 2.9255212523847867,
-            "ci_low": -0.29052078061449116,
-            "p_two_sided": 0.10830516838239078,
-            "se": 0.8204339616357768
+            "ci_high": 2.8977853119305057,
+            "ci_low": -0.2627848401602102,
+            "p_two_sided": 0.10224992226375532,
+            "se": 0.8062827115755418
           },
           "kernel_jackknife_se": 1.1171247041335406,
           "random_candidate": {
@@ -953,26 +961,26 @@
         },
         "single_scale_90M": {
           "calibrated_fixed_candidate": {
-            "ci_high": 1.3446440899067607,
-            "ci_low": -1.1267049363490995,
-            "critical_value": 2.2590775822890277,
-            "p_two_sided": 0.8507252768287734,
-            "se": 0.5469818844715698
+            "ci_high": 1.3625320477620904,
+            "ci_low": -1.1445928942044292,
+            "critical_value": 2.2359097649243167,
+            "p_two_sided": 0.8539476092800508,
+            "se": 0.5606498485083953
           },
           "calibrated_random_candidate": {
-            "ci_high": 1.7921113718100283,
-            "ci_low": -1.5741722182523672,
-            "critical_value": 1.7289714998116024,
-            "p_two_sided": 0.9012149518862698,
-            "se": 0.97349308257227,
-            "se_method": "random_jackknife"
+            "ci_high": 1.6900840785239923,
+            "ci_low": -1.4721449249663312,
+            "critical_value": 2.9890861649366043,
+            "p_two_sided": 0.8663331825556378,
+            "se": 0.5289625037552893,
+            "se_method": "random_u"
           },
           "estimate_pp": 0.10896957677883047,
           "fixed_candidate": {
-            "ci_high": 1.181034370538956,
-            "ci_low": -0.9630952169812951,
-            "p_two_sided": 0.8420908758247947,
-            "se": 0.5469818844715698
+            "ci_high": 1.2078230877931226,
+            "ci_low": -0.9898839342354616,
+            "p_two_sided": 0.8458916727404355,
+            "se": 0.5606498485083953
           },
           "kernel_jackknife_se": 0.97349308257227,
           "random_candidate": {
@@ -990,26 +998,26 @@
       "comparisons": {
         "checkpoint_augmented": {
           "calibrated_fixed_candidate": {
-            "ci_high": 3.077092111677256,
-            "ci_low": -3.09762785064621,
-            "critical_value": 2.2590775822890277,
-            "p_two_sided": 0.995954085572704,
-            "se": 1.3666462831406798
+            "ci_high": 2.954516842009695,
+            "ci_low": -2.9750525809786494,
+            "critical_value": 2.0863951183989675,
+            "p_two_sided": 0.9968306096229452,
+            "se": 1.4210082670099673
           },
           "calibrated_random_candidate": {
-            "ci_high": 2.8465448988085322,
-            "ci_low": -2.8670806377774865,
-            "critical_value": 1.7289714998116024,
-            "p_two_sided": 0.9945419481222607,
-            "se": 1.6523191785430253,
-            "se_method": "random_jackknife"
+            "ci_high": 3.890602058727194,
+            "ci_low": -3.9111377976961483,
+            "critical_value": 2.9753522993623096,
+            "p_two_sided": 0.992975260987779,
+            "se": 1.3110615267468402,
+            "se_method": "random_u"
           },
           "estimate_pp": -0.010267869484477027,
           "fixed_candidate": {
-            "ci_high": 2.668309625076785,
-            "ci_low": -2.688845364045739,
-            "p_two_sided": 0.9940054002560851,
-            "se": 1.3666462831406798
+            "ci_high": 2.7748571555887356,
+            "ci_low": -2.79539289455769,
+            "p_two_sided": 0.9942347251360575,
+            "se": 1.4210082670099673
           },
           "kernel_jackknife_se": 1.6523191785430253,
           "random_candidate": {
@@ -1021,26 +1029,26 @@
         },
         "eb_shrinkage": {
           "calibrated_fixed_candidate": {
-            "ci_high": 2.8294325233200874,
-            "ci_low": -2.098084707190919,
-            "critical_value": 2.2590775822890277,
-            "p_two_sided": 0.7518675664748184,
-            "se": 1.0906038086390468
+            "ci_high": 2.8205128084582216,
+            "ci_low": -2.0891649923290534,
+            "critical_value": 2.0863951183989675,
+            "p_two_sided": 0.7676033029968186,
+            "se": 1.1765934835379608
           },
           "calibrated_random_candidate": {
-            "ci_high": 3.038061437870888,
-            "ci_low": -2.3067136217417197,
-            "critical_value": 1.7289714998116024,
-            "p_two_sided": 0.784072604885206,
-            "se": 1.5456515796226258,
-            "se_method": "random_jackknife"
+            "ci_high": 3.997425505125164,
+            "ci_low": -3.266077688995996,
+            "critical_value": 2.9753522993623096,
+            "p_two_sided": 0.8123483143956919,
+            "se": 1.2206122944966729,
+            "se_method": "random_u"
           },
           "estimate_pp": 0.36567390806458416,
           "fixed_candidate": {
-            "ci_high": 2.5032180943993287,
-            "ci_low": -1.7718702782701605,
-            "p_two_sided": 0.7374026314465301,
-            "se": 1.0906038086390468
+            "ci_high": 2.671754760243508,
+            "ci_low": -1.94040694411434,
+            "p_two_sided": 0.7559600013900974,
+            "se": 1.1765934835379608
           },
           "kernel_jackknife_se": 1.545651579622626,
           "random_candidate": {
@@ -1058,26 +1066,26 @@
         },
         "ensemble": {
           "calibrated_fixed_candidate": {
-            "ci_high": 2.801849355011557,
-            "ci_low": -3.891775463374181,
-            "critical_value": 2.2590775822890277,
-            "p_two_sided": 0.7314885371220883,
-            "se": 1.4814951179329068
+            "ci_high": 2.568115564772066,
+            "ci_low": -3.658041673134691,
+            "critical_value": 2.0863951183989675,
+            "p_two_sided": 0.7247651845474932,
+            "se": 1.492084884354146
           },
           "calibrated_random_candidate": {
-            "ci_high": 1.842970340163968,
-            "ci_low": -2.9328964485265923,
-            "critical_value": 1.7289714998116024,
-            "p_two_sided": 0.6449546274657514,
-            "se": 1.3811294139929327,
-            "se_method": "random_jackknife"
+            "ci_high": 2.8528326655163116,
+            "ci_low": -3.9427587738789356,
+            "critical_value": 2.9753522993623096,
+            "p_two_sided": 0.6969315045958078,
+            "se": 1.1419809749675203,
+            "se_method": "random_u"
           },
           "estimate_pp": -0.5449630541813122,
           "fixed_candidate": {
-            "ci_high": 2.3587140202391055,
-            "ci_low": -3.4486401286017294,
-            "p_two_sided": 0.7129875631847054,
-            "se": 1.4814951179329068
+            "ci_high": 2.3794695810294257,
+            "ci_low": -3.4693956893920506,
+            "p_two_sided": 0.7149352779549956,
+            "se": 1.492084884354146
           },
           "kernel_jackknife_se": 1.3811294139929327,
           "random_candidate": {
@@ -1089,26 +1097,26 @@
         },
         "projection": {
           "calibrated_fixed_candidate": {
-            "ci_high": 2.838675256794752,
-            "ci_low": -2.1073274406655838,
-            "critical_value": 2.2590775822890277,
-            "p_two_sided": 0.7529685200958098,
-            "se": 1.0946951836086922
+            "ci_high": 2.818369786576415,
+            "ci_low": -2.0870219704472466,
+            "critical_value": 2.0863951183989675,
+            "p_two_sided": 0.7673186014006872,
+            "se": 1.1755663425794203
           },
           "calibrated_random_candidate": {
-            "ci_high": 3.0380614378708883,
-            "ci_low": -2.30671362174172,
-            "critical_value": 1.7289714998116024,
-            "p_two_sided": 0.784072604885206,
-            "se": 1.545651579622626,
-            "se_method": "random_jackknife"
+            "ci_high": 3.997425505125164,
+            "ci_low": -3.266077688995996,
+            "critical_value": 2.9753522993623096,
+            "p_two_sided": 0.8123483143956919,
+            "se": 1.2206122944966729,
+            "se_method": "random_u"
           },
           "estimate_pp": 0.36567390806458416,
           "fixed_candidate": {
-            "ci_high": 2.5112370419870826,
-            "ci_low": -1.7798892258579144,
-            "p_two_sided": 0.7383480452877577,
-            "se": 1.0946951836086922
+            "ci_high": 2.669741600957723,
+            "ci_low": -1.9383937848285546,
+            "p_two_sided": 0.7557535595237943,
+            "se": 1.1755663425794203
           },
           "kernel_jackknife_se": 1.545651579622626,
           "random_candidate": {
@@ -1120,26 +1128,26 @@
         },
         "shared_exponent": {
           "calibrated_fixed_candidate": {
-            "ci_high": 3.509320622823923,
-            "ci_low": -1.510035173027788,
-            "critical_value": 2.2590775822890277,
-            "p_two_sided": 0.4130302178770666,
-            "se": 1.110930371582416
+            "ci_high": 3.5086927573665596,
+            "ci_low": -1.5094073075704246,
+            "critical_value": 2.0863951183989675,
+            "p_two_sided": 0.40091030838029096,
+            "se": 1.2025766406095968
           },
           "calibrated_random_candidate": {
-            "ci_high": 4.31978284966776,
-            "ci_low": -2.3204973998716256,
-            "critical_value": 1.7289714998116024,
-            "p_two_sided": 0.5293355159777668,
-            "se": 1.9202977753719321,
-            "se_method": "random_jackknife"
+            "ci_high": 5.80877773858894,
+            "ci_low": -3.8094922887928053,
+            "critical_value": 2.9753522993623096,
+            "p_two_sided": 0.6131528251953209,
+            "se": 1.6163245659082415,
+            "se_method": "random_u"
           },
           "estimate_pp": 0.9996427248980674,
           "fixed_candidate": {
-            "ci_high": 3.1770262425313023,
-            "ci_low": -1.1777407927351673,
-            "p_two_sided": 0.368213482110495,
-            "se": 1.110930371582416
+            "ci_high": 3.3566496291420456,
+            "ci_low": -1.3573641793459106,
+            "p_two_sided": 0.4058319950070982,
+            "se": 1.2025766406095968
           },
           "kernel_jackknife_se": 1.9202977753719321,
           "random_candidate": {
@@ -1157,26 +1165,26 @@
         },
         "single_scale_150M": {
           "calibrated_fixed_candidate": {
-            "ci_high": 5.001009410170667,
-            "ci_low": -1.7941165336535143,
-            "critical_value": 2.2590775822890277,
-            "p_two_sided": 0.32971343727574265,
-            "se": 1.5039602882825671
+            "ci_high": 4.799051014364548,
+            "ci_low": -1.592158137847396,
+            "critical_value": 2.0863951183989675,
+            "p_two_sided": 0.29939123878565754,
+            "se": 1.5316392124988176
           },
           "calibrated_random_candidate": {
-            "ci_high": 5.223622739547587,
-            "ci_low": -2.0167298630304344,
-            "critical_value": 1.7289714998116024,
-            "p_two_sided": 0.3548352977074123,
-            "se": 2.093832259053133,
-            "se_method": "random_jackknife"
+            "ci_high": 7.109482376101234,
+            "ci_low": -3.9025894995840815,
+            "critical_value": 2.9753522993623096,
+            "p_two_sided": 0.47042143852740603,
+            "se": 1.8505492405127066,
+            "se_method": "random_u"
           },
           "estimate_pp": 1.6034464382585762,
           "fixed_candidate": {
-            "ci_high": 4.551154437470885,
-            "ci_low": -1.3442615609537325,
-            "p_two_sided": 0.2863560876518688,
-            "se": 1.5039602882825671
+            "ci_high": 4.60540413206555,
+            "ci_low": -1.398511255548397,
+            "p_two_sided": 0.2951537287338346,
+            "se": 1.5316392124988176
           },
           "kernel_jackknife_se": 2.093832259053133,
           "random_candidate": {
@@ -1188,26 +1196,26 @@
         },
         "single_scale_20M": {
           "calibrated_fixed_candidate": {
-            "ci_high": 19.606401540724875,
-            "ci_low": 4.388727045009048,
-            "critical_value": 2.2590775822890277,
-            "p_two_sided": 0.002915180740192813,
-            "se": 3.3681168400370742
+            "ci_high": 19.32406321866686,
+            "ci_low": 4.6710653670670625,
+            "critical_value": 2.0863951183989675,
+            "p_two_sided": 0.0015045085997564822,
+            "se": 3.511558698153981
           },
           "calibrated_random_candidate": {
-            "ci_high": 18.77381501416759,
-            "ci_low": 5.221313571566333,
-            "critical_value": 1.7289714998116024,
-            "p_two_sided": 0.004943452309675411,
-            "se": 3.9192379527592003,
-            "se_method": "random_jackknife"
+            "ci_high": 22.213079509131205,
+            "ci_low": 1.7820490766027195,
+            "critical_value": 2.9753522993623096,
+            "p_two_sided": 0.03164718090189722,
+            "se": 3.4333800466094972,
+            "se_method": "random_u"
           },
           "estimate_pp": 11.997564292866961,
           "fixed_candidate": {
-            "ci_high": 18.59895199506248,
-            "ci_low": 5.396176590671441,
-            "p_two_sided": 0.0003679021464252743,
-            "se": 3.3681168400370742
+            "ci_high": 18.880092870847122,
+            "ci_low": 5.1150357148868,
+            "p_two_sided": 0.0006341017203044055,
+            "se": 3.511558698153981
           },
           "kernel_jackknife_se": 3.9192379527592003,
           "random_candidate": {
@@ -1219,26 +1227,26 @@
         },
         "single_scale_60M": {
           "calibrated_fixed_candidate": {
-            "ci_high": 11.307465062177917,
-            "ci_low": -1.4069823930946637,
-            "critical_value": 2.2590775822890277,
-            "p_two_sided": 0.12398257843107052,
-            "se": 2.8140794178457496
+            "ci_high": 10.937148116699165,
+            "ci_low": -1.0366654476159116,
+            "critical_value": 2.0863951183989675,
+            "p_two_sided": 0.09541239343373442,
+            "se": 2.869498077982323
           },
           "calibrated_random_candidate": {
-            "ci_high": 9.510931938790748,
-            "ci_low": 0.3895507302925063,
-            "critical_value": 1.7289714998116024,
-            "p_two_sided": 0.03693239884951671,
-            "se": 2.637805542049754,
-            "se_method": "random_jackknife"
+            "ci_high": 11.086729685356488,
+            "ci_low": -1.186247016273235,
+            "critical_value": 2.9753522993623096,
+            "p_two_sided": 0.08574404602081465,
+            "se": 2.062440925778793,
+            "se_method": "random_u"
           },
           "estimate_pp": 4.9502413345416265,
           "fixed_candidate": {
-            "ci_high": 10.465735643154737,
-            "ci_low": -0.5652529740714849,
-            "p_two_sided": 0.07856087309215397,
-            "se": 2.8140794178457496
+            "ci_high": 10.574354221093888,
+            "ci_low": -0.6738715520106338,
+            "p_two_sided": 0.08450504457393129,
+            "se": 2.869498077982323
           },
           "kernel_jackknife_se": 2.637805542049754,
           "random_candidate": {
@@ -1250,26 +1258,26 @@
         },
         "single_scale_90M": {
           "calibrated_fixed_candidate": {
-            "ci_high": 7.172291562927668,
-            "ci_low": -0.7246892316334126,
-            "critical_value": 2.2590775822890277,
-            "p_two_sided": 0.1106527716368344,
-            "se": 1.7478330218653677
+            "ci_high": 6.685105701852708,
+            "ci_low": -0.23750337055845216,
+            "critical_value": 2.0863951183989675,
+            "p_two_sided": 0.06411099196498371,
+            "se": 1.6589880342807135
           },
           "calibrated_random_candidate": {
-            "ci_high": 6.664468995977407,
-            "ci_low": -0.21686666468315208,
-            "critical_value": 1.7289714998116024,
-            "p_two_sided": 0.06500066045849506,
-            "se": 1.9900084129236326,
-            "se_method": "random_jackknife"
+            "ci_high": 7.7871116813527355,
+            "ci_low": -1.339509350058481,
+            "critical_value": 2.9753522993623096,
+            "p_two_sided": 0.11299069947601481,
+            "se": 1.5337042664438887,
+            "se_method": "random_u"
           },
           "estimate_pp": 3.2238011656471275,
           "fixed_candidate": {
-            "ci_high": 6.649490939493057,
-            "ci_low": -0.20188860819880183,
-            "p_two_sided": 0.06511670743270903,
-            "se": 1.7478330218653677
+            "ci_high": 6.475357963620226,
+            "ci_low": -0.027755632325971558,
+            "p_two_sided": 0.0519879491759148,
+            "se": 1.6589880342807135
           },
           "kernel_jackknife_se": 1.9900084129236326,
           "random_candidate": {

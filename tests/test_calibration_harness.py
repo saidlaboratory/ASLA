@@ -135,3 +135,26 @@ def test_an_oracle_ranker_has_zero_true_mis_selection() -> None:
     assert out["oracle"].true_difference == pytest.approx(-100 * true_mis_rate(preds["top"], truth_gaps))
     se = jackknife_se(final, ckpt, rankers, (), "oracle", "top", evidence_at_target(final, "tgt"), budgets, truth.target)
     assert np.isfinite(se) and se >= 0
+
+
+def test_shrunk_truth_reduces_spread_and_keeps_means() -> None:
+    from asla.analysis.calibration import shrink_truth
+
+    truth = _truth(n=12, sigma=0.3)
+    shrunk = shrink_truth(truth)
+    for label in SCALES:
+        before = truth.final[truth.final["scale_label"] == label].groupby("intervention")["mu"].first()
+        after = shrunk.final[shrunk.final["scale_label"] == label].groupby("intervention")["mu"].first()
+        assert after.var() <= before.var() + 1e-12
+        assert after.mean() == pytest.approx(before.mean())
+    merged = shrunk.final.merge(shrunk.ckpt, on=["intervention", "scale_label", "seed", "step"], suffixes=("_f", "_c"))
+    assert np.allclose(merged["mu_f"], merged["mu_c"])
+
+
+def test_shrinkage_is_total_when_spread_is_pure_noise() -> None:
+    from asla.analysis.calibration import shrink_truth
+
+    truth = _truth(n=8, sigma=5.0)  # recipe spread (0.1 steps) far below noise variance / 3
+    shrunk = shrink_truth(truth)
+    tgt = shrunk.final[shrunk.final["scale_label"] == "tgt"].groupby("intervention")["mu"].first()
+    assert tgt.std() == pytest.approx(0.0, abs=1e-9)

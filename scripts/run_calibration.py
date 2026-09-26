@@ -31,6 +31,7 @@ from __future__ import annotations
 import argparse
 import importlib
 import json
+import os
 import sys
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
@@ -51,15 +52,26 @@ from asla.analysis.calibration import (  # noqa: E402
     jackknife_se,
     predict,
     random_truth,
+    shrink_truth,
     simulate,
     truth_from_tables,
 )
 
-CACHE = REPO / "data" / "cache" / "calibration_worlds.jsonl"
-OUT = REPO / "results" / "target_scoring" / "calibration.json"
-METRIC = "c4_en_bits_per_token"
-# The metric the benchmark is built on; other metrics transport its critical values.
-CALIBRATED_METRIC = "c4_en_bits_per_token"
+# Configuration travels through the environment so spawned workers see it.
+METRIC = os.environ.get("ASLA_CAL_METRIC", "c4_en_bits_per_token")
+TRUTH = os.environ.get("ASLA_CAL_TRUTH", "shrunk")  # "shrunk" (primary) or "observed"
+PRIMARY = ("c4_en_bits_per_token", "shrunk")
+
+
+def output_path(metric: str, truth: str) -> Path:
+    if (metric, truth) == PRIMARY:
+        return REPO / "results" / "target_scoring" / "calibration.json"
+    suffix = metric if truth == "shrunk" else f"{metric}_{truth}_truth"
+    return REPO / "results" / "target_scoring" / f"calibration_{suffix}.json"
+
+
+CACHE = REPO / "data" / "cache" / f"calibration_{METRIC}_{TRUTH}.jsonl"
+OUT = output_path(METRIC, TRUTH)
 MAX_FIT, TARGET_LABEL = "300M", "530M"
 BASELINE = "single_scale"
 CHECKPOINT_RANKERS = ("checkpoint_augmented",)
@@ -67,8 +79,10 @@ JACKKNIFE_RANKERS = ("shared_exponent", "eb_shrinkage")
 PLANTED_RUNGS = ("150M", "90M", "60M", "20M")
 BANDWIDTH = 0.5
 COUPLING = ("300M", "530M", 0.30)
-N_FIXED, N_RANDOM, N_MC_FIXED, N_MC_RANDOM, N_COUPLED = 150, 300, 400, 400, 300
-B_WORLD, B_REAL = 50, 400
+N_FIXED = int(os.environ.get("ASLA_CAL_N_FIXED", "150"))
+N_RANDOM, N_MC_FIXED, N_MC_RANDOM, N_COUPLED = 300, 400, 400, 300
+B_WORLD = int(os.environ.get("ASLA_CAL_B_WORLD", "50"))
+B_REAL = 400
 SEED = 20260923
 Z = 1.959963984540054
 
@@ -115,6 +129,9 @@ def _context() -> dict[str, Any]:
         **{f"single_scale_{label}": at_rung(label) for label in PLANTED_RUNGS},
     }
     base = truth_from_tables(final, ckpt, target, TARGET_LABEL)
+    if TRUTH == "shrunk":
+        # Simulated spread should be the estimated true spread, not the noisy observed one.
+        base = shrink_truth(base)
     params = {}
     for recipe, group in base.final.groupby("intervention"):
         cells = group.groupby("compute")["mu"].mean()
@@ -344,15 +361,21 @@ def calibrated_procedures(rows: list[dict[str, Any]], summary: dict[str, Any]) -
     theta_f = {n: summary["by_comparator"][n]["theta_fixed"] for n in names}
     theta_r = {n: summary["by_comparator"][n]["theta_random"] for n in names}
     mismatch = max(
-        abs(by_kind["random"][i][n]["estimate"] - by_kind["random_jk"][i][n]["estimate"])
-        for i in by_kind["random_jk"]
-        for n in names
+        (
+            abs(by_kind["random"][i][n]["estimate"] - by_kind["random_jk"][i][n]["estimate"])
+            for i in by_kind.get("random_jk", {})
+            for n in names
+        ),
+        default=0.0,
     )
     if mismatch > 1e-9:
         raise ValueError(f"random_jk worlds do not reproduce the random worlds (max estimate gap {mismatch})")
 
     def jk_se(i: int, n: str) -> float:
-        return by_kind["random"][i][n]["jk_se"] if n in JACKKNIFE_RANKERS else by_kind["random_jk"][i][n]["kjk_se"]
+        if n in JACKKNIFE_RANKERS:
+            return by_kind["random"][i][n]["jk_se"]
+        row = by_kind["random"][i][n]
+        return row["kjk_se"] if "kjk_se" in row else by_kind["random_jk"][i][n]["kjk_se"]
 
     def ratio(dev: float, se: float) -> float:
         return abs(dev) / se if se > 0 else (0.0 if dev == 0 else float("inf"))
@@ -400,7 +423,55 @@ def calibrated_procedures(rows: list[dict[str, Any]], summary: dict[str, Any]) -
             "n_statistics": int(stats_all.size),
         }
     u, jk = out["random_u"], out["random_jackknife"]
-    out["random_adopted"] = "random_jackknife" if jk["median_half_width_pp"] <= u["median_half_width_pp"] else "random_u"
+    # Rule P3 (PREDICTIONS_TASK_FINAL_CALIBRATION.md): keep the jackknife only if its held-out
+    # coverage is at least the U-statistic's for every comparator. Width is reported, not used.
+    jk_at_least_u = {n: jk["cross_fit_coverage"][n] >= u["cross_fit_coverage"][n] for n in names}
+    out["estimator_rule"] = {
+        "rule": "jackknife kept only if held-out coverage >= U-statistic's for every comparator",
+        "jackknife_at_least_u": jk_at_least_u,
+        "jackknife_kept": all(jk_at_least_u.values()),
+    }
+    out["random_adopted"] = "random_jackknife" if all(jk_at_least_u.values()) else "random_u"
+    return out
+
+
+def candidates_required(calibrated: dict[str, Any], rows: list[dict[str, Any]], deltas: tuple[float, ...]) -> dict[str, Any]:
+    """Candidates needed for power 0.8 under the calibrated random-candidate test, for projection on C4.
+
+    The adopted SE is taken to scale with n as the U-statistic variance does,
+    with its ratio to the U-statistic SE held at the median seen in the
+    benchmark. The variance components are the real-data ones.
+    """
+
+    from scipy import stats as st
+
+    from asla.analysis.target_scoring import u_statistic_variance
+    from asla.provenance import Source
+
+    expected = Source.load("target_scoring/expected_error.json")
+    base = "regimes.c4_en_bits_per_token/primary_4M-300M_gate530M.significance.u_statistic"
+    zeta1, zeta2 = expected.number(base + ".zeta1"), expected.number(base + ".zeta2")
+    label = calibrated["random_adopted"]
+    k = calibrated[label]["critical_value"]
+    ratios = []
+    for row in rows:
+        if row["kind"] != "random":
+            continue
+        cell = row["comparisons"]["projection"]
+        se = cell["kjk_se"] if label == "random_jackknife" and "kjk_se" in cell else cell["u_se"]
+        if cell["u_se"] > 0:
+            ratios.append(se / cell["u_se"])
+    ratio = float(np.median(ratios)) if ratios else 1.0
+    out = {"critical_value": k, "se_ratio_to_u": ratio, "by_delta_pp": {}}
+    for delta in deltas:
+        needed = None
+        for n in range(4, 5000):
+            se = ratio * float(np.sqrt(u_statistic_variance(zeta1, zeta2, n)))
+            power = float(st.norm.cdf(delta / se - k) + st.norm.cdf(-delta / se - k))
+            if power >= 0.8:
+                needed = n
+                break
+        out["by_delta_pp"][f"{delta:g}"] = needed
     return out
 
 
@@ -440,7 +511,21 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--workers", type=int, default=6)
+    parser.add_argument("--metric", default=METRIC)
+    parser.add_argument("--truth", choices=("shrunk", "observed"), default=TRUTH)
+    parser.add_argument("--n-fixed", type=int, default=N_FIXED)
+    parser.add_argument("--b-world", type=int, default=B_WORLD)
     args = parser.parse_args()
+    if (args.metric, args.truth, args.n_fixed, args.b_world) != (METRIC, TRUTH, N_FIXED, B_WORLD):
+        # Re-exec with the configuration in the environment so workers inherit it.
+        env = dict(os.environ)
+        env.update(
+            ASLA_CAL_METRIC=args.metric,
+            ASLA_CAL_TRUTH=args.truth,
+            ASLA_CAL_N_FIXED=str(args.n_fixed),
+            ASLA_CAL_B_WORLD=str(args.b_world),
+        )
+        os.execve(sys.executable, [sys.executable, *sys.argv], env)
     CACHE.parent.mkdir(parents=True, exist_ok=True)
     if not args.resume and CACHE.exists():
         CACHE.unlink()
@@ -448,7 +533,6 @@ def main() -> None:
     plan = [("fixed", i) for i in range(N_FIXED)] + [("random", i) for i in range(N_RANDOM)]
     plan += [("mc_fixed", i) for i in range(N_MC_FIXED)] + [("mc_random", i) for i in range(N_MC_RANDOM)]
     plan += [("coupled", i) for i in range(N_COUPLED)]
-    plan += [("random_jk", i) for i in range(N_RANDOM)]
     todo = [task for task in plan if task not in done]
     print(f"{len(done)} worlds cached, {len(todo)} to run", flush=True)
     with ProcessPoolExecutor(max_workers=args.workers) as pool, CACHE.open("a", encoding="utf-8") as sink:
@@ -480,13 +564,16 @@ def main() -> None:
             "eb_strength_frozen_at": ctx["strength"],
             "checkpoint_autocorrelation": dict(ctx["base"].rho_ckpt),
             "noise": "Gaussian, moderated per-(recipe, scale) sd; AR(1) along checkpoints; independent across scales",
-            "truth": "observed seed-mean trajectories (fixed); smoothed bootstrap over recipes (random)",
+            "truth": f"{TRUTH} seed-mean trajectories (fixed); smoothed bootstrap over recipes (random)",
+            "truth_kind": TRUTH,
         },
         "real_data": real_data(np.random.default_rng([SEED, 99])),
         "calibration": summary,
     }
     out["predictions"] = predictions(summary)
     out["calibrated"] = calibrated_procedures(rows, summary)
+    if METRIC == "c4_en_bits_per_token":
+        out["candidates_required"] = candidates_required(out["calibrated"], rows, (1.0, 2.0, 5.0))
     out["real_data"] = apply_calibration(out["real_data"], out["calibrated"])
     OUT.write_text(json.dumps(out, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(json.dumps(out["predictions"], indent=1))

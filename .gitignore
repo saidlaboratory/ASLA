@@ -53,3 +53,6 @@ paper/main.pdf
 
 # resumable caches for long runs; results are summarised into results/
 data/cache/
+
+# macOS Finder metadata
+.DS_Store

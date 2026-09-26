@@ -71,24 +71,24 @@ def _p(estimate: float, se: float) -> float:
     return 1.0 if estimate == 0 else 0.0
 
 
-def ranker_claims(calibrated: dict[str, Any]) -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
-    """Both estimands for every ranker comparison, on both metrics, with calibrated critical values.
+CALIBRATION_FILES = {
+    "c4_en_bits_per_token": "target_scoring/calibration.json",
+    "olmes_macro_error": "target_scoring/calibration_olmes_macro_error.json",
+}
 
-    C4 is the metric the calibration benchmark was built on. For OLMES macro error
-    the calibrated critical values are transported, which is stated on each
-    claim.
-    """
 
-    calibration = importlib.import_module("scripts.run_calibration")
+def ranker_claims() -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
+    """Both estimands for every ranker comparison, each metric under its own calibration benchmark."""
+
+    # The real-data results are read from each metric's calibration file, where
+    # they were computed alongside the benchmark, rather than recomputed here.
+    # Recomputing with a fresh bootstrap put Monte Carlo noise between the
+    # paper's headline and this table (p = 0.030 there against 0.042 here).
     random_claims, fixed_claims, detail = [], [], {}
     for metric in METRICS:
-        calibration.METRIC = metric
-        calibration._CONTEXT.clear()
-        real = calibration.apply_calibration(
-            calibration.real_data(np.random.default_rng([SEED, METRICS.index(metric)])), calibrated
-        )
+        real = Source.load(CALIBRATION_FILES[metric]).get("real_data")
         detail[metric] = real
-        scope = "" if metric == calibration.CALIBRATED_METRIC else " (critical value transported from the C4 benchmark)"
+        scope = f" (calibrated on {metric})"
         for name in RANKERS:
             row = real["comparisons"][name]
             r, f = row["calibrated_random_candidate"], row["calibrated_fixed_candidate"]
@@ -115,7 +115,9 @@ def ranker_claims(calibrated: dict[str, Any]) -> tuple[list[dict[str, Any]], lis
     return random_claims, fixed_claims, detail
 
 
-def _calibrated(estimate: float, u_se: float, jk_se: float, calibrated: dict[str, Any]) -> tuple[float, list[float], str]:
+def _calibrated(
+    estimate: float, u_se: float, jk_se: float, calibrated: dict[str, Any], scope: str
+) -> tuple[float, list[float], str]:
     calibration = importlib.import_module("scripts.run_calibration")
     label = calibrated["random_adopted"]
     se = jk_se if label == "random_jackknife" else u_se
@@ -126,17 +128,25 @@ def _calibrated(estimate: float, u_se: float, jk_se: float, calibrated: dict[str
         if se > 0
         else 1.0
     )
-    return p, [estimate - k * se, estimate + k * se], f"{label} (critical value transported from the C4 benchmark)"
+    return p, [estimate - k * se, estimate + k * se], f"{label} ({scope})"
 
 
-def other_claims(calibrated: dict[str, Any]) -> list[dict[str, Any]]:
+def other_claims() -> list[dict[str, Any]]:
     rescoring = Source.load("target_scoring/rescoring.json")
-    expected = Source.load("target_scoring/expected_error.json")
+    lever = Source.load("target_scoring/lever_arm_calibration.json")
     published = Source.load("external/published_comparisons.json")
+    c4 = Source.load("target_scoring/calibration.json").get("calibrated")
+    families = Source.load("external/published_calibration.json").get("families")
     claims = []
     for row in rescoring.get("optimal_allocation.by_budget_fraction"):
         test = row["candidate_test"]
-        p, ci, method = _calibrated(test["point_pp"], test["standard_error_pp"], test["jackknife_se_pp"], calibrated)
+        p, ci, method = _calibrated(
+            test["point_pp"],
+            test["standard_error_pp"],
+            test["jackknife_se_pp"],
+            c4,
+            "calibrated on c4_en_bits_per_token at the primary design, applied to the 1B allocation design",
+        )
         claims.append(
             {
                 "claim": f"optimised allocation at {row['budget_fraction']:g} of budget vs single-scale, c4",
@@ -152,9 +162,9 @@ def other_claims(calibrated: dict[str, Any]) -> list[dict[str, Any]]:
             "claim": "projection excess rises with log lever arm (expected-error scoring)",
             "family": "dose-response",
             "estimate_pp": None,
-            "ci_pp": None,
-            "method": "delete-one-recipe jackknife of the Spearman correlation's Fisher z",
-            "p": expected.number("dose_response.candidate_jackknife.p_two_sided"),
+            "ci_pp": lever.get("real_data.ci_calibrated"),
+            "method": "leave-one-recipe-out Fisher-z jackknife; p against the correlated-design null comparator",
+            "p": lever.number("real_data.p_against_null_comparator"),
         }
     )
     d1 = published.get("d1_scaling_laws_vs_single_scale.comparisons")
@@ -162,7 +172,11 @@ def other_claims(calibrated: dict[str, Any]) -> list[dict[str, Any]]:
         task, setup, scale, target = key.split("|")
         if task == "olmes_10_macro_avg" and scale == "750M" and target == "three_seed_mean":
             p, ci, method = _calibrated(
-                row["difference_pp"], row["candidate_se_pp"], row["candidate_jackknife_se_pp"], calibrated
+                row["difference_pp"],
+                row["candidate_se_pp"],
+                row["candidate_jackknife_se_pp"],
+                families["scaling_law_variants"],
+                "calibrated on the scaling-law re-test",
             )
             claims.append(
                 {
@@ -179,7 +193,11 @@ def other_claims(calibrated: dict[str, Any]) -> list[dict[str, Any]]:
         task, scale = key.split("|")
         if task == "olmes_10_macro_avg":
             p, ci, method = _calibrated(
-                row["difference_pp"], row["candidate_se_pp"], row["candidate_jackknife_se_pp"], calibrated
+                row["difference_pp"],
+                row["candidate_se_pp"],
+                row["candidate_jackknife_se_pp"],
+                families["correct_prob_vs_accuracy"],
+                "calibrated on the Correct Prob re-test",
             )
             claims.append(
                 {
@@ -211,13 +229,16 @@ def corrected(claims: list[dict[str, Any]]) -> dict[str, Any]:
 
 
 def main() -> None:
-    calibrated = Source.load("target_scoring/calibration.json").get("calibrated")
-    random_claims, fixed_claims, detail = ranker_claims(calibrated)
-    primary = corrected(random_claims + other_claims(calibrated))
+    random_claims, fixed_claims, detail = ranker_claims()
+    primary = corrected(random_claims + other_claims())
     fixed = corrected(fixed_claims)
     out = {
         "alpha": ALPHA,
-        "random_candidate_se": calibrated["random_adopted"],
+        "calibration_sources": dict(CALIBRATION_FILES)
+        | {
+            "published": "external/published_calibration.json",
+            "lever_arm": "target_scoring/lever_arm_calibration.json",
+        },
         "primary_family_random_candidate": primary,
         "fixed_candidate_family": fixed,
         "ranker_detail": detail,

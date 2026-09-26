@@ -277,7 +277,8 @@ def _calibration_entries() -> list[tuple[str, str, str]]:
     cal = Source.load("target_scoring/calibration.json")
     by = cal.get("calibration.by_comparator")
     procedures = cal.get("calibrated")
-    fixed, jack, u_stat = procedures["fixed_bootstrap"], procedures["random_jackknife"], procedures["random_u"]
+    fixed, u_stat = procedures["fixed_bootstrap"], procedures["random_u"]
+    jack = procedures[procedures["random_adopted"]]  # the adopted random-candidate procedure
     rows = []
     for name, label in COMPARATOR_LABELS.items():
         row = by[name]
@@ -298,6 +299,8 @@ def _calibration_entries() -> list[tuple[str, str, str]]:
         ("calBootDraws", f"{cal.integer('design.bootstrap_draws_per_fixed_world')}", origin),
         ("calFixedK", f"{fixed['critical_value']:.2f}", origin),
         ("calJackK", f"{jack['critical_value']:.2f}", origin),
+        ("calRandomAdopted", "jackknife" if procedures["random_adopted"] == "random_jackknife" else "U-statistic", origin),
+        ("calJackRawK", f"{procedures['random_jackknife']['critical_value']:.2f}", origin),
         ("calUK", f"{u_stat['critical_value']:.2f}", origin),
         ("calJackHalf", f"{jack['median_half_width_pp']:.2f}", origin),
         ("calUHalf", f"{u_stat['median_half_width_pp']:.2f}", origin),
@@ -335,6 +338,101 @@ def _dose_jackknife_entries() -> list[tuple[str, str, str]]:
         ("doseJackLow", f"{ci[0]:+.2f}", "expected_error.json"),
         ("doseJackHigh", f"{ci[1]:+.2f}", "expected_error.json"),
     ]
+
+
+def _final_round_entries() -> list[tuple[str, str, str]]:
+    """Lever-arm calibration, shrunk-versus-observed truth, the estimator rule, per-metric critical values."""
+
+    lever = Source.load("target_scoring/lever_arm_calibration.json")
+    shrunk = Source.load("target_scoring/calibration.json")
+    observed = Source.load("target_scoring/calibration_c4_en_bits_per_token_observed_truth.json")
+    olmes = Source.load("target_scoring/calibration_olmes_macro_error.json")
+    published = Source.load("external/published_calibration.json")
+    origin_l, origin_c = "lever_arm_calibration.json", "calibration.json"
+    entries = [
+        ("leverRhoTrue", f"{lever.number('summary.rho_true'):.2f}", origin_l),
+        ("leverRhoHatMean", f"{lever.number('summary.mean_rho_hat'):.2f}", origin_l),
+        ("leverCov", f"{lever.number('summary.coverage_at_1_96'):.2f}", origin_l),
+        ("leverK", f"{lever.number('summary.calibrated_critical_value'):.2f}", origin_l),
+        ("leverCrossCov", f"{lever.number('summary.cross_fit_coverage'):.2f}", origin_l),
+        ("leverNullRate", f"{lever.number('summary.null_rejection_rate_at_0_05'):.3f}", origin_l),
+        ("leverNullN", f"{lever.integer('summary.n_null_statistics')}", origin_l),
+        ("leverWorlds", f"{lever.integer('summary.n_worlds')}", origin_l),
+        ("leverRealRho", f"{lever.number('real_data.rho'):.2f}", origin_l),
+        ("leverRealLow", f"{lever.get('real_data.ci_calibrated')[0]:.2f}", origin_l),
+        ("leverRealHigh", f"{lever.get('real_data.ci_calibrated')[1]:.2f}", origin_l),
+        ("leverRealP", f"{lever.number('real_data.p_against_null_comparator'):.2g}", origin_l),
+        ("leverAbsT", f"{lever.number('real_data.abs_t'):.1f}", origin_l),
+    ]
+    rows = []
+    for name, label in COMPARATOR_LABELS.items():
+        if not name.startswith("single_scale_"):
+            continue
+        cells = []
+        for source in (observed, shrunk):
+            by = source.get("calibration.by_comparator")[name]
+            procedures = source.get("calibrated")
+            adopted = procedures[procedures["random_adopted"]]
+            cells.append(
+                (
+                    by["theta_fixed"],
+                    by["theta_random"],
+                    procedures["fixed_bootstrap"]["power_at_critical_value"][name],
+                    adopted["power_at_critical_value"][name],
+                )
+            )
+        (tf_o, tr_o, pf_o, pr_o), (tf_s, tr_s, pf_s, pr_s) = cells
+        rows.append(
+            f"{label} & ${tf_o:+.2f}$ & ${tf_s:+.2f}$ & {pf_o:.2f} & {pf_s:.2f} & "
+            f"${tr_o:+.2f}$ & ${tr_s:+.2f}$ & {pr_o:.2f} & {pr_s:.2f} \\\\"
+        )
+    entries.append(("truthComparisonRows", " ".join(rows), origin_c))
+    for tag, source in (("Obs", observed), ("Shrunk", shrunk)):
+        need = source.get("candidates_required.by_delta_pp")
+        entries += [
+            (f"cand{tag}One", f"{need['1']}", origin_c),
+            (f"cand{tag}Two", f"{need['2']}", origin_c),
+            (f"cand{tag}Five", f"{need['5']}", origin_c),
+        ]
+    rule_rows = []
+    procedures = shrunk.get("calibrated")
+    u_cover, jk_cover = procedures["random_u"]["cross_fit_coverage"], procedures["random_jackknife"]["cross_fit_coverage"]
+    failures = sum(jk_cover[n] < u_cover[n] for n in COMPARATOR_LABELS)
+    for name, label in COMPARATOR_LABELS.items():
+        u_cov = procedures["random_u"]["cross_fit_coverage"][name]
+        jk_cov = procedures["random_jackknife"]["cross_fit_coverage"][name]
+        rule_rows.append(f"{label} & {u_cov:.2f} & {jk_cov:.2f} & {'yes' if jk_cov >= u_cov else 'no'} \\\\")
+    entries.append(("estimatorRuleRows", " ".join(rule_rows), origin_c))
+    entries.append(("estimatorRuleFailures", f"{failures}", origin_c))
+    olmes_proc = olmes.get("calibrated")
+    entries += [
+        ("olmesFixedK", f"{olmes_proc['fixed_bootstrap']['critical_value']:.2f}", "calibration_olmes_macro_error.json"),
+        (
+            "olmesRandomK",
+            f"{olmes_proc[olmes_proc['random_adopted']]['critical_value']:.2f}",
+            "calibration_olmes_macro_error.json",
+        ),
+        (
+            "olmesRandomAdopted",
+            "jackknife" if olmes_proc["random_adopted"] == "random_jackknife" else "U-statistic",
+            "calibration_olmes_macro_error.json",
+        ),
+    ]
+    for tag, family in (("Cp", "correct_prob_vs_accuracy"), ("Sl", "scaling_law_variants")):
+        block = published.get("families")[family]
+        adopted = block[block["random_adopted"]]
+        cov = adopted["cross_fit_coverage"].values()
+        entries += [
+            (f"pub{tag}K", f"{adopted['critical_value']:.2f}", "published_calibration.json"),
+            (
+                f"pub{tag}Adopted",
+                "jackknife" if block["random_adopted"] == "random_jackknife" else "U-statistic",
+                "published_calibration.json",
+            ),
+            (f"pub{tag}CovMin", f"{min(cov):.2f}", "published_calibration.json"),
+            (f"pub{tag}CovMax", f"{max(cov):.2f}", "published_calibration.json"),
+        ]
+    return entries
 
 
 def _restated_entries() -> list[tuple[str, str, str]]:
@@ -874,6 +972,7 @@ def build() -> str:
     entries.extend(_calibration_entries())
     entries.extend(_restated_entries())
     entries.extend(_dose_jackknife_entries())
+    entries.extend(_final_round_entries())
     lines.extend(_macro(name, value, origin) for name, value, origin in entries)
     lines.append("")
     return "\n".join(lines)

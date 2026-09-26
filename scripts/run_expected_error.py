@@ -478,30 +478,26 @@ def estimator_calibration(zeta1: float, zeta2: float, n: int, rng: np.random.Gen
 
 
 def dose_response_jackknife(frame: pd.DataFrame) -> dict[str, Any]:
-    """Candidate-level test of the lever-arm association.
+    """Candidate-level test of the lever-arm association (asla.analysis.lever_arm).
 
-    The Spearman p-value treats the designs as independent, but every design
-    scores the same 25 recipes on nested ladders. This deletes one recipe at a
-    time, recomputes the whole dose-response, and jackknifes the Fisher z of the
-    expected-error Spearman correlation.
+    The same function is run in every semi-synthetic world of
+    scripts/run_lever_arm_calibration.py, so the reported test is the
+    calibrated one. Leave-one-recipe-out drops the recipe's pairs from every
+    design; the evidence is not refitted.
     """
 
-    recipes = sorted(frame["intervention"].astype(str).unique())
-    rhos = []
-    for recipe in recipes:
-        reduced = dose_response(frame[frame["intervention"].astype(str) != recipe])
-        rhos.append(reduced["expected_excess_pp"]["spearman_vs_log_lever_arm"])
-    z_values = np.arctanh(np.clip(np.asarray(rhos), -0.999999, 0.999999))
-    n = len(recipes)
-    se = float(np.sqrt((n - 1) / n * np.sum((z_values - z_values.mean()) ** 2)))
-    full = float(np.arctanh(dose_response(frame)["expected_excess_pp"]["spearman_vs_log_lever_arm"]))
+    from asla.analysis.lever_arm import designs, loro_test
+
+    test = loro_test(designs(frame))
     return {
-        "method": "delete-one-recipe jackknife of the Fisher z of the expected-error Spearman correlation",
-        "leave_one_out_rho": [float(r) for r in rhos],
-        "fisher_z": full,
-        "se_fisher_z": se,
-        "p_two_sided": float(2 * stats.norm.sf(abs(full) / se)) if se > 0 else 0.0,
-        "rho_ci": [float(np.tanh(full - 1.959963984540054 * se)), float(np.tanh(full + 1.959963984540054 * se))],
+        "method": "leave-one-recipe-out jackknife of the Fisher z of the expected-error Spearman correlation",
+        "rho": test["rho"],
+        "leave_one_out_rho": test["leave_one_out_rho"],
+        "fisher_z": test["fisher_z"],
+        "se_fisher_z": test["se_fisher_z"],
+        "p_two_sided": test["p_two_sided"],
+        "rho_ci": test["ci"],
+        "n_designs": test["n_designs"],
     }
 
 

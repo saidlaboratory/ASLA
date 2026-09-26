@@ -105,6 +105,36 @@ def truth_from_tables(
     )
 
 
+def _shrink(frame: pd.DataFrame, keys: list[str], sigma: Mapping[tuple[str, str], float], seeds: int) -> pd.Series:
+    """Normal-normal empirical-Bayes shrinkage of recipe means toward the cell mean, within each ``keys`` cell."""
+
+    out = frame["mu"].copy()
+    for _, cell in frame.groupby(keys):
+        means = cell.groupby("intervention")["mu"].first()
+        v = pd.Series({r: sigma[(str(r), str(cell["scale_label"].iloc[0]))] ** 2 / seeds for r in means.index})
+        centre = float(means.mean())
+        tau2 = max(float(means.var(ddof=1)) - float(v.mean()), 0.0)
+        factor = tau2 / (tau2 + v) if tau2 > 0 else v * 0.0
+        shrunk = centre + factor * (means - centre)
+        out.loc[cell.index] = cell["intervention"].map(shrunk).to_numpy()
+    return out
+
+
+def shrink_truth(truth: Truth, seeds: int = 3) -> Truth:
+    """Truth whose between-recipe spread is the estimated true spread, not the noisy observed one.
+
+    Per scale (and per checkpoint step), each recipe's mean is shrunk toward the
+    across-recipe mean by tau^2 / (tau^2 + v_r), with v_r the recipe's noise
+    variance over ``seeds`` and tau^2 = max(var(means) - mean(v), 0).
+    """
+
+    final = truth.final.copy()
+    ckpt = truth.ckpt.copy()
+    final["mu"] = _shrink(final, ["scale_label"], truth.sigma, seeds)
+    ckpt["mu"] = _shrink(ckpt, ["scale_label", "step"], truth.sigma, seeds)
+    return replace(truth, final=final, ckpt=ckpt)
+
+
 def simulate(
     truth: Truth,
     rng: np.random.Generator,
@@ -290,6 +320,7 @@ def jackknife_se(
 
 
 __all__ = [
+    "shrink_truth",
     "Comparison",
     "Truth",
     "checkpoint_autocorrelation",
