@@ -1,0 +1,105 @@
+{
+  "code": {
+    "repository": "allenai/DataDecide",
+    "commit": "68abc496587935b7211e9894206e78f15d535832",
+    "function": "scaling_laws/utils/stats.py:compute_decision_accuracy"
+  },
+  "convention_read_from_code": [
+    "target: 1B, seed 'default' only, each model's highest step, sorted by the same metric (pandas default sort)",
+    "prediction: recipes sorted by stacked_pred",
+    "score: compute_2_class compares two ordered lists; ties are ordered by the sort, not scored as ties"
+  ],
+  "all_rows": {
+    "n": 5280,
+    "matched": 5271
+  },
+  "tested_88_rows": {
+    "n": 88,
+    "matched": 88
+  },
+  "previous_no_convention_rows": {
+    "n": 11,
+    "matched_by_their_code": 11,
+    "rows": [
+      {
+        "task": "arc_challenge",
+        "setup": "5_param-ai2",
+        "released": 83.66666666666667,
+        "their_code": 83.66666666666667,
+        "target_tied_pairs": 3
+      },
+      {
+        "task": "arc_challenge",
+        "setup": "5_param-1_step-ai2",
+        "released": 70.33333333333334,
+        "their_code": 70.33333333333334,
+        "target_tied_pairs": 3
+      },
+      {
+        "task": "openbookqa",
+        "setup": "3_param-default",
+        "released": 73.33333333333333,
+        "their_code": 73.33333333333333,
+        "target_tied_pairs": 3
+      },
+      {
+        "task": "openbookqa",
+        "setup": "5_param-ai2",
+        "released": 69.66666666666667,
+        "their_code": 69.66666666666667,
+        "target_tied_pairs": 3
+      },
+      {
+        "task": "openbookqa",
+        "setup": "3_param-1_step",
+        "released": 75.33333333333333,
+        "their_code": 75.33333333333333,
+        "target_tied_pairs": 3
+      },
+      {
+        "task": "openbookqa",
+        "setup": "3_param-default-helper_points",
+        "released": 74.66666666666667,
+        "their_code": 74.66666666666667,
+        "target_tied_pairs": 3
+      },
+      {
+        "task": "openbookqa",
+        "setup": "3_param-default-helper_points-step2=0.5",
+        "released": 73.0,
+        "their_code": 73.0,
+        "target_tied_pairs": 3
+      },
+      {
+        "task": "socialiqa",
+        "setup": "2_param-default",
+        "released": 62.0,
+        "their_code": 62.0,
+        "target_tied_pairs": 4
+      },
+      {
+        "task": "socialiqa",
+        "setup": "3_param-1_step",
+        "released": 77.33333333333333,
+        "their_code": 77.33333333333333,
+        "target_tied_pairs": 4
+      },
+      {
+        "task": "winogrande",
+        "setup": "3_param-1_step",
+        "released": 60.66666666666667,
+        "their_code": 60.66666666666667,
+        "target_tied_pairs": 3
+      },
+      {
+        "task": "winogrande",
+        "setup": "3_param-default-helper_points-step2=0.5",
+        "released": 67.33333333333333,
+        "their_code": 67.33333333333333,
+        "target_tied_pairs": 3
+      }
+    ],
+    "explanation": "every one of these rows is in a task whose 1B default-seed target has tied values; compute_2_class orders tied recipes by an unstable sort instead of scoring the tie, which no fixed tie rule reproduces"
+  },
+  "nonmatching_tested_rows": []
+}

@@ -435,6 +435,50 @@ def _final_round_entries() -> list[tuple[str, str, str]]:
     return entries
 
 
+def _lever_gap_entries() -> list[tuple[str, str, str]]:
+    """The lever-arm dose arms, DataDecide's own code, and Monte Carlo precision (no prose uses these yet)."""
+
+    arms = Source.load("target_scoring/lever_arm_arms.json")
+    check = Source.load("external/datadecide_code_check.json")
+    origin = "lever_arm_arms.json"
+    labels = {"A": "ArmA", "B1": "ArmBOne", "B2": "ArmBTwo", "B3_0.5": "ArmHalf", "B3_1": "ArmFull", "B3_2": "ArmDouble"}
+    entries = []
+    for arm, tag in labels.items():
+        block = arms.get("arms")[arm]
+        entries += [
+            (f"rho{tag}", f"{block['true_rho']:.2f}", origin),
+            (f"slope{tag}", f"{block['true_slope_pp_per_log']:.2f}", origin),
+            (f"noiselessRho{tag}", f"{block['noiseless']['rho']:+.2f}", origin),
+            (f"ens{tag}", f"{block['ensemble_true_excess_pp']:+.2f}", origin),
+            (f"candTwo{tag}", f"{block['candidates_for_2pp_power_0_8']}", origin),
+        ]
+    share = arms.get("attribution.share_of_B3_1_slope")
+    real_share = arms.get("attribution.share_of_real_slope")
+    entries += [
+        ("shareVariance", f"{100 * share['A_variance']:.0f}", origin),
+        ("shareCommonMode", f"{100 * share['B1_common_mode_increment']:+.0f}", origin),
+        ("shareRecipeSpecific", f"{100 * share['B2_recipe_specific_increment']:.0f}", origin),
+        ("shareUnexplained", f"{100 * real_share['unexplained']:.0f}", origin),
+        ("loadingCvShrunk", f"{arms.number('decomposition.loading_cv'):.2f}", origin),
+        ("codeCheckTested", f"{check.integer('tested_88_rows.matched')}", "datadecide_code_check.json"),
+        ("codeCheckTestedN", f"{check.integer('tested_88_rows.n')}", "datadecide_code_check.json"),
+        ("codeCheckAll", f"{check.integer('all_rows.matched')}", "datadecide_code_check.json"),
+        ("codeCheckAllN", f"{check.integer('all_rows.n')}", "datadecide_code_check.json"),
+    ]
+    precision = Source.load("target_scoring/mc_precision.json").get("metrics")
+    for metric, tag in (("c4_en_bits_per_token", "CFour"), ("olmes_macro_error", "Olmes")):
+        for name, label in (
+            ("projection", "Proj"),
+            ("ensemble", "Ens"),
+            ("eb_shrinkage", "Eb"),
+            ("checkpoint_augmented", "Ckpt"),
+            ("shared_exponent", "Shared"),
+        ):
+            report = precision[metric][name]["stable_report"].replace("< ", "$<$ ")  # a bare < typesets as an inverted !
+            entries.append((f"stableP{tag}{label}", report, "mc_precision.json"))
+    return entries
+
+
 def _restated_entries() -> list[tuple[str, str, str]]:
     """Every inferential claim under the calibrated procedure, with Holm and BY."""
 
@@ -973,6 +1017,7 @@ def build() -> str:
     entries.extend(_restated_entries())
     entries.extend(_dose_jackknife_entries())
     entries.extend(_final_round_entries())
+    entries.extend(_lever_gap_entries())
     lines.extend(_macro(name, value, origin) for name, value, origin in entries)
     lines.append("")
     return "\n".join(lines)
