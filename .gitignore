@@ -20,6 +20,7 @@ results/*
 !results/common_mode/
 !results/confidence/
 !results/consolidated/
+!results/crn/
 !results/curvature/
 !results/ensemble_check/
 !results/external/

@@ -1,0 +1,33 @@
+{
+  "question": "prior use of common random numbers / paired or shared seeds / data-order control as variance reduction in LM training comparisons, hyperparameter selection, ML model comparison, RL evaluation; and whether the variance reduction for recipe selection and its effect on resolvability has been quantified",
+  "verdict": "not done: CRN is established in general and for hyperparameter search, but no work found quantifies the cross-recipe correlation of seed deviations in language-model pretraining, the implied gap-variance reduction, or its effect on the resolvable fraction of recipe pairs",
+  "closest": [
+    {
+      "work": "Sharma, When Does Pairing Seeds Reduce Variance? Evidence from a Multi-Agent Economic Simulation, arXiv:2512.24145 (Dec 2025, rev. Jan 2026)",
+      "what": "shared seeds across compared systems as a CRN estimator; strict variance reduction under positive seed-level correlation; paired evaluation resolves differences inconclusive under independent evaluation",
+      "delta": "learning-based economic simulator, not model training or recipe selection; no cross-recipe correlation of training-seed deviations for language models; no calibrated candidate-level resolvability"
+    },
+    {
+      "work": "Pearce, Poloczek, Branke, Bayesian Optimization Allowing for Common Random Numbers, Operations Research 70(6):3457-3472, 2022 (arXiv:1910.09259)",
+      "what": "GP model and acquisition that reuses seeds across inputs to exploit CRN; ML hyperparameter tuning named as a use case (same train/validation split)",
+      "delta": "an optimiser that exploits CRN; does not measure seed-deviation correlation across LM training recipes or its effect on decision resolvability"
+    },
+    {
+      "work": "Sellam et al., The MultiBERTs, arXiv:2106.16163 (2021)",
+      "what": "paired Multi-Bootstrap when compared treatments share pretraining seeds; notes pairing reduces Var(X-Y)",
+      "delta": "pairs downstream interventions on shared pretraining checkpoints; not recipe selection with shared data order and initialisation"
+    },
+    {
+      "work": "Du, When +1% Is Not Enough: A Paired Bootstrap Protocol for Evaluating Small Improvements, arXiv:2511.19794 (Nov 2025)",
+      "what": "paired multi-seed runs with BCa bootstrap and sign-flip test on CIFAR-10/10N and AG News",
+      "delta": "a testing protocol; the abstract reports no quantification of the variance reduction from pairing, and not LM pretraining"
+    }
+  ],
+  "related_not_crn": [
+    "Dodge et al. 2020 (arXiv:2002.06305): weight-initialisation vs data-order variance in fine-tuning",
+    "Bouthillier et al. 2021 (arXiv:2103.03098): accounting for variance sources in ML benchmarks",
+    "Huang 2026 (arXiv:2608.02705): covariate adjustment from training logs, arm-specific, vision",
+    "Yang et al. 2026 (arXiv:2609.10702, sec. 5.5): the same seed left 53 of 140 shared tensors with different initial values across architectures; explicit parameter copying changed an architecture-by-data interaction from -0.6908 to +0.0679 (a pitfall for init-sharing CRN)"
+  ],
+  "limits": "bounded search (web search and reading of the closest papers); informal same-seed practice is common and unindexed or industry work cannot be excluded"
+}
