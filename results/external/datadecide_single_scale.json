@@ -1,0 +1,323 @@
+{
+  "code": {
+    "repository": "allenai/DataDecide",
+    "commit": "68abc496587935b7211e9894206e78f15d535832",
+    "functions": [
+      "single_scale/target_filter.py:TargetFilter.apply",
+      "single_scale/main.py:take_mean_over_seeds",
+      "single_scale/main.py:process_single_combination",
+      "single_scale/evaluator.py:Evaluator (binary_accuracy)"
+    ]
+  },
+  "search": {
+    "found": "single_scale/ (main.py, evaluator.py, config.yaml): per-seed binary accuracy against the three-seed-mean 1B target",
+    "released_outputs": "results/readme.md points to a Google Drive folder (outputs2/, per_task_out/); access was denied in this environment, so the released outputs were not checked",
+    "not_found": "no single-scale output in the repository or in the Hugging Face release"
+  },
+  "target_pairs": 300,
+  "their_single_scale_macro": {
+    "4M": {
+      "three_seed_target": {
+        "per_seed": {
+          "default": 37.333333333333336,
+          "small aux 2": 33.33333333333333,
+          "small aux 3": 43.0
+        },
+        "mean": 37.888888888888886
+      },
+      "default_seed_target": {
+        "per_seed": {
+          "default": 40.0,
+          "small aux 2": 31.333333333333336,
+          "small aux 3": 45.0
+        },
+        "mean": 38.77777777777778
+      }
+    },
+    "6M": {
+      "three_seed_target": {
+        "per_seed": {
+          "default": 39.666666666666664,
+          "small aux 2": 42.333333333333336,
+          "small aux 3": 55.00000000000001
+        },
+        "mean": 45.666666666666664
+      },
+      "default_seed_target": {
+        "per_seed": {
+          "default": 41.0,
+          "small aux 2": 43.0,
+          "small aux 3": 53.666666666666664
+        },
+        "mean": 45.888888888888886
+      }
+    },
+    "8M": {
+      "three_seed_target": {
+        "per_seed": {
+          "default": 64.66666666666666,
+          "small aux 2": 52.0,
+          "small aux 3": 52.666666666666664
+        },
+        "mean": 56.444444444444436
+      },
+      "default_seed_target": {
+        "per_seed": {
+          "default": 67.33333333333333,
+          "small aux 2": 52.0,
+          "small aux 3": 50.66666666666667
+        },
+        "mean": 56.666666666666664
+      }
+    },
+    "10M": {
+      "three_seed_target": {
+        "per_seed": {
+          "default": 48.66666666666667,
+          "small aux 2": 66.0,
+          "small aux 3": 63.33333333333333
+        },
+        "mean": 59.333333333333336
+      },
+      "default_seed_target": {
+        "per_seed": {
+          "default": 48.66666666666667,
+          "small aux 2": 65.33333333333333,
+          "small aux 3": 62.66666666666667
+        },
+        "mean": 58.88888888888889
+      }
+    },
+    "14M": {
+      "three_seed_target": {
+        "per_seed": {
+          "default": 55.00000000000001,
+          "small aux 2": 52.666666666666664,
+          "small aux 3": 63.33333333333333
+        },
+        "mean": 57.0
+      },
+      "default_seed_target": {
+        "per_seed": {
+          "default": 56.99999999999999,
+          "small aux 2": 49.333333333333336,
+          "small aux 3": 65.33333333333333
+        },
+        "mean": 57.22222222222222
+      }
+    },
+    "16M": {
+      "three_seed_target": {
+        "per_seed": {
+          "default": 69.0,
+          "small aux 2": 62.33333333333333,
+          "small aux 3": 59.66666666666667
+        },
+        "mean": 63.666666666666664
+      },
+      "default_seed_target": {
+        "per_seed": {
+          "default": 65.66666666666666,
+          "small aux 2": 60.333333333333336,
+          "small aux 3": 59.66666666666667
+        },
+        "mean": 61.88888888888889
+      }
+    },
+    "20M": {
+      "three_seed_target": {
+        "per_seed": {
+          "default": 71.33333333333334,
+          "small aux 2": 69.0,
+          "small aux 3": 53.333333333333336
+        },
+        "mean": 64.55555555555556
+      },
+      "default_seed_target": {
+        "per_seed": {
+          "default": 72.0,
+          "small aux 2": 66.33333333333333,
+          "small aux 3": 57.333333333333336
+        },
+        "mean": 65.22222222222221
+      }
+    },
+    "60M": {
+      "three_seed_target": {
+        "per_seed": {
+          "default": 71.33333333333334,
+          "small aux 2": 72.0,
+          "small aux 3": 71.0
+        },
+        "mean": 71.44444444444444
+      },
+      "default_seed_target": {
+        "per_seed": {
+          "default": 70.0,
+          "small aux 2": 70.66666666666667,
+          "small aux 3": 70.33333333333334
+        },
+        "mean": 70.33333333333334
+      }
+    },
+    "90M": {
+      "three_seed_target": {
+        "per_seed": {
+          "default": 79.0,
+          "small aux 2": 81.33333333333333,
+          "small aux 3": 75.33333333333333
+        },
+        "mean": 78.55555555555554
+      },
+      "default_seed_target": {
+        "per_seed": {
+          "default": 76.33333333333333,
+          "small aux 2": 78.66666666666666,
+          "small aux 3": 74.0
+        },
+        "mean": 76.33333333333333
+      }
+    },
+    "150M": {
+      "three_seed_target": {
+        "per_seed": {
+          "default": 78.0,
+          "small aux 2": 83.66666666666667,
+          "small aux 3": 79.33333333333333
+        },
+        "mean": 80.33333333333333
+      },
+      "default_seed_target": {
+        "per_seed": {
+          "default": 76.66666666666667,
+          "small aux 2": 81.66666666666667,
+          "small aux 3": 78.66666666666666
+        },
+        "mean": 79.0
+      }
+    },
+    "300M": {
+      "three_seed_target": {
+        "per_seed": {
+          "default": 83.66666666666667,
+          "small aux 2": 82.0,
+          "small aux 3": 81.33333333333333
+        },
+        "mean": 82.33333333333333
+      },
+      "default_seed_target": {
+        "per_seed": {
+          "default": 80.33333333333333,
+          "small aux 2": 80.66666666666666,
+          "small aux 3": 80.66666666666666
+        },
+        "mean": 80.55555555555556
+      }
+    },
+    "750M": {
+      "three_seed_target": {
+        "per_seed": {
+          "default": 84.66666666666667,
+          "small aux 2": 81.33333333333333,
+          "small aux 3": 78.66666666666666
+        },
+        "mean": 81.55555555555556
+      },
+      "default_seed_target": {
+        "per_seed": {
+          "default": 83.33333333333334,
+          "small aux 2": 78.0,
+          "small aux 3": 77.33333333333333
+        },
+        "mean": 79.55555555555556
+      }
+    },
+    "530M": {
+      "three_seed_target": {
+        "per_seed": {
+          "default": 86.0,
+          "small aux 2": 84.66666666666667,
+          "small aux 3": 83.33333333333334
+        },
+        "mean": 84.66666666666667
+      },
+      "default_seed_target": {
+        "per_seed": {
+          "default": 83.33333333333334,
+          "small aux 2": 85.33333333333334,
+          "small aux 3": 82.0
+        },
+        "mean": 83.55555555555556
+      }
+    }
+  },
+  "our_rebuild_750M_three_seed": 81.55555555555556,
+  "comparisons_macro_750M": {
+    "3_param-default": {
+      "variant_default_target": 78.33333333333333,
+      "variant_three_seed_target": 79.66666666666666,
+      "a_as_implemented_minus_their_ss": -3.2222222222222285,
+      "b_both_three_seed_minus_their_ss": -1.8888888888889,
+      "secondary_both_default_minus_their_ss": -1.2222222222222285
+    },
+    "2_param-default": {
+      "variant_default_target": 72.66666666666667,
+      "variant_three_seed_target": 73.33333333333333,
+      "a_as_implemented_minus_their_ss": -8.888888888888886,
+      "b_both_three_seed_minus_their_ss": -8.222222222222229,
+      "secondary_both_default_minus_their_ss": -6.888888888888886
+    },
+    "5_param-ai2": {
+      "variant_default_target": 78.66666666666666,
+      "variant_three_seed_target": 79.33333333333333,
+      "a_as_implemented_minus_their_ss": -2.8888888888889,
+      "b_both_three_seed_minus_their_ss": -2.2222222222222285,
+      "secondary_both_default_minus_their_ss": -0.8888888888888999
+    },
+    "3_param-1_step": {
+      "variant_default_target": 78.66666666666666,
+      "variant_three_seed_target": 82.66666666666667,
+      "a_as_implemented_minus_their_ss": -2.8888888888889,
+      "b_both_three_seed_minus_their_ss": 1.1111111111111143,
+      "secondary_both_default_minus_their_ss": -0.8888888888888999
+    },
+    "5_param-1_step-ai2": {
+      "variant_default_target": 66.33333333333333,
+      "variant_three_seed_target": 66.33333333333333,
+      "a_as_implemented_minus_their_ss": -15.222222222222229,
+      "b_both_three_seed_minus_their_ss": -15.222222222222229,
+      "secondary_both_default_minus_their_ss": -13.222222222222229
+    },
+    "3_param-default-helper_points": {
+      "variant_default_target": 78.66666666666666,
+      "variant_three_seed_target": 80.66666666666666,
+      "a_as_implemented_minus_their_ss": -2.8888888888889,
+      "b_both_three_seed_minus_their_ss": -0.8888888888888999,
+      "secondary_both_default_minus_their_ss": -0.8888888888888999
+    },
+    "3_param-default-step2=0.5": {
+      "variant_default_target": 77.66666666666666,
+      "variant_three_seed_target": 79.66666666666666,
+      "a_as_implemented_minus_their_ss": -3.8888888888889,
+      "b_both_three_seed_minus_their_ss": -1.8888888888889,
+      "secondary_both_default_minus_their_ss": -1.8888888888889
+    },
+    "3_param-default-helper_points-step2=0.5": {
+      "variant_default_target": 79.33333333333333,
+      "variant_three_seed_target": 80.0,
+      "a_as_implemented_minus_their_ss": -2.2222222222222285,
+      "b_both_three_seed_minus_their_ss": -1.5555555555555571,
+      "secondary_both_default_minus_their_ss": -0.22222222222222854
+    }
+  },
+  "variants_exceeding": {
+    "a_as_implemented_minus_their_ss": [],
+    "b_both_three_seed_minus_their_ss": [
+      "3_param-1_step"
+    ],
+    "secondary_both_default_minus_their_ss": []
+  },
+  "predictions": {
+    "P4_flip_persists_3_param_1_step": true
+  }
+}

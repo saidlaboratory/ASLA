@@ -71,13 +71,18 @@ def _frame(metric: str) -> pd.DataFrame:
     return frame[frame["scale_label"] != "750M"].reset_index(drop=True)
 
 
-def build_context(frame: pd.DataFrame) -> dict[str, Any]:
-    """Shrunk truth, per-recipe power-law fits, residual decomposition and the practitioner coordinates."""
+def build_context(frame: pd.DataFrame, base: Truth | None = None) -> dict[str, Any]:
+    """Shrunk truth, per-recipe power-law fits, residual decomposition and the practitioner coordinates.
+
+    ``base`` supplies the truth directly (for a table without seed replicates);
+    by default it is the shrunk truth estimated from ``frame``.
+    """
 
     from asla.models import fit_power_law
 
-    target = float(frame[frame["scale_label"] == "1B"]["compute"].iloc[0])
-    base = shrink_truth(truth_from_tables(frame, frame.copy(), target, "1B", rho_ckpt={}))
+    if base is None:
+        target = float(frame[frame["scale_label"] == "1B"]["compute"].iloc[0])
+        base = shrink_truth(truth_from_tables(frame, frame.copy(), target, "1B", rho_ckpt={}))
     compute = base.final.groupby("scale_label")["compute"].first().sort_values()
     scales = list(compute.index)
     table = base.final.groupby(["intervention", "scale_label"])["mu"].first().unstack()[scales]

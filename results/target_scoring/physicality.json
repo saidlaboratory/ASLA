@@ -1,0 +1,121 @@
+{
+  "grid": {
+    "from": 0.0,
+    "to": 8.0,
+    "step": 0.01
+  },
+  "tolerance": "a rise between adjacent rungs larger than the recipe's per-run seed sd at the higher rung",
+  "axes": {
+    "c4_map": {
+      "first_failure": {
+        "strict_monotone": 1.45,
+        "tolerant_monotone": 1.85,
+        "in_range": null
+      },
+      "operative_first_failure": 1.85,
+      "at_lambda_1": {
+        "strict_monotone": true,
+        "tolerant_monotone": true,
+        "in_range": true,
+        "max_increase": -0.023140583630556932,
+        "max_increase_over_sd": -0.6950085973351092
+      }
+    },
+    "c4_ensemble": {
+      "first_failure": {
+        "strict_monotone": 1.39,
+        "tolerant_monotone": 1.79,
+        "in_range": null
+      },
+      "operative_first_failure": 1.79,
+      "at_lambda_1": {
+        "strict_monotone": true,
+        "tolerant_monotone": true,
+        "in_range": true,
+        "max_increase": -0.023140583630556932,
+        "max_increase_over_sd": -0.6950085973351092
+      }
+    },
+    "olmes_map": {
+      "first_failure": {
+        "strict_monotone": 0.0,
+        "tolerant_monotone": 0.0,
+        "in_range": null
+      },
+      "operative_first_failure": 0.0,
+      "at_lambda_1": {
+        "strict_monotone": false,
+        "tolerant_monotone": false,
+        "in_range": true,
+        "max_increase": 0.012488161067305437,
+        "max_increase_over_sd": 4.945482664878404
+      }
+    }
+  },
+  "own_truth": {
+    "c4": {
+      "strict_monotone": true,
+      "tolerant_monotone": true,
+      "in_range": true,
+      "max_increase": -0.023140583630556932,
+      "max_increase_over_sd": -0.6950085973351092
+    },
+    "olmes": {
+      "strict_monotone": false,
+      "tolerant_monotone": false,
+      "in_range": true,
+      "max_increase": 0.012488161067305437,
+      "max_increase_over_sd": 4.945482664878404
+    },
+    "cp": {
+      "strict_monotone": false,
+      "tolerant_monotone": false,
+      "in_range": true,
+      "max_increase": 0.020336662021357976,
+      "max_increase_over_sd": 1.3317282363192193
+    },
+    "sn": {
+      "strict_monotone": true,
+      "tolerant_monotone": true,
+      "in_range": true,
+      "max_increase": -0.020286309211718923,
+      "max_increase_over_sd": -20.574621079420957
+    }
+  },
+  "restricted_map": {
+    "c4_map_physical_below_lambda": 1.85,
+    "physical_grid_lambdas": [
+      0.0,
+      0.25,
+      0.5,
+      1.0
+    ],
+    "short_design_winning_cells": [
+      "s=0,lambda=8",
+      "s=0.25,lambda=8",
+      "s=0.5,lambda=8",
+      "s=1,lambda=8",
+      "s=2,lambda=8",
+      "s=4,lambda=8",
+      "s=8,lambda=8"
+    ],
+    "short_design_winning_cells_physical": [],
+    "candidates_by_lambda_physical": {
+      "0": 30,
+      "0.25": 41,
+      "0.5": 60,
+      "1": 91
+    },
+    "candidates_fall_cells_physical": [],
+    "olmes_lambda_on_c4_axis": 4.077271171937837,
+    "olmes_inside_c4_physical_region": false,
+    "primary_winning_cells": [
+      "s=0,lambda=0"
+    ],
+    "long_winning_cells": []
+  },
+  "predictions": {
+    "P1_1_c4_fails_below_4_and_olmes_outside": true,
+    "P1_2_c4_strict_olmes_tolerant_only": false
+  }
+}

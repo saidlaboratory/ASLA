@@ -1,0 +1,455 @@
+{
+  "design": "primary 300M -> 530M; hybrids in the base metric's units (median true gap at 530M as the unit)",
+  "units": {
+    "c4": {
+      "g": 0.1641458841951735,
+      "noise_amplitude_in_g": 0.102404274281946
+    },
+    "olmes": {
+      "g": 0.02260058651152677,
+      "noise_amplitude_in_g": 0.2895478292080374
+    }
+  },
+  "noise_profiles": {
+    "c4": {
+      "4M": 1.144,
+      "6M": 1.4886,
+      "8M": 0.9447,
+      "10M": 1.0588,
+      "14M": 0.5915,
+      "16M": 0.9262,
+      "20M": 2.1723,
+      "60M": 1.0479,
+      "90M": 0.4634,
+      "150M": 0.2297,
+      "300M": 0.3655,
+      "530M": 0.1449,
+      "1B": 0.1228
+    },
+    "olmes": {
+      "4M": 1.2156,
+      "6M": 0.8427,
+      "8M": 0.8598,
+      "10M": 1.0053,
+      "14M": 1.1164,
+      "16M": 0.9483,
+      "20M": 1.0791,
+      "60M": 1.2855,
+      "90M": 0.8133,
+      "150M": 0.877,
+      "300M": 0.9711,
+      "530M": 1.0949,
+      "1B": 0.7262
+    }
+  },
+  "configurations": {
+    "c4": {
+      "base": "c4",
+      "swapped": {},
+      "excess_pp": 2.3155555555555556,
+      "ci": [
+        2.195555555555556,
+        2.4356111111111107
+      ],
+      "sign": "projection loses",
+      "share_of_gap_closed": -0.0,
+      "worlds_with_undefined_excess": 0,
+      "physicality": {
+        "strict_monotone": true,
+        "tolerant_monotone": true,
+        "in_range": true,
+        "max_increase": -0.023140583630556932,
+        "max_increase_over_sd": -0.6950085973351521
+      }
+    },
+    "olmes": {
+      "base": "olmes",
+      "swapped": {},
+      "excess_pp": -0.7222222222222222,
+      "ci": [
+        -0.9377777777777777,
+        -0.493277777777778
+      ],
+      "sign": "projection wins",
+      "share_of_gap_closed": 0.0,
+      "worlds_with_undefined_excess": 0,
+      "physicality": {
+        "strict_monotone": false,
+        "tolerant_monotone": false,
+        "in_range": true,
+        "max_increase": 0.012488161067305437,
+        "max_increase_over_sd": 4.945482664878404
+      }
+    },
+    "c4+i": {
+      "base": "c4",
+      "swapped": {
+        "i": "noise profile shape"
+      },
+      "excess_pp": 1.8844444444444446,
+      "ci": [
+        1.7488888888888892,
+        2.02
+      ],
+      "sign": "projection loses",
+      "share_of_gap_closed": 0.14191660570592535,
+      "worlds_with_undefined_excess": 0,
+      "physicality": {
+        "strict_monotone": true,
+        "tolerant_monotone": true,
+        "in_range": true,
+        "max_increase": -0.023140583630556932,
+        "max_increase_over_sd": -0.678847754299522
+      }
+    },
+    "c4+ii": {
+      "base": "c4",
+      "swapped": {
+        "ii": "true-gap distribution at target"
+      },
+      "excess_pp": 1.2155555555555555,
+      "ci": [
+        1.1066666666666667,
+        1.3266666666666667
+      ],
+      "sign": "projection loses",
+      "share_of_gap_closed": 0.3621068032187272,
+      "worlds_with_undefined_excess": 0,
+      "physicality": {
+        "strict_monotone": true,
+        "tolerant_monotone": true,
+        "in_range": true,
+        "max_increase": -0.023140583630556932,
+        "max_increase_over_sd": -0.6950085973351521
+      }
+    },
+    "c4+iii": {
+      "base": "c4",
+      "swapped": {
+        "iii": "curve shape and floor"
+      },
+      "excess_pp": 0.6844444444444444,
+      "ci": [
+        0.5888888888888889,
+        0.782222222222222
+      ],
+      "sign": "projection loses",
+      "share_of_gap_closed": 0.5369422092172641,
+      "worlds_with_undefined_excess": 0,
+      "physicality": {
+        "strict_monotone": false,
+        "tolerant_monotone": false,
+        "in_range": true,
+        "max_increase": 0.030909461310072217,
+        "max_increase_over_sd": 1.1846794196275212
+      }
+    },
+    "c4+iv": {
+      "base": "c4",
+      "swapped": {
+        "iv": "misspecification loading pattern"
+      },
+      "excess_pp": -3.251111111111111,
+      "ci": [
+        -3.3378333333333337,
+        -3.1622222222222223
+      ],
+      "sign": "projection wins",
+      "share_of_gap_closed": 1.8324798829553766,
+      "worlds_with_undefined_excess": 0,
+      "physicality": {
+        "strict_monotone": false,
+        "tolerant_monotone": true,
+        "in_range": true,
+        "max_increase": 0.022015123340782594,
+        "max_increase_over_sd": 0.9023171652224024
+      }
+    },
+    "c4+v": {
+      "base": "c4",
+      "swapped": {
+        "v": "noise amplitude (added)"
+      },
+      "excess_pp": 3.1,
+      "ci": [
+        2.899944444444445,
+        3.2933333333333334
+      ],
+      "sign": "projection loses",
+      "share_of_gap_closed": -0.2582297000731529,
+      "worlds_with_undefined_excess": 0,
+      "physicality": {
+        "strict_monotone": true,
+        "tolerant_monotone": true,
+        "in_range": true,
+        "max_increase": -0.023140583630556932,
+        "max_increase_over_sd": -0.24580343504728253
+      }
+    },
+    "c4+all": {
+      "base": "c4",
+      "swapped": {
+        "i": "noise profile shape",
+        "ii": "true-gap distribution at target",
+        "iii": "curve shape and floor",
+        "iv": "misspecification loading pattern",
+        "v": "noise amplitude (added)"
+      },
+      "excess_pp": -0.7266666666666669,
+      "ci": [
+        -0.9378333333333335,
+        -0.49555555555555564
+      ],
+      "sign": "projection wins",
+      "share_of_gap_closed": 1.0014630577907828,
+      "worlds_with_undefined_excess": 0,
+      "physicality": {
+        "strict_monotone": false,
+        "tolerant_monotone": false,
+        "in_range": true,
+        "max_increase": 0.09070031166311132,
+        "max_increase_over_sd": 6.145009463292155
+      }
+    },
+    "c4+iv_common": {
+      "base": "c4",
+      "swapped": {
+        "iv_common": "residual common mode (exploratory)"
+      },
+      "excess_pp": 0.4177777777777777,
+      "ci": [
+        0.30222222222222217,
+        0.5311111111111111
+      ],
+      "sign": "projection loses",
+      "share_of_gap_closed": 0.6247256766642282,
+      "worlds_with_undefined_excess": 0,
+      "physicality": {
+        "strict_monotone": false,
+        "tolerant_monotone": true,
+        "in_range": true,
+        "max_increase": 0.005371798284211415,
+        "max_increase_over_sd": 0.18973762946832023
+      }
+    },
+    "c4+iv_specific": {
+      "base": "c4",
+      "swapped": {
+        "iv_specific": "residual recipe-specific part (exploratory)"
+      },
+      "excess_pp": -0.47777777777777763,
+      "ci": [
+        -0.5866666666666667,
+        -0.36222222222222217
+      ],
+      "sign": "projection wins",
+      "share_of_gap_closed": 0.9195318215069493,
+      "worlds_with_undefined_excess": 0,
+      "physicality": {
+        "strict_monotone": false,
+        "tolerant_monotone": false,
+        "in_range": true,
+        "max_increase": 0.01913836216244391,
+        "max_increase_over_sd": 9.268792730562405
+      }
+    },
+    "olmes+i": {
+      "base": "olmes",
+      "swapped": {
+        "i": "noise profile shape"
+      },
+      "excess_pp": 0.48222222222222216,
+      "ci": [
+        0.34438888888888897,
+        0.6289444444444442
+      ],
+      "sign": "projection loses",
+      "share_of_gap_closed": 0.3964886613021214,
+      "worlds_with_undefined_excess": 0,
+      "physicality": {
+        "strict_monotone": false,
+        "tolerant_monotone": false,
+        "in_range": true,
+        "max_increase": 0.012488161067305437,
+        "max_increase_over_sd": 2.799460069585569
+      }
+    },
+    "olmes+ii": {
+      "base": "olmes",
+      "swapped": {
+        "ii": "true-gap distribution at target"
+      },
+      "excess_pp": -1.7177777777777776,
+      "ci": [
+        -2.011111111111111,
+        -1.4266111111111115
+      ],
+      "sign": "projection wins",
+      "share_of_gap_closed": -0.3277249451353328,
+      "worlds_with_undefined_excess": 0,
+      "physicality": {
+        "strict_monotone": false,
+        "tolerant_monotone": false,
+        "in_range": true,
+        "max_increase": 0.012488161067305437,
+        "max_increase_over_sd": 4.945482664878404
+      }
+    },
+    "olmes+iii": {
+      "base": "olmes",
+      "swapped": {
+        "iii": "curve shape and floor"
+      },
+      "excess_pp": -0.5111111111111112,
+      "ci": [
+        -0.7422777777777779,
+        -0.27772222222222237
+      ],
+      "sign": "projection wins",
+      "share_of_gap_closed": 0.06949524506217993,
+      "worlds_with_undefined_excess": 0,
+      "physicality": {
+        "strict_monotone": false,
+        "tolerant_monotone": true,
+        "in_range": false,
+        "max_increase": 0.003031173776088525,
+        "max_increase_over_sd": 0.6148176778009745
+      }
+    },
+    "olmes+iv": {
+      "base": "olmes",
+      "swapped": {
+        "iv": "misspecification loading pattern"
+      },
+      "excess_pp": 0.611111111111111,
+      "ci": [
+        0.39555555555555555,
+        0.8156111111111107
+      ],
+      "sign": "projection loses",
+      "share_of_gap_closed": 0.43891733723482074,
+      "worlds_with_undefined_excess": 0,
+      "physicality": {
+        "strict_monotone": false,
+        "tolerant_monotone": true,
+        "in_range": true,
+        "max_increase": 0.004255799393254045,
+        "max_increase_over_sd": 0.6910864813250769
+      }
+    },
+    "olmes+v": {
+      "base": "olmes",
+      "swapped": {
+        "v": "noise amplitude (added)"
+      },
+      "excess_pp": 0.28444444444444444,
+      "ci": [
+        0.1666666666666667,
+        0.40888888888888886
+      ],
+      "sign": "projection loses",
+      "share_of_gap_closed": 0.33138258961228967,
+      "worlds_with_undefined_excess": 0,
+      "physicality": {
+        "strict_monotone": false,
+        "tolerant_monotone": false,
+        "in_range": true,
+        "max_increase": 0.012488161067305437,
+        "max_increase_over_sd": 13.983339856097952
+      }
+    },
+    "olmes+all": {
+      "base": "olmes",
+      "swapped": {
+        "i": "noise profile shape",
+        "ii": "true-gap distribution at target",
+        "iii": "curve shape and floor",
+        "iv": "misspecification loading pattern",
+        "v": "noise amplitude (added)"
+      },
+      "excess_pp": 2.12,
+      "ci": [
+        1.9955555555555557,
+        2.237777777777778
+      ],
+      "sign": "projection loses",
+      "share_of_gap_closed": 0.9356254572055597,
+      "worlds_with_undefined_excess": 0,
+      "physicality": {
+        "strict_monotone": true,
+        "tolerant_monotone": true,
+        "in_range": false,
+        "max_increase": -0.0031861338761791647,
+        "max_increase_over_sd": -1.0491312900670269
+      }
+    },
+    "olmes+iv_common": {
+      "base": "olmes",
+      "swapped": {
+        "iv_common": "residual common mode (exploratory)"
+      },
+      "excess_pp": -0.42888888888888876,
+      "ci": [
+        -0.6422777777777778,
+        -0.21327777777777793
+      ],
+      "sign": "projection wins",
+      "share_of_gap_closed": 0.0965618141916606,
+      "worlds_with_undefined_excess": 0,
+      "physicality": {
+        "strict_monotone": false,
+        "tolerant_monotone": false,
+        "in_range": true,
+        "max_increase": 0.00667349209752488,
+        "max_increase_over_sd": 1.0972095078117996
+      }
+    },
+    "olmes+iv_specific": {
+      "base": "olmes",
+      "swapped": {
+        "iv_specific": "residual recipe-specific part (exploratory)"
+      },
+      "excess_pp": -1.7288888888888887,
+      "ci": [
+        -1.9266666666666667,
+        -1.5311111111111113
+      ],
+      "sign": "projection wins",
+      "share_of_gap_closed": -0.33138258961228956,
+      "worlds_with_undefined_excess": 0,
+      "physicality": {
+        "strict_monotone": false,
+        "tolerant_monotone": false,
+        "in_range": true,
+        "max_increase": 0.013604683648747895,
+        "max_increase_over_sd": 4.41977144320321
+      }
+    }
+  },
+  "largest_share_by_component": {
+    "i": 0.3964886613021214,
+    "ii": 0.3621068032187272,
+    "iii": 0.5369422092172641,
+    "iv": 1.8324798829553766,
+    "v": 0.33138258961228967
+  },
+  "ranking_of_i_to_iv": [
+    "iv",
+    "iii",
+    "i",
+    "ii"
+  ],
+  "identified_for_task_3": [
+    "i",
+    "iii",
+    "iv",
+    "v"
+  ],
+  "predictions": {
+    "P2_1_i_primary": false,
+    "P2_2_ii_secondary": false,
+    "refutation_neither_i_nor_ii_moves_sign": false,
+    "P2_3_iii_or_v_largest_and_i_below_half": false,
+    "P2_4_all_swapped_reproduces": false
+  }
+}

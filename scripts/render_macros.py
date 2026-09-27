@@ -530,6 +530,48 @@ def _regime_entries() -> list[tuple[str, str, str]]:
     return entries
 
 
+def _transfer_entries() -> list[tuple[str, str, str]]:
+    """Physicality, structure swap, dimensionless transfer, DataDecide's own baseline (no prose uses these yet)."""
+
+    phys = Source.load("target_scoring/physicality.json")
+    swap = Source.load("target_scoring/structure_swap.json")
+    transfer = Source.load("target_scoring/dimensionless_transfer.json")
+    single = Source.load("external/datadecide_single_scale.json")
+    entries = [
+        ("physLimitMap", f"{phys.number('axes.c4_map.operative_first_failure'):.2f}", "physicality.json"),
+        ("physLimitEnsemble", f"{phys.number('axes.c4_ensemble.operative_first_failure'):.2f}", "physicality.json"),
+        ("physStrictMap", f"{phys.number('axes.c4_map.first_failure.strict_monotone'):.2f}", "physicality.json"),
+    ]
+    for name, tag in (
+        ("c4", "CFour"),
+        ("olmes", "Olmes"),
+        ("c4+i", "CFourI"),
+        ("c4+ii", "CFourII"),
+        ("c4+iii", "CFourIII"),
+        ("c4+iv", "CFourIV"),
+        ("c4+v", "CFourV"),
+        ("olmes+i", "OlmesI"),
+        ("olmes+ii", "OlmesII"),
+        ("olmes+iii", "OlmesIII"),
+        ("olmes+iv", "OlmesIV"),
+        ("olmes+v", "OlmesV"),
+    ):
+        row = swap.get("configurations")[name]
+        entries.append((f"swap{tag}", f"{row['excess_pp']:+.2f}", "structure_swap.json"))
+    for variant, tag in (("base", "Base"), ("extended", "Extended")):
+        held = transfer.get(f"summary.{variant}.held_out")
+        entries += [
+            (f"transferMatches{tag}", f"{held['matches']}", "dimensionless_transfer.json"),
+            (f"transferTests{tag}", f"{held['tests']}", "dimensionless_transfer.json"),
+        ]
+    ss = single.get("their_single_scale_macro")["750M"]
+    entries += [
+        ("theirSingleScaleThree", f"{ss['three_seed_target']['mean']:.2f}", "datadecide_single_scale.json"),
+        ("theirSingleScaleDefault", f"{ss['default_seed_target']['mean']:.2f}", "datadecide_single_scale.json"),
+    ]
+    return entries
+
+
 def _tex_name(tag: str) -> str:
     """Digits are not allowed in a TeX control word; spell them."""
 
@@ -1077,6 +1119,7 @@ def build() -> str:
     entries.extend(_final_round_entries())
     entries.extend(_lever_gap_entries())
     entries.extend(_regime_entries())
+    entries.extend(_transfer_entries())
     lines.extend(_macro(name, value, origin) for name, value, origin in entries)
     lines.append("")
     return "\n".join(lines)
