@@ -479,6 +479,64 @@ def _lever_gap_entries() -> list[tuple[str, str, str]]:
     return entries
 
 
+def _regime_entries() -> list[tuple[str, str, str]]:
+    """The regime map, the ensemble dose-response, DataDecide sensitivity (no prose uses these yet)."""
+
+    regime = Source.load("target_scoring/regime_map.json")
+    origin = "regime_map.json"
+    a1 = regime.get("task_1a")
+    olmes = regime.get("task_1c.olmes.map_position")
+    entries = [
+        ("noiselessProjMaxWrong", f"{a1['max_projection_wrong']}", origin),
+        ("noiselessSingleWrongRho", f"{a1['single_wrong_spearman_with_log_lever']:.2f}", origin),
+        ("noiselessSingleWrongMin", f"{a1['single_wrong_range'][0]}", origin),
+        ("noiselessSingleWrongMax", f"{a1['single_wrong_range'][1]}", origin),
+        ("olmesNoiseMultiple", f"{olmes[0]:.1f}", origin),
+        ("olmesSpecificMultiple", f"{olmes[1]:.1f}", origin),
+        ("ensVerdict", regime.get("task_2.verdict.verdict").replace("_", " "), origin),
+        ("realCandTwo", f"{regime.get('task_3.reconciliation.real_data.candidates_for_2pp')}", origin),
+        ("simCandTwoLow", f"{regime.get('task_3.reconciliation.simulated_B3_1.per_world_candidates_95')[0]:.0f}", origin),
+        ("simCandTwoHigh", f"{regime.get('task_3.reconciliation.simulated_B3_1.per_world_candidates_95')[1]:.0f}", origin),
+        ("modelShareOfReal", f"{100 * regime.number('task_5.model_slope_share_of_real_slope'):.0f}", origin),
+    ]
+    for name, tag in (("short", "Short"), ("primary", "Primary"), ("long", "Long")):
+        block = regime.get(f"task_1c.by_design.{name}")
+        entries += [
+            (f"mapExcessCFour{tag}", f"{block['c4']['map_excess_pp']:+.1f}", origin),
+            (f"mapExcessOlmes{tag}", f"{block['olmes']['map_excess_pp']:+.1f}", origin),
+            (f"worldExcessOlmes{tag}", f"{block['olmes_worlds']['excess_pp']:+.1f}", origin),
+        ]
+    for lam, value in regime.get("task_2.dose_response").items():
+        tag = lam.replace(".", "p")
+        entries.append((f"ensDose{_tex_name(tag)}", f"{value['ensemble_excess_pp']:+.2f}", origin))
+    for lam, value in regime.get("task_3.at_measured_noise_by_lambda").items():
+        entries.append((f"candTwoLambda{_tex_name(lam.replace('.', 'p'))}", f"{value['candidates_for_2pp']}", origin))
+    for key, value in regime.get("task_5.components_share_of_real_slope").items():
+        tag = {"A_variance": "Variance", "B1_common_mode_increment": "CommonMode"}.get(key)
+        tag = tag or {"B2_recipe_specific_increment": "RecipeSpecific", "interaction_remainder": "Interaction"}[key]
+        entries.append((f"realShare{tag}", f"{100 * value:+.0f}", origin))
+
+    sens = Source.load("external/datadecide_sensitivity.json")
+    origin = "datadecide_sensitivity.json"
+    entries += [
+        ("tieMaxRange", f"{sens.number('task_4a.max_row_range_pp'):.2f}", origin),
+        ("tieGroups", f"{sens.integer('task_4a.target_groups_with_ties')}", origin),
+        ("tieOrderingsDistinct", f"{sens.integer('task_4a.random_orders.orderings_distinct')}", origin),
+        ("tieCAHolds", f"{sens.integer('task_4a.random_orders.C_A_holds_in')}", origin),
+        ("threeSeedMedianChange", f"{sens.number('task_4b.tested_rows.median_abs_change_pp'):.2f}", origin),
+        ("threeSeedMaxChange", f"{sens.number('task_4b.tested_rows.max_abs_change_pp'):.2f}", origin),
+        ("unmatchedRows", f"{len(sens.get('task_4c.unmatched_rows'))}", origin),
+    ]
+    return entries
+
+
+def _tex_name(tag: str) -> str:
+    """Digits are not allowed in a TeX control word; spell them."""
+
+    words = dict(zip("0123456789", ("Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine")))
+    return "".join(words.get(c, "P" if c == "p" else c) for c in tag)
+
+
 def _restated_entries() -> list[tuple[str, str, str]]:
     """Every inferential claim under the calibrated procedure, with Holm and BY."""
 
@@ -1018,6 +1076,7 @@ def build() -> str:
     entries.extend(_dose_jackknife_entries())
     entries.extend(_final_round_entries())
     entries.extend(_lever_gap_entries())
+    entries.extend(_regime_entries())
     lines.extend(_macro(name, value, origin) for name, value, origin in entries)
     lines.append("")
     return "\n".join(lines)

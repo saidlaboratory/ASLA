@@ -1,0 +1,1408 @@
+{
+  "code": {
+    "repository": "allenai/DataDecide",
+    "commit": "68abc496587935b7211e9894206e78f15d535832"
+  },
+  "gate_per_row_path_max_difference": 0.0,
+  "task_4a": {
+    "target_groups": 176,
+    "target_groups_with_ties": 27,
+    "rows_affected": 810,
+    "macro_average_has_ties": false,
+    "max_row_range_pp": 3.333333333333343,
+    "max_tied_pairs": 10,
+    "range_within_tied_pair_bound": true,
+    "tested_rows": [
+      {
+        "task": "arc_challenge",
+        "setup": "3_param-default",
+        "default": 83.33333333333334,
+        "min": 83.33333333333334,
+        "max": 84.33333333333334,
+        "stable": 84.0,
+        "reversed": 83.66666666666667
+      },
+      {
+        "task": "arc_challenge",
+        "setup": "2_param-default",
+        "default": 82.33333333333334,
+        "min": 82.33333333333334,
+        "max": 83.33333333333334,
+        "stable": 83.0,
+        "reversed": 82.66666666666667
+      },
+      {
+        "task": "arc_challenge",
+        "setup": "5_param-ai2",
+        "default": 83.66666666666667,
+        "min": 83.33333333333334,
+        "max": 84.33333333333334,
+        "stable": 84.33333333333334,
+        "reversed": 83.33333333333334
+      },
+      {
+        "task": "arc_challenge",
+        "setup": "3_param-1_step",
+        "default": 89.66666666666666,
+        "min": 89.66666666666666,
+        "max": 90.66666666666666,
+        "stable": 90.33333333333333,
+        "reversed": 90.0
+      },
+      {
+        "task": "arc_challenge",
+        "setup": "5_param-1_step-ai2",
+        "default": 70.33333333333334,
+        "min": 70.0,
+        "max": 71.0,
+        "stable": 70.33333333333334,
+        "reversed": 70.66666666666667
+      },
+      {
+        "task": "arc_challenge",
+        "setup": "3_param-default-helper_points",
+        "default": 85.0,
+        "min": 85.0,
+        "max": 86.0,
+        "stable": 85.66666666666667,
+        "reversed": 85.33333333333334
+      },
+      {
+        "task": "arc_challenge",
+        "setup": "3_param-default-step2=0.5",
+        "default": 81.66666666666667,
+        "min": 81.33333333333333,
+        "max": 82.33333333333334,
+        "stable": 81.66666666666667,
+        "reversed": 82.0
+      },
+      {
+        "task": "arc_challenge",
+        "setup": "3_param-default-helper_points-step2=0.5",
+        "default": 81.33333333333333,
+        "min": 81.33333333333333,
+        "max": 82.33333333333334,
+        "stable": 82.0,
+        "reversed": 81.66666666666667
+      },
+      {
+        "task": "boolq",
+        "setup": "3_param-default",
+        "default": 60.333333333333336,
+        "min": 60.0,
+        "max": 60.333333333333336,
+        "stable": 60.333333333333336,
+        "reversed": 60.0
+      },
+      {
+        "task": "boolq",
+        "setup": "2_param-default",
+        "default": 57.666666666666664,
+        "min": 57.333333333333336,
+        "max": 57.666666666666664,
+        "stable": 57.666666666666664,
+        "reversed": 57.333333333333336
+      },
+      {
+        "task": "boolq",
+        "setup": "5_param-ai2",
+        "default": 59.0,
+        "min": 58.666666666666664,
+        "max": 59.0,
+        "stable": 59.0,
+        "reversed": 58.666666666666664
+      },
+      {
+        "task": "boolq",
+        "setup": "3_param-1_step",
+        "default": 61.66666666666667,
+        "min": 61.33333333333333,
+        "max": 61.66666666666667,
+        "stable": 61.66666666666667,
+        "reversed": 61.33333333333333
+      },
+      {
+        "task": "boolq",
+        "setup": "5_param-1_step-ai2",
+        "default": 57.99999999999999,
+        "min": 57.666666666666664,
+        "max": 57.99999999999999,
+        "stable": 57.99999999999999,
+        "reversed": 57.666666666666664
+      },
+      {
+        "task": "boolq",
+        "setup": "3_param-default-helper_points",
+        "default": 59.0,
+        "min": 58.666666666666664,
+        "max": 59.0,
+        "stable": 59.0,
+        "reversed": 58.666666666666664
+      },
+      {
+        "task": "boolq",
+        "setup": "3_param-default-step2=0.5",
+        "default": 61.33333333333333,
+        "min": 61.0,
+        "max": 61.33333333333333,
+        "stable": 61.33333333333333,
+        "reversed": 61.0
+      },
+      {
+        "task": "boolq",
+        "setup": "3_param-default-helper_points-step2=0.5",
+        "default": 58.666666666666664,
+        "min": 58.333333333333336,
+        "max": 58.666666666666664,
+        "stable": 58.666666666666664,
+        "reversed": 58.333333333333336
+      },
+      {
+        "task": "csqa",
+        "setup": "3_param-default",
+        "default": 65.0,
+        "min": 64.66666666666666,
+        "max": 65.33333333333333,
+        "stable": 65.0,
+        "reversed": 65.0
+      },
+      {
+        "task": "csqa",
+        "setup": "2_param-default",
+        "default": 64.66666666666666,
+        "min": 64.33333333333333,
+        "max": 65.0,
+        "stable": 64.66666666666666,
+        "reversed": 64.66666666666666
+      },
+      {
+        "task": "csqa",
+        "setup": "5_param-ai2",
+        "default": 66.33333333333333,
+        "min": 66.0,
+        "max": 66.66666666666666,
+        "stable": 66.33333333333333,
+        "reversed": 66.33333333333333
+      },
+      {
+        "task": "csqa",
+        "setup": "3_param-1_step",
+        "default": 79.66666666666666,
+        "min": 79.33333333333333,
+        "max": 80.0,
+        "stable": 79.66666666666666,
+        "reversed": 79.66666666666666
+      },
+      {
+        "task": "csqa",
+        "setup": "5_param-1_step-ai2",
+        "default": 63.33333333333333,
+        "min": 63.0,
+        "max": 63.66666666666667,
+        "stable": 63.33333333333333,
+        "reversed": 63.33333333333333
+      },
+      {
+        "task": "csqa",
+        "setup": "3_param-default-helper_points",
+        "default": 66.66666666666666,
+        "min": 66.33333333333333,
+        "max": 67.0,
+        "stable": 66.66666666666666,
+        "reversed": 66.66666666666666
+      },
+      {
+        "task": "csqa",
+        "setup": "3_param-default-step2=0.5",
+        "default": 69.0,
+        "min": 68.66666666666667,
+        "max": 69.33333333333334,
+        "stable": 69.0,
+        "reversed": 69.0
+      },
+      {
+        "task": "csqa",
+        "setup": "3_param-default-helper_points-step2=0.5",
+        "default": 66.66666666666666,
+        "min": 66.33333333333333,
+        "max": 67.0,
+        "stable": 66.66666666666666,
+        "reversed": 66.66666666666666
+      },
+      {
+        "task": "openbookqa",
+        "setup": "3_param-default",
+        "default": 73.33333333333333,
+        "min": 73.0,
+        "max": 74.0,
+        "stable": 73.33333333333333,
+        "reversed": 73.66666666666667
+      },
+      {
+        "task": "openbookqa",
+        "setup": "2_param-default",
+        "default": 65.0,
+        "min": 65.0,
+        "max": 66.0,
+        "stable": 65.0,
+        "reversed": 66.0
+      },
+      {
+        "task": "openbookqa",
+        "setup": "5_param-ai2",
+        "default": 69.66666666666667,
+        "min": 69.33333333333334,
+        "max": 70.33333333333334,
+        "stable": 69.66666666666667,
+        "reversed": 70.0
+      },
+      {
+        "task": "openbookqa",
+        "setup": "3_param-1_step",
+        "default": 75.33333333333333,
+        "min": 75.0,
+        "max": 76.0,
+        "stable": 75.33333333333333,
+        "reversed": 75.66666666666667
+      },
+      {
+        "task": "openbookqa",
+        "setup": "5_param-1_step-ai2",
+        "default": 63.66666666666667,
+        "min": 63.66666666666667,
+        "max": 64.66666666666666,
+        "stable": 63.66666666666667,
+        "reversed": 64.66666666666666
+      },
+      {
+        "task": "openbookqa",
+        "setup": "3_param-default-helper_points",
+        "default": 74.66666666666667,
+        "min": 74.0,
+        "max": 75.0,
+        "stable": 74.66666666666667,
+        "reversed": 74.33333333333333
+      },
+      {
+        "task": "openbookqa",
+        "setup": "3_param-default-step2=0.5",
+        "default": 73.66666666666667,
+        "min": 73.66666666666667,
+        "max": 74.66666666666667,
+        "stable": 73.66666666666667,
+        "reversed": 74.66666666666667
+      },
+      {
+        "task": "openbookqa",
+        "setup": "3_param-default-helper_points-step2=0.5",
+        "default": 73.0,
+        "min": 72.66666666666667,
+        "max": 73.66666666666667,
+        "stable": 73.0,
+        "reversed": 73.33333333333333
+      },
+      {
+        "task": "piqa",
+        "setup": "3_param-default",
+        "default": 67.33333333333333,
+        "min": 67.0,
+        "max": 67.66666666666666,
+        "stable": 67.33333333333333,
+        "reversed": 67.33333333333333
+      },
+      {
+        "task": "piqa",
+        "setup": "2_param-default",
+        "default": 62.66666666666667,
+        "min": 62.33333333333333,
+        "max": 63.0,
+        "stable": 62.66666666666667,
+        "reversed": 62.66666666666667
+      },
+      {
+        "task": "piqa",
+        "setup": "5_param-ai2",
+        "default": 64.33333333333333,
+        "min": 64.0,
+        "max": 64.66666666666666,
+        "stable": 64.33333333333333,
+        "reversed": 64.33333333333333
+      },
+      {
+        "task": "piqa",
+        "setup": "3_param-1_step",
+        "default": 72.0,
+        "min": 72.0,
+        "max": 72.66666666666667,
+        "stable": 72.0,
+        "reversed": 72.66666666666667
+      },
+      {
+        "task": "piqa",
+        "setup": "5_param-1_step-ai2",
+        "default": 63.66666666666667,
+        "min": 63.33333333333333,
+        "max": 64.0,
+        "stable": 63.66666666666667,
+        "reversed": 63.66666666666667
+      },
+      {
+        "task": "piqa",
+        "setup": "3_param-default-helper_points",
+        "default": 61.0,
+        "min": 60.66666666666667,
+        "max": 61.33333333333333,
+        "stable": 61.0,
+        "reversed": 61.0
+      },
+      {
+        "task": "piqa",
+        "setup": "3_param-default-step2=0.5",
+        "default": 66.0,
+        "min": 65.66666666666666,
+        "max": 66.33333333333333,
+        "stable": 66.0,
+        "reversed": 66.0
+      },
+      {
+        "task": "piqa",
+        "setup": "3_param-default-helper_points-step2=0.5",
+        "default": 66.0,
+        "min": 65.66666666666666,
+        "max": 66.33333333333333,
+        "stable": 66.0,
+        "reversed": 66.0
+      },
+      {
+        "task": "socialiqa",
+        "setup": "3_param-default",
+        "default": 56.99999999999999,
+        "min": 55.666666666666664,
+        "max": 56.99999999999999,
+        "stable": 56.99999999999999,
+        "reversed": 55.666666666666664
+      },
+      {
+        "task": "socialiqa",
+        "setup": "2_param-default",
+        "default": 62.0,
+        "min": 61.0,
+        "max": 62.33333333333333,
+        "stable": 62.0,
+        "reversed": 61.33333333333333
+      },
+      {
+        "task": "socialiqa",
+        "setup": "5_param-ai2",
+        "default": 57.666666666666664,
+        "min": 56.333333333333336,
+        "max": 57.666666666666664,
+        "stable": 57.666666666666664,
+        "reversed": 56.333333333333336
+      },
+      {
+        "task": "socialiqa",
+        "setup": "3_param-1_step",
+        "default": 77.33333333333333,
+        "min": 76.33333333333333,
+        "max": 77.66666666666666,
+        "stable": 77.33333333333333,
+        "reversed": 76.66666666666667
+      },
+      {
+        "task": "socialiqa",
+        "setup": "5_param-1_step-ai2",
+        "default": 51.66666666666667,
+        "min": 50.33333333333333,
+        "max": 51.66666666666667,
+        "stable": 51.66666666666667,
+        "reversed": 50.33333333333333
+      },
+      {
+        "task": "socialiqa",
+        "setup": "3_param-default-helper_points",
+        "default": 59.333333333333336,
+        "min": 57.99999999999999,
+        "max": 59.333333333333336,
+        "stable": 59.333333333333336,
+        "reversed": 57.99999999999999
+      },
+      {
+        "task": "socialiqa",
+        "setup": "3_param-default-step2=0.5",
+        "default": 63.33333333333333,
+        "min": 62.0,
+        "max": 63.33333333333333,
+        "stable": 63.33333333333333,
+        "reversed": 62.0
+      },
+      {
+        "task": "socialiqa",
+        "setup": "3_param-default-helper_points-step2=0.5",
+        "default": 56.00000000000001,
+        "min": 54.666666666666664,
+        "max": 56.00000000000001,
+        "stable": 56.00000000000001,
+        "reversed": 54.666666666666664
+      },
+      {
+        "task": "winogrande",
+        "setup": "3_param-default",
+        "default": 67.0,
+        "min": 66.0,
+        "max": 67.0,
+        "stable": 66.33333333333333,
+        "reversed": 66.66666666666666
+      },
+      {
+        "task": "winogrande",
+        "setup": "2_param-default",
+        "default": 61.33333333333333,
+        "min": 60.333333333333336,
+        "max": 61.33333333333333,
+        "stable": 60.66666666666667,
+        "reversed": 61.0
+      },
+      {
+        "task": "winogrande",
+        "setup": "5_param-ai2",
+        "default": 65.0,
+        "min": 64.0,
+        "max": 65.0,
+        "stable": 64.33333333333333,
+        "reversed": 64.66666666666666
+      },
+      {
+        "task": "winogrande",
+        "setup": "3_param-1_step",
+        "default": 60.66666666666667,
+        "min": 60.0,
+        "max": 61.0,
+        "stable": 60.66666666666667,
+        "reversed": 60.333333333333336
+      },
+      {
+        "task": "winogrande",
+        "setup": "5_param-1_step-ai2",
+        "default": 59.66666666666667,
+        "min": 58.666666666666664,
+        "max": 59.66666666666667,
+        "stable": 59.0,
+        "reversed": 59.333333333333336
+      },
+      {
+        "task": "winogrande",
+        "setup": "3_param-default-helper_points",
+        "default": 66.66666666666666,
+        "min": 65.66666666666666,
+        "max": 66.66666666666666,
+        "stable": 66.0,
+        "reversed": 66.33333333333333
+      },
+      {
+        "task": "winogrande",
+        "setup": "3_param-default-step2=0.5",
+        "default": 64.0,
+        "min": 63.0,
+        "max": 64.0,
+        "stable": 63.33333333333333,
+        "reversed": 63.66666666666667
+      },
+      {
+        "task": "winogrande",
+        "setup": "3_param-default-helper_points-step2=0.5",
+        "default": 67.33333333333333,
+        "min": 66.66666666666666,
+        "max": 67.66666666666666,
+        "stable": 67.33333333333333,
+        "reversed": 67.0
+      }
+    ],
+    "conclusions": {
+      "default": {
+        "single_scale_750M": {
+          "olmes_10_macro_avg": 79.55555555555556,
+          "arc_challenge": 90.66666666666667,
+          "arc_easy": 95.22222222222221,
+          "boolq": 54.0,
+          "csqa": 75.88888888888889,
+          "hellaswag": 91.22222222222223,
+          "mmlu": 91.55555555555557,
+          "openbookqa": 66.55555555555556,
+          "piqa": 75.33333333333333,
+          "socialiqa": 69.11111111111111,
+          "winogrande": 60.44444444444444
+        },
+        "C_A_no_variant_exceeds_on_macro": true,
+        "variants_exceeding_on_macro": [],
+        "variant_task_rows_exceeding": 24,
+        "C_B_best_on_macro": "3_param-default-helper_points-step2=0.5",
+        "C_B_ordering_by_mean": [
+          "3_param-1_step",
+          "3_param-default-step2=0.5",
+          "3_param-default",
+          "3_param-default-helper_points",
+          "3_param-default-helper_points-step2=0.5",
+          "5_param-ai2",
+          "2_param-default",
+          "5_param-1_step-ai2"
+        ]
+      },
+      "stable": {
+        "single_scale_750M": {
+          "olmes_10_macro_avg": 79.55555555555556,
+          "arc_challenge": 90.66666666666667,
+          "arc_easy": 95.22222222222221,
+          "boolq": 54.0,
+          "csqa": 76.11111111111111,
+          "hellaswag": 91.22222222222223,
+          "mmlu": 91.55555555555557,
+          "openbookqa": 66.55555555555556,
+          "piqa": 75.33333333333333,
+          "socialiqa": 69.11111111111111,
+          "winogrande": 60.44444444444444
+        },
+        "C_A_no_variant_exceeds_on_macro": true,
+        "variants_exceeding_on_macro": [],
+        "variant_task_rows_exceeding": 24,
+        "C_B_best_on_macro": "3_param-default-helper_points-step2=0.5",
+        "C_B_ordering_by_mean": [
+          "3_param-1_step",
+          "3_param-default-step2=0.5",
+          "3_param-default",
+          "3_param-default-helper_points-step2=0.5",
+          "3_param-default-helper_points",
+          "5_param-ai2",
+          "2_param-default",
+          "5_param-1_step-ai2"
+        ]
+      },
+      "reversed": {
+        "single_scale_750M": {
+          "olmes_10_macro_avg": 79.55555555555556,
+          "arc_challenge": 90.77777777777779,
+          "arc_easy": 95.22222222222221,
+          "boolq": 53.888888888888886,
+          "csqa": 75.88888888888889,
+          "hellaswag": 91.22222222222223,
+          "mmlu": 91.55555555555557,
+          "openbookqa": 66.8888888888889,
+          "piqa": 75.77777777777777,
+          "socialiqa": 68.8888888888889,
+          "winogrande": 60.333333333333336
+        },
+        "C_A_no_variant_exceeds_on_macro": true,
+        "variants_exceeding_on_macro": [],
+        "variant_task_rows_exceeding": 23,
+        "C_B_best_on_macro": "3_param-default-helper_points-step2=0.5",
+        "C_B_ordering_by_mean": [
+          "3_param-1_step",
+          "3_param-default-step2=0.5",
+          "3_param-default",
+          "3_param-default-helper_points-step2=0.5",
+          "3_param-default-helper_points",
+          "5_param-ai2",
+          "2_param-default",
+          "5_param-1_step-ai2"
+        ]
+      }
+    },
+    "random_orders": {
+      "n": 1000,
+      "C_A_holds_in": 1000,
+      "best_on_macro": [
+        "3_param-default-helper_points-step2=0.5"
+      ],
+      "orderings_distinct": 5,
+      "orderings_equal_to_default": 179
+    }
+  },
+  "task_4b": {
+    "definition": "1B target = mean over seeds default, large aux 2, large aux 3 at the final step common to them per task",
+    "all_rows": {
+      "n": 5280,
+      "median_abs_change_pp": 1.6666666666666643,
+      "max_abs_change_pp": 18.333333333333336,
+      "rows_changed": 4909
+    },
+    "tested_rows": {
+      "median_abs_change_pp": 1.666666666666675,
+      "max_abs_change_pp": 11.333333333333336,
+      "rows": [
+        {
+          "task": "olmes_10_macro_avg",
+          "setup": "3_param-default",
+          "implemented": 78.33333333333333,
+          "three_seed_mean": 79.66666666666666
+        },
+        {
+          "task": "olmes_10_macro_avg",
+          "setup": "2_param-default",
+          "implemented": 72.66666666666667,
+          "three_seed_mean": 73.33333333333333
+        },
+        {
+          "task": "olmes_10_macro_avg",
+          "setup": "5_param-ai2",
+          "implemented": 78.66666666666666,
+          "three_seed_mean": 79.33333333333333
+        },
+        {
+          "task": "olmes_10_macro_avg",
+          "setup": "3_param-1_step",
+          "implemented": 78.66666666666666,
+          "three_seed_mean": 82.66666666666667
+        },
+        {
+          "task": "olmes_10_macro_avg",
+          "setup": "5_param-1_step-ai2",
+          "implemented": 66.33333333333333,
+          "three_seed_mean": 66.33333333333333
+        },
+        {
+          "task": "olmes_10_macro_avg",
+          "setup": "3_param-default-helper_points",
+          "implemented": 78.66666666666666,
+          "three_seed_mean": 80.66666666666666
+        },
+        {
+          "task": "olmes_10_macro_avg",
+          "setup": "3_param-default-step2=0.5",
+          "implemented": 77.66666666666666,
+          "three_seed_mean": 79.66666666666666
+        },
+        {
+          "task": "olmes_10_macro_avg",
+          "setup": "3_param-default-helper_points-step2=0.5",
+          "implemented": 79.33333333333333,
+          "three_seed_mean": 80.0
+        },
+        {
+          "task": "arc_challenge",
+          "setup": "3_param-default",
+          "implemented": 83.33333333333334,
+          "three_seed_mean": 81.66666666666667
+        },
+        {
+          "task": "arc_challenge",
+          "setup": "2_param-default",
+          "implemented": 82.33333333333334,
+          "three_seed_mean": 80.0
+        },
+        {
+          "task": "arc_challenge",
+          "setup": "5_param-ai2",
+          "implemented": 83.66666666666667,
+          "three_seed_mean": 81.33333333333333
+        },
+        {
+          "task": "arc_challenge",
+          "setup": "3_param-1_step",
+          "implemented": 89.66666666666666,
+          "three_seed_mean": 90.66666666666666
+        },
+        {
+          "task": "arc_challenge",
+          "setup": "5_param-1_step-ai2",
+          "implemented": 70.33333333333334,
+          "three_seed_mean": 68.0
+        },
+        {
+          "task": "arc_challenge",
+          "setup": "3_param-default-helper_points",
+          "implemented": 85.0,
+          "three_seed_mean": 85.33333333333334
+        },
+        {
+          "task": "arc_challenge",
+          "setup": "3_param-default-step2=0.5",
+          "implemented": 81.66666666666667,
+          "three_seed_mean": 82.66666666666667
+        },
+        {
+          "task": "arc_challenge",
+          "setup": "3_param-default-helper_points-step2=0.5",
+          "implemented": 81.33333333333333,
+          "three_seed_mean": 81.0
+        },
+        {
+          "task": "arc_easy",
+          "setup": "3_param-default",
+          "implemented": 93.66666666666667,
+          "three_seed_mean": 94.0
+        },
+        {
+          "task": "arc_easy",
+          "setup": "2_param-default",
+          "implemented": 93.33333333333333,
+          "three_seed_mean": 93.0
+        },
+        {
+          "task": "arc_easy",
+          "setup": "5_param-ai2",
+          "implemented": 94.33333333333334,
+          "three_seed_mean": 93.33333333333333
+        },
+        {
+          "task": "arc_easy",
+          "setup": "3_param-1_step",
+          "implemented": 96.33333333333334,
+          "three_seed_mean": 94.66666666666667
+        },
+        {
+          "task": "arc_easy",
+          "setup": "5_param-1_step-ai2",
+          "implemented": 80.0,
+          "three_seed_mean": 79.66666666666666
+        },
+        {
+          "task": "arc_easy",
+          "setup": "3_param-default-helper_points",
+          "implemented": 92.66666666666666,
+          "three_seed_mean": 93.0
+        },
+        {
+          "task": "arc_easy",
+          "setup": "3_param-default-step2=0.5",
+          "implemented": 94.0,
+          "three_seed_mean": 94.33333333333334
+        },
+        {
+          "task": "arc_easy",
+          "setup": "3_param-default-helper_points-step2=0.5",
+          "implemented": 93.33333333333333,
+          "three_seed_mean": 94.33333333333334
+        },
+        {
+          "task": "boolq",
+          "setup": "3_param-default",
+          "implemented": 60.333333333333336,
+          "three_seed_mean": 69.33333333333334
+        },
+        {
+          "task": "boolq",
+          "setup": "2_param-default",
+          "implemented": 57.666666666666664,
+          "three_seed_mean": 67.33333333333333
+        },
+        {
+          "task": "boolq",
+          "setup": "5_param-ai2",
+          "implemented": 59.0,
+          "three_seed_mean": 68.66666666666667
+        },
+        {
+          "task": "boolq",
+          "setup": "3_param-1_step",
+          "implemented": 61.66666666666667,
+          "three_seed_mean": 62.66666666666667
+        },
+        {
+          "task": "boolq",
+          "setup": "5_param-1_step-ai2",
+          "implemented": 57.99999999999999,
+          "three_seed_mean": 59.66666666666667
+        },
+        {
+          "task": "boolq",
+          "setup": "3_param-default-helper_points",
+          "implemented": 59.0,
+          "three_seed_mean": 68.0
+        },
+        {
+          "task": "boolq",
+          "setup": "3_param-default-step2=0.5",
+          "implemented": 61.33333333333333,
+          "three_seed_mean": 71.0
+        },
+        {
+          "task": "boolq",
+          "setup": "3_param-default-helper_points-step2=0.5",
+          "implemented": 58.666666666666664,
+          "three_seed_mean": 68.33333333333333
+        },
+        {
+          "task": "csqa",
+          "setup": "3_param-default",
+          "implemented": 65.0,
+          "three_seed_mean": 73.0
+        },
+        {
+          "task": "csqa",
+          "setup": "2_param-default",
+          "implemented": 64.66666666666666,
+          "three_seed_mean": 72.66666666666667
+        },
+        {
+          "task": "csqa",
+          "setup": "5_param-ai2",
+          "implemented": 66.33333333333333,
+          "three_seed_mean": 73.0
+        },
+        {
+          "task": "csqa",
+          "setup": "3_param-1_step",
+          "implemented": 79.66666666666666,
+          "three_seed_mean": 82.33333333333334
+        },
+        {
+          "task": "csqa",
+          "setup": "5_param-1_step-ai2",
+          "implemented": 63.33333333333333,
+          "three_seed_mean": 66.66666666666666
+        },
+        {
+          "task": "csqa",
+          "setup": "3_param-default-helper_points",
+          "implemented": 66.66666666666666,
+          "three_seed_mean": 74.0
+        },
+        {
+          "task": "csqa",
+          "setup": "3_param-default-step2=0.5",
+          "implemented": 69.0,
+          "three_seed_mean": 78.33333333333333
+        },
+        {
+          "task": "csqa",
+          "setup": "3_param-default-helper_points-step2=0.5",
+          "implemented": 66.66666666666666,
+          "three_seed_mean": 75.33333333333333
+        },
+        {
+          "task": "hellaswag",
+          "setup": "3_param-default",
+          "implemented": 79.33333333333333,
+          "three_seed_mean": 79.33333333333333
+        },
+        {
+          "task": "hellaswag",
+          "setup": "2_param-default",
+          "implemented": 71.0,
+          "three_seed_mean": 71.0
+        },
+        {
+          "task": "hellaswag",
+          "setup": "5_param-ai2",
+          "implemented": 80.66666666666666,
+          "three_seed_mean": 80.66666666666666
+        },
+        {
+          "task": "hellaswag",
+          "setup": "3_param-1_step",
+          "implemented": 91.0,
+          "three_seed_mean": 91.0
+        },
+        {
+          "task": "hellaswag",
+          "setup": "5_param-1_step-ai2",
+          "implemented": 75.33333333333333,
+          "three_seed_mean": 76.0
+        },
+        {
+          "task": "hellaswag",
+          "setup": "3_param-default-helper_points",
+          "implemented": 79.0,
+          "three_seed_mean": 79.0
+        },
+        {
+          "task": "hellaswag",
+          "setup": "3_param-default-step2=0.5",
+          "implemented": 81.66666666666667,
+          "three_seed_mean": 81.66666666666667
+        },
+        {
+          "task": "hellaswag",
+          "setup": "3_param-default-helper_points-step2=0.5",
+          "implemented": 80.33333333333333,
+          "three_seed_mean": 80.33333333333333
+        },
+        {
+          "task": "mmlu",
+          "setup": "3_param-default",
+          "implemented": 85.33333333333334,
+          "three_seed_mean": 86.33333333333333
+        },
+        {
+          "task": "mmlu",
+          "setup": "2_param-default",
+          "implemented": 88.0,
+          "three_seed_mean": 89.0
+        },
+        {
+          "task": "mmlu",
+          "setup": "5_param-ai2",
+          "implemented": 87.33333333333333,
+          "three_seed_mean": 87.66666666666667
+        },
+        {
+          "task": "mmlu",
+          "setup": "3_param-1_step",
+          "implemented": 89.0,
+          "three_seed_mean": 88.0
+        },
+        {
+          "task": "mmlu",
+          "setup": "5_param-1_step-ai2",
+          "implemented": 79.0,
+          "three_seed_mean": 79.33333333333333
+        },
+        {
+          "task": "mmlu",
+          "setup": "3_param-default-helper_points",
+          "implemented": 84.66666666666667,
+          "three_seed_mean": 85.66666666666667
+        },
+        {
+          "task": "mmlu",
+          "setup": "3_param-default-step2=0.5",
+          "implemented": 88.33333333333333,
+          "three_seed_mean": 89.33333333333333
+        },
+        {
+          "task": "mmlu",
+          "setup": "3_param-default-helper_points-step2=0.5",
+          "implemented": 85.0,
+          "three_seed_mean": 86.0
+        },
+        {
+          "task": "openbookqa",
+          "setup": "3_param-default",
+          "implemented": 73.33333333333333,
+          "three_seed_mean": 76.33333333333333
+        },
+        {
+          "task": "openbookqa",
+          "setup": "2_param-default",
+          "implemented": 65.0,
+          "three_seed_mean": 70.0
+        },
+        {
+          "task": "openbookqa",
+          "setup": "5_param-ai2",
+          "implemented": 69.66666666666667,
+          "three_seed_mean": 71.33333333333334
+        },
+        {
+          "task": "openbookqa",
+          "setup": "3_param-1_step",
+          "implemented": 75.33333333333333,
+          "three_seed_mean": 78.33333333333333
+        },
+        {
+          "task": "openbookqa",
+          "setup": "5_param-1_step-ai2",
+          "implemented": 63.66666666666667,
+          "three_seed_mean": 65.33333333333333
+        },
+        {
+          "task": "openbookqa",
+          "setup": "3_param-default-helper_points",
+          "implemented": 74.66666666666667,
+          "three_seed_mean": 77.0
+        },
+        {
+          "task": "openbookqa",
+          "setup": "3_param-default-step2=0.5",
+          "implemented": 73.66666666666667,
+          "three_seed_mean": 78.66666666666666
+        },
+        {
+          "task": "openbookqa",
+          "setup": "3_param-default-helper_points-step2=0.5",
+          "implemented": 73.0,
+          "three_seed_mean": 76.66666666666667
+        },
+        {
+          "task": "piqa",
+          "setup": "3_param-default",
+          "implemented": 67.33333333333333,
+          "three_seed_mean": 64.0
+        },
+        {
+          "task": "piqa",
+          "setup": "2_param-default",
+          "implemented": 62.66666666666667,
+          "three_seed_mean": 58.666666666666664
+        },
+        {
+          "task": "piqa",
+          "setup": "5_param-ai2",
+          "implemented": 64.33333333333333,
+          "three_seed_mean": 63.0
+        },
+        {
+          "task": "piqa",
+          "setup": "3_param-1_step",
+          "implemented": 72.0,
+          "three_seed_mean": 74.0
+        },
+        {
+          "task": "piqa",
+          "setup": "5_param-1_step-ai2",
+          "implemented": 63.66666666666667,
+          "three_seed_mean": 62.33333333333333
+        },
+        {
+          "task": "piqa",
+          "setup": "3_param-default-helper_points",
+          "implemented": 61.0,
+          "three_seed_mean": 60.333333333333336
+        },
+        {
+          "task": "piqa",
+          "setup": "3_param-default-step2=0.5",
+          "implemented": 66.0,
+          "three_seed_mean": 62.66666666666667
+        },
+        {
+          "task": "piqa",
+          "setup": "3_param-default-helper_points-step2=0.5",
+          "implemented": 66.0,
+          "three_seed_mean": 64.66666666666666
+        },
+        {
+          "task": "socialiqa",
+          "setup": "3_param-default",
+          "implemented": 56.99999999999999,
+          "three_seed_mean": 67.0
+        },
+        {
+          "task": "socialiqa",
+          "setup": "2_param-default",
+          "implemented": 62.0,
+          "three_seed_mean": 72.66666666666667
+        },
+        {
+          "task": "socialiqa",
+          "setup": "5_param-ai2",
+          "implemented": 57.666666666666664,
+          "three_seed_mean": 68.33333333333333
+        },
+        {
+          "task": "socialiqa",
+          "setup": "3_param-1_step",
+          "implemented": 77.33333333333333,
+          "three_seed_mean": 79.33333333333333
+        },
+        {
+          "task": "socialiqa",
+          "setup": "5_param-1_step-ai2",
+          "implemented": 51.66666666666667,
+          "three_seed_mean": 62.33333333333333
+        },
+        {
+          "task": "socialiqa",
+          "setup": "3_param-default-helper_points",
+          "implemented": 59.333333333333336,
+          "three_seed_mean": 70.66666666666667
+        },
+        {
+          "task": "socialiqa",
+          "setup": "3_param-default-step2=0.5",
+          "implemented": 63.33333333333333,
+          "three_seed_mean": 70.0
+        },
+        {
+          "task": "socialiqa",
+          "setup": "3_param-default-helper_points-step2=0.5",
+          "implemented": 56.00000000000001,
+          "three_seed_mean": 65.33333333333333
+        },
+        {
+          "task": "winogrande",
+          "setup": "3_param-default",
+          "implemented": 67.0,
+          "three_seed_mean": 72.66666666666667
+        },
+        {
+          "task": "winogrande",
+          "setup": "2_param-default",
+          "implemented": 61.33333333333333,
+          "three_seed_mean": 66.33333333333333
+        },
+        {
+          "task": "winogrande",
+          "setup": "5_param-ai2",
+          "implemented": 65.0,
+          "three_seed_mean": 69.33333333333334
+        },
+        {
+          "task": "winogrande",
+          "setup": "3_param-1_step",
+          "implemented": 60.66666666666667,
+          "three_seed_mean": 67.66666666666666
+        },
+        {
+          "task": "winogrande",
+          "setup": "5_param-1_step-ai2",
+          "implemented": 59.66666666666667,
+          "three_seed_mean": 59.333333333333336
+        },
+        {
+          "task": "winogrande",
+          "setup": "3_param-default-helper_points",
+          "implemented": 66.66666666666666,
+          "three_seed_mean": 67.0
+        },
+        {
+          "task": "winogrande",
+          "setup": "3_param-default-step2=0.5",
+          "implemented": 64.0,
+          "three_seed_mean": 69.0
+        },
+        {
+          "task": "winogrande",
+          "setup": "3_param-default-helper_points-step2=0.5",
+          "implemented": 67.33333333333333,
+          "three_seed_mean": 68.33333333333333
+        }
+      ]
+    },
+    "conclusions": {
+      "single_scale_750M": {
+        "olmes_10_macro_avg": 81.55555555555556,
+        "arc_challenge": 90.11111111111111,
+        "arc_easy": 95.33333333333333,
+        "boolq": 56.77777777777777,
+        "csqa": 78.33333333333333,
+        "hellaswag": 91.22222222222223,
+        "mmlu": 92.11111111111111,
+        "openbookqa": 75.55555555555556,
+        "piqa": 77.55555555555556,
+        "socialiqa": 72.44444444444444,
+        "winogrande": 62.11111111111111
+      },
+      "C_A_no_variant_exceeds_on_macro": false,
+      "variants_exceeding_on_macro": [
+        "3_param-1_step"
+      ],
+      "variant_task_rows_exceeding": 25,
+      "C_B_best_on_macro": "3_param-1_step",
+      "C_B_ordering_by_mean": [
+        "3_param-1_step",
+        "3_param-default-step2=0.5",
+        "3_param-default",
+        "3_param-default-helper_points",
+        "3_param-default-helper_points-step2=0.5",
+        "5_param-ai2",
+        "2_param-default",
+        "5_param-1_step-ai2"
+      ]
+    }
+  },
+  "task_4c": {
+    "unmatched_rows": [
+      {
+        "task": "arc_challenge",
+        "metric": "total_prob_per_char",
+        "setup": "3_param-no_750M-step2=0.5",
+        "released": 43.0,
+        "their_code": 43.333333333333336,
+        "target_tie_blocks": [],
+        "tie_orders": 1,
+        "stacked_pred_ties": 1,
+        "stacked_pred_nonfinite": 0,
+        "prediction_tie_blocks": [
+          2
+        ],
+        "prediction_tie_orders": 2,
+        "prediction_orders_exhaustive": true,
+        "prediction_tie_values": [
+          43.0,
+          43.333333333
+        ],
+        "some_prediction_tie_order_reproduces": true
+      },
+      {
+        "task": "hellaswag",
+        "metric": "total_prob_per_char",
+        "setup": "2_param-no_750M_no_530M",
+        "released": 45.666666666666664,
+        "their_code": 45.0,
+        "target_tie_blocks": [],
+        "tie_orders": 1,
+        "stacked_pred_ties": 8,
+        "stacked_pred_nonfinite": 0,
+        "prediction_tie_blocks": [
+          4,
+          3,
+          2,
+          3
+        ],
+        "prediction_tie_orders": 1728,
+        "prediction_orders_exhaustive": true,
+        "prediction_tie_values": [
+          43.666666667,
+          48.0
+        ],
+        "some_prediction_tie_order_reproduces": true
+      },
+      {
+        "task": "hellaswag",
+        "metric": "total_prob_per_char",
+        "setup": "3_param-no_750M-helper_points-step2=0.5",
+        "released": 70.66666666666667,
+        "their_code": 70.33333333333334,
+        "target_tie_blocks": [],
+        "tie_orders": 1,
+        "stacked_pred_ties": 3,
+        "stacked_pred_nonfinite": 0,
+        "prediction_tie_blocks": [
+          3,
+          2
+        ],
+        "prediction_tie_orders": 12,
+        "prediction_orders_exhaustive": true,
+        "prediction_tie_values": [
+          69.666666667,
+          71.0
+        ],
+        "some_prediction_tie_order_reproduces": true
+      },
+      {
+        "task": "hellaswag",
+        "metric": "total_prob_per_char",
+        "setup": "3_param-no_750M_no_530M",
+        "released": 45.666666666666664,
+        "their_code": 45.0,
+        "target_tie_blocks": [],
+        "tie_orders": 1,
+        "stacked_pred_ties": 8,
+        "stacked_pred_nonfinite": 0,
+        "prediction_tie_blocks": [
+          4,
+          3,
+          2,
+          3
+        ],
+        "prediction_tie_orders": 1728,
+        "prediction_orders_exhaustive": true,
+        "prediction_tie_values": [
+          43.666666667,
+          48.0
+        ],
+        "some_prediction_tie_order_reproduces": true
+      },
+      {
+        "task": "hellaswag",
+        "metric": "total_prob_per_char",
+        "setup": "3_param-no_750M_no_530M-helper_points",
+        "released": 44.0,
+        "their_code": 45.33333333333333,
+        "target_tie_blocks": [],
+        "tie_orders": 1,
+        "stacked_pred_ties": 6,
+        "stacked_pred_nonfinite": 0,
+        "prediction_tie_blocks": [
+          4,
+          3,
+          2
+        ],
+        "prediction_tie_orders": 288,
+        "prediction_orders_exhaustive": true,
+        "prediction_tie_values": [
+          43.666666667,
+          47.0
+        ],
+        "some_prediction_tie_order_reproduces": true
+      },
+      {
+        "task": "hellaswag",
+        "metric": "total_prob_per_char",
+        "setup": "3_param-no_750M_no_530M-step2=0.5",
+        "released": 78.66666666666666,
+        "their_code": 79.0,
+        "target_tie_blocks": [],
+        "tie_orders": 1,
+        "stacked_pred_ties": 1,
+        "stacked_pred_nonfinite": 0,
+        "prediction_tie_blocks": [
+          2
+        ],
+        "prediction_tie_orders": 2,
+        "prediction_orders_exhaustive": true,
+        "prediction_tie_values": [
+          78.666666667,
+          79.0
+        ],
+        "some_prediction_tie_order_reproduces": true
+      },
+      {
+        "task": "hellaswag",
+        "metric": "total_prob_per_char",
+        "setup": "5_param-ai2-no_750M_no_530M",
+        "released": 45.666666666666664,
+        "their_code": 45.0,
+        "target_tie_blocks": [],
+        "tie_orders": 1,
+        "stacked_pred_ties": 8,
+        "stacked_pred_nonfinite": 0,
+        "prediction_tie_blocks": [
+          4,
+          3,
+          2,
+          3
+        ],
+        "prediction_tie_orders": 1728,
+        "prediction_orders_exhaustive": true,
+        "prediction_tie_values": [
+          43.666666667,
+          48.0
+        ],
+        "some_prediction_tie_order_reproduces": true
+      },
+      {
+        "task": "olmes_10_macro_avg",
+        "metric": "total_prob_per_char",
+        "setup": "3_param-no_750M-step2=0.5",
+        "released": 25.333333333333336,
+        "their_code": 25.0,
+        "target_tie_blocks": [],
+        "tie_orders": 1,
+        "stacked_pred_ties": 1,
+        "stacked_pred_nonfinite": 0,
+        "prediction_tie_blocks": [
+          2
+        ],
+        "prediction_tie_orders": 2,
+        "prediction_orders_exhaustive": true,
+        "prediction_tie_values": [
+          25.0,
+          25.333333333
+        ],
+        "some_prediction_tie_order_reproduces": true
+      },
+      {
+        "task": "olmes_10_macro_avg",
+        "metric": "total_prob_per_char",
+        "setup": "3_param-no_750M_no_530M-helper_points",
+        "released": 31.0,
+        "their_code": 31.333333333333336,
+        "target_tie_blocks": [],
+        "tie_orders": 1,
+        "stacked_pred_ties": 1,
+        "stacked_pred_nonfinite": 0,
+        "prediction_tie_blocks": [
+          2
+        ],
+        "prediction_tie_orders": 2,
+        "prediction_orders_exhaustive": true,
+        "prediction_tie_values": [
+          31.0,
+          31.333333333
+        ],
+        "some_prediction_tie_order_reproduces": true
+      }
+    ]
+  },
+  "predictions": {
+    "P4a1_macro_invariant": true,
+    "P4a2_range_within_bound_and_4_3": false,
+    "P4a3_conclusions_unchanged": false,
+    "P4b1_median_change_at_least_1pp": true,
+    "P4b2_C_A_holds": false,
+    "P4c_all_tied_and_reproducible": false,
+    "P4c_followup_all_reproduced_by_prediction_tie_order": true
+  }
+}
