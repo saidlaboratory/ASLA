@@ -29,5 +29,6 @@
     "Huang 2026 (arXiv:2608.02705): covariate adjustment from training logs, arm-specific, vision",
     "Yang et al. 2026 (arXiv:2609.10702, sec. 5.5): the same seed left 53 of 140 shared tensors with different initial values across architectures; explicit parameter copying changed an architecture-by-data interaction from -0.6908 to +0.0679 (a pitfall for init-sharing CRN)"
   ],
-  "limits": "bounded search (web search and reading of the closest papers); informal same-seed practice is common and unindexed or industry work cannot be excluded"
+  "limits": "bounded search (web search and reading of the closest papers); informal same-seed practice is common and unindexed or industry work cannot be excluded",
+  "framing": "CRN for hyperparameter selection is established (Pearce, Poloczek & Branke, Operations Research 2022), and seed pairing is shown to resolve otherwise inconclusive differences in another domain (Sharma, arXiv:2512.24145). A positive pilot or full experiment here would measure CRN's benefit for language-model recipe selection and give a practical design (copied initialisation, shared data order); it would not introduce a method. Any later result is to be framed this way."
 }
