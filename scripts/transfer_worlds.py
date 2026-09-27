@@ -130,8 +130,12 @@ def world_excess(
     designs: Mapping[str, tuple[str, str]],
     rng: np.random.Generator,
     scales: list[str] | None = None,
+    rates: dict[str, tuple[float, float]] | None = None,
 ) -> dict[str, float]:
-    """True excess (points) of projection over single-scale at each design, for one noise draw."""
+    """True excess (points) of projection over single-scale at each design, for one noise draw.
+
+    If ``rates`` is given, each design's (projection, single-scale) mis-selection rates are stored in it.
+    """
 
     from asla.models import FitError, bpb_power_law, fit_power_law
 
@@ -161,6 +165,8 @@ def world_excess(
         proj = true_mis_rate(gaps(pd.Series(projected)), truth_gaps)
         single = true_mis_rate(gaps(means[fit_top]), truth_gaps)
         out[name] = 100 * (proj - single)
+        if rates is not None:
+            rates[name] = (proj, single)
     return out
 
 

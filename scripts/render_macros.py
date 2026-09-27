@@ -572,6 +572,50 @@ def _transfer_entries() -> list[tuple[str, str, str]]:
     return entries
 
 
+def _pattern_entries() -> list[tuple[str, str, str]]:
+    """Misspecification-pattern property, alignment sweep, correct-prob long design, paper check (no prose yet)."""
+
+    pattern = Source.load("target_scoring/pattern.json")
+    paper = Source.load("external/datadecide_paper_check.json")
+    t1 = pattern.get("task_1")
+    t4 = pattern.get("task_4")
+    sweep = pattern.get("task_2.sweep")
+    entries = [
+        ("alignOwnAgree", f"{t1['own_world_lines_up']['agree']}", "pattern.json"),
+        ("alignOwnTests", f"{t1['own_world_lines_up']['tests']}", "pattern.json"),
+        ("alignSwapAgree", f"{t1['swaps_lines_up']['agree']}", "pattern.json"),
+        ("alignSwapTests", f"{t1['swaps_lines_up']['tests']}", "pattern.json"),
+        ("alignCFourPrimary", f"{t1['own_world']['c4|primary']['a_with_target']:+.2f}", "pattern.json"),
+        ("alignOlmesPrimary", f"{t1['own_world']['olmes|primary']['a_with_target']:+.2f}", "pattern.json"),
+        ("proxyAgree", f"{pattern.integer('task_3.c_observed_sign_agrees')}", "pattern.json"),
+        ("cpLongSingleRate", f"{100 * t4['single_scale_rate']:.1f}", "pattern.json"),
+        ("cpLongProjRate", f"{100 * t4['projection_rate']:.1f}", "pattern.json"),
+        ("cpLongNoiselessSingle", f"{100 * t4['noiseless_single_scale_rate']:.0f}", "pattern.json"),
+        (
+            "releasedSingleScaleThree",
+            f"{paper.get('released_single_scale_vs_our_run_of_their_code.released')['750M']:.2f}",
+            "datadecide_paper_check.json",
+        ),
+        (
+            "snAgreeMin",
+            f"{100 * paper.number('sn_agreement_verified.min_pairwise_agreement'):.1f}",
+            "datadecide_paper_check.json",
+        ),
+        (
+            "snAgreeMax",
+            f"{100 * paper.number('sn_agreement_verified.max_pairwise_agreement'):.1f}",
+            "datadecide_paper_check.json",
+        ),
+    ]
+    for d, tag in (("short", "Short"), ("primary", "Primary"), ("long", "Long")):
+        pts = sweep[d]["points"]
+        entries += [
+            (f"sweepOpposed{tag}", f"{pts['-1']['excess_pp']:+.2f}", "pattern.json"),
+            (f"sweepAligned{tag}", f"{pts['1']['excess_pp']:+.2f}", "pattern.json"),
+        ]
+    return entries
+
+
 def _tex_name(tag: str) -> str:
     """Digits are not allowed in a TeX control word; spell them."""
 
@@ -1120,6 +1164,7 @@ def build() -> str:
     entries.extend(_lever_gap_entries())
     entries.extend(_regime_entries())
     entries.extend(_transfer_entries())
+    entries.extend(_pattern_entries())
     lines.extend(_macro(name, value, origin) for name, value, origin in entries)
     lines.append("")
     return "\n".join(lines)

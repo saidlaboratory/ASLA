@@ -1,0 +1,877 @@
+{
+  "label": "exploratory: characterises the mechanism of metric-specificity, not a decision rule",
+  "definitions": {
+    "a": "Spearman(recipe-specific residual at the target, true target values)",
+    "b": "Spearman(the same residual, top-fitted-rung values; truth and observed)",
+    "c": "Spearman(in-sample residual at the top fitted rung from a fit on rungs <= f, top-rung values)"
+  },
+  "task_1": {
+    "own_world": {
+      "c4|short": {
+        "design": [
+          "14M",
+          "16M"
+        ],
+        "a_with_target": 0.24,
+        "b_with_top_rung_truth": 0.17923076923076922,
+        "b_with_top_rung_observed": 0.17076923076923078,
+        "c_proxy_truth": 0.6346153846153846,
+        "c_proxy_observed": 0.6323076923076923,
+        "crossover_rate_f_to_t": 0.04666666666666667,
+        "own_world_sign": "loses",
+        "own_world_excess_pp": 0.9866666666666665
+      },
+      "c4|primary": {
+        "design": [
+          "300M",
+          "530M"
+        ],
+        "a_with_target": -0.7284615384615384,
+        "b_with_top_rung_truth": -0.7438461538461538,
+        "b_with_top_rung_observed": -0.7438461538461538,
+        "c_proxy_truth": 0.3246153846153846,
+        "c_proxy_observed": 0.3515384615384615,
+        "crossover_rate_f_to_t": 0.01,
+        "own_world_sign": "loses",
+        "own_world_excess_pp": 2.3333333333333335
+      },
+      "c4|long": {
+        "design": [
+          "8M",
+          "1B"
+        ],
+        "a_with_target": 0.3815384615384615,
+        "b_with_top_rung_truth": 0.4907692307692308,
+        "b_with_top_rung_observed": 0.4876923076923077,
+        "c_proxy_truth": -0.46384615384615385,
+        "c_proxy_observed": -0.4976923076923077,
+        "crossover_rate_f_to_t": 0.05333333333333334,
+        "own_world_sign": "loses",
+        "own_world_excess_pp": 39.488888888888894
+      },
+      "olmes|short": {
+        "design": [
+          "8M",
+          "10M"
+        ],
+        "a_with_target": -0.5453846153846154,
+        "b_with_top_rung_truth": -0.39,
+        "b_with_top_rung_observed": -0.32846153846153847,
+        "c_proxy_truth": 0.39307692307692305,
+        "c_proxy_observed": 0.49615384615384617,
+        "crossover_rate_f_to_t": 0.32666666666666666,
+        "own_world_sign": "loses",
+        "own_world_excess_pp": 2.7355555555555555
+      },
+      "olmes|primary": {
+        "design": [
+          "300M",
+          "530M"
+        ],
+        "a_with_target": 0.7853846153846153,
+        "b_with_top_rung_truth": 0.6476923076923076,
+        "b_with_top_rung_observed": 0.6476923076923076,
+        "c_proxy_truth": 0.5392307692307693,
+        "c_proxy_observed": 0.39,
+        "crossover_rate_f_to_t": 0.08,
+        "own_world_sign": "wins",
+        "own_world_excess_pp": -0.5244444444444444
+      },
+      "olmes|long": {
+        "design": [
+          "8M",
+          "1B"
+        ],
+        "a_with_target": -0.25076923076923074,
+        "b_with_top_rung_truth": -0.26384615384615384,
+        "b_with_top_rung_observed": -0.19769230769230767,
+        "c_proxy_truth": 0.39307692307692305,
+        "c_proxy_observed": 0.49615384615384617,
+        "crossover_rate_f_to_t": 0.42333333333333334,
+        "own_world_sign": "loses",
+        "own_world_excess_pp": 1.4333333333333333
+      },
+      "cp|short": {
+        "design": [
+          "8M",
+          "10M"
+        ],
+        "a_with_target": 0.4038461538461539,
+        "b_with_top_rung_truth": 0.019999999999999997,
+        "b_with_top_rung_observed": 0.019999999999999997,
+        "c_proxy_truth": -0.31692307692307686,
+        "c_proxy_observed": -0.24615384615384614,
+        "crossover_rate_f_to_t": 0.30333333333333334,
+        "own_world_sign": "wins",
+        "own_world_excess_pp": -0.7911111111111111
+      },
+      "cp|primary": {
+        "design": [
+          "300M",
+          "530M"
+        ],
+        "a_with_target": -0.1769230769230769,
+        "b_with_top_rung_truth": -0.2776923076923077,
+        "b_with_top_rung_observed": -0.2692307692307692,
+        "c_proxy_truth": -0.27,
+        "c_proxy_observed": -0.13153846153846155,
+        "crossover_rate_f_to_t": 0.1,
+        "own_world_sign": "loses",
+        "own_world_excess_pp": 2.8266666666666667
+      },
+      "cp|long": {
+        "design": [
+          "8M",
+          "1B"
+        ],
+        "a_with_target": -0.009999999999999998,
+        "b_with_top_rung_truth": -0.18692307692307694,
+        "b_with_top_rung_observed": -0.18692307692307694,
+        "c_proxy_truth": -0.31692307692307686,
+        "c_proxy_observed": -0.24615384615384614,
+        "crossover_rate_f_to_t": 0.62,
+        "own_world_sign": "wins",
+        "own_world_excess_pp": -13.335555555555556
+      },
+      "sn|short": {
+        "design": [
+          "90M",
+          "150M"
+        ],
+        "a_with_target": -0.22923076923076924,
+        "b_with_top_rung_truth": -0.2561538461538462,
+        "b_with_top_rung_observed": -0.2561538461538462,
+        "c_proxy_truth": -0.4723076923076923,
+        "c_proxy_observed": -0.42538461538461536,
+        "crossover_rate_f_to_t": 0.016666666666666666,
+        "own_world_sign": "loses",
+        "own_world_excess_pp": 4.768888888888889
+      },
+      "sn|primary": {
+        "design": [
+          "300M",
+          "530M"
+        ],
+        "a_with_target": -0.6399999999999999,
+        "b_with_top_rung_truth": -0.6692307692307693,
+        "b_with_top_rung_observed": -0.6692307692307693,
+        "c_proxy_truth": -0.13,
+        "c_proxy_observed": 0.04692307692307692,
+        "crossover_rate_f_to_t": 0.013333333333333334,
+        "own_world_sign": "loses",
+        "own_world_excess_pp": 4.78
+      },
+      "sn|long": {
+        "design": [
+          "60M",
+          "1B"
+        ],
+        "a_with_target": 0.34307692307692306,
+        "b_with_top_rung_truth": 0.36846153846153845,
+        "b_with_top_rung_observed": 0.3661538461538461,
+        "c_proxy_truth": 0.16076923076923075,
+        "c_proxy_observed": 0.06461538461538462,
+        "crossover_rate_f_to_t": 0.06,
+        "own_world_sign": "loses",
+        "own_world_excess_pp": 20.226666666666667
+      }
+    },
+    "own_world_lines_up": {
+      "tests": 12,
+      "agree": 8
+    },
+    "swaps": {
+      "c4": {
+        "a_with_target": -0.7284615384615384,
+        "excess_pp": 2.3155555555555556,
+        "sign": "projection loses",
+        "lines_up": true
+      },
+      "olmes": {
+        "a_with_target": 0.7853846153846153,
+        "excess_pp": -0.7222222222222222,
+        "sign": "projection wins",
+        "lines_up": true
+      },
+      "c4+i": {
+        "a_with_target": -0.7284615384615384,
+        "excess_pp": 1.8844444444444446,
+        "sign": "projection loses",
+        "lines_up": true
+      },
+      "c4+ii": {
+        "a_with_target": -0.7284615384615384,
+        "excess_pp": 1.2155555555555555,
+        "sign": "projection loses",
+        "lines_up": true
+      },
+      "c4+iii": {
+        "a_with_target": 0.8015384615384615,
+        "excess_pp": 0.6844444444444444,
+        "sign": "projection loses",
+        "lines_up": false
+      },
+      "c4+iv": {
+        "a_with_target": -0.5861538461538462,
+        "excess_pp": -3.251111111111111,
+        "sign": "projection wins",
+        "lines_up": false
+      },
+      "c4+v": {
+        "a_with_target": -0.7284615384615384,
+        "excess_pp": 3.1,
+        "sign": "projection loses",
+        "lines_up": true
+      },
+      "c4+all": {
+        "a_with_target": 0.7853846153846153,
+        "excess_pp": -0.7266666666666669,
+        "sign": "projection wins",
+        "lines_up": true
+      },
+      "c4+iv_common": {
+        "a_with_target": -0.7284615384615384,
+        "excess_pp": 0.4177777777777777,
+        "sign": "projection loses",
+        "lines_up": true
+      },
+      "c4+iv_specific": {
+        "a_with_target": -0.5861538461538462,
+        "excess_pp": -0.47777777777777763,
+        "sign": "projection wins",
+        "lines_up": false
+      },
+      "olmes+i": {
+        "a_with_target": 0.7853846153846153,
+        "excess_pp": 0.48222222222222216,
+        "sign": "projection loses",
+        "lines_up": false
+      },
+      "olmes+ii": {
+        "a_with_target": 0.7853846153846153,
+        "excess_pp": -1.7177777777777776,
+        "sign": "projection wins",
+        "lines_up": true
+      },
+      "olmes+iii": {
+        "a_with_target": -0.5861538461538462,
+        "excess_pp": -0.5111111111111112,
+        "sign": "projection wins",
+        "lines_up": false
+      },
+      "olmes+iv": {
+        "a_with_target": 0.8015384615384615,
+        "excess_pp": 0.611111111111111,
+        "sign": "projection loses",
+        "lines_up": false
+      },
+      "olmes+v": {
+        "a_with_target": 0.7853846153846153,
+        "excess_pp": 0.28444444444444444,
+        "sign": "projection loses",
+        "lines_up": false
+      },
+      "olmes+all": {
+        "a_with_target": -0.7284615384615384,
+        "excess_pp": 2.12,
+        "sign": "projection loses",
+        "lines_up": true
+      },
+      "olmes+iv_common": {
+        "a_with_target": 0.7853846153846153,
+        "excess_pp": -0.42888888888888876,
+        "sign": "projection wins",
+        "lines_up": true
+      },
+      "olmes+iv_specific": {
+        "a_with_target": 0.8015384615384615,
+        "excess_pp": -1.7288888888888887,
+        "sign": "projection wins",
+        "lines_up": true
+      }
+    },
+    "swaps_lines_up": {
+      "tests": 18,
+      "agree": 11
+    }
+  },
+  "task_2": {
+    "measured_c4_alignment": {
+      "short": 0.24,
+      "primary": -0.7284615384615384,
+      "long": 0.3815384615384615
+    },
+    "deviation": "the pre-registered construction (rank-one loadings varied, remainder E fixed) cannot span the range: the remainder dominates the recipe-specific residual at the target. Its reachable Pearson range is reported; the sweep instead reassigns the measured recipe-specific residual rows among recipes, holding the amplitude exactly",
+    "preregistered_construction_reach": {
+      "short": [
+        -0.5418420125679846,
+        0.5152157198575104
+      ],
+      "primary": [
+        -0.9412011084224234,
+        -0.8004394537243674
+      ],
+      "long": [
+        -0.21631394409625274,
+        0.9398379298923527
+      ]
+    },
+    "sweep": {
+      "short": {
+        "sign_changes_at_achieved_alignment": [],
+        "points": {
+          "-1": {
+            "excess_pp": 1.08,
+            "ci": [
+              0.9166666666666665,
+              1.2333333333333334
+            ],
+            "sign": "loses",
+            "physical": true,
+            "requested_c": -1.0,
+            "achieved_spearman_with_y0": -1.0,
+            "achieved_spearman_with_true_target": -0.9938461538461538,
+            "specific_rms": 0.014582226982726492,
+            "measured_specific_rms": 0.014582226982726494
+          },
+          "-0.75": {
+            "excess_pp": 0.8699999999999999,
+            "ci": [
+              0.7199999999999999,
+              1.0133333333333334
+            ],
+            "sign": "loses",
+            "physical": true,
+            "requested_c": -0.75,
+            "achieved_spearman_with_y0": -0.8023076923076922,
+            "achieved_spearman_with_true_target": -0.763076923076923,
+            "specific_rms": 0.014582226982726494,
+            "measured_specific_rms": 0.014582226982726494
+          },
+          "-0.5": {
+            "excess_pp": 1.1,
+            "ci": [
+              0.98,
+              1.2133333333333334
+            ],
+            "sign": "loses",
+            "physical": true,
+            "requested_c": -0.5,
+            "achieved_spearman_with_y0": -0.5784615384615384,
+            "achieved_spearman_with_true_target": -0.536923076923077,
+            "specific_rms": 0.014582226982726492,
+            "measured_specific_rms": 0.014582226982726494
+          },
+          "-0.25": {
+            "excess_pp": 0.8833333333333333,
+            "ci": [
+              0.7632499999999999,
+              1.0
+            ],
+            "sign": "loses",
+            "physical": true,
+            "requested_c": -0.25,
+            "achieved_spearman_with_y0": -0.42153846153846153,
+            "achieved_spearman_with_true_target": -0.3815384615384615,
+            "specific_rms": 0.014582226982726494,
+            "measured_specific_rms": 0.014582226982726494
+          },
+          "0": {
+            "excess_pp": 0.54,
+            "ci": [
+              0.42,
+              0.6566666666666667
+            ],
+            "sign": "loses",
+            "physical": true,
+            "requested_c": 0.0,
+            "achieved_spearman_with_y0": -0.1576923076923077,
+            "achieved_spearman_with_true_target": -0.12153846153846154,
+            "specific_rms": 0.014582226982726494,
+            "measured_specific_rms": 0.014582226982726494
+          },
+          "0.25": {
+            "excess_pp": 1.0266666666666666,
+            "ci": [
+              0.9,
+              1.1633333333333333
+            ],
+            "sign": "loses",
+            "physical": true,
+            "requested_c": 0.25,
+            "achieved_spearman_with_y0": 0.11384615384615385,
+            "achieved_spearman_with_true_target": 0.1523076923076923,
+            "specific_rms": 0.014582226982726492,
+            "measured_specific_rms": 0.014582226982726494
+          },
+          "0.5": {
+            "excess_pp": 0.52,
+            "ci": [
+              0.36000000000000015,
+              0.6733333333333333
+            ],
+            "sign": "loses",
+            "physical": true,
+            "requested_c": 0.5,
+            "achieved_spearman_with_y0": 0.3769230769230769,
+            "achieved_spearman_with_true_target": 0.4246153846153846,
+            "specific_rms": 0.014582226982726494,
+            "measured_specific_rms": 0.014582226982726494
+          },
+          "0.75": {
+            "excess_pp": 0.7466666666666666,
+            "ci": [
+              0.6,
+              0.89
+            ],
+            "sign": "loses",
+            "physical": true,
+            "requested_c": 0.75,
+            "achieved_spearman_with_y0": 0.6569230769230769,
+            "achieved_spearman_with_true_target": 0.6707692307692308,
+            "specific_rms": 0.014582226982726494,
+            "measured_specific_rms": 0.014582226982726494
+          },
+          "1": {
+            "excess_pp": 0.49666666666666665,
+            "ci": [
+              0.34,
+              0.6466666666666666
+            ],
+            "sign": "loses",
+            "physical": true,
+            "requested_c": 1.0,
+            "achieved_spearman_with_y0": 1.0,
+            "achieved_spearman_with_true_target": 1.0,
+            "specific_rms": 0.014582226982726492,
+            "measured_specific_rms": 0.014582226982726494
+          }
+        },
+        "physical_points": 9,
+        "spearman_excess_vs_c": -0.7333333333333334,
+        "sign_changes_at_c": []
+      },
+      "primary": {
+        "sign_changes_at_achieved_alignment": [],
+        "points": {
+          "-1": {
+            "excess_pp": 2.0466666666666664,
+            "ci": [
+              1.9099999999999997,
+              2.18
+            ],
+            "sign": "loses",
+            "physical": true,
+            "requested_c": -1.0,
+            "achieved_spearman_with_y0": -1.0,
+            "achieved_spearman_with_true_target": -0.9992307692307693,
+            "specific_rms": 0.014582226982726494,
+            "measured_specific_rms": 0.014582226982726494
+          },
+          "-0.75": {
+            "excess_pp": 2.4366666666666665,
+            "ci": [
+              2.293333333333334,
+              2.5833333333333326
+            ],
+            "sign": "loses",
+            "physical": true,
+            "requested_c": -0.75,
+            "achieved_spearman_with_y0": -0.35846153846153844,
+            "achieved_spearman_with_true_target": -0.3446153846153846,
+            "specific_rms": 0.014582226982726494,
+            "measured_specific_rms": 0.014582226982726494
+          },
+          "-0.5": {
+            "excess_pp": 1.5533333333333332,
+            "ci": [
+              1.426583333333333,
+              1.6867499999999995
+            ],
+            "sign": "loses",
+            "physical": true,
+            "requested_c": -0.5,
+            "achieved_spearman_with_y0": -0.06999999999999999,
+            "achieved_spearman_with_true_target": -0.05538461538461539,
+            "specific_rms": 0.014582226982726492,
+            "measured_specific_rms": 0.014582226982726494
+          },
+          "-0.25": {
+            "excess_pp": 1.5266666666666666,
+            "ci": [
+              1.4,
+              1.6499999999999997
+            ],
+            "sign": "loses",
+            "physical": true,
+            "requested_c": -0.25,
+            "achieved_spearman_with_y0": 0.1276923076923077,
+            "achieved_spearman_with_true_target": 0.13999999999999999,
+            "specific_rms": 0.014582226982726492,
+            "measured_specific_rms": 0.014582226982726494
+          },
+          "0": {
+            "excess_pp": 1.4266666666666665,
+            "ci": [
+              1.3033333333333335,
+              1.5534166666666664
+            ],
+            "sign": "loses",
+            "physical": true,
+            "requested_c": 0.0,
+            "achieved_spearman_with_y0": 0.29384615384615387,
+            "achieved_spearman_with_true_target": 0.3069230769230769,
+            "specific_rms": 0.014582226982726494,
+            "measured_specific_rms": 0.014582226982726494
+          },
+          "0.25": {
+            "excess_pp": 0.7266666666666666,
+            "ci": [
+              0.62,
+              0.83
+            ],
+            "sign": "loses",
+            "physical": true,
+            "requested_c": 0.25,
+            "achieved_spearman_with_y0": 0.52,
+            "achieved_spearman_with_true_target": 0.5323076923076923,
+            "specific_rms": 0.014582226982726492,
+            "measured_specific_rms": 0.014582226982726494
+          },
+          "0.5": {
+            "excess_pp": 0.8733333333333334,
+            "ci": [
+              0.7666666666666667,
+              0.9866666666666667
+            ],
+            "sign": "loses",
+            "physical": true,
+            "requested_c": 0.5,
+            "achieved_spearman_with_y0": 0.6976923076923077,
+            "achieved_spearman_with_true_target": 0.7069230769230769,
+            "specific_rms": 0.014582226982726494,
+            "measured_specific_rms": 0.014582226982726494
+          },
+          "0.75": {
+            "excess_pp": 1.23,
+            "ci": [
+              1.1165833333333333,
+              1.343333333333333
+            ],
+            "sign": "loses",
+            "physical": true,
+            "requested_c": 0.75,
+            "achieved_spearman_with_y0": 0.8569230769230769,
+            "achieved_spearman_with_true_target": 0.8661538461538462,
+            "specific_rms": 0.014582226982726494,
+            "measured_specific_rms": 0.014582226982726494
+          },
+          "1": {
+            "excess_pp": 0.8033333333333332,
+            "ci": [
+              0.6866666666666665,
+              0.9266666666666669
+            ],
+            "sign": "loses",
+            "physical": true,
+            "requested_c": 1.0,
+            "achieved_spearman_with_y0": 1.0,
+            "achieved_spearman_with_true_target": 1.0,
+            "specific_rms": 0.014582226982726494,
+            "measured_specific_rms": 0.014582226982726494
+          }
+        },
+        "physical_points": 9,
+        "spearman_excess_vs_c": -0.8666666666666667,
+        "sign_changes_at_c": []
+      },
+      "long": {
+        "sign_changes_at_achieved_alignment": [],
+        "points": {
+          "-1": {
+            "excess_pp": 27.769999999999996,
+            "ci": [
+              26.813249999999996,
+              28.750083333333336
+            ],
+            "sign": "loses",
+            "physical": true,
+            "requested_c": -1.0,
+            "achieved_spearman_with_y0": -1.0,
+            "achieved_spearman_with_true_target": -0.9892307692307692,
+            "specific_rms": 0.014582226982726492,
+            "measured_specific_rms": 0.014582226982726494
+          },
+          "-0.75": {
+            "excess_pp": 27.25999999999999,
+            "ci": [
+              26.466666666666676,
+              28.076666666666664
+            ],
+            "sign": "loses",
+            "physical": true,
+            "requested_c": -0.75,
+            "achieved_spearman_with_y0": -0.8723076923076923,
+            "achieved_spearman_with_true_target": -0.8261538461538462,
+            "specific_rms": 0.014582226982726494,
+            "measured_specific_rms": 0.014582226982726494
+          },
+          "-0.5": {
+            "excess_pp": 38.406666666666666,
+            "ci": [
+              37.61666666666667,
+              39.22333333333333
+            ],
+            "sign": "loses",
+            "physical": true,
+            "requested_c": -0.5,
+            "achieved_spearman_with_y0": -0.666923076923077,
+            "achieved_spearman_with_true_target": -0.6115384615384616,
+            "specific_rms": 0.014582226982726494,
+            "measured_specific_rms": 0.014582226982726494
+          },
+          "-0.25": {
+            "excess_pp": 33.16,
+            "ci": [
+              32.25983333333333,
+              34.11
+            ],
+            "sign": "loses",
+            "physical": true,
+            "requested_c": -0.25,
+            "achieved_spearman_with_y0": -0.53,
+            "achieved_spearman_with_true_target": -0.48615384615384616,
+            "specific_rms": 0.014582226982726494,
+            "measured_specific_rms": 0.014582226982726494
+          },
+          "0": {
+            "excess_pp": 22.323333333333334,
+            "ci": [
+              21.463250000000002,
+              23.203333333333326
+            ],
+            "sign": "loses",
+            "physical": true,
+            "requested_c": 0.0,
+            "achieved_spearman_with_y0": -0.3553846153846154,
+            "achieved_spearman_with_true_target": -0.3230769230769231,
+            "specific_rms": 0.014582226982726494,
+            "measured_specific_rms": 0.014582226982726494
+          },
+          "0.25": {
+            "excess_pp": 29.40333333333333,
+            "ci": [
+              28.38,
+              30.450083333333332
+            ],
+            "sign": "loses",
+            "physical": true,
+            "requested_c": 0.25,
+            "achieved_spearman_with_y0": -0.21153846153846154,
+            "achieved_spearman_with_true_target": -0.16461538461538464,
+            "specific_rms": 0.014582226982726492,
+            "measured_specific_rms": 0.014582226982726494
+          },
+          "0.5": {
+            "excess_pp": 28.436666666666664,
+            "ci": [
+              27.36658333333333,
+              29.573333333333334
+            ],
+            "sign": "loses",
+            "physical": true,
+            "requested_c": 0.5,
+            "achieved_spearman_with_y0": 0.03538461538461538,
+            "achieved_spearman_with_true_target": 0.08461538461538462,
+            "specific_rms": 0.014582226982726494,
+            "measured_specific_rms": 0.014582226982726494
+          },
+          "0.75": {
+            "excess_pp": 40.19,
+            "ci": [
+              39.01658333333334,
+              41.33675000000001
+            ],
+            "sign": "loses",
+            "physical": true,
+            "requested_c": 0.75,
+            "achieved_spearman_with_y0": 0.32615384615384607,
+            "achieved_spearman_with_true_target": 0.37846153846153846,
+            "specific_rms": 0.014582226982726494,
+            "measured_specific_rms": 0.014582226982726494
+          },
+          "1": {
+            "excess_pp": 27.29,
+            "ci": [
+              26.31,
+              28.263499999999997
+            ],
+            "sign": "loses",
+            "physical": true,
+            "requested_c": 1.0,
+            "achieved_spearman_with_y0": 1.0,
+            "achieved_spearman_with_true_target": 1.0,
+            "specific_rms": 0.014582226982726492,
+            "measured_specific_rms": 0.014582226982726494
+          }
+        },
+        "physical_points": 9,
+        "spearman_excess_vs_c": 0.16666666666666669,
+        "sign_changes_at_c": []
+      }
+    }
+  },
+  "task_3": {
+    "per_cell": {
+      "c4|short": {
+        "sign_b_truth_matches_a": true,
+        "abs_diff_b_truth_a": 0.06076923076923077,
+        "sign_b_observed_matches_a": true,
+        "sign_c_observed_matches_a": true,
+        "sign_c_truth_matches_a": true,
+        "crossover_rate": 0.04666666666666667
+      },
+      "c4|primary": {
+        "sign_b_truth_matches_a": true,
+        "abs_diff_b_truth_a": 0.015384615384615441,
+        "sign_b_observed_matches_a": true,
+        "sign_c_observed_matches_a": false,
+        "sign_c_truth_matches_a": false,
+        "crossover_rate": 0.01
+      },
+      "c4|long": {
+        "sign_b_truth_matches_a": true,
+        "abs_diff_b_truth_a": 0.1092307692307693,
+        "sign_b_observed_matches_a": true,
+        "sign_c_observed_matches_a": false,
+        "sign_c_truth_matches_a": false,
+        "crossover_rate": 0.05333333333333334
+      },
+      "olmes|short": {
+        "sign_b_truth_matches_a": true,
+        "abs_diff_b_truth_a": 0.15538461538461534,
+        "sign_b_observed_matches_a": true,
+        "sign_c_observed_matches_a": false,
+        "sign_c_truth_matches_a": false,
+        "crossover_rate": 0.32666666666666666
+      },
+      "olmes|primary": {
+        "sign_b_truth_matches_a": true,
+        "abs_diff_b_truth_a": 0.13769230769230778,
+        "sign_b_observed_matches_a": true,
+        "sign_c_observed_matches_a": true,
+        "sign_c_truth_matches_a": true,
+        "crossover_rate": 0.08
+      },
+      "olmes|long": {
+        "sign_b_truth_matches_a": true,
+        "abs_diff_b_truth_a": 0.013076923076923097,
+        "sign_b_observed_matches_a": true,
+        "sign_c_observed_matches_a": false,
+        "sign_c_truth_matches_a": false,
+        "crossover_rate": 0.42333333333333334
+      },
+      "cp|short": {
+        "sign_b_truth_matches_a": true,
+        "abs_diff_b_truth_a": 0.3838461538461539,
+        "sign_b_observed_matches_a": true,
+        "sign_c_observed_matches_a": false,
+        "sign_c_truth_matches_a": false,
+        "crossover_rate": 0.30333333333333334
+      },
+      "cp|primary": {
+        "sign_b_truth_matches_a": true,
+        "abs_diff_b_truth_a": 0.10076923076923078,
+        "sign_b_observed_matches_a": true,
+        "sign_c_observed_matches_a": true,
+        "sign_c_truth_matches_a": true,
+        "crossover_rate": 0.1
+      },
+      "cp|long": {
+        "sign_b_truth_matches_a": true,
+        "abs_diff_b_truth_a": 0.17692307692307693,
+        "sign_b_observed_matches_a": true,
+        "sign_c_observed_matches_a": true,
+        "sign_c_truth_matches_a": true,
+        "crossover_rate": 0.62
+      },
+      "sn|short": {
+        "sign_b_truth_matches_a": true,
+        "abs_diff_b_truth_a": 0.02692307692307694,
+        "sign_b_observed_matches_a": true,
+        "sign_c_observed_matches_a": true,
+        "sign_c_truth_matches_a": true,
+        "crossover_rate": 0.016666666666666666
+      },
+      "sn|primary": {
+        "sign_b_truth_matches_a": true,
+        "abs_diff_b_truth_a": 0.029230769230769393,
+        "sign_b_observed_matches_a": true,
+        "sign_c_observed_matches_a": false,
+        "sign_c_truth_matches_a": true,
+        "crossover_rate": 0.013333333333333334
+      },
+      "sn|long": {
+        "sign_b_truth_matches_a": true,
+        "abs_diff_b_truth_a": 0.025384615384615394,
+        "sign_b_observed_matches_a": true,
+        "sign_c_observed_matches_a": true,
+        "sign_c_truth_matches_a": true,
+        "crossover_rate": 0.06
+      }
+    },
+    "b_truth_sign_agrees_where_crossovers_below_10pct": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "c_observed_sign_agrees": 6,
+    "b_observed_sign_agrees": 12
+  },
+  "task_4": {
+    "design": [
+      "8M",
+      "1B"
+    ],
+    "chance_rate": 0.5,
+    "single_scale_rate": 0.5885111111111111,
+    "single_scale_rate_ci": [
+      0.5801325,
+      0.5946675
+    ],
+    "projection_rate": 0.4525555555555556,
+    "noiseless_single_scale_rate": 0.62,
+    "between_recipe_sd_at_top_rung": 0.010820044811163778,
+    "cell_mean_noise_at_top_rung": 0.005129821877069667,
+    "spread_to_noise_at_top_rung": 2.1092437652717417,
+    "truth_monotonicity": {
+      "strict_violations_by_rung": {
+        "16M": 4,
+        "20M": 5,
+        "90M": 1,
+        "150M": 1,
+        "300M": 2,
+        "530M": 3,
+        "1B": 3
+      },
+      "tolerant_violations_by_rung": {
+        "530M": 1,
+        "1B": 1
+      },
+      "max_rise_over_sd": 1.3317282363192193
+    }
+  },
+  "predictions": {
+    "P1_own_world_80pct": false,
+    "P1_swaps_80pct": false,
+    "P2_monotone_decreasing_each_design": false,
+    "P2_sign_change_in_neutral_band_each_design": false,
+    "P3_1_b_agrees_where_crossovers_rare": true,
+    "P3_2_proxy_agrees_at_most_8_of_12": true,
+    "P4_single_scale_near_chance": true
+  }
+}

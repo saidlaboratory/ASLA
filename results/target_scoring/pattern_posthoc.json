@@ -1,0 +1,177 @@
+{
+  "label": "post hoc and exploratory: suggested by the swap data after P2 was refuted; not a pre-registered test",
+  "design": "primary 300M -> 530M; 22 cells (4 own worlds, 18 swap configurations)",
+  "cells": {
+    "own:c4": {
+      "persistence": 0.7545701332997828,
+      "transient_size_in_gaps": 0.04208767877546823,
+      "top_rung_size_in_gaps": 0.06456072244112208,
+      "excess_pp": 2.3333333333333335,
+      "sign": "loses"
+    },
+    "own:olmes": {
+      "persistence": 0.26227694472052915,
+      "transient_size_in_gaps": 0.24842819804042138,
+      "top_rung_size_in_gaps": 0.23644928788955327,
+      "excess_pp": -0.5244444444444444,
+      "sign": "wins"
+    },
+    "own:cp": {
+      "persistence": 0.13620799495243943,
+      "transient_size_in_gaps": 0.4093503970956004,
+      "top_rung_size_in_gaps": 0.3488996152688848,
+      "excess_pp": 2.8266666666666667,
+      "sign": "loses"
+    },
+    "own:sn": {
+      "persistence": 0.4056219924924835,
+      "transient_size_in_gaps": 0.06255077471698878,
+      "top_rung_size_in_gaps": 0.05606286266528463,
+      "excess_pp": 4.78,
+      "sign": "loses"
+    },
+    "swap:c4": {
+      "persistence": 0.7545701332997828,
+      "transient_size_in_gaps": 0.04208767877546823,
+      "top_rung_size_in_gaps": 0.06456072244112208,
+      "excess_pp": 2.3155555555555556,
+      "sign": "loses"
+    },
+    "swap:olmes": {
+      "persistence": 0.2622769447205291,
+      "transient_size_in_gaps": 0.24842819804042107,
+      "top_rung_size_in_gaps": 0.236449287889553,
+      "excess_pp": -0.7222222222222222,
+      "sign": "wins"
+    },
+    "swap:c4+i": {
+      "persistence": 0.7545701332997828,
+      "transient_size_in_gaps": 0.04208767877546823,
+      "top_rung_size_in_gaps": 0.06456072244112208,
+      "excess_pp": 1.8844444444444446,
+      "sign": "loses"
+    },
+    "swap:c4+ii": {
+      "persistence": 0.7545701332997828,
+      "transient_size_in_gaps": 0.04208767877546823,
+      "top_rung_size_in_gaps": 0.06456072244112208,
+      "excess_pp": 1.2155555555555555,
+      "sign": "loses"
+    },
+    "swap:c4+iii": {
+      "persistence": 0.7545701332997828,
+      "transient_size_in_gaps": 0.04208767877546823,
+      "top_rung_size_in_gaps": 0.06456072244112208,
+      "excess_pp": 0.6844444444444444,
+      "sign": "loses"
+    },
+    "swap:c4+iv": {
+      "persistence": 0.26227694472052915,
+      "transient_size_in_gaps": 0.2484281980404213,
+      "top_rung_size_in_gaps": 0.23644928788955327,
+      "excess_pp": -3.251111111111111,
+      "sign": "wins"
+    },
+    "swap:c4+v": {
+      "persistence": 0.7545701332997828,
+      "transient_size_in_gaps": 0.04208767877546823,
+      "top_rung_size_in_gaps": 0.06456072244112208,
+      "excess_pp": 3.1,
+      "sign": "loses"
+    },
+    "swap:c4+all": {
+      "persistence": 0.26227694472052915,
+      "transient_size_in_gaps": 0.2484281980404213,
+      "top_rung_size_in_gaps": 0.23644928788955327,
+      "excess_pp": -0.7266666666666669,
+      "sign": "wins"
+    },
+    "swap:c4+iv_common": {
+      "persistence": 0.7545701332997828,
+      "transient_size_in_gaps": 0.04208767877546823,
+      "top_rung_size_in_gaps": 0.06456072244112208,
+      "excess_pp": 0.4177777777777777,
+      "sign": "loses"
+    },
+    "swap:c4+iv_specific": {
+      "persistence": 0.26227694472052915,
+      "transient_size_in_gaps": 0.2484281980404213,
+      "top_rung_size_in_gaps": 0.23644928788955327,
+      "excess_pp": -0.47777777777777763,
+      "sign": "wins"
+    },
+    "swap:olmes+i": {
+      "persistence": 0.2622769447205291,
+      "transient_size_in_gaps": 0.24842819804042107,
+      "top_rung_size_in_gaps": 0.236449287889553,
+      "excess_pp": 0.48222222222222216,
+      "sign": "loses"
+    },
+    "swap:olmes+ii": {
+      "persistence": 0.2622769447205291,
+      "transient_size_in_gaps": 0.24842819804042138,
+      "top_rung_size_in_gaps": 0.23644928788955327,
+      "excess_pp": -1.7177777777777776,
+      "sign": "wins"
+    },
+    "swap:olmes+iii": {
+      "persistence": 0.2622769447205291,
+      "transient_size_in_gaps": 0.24842819804042168,
+      "top_rung_size_in_gaps": 0.23644928788955358,
+      "excess_pp": -0.5111111111111112,
+      "sign": "wins"
+    },
+    "swap:olmes+iv": {
+      "persistence": 0.7545701332997836,
+      "transient_size_in_gaps": 0.042087678775468235,
+      "top_rung_size_in_gaps": 0.06456072244112208,
+      "excess_pp": 0.611111111111111,
+      "sign": "loses"
+    },
+    "swap:olmes+v": {
+      "persistence": 0.2622769447205291,
+      "transient_size_in_gaps": 0.24842819804042107,
+      "top_rung_size_in_gaps": 0.236449287889553,
+      "excess_pp": 0.28444444444444444,
+      "sign": "loses"
+    },
+    "swap:olmes+all": {
+      "persistence": 0.7545701332997836,
+      "transient_size_in_gaps": 0.04208767877546828,
+      "top_rung_size_in_gaps": 0.06456072244112217,
+      "excess_pp": 2.12,
+      "sign": "loses"
+    },
+    "swap:olmes+iv_common": {
+      "persistence": 0.2622769447205291,
+      "transient_size_in_gaps": 0.24842819804042107,
+      "top_rung_size_in_gaps": 0.236449287889553,
+      "excess_pp": -0.42888888888888876,
+      "sign": "wins"
+    },
+    "swap:olmes+iv_specific": {
+      "persistence": 0.7545701332997836,
+      "transient_size_in_gaps": 0.04208767877546828,
+      "top_rung_size_in_gaps": 0.06456072244112217,
+      "excess_pp": -1.7288888888888887,
+      "sign": "wins"
+    }
+  },
+  "summary": {
+    "persistence": {
+      "spearman_with_excess": 0.3004020710605397,
+      "mean_where_projection_wins": 0.31697618789600185,
+      "mean_where_projection_loses": 0.60442423666031
+    },
+    "transient_size_in_gaps": {
+      "spearman_with_excess": -0.527491084892815,
+      "mean_where_projection_wins": 0.22550147367764875,
+      "mean_where_projection_loses": 0.10365743668251118
+    },
+    "top_rung_size_in_gaps": {
+      "spearman_with_excess": -0.6078708011234936,
+      "mean_where_projection_wins": 0.21735055839528314,
+      "mean_where_projection_loses": 0.11222365812949033
+    }
+  }
+}

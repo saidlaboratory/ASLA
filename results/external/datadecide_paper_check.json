@@ -1,0 +1,176 @@
+{
+  "inputs": {
+    "drive_folder": "1weYlEOlHrA_fzT2OsRa40uLc4EKTGz1D (public; linked from allenai/DataDecide results/readme.md)",
+    "drive_top_level": {
+      "new_eval_intermediates": "1DRTeqzUfXe8-qfTlCU_Qy6qIv6E_uASY",
+      "outputs2": "1DwdzMSEbLmV6wKJM7uWtHPbZB2SIkqZ0",
+      "per_task_out": "1-glST22wTMm0nDqVBIC-Ck9BpwucY2TW",
+      "processed_data": "1plpOy-W_AIjcX_vW2K6O-gdrRz5a2PxW",
+      "raw_data": "1ZXOqmolTQFrsn95Dzbnj6GQG00O7NiCm",
+      "cheap_decisions_stacked_rc_pred_all.csv": "1nK-9u_UcI07QGcNN63sGQF77klyNzOYp"
+    },
+    "drive_outputs2": {
+      "0_target_pairs.json": "1jqL8fxx_SJvGMYJs49YlXiglFO0upZFN",
+      "1_metric_transformed.csv": "1OryNNXDrkrUazbrDphqUjjB6k3MRS_tl",
+      "1_primary_transformed.csv": "1hx0X6YwpKwn4uR01MiNF9JuR6gJAswtf",
+      "2_prediction_model_scale.csv": "1uzhtmfWx73ZR3QJyIrdzQL2hHr4t_9sN"
+    },
+    "sha256": {
+      "1_primary_transformed.csv": "e5b0981091bcf850c9f639705e6de8b5cf4f054edd418d74b5f3bf91262ab285",
+      "2_prediction_model_scale.csv": "802762889064fcaa05773609213182cf0e09f520687e74b315f9d414400bb9b3",
+      "2504.11393v2.html": "3a5ba4e793588d9f83d83a0519b9bdab66158f0ff9561517a01f209624bb5d4e",
+      "2504.11393v2.pdf": "5d810e659f231c9f839896f03742a1a905469c1497251e73c8f8ab1cc430371a"
+    }
+  },
+  "released_single_scale_vs_our_run_of_their_code": {
+    "scales": [
+      "10M",
+      "14M",
+      "150M",
+      "16M",
+      "20M",
+      "300M",
+      "4M",
+      "530M",
+      "60M",
+      "6M",
+      "750M",
+      "8M",
+      "90M"
+    ],
+    "released": {
+      "10M": 59.333333333333336,
+      "14M": 56.99999999999999,
+      "150M": 80.33333333333333,
+      "16M": 63.66666666666666,
+      "20M": 64.55555555555556,
+      "300M": 82.33333333333333,
+      "4M": 37.888888888888886,
+      "530M": 84.66666666666667,
+      "60M": 71.44444444444446,
+      "6M": 45.66666666666667,
+      "750M": 81.55555555555556,
+      "8M": 56.44444444444444,
+      "90M": 78.55555555555554
+    },
+    "ours_three_seed_target": {
+      "10M": 59.333333333333336,
+      "14M": 57.0,
+      "150M": 80.33333333333333,
+      "16M": 63.666666666666664,
+      "20M": 64.55555555555556,
+      "300M": 82.33333333333333,
+      "4M": 37.888888888888886,
+      "530M": 84.66666666666667,
+      "60M": 71.44444444444444,
+      "6M": 45.666666666666664,
+      "750M": 81.55555555555556,
+      "8M": 56.444444444444436,
+      "90M": 78.55555555555554
+    },
+    "ours_default_seed_target": {
+      "10M": 58.88888888888889,
+      "14M": 57.22222222222222,
+      "150M": 79.0,
+      "16M": 61.88888888888889,
+      "20M": 65.22222222222221,
+      "300M": 80.55555555555556,
+      "4M": 38.77777777777778,
+      "530M": 83.55555555555556,
+      "60M": 70.33333333333334,
+      "6M": 45.888888888888886,
+      "750M": 79.55555555555556,
+      "8M": 56.666666666666664,
+      "90M": 76.33333333333333
+    },
+    "max_abs_diff_three_seed": 1.4210854715202004e-14,
+    "max_abs_diff_default_seed": 2.2222222222222143
+  },
+  "paper": {
+    "quotes": {
+      "printed_single_scale": "e ranking of models at a single, small size (e.g., 150M parameters) is a strong baseline for predicting best models at our larger target scale (1B) ( \u223c 80 \\sim 80 % of comparisons correct). No scaling law methods among 8 baselines exceed the compute-decision frontier of single-scale predictions, but DataDecide can measure improvement in future s",
+      "single_scale_target": "analyses such as Figure 1 (right), which shows the relationship between compute used to predict a ranking of datasets and how accurately that ranking reflects mean performance over 3 seed runs (quantified here by OLMES; Gu et al., 2024 ) for models fully trained on those datasets at the target (1B) scale. We measure the accuracy of decisions as the p",
+      "section_2_3_target": "eves higher performance at the target scale. This is nearly equivalent to Kendall\u2019s \u03c4 \\tau , but ranges from 0 to 1. We define the target-scale winner based on mean downstream performance over 3 random seeds. Thus decision accuracy can be formalized as follows. Let \ud835\udcab \\mathcal{P} be the set of all data recipe pairs ( A , B ) (A,B) with observed mean performance y A",
+      "scaling_law_attempts": "\\left\\{\\{s_{k},\\dots,s_{14}\\}\\mid 2\\leq k\\leq 11\\right\\} to try removing potentially noisy information from small models. Unlike single scale results, we make only one prediction attempt with the default fully trained random seed, as final checkpoints are required for fitting the first step of these scaling law variants but are not available for all seeds. Our scaling law approaches var",
+      "figure_3": "get runs. HellaSwag, SocialIQA, WinoGrande show distinct periods of insensitivity followed by roughly log-linear increase after hitting some compute threshold. Figure 3: Decision accuracy over 8 baseline scaling law variants. At best, these approaches reach only the same compute to decision accuracy frontier as ranking single scale experiments. DataDecide can be used to iterate on",
+      "table_4": "> 50% checkpoints 5.9 2.9 3-parameter 6.5 3.1 2-parameter 6.5 3.2 5-parameter, single step 42.8 17.4 3-parameter, single step 42.9 42.3 5-parameter 230.8 65.4 Table 4: Average prediction error for 1B targets for the different scaling law setups across tasks and recipes on Accuracy fit to all models but 1B. We see that other than the single step and 5",
+      "size_subsets": "ls sizes: We use { { s 1 , \u2026 , s k } \u2223 3 \u2264 k \u2264 14 } \\left\\{\\{s_{1},\\dots,s_{k}\\}\\mid 3\\leq k\\leq 14{}\\right\\} , where \ud835\udc2c \\mathbf{s} is the ordered set of sizes, to explore the improvements of progressively adding larger model sizes beyond the minimum 3 required for fitting. We also use { { s k , \u2026 , s 14 } \u2223 2 \u2264 k \u2264 11 } \\left\\{\\{s_{k},\\dots,s_{14}\\}\\mid 2\\leq k\\leq 11\\right\\} to try remo"
+    },
+    "printed_macro_decision_accuracies": {
+      "single_scale_150M_approx_80": {
+        "printed": "~80%",
+        "where": "abstract and Figure 1 (right) callout",
+        "three_seed_target": 80.33333333333333,
+        "default_seed_target": 79.0
+      }
+    },
+    "scaling_law_macro_values": "not printed: shown only as points in Figure 1 (right, 'Multi-Scale Fit' stars) and Figure 3 (8 variants); Table 4 prints prediction error, not decision accuracy. The figures include size-subset configurations ({s1..sk}, {sk..s14}) that are not in the released scaling_law_fit table, so plotted points cannot be matched to released rows at the precision that separates (a) from (b)"
+  },
+  "code_outputs_macro_750M": {
+    "single_scale_three_seed": 81.55555555555556,
+    "single_scale_default_seed": 79.55555555555556,
+    "variants": {
+      "3_param-default": {
+        "default_seed_target": 78.33333333333333,
+        "three_seed_target": 79.66666666666666
+      },
+      "2_param-default": {
+        "default_seed_target": 72.66666666666667,
+        "three_seed_target": 73.33333333333333
+      },
+      "5_param-ai2": {
+        "default_seed_target": 78.66666666666666,
+        "three_seed_target": 79.33333333333333
+      },
+      "3_param-1_step": {
+        "default_seed_target": 78.66666666666666,
+        "three_seed_target": 82.66666666666667
+      },
+      "5_param-1_step-ai2": {
+        "default_seed_target": 66.33333333333333,
+        "three_seed_target": 66.33333333333333
+      },
+      "3_param-default-helper_points": {
+        "default_seed_target": 78.66666666666666,
+        "three_seed_target": 80.66666666666666
+      },
+      "3_param-default-step2=0.5": {
+        "default_seed_target": 77.66666666666666,
+        "three_seed_target": 79.66666666666666
+      },
+      "3_param-default-helper_points-step2=0.5": {
+        "default_seed_target": 79.33333333333333,
+        "three_seed_target": 80.0
+      }
+    }
+  },
+  "sn_agreement_verified": {
+    "source": "results/signal_and_noise/agreement.json metric_agreement",
+    "min_pairwise_agreement": 0.9333333333333333,
+    "max_pairwise_agreement": 0.9966666666666667,
+    "by_scale": {
+      "4M": 0.9333333333333333,
+      "20M": 0.9366666666666666,
+      "60M": 0.9666666666666667,
+      "90M": 0.9866666666666667,
+      "150M": 0.9833333333333333,
+      "300M": 0.9866666666666667,
+      "530M": 0.9966666666666667,
+      "750M": 0.9866666666666667,
+      "1B": 0.9933333333333333
+    }
+  },
+  "verdict": {
+    "released_single_scale_is_three_seed_target": true,
+    "printed_80pct_consistent_with": [
+      "three_seed_target",
+      "default_seed_target"
+    ],
+    "printed_80pct_discriminates_targets": false,
+    "mixed_comparison_where": "Figure 1 (right) and Figure 3 plot single-scale points (three-seed target, per the text and the released outputs) against scaling-law points; the released scaling-law code scores against the default seed. Whether the plotted scaling-law points were scored that way cannot be established from the paper",
+    "claim_kept_to_released_code": true
+  },
+  "predictions": {
+    "P5_printed_numbers_match_mixed": null
+  }
+}
