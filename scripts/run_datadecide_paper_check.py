@@ -155,6 +155,40 @@ def main() -> None:
         ),
         "claim_kept_to_released_code": True,
     }
+    d1 = json.loads((REPO / "results" / "external" / "published_comparisons.json").read_text())
+    retest = d1["d1_scaling_laws_vs_single_scale"]["comparisons"][f"{MACRO}|3_param-1_step|750M|three_seed_mean"]
+    variant = out["code_outputs_macro_750M"]["variants"]["3_param-1_step"]
+    single = out["code_outputs_macro_750M"]["single_scale_three_seed"]
+    code_check = json.loads((REPO / "results" / "external" / "datadecide_code_check.json").read_text())
+    sensitivity = json.loads((REPO / "results" / "external" / "datadecide_sensitivity.json").read_text())
+    out["finding"] = {
+        "statement": (
+            "The stated and implemented protocol scores the two methods against different targets: single-scale "
+            "against the three-seed 1B mean, each scaling-law variant against the default seed. On a consistent "
+            "three-seed target, 3_param-1_step's point estimate exceeds single-scale at 750M, within candidate-level "
+            "intervals."
+        ),
+        "precision_of_stated": (
+            "The paper states the single-scale target as the three-seed mean (section 2.3; Figure 1) and each "
+            "scaling-law variant as a single prediction attempt with the default seed (section 3.2); it does not "
+            "state the scaling-law target separately. The released code scores the variants against the default seed."
+        ),
+        "variant_3_param_1_step_three_seed_target": variant["three_seed_target"],
+        "variant_3_param_1_step_default_seed_target": variant["default_seed_target"],
+        "single_scale_750M_three_seed_target": single,
+        "candidate_level_difference_pp": retest["difference_pp"],
+        "candidate_level_ci_pp": [retest["ci_low_pp"], retest["ci_high_pp"]],
+        "candidate_level_p": retest["p_two_sided"],
+        "reproduction": {
+            "tested_rows": [code_check["tested_88_rows"]["matched"], code_check["tested_88_rows"]["n"]],
+            "all_rows": [code_check["all_rows"]["matched"], code_check["all_rows"]["n"]],
+            "remaining_rows_matched_by_a_tied_prediction_order": sum(
+                e["some_prediction_tie_order_reproduces"] for e in sensitivity["task_4c"]["unmatched_rows"]
+            ),
+            "remaining_rows": len(sensitivity["task_4c"]["unmatched_rows"]),
+        },
+        "supersedes": "the earlier 'open discrepancy' framing; see results/external/prose_corrections.json",
+    }
     out["predictions"] = {"P5_printed_numbers_match_mixed": None}
     OUT.write_text(json.dumps(out, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(out["verdict"], indent=1))

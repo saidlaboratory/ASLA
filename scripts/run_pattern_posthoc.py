@@ -75,12 +75,78 @@ def main() -> None:
         }
         for key in ("persistence", "transient_size_in_gaps", "top_rung_size_in_gaps")
     }
+    pattern = json.loads((REPO / "results" / "target_scoring" / "pattern.json").read_text())
+    wins_sizes = [c["top_rung_size_in_gaps"] for c in cells.values() if c["sign"] == "wins"]
+    lose_sizes = [c["top_rung_size_in_gaps"] for c in cells.values() if c["sign"] == "loses"]
+    counterexamples = {
+        "loses_despite_size_at_or_above_smallest_winning_size": sorted(
+            k for k, c in cells.items() if c["sign"] == "loses" and c["top_rung_size_in_gaps"] >= min(wins_sizes)
+        ),
+        "wins_despite_size_at_or_below_largest_losing_size": sorted(
+            k for k, c in cells.items() if c["sign"] == "wins" and c["top_rung_size_in_gaps"] <= max(lose_sizes)
+        ),
+        "distinct_residual_values_among_cells": len({round(c["top_rung_size_in_gaps"], 6) for c in cells.values()}),
+    }
     out = {
         "label": "post hoc and exploratory: suggested by the swap data after P2 was refuted; not a pre-registered test",
+        "status": (
+            "EXPLORATORY, NOT A FINDING. The top-rung-magnitude statistic tracks the excess across these cells, but "
+            "the cells carry only a few distinct residuals, the counterexamples below contradict it, and it is one "
+            "of the statistics listed under statistics_tried, chosen after seeing the data. The mechanism search is "
+            "closed; no further pattern statistics are run."
+        ),
+        "counterexamples": counterexamples,
+        "statistics_tried": {
+            "this_round (PREDICTIONS_TASK_PATTERN.md)": [
+                "a: alignment of target residual with true target ordering",
+                "b: alignment with top-fitted-rung ordering (truth)",
+                "b: alignment with top-fitted-rung ordering (observed)",
+                "c: in-sample residual proxy (truth)",
+                "c: in-sample residual proxy (observed)",
+                "crossover rate between f and t",
+                "persistence of the residual from f to t (post hoc)",
+                "transient residual size in target gaps (post hoc)",
+                "top-rung residual size in target gaps (post hoc)",
+            ],
+            "previous_round (PREDICTIONS_TASK_TRANSFER.md)": [
+                "q1: top-rung cell-mean noise / median target gap",
+                "q2: recipe-specific misspecification / median target gap",
+                "q3: smallest-rung / top-rung noise ratio",
+                "q4: lever arm",
+                "q5: floor level of the mean curve",
+                "q6: decay of the mean curve",
+            ],
+            "count_this_and_previous_round": 15,
+            "also_two_rounds_earlier (regime map coordinates)": [
+                "seed noise / between-recipe spread",
+                "loading sd x shape rms / spread",
+                "loading CV x residual RMS / spread",
+                "recipe-specific residual RMS / spread",
+            ],
+            "count_including_two_rounds_earlier": 19,
+        },
+        "task_2_construction_deviation": {
+            "registered": "vary the rank-one recipe-specific loadings b with the remainder E fixed, sd(b) at measured",
+            "why_changed": (
+                "made after the registered construction failed to span the alignment range: with E fixed it reaches "
+                "only the reported Pearson ranges, because the remainder dominates the recipe-specific residual at "
+                "the target"
+            ),
+            "registered_construction_reach": pattern["task_2"]["preregistered_construction_reach"],
+            "used_instead": (
+                "reassign the measured recipe-specific residual rows among recipes by a score correlated c with the "
+                "target values; amplitude held exactly"
+            ),
+        },
         "design": "primary 300M -> 530M; 22 cells (4 own worlds, 18 swap configurations)",
         "cells": cells,
         "summary": summary,
     }
+    assert (
+        len(out["statistics_tried"]["this_round (PREDICTIONS_TASK_PATTERN.md)"])
+        + len(out["statistics_tried"]["previous_round (PREDICTIONS_TASK_TRANSFER.md)"])
+        == out["statistics_tried"]["count_this_and_previous_round"]
+    )
     OUT.write_text(json.dumps(out, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(summary, indent=1))
     for k, c in cells.items():

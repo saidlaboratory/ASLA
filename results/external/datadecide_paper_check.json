@@ -170,6 +170,32 @@
     "mixed_comparison_where": "Figure 1 (right) and Figure 3 plot single-scale points (three-seed target, per the text and the released outputs) against scaling-law points; the released scaling-law code scores against the default seed. Whether the plotted scaling-law points were scored that way cannot be established from the paper",
     "claim_kept_to_released_code": true
   },
+  "finding": {
+    "statement": "The stated and implemented protocol scores the two methods against different targets: single-scale against the three-seed 1B mean, each scaling-law variant against the default seed. On a consistent three-seed target, 3_param-1_step's point estimate exceeds single-scale at 750M, within candidate-level intervals.",
+    "precision_of_stated": "The paper states the single-scale target as the three-seed mean (section 2.3; Figure 1) and each scaling-law variant as a single prediction attempt with the default seed (section 3.2); it does not state the scaling-law target separately. The released code scores the variants against the default seed.",
+    "variant_3_param_1_step_three_seed_target": 82.66666666666667,
+    "variant_3_param_1_step_default_seed_target": 78.66666666666666,
+    "single_scale_750M_three_seed_target": 81.55555555555556,
+    "candidate_level_difference_pp": 1.1111111111111123,
+    "candidate_level_ci_pp": [
+      -6.783689131892104,
+      9.005911354114328
+    ],
+    "candidate_level_p": 0.7826674510415316,
+    "reproduction": {
+      "tested_rows": [
+        88,
+        88
+      ],
+      "all_rows": [
+        5271,
+        5280
+      ],
+      "remaining_rows_matched_by_a_tied_prediction_order": 9,
+      "remaining_rows": 9
+    },
+    "supersedes": "the earlier 'open discrepancy' framing; see results/external/prose_corrections.json"
+  },
   "predictions": {
     "P5_printed_numbers_match_mixed": null
   }

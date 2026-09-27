@@ -1,0 +1,48 @@
+{
+  "mechanism": {
+    "statement": "Reassigning C4's recipe-specific residuals among recipes cannot flip C4 at any alignment or design; OLMES's residuals can. The driver is the shape of the recipe-specific residuals, which no tested summary captures and which cannot be measured without the target.",
+    "support": {
+      "c4_reassignment_sweep": {
+        "points": 27,
+        "physical_points": 27,
+        "points_where_projection_wins": 0,
+        "smallest_excess_pp": 0.49666666666666665,
+        "sign_changes": {
+          "short": [],
+          "primary": [],
+          "long": []
+        }
+      },
+      "olmes_residuals_in_c4": {
+        "c4_with_olmes_residual_pp": -3.251111111111111,
+        "c4_with_olmes_residual_ci": [
+          -3.3378333333333337,
+          -3.1622222222222223
+        ],
+        "c4_with_olmes_recipe_specific_residual_pp": -0.47777777777777763,
+        "c4_with_olmes_recipe_specific_residual_ci": [
+          -0.5866666666666667,
+          -0.36222222222222217
+        ],
+        "c4_baseline_pp": 2.3155555555555556
+      },
+      "no_tested_summary_captures_it": "15 summaries in the last two rounds (19 over three); see pattern_posthoc.json statistics_tried",
+      "not_measurable_without_target": {
+        "target_free_proxy_sign_agreement": "6 of 12",
+        "reason": "the residual at the target comes from a fit that includes the target"
+      }
+    }
+  },
+  "correct_prob_long_design": {
+    "statement": "Large-scale crossover that extrapolation does not recover, not an extrapolation win: the 8M ordering reverses at 1B, so single-scale ranking is worse than chance even without noise, and projection is only slightly better than chance.",
+    "design": [
+      "8M",
+      "1B"
+    ],
+    "noiseless_single_scale_error": 0.62,
+    "single_scale_error": 0.5885111111111111,
+    "projection_error": 0.4525555555555556,
+    "chance": 0.5,
+    "projection_better_than_chance_pp": 4.74444444444444
+  }
+}

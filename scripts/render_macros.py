@@ -616,6 +616,55 @@ def _pattern_entries() -> list[tuple[str, str, str]]:
     return entries
 
 
+def _closeout_entries() -> list[tuple[str, str, str]]:
+    """Close-out records: the DataDecide protocol finding and the mechanism statement (no prose uses these yet)."""
+
+    check = Source.load("external/datadecide_paper_check.json")
+    record = Source.load("target_scoring/mechanism_record.json")
+    posthoc = Source.load("target_scoring/pattern_posthoc.json")
+    f = check.get("finding")
+    origin = "datadecide_paper_check.json"
+    variant, single = f["variant_3_param_1_step_three_seed_target"], f["single_scale_750M_three_seed_target"]
+    diff, (low, high) = f["candidate_level_difference_pp"], f["candidate_level_ci_pp"]
+    finding = (
+        "the stated and implemented protocol scores the two methods against different targets; on a consistent "
+        f"three-seed target, \\texttt{{3\\_param-1\\_step}}'s point estimate ({variant:.2f}) exceeds single-scale "
+        f"({single:.2f}) at 750M, within candidate-level intervals (${diff:+.1f}$ points, $[{low:+.1f},\\ {high:+.1f}]$)"
+    )
+    support = record.get("mechanism.support")
+    cp = record.get("correct_prob_long_design")
+    return [
+        ("ddProtocolFinding", finding, origin),
+        ("ddFindingVariant", f"{variant:.2f}", origin),
+        ("ddFindingVariantDefault", f"{f['variant_3_param_1_step_default_seed_target']:.2f}", origin),
+        ("ddFindingSingle", f"{single:.2f}", origin),
+        ("ddFindingDiff", f"{diff:+.2f}", origin),
+        ("ddFindingLow", f"{low:+.1f}", origin),
+        ("ddFindingHigh", f"{high:+.1f}", origin),
+        ("ddRemainingRows", f"{f['reproduction']['remaining_rows']}", origin),
+        ("ddRemainingMatched", f"{f['reproduction']['remaining_rows_matched_by_a_tied_prediction_order']}", origin),
+        ("mechSweepPoints", f"{support['c4_reassignment_sweep']['points']}", "mechanism_record.json"),
+        ("mechSweepWins", f"{support['c4_reassignment_sweep']['points_where_projection_wins']}", "mechanism_record.json"),
+        ("mechSweepMinExcess", f"{support['c4_reassignment_sweep']['smallest_excess_pp']:+.2f}", "mechanism_record.json"),
+        (
+            "mechOlmesResidual",
+            f"{support['olmes_residuals_in_c4']['c4_with_olmes_residual_pp']:+.2f}",
+            "mechanism_record.json",
+        ),
+        (
+            "mechOlmesSpecificResidual",
+            f"{support['olmes_residuals_in_c4']['c4_with_olmes_recipe_specific_residual_pp']:+.2f}",
+            "mechanism_record.json",
+        ),
+        ("cpLongProjOverChance", f"{cp['projection_better_than_chance_pp']:.1f}", "mechanism_record.json"),
+        (
+            "statsTriedTwoRounds",
+            f"{posthoc.integer('statistics_tried.count_this_and_previous_round')}",
+            "pattern_posthoc.json",
+        ),
+    ]
+
+
 def _tex_name(tag: str) -> str:
     """Digits are not allowed in a TeX control word; spell them."""
 
@@ -1165,6 +1214,7 @@ def build() -> str:
     entries.extend(_regime_entries())
     entries.extend(_transfer_entries())
     entries.extend(_pattern_entries())
+    entries.extend(_closeout_entries())
     lines.extend(_macro(name, value, origin) for name, value, origin in entries)
     lines.append("")
     return "\n".join(lines)
