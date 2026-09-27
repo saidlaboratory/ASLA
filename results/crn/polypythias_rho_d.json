@@ -1,0 +1,100 @@
+{
+  "sample": {
+    "file": "data/raw/crn/heldout_text.txt",
+    "sha256": "c7d4f38d433cd5c748bdef5893a5517ca71ba97bea2f96288aacecc30f497487",
+    "tokens": 20480,
+    "chunks": 20
+  },
+  "runs": {
+    "EleutherAI/pythia-160m-data-seed1": {
+      "repo": "EleutherAI/pythia-160m-data-seed1",
+      "mean_loss": 3.299482548236847,
+      "weights_sha256": "531fd7cdcc72c920a76f551bd2d44bc898408137ff4ed0cc419bdc488ecca96a"
+    },
+    "EleutherAI/pythia-160m-data-seed2": {
+      "repo": "EleutherAI/pythia-160m-data-seed2",
+      "mean_loss": 3.294192445278168,
+      "weights_sha256": "ba76e09fe36491939c3a84be3992e651b71add24dbe7450d009ee3b3abc3d26d"
+    },
+    "EleutherAI/pythia-160m-data-seed3": {
+      "repo": "EleutherAI/pythia-160m-data-seed3",
+      "mean_loss": 3.318087303638458,
+      "weights_sha256": "4f5cf48b0d83b05ee1e06f67421088b42dbdc2c17854b394184788eedae41db5"
+    },
+    "EleutherAI/pythia-160m-weight-seed1": {
+      "repo": "EleutherAI/pythia-160m-weight-seed1",
+      "mean_loss": 3.348180115222931,
+      "weights_sha256": "aef232c5545a0b81831f112b755872a3ba68d92c70e78252b4d909829daa2525"
+    },
+    "EleutherAI/pythia-160m-weight-seed2": {
+      "repo": "EleutherAI/pythia-160m-weight-seed2",
+      "mean_loss": 3.2634704411029816,
+      "weights_sha256": "6fac9efb34c6dff0d705abacdf6e2d042a1520ae25bf23b31e18bacb492cb668"
+    },
+    "EleutherAI/pythia-160m-weight-seed3": {
+      "repo": "EleutherAI/pythia-160m-weight-seed3",
+      "mean_loss": 3.2933321356773377,
+      "weights_sha256": "82f3c4011d6f67b35a52f0af9c915760bf3aaf8c41087bc38f092c9dad33b1ff"
+    }
+  },
+  "arms": {
+    "data_seed_losses": [
+      3.299482548236847,
+      3.294192445278168,
+      3.318087303638458
+    ],
+    "weight_seed_losses": [
+      3.348180115222931,
+      3.2634704411029816,
+      3.2933321356773377
+    ]
+  },
+  "primary": {
+    "s2_data": 0.00015751439482092382,
+    "s2_weight": 0.0018459584254323258,
+    "rho_d": 0.07862067966612751,
+    "rho_d_ci": [
+      0.002183154933438363,
+      0.7689380592079262
+    ],
+    "variance_ratio": 0.08532932955087207,
+    "variance_ratio_ci": [
+      0.0021879315269454397,
+      3.3278438524840075
+    ],
+    "df": [
+      2,
+      2
+    ]
+  },
+  "secondary_per_chunk_rho_d": {
+    "median": 0.32079961117669353,
+    "values": [
+      0.04546398681527642,
+      0.3706294582115598,
+      0.23939108022784175,
+      0.4031187102025012,
+      0.11406074988709244,
+      0.05762226999959794,
+      0.514338990888605,
+      0.001796215302227729,
+      0.03547429118002018,
+      0.6005666514429119,
+      0.6416424278566748,
+      0.4904005576074918,
+      0.15259195831990963,
+      0.0037905919599756414,
+      0.7626779493593194,
+      0.2867218687936723,
+      0.39018842404570186,
+      0.3548773535597147,
+      0.9672504373807215,
+      0.052153473926413355
+    ]
+  },
+  "interpretation": "upper bound on CRN's gap-variance reduction when only data order is shared and its effect is perfectly correlated across recipes; if initialisation is also shared (same architecture, parameters copied explicitly), the bound is the whole seed variance",
+  "predictions": {
+    "P2_rho_d_in_0_3_to_0_7": false,
+    "P2_interval_covers_most_of_0_1": true
+  }
+}

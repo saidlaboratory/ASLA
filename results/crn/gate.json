@@ -1,0 +1,30 @@
+{
+  "threshold_gap_variance_reduction": 0.2,
+  "task_0_novelty": "not done: CRN is established in general and for hyperparameter search, but no work found quantifies the cross-recipe correlation of seed deviations in language-model pretraining, the implied gap-variance reduction, or its effect on the resolvable fraction of recipe pairs",
+  "task_1": {
+    "design_status": "data_seed equals the seed index and is identical across all 7 recipes, with the same corpus, tokenizer, context and batch; the loader is not in the release, so data-order identity is probable but not verified; recipes train on different token counts, so at most a shared order prefix is possible; initialisation is not shared (architectures differ)",
+    "metric": "native_heldout_nll",
+    "r": -0.03034563742850494,
+    "r_ci": [
+      -0.1371425620115745,
+      0.8122759114862664
+    ],
+    "reduction_factor": 0.9705480992725506,
+    "secondary_r": {
+      "olmes10": -0.11890736711270761,
+      "heldout7_mean_nll": 0.26515781242397446,
+      "alt8": 0.12959762268021183
+    },
+    "note": "three seeds per recipe; the interval is wide"
+  },
+  "task_2": {
+    "rho_d": 0.07862067966612751,
+    "rho_d_ci": [
+      0.002183154933438363,
+      0.7689380592079262
+    ],
+    "note": "three runs per arm, F(2, 2); an upper bound on data-order-only CRN"
+  },
+  "decision": "do not recommend",
+  "not_tested_by_tasks_1_2": "cross-recipe correlation when recipes share the architecture and the initialisation is copied explicitly (the regime Task 3 would use); Task 2's point estimate puts most seed variance in initialisation, which only such a design could share"
+}
