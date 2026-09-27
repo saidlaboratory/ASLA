@@ -1,0 +1,46 @@
+{
+  "command": "python -m pilot.crn.launch",
+  "run_from": "the repository root, on the RTX 4080 machine",
+  "what_it_does": "downloads and checks the pinned TinyStories sample; saves 4 initial states and 4 data orders; times 50 steps; fixes the step count for ~5 min/run; writes the manifest; runs 16 runs seed-major in fresh processes; resumable by re-running the same command",
+  "estimate": {
+    "flops_per_step": 1181988421632,
+    "assumed_achieved_throughput_tflops": [
+      20.0,
+      35.0
+    ],
+    "seconds_per_step": [
+      0.03377109776091428,
+      0.0590994210816
+    ],
+    "steps_chosen_by_rule": [
+      4500,
+      8000
+    ],
+    "minutes_per_run": 5,
+    "total_hours_runs": 1.33,
+    "total_hours_with_setup": "about 1.4 to 1.6 (download ~260 MB and conversion, probe, 16 runs of ~5 min)",
+    "basis": "6 N D plus explicit attention FLOPs; throughput assumed, not measured (no GPU here); the launcher's own probe sets the real step count and aborts if the projection exceeds --max-hours (default 2.5)"
+  },
+  "requirements": {
+    "python": ">= 3.10",
+    "packages": [
+      "torch >= 2.1 with CUDA",
+      "numpy",
+      "pyarrow"
+    ],
+    "install": "pip install torch numpy pyarrow  (use the CUDA build of torch for your driver)",
+    "gpu": "RTX 4080 (16 GB); peak memory well under 4 GB",
+    "disk": "about 1 GB in data/cache/crn_pilot",
+    "network": "huggingface.co for the pinned TinyStories files",
+    "os": "Linux or Windows; the launcher sets CUBLAS_WORKSPACE_CONFIG itself"
+  },
+  "outputs": {
+    "manifest": "results/crn/pilot/manifest.json",
+    "runs": "results/crn/pilot/runs/lr{0.5,0.75,1,1.5}_seed{0..3}.json (eval loss at step 0 and 10 checkpoints, hashes)",
+    "heavy_artifacts": "data/cache/crn_pilot (data, initial states, orders; git-ignored)",
+    "analysis_command": "python scripts/analyze_crn_pilot.py",
+    "analysis_output": "results/crn/pilot_analysis.json"
+  },
+  "validated_here": "CPU, toy size (tests/test_crn_pilot.py): identical configuration reproduces the loss curve exactly; step-0 parameter hashes identical across the four learning rates per seed index; batch sequence identical across the four learning rates per seed index; analysis decision logic on synthetic runs. Not validated here: CUDA determinism and the full-size runs.",
+  "preregistration": "PREDICTIONS_TASK_CRN_PILOT.md"
+}
