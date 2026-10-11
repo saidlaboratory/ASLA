@@ -1,0 +1,105 @@
+{
+  "preregistration": "PREDICTIONS_TASK_CRN_PILOT_DIVERGENCE.md",
+  "identical_run_gap_curves": {
+    "1": {
+      "steps": [
+        0,
+        50,
+        100,
+        150,
+        200,
+        250,
+        300,
+        350,
+        400,
+        450,
+        500
+      ],
+      "identical_run_gap": [
+        0.0,
+        0.00039964914321899414,
+        0.0014199018478393555,
+        0.0023730099201202393,
+        0.02156868577003479,
+        0.0028388798236846924,
+        0.002297535538673401,
+        0.006630122661590576,
+        0.005258411169052124,
+        0.001476392149925232,
+        0.002341240644454956
+      ]
+    },
+    "1.5": {
+      "steps": [
+        0,
+        50,
+        100,
+        150,
+        200,
+        250,
+        300,
+        350,
+        400,
+        450,
+        500
+      ],
+      "identical_run_gap": [
+        0.0,
+        9.5367431640625e-07,
+        7.855892181396484e-05,
+        0.0069773197174072266,
+        0.022535592317581177,
+        0.02161012589931488,
+        0.019964054226875305,
+        0.02458786964416504,
+        0.01780809462070465,
+        0.018298447132110596,
+        0.020488977432250977
+      ]
+    }
+  },
+  "final_identical_run_variance": {
+    "1": 2.740703877623929e-06,
+    "1.5": 0.0002098990981096449
+  },
+  "variance_note": "one degree of freedom per learning rate; a noisy estimate",
+  "pairs": {
+    "0.5|1": {
+      "matched_gap_variance": 0.008186023782329613,
+      "2v_1_fraction": 0.0006696056475037428,
+      "decision_fraction": 0.0006696056475037428
+    },
+    "0.5|1.5": {
+      "matched_gap_variance": 0.010206401050150507,
+      "2v_1.5_fraction": 0.041130874061929924,
+      "decision_fraction": 0.041130874061929924
+    },
+    "0.75|1": {
+      "matched_gap_variance": 0.007480929394251841,
+      "2v_1_fraction": 0.0007327174828651149,
+      "decision_fraction": 0.0007327174828651149
+    },
+    "0.75|1.5": {
+      "matched_gap_variance": 0.011397086743538731,
+      "2v_1.5_fraction": 0.0368338160150692,
+      "decision_fraction": 0.0368338160150692
+    },
+    "1|1.5": {
+      "matched_gap_variance": 0.02255055281115803,
+      "2v_1_fraction": 0.00024307199034764474,
+      "2v_1.5_fraction": 0.018615871625620343,
+      "decision_fraction": 0.009429471807983994
+    }
+  },
+  "max_decision_fraction": 0.041130874061929924,
+  "decision": "negative stands; close the CRN program",
+  "pilot_result": {
+    "median_ratio": 1.04,
+    "ci": [
+      0.29,
+      2.81
+    ],
+    "reading": "no large benefit; does not exclude a moderate reduction"
+  },
+  "exploratory": "the 0.5x/0.75x pair's ratio of 0.075 is one of six pairs; exploratory, no follow-up"
+}
