@@ -170,3 +170,13 @@ def test_floor_check() -> None:
 def test_stop_after_checkpoint_keeps_the_full_schedule_prefix(work: Path, runs: dict) -> None:
     short = trainer.train_run(_config(1.0, 0), work, "cpu", stop_after_checkpoint=2)
     assert short["curve"] == runs[(1.0, 0)]["curve"][:3]
+
+
+def test_divergence_fractions() -> None:
+    div = pytest.importorskip("scripts.run_crn_mps_divergence")
+    finals = {(m, s): 1.0 + 0.1 * i + 0.01 * s * (i + 1) for i, m in enumerate((0.5, 1.0, 1.5)) for s in range(4)}
+    out = div.fractions(finals, {1.0: 0.001, 1.5: 0.002}, [0.5, 1.0, 1.5], [0, 1, 2, 3])
+    assert set(out) == {"0.5|1", "0.5|1.5", "1|1.5"}
+    var = out["1|1.5"]["matched_gap_variance"]
+    assert np.isclose(out["1|1.5"]["decision_fraction"], 0.003 / var)
+    assert np.isclose(out["0.5|1"]["decision_fraction"], 0.002 / out["0.5|1"]["matched_gap_variance"])
