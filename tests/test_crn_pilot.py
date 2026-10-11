@@ -138,3 +138,35 @@ def test_pair_ratio_excludes_same_seed_positions_in_bootstrap() -> None:
     assert analysis.pair_ratio(a, b) == 0.0
     labels = np.array([0, 0, 1, 2])
     assert np.isfinite(analysis.pair_ratio(a[[0, 0, 1, 2]], b[[0, 0, 1, 2]], labels=labels))
+
+
+laptop = pytest.importorskip("pilot.crn.laptop")
+
+
+def test_laptop_step_rule_fits_the_budget() -> None:
+    assert laptop.steps_for(0.1) == 10000  # 19800 / (16 x 0.1 x 1.1) = 11250 -> capped
+    assert laptop.steps_for(1.0) == 1100  # 1125 -> 1100
+    assert 16 * laptop.steps_for(0.7) * 0.7 * 1.1 <= laptop.BUDGET_SECONDS
+
+
+def test_gate_statistic_separates_nondeterminism_from_seed_effect() -> None:
+    exact = laptop.gate_statistic([2.0, 1.8, 1.7], [2.0, 1.8, 1.7], [2.1, 1.9, 1.75])
+    assert exact["v_nd"] == 0.0 and exact["passes"] and exact["exactly_reproducible"]
+    noisy = laptop.gate_statistic([2.0, 1.8, 1.7], [2.05, 1.85, 1.65], [2.06, 1.86, 1.66])
+    assert not noisy["passes"]
+    assert not laptop.gate_statistic([1.0], [1.0], [1.0])["passes"]  # no seed effect
+
+
+def test_floor_check() -> None:
+    initial = {(m, s): 5.5 for m in (0.5, 1.0) for s in (0, 1)}
+    good = {(0.5, 0): 2.0, (0.5, 1): 2.01, (1.0, 0): 1.9, (1.0, 1): 1.91}
+    assert laptop.floor_check(good, initial)["passes"]
+    overlapping = {(0.5, 0): 2.0, (0.5, 1): 1.8, (1.0, 0): 1.9, (1.0, 1): 1.91}
+    assert not laptop.floor_check(overlapping, initial)["F2_separated"]
+    untrained = {k: 5.0 for k in initial}
+    assert not laptop.floor_check(untrained, initial)["F1_all_well_below_initial"]
+
+
+def test_stop_after_checkpoint_keeps_the_full_schedule_prefix(work: Path, runs: dict) -> None:
+    short = trainer.train_run(_config(1.0, 0), work, "cpu", stop_after_checkpoint=2)
+    assert short["curve"] == runs[(1.0, 0)]["curve"][:3]

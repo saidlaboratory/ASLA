@@ -217,19 +217,44 @@ def checkpoints(steps: int, n: int) -> list[int]:
     return sorted({0, *(round(steps * (k + 1) / n) for k in range(n))})
 
 
-def train_run(cfg: RunConfig, work: Path, device: str = "cpu") -> dict[str, Any]:
-    """One learning-rate run from the saved initial state and data order for its seed index."""
+def _sync(device: str) -> None:
+    if device.startswith("cuda"):
+        torch.cuda.synchronize()
+    elif device.startswith("mps"):
+        torch.mps.synchronize()
+
+
+def _device_name(device: str) -> str:
+    if device.startswith("cuda"):
+        return torch.cuda.get_device_name(0)
+    return "apple-mps" if device.startswith("mps") else "cpu"
+
+
+def train_run(
+    cfg: RunConfig,
+    work: Path,
+    device: str = "cpu",
+    state_dir: Path | None = None,
+    stop_after_checkpoint: int | None = None,
+) -> dict[str, Any]:
+    """One learning-rate run from the saved initial state and data order for its seed index.
+
+    ``work`` holds train.bin and eval.bin; ``state_dir`` (default ``work``) holds the per-seed-index
+    initial states and orders. ``stop_after_checkpoint`` ends the run, with the full schedule, after
+    that many checkpoints (used by the determinism gate).
+    """
 
     set_determinism(device)
+    state_dir = state_dir or work
     context = cfg.model.context
     train = np.memmap(work / "train.bin", dtype=np.uint8, mode="r")
     evaluation = np.fromfile(work / "eval.bin", dtype=np.uint8)
-    order = np.load(work / f"order_seed{cfg.seed_index}.npy")
+    order = np.load(state_dir / f"order_seed{cfg.seed_index}.npy")
     if len(order) < cfg.steps * cfg.batch_size:
         raise ValueError("saved order is shorter than the run needs")
     torch.manual_seed(0)  # any construction seed: the state is overwritten by the saved one
     model = GPT(cfg.model)
-    state = torch.load(work / f"init_seed{cfg.seed_index}.pt", map_location="cpu", weights_only=True)
+    state = torch.load(state_dir / f"init_seed{cfg.seed_index}.pt", map_location="cpu", weights_only=True)
     model.load_state_dict(state, strict=True)
     init_hash = state_hash(model)
     model.to(device)
@@ -273,17 +298,21 @@ def train_run(cfg: RunConfig, work: Path, device: str = "cpu") -> dict[str, Any]
                 }
             )
             running, running_n = 0.0, 0
+            if stop_after_checkpoint is not None and len(curve) - 1 >= stop_after_checkpoint:
+                break
     return {
         "name": cfg.name(),
         "config": asdict(cfg),
         "device": device,
-        "device_name": torch.cuda.get_device_name(0) if device.startswith("cuda") else "cpu",
+        "device_name": _device_name(device),
+        "torch_threads": torch.get_num_threads(),
+        "stopped_after_checkpoint": stop_after_checkpoint,
         "torch": torch.__version__,
         "deterministic_algorithms": torch.are_deterministic_algorithms_enabled(),
         "cublas_workspace_config": os.environ.get("CUBLAS_WORKSPACE_CONFIG"),
         "init_param_sha256": init_hash,
-        "init_file_sha256": file_hash(work / f"init_seed{cfg.seed_index}.pt"),
-        "order_file_sha256": file_hash(work / f"order_seed{cfg.seed_index}.npy"),
+        "init_file_sha256": file_hash(state_dir / f"init_seed{cfg.seed_index}.pt"),
+        "order_file_sha256": file_hash(state_dir / f"order_seed{cfg.seed_index}.npy"),
         "batch_sequence_sha256": batch_digest.hexdigest(),
         "curve": curve,
         "final_eval_loss": curve[-1]["eval_loss"],
@@ -291,21 +320,23 @@ def train_run(cfg: RunConfig, work: Path, device: str = "cpu") -> dict[str, Any]
     }
 
 
-def probe_step_seconds(cfg: RunConfig, work: Path, device: str, n: int = 60, skip: int = 10) -> float:
-    """Mean wall seconds per training step (no evaluation), after ``skip`` warm-up steps."""
+def probe_step_seconds(
+    cfg: RunConfig, work: Path, device: str, n: int = 60, skip: int = 10, state_dir: Path | None = None
+) -> float:
+    """Mean wall seconds per training step (no evaluation) over ``n - skip`` steps, after ``skip`` warm-up steps."""
 
     set_determinism(device)
+    state_dir = state_dir or work
     train = np.memmap(work / "train.bin", dtype=np.uint8, mode="r")
-    order = np.load(work / f"order_seed{cfg.seed_index}.npy")
+    order = np.load(state_dir / f"order_seed{cfg.seed_index}.npy")
     model = GPT(cfg.model)
-    model.load_state_dict(torch.load(work / f"init_seed{cfg.seed_index}.pt", map_location="cpu", weights_only=True))
+    model.load_state_dict(torch.load(state_dir / f"init_seed{cfg.seed_index}.pt", map_location="cpu", weights_only=True))
     model.to(device)
     optimizer = torch.optim.AdamW(model.parameters(), lr=cfg.base_lr, betas=(0.9, 0.95), foreach=False, fused=False)
     start = 0.0
     for step in range(n):
         if step == skip:
-            if device.startswith("cuda"):
-                torch.cuda.synchronize()
+            _sync(device)
             start = time.time()
         x = torch.from_numpy(_batches(train, order, cfg.model.context, cfg.batch_size, step)).to(device)
         with _autocast(device):
@@ -314,8 +345,7 @@ def probe_step_seconds(cfg: RunConfig, work: Path, device: str, n: int = 60, ski
         optimizer.zero_grad(set_to_none=True)
         loss.backward()
         optimizer.step()
-    if device.startswith("cuda"):
-        torch.cuda.synchronize()
+    _sync(device)
     return (time.time() - start) / (n - skip)
 
 
@@ -336,9 +366,29 @@ def main() -> None:
     parser.add_argument("--work", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--device", default="cuda")
+    parser.add_argument("--state-dir", type=Path, default=None)
+    parser.add_argument("--n-layer", type=int, default=ModelConfig.n_layer)
+    parser.add_argument("--n-head", type=int, default=ModelConfig.n_head)
+    parser.add_argument("--d-model", type=int, default=ModelConfig.d_model)
+    parser.add_argument("--context", type=int, default=ModelConfig.context)
+    parser.add_argument("--batch-size", type=int, default=64)
+    parser.add_argument("--threads", type=int, default=None)
+    parser.add_argument("--stop-after-checkpoint", type=int, default=None)
+    parser.add_argument("--tag", default="", help="suffix for the output file name")
     args = parser.parse_args()
-    cfg = RunConfig(lr_multiplier=args.lr_multiplier, seed_index=args.seed_index, steps=args.steps)
-    result = train_run(cfg, args.work, args.device)
+    if args.threads:
+        torch.set_num_threads(args.threads)
+    model = ModelConfig(n_layer=args.n_layer, n_head=args.n_head, d_model=args.d_model, context=args.context)
+    cfg = RunConfig(
+        lr_multiplier=args.lr_multiplier,
+        seed_index=args.seed_index,
+        steps=args.steps,
+        batch_size=args.batch_size,
+        model=model,
+    )
+    result = train_run(cfg, args.work, args.device, args.state_dir, args.stop_after_checkpoint)
+    if args.tag:
+        result["name"] = f"{result['name']}_{args.tag}"
     print(
         json.dumps(
             {"name": result["name"], "final_eval_loss": result["final_eval_loss"], "wall_seconds": result["wall_seconds"]}

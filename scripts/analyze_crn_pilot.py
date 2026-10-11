@@ -118,6 +118,12 @@ def at_checkpoint(lrs: list[float], seeds: list[int], table: dict, step: int, rn
     return {
         "step": step,
         "pair_ratios": ratios,
+        "pair_mismatched_variance": {
+            f"{a:g}|{b:g}": float(
+                np.var([values[a][i] - values[b][j] for i in range(len(seeds)) for j in range(len(seeds)) if i != j], ddof=1)
+            )
+            for a, b in pairs
+        },
         "pair_ratio_ci": {
             k: [float(np.percentile(v, 2.5)), float(np.percentile(v, 97.5))] if v else None for k, v in boot_pairs.items()
         },
@@ -129,7 +135,9 @@ def at_checkpoint(lrs: list[float], seeds: list[int], table: dict, step: int, rn
     }
 
 
-def analyse(runs_dir: Path) -> dict[str, Any]:
+def analyse(runs_dir: Path, v_nd: float | None = None, context: dict[str, Any] | None = None) -> dict[str, Any]:
+    """``v_nd``: measured per-run nondeterminism variance; ``context``: device and scale facts to carry along."""
+
     lrs, seeds, steps, table = load_runs(runs_dir)
     rng = np.random.default_rng(SEED)
     step0 = {m: [table[(m, s)][0] for s in seeds] for m in lrs} if 0 in steps else None
@@ -159,6 +167,19 @@ def analyse(runs_dir: Path) -> dict[str, Any]:
         "decision": decision,
         "four_seeds_note": "four seeds detect only large effects; intentional (see the pre-registration)",
     }
+    if v_nd is not None:
+        median_mismatched = float(np.median(list(final["pair_mismatched_variance"].values())))
+        out["nondeterminism"] = {
+            "v_nd": v_nd,
+            "matched_gap_floor_2_v_nd": 2 * v_nd,
+            "floor_over_median_mismatched_variance": 2 * v_nd / median_mismatched if median_mismatched > 0 else None,
+            "note": (
+                "each matched gap carries two runs' nondeterminism (2 v_nd) that CRN cannot remove, so it biases the "
+                "ratio upward, toward concluding CRN does not help"
+            ),
+        }
+    if context:
+        out["context"] = context
     first = by_step[0]["median_ratio"]
     out["predictions"] = {
         "PP1_first_checkpoint_at_most_0_2": bool(first <= 0.2),
@@ -177,8 +198,11 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--runs", type=Path, default=RUNS)
     parser.add_argument("--out", type=Path, default=OUT)
+    parser.add_argument("--v-nd", type=float, default=None, help="measured per-run nondeterminism variance")
+    parser.add_argument("--context-json", type=Path, nargs="*", default=[], help="device/scale records to carry along")
     args = parser.parse_args()
-    out = analyse(args.runs)
+    context = {p.name: json.loads(p.read_text()) for p in args.context_json}
+    out = analyse(args.runs, args.v_nd, context)
     args.out.write_text(json.dumps(out, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(out["final"], indent=1), out["decision"])
     for c in out["by_checkpoint"]:
