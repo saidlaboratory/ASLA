@@ -1,0 +1,13 @@
+{
+  "device": "mps",
+  "label": "C0",
+  "shape": [
+    6,
+    384,
+    6,
+    256,
+    64
+  ],
+  "steps": 500,
+  "threads": 2
+}

@@ -1,0 +1,40 @@
+{
+  "manifest": {
+    "device": "mps",
+    "label": "C0",
+    "shape": [
+      6,
+      384,
+      6,
+      256,
+      64
+    ],
+    "steps": 500,
+    "threads": 2
+  },
+  "floor_all_16": {
+    "F1_all_well_below_initial": true,
+    "F1_by_run": {
+      "1.5_seed0": true,
+      "0.5_seed1": true,
+      "0.5_seed0": true,
+      "1.5_seed1": true,
+      "1_seed3": true,
+      "0.75_seed2": true,
+      "0.75_seed3": true,
+      "1_seed2": true,
+      "1_seed1": true,
+      "0.75_seed0": true,
+      "0.75_seed1": true,
+      "1_seed0": true,
+      "1.5_seed2": true,
+      "0.5_seed3": true,
+      "0.5_seed2": true,
+      "1.5_seed3": true
+    },
+    "F2_lr_range": 0.37734438106417656,
+    "F2_max_within_lr_seed_range": 0.22331516444683075,
+    "F2_separated": true,
+    "passes": true
+  }
+}

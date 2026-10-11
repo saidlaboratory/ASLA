@@ -1,0 +1,93 @@
+{
+  "name": "lr0.5_seed2",
+  "config": {
+    "lr_multiplier": 0.5,
+    "seed_index": 2,
+    "steps": 500,
+    "batch_size": 64,
+    "base_lr": 0.001,
+    "warmup_fraction": 0.01,
+    "min_lr_fraction": 0.1,
+    "weight_decay": 0.1,
+    "grad_clip": 1.0,
+    "n_checkpoints": 10,
+    "eval_batch_size": 64,
+    "model": {
+      "n_layer": 6,
+      "n_head": 6,
+      "d_model": 384,
+      "context": 256,
+      "vocab": 256
+    }
+  },
+  "device": "mps",
+  "device_name": "apple-mps",
+  "torch_threads": 2,
+  "stopped_after_checkpoint": null,
+  "torch": "2.1.2",
+  "deterministic_algorithms": true,
+  "cublas_workspace_config": ":4096:8",
+  "init_param_sha256": "a2b925d6fb311ce5750c04288523aa263317d27aa5fa50f0b2114c9930f3d513",
+  "init_file_sha256": "86b78cf11739e6126b687cd94a79d20bebcebfceaae33f23d7a19ab1ed250835",
+  "order_file_sha256": "4552860c6f27fe6780a3d42863c76972bf667c43e1ed93d8fdb516360836464d",
+  "batch_sequence_sha256": "76fd89e7d227716b71d11f93881b7ed57495c14b32a3754d8910332d0020953e",
+  "curve": [
+    {
+      "step": 0,
+      "eval_loss": 5.557266891002655,
+      "train_loss": null
+    },
+    {
+      "step": 50,
+      "eval_loss": 2.3294143080711365,
+      "train_loss": 2.7743545293807985
+    },
+    {
+      "step": 100,
+      "eval_loss": 2.2136553525924683,
+      "train_loss": 2.276201295852661
+    },
+    {
+      "step": 150,
+      "eval_loss": 2.0739142298698425,
+      "train_loss": 2.1567044496536254
+    },
+    {
+      "step": 200,
+      "eval_loss": 1.8638649433851242,
+      "train_loss": 2.001282637119293
+    },
+    {
+      "step": 250,
+      "eval_loss": 1.6509627252817154,
+      "train_loss": 1.813727653026581
+    },
+    {
+      "step": 300,
+      "eval_loss": 1.5067209601402283,
+      "train_loss": 1.6431074476242065
+    },
+    {
+      "step": 350,
+      "eval_loss": 1.392245665192604,
+      "train_loss": 1.5273799443244933
+    },
+    {
+      "step": 400,
+      "eval_loss": 1.3103346079587936,
+      "train_loss": 1.4336686944961547
+    },
+    {
+      "step": 450,
+      "eval_loss": 1.267113745212555,
+      "train_loss": 1.38293776512146
+    },
+    {
+      "step": 500,
+      "eval_loss": 1.2359804958105087,
+      "train_loss": 1.3407425141334535
+    }
+  ],
+  "final_eval_loss": 1.2359804958105087,
+  "wall_seconds": 1185.2182049751282
+}
