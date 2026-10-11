@@ -115,11 +115,8 @@ def prepare(label: str) -> Path:
 
 
 def probe(label: str, device: str) -> float:
-    import torch
-
     from pilot.crn import trainer
 
-    torch.set_num_threads(THREADS)
     n_layer, d_model, n_head, context, batch = CANDIDATES[label]
     cfg = trainer.RunConfig(
         lr_multiplier=1.0,
@@ -277,6 +274,9 @@ def main() -> None:
     run = sub.add_parser("run")
     run.add_argument("--device", choices=["mps", "cpu"], required=True)
     args = parser.parse_args()
+    import torch
+
+    torch.set_num_threads(THREADS)  # before any torch work, or the cap is ignored (and CPU timing is optimistic)
     if args.command == "mps-gate":
         print(json.dumps(mps_gate(), indent=2))
     elif args.command == "cpu-select":

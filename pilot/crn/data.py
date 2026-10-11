@@ -10,6 +10,8 @@ SHA-256 digests; the byte files' digests go into the manifest.
 from __future__ import annotations
 
 import hashlib
+import subprocess
+import urllib.error
 import urllib.request
 from pathlib import Path
 from typing import Iterable
@@ -46,7 +48,11 @@ def download(name: str, raw_dir: Path) -> Path:
     if not target.exists() or sha256(target) != expected:
         raw_dir.mkdir(parents=True, exist_ok=True)
         url = f"https://huggingface.co/datasets/{REPO}/resolve/{REVISION}/{remote}"
-        urllib.request.urlretrieve(url, target)
+        try:
+            urllib.request.urlretrieve(url, target)
+        except urllib.error.URLError:
+            # Some Python builds ship without a CA bundle; curl uses the system's. The digest check below still applies.
+            subprocess.run(["curl", "-sSfL", "--max-time", "1800", "-o", str(target), url], check=True)
     if sha256(target) != expected:
         raise RuntimeError(f"{target} does not match its pinned SHA-256")
     return target

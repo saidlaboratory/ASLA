@@ -1,0 +1,58 @@
+{
+  "name": "lr1_seed0_gateB",
+  "config": {
+    "lr_multiplier": 1.0,
+    "seed_index": 0,
+    "steps": 500,
+    "batch_size": 64,
+    "base_lr": 0.001,
+    "warmup_fraction": 0.01,
+    "min_lr_fraction": 0.1,
+    "weight_decay": 0.1,
+    "grad_clip": 1.0,
+    "n_checkpoints": 10,
+    "eval_batch_size": 64,
+    "model": {
+      "n_layer": 6,
+      "n_head": 6,
+      "d_model": 384,
+      "context": 256,
+      "vocab": 256
+    }
+  },
+  "device": "mps",
+  "device_name": "apple-mps",
+  "torch_threads": 2,
+  "stopped_after_checkpoint": 3,
+  "torch": "2.1.2",
+  "deterministic_algorithms": true,
+  "cublas_workspace_config": ":4096:8",
+  "init_param_sha256": "95d9569de58b7cccb535119e389e246db44f3416c604e88b7032cc2da870f066",
+  "init_file_sha256": "7d9bb211e40e659d26a54beb177b02c58ee89a35043bf018bd9e7da517f89c83",
+  "order_file_sha256": "52f47ebc99c3e3c8e63d590af58ddc3b051db87feaad604984a7d67d5dc706c0",
+  "batch_sequence_sha256": "437aa230d606bcb9e4662a488636b9d4dedf09a3a649ab969a8392f3ddc8dc3a",
+  "curve": [
+    {
+      "step": 0,
+      "eval_loss": 5.541671931743622,
+      "train_loss": null
+    },
+    {
+      "step": 50,
+      "eval_loss": 2.409991979598999,
+      "train_loss": 2.9265615129470826
+    },
+    {
+      "step": 100,
+      "eval_loss": 2.298711985349655,
+      "train_loss": 2.3528151893615723
+    },
+    {
+      "step": 150,
+      "eval_loss": 2.1847572028636932,
+      "train_loss": 2.2614082050323487
+    }
+  ],
+  "final_eval_loss": 2.1847572028636932,
+  "wall_seconds": 422.6126220226288
+}
