@@ -1,0 +1,167 @@
+{
+  "procedure": "projection vs single-scale, C4, fit 300M, target 530M; adopted critical values",
+  "critical_values": {
+    "random_u": 2.9890861649366043,
+    "fixed_bootstrap": 2.2359097649243167
+  },
+  "rerun_note": "The first run of misspec_0_5, misspec_1_5 and spread_2x was invalid: the perturbation changed the final-table truth but not the checkpoint table that simulate draws observations from, so theta moved while the data did not (misspec_0_5 fixed coverage read 0.11 with the estimate unchanged). Caught by checking that the estimate tracks theta; fixed so the same change reaches both tables (tested), and those three conditions rerun. Invalid rows kept in data/cache/calibration_misspecified_invalid_first_run.jsonl.",
+  "conditions": {
+    "control": {
+      "random_candidate": {
+        "theta": -0.4283333333333333,
+        "coverage": 0.94,
+        "ci": [
+          0.8975381686916755,
+          0.9686160461065165
+        ],
+        "n_worlds": 200,
+        "below_0_90": false
+      },
+      "fixed_candidate": {
+        "theta": 2.270833333333333,
+        "coverage": 0.95,
+        "ci": [
+          0.876901263556847,
+          0.9862106060235382
+        ],
+        "n_worlds": 80,
+        "below_0_90": false
+      }
+    },
+    "t_noise": {
+      "random_candidate": {
+        "theta": -0.25,
+        "coverage": 0.965,
+        "ci": [
+          0.9292190016490228,
+          0.9858144741015807
+        ],
+        "n_worlds": 200,
+        "below_0_90": false
+      },
+      "fixed_candidate": {
+        "theta": 2.225,
+        "coverage": 0.975,
+        "ci": [
+          0.9125928440694078,
+          0.9969579138351904
+        ],
+        "n_worlds": 80,
+        "below_0_90": false
+      }
+    },
+    "profile_flat": {
+      "random_candidate": {
+        "theta": -0.20666666666666664,
+        "coverage": 0.97,
+        "ci": [
+          0.935849373294973,
+          0.9889125443277452
+        ],
+        "n_worlds": 200,
+        "below_0_90": false
+      },
+      "fixed_candidate": {
+        "theta": 2.1375,
+        "coverage": 0.8625,
+        "ci": [
+          0.7672791291752743,
+          0.9293121672961213
+        ],
+        "n_worlds": 80,
+        "below_0_90": true
+      }
+    },
+    "profile_steep": {
+      "random_candidate": {
+        "theta": -0.315,
+        "coverage": 0.98,
+        "ci": [
+          0.9495863909101037,
+          0.9945244341204436
+        ],
+        "n_worlds": 200,
+        "below_0_90": false
+      },
+      "fixed_candidate": {
+        "theta": 2.3666666666666667,
+        "coverage": 0.95,
+        "ci": [
+          0.876901263556847,
+          0.9862106060235382
+        ],
+        "n_worlds": 80,
+        "below_0_90": false
+      }
+    },
+    "misspec_0_5": {
+      "random_candidate": {
+        "theta": -0.8966666666666666,
+        "coverage": 0.945,
+        "ci": [
+          0.9037223555660872,
+          0.9722277454479935
+        ],
+        "n_worlds": 200,
+        "below_0_90": false
+      },
+      "fixed_candidate": {
+        "theta": -0.9083333333333334,
+        "coverage": 0.9125,
+        "ci": [
+          0.8279916615801152,
+          0.9640936410104413
+        ],
+        "n_worlds": 80,
+        "below_0_90": false
+      }
+    },
+    "misspec_1_5": {
+      "random_candidate": {
+        "theta": 0.3483333333333333,
+        "coverage": 0.945,
+        "ci": [
+          0.9037223555660872,
+          0.9722277454479935
+        ],
+        "n_worlds": 200,
+        "below_0_90": false
+      },
+      "fixed_candidate": {
+        "theta": 3.191666666666667,
+        "coverage": 0.975,
+        "ci": [
+          0.9125928440694078,
+          0.9969579138351904
+        ],
+        "n_worlds": 80,
+        "below_0_90": false
+      }
+    },
+    "spread_2x": {
+      "random_candidate": {
+        "theta": 0.8683333333333333,
+        "coverage": 0.965,
+        "ci": [
+          0.9292190016490228,
+          0.9858144741015807
+        ],
+        "n_worlds": 200,
+        "below_0_90": false
+      },
+      "fixed_candidate": {
+        "theta": 2.070833333333333,
+        "coverage": 0.9125,
+        "ci": [
+          0.8279916615801152,
+          0.9640936410104413
+        ],
+        "n_worlds": 80,
+        "below_0_90": false
+      }
+    }
+  },
+  "limits": [
+    "profile_flat: fixed_candidate coverage 0.86"
+  ]
+}

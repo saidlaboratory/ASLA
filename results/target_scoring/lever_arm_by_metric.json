@@ -1,0 +1,290 @@
+{
+  "metrics": {
+    "olmes": {
+      "chance_rungs": {
+        "strict": [
+          "10M",
+          "4M",
+          "6M",
+          "8M"
+        ],
+        "margin": [
+          "10M",
+          "14M",
+          "16M",
+          "20M",
+          "4M",
+          "6M",
+          "8M"
+        ]
+      },
+      "all": {
+        "n_designs": 55,
+        "n_worlds": 150,
+        "n_null_statistics": 1150,
+        "rho_true_in_worlds": 0.33626147663256406,
+        "calibrated_critical_value": 2.1914785850868372,
+        "coverage_at_1_96": 0.9066666666666666,
+        "real_rho": -0.4212842712842713,
+        "real_ci_calibrated": [
+          -0.8137361375816198,
+          0.23500941045330456
+        ],
+        "real_p_against_null": 0.06956521739130435,
+        "verdict": "inconclusive"
+      },
+      "strict": {
+        "n_designs": 36,
+        "n_worlds": 150,
+        "n_null_statistics": 1150,
+        "rho_true_in_worlds": 0.10990990990990991,
+        "calibrated_critical_value": 2.066143849523274,
+        "coverage_at_1_96": 0.9333333333333333,
+        "real_rho": -0.303989703989704,
+        "real_ci_calibrated": [
+          -0.672227972442704,
+          0.18482860580937296
+        ],
+        "real_p_against_null": 0.08260869565217391,
+        "verdict": "inconclusive"
+      },
+      "margin": {
+        "n_designs": 15,
+        "n_worlds": 150,
+        "n_null_statistics": 1150,
+        "rho_true_in_worlds": -0.028571428571428564,
+        "calibrated_critical_value": 1.572484311885853,
+        "coverage_at_1_96": 0.98,
+        "real_rho": -0.1464285714285714,
+        "real_ci_calibrated": [
+          -0.8031533533311116,
+          0.6709429232357851
+        ],
+        "real_p_against_null": 0.7452173913043478,
+        "verdict": "inconclusive"
+      }
+    },
+    "cp": {
+      "chance_rungs": {
+        "strict": [
+          "10M",
+          "4M",
+          "6M",
+          "8M"
+        ],
+        "margin": [
+          "10M",
+          "14M",
+          "16M",
+          "20M",
+          "4M",
+          "6M",
+          "8M"
+        ]
+      },
+      "all": {
+        "n_designs": 55,
+        "n_worlds": 150,
+        "n_null_statistics": 1150,
+        "rho_true_in_worlds": 0.07464059598248846,
+        "calibrated_critical_value": 1.7993719358046814,
+        "coverage_at_1_96": 0.98,
+        "real_rho": -0.3708513708513709,
+        "real_ci_calibrated": [
+          -0.8225990526779889,
+          0.36789244868584436
+        ],
+        "real_p_against_null": 0.17043478260869566,
+        "verdict": "inconclusive"
+      },
+      "strict": {
+        "n_designs": 36,
+        "n_worlds": 150,
+        "n_null_statistics": 1150,
+        "rho_true_in_worlds": -0.25213977785656266,
+        "calibrated_critical_value": 1.9679169795784432,
+        "coverage_at_1_96": 0.9466666666666667,
+        "real_rho": -0.34002574002574004,
+        "real_ci_calibrated": [
+          -0.9070057091617777,
+          0.665227257182249
+        ],
+        "real_p_against_null": 0.36434782608695654,
+        "verdict": "inconclusive"
+      },
+      "margin": {
+        "n_designs": 15,
+        "n_worlds": 150,
+        "n_null_statistics": 1148,
+        "rho_true_in_worlds": -0.9214285714285713,
+        "calibrated_critical_value": 3.387274228530653,
+        "coverage_at_1_96": 0.7866666666666666,
+        "real_rho": -0.1607142857142857,
+        "real_ci_calibrated": [
+          -0.9936826749942659,
+          0.9879520243171784
+        ],
+        "real_p_against_null": 0.769163763066202,
+        "verdict": "inconclusive"
+      }
+    },
+    "margin": {
+      "chance_rungs": {
+        "strict": [
+          "10M",
+          "4M",
+          "6M",
+          "8M"
+        ],
+        "margin": [
+          "10M",
+          "14M",
+          "16M",
+          "20M",
+          "4M",
+          "6M",
+          "8M"
+        ]
+      },
+      "all": {
+        "n_designs": 55,
+        "n_worlds": 150,
+        "n_null_statistics": 1150,
+        "rho_true_in_worlds": 0.5674603174603177,
+        "calibrated_critical_value": 2.6750313056187607,
+        "coverage_at_1_96": 0.7066666666666667,
+        "real_rho": 0.6944444444444446,
+        "real_ci_calibrated": [
+          0.4829586387240795,
+          0.8293787633283308
+        ],
+        "real_p_against_null": 0.0008695652173913044,
+        "verdict": "holds"
+      },
+      "strict": {
+        "n_designs": 36,
+        "n_worlds": 150,
+        "n_null_statistics": 1150,
+        "rho_true_in_worlds": 0.27181467181467184,
+        "calibrated_critical_value": 1.8662110070086273,
+        "coverage_at_1_96": 0.9533333333333334,
+        "real_rho": 0.5729729729729731,
+        "real_ci_calibrated": [
+          0.3806778753876506,
+          0.7177667553423122
+        ],
+        "real_p_against_null": 0.0008695652173913044,
+        "verdict": "holds"
+      },
+      "margin": {
+        "n_designs": 15,
+        "n_worlds": 150,
+        "n_null_statistics": 1150,
+        "rho_true_in_worlds": -0.914285714285714,
+        "calibrated_critical_value": 4.141246012636118,
+        "coverage_at_1_96": 0.5466666666666666,
+        "real_rho": -0.6142857142857142,
+        "real_ci_calibrated": [
+          -0.984874692423197,
+          0.7644850587421873
+        ],
+        "real_p_against_null": 0.030434782608695653,
+        "verdict": "inconclusive"
+      }
+    },
+    "norm_cp": {
+      "chance_rungs": {
+        "strict": [
+          "10M",
+          "4M",
+          "6M",
+          "8M"
+        ],
+        "margin": [
+          "10M",
+          "14M",
+          "16M",
+          "20M",
+          "4M",
+          "6M",
+          "8M"
+        ]
+      },
+      "all": {
+        "n_designs": 55,
+        "n_worlds": 150,
+        "n_null_statistics": 1150,
+        "rho_true_in_worlds": 0.5833438555035468,
+        "calibrated_critical_value": 2.7864622254151374,
+        "coverage_at_1_96": 0.7533333333333333,
+        "real_rho": 0.41147186147186154,
+        "real_ci_calibrated": [
+          -0.22826540618542887,
+          0.8030428256197355
+        ],
+        "real_p_against_null": 0.02434782608695652,
+        "verdict": "inconclusive"
+      },
+      "strict": {
+        "n_designs": 36,
+        "n_worlds": 150,
+        "n_null_statistics": 1150,
+        "rho_true_in_worlds": 0.44581724581724586,
+        "calibrated_critical_value": 2.2390529151308436,
+        "coverage_at_1_96": 0.9066666666666666,
+        "real_rho": 0.46537966537966546,
+        "real_ci_calibrated": [
+          -0.2869536112627261,
+          0.8626358288778978
+        ],
+        "real_p_against_null": 0.08347826086956522,
+        "verdict": "inconclusive"
+      },
+      "margin": {
+        "n_designs": 15,
+        "n_worlds": 150,
+        "n_null_statistics": 1150,
+        "rho_true_in_worlds": -0.0035714285714285704,
+        "calibrated_critical_value": 1.4461848886197899,
+        "coverage_at_1_96": 0.98,
+        "real_rho": -0.017857142857142853,
+        "real_ci_calibrated": [
+          -0.6366934972978989,
+          0.6149699738483818
+        ],
+        "real_p_against_null": 0.9669565217391304,
+        "verdict": "inconclusive"
+      }
+    },
+    "c4": {
+      "chance_rungs": "none (bits per token has no chance level)",
+      "all": {
+        "source": "results/target_scoring/lever_arm_calibration.json (300 main worlds, 8,000 null worlds)",
+        "real_rho": 0.8686147186147188,
+        "real_ci_calibrated": [
+          0.8016662674536721,
+          0.9140426016545453
+        ],
+        "calibrated_critical_value": 1.4907924545648121,
+        "verdict": "holds"
+      }
+    }
+  },
+  "signal_and_noise": {
+    "n_designs": 15,
+    "rho": 0.907142857142857,
+    "loro_ci_1_96": [
+      0.6691199807724668,
+      0.9763653902556308
+    ],
+    "note": "one run per cell: the observed 1B order is the target, no noise model, no calibration; descriptive"
+  },
+  "excluded_metrics": {
+    "total_prob": "1 - total_prob_per_char is not positive on some cells (total prob exceeds 1), so no power law fits"
+  },
+  "existing_claim_tested_on": "C4 bits per token (lever_arm_calibration.json design field)",
+  "predictions": {
+    "P1a_holds_on_c4": true,
+    "P1b_cp_fails_or_reverses_with_chance_rungs": true
+  }
+}

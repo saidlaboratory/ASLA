@@ -1,0 +1,1028 @@
+{
+  "noiseless": {
+    "designs": [
+      {
+        "fit": "8M",
+        "target": "10M",
+        "lever_arm": 1.3443337899846326,
+        "projection_wrong": 15,
+        "projection_scored": 300,
+        "single_wrong": 13,
+        "single_scored": 300,
+        "excess": 0.6666666666666667
+      },
+      {
+        "fit": "8M",
+        "target": "14M",
+        "lever_arm": 2.835612518622024,
+        "projection_wrong": 20,
+        "projection_scored": 300,
+        "single_wrong": 12,
+        "single_scored": 300,
+        "excess": 2.6666666666666665
+      },
+      {
+        "fit": "10M",
+        "target": "14M",
+        "lever_arm": 2.1093068847540004,
+        "projection_wrong": 21,
+        "projection_scored": 300,
+        "single_wrong": 11,
+        "single_scored": 300,
+        "excess": 3.333333333333334
+      },
+      {
+        "fit": "8M",
+        "target": "16M",
+        "lever_arm": 3.512287961839689,
+        "projection_wrong": 31,
+        "projection_scored": 300,
+        "single_wrong": 6,
+        "single_scored": 300,
+        "excess": 8.333333333333332
+      },
+      {
+        "fit": "10M",
+        "target": "16M",
+        "lever_arm": 2.612660626405767,
+        "projection_wrong": 26,
+        "projection_scored": 300,
+        "single_wrong": 11,
+        "single_scored": 300,
+        "excess": 5.0
+      },
+      {
+        "fit": "14M",
+        "target": "16M",
+        "lever_arm": 1.2386346649176516,
+        "projection_wrong": 16,
+        "projection_scored": 300,
+        "single_wrong": 14,
+        "single_scored": 300,
+        "excess": 0.6666666666666667
+      },
+      {
+        "fit": "8M",
+        "target": "20M",
+        "lever_arm": 5.004610723709241,
+        "projection_wrong": 43,
+        "projection_scored": 300,
+        "single_wrong": 14,
+        "single_scored": 300,
+        "excess": 9.666666666666668
+      },
+      {
+        "fit": "10M",
+        "target": "20M",
+        "lever_arm": 3.7227441287230087,
+        "projection_wrong": 41,
+        "projection_scored": 300,
+        "single_wrong": 15,
+        "single_scored": 300,
+        "excess": 8.666666666666666
+      },
+      {
+        "fit": "14M",
+        "target": "20M",
+        "lever_arm": 1.7649134678461815,
+        "projection_wrong": 19,
+        "projection_scored": 300,
+        "single_wrong": 16,
+        "single_scored": 300,
+        "excess": 1.0000000000000002
+      },
+      {
+        "fit": "16M",
+        "target": "20M",
+        "lever_arm": 1.4248862217686427,
+        "projection_wrong": 15,
+        "projection_scored": 300,
+        "single_wrong": 12,
+        "single_scored": 300,
+        "excess": 1.0000000000000002
+      },
+      {
+        "fit": "8M",
+        "target": "60M",
+        "lever_arm": 44.66887092264919,
+        "projection_wrong": 112,
+        "projection_scored": 300,
+        "single_wrong": 11,
+        "single_scored": 300,
+        "excess": 33.666666666666664
+      },
+      {
+        "fit": "10M",
+        "target": "60M",
+        "lever_arm": 33.22751481472456,
+        "projection_wrong": 122,
+        "projection_scored": 300,
+        "single_wrong": 18,
+        "single_scored": 300,
+        "excess": 34.66666666666667
+      },
+      {
+        "fit": "14M",
+        "target": "60M",
+        "lever_arm": 15.752812004214238,
+        "projection_wrong": 61,
+        "projection_scored": 300,
+        "single_wrong": 13,
+        "single_scored": 300,
+        "excess": 16.0
+      },
+      {
+        "fit": "16M",
+        "target": "60M",
+        "lever_arm": 12.717884014057958,
+        "projection_wrong": 47,
+        "projection_scored": 300,
+        "single_wrong": 13,
+        "single_scored": 300,
+        "excess": 11.333333333333334
+      },
+      {
+        "fit": "20M",
+        "target": "60M",
+        "lever_arm": 8.92554354148492,
+        "projection_wrong": 34,
+        "projection_scored": 300,
+        "single_wrong": 19,
+        "single_scored": 300,
+        "excess": 4.999999999999999
+      },
+      {
+        "fit": "8M",
+        "target": "90M",
+        "lever_arm": 131.53236114035985,
+        "projection_wrong": 127,
+        "projection_scored": 300,
+        "single_wrong": 11,
+        "single_scored": 300,
+        "excess": 38.666666666666664
+      },
+      {
+        "fit": "10M",
+        "target": "90M",
+        "lever_arm": 97.84204051128064,
+        "projection_wrong": 150,
+        "projection_scored": 300,
+        "single_wrong": 20,
+        "single_scored": 300,
+        "excess": 43.333333333333336
+      },
+      {
+        "fit": "14M",
+        "target": "90M",
+        "lever_arm": 46.38587263829632,
+        "projection_wrong": 79,
+        "projection_scored": 300,
+        "single_wrong": 15,
+        "single_scored": 300,
+        "excess": 21.333333333333332
+      },
+      {
+        "fit": "16M",
+        "target": "90M",
+        "lever_arm": 37.44919624171846,
+        "projection_wrong": 63,
+        "projection_scored": 300,
+        "single_wrong": 13,
+        "single_scored": 300,
+        "excess": 16.666666666666664
+      },
+      {
+        "fit": "20M",
+        "target": "90M",
+        "lever_arm": 26.28223620215414,
+        "projection_wrong": 58,
+        "projection_scored": 300,
+        "single_wrong": 21,
+        "single_scored": 300,
+        "excess": 12.333333333333332
+      },
+      {
+        "fit": "60M",
+        "target": "90M",
+        "lever_arm": 2.944609040334325,
+        "projection_wrong": 6,
+        "projection_scored": 300,
+        "single_wrong": 4,
+        "single_scored": 300,
+        "excess": 0.6666666666666666
+      },
+      {
+        "fit": "8M",
+        "target": "150M",
+        "lever_arm": 306.9901537193612,
+        "projection_wrong": 134,
+        "projection_scored": 300,
+        "single_wrong": 13,
+        "single_scored": 300,
+        "excess": 40.33333333333333
+      },
+      {
+        "fit": "10M",
+        "target": "150M",
+        "lever_arm": 228.3585788042049,
+        "projection_wrong": 162,
+        "projection_scored": 300,
+        "single_wrong": 20,
+        "single_scored": 300,
+        "excess": 47.333333333333336
+      },
+      {
+        "fit": "14M",
+        "target": "150M",
+        "lever_arm": 108.26237777668726,
+        "projection_wrong": 92,
+        "projection_scored": 300,
+        "single_wrong": 17,
+        "single_scored": 300,
+        "excess": 24.999999999999996
+      },
+      {
+        "fit": "16M",
+        "target": "150M",
+        "lever_arm": 87.40460835066722,
+        "projection_wrong": 75,
+        "projection_scored": 300,
+        "single_wrong": 15,
+        "single_scored": 300,
+        "excess": 20.0
+      },
+      {
+        "fit": "20M",
+        "target": "150M",
+        "lever_arm": 61.34146503443347,
+        "projection_wrong": 75,
+        "projection_scored": 300,
+        "single_wrong": 23,
+        "single_scored": 300,
+        "excess": 17.333333333333336
+      },
+      {
+        "fit": "60M",
+        "target": "150M",
+        "lever_arm": 6.872574734448973,
+        "projection_wrong": 12,
+        "projection_scored": 300,
+        "single_wrong": 6,
+        "single_scored": 300,
+        "excess": 2.0
+      },
+      {
+        "fit": "90M",
+        "target": "150M",
+        "lever_arm": 2.333951516249055,
+        "projection_wrong": 7,
+        "projection_scored": 300,
+        "single_wrong": 2,
+        "single_scored": 300,
+        "excess": 1.6666666666666667
+      },
+      {
+        "fit": "8M",
+        "target": "300M",
+        "lever_arm": 1293.3719641614846,
+        "projection_wrong": 145,
+        "projection_scored": 300,
+        "single_wrong": 18,
+        "single_scored": 300,
+        "excess": 42.333333333333336
+      },
+      {
+        "fit": "10M",
+        "target": "300M",
+        "lever_arm": 962.0913896512781,
+        "projection_wrong": 173,
+        "projection_scored": 300,
+        "single_wrong": 23,
+        "single_scored": 300,
+        "excess": 50.0
+      },
+      {
+        "fit": "14M",
+        "target": "300M",
+        "lever_arm": 456.1173135143314,
+        "projection_wrong": 105,
+        "projection_scored": 300,
+        "single_wrong": 20,
+        "single_scored": 300,
+        "excess": 28.333333333333332
+      },
+      {
+        "fit": "16M",
+        "target": "300M",
+        "lever_arm": 368.24200584169466,
+        "projection_wrong": 91,
+        "projection_scored": 300,
+        "single_wrong": 20,
+        "single_scored": 300,
+        "excess": 23.666666666666668
+      },
+      {
+        "fit": "20M",
+        "target": "300M",
+        "lever_arm": 258.43607736245326,
+        "projection_wrong": 106,
+        "projection_scored": 300,
+        "single_wrong": 26,
+        "single_scored": 300,
+        "excess": 26.666666666666668
+      },
+      {
+        "fit": "60M",
+        "target": "300M",
+        "lever_arm": 28.954659865953428,
+        "projection_wrong": 22,
+        "projection_scored": 300,
+        "single_wrong": 9,
+        "single_scored": 300,
+        "excess": 4.333333333333334
+      },
+      {
+        "fit": "90M",
+        "target": "300M",
+        "lever_arm": 9.833108392096078,
+        "projection_wrong": 20,
+        "projection_scored": 300,
+        "single_wrong": 7,
+        "single_scored": 300,
+        "excess": 4.333333333333334
+      },
+      {
+        "fit": "150M",
+        "target": "300M",
+        "lever_arm": 4.213073118116474,
+        "projection_wrong": 13,
+        "projection_scored": 300,
+        "single_wrong": 5,
+        "single_scored": 300,
+        "excess": 2.666666666666667
+      },
+      {
+        "fit": "8M",
+        "target": "530M",
+        "lever_arm": 3416.225562643684,
+        "projection_wrong": 143,
+        "projection_scored": 300,
+        "single_wrong": 15,
+        "single_scored": 300,
+        "excess": 42.66666666666667
+      },
+      {
+        "fit": "10M",
+        "target": "530M",
+        "lever_arm": 2541.203373815915,
+        "projection_wrong": 180,
+        "projection_scored": 300,
+        "single_wrong": 20,
+        "single_scored": 300,
+        "excess": 53.333333333333336
+      },
+      {
+        "fit": "14M",
+        "target": "530M",
+        "lever_arm": 1204.7575401112317,
+        "projection_wrong": 112,
+        "projection_scored": 300,
+        "single_wrong": 17,
+        "single_scored": 300,
+        "excess": 31.66666666666667
+      },
+      {
+        "fit": "16M",
+        "target": "530M",
+        "lever_arm": 972.6496231972709,
+        "projection_wrong": 95,
+        "projection_scored": 300,
+        "single_wrong": 17,
+        "single_scored": 300,
+        "excess": 26.0
+      },
+      {
+        "fit": "20M",
+        "target": "530M",
+        "lever_arm": 682.6156421036676,
+        "projection_wrong": 119,
+        "projection_scored": 300,
+        "single_wrong": 25,
+        "single_scored": 300,
+        "excess": 31.333333333333336
+      },
+      {
+        "fit": "60M",
+        "target": "530M",
+        "lever_arm": 76.47888769249144,
+        "projection_wrong": 26,
+        "projection_scored": 300,
+        "single_wrong": 8,
+        "single_scored": 300,
+        "excess": 6.0
+      },
+      {
+        "fit": "90M",
+        "target": "530M",
+        "lever_arm": 25.972509981769324,
+        "projection_wrong": 27,
+        "projection_scored": 300,
+        "single_wrong": 4,
+        "single_scored": 300,
+        "excess": 7.666666666666666
+      },
+      {
+        "fit": "150M",
+        "target": "530M",
+        "lever_arm": 11.128127470064296,
+        "projection_wrong": 18,
+        "projection_scored": 300,
+        "single_wrong": 2,
+        "single_scored": 300,
+        "excess": 5.333333333333333
+      },
+      {
+        "fit": "300M",
+        "target": "530M",
+        "lever_arm": 2.6413326230234797,
+        "projection_wrong": 10,
+        "projection_scored": 300,
+        "single_wrong": 3,
+        "single_scored": 300,
+        "excess": 2.333333333333333
+      },
+      {
+        "fit": "8M",
+        "target": "1B",
+        "lever_arm": 16132.064149010477,
+        "projection_wrong": 143,
+        "projection_scored": 300,
+        "single_wrong": 16,
+        "single_scored": 300,
+        "excess": 42.333333333333336
+      },
+      {
+        "fit": "10M",
+        "target": "1B",
+        "lever_arm": 12000.04364183607,
+        "projection_wrong": 188,
+        "projection_scored": 300,
+        "single_wrong": 23,
+        "single_scored": 300,
+        "excess": 55.00000000000001
+      },
+      {
+        "fit": "14M",
+        "target": "1B",
+        "lever_arm": 5689.093288687381,
+        "projection_wrong": 125,
+        "projection_scored": 300,
+        "single_wrong": 20,
+        "single_scored": 300,
+        "excess": 35.0
+      },
+      {
+        "fit": "16M",
+        "target": "1B",
+        "lever_arm": 4593.035743162904,
+        "projection_wrong": 103,
+        "projection_scored": 300,
+        "single_wrong": 18,
+        "single_scored": 300,
+        "excess": 28.333333333333332
+      },
+      {
+        "fit": "20M",
+        "target": "1B",
+        "lever_arm": 3223.4403512315457,
+        "projection_wrong": 139,
+        "projection_scored": 300,
+        "single_wrong": 26,
+        "single_scored": 300,
+        "excess": 37.666666666666664
+      },
+      {
+        "fit": "60M",
+        "target": "1B",
+        "lever_arm": 361.1477929886688,
+        "projection_wrong": 34,
+        "projection_scored": 300,
+        "single_wrong": 9,
+        "single_scored": 300,
+        "excess": 8.333333333333332
+      },
+      {
+        "fit": "90M",
+        "target": "1B",
+        "lever_arm": 122.64711139637906,
+        "projection_wrong": 33,
+        "projection_scored": 300,
+        "single_wrong": 5,
+        "single_scored": 300,
+        "excess": 9.333333333333334
+      },
+      {
+        "fit": "150M",
+        "target": "1B",
+        "lever_arm": 52.54912561058163,
+        "projection_wrong": 28,
+        "projection_scored": 300,
+        "single_wrong": 3,
+        "single_scored": 300,
+        "excess": 8.333333333333334
+      },
+      {
+        "fit": "300M",
+        "target": "1B",
+        "lever_arm": 12.472872921340285,
+        "projection_wrong": 18,
+        "projection_scored": 300,
+        "single_wrong": 4,
+        "single_scored": 300,
+        "excess": 4.666666666666666
+      },
+      {
+        "fit": "530M",
+        "target": "1B",
+        "lever_arm": 4.722189402659495,
+        "projection_wrong": 9,
+        "projection_scored": 300,
+        "single_wrong": 3,
+        "single_scored": 300,
+        "excess": 1.9999999999999998
+      }
+    ],
+    "projection_wrong_total": 3888,
+    "single_wrong_total": 744,
+    "designs_where_projection_beats_single": 0,
+    "arm_a_note": "In arm A the truth is each recipe's fitted E + A C^-alpha, the projection's own functional form, so projection is exact there by construction (0 wrong pairs at all 55 designs, regime_map.json task_1a); it is not evidence about real curves"
+  },
+  "variants": {
+    "baseline": {
+      "worlds_per_arm": 60,
+      "slopes": {
+        "A": 3.035917348130826,
+        "B1": 2.5803170052698494,
+        "B2": 5.220031758880456,
+        "B3": 4.945967753686599
+      },
+      "attribution": {
+        "variance": 0.6138166480903419,
+        "common_mode": -0.09211551015903481,
+        "recipe_specific": 0.44159495563262546,
+        "interaction": 0.03670390643606743
+      }
+    },
+    "rank_two": {
+      "worlds_per_arm": 60,
+      "slopes": {
+        "A": 3.035917348130826,
+        "B1": 2.568510527119989,
+        "B2": 5.25675266670478,
+        "B3": 4.945967753686599
+      },
+      "attribution": {
+        "variance": 0.6138166480903419,
+        "common_mode": -0.09450260177342319,
+        "recipe_specific": 0.4490193687410517,
+        "interaction": 0.03166658494202961
+      }
+    },
+    "chinchilla": {
+      "worlds_per_arm": 60,
+      "slopes": {
+        "A": 4.407878848458657,
+        "B1": 4.322279328168599,
+        "B2": 5.1631195497876705,
+        "B3": 4.945967753686599
+      },
+      "attribution": {
+        "variance": 0.891206548035647,
+        "common_mode": -0.017306930524618694,
+        "recipe_specific": 0.15269826633343414,
+        "interaction": -0.026597883844462496
+      }
+    },
+    "loro:C4": {
+      "worlds_per_arm": 15,
+      "slopes": {
+        "A": 2.964456262093104,
+        "B1": 2.4325672367159443,
+        "B2": 5.3334414849741325,
+        "B3": 4.987332263168026
+      },
+      "attribution": {
+        "variance": 0.5943971858434067,
+        "common_mode": -0.10664800284216393,
+        "recipe_specific": 0.47500048079335594,
+        "interaction": 0.03725033620540119
+      }
+    },
+    "loro:DCLM-Baseline": {
+      "worlds_per_arm": 15,
+      "slopes": {
+        "A": 2.88123884692802,
+        "B1": 2.437982369959267,
+        "B2": 5.105486078283593,
+        "B3": 4.858000606952945
+      },
+      "attribution": {
+        "variance": 0.5930914958726615,
+        "common_mode": -0.09124257340238867,
+        "recipe_specific": 0.4578523988185902,
+        "interaction": 0.04029867871113699
+      }
+    },
+    "loro:DCLM-Baseline (QC 10%)": {
+      "worlds_per_arm": 15,
+      "slopes": {
+        "A": 2.9264324131425834,
+        "B1": 2.4653218040280964,
+        "B2": 5.02695139954305,
+        "B3": 4.804115251968561
+      },
+      "attribution": {
+        "variance": 0.60915116720887,
+        "common_mode": -0.09598242026469697,
+        "recipe_specific": 0.43723326278230856,
+        "interaction": 0.049597990273518446
+      }
+    },
+    "loro:DCLM-Baseline (QC 20%)": {
+      "worlds_per_arm": 15,
+      "slopes": {
+        "A": 2.900786111210546,
+        "B1": 2.4568894625645035,
+        "B2": 5.029253367837954,
+        "B3": 4.824114643895145
+      },
+      "attribution": {
+        "variance": 0.6013095304195255,
+        "common_mode": -0.0920161897909678,
+        "recipe_specific": 0.44121407009283153,
+        "interaction": 0.04949258927861078
+      }
+    },
+    "loro:DCLM-Baseline (QC 7%, FW2)": {
+      "worlds_per_arm": 15,
+      "slopes": {
+        "A": 2.91419667448268,
+        "B1": 2.4659186242063162,
+        "B2": 5.022698865513135,
+        "B3": 4.844401221678528
+      },
+      "attribution": {
+        "variance": 0.6015597266059942,
+        "common_mode": -0.09253528553133354,
+        "recipe_specific": 0.435245161279165,
+        "interaction": 0.055730397646174316
+      }
+    },
+    "loro:DCLM-Baseline (QC 7%, FW3)": {
+      "worlds_per_arm": 15,
+      "slopes": {
+        "A": 3.005989287882913,
+        "B1": 2.5120777159503196,
+        "B2": 5.195777138331034,
+        "B3": 5.006222924170364
+      },
+      "attribution": {
+        "variance": 0.600450545933503,
+        "common_mode": -0.0986595242389141,
+        "recipe_specific": 0.4374131722891694,
+        "interaction": 0.060795806016241676
+      }
+    },
+    "loro:DCLM-Baseline (QC FW 10%)": {
+      "worlds_per_arm": 15,
+      "slopes": {
+        "A": 2.9759185452815315,
+        "B1": 2.5158366431595285,
+        "B2": 5.080934624254023,
+        "B3": 4.91064824058314
+      },
+      "attribution": {
+        "variance": 0.6060133814284651,
+        "common_mode": -0.09369066558662086,
+        "recipe_specific": 0.42866358489618067,
+        "interaction": 0.05901369926197508
+      }
+    },
+    "loro:DCLM-Baseline (QC FW 3%)": {
+      "worlds_per_arm": 15,
+      "slopes": {
+        "A": 3.06654978386122,
+        "B1": 2.554241484033597,
+        "B2": 5.1594385696900416,
+        "B3": 4.943299935728304
+      },
+      "attribution": {
+        "variance": 0.6203446733420639,
+        "common_mode": -0.10363690378664914,
+        "recipe_specific": 0.42337887909697974,
+        "interaction": 0.05991335134760556
+      }
+    },
+    "loro:DCLM-Baseline 25% / Dolma 75%": {
+      "worlds_per_arm": 15,
+      "slopes": {
+        "A": 2.8673718089585107,
+        "B1": 2.4246802097332347,
+        "B2": 5.111306973600077,
+        "B3": 4.910456431659768
+      },
+      "attribution": {
+        "variance": 0.5839318297320315,
+        "common_mode": -0.09015284126564242,
+        "recipe_specific": 0.4569707919968451,
+        "interaction": 0.049250219536765845
+      }
+    },
+    "loro:DCLM-Baseline 50% / Dolma 50%": {
+      "worlds_per_arm": 15,
+      "slopes": {
+        "A": 2.896285560263358,
+        "B1": 2.424026687162291,
+        "B2": 4.98361031066585,
+        "B3": 4.758442019879627
+      },
+      "attribution": {
+        "variance": 0.6086625723636797,
+        "common_mode": -0.09924653303078675,
+        "recipe_specific": 0.43865717848029895,
+        "interaction": 0.05192678218680805
+      }
+    },
+    "loro:DCLM-Baseline 75% / Dolma 25%": {
+      "worlds_per_arm": 15,
+      "slopes": {
+        "A": 2.8674846811781602,
+        "B1": 2.42479964364417,
+        "B2": 5.094124387794296,
+        "B3": 4.904191942625885
+      },
+      "attribution": {
+        "variance": 0.5847007447352893,
+        "common_mode": -0.0902666622173357,
+        "recipe_specific": 0.4540278465169353,
+        "interaction": 0.051538070965111094
+      }
+    },
+    "loro:Dolma1.6++": {
+      "worlds_per_arm": 15,
+      "slopes": {
+        "A": 3.033467866277464,
+        "B1": 2.501882175752299,
+        "B2": 5.126270010707296,
+        "B3": 4.849135050707356
+      },
+      "attribution": {
+        "variance": 0.6255688560034978,
+        "common_mode": -0.1096248475174188,
+        "recipe_specific": 0.43158256525038413,
+        "interaction": 0.052473426263536876
+      }
+    },
+    "loro:Dolma1.7": {
+      "worlds_per_arm": 15,
+      "slopes": {
+        "A": 2.919253569137526,
+        "B1": 2.431004504025314,
+        "B2": 5.132583635231735,
+        "B3": 4.86803822028735
+      },
+      "attribution": {
+        "variance": 0.5996776189988929,
+        "common_mode": -0.10029688408719838,
+        "recipe_specific": 0.45466571253903615,
+        "interaction": 0.045953552549269326
+      }
+    },
+    "loro:Dolma1.7 (no Flan)": {
+      "worlds_per_arm": 15,
+      "slopes": {
+        "A": 2.9431578756482883,
+        "B1": 2.3918324929502695,
+        "B2": 5.1470940747436025,
+        "B3": 4.8363912222157746
+      },
+      "attribution": {
+        "variance": 0.6085442100153121,
+        "common_mode": -0.11399519959541884,
+        "recipe_specific": 0.4556984945658695,
+        "interaction": 0.049752495014237216
+      }
+    },
+    "loro:Dolma1.7 (no Reddit)": {
+      "worlds_per_arm": 15,
+      "slopes": {
+        "A": 2.9812816981069816,
+        "B1": 2.4281203907683424,
+        "B2": 5.103822164637056,
+        "B3": 4.662677303731243
+      },
+      "attribution": {
+        "variance": 0.6393926716140643,
+        "common_mode": -0.11863598342865793,
+        "recipe_specific": 0.45521925028599786,
+        "interaction": 0.024024061528595764
+      }
+    },
+    "loro:Dolma1.7 (no code)": {
+      "worlds_per_arm": 15,
+      "slopes": {
+        "A": 3.0066888374518856,
+        "B1": 2.5069305626467364,
+        "B2": 5.041388498650337,
+        "B3": 4.771769041000376
+      },
+      "attribution": {
+        "variance": 0.630099405821525,
+        "common_mode": -0.10473228492642585,
+        "recipe_specific": 0.42640363431585676,
+        "interaction": 0.04822924478904403
+      }
+    },
+    "loro:Dolma1.7 (no math, code)": {
+      "worlds_per_arm": 15,
+      "slopes": {
+        "A": 3.0435959112346436,
+        "B1": 2.5773365976577747,
+        "B2": 5.427473123480456,
+        "B3": 5.169306546745847
+      },
+      "attribution": {
+        "variance": 0.5887822445257441,
+        "common_mode": -0.09019765211455409,
+        "recipe_specific": 0.4611599623060655,
+        "interaction": 0.040255445282744474
+      }
+    },
+    "loro:Falcon": {
+      "worlds_per_arm": 15,
+      "slopes": {
+        "A": 3.0315091590413954,
+        "B1": 2.501636410809643,
+        "B2": 4.988409648664122,
+        "B3": 4.671798890210845
+      },
+      "attribution": {
+        "variance": 0.6488954748016944,
+        "common_mode": -0.11341942593933839,
+        "recipe_specific": 0.41887515614663134,
+        "interaction": 0.04564879499101265
+      }
+    },
+    "loro:Falcon+CC": {
+      "worlds_per_arm": 15,
+      "slopes": {
+        "A": 3.0683574424082045,
+        "B1": 2.601164042994491,
+        "B2": 5.373246392101142,
+        "B3": 5.088606750691446
+      },
+      "attribution": {
+        "variance": 0.602985766583608,
+        "common_mode": -0.09181165342561219,
+        "recipe_specific": 0.45295088864545213,
+        "interaction": 0.035874998196552044
+      }
+    },
+    "loro:Falcon+CC (QC 10%)": {
+      "worlds_per_arm": 15,
+      "slopes": {
+        "A": 2.92626962181655,
+        "B1": 2.540879008457684,
+        "B2": 4.938356879523507,
+        "B3": 4.729128411041015
+      },
+      "attribution": {
+        "variance": 0.6187756743895214,
+        "common_mode": -0.08149294750785382,
+        "recipe_specific": 0.42546682661637436,
+        "interaction": 0.037250446501958065
+      }
+    },
+    "loro:Falcon+CC (QC 20%)": {
+      "worlds_per_arm": 15,
+      "slopes": {
+        "A": 2.9430058994073516,
+        "B1": 2.530155296307971,
+        "B2": 5.104315308094835,
+        "B3": 4.858596858549189
+      },
+      "attribution": {
+        "variance": 0.6057316515629069,
+        "common_mode": -0.08497321657237897,
+        "recipe_specific": 0.4448423015143646,
+        "interaction": 0.0343992634951075
+      }
+    },
+    "loro:Falcon+CC (QC Orig 10%)": {
+      "worlds_per_arm": 15,
+      "slopes": {
+        "A": 2.920308487217571,
+        "B1": 2.4710028346244686,
+        "B2": 5.0993910078438915,
+        "B3": 4.847157500261861
+      },
+      "attribution": {
+        "variance": 0.6024785633765367,
+        "common_mode": -0.09269466745589128,
+        "recipe_specific": 0.4495588436126943,
+        "interaction": 0.040657260466660274
+      }
+    },
+    "loro:Falcon+CC (QC Tulu 10%)": {
+      "worlds_per_arm": 15,
+      "slopes": {
+        "A": 3.078682033640563,
+        "B1": 2.5758598433397792,
+        "B2": 5.194956741809826,
+        "B3": 4.909736893548098
+      },
+      "attribution": {
+        "variance": 0.6270564187841245,
+        "common_mode": -0.10241326596574737,
+        "recipe_specific": 0.431036276292171,
+        "interaction": 0.04432057088945185
+      }
+    },
+    "loro:FineWeb-Edu": {
+      "worlds_per_arm": 15,
+      "slopes": {
+        "A": 2.9425862221260424,
+        "B1": 2.5024024491753876,
+        "B2": 5.118103722498201,
+        "B3": 4.897078772206165
+      },
+      "attribution": {
+        "variance": 0.6008860300199722,
+        "common_mode": -0.08988701089493588,
+        "recipe_specific": 0.4442480102054953,
+        "interaction": 0.04475297066946838
+      }
+    },
+    "loro:FineWeb-Pro": {
+      "worlds_per_arm": 15,
+      "slopes": {
+        "A": 2.93170637907665,
+        "B1": 2.5333543197518416,
+        "B2": 5.09163977456438,
+        "B3": 4.862969610210029
+      },
+      "attribution": {
+        "variance": 0.602863397073549,
+        "common_mode": -0.08191539146953544,
+        "recipe_specific": 0.4441593447248468,
+        "interaction": 0.03489264967113964
+      }
+    }
+  },
+  "ranges": {
+    "variance": {
+      "baseline": 0.6138166480903419,
+      "rank_two": 0.6138166480903419,
+      "chinchilla": 0.891206548035647,
+      "loro_min": 0.5839318297320315,
+      "loro_max": 0.6488954748016944,
+      "overall": [
+        0.5839318297320315,
+        0.891206548035647
+      ]
+    },
+    "common_mode": {
+      "baseline": -0.09211551015903481,
+      "rank_two": -0.09450260177342319,
+      "chinchilla": -0.017306930524618694,
+      "loro_min": -0.11863598342865793,
+      "loro_max": -0.08149294750785382,
+      "overall": [
+        -0.11863598342865793,
+        -0.017306930524618694
+      ]
+    },
+    "recipe_specific": {
+      "baseline": 0.44159495563262546,
+      "rank_two": 0.4490193687410517,
+      "chinchilla": 0.15269826633343414,
+      "loro_min": 0.41887515614663134,
+      "loro_max": 0.47500048079335594,
+      "overall": [
+        0.15269826633343414,
+        0.47500048079335594
+      ]
+    },
+    "interaction": {
+      "baseline": 0.03670390643606743,
+      "rank_two": 0.03166658494202961,
+      "chinchilla": -0.026597883844462496,
+      "loro_min": 0.024024061528595764,
+      "loro_max": 0.060795806016241676,
+      "overall": [
+        -0.026597883844462496,
+        0.060795806016241676
+      ]
+    }
+  }
+}

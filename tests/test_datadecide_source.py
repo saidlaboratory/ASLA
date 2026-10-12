@@ -36,7 +36,15 @@ def _synthetic_artifacts():
                             "chinchilla": "5xC",
                             "tokens": int(tokens),
                             "compute": 6.0 * n * tokens,
-                            "metrics": json.dumps({"primary_metric": acc, "correct_prob_per_char": acc + 0.1}),
+                            "metrics": json.dumps(
+                                {
+                                    "primary_metric": acc,
+                                    "correct_prob_per_char": acc + 0.1,
+                                    "margin_per_char": acc - 0.3,
+                                    "norm_correct_prob_per_char": acc + 0.05,
+                                    "total_prob_per_char": acc + 0.2,
+                                }
+                            ),
                         }
                     )
                     ppl_rows.append(
@@ -76,7 +84,13 @@ def test_scale_constants_recover_n_and_tokens_per_step():
 def _unpack(eval_df):
     df = eval_df[eval_df["task"] == dd.MACRO_TASK].drop(columns=["task"]).reset_index(drop=True)
     parsed = [json.loads(m) for m in df["metrics"]]
-    for field in ("primary_metric", "correct_prob_per_char"):
+    for field in (
+        "primary_metric",
+        "correct_prob_per_char",
+        "margin_per_char",
+        "norm_correct_prob_per_char",
+        "total_prob_per_char",
+    ):
         df[field] = [p[field] for p in parsed]
     return df.drop(columns=["metrics"])
 

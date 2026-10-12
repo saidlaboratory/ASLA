@@ -104,9 +104,22 @@ def context() -> dict[str, Any]:
 
 
 def _with_final_mu(base: Truth, mu: pd.Series) -> Truth:
+    """New final-table truth, with the same per-(recipe, scale) change applied to the checkpoint table.
+
+    ``simulate`` draws each final observation from the matching checkpoint row, so a change made to the final
+    table alone would move the truth but not the data.
+    """
+
     final = base.final.copy()
+    delta = pd.Series(
+        mu.to_numpy() - final["mu"].to_numpy(), index=pd.MultiIndex.from_frame(final[["intervention", "scale_label"]])
+    )
+    delta = delta.groupby(level=[0, 1]).mean()
     final["mu"] = mu.to_numpy()
-    return replace(base, final=final)
+    ckpt = base.ckpt.copy()
+    keys = pd.MultiIndex.from_frame(ckpt[["intervention", "scale_label"]])
+    ckpt["mu"] = ckpt["mu"].to_numpy() + delta.reindex(keys).fillna(0.0).to_numpy()
+    return replace(base, final=final, ckpt=ckpt)
 
 
 def perturbed_base(condition: str) -> Truth:
@@ -224,6 +237,13 @@ def main() -> None:
     out: dict[str, Any] = {
         "procedure": "projection vs single-scale, C4, fit 300M, target 530M; adopted critical values",
         "critical_values": {"random_u": K_RANDOM, "fixed_bootstrap": K_FIXED},
+        "rerun_note": (
+            "The first run of misspec_0_5, misspec_1_5 and spread_2x was invalid: the perturbation changed the "
+            "final-table truth but not the checkpoint table that simulate draws observations from, so theta moved "
+            "while the data did not (misspec_0_5 fixed coverage read 0.11 with the estimate unchanged). Caught by "
+            "checking that the estimate tracks theta; fixed so the same change reaches both tables (tested), and those "
+            "three conditions rerun. Invalid rows kept in data/cache/calibration_misspecified_invalid_first_run.jsonl."
+        ),
         "conditions": {},
     }
     for condition in CONDITIONS:
