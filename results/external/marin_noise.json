@@ -1,0 +1,731 @@
+{
+  "preregistration": "PREDICTIONS_TASK_MARIN_NOISE.md",
+  "task_1a_replicates": {
+    "found": false,
+    "searched": [
+      "speedrun runs.json (118 records): no prefix-and-size repeats",
+      "Delphi public tables: seed replicates only at 1e21 and 1e22 (3.4B and 9.7B parameters)",
+      "marin, marin-experiments, marin-logbooks repositories: no seed-sweep experiments",
+      "W&B: not accessible (no API key on this machine)"
+    ],
+    "speedrun_repeats": {}
+  },
+  "task_1b_empirical_bound": {
+    "two_parameter": {
+      "sigma_rel": 0.013590422048154386,
+      "df": 42
+    },
+    "three_parameter": {
+      "sigma_rel": 0.004283575224018509,
+      "df": 21,
+      "failed": []
+    },
+    "note": "upper bound on seed noise: the residual scatter includes lack of fit",
+    "borrowed": {
+      "datadecide_c4_1B": 0.000511266156200176,
+      "delphi_1e+21": 0.0004399989046088219,
+      "delphi_1e+22": 0.0007518208202287208,
+      "empirical_two_parameter": 0.013590422048154386,
+      "empirical_three_parameter": 0.004283575224018509
+    }
+  },
+  "task_1c_both_rung": {
+    "marin_520m_to_1_2b": {
+      "datadecide_c4_1B": {
+        "determined_at_both": 168,
+        "genuine_reorderings": 33,
+        "rate_among_both_determined": 0.19642857142857142,
+        "rate_among_all_pairs": 0.15714285714285714,
+        "target_determined_reorderings": 41,
+        "of_which_determined_at_520m": 33
+      },
+      "delphi_1e+21": {
+        "determined_at_both": 173,
+        "genuine_reorderings": 34,
+        "rate_among_both_determined": 0.19653179190751446,
+        "rate_among_all_pairs": 0.1619047619047619,
+        "target_determined_reorderings": 41,
+        "of_which_determined_at_520m": 34
+      },
+      "delphi_1e+22": {
+        "determined_at_both": 159,
+        "genuine_reorderings": 31,
+        "rate_among_both_determined": 0.1949685534591195,
+        "rate_among_all_pairs": 0.14761904761904762,
+        "target_determined_reorderings": 40,
+        "of_which_determined_at_520m": 31
+      },
+      "empirical_two_parameter": {
+        "determined_at_both": 0,
+        "genuine_reorderings": 0,
+        "rate_among_both_determined": null,
+        "rate_among_all_pairs": 0.0,
+        "target_determined_reorderings": 0,
+        "of_which_determined_at_520m": 0
+      },
+      "empirical_three_parameter": {
+        "determined_at_both": 38,
+        "genuine_reorderings": 0,
+        "rate_among_both_determined": 0.0,
+        "rate_among_all_pairs": 0.0,
+        "target_determined_reorderings": 5,
+        "of_which_determined_at_520m": 0
+      }
+    },
+    "datadecide_c4": {
+      "300M->1B": {
+        "determined_at_both": 289,
+        "genuine_reorderings": 0,
+        "rate_among_both_determined": 0.0,
+        "rate_among_all_pairs": 0.0
+      },
+      "530M->1B": {
+        "determined_at_both": 293,
+        "genuine_reorderings": 0,
+        "rate_among_both_determined": 0.0,
+        "rate_among_all_pairs": 0.0
+      }
+    }
+  },
+  "task_1d_sign_pattern": {
+    "marin": {
+      "observed_distribution": {
+        "0": 0.6476190476190476,
+        "1": 0.1761904761904762,
+        "2": 0.15714285714285714,
+        "3": 0.01904761904761905
+      },
+      "observed_mean_changes": 0.5476190476190477,
+      "observed_share_two_or_more": 0.1761904761904762,
+      "single_change_pairs": 37,
+      "single_change_monotone_gap": 13,
+      "null": {
+        "sigma_rel": 0.013590422048154386,
+        "smooth_fit_changes_without_noise": {
+          "0": 0.6952380952380952,
+          "1": 0.20476190476190476,
+          "2": 0.1,
+          "3": 0.0
+        },
+        "mean_changes_95": [
+          0.9952380952380953,
+          1.561904761904762
+        ],
+        "share_two_or_more_95": [
+          0.2761904761904762,
+          0.5666666666666667
+        ],
+        "mean_distribution": {
+          "0": 0.23753333333333335,
+          "1": 0.3447119047619048,
+          "2": 0.3258404761904762,
+          "3": 0.09191428571428571
+        }
+      },
+      "observed_inside_null_band": false
+    },
+    "marin_exploratory_null_at_three_parameter_bound": {
+      "label": "exploratory, not pre-registered: the same null at the tighter three-parameter bound",
+      "observed_distribution": {
+        "0": 0.6476190476190476,
+        "1": 0.1761904761904762,
+        "2": 0.15714285714285714,
+        "3": 0.01904761904761905
+      },
+      "observed_mean_changes": 0.5476190476190477,
+      "observed_share_two_or_more": 0.1761904761904762,
+      "single_change_pairs": 37,
+      "single_change_monotone_gap": 13,
+      "null": {
+        "sigma_rel": 0.004283575224018509,
+        "smooth_fit_changes_without_noise": {
+          "0": 0.6952380952380952,
+          "1": 0.20476190476190476,
+          "2": 0.1,
+          "3": 0.0
+        },
+        "mean_changes_95": [
+          0.5761904761904761,
+          0.9285714285714286
+        ],
+        "share_two_or_more_95": [
+          0.14285714285714285,
+          0.3142857142857143
+        ],
+        "mean_distribution": {
+          "0": 0.5214404761904762,
+          "1": 0.25675714285714285,
+          "2": 0.17968809523809523,
+          "3": 0.042114285714285715
+        }
+      },
+      "observed_inside_null_band": false
+    },
+    "datadecide_c4": {
+      "rungs": [
+        "150M",
+        "300M",
+        "530M",
+        "1B"
+      ],
+      "distribution": {
+        "0": 0.98,
+        "1": 0.006666666666666667,
+        "2": 0.01,
+        "3": 0.0033333333333333335
+      },
+      "mean_changes": 0.03666666666666667
+    }
+  },
+  "task_2": {
+    "reference": "least-squares optimum (Python, converged in all 21)",
+    "shift_decomposition": {
+      "common_shift_bpb": 0.02075022383408947,
+      "median_common_over_gap": 29.584195482117362,
+      "median_differential_over_gap": 8.71749742468972,
+      "max_differential_over_gap": 183.4306689660192,
+      "submissions_with_differential_over_gap_above_1": 17,
+      "common_explains_few_order_changes": false
+    },
+    "changed_pairs": {
+      "count": 11,
+      "pairs": [
+        [
+          "adamc_llama_scaling",
+          "hackable_transformer_attn_gate/lr_x1",
+          0.0016065709246864124,
+          -0.0027276774290050376
+        ],
+        [
+          "adamc_llama_scaling",
+          "muon_llama_scaling",
+          -0.0009407504404567169,
+          0.0013566262257952433
+        ],
+        [
+          "adamh_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x4",
+          -0.005577717330605414,
+          3.271329333920381e-05
+        ],
+        [
+          "adamw_llama_scaling",
+          "parallel_llama",
+          0.0021441671515904925,
+          -0.007134039278283266
+        ],
+        [
+          "c-adamc_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x4",
+          -0.0019316816212608945,
+          0.013153874193847503
+        ],
+        [
+          "cautious_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x4",
+          -0.0026330771973762657,
+          0.010383733872144196
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x1",
+          "muon_llama_scaling",
+          -0.0025473213651431292,
+          0.004084303654800281
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x1",
+          "muon_qwen3_scaling",
+          -0.0025676104373162367,
+          0.0025182004769720434
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x4",
+          -0.004094433604607817,
+          0.005083357976911729
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5",
+          "muonremez_qwen3_scaling",
+          -0.0055808997441227914,
+          0.0038740463384161483
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x4",
+          -0.0028462565855713606,
+          0.007159628880434865
+        ]
+      ]
+    },
+    "top3_as_implemented": [
+      "muonh_qwen3_scaling",
+      "hackable_transformer_attn_gate/lr_x2_5",
+      "adamh_llama_scaling"
+    ],
+    "top3_least_squares_optimum": [
+      "muonh_qwen3_scaling",
+      "hackable_transformer_attn_gate/lr_x2_5",
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+    ],
+    "initialisation_range": {
+      "settings": [
+        {
+          "c0_fraction": 0.0,
+          "b0_factor": 0.5,
+          "cap": 200,
+          "top1": "muonh_qwen3_scaling",
+          "top3": [
+            "muonh_qwen3_scaling",
+            "cautious_llama_scaling",
+            "c-adamc_llama_scaling"
+          ]
+        },
+        {
+          "c0_fraction": 0.0,
+          "b0_factor": 0.5,
+          "cap": 100000,
+          "top1": "muonh_qwen3_scaling",
+          "top3": [
+            "muonh_qwen3_scaling",
+            "hackable_transformer_attn_gate/lr_x2_5",
+            "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+          ]
+        },
+        {
+          "c0_fraction": 0.0,
+          "b0_factor": 1.0,
+          "cap": 200,
+          "top1": "muonh_qwen3_scaling",
+          "top3": [
+            "muonh_qwen3_scaling",
+            "cautious_llama_scaling",
+            "c-adamc_llama_scaling"
+          ]
+        },
+        {
+          "c0_fraction": 0.0,
+          "b0_factor": 1.0,
+          "cap": 100000,
+          "top1": "cautious_llama_scaling",
+          "top3": [
+            "cautious_llama_scaling",
+            "adamh_llama_scaling",
+            "c-adamc_llama_scaling"
+          ]
+        },
+        {
+          "c0_fraction": 0.0,
+          "b0_factor": 2.0,
+          "cap": 200,
+          "top1": "parallel_llama",
+          "top3": [
+            "parallel_llama",
+            "hackable_transformer_attn_sink/attnsink/splash/default_x0.5",
+            "muonremez_qwen3_scaling"
+          ]
+        },
+        {
+          "c0_fraction": 0.0,
+          "b0_factor": 2.0,
+          "cap": 100000,
+          "top1": "muonh_qwen3_scaling",
+          "top3": [
+            "muonh_qwen3_scaling",
+            "hackable_transformer_attn_gate/lr_x2_5",
+            "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+          ]
+        },
+        {
+          "c0_fraction": 0.25,
+          "b0_factor": 0.5,
+          "cap": 200,
+          "top1": "muonh_qwen3_scaling",
+          "top3": [
+            "muonh_qwen3_scaling",
+            "hackable_transformer_attn_gate/lr_x2_5",
+            "adamh_llama_scaling"
+          ]
+        },
+        {
+          "c0_fraction": 0.25,
+          "b0_factor": 0.5,
+          "cap": 100000,
+          "top1": "muonh_qwen3_scaling",
+          "top3": [
+            "muonh_qwen3_scaling",
+            "hackable_transformer_attn_gate/lr_x2_5",
+            "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+          ]
+        },
+        {
+          "c0_fraction": 0.25,
+          "b0_factor": 1.0,
+          "cap": 200,
+          "top1": "muonh_qwen3_scaling",
+          "top3": [
+            "muonh_qwen3_scaling",
+            "hackable_transformer_attn_gate/lr_x2_5",
+            "adamh_llama_scaling"
+          ]
+        },
+        {
+          "c0_fraction": 0.25,
+          "b0_factor": 1.0,
+          "cap": 100000,
+          "top1": "muonh_qwen3_scaling",
+          "top3": [
+            "muonh_qwen3_scaling",
+            "hackable_transformer_attn_gate/lr_x2_5",
+            "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+          ]
+        },
+        {
+          "c0_fraction": 0.25,
+          "b0_factor": 2.0,
+          "cap": 200,
+          "top1": "muonh_qwen3_scaling",
+          "top3": [
+            "muonh_qwen3_scaling",
+            "hackable_transformer_attn_gate/lr_x2_5",
+            "adamh_llama_scaling"
+          ]
+        },
+        {
+          "c0_fraction": 0.25,
+          "b0_factor": 2.0,
+          "cap": 100000,
+          "top1": "muonh_qwen3_scaling",
+          "top3": [
+            "muonh_qwen3_scaling",
+            "hackable_transformer_attn_gate/lr_x2_5",
+            "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+          ]
+        },
+        {
+          "c0_fraction": 0.5,
+          "b0_factor": 0.5,
+          "cap": 200,
+          "top1": "muonh_qwen3_scaling",
+          "top3": [
+            "muonh_qwen3_scaling",
+            "hackable_transformer_attn_gate/lr_x2_5",
+            "adamh_llama_scaling"
+          ]
+        },
+        {
+          "c0_fraction": 0.5,
+          "b0_factor": 0.5,
+          "cap": 100000,
+          "top1": "muonh_qwen3_scaling",
+          "top3": [
+            "muonh_qwen3_scaling",
+            "hackable_transformer_attn_gate/lr_x2_5",
+            "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+          ]
+        },
+        {
+          "c0_fraction": 0.5,
+          "b0_factor": 1.0,
+          "cap": 200,
+          "top1": "muonh_qwen3_scaling",
+          "top3": [
+            "muonh_qwen3_scaling",
+            "hackable_transformer_attn_gate/lr_x2_5",
+            "adamh_llama_scaling"
+          ]
+        },
+        {
+          "c0_fraction": 0.5,
+          "b0_factor": 1.0,
+          "cap": 100000,
+          "top1": "muonh_qwen3_scaling",
+          "top3": [
+            "muonh_qwen3_scaling",
+            "hackable_transformer_attn_gate/lr_x2_5",
+            "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+          ]
+        },
+        {
+          "c0_fraction": 0.5,
+          "b0_factor": 2.0,
+          "cap": 200,
+          "top1": "muonh_qwen3_scaling",
+          "top3": [
+            "muonh_qwen3_scaling",
+            "hackable_transformer_attn_gate/lr_x2_5",
+            "adamh_llama_scaling"
+          ]
+        },
+        {
+          "c0_fraction": 0.5,
+          "b0_factor": 2.0,
+          "cap": 100000,
+          "top1": "muonh_qwen3_scaling",
+          "top3": [
+            "muonh_qwen3_scaling",
+            "hackable_transformer_attn_gate/lr_x2_5",
+            "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+          ]
+        },
+        {
+          "c0_fraction": 0.7,
+          "b0_factor": 0.5,
+          "cap": 200,
+          "top1": "muonh_qwen3_scaling",
+          "top3": [
+            "muonh_qwen3_scaling",
+            "hackable_transformer_attn_gate/lr_x2_5",
+            "adamh_llama_scaling"
+          ]
+        },
+        {
+          "c0_fraction": 0.7,
+          "b0_factor": 0.5,
+          "cap": 100000,
+          "top1": "muonh_qwen3_scaling",
+          "top3": [
+            "muonh_qwen3_scaling",
+            "hackable_transformer_attn_gate/lr_x2_5",
+            "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+          ]
+        },
+        {
+          "c0_fraction": 0.7,
+          "b0_factor": 1.0,
+          "cap": 200,
+          "top1": "muonh_qwen3_scaling",
+          "top3": [
+            "muonh_qwen3_scaling",
+            "hackable_transformer_attn_gate/lr_x2_5",
+            "adamh_llama_scaling"
+          ]
+        },
+        {
+          "c0_fraction": 0.7,
+          "b0_factor": 1.0,
+          "cap": 100000,
+          "top1": "muonh_qwen3_scaling",
+          "top3": [
+            "muonh_qwen3_scaling",
+            "hackable_transformer_attn_gate/lr_x2_5",
+            "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+          ]
+        },
+        {
+          "c0_fraction": 0.7,
+          "b0_factor": 2.0,
+          "cap": 200,
+          "top1": "muonh_qwen3_scaling",
+          "top3": [
+            "muonh_qwen3_scaling",
+            "hackable_transformer_attn_gate/lr_x2_5",
+            "adamh_llama_scaling"
+          ]
+        },
+        {
+          "c0_fraction": 0.7,
+          "b0_factor": 2.0,
+          "cap": 100000,
+          "top1": "muonh_qwen3_scaling",
+          "top3": [
+            "muonh_qwen3_scaling",
+            "hackable_transformer_attn_gate/lr_x2_5",
+            "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+          ]
+        },
+        {
+          "c0_fraction": 0.9,
+          "b0_factor": 0.5,
+          "cap": 200,
+          "top1": "hackable_transformer_attn_gate/lr_x2",
+          "top3": [
+            "hackable_transformer_attn_gate/lr_x2",
+            "hackable_transformer_attn_gate/lr_x1",
+            "hackable_transformer_attn_gate/lr_x2_5"
+          ]
+        },
+        {
+          "c0_fraction": 0.9,
+          "b0_factor": 0.5,
+          "cap": 100000,
+          "top1": "hackable_transformer_attn_gate/lr_x2",
+          "top3": [
+            "hackable_transformer_attn_gate/lr_x2",
+            "hackable_transformer_attn_gate/lr_x1",
+            "hackable_transformer_attn_gate/lr_x2_5"
+          ]
+        },
+        {
+          "c0_fraction": 0.9,
+          "b0_factor": 1.0,
+          "cap": 200,
+          "top1": "hackable_transformer_attn_gate/lr_x2",
+          "top3": [
+            "hackable_transformer_attn_gate/lr_x2",
+            "hackable_transformer_attn_gate/lr_x1",
+            "hackable_transformer_attn_gate/lr_x2_5"
+          ]
+        },
+        {
+          "c0_fraction": 0.9,
+          "b0_factor": 1.0,
+          "cap": 100000,
+          "top1": "hackable_transformer_attn_gate/lr_x2",
+          "top3": [
+            "hackable_transformer_attn_gate/lr_x2",
+            "hackable_transformer_attn_gate/lr_x1",
+            "hackable_transformer_attn_gate/lr_x2_5"
+          ]
+        },
+        {
+          "c0_fraction": 0.9,
+          "b0_factor": 2.0,
+          "cap": 200,
+          "top1": "hackable_transformer_attn_gate/lr_x2",
+          "top3": [
+            "hackable_transformer_attn_gate/lr_x2",
+            "hackable_transformer_attn_gate/lr_x2_5",
+            "hackable_transformer_attn_gate/lr_x1"
+          ]
+        },
+        {
+          "c0_fraction": 0.9,
+          "b0_factor": 2.0,
+          "cap": 100000,
+          "top1": "hackable_transformer_attn_gate/lr_x2",
+          "top3": [
+            "hackable_transformer_attn_gate/lr_x2",
+            "hackable_transformer_attn_gate/lr_x2_5",
+            "hackable_transformer_attn_gate/lr_x1"
+          ]
+        },
+        {
+          "c0_fraction": 0.99,
+          "b0_factor": 0.5,
+          "cap": 200,
+          "top1": "hackable_transformer_attn_gate/lr_x2",
+          "top3": [
+            "hackable_transformer_attn_gate/lr_x2",
+            "hackable_transformer_attn_gate/lr_x2_5",
+            "hackable_transformer_attn_gate/lr_x1"
+          ]
+        },
+        {
+          "c0_fraction": 0.99,
+          "b0_factor": 0.5,
+          "cap": 100000,
+          "top1": "hackable_transformer_attn_gate/lr_x2",
+          "top3": [
+            "hackable_transformer_attn_gate/lr_x2",
+            "hackable_transformer_attn_gate/lr_x2_5",
+            "hackable_transformer_attn_gate/lr_x1"
+          ]
+        },
+        {
+          "c0_fraction": 0.99,
+          "b0_factor": 1.0,
+          "cap": 200,
+          "top1": "hackable_transformer_attn_gate/lr_x2",
+          "top3": [
+            "hackable_transformer_attn_gate/lr_x2",
+            "hackable_transformer_attn_gate/lr_x2_5",
+            "hackable_transformer_attn_gate/lr_x1"
+          ]
+        },
+        {
+          "c0_fraction": 0.99,
+          "b0_factor": 1.0,
+          "cap": 100000,
+          "top1": "hackable_transformer_attn_gate/lr_x2",
+          "top3": [
+            "hackable_transformer_attn_gate/lr_x2",
+            "hackable_transformer_attn_gate/lr_x2_5",
+            "hackable_transformer_attn_gate/lr_x1"
+          ]
+        },
+        {
+          "c0_fraction": 0.99,
+          "b0_factor": 2.0,
+          "cap": 200,
+          "top1": "hackable_transformer_attn_gate/lr_x2",
+          "top3": [
+            "hackable_transformer_attn_gate/lr_x2",
+            "hackable_transformer_attn_gate/lr_x2_5",
+            "hackable_transformer_attn_gate/lr_x1"
+          ]
+        },
+        {
+          "c0_fraction": 0.99,
+          "b0_factor": 2.0,
+          "cap": 100000,
+          "top1": "hackable_transformer_attn_gate/lr_x2",
+          "top3": [
+            "hackable_transformer_attn_gate/lr_x2",
+            "hackable_transformer_attn_gate/lr_x2_5",
+            "hackable_transformer_attn_gate/lr_x1"
+          ]
+        }
+      ],
+      "by_cap": {
+        "200": {
+          "settings": 18,
+          "top1_differs_from_default_share": 0.3888888888888889,
+          "top3_set_differs_from_default_share": 0.5,
+          "distinct_top1": [
+            "hackable_transformer_attn_gate/lr_x2",
+            "muonh_qwen3_scaling",
+            "parallel_llama"
+          ]
+        },
+        "100000": {
+          "settings": 18,
+          "top1_differs_from_default_share": 0.3888888888888889,
+          "top3_set_differs_from_default_share": 1.0,
+          "distinct_top1": [
+            "cautious_llama_scaling",
+            "hackable_transformer_attn_gate/lr_x2",
+            "muonh_qwen3_scaling"
+          ]
+        }
+      }
+    },
+    "forms": {
+      "kendall_tau": {
+        "as_implemented|least_squares_optimum": 0.894736842105263,
+        "as_implemented|two_parameter_loglog": 0.6937799043062199,
+        "as_implemented|shared_exponent": 0.4832535885167464,
+        "least_squares_optimum|two_parameter_loglog": 0.6650717703349283,
+        "least_squares_optimum|shared_exponent": 0.43540669856459324,
+        "two_parameter_loglog|shared_exponent": 0.3684210526315789
+      },
+      "top3": {
+        "as_implemented": [
+          "muonh_qwen3_scaling",
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "adamh_llama_scaling"
+        ],
+        "least_squares_optimum": [
+          "muonh_qwen3_scaling",
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+        ],
+        "two_parameter_loglog": [
+          "muonh_qwen3_scaling",
+          "cautious_llama_scaling",
+          "c-adamc_llama_scaling"
+        ],
+        "shared_exponent": [
+          "muonh_qwen3_scaling",
+          "hackable_transformer_attn_gate/lr_x1",
+          "muon_qwen3_scaling"
+        ]
+      },
+      "top3_stable_across_forms": false
+    }
+  },
+  "predictions": {
+    "PN1_most_reorderings_not_determined_at_both_rungs": true,
+    "PN2_sign_changes_match_noise_null": false
+  }
+}

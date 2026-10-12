@@ -107,3 +107,17 @@ def test_reorder_rate_counts_only_determined_pairs() -> None:
     out = ref.reorder(fit, target, se)
     assert out["determined"] == 2 and out["reordered"] == 1 and out["rate"] == 0.5
     assert ref.reorder(fit, target, se, m=100.0)["determined"] == 0
+
+
+def test_sign_changes_and_both_rung_reordering() -> None:
+    mn = importlib.import_module("scripts.run_marin_noise")
+    values = np.array([[1.0, 2.0, 1.0, 2.0], [1.5, 1.5, 1.5, 1.5], [3.0, 3.0, 3.0, 3.0]])
+    changes = mn.sign_changes(values)  # pairs (0,1), (0,2), (1,2)
+    assert changes.tolist() == [3, 0, 0]
+    fit = {"a": 1.0, "b": 2.0}
+    target = {"a": 2.0, "b": 1.0}
+    se = {("a", "b"): 0.1}
+    res = mn.both_rung(mn.determined(fit, se), mn.determined(target, se))
+    assert res["genuine_reorderings"] == 1 and res["determined_at_both"] == 1
+    loose = {("a", "b"): 10.0}
+    assert mn.both_rung(mn.determined(fit, loose), mn.determined(target, se))["genuine_reorderings"] == 0
