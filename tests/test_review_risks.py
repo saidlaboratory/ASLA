@@ -77,3 +77,23 @@ def test_truth_perturbation_reaches_the_simulated_observations() -> None:
     shift_truth = (moved.final["mu"] - base.final["mu"]).to_numpy()
     assert np.allclose(shift_obs, shift_truth, atol=1e-9)
     assert np.abs(shift_truth).max() > 0
+
+
+def test_marin_fit_helpers() -> None:
+    rig = importlib.import_module("scripts.run_marin_rigour")
+    pts = [(1e18, 2.0 * 1e18**-0.1), (1e19, 2.0 * 1e19**-0.1), (1e20, 2.0 * 1e20**-0.1)]
+    assert np.isclose(rig.loglog(pts, 1e21), 2.0 * 1e21**-0.1)
+    series = {"a": pts, "b": [(x, 1.1 * y) for x, y in pts]}
+    out = rig.shared_exponent(series, {"a": 1e21, "b": 1e21})
+    assert np.isclose(out["a"], 2.0 * 1e21**-0.1) and np.isclose(out["b"], 2.2 * 1e21**-0.1)
+    truth = rig.gaps({"a": 1.0, "b": 2.0, "c": 3.0})
+    assert rig.wrong(rig.gaps({"a": 2.0, "b": 1.0, "c": 3.0}), truth) == 1
+    assert rig.converged_sse([(1e18, 1.3), (3e18, 1.2), (1e19, 1.12), (3e19, 1.07)]) < 1e-3
+
+
+def test_noise_profile_summary() -> None:
+    import pandas as pd
+
+    npf = importlib.import_module("scripts.run_noise_profiles")
+    out = npf.summarise(pd.Series({"a": 1.0, "b": np.e}), pd.Series({"a": 1.0, "b": 10.0}))
+    assert np.isclose(out["log_range"], 1.0) and np.isclose(out["log_sd_slope_per_decade"], 1.0)

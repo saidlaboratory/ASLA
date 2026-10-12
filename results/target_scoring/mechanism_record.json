@@ -1,6 +1,31 @@
 {
   "mechanism": {
     "statement": "Reassigning C4's recipe-specific residuals among recipes cannot flip C4 at any alignment or design; OLMES's residuals can. The driver is the shape of the recipe-specific residuals, which no tested summary captures and which cannot be measured without the target.",
+    "primary_evidence": {
+      "noiseless_counts_on_real_curves": {
+        "projection_wrong_pairs": 3888,
+        "single_scale_wrong_pairs": 744,
+        "designs": 55,
+        "designs_where_projection_beats_single": 0,
+        "source": "mechanism_robustness.json: fixed-candidate real shrunk C4 curves, no noise"
+      },
+      "reading": "with the noise removed, projection is wrong on more pairs than single-scale at every one of the 55 designs; this is the primary mechanism evidence"
+    },
+    "attribution_depends_on_base_form": {
+      "power_law_base": {
+        "variance": 0.6138166480903419,
+        "common_mode": -0.09211551015903481,
+        "recipe_specific": 0.44159495563262546,
+        "interaction": 0.03670390643606743
+      },
+      "chinchilla_base": {
+        "variance": 0.891206548035647,
+        "common_mode": -0.017306930524618694,
+        "recipe_specific": 0.15269826633343414,
+        "interaction": -0.026597883844462496
+      },
+      "reading": "the variance / misspecification split of the lever-arm slope depends on which functional form counts as correctly specified; a Chinchilla-form truth is itself misspecified relative to the compute power law projection fits, so its arm A no longer isolates variance"
+    },
     "support": {
       "c4_reassignment_sweep": {
         "points": 27,

@@ -1,0 +1,592 @@
+{
+  "preregistration": "PREDICTIONS_TASK_MARIN.md",
+  "members": [
+    "adamc_llama_scaling",
+    "adamh_llama_scaling",
+    "adamw_llama_scaling",
+    "c-adamc_llama_scaling",
+    "cautious_llama_scaling",
+    "hackable_transformer_attn_gate/lr_x1",
+    "hackable_transformer_attn_gate/lr_x2",
+    "hackable_transformer_attn_gate/lr_x2_5",
+    "hackable_transformer_attn_sink/attnsink/jax",
+    "hackable_transformer_attn_sink/attnsink/splash",
+    "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+    "hackable_transformer_attn_sink/attnsink/splash/default_x0.25",
+    "hackable_transformer_attn_sink/attnsink/splash/default_x0.5",
+    "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+    "hackable_transformer_attn_sink/attnsink/splash/default_x4",
+    "muon_llama_scaling",
+    "muon_qwen3_scaling",
+    "muonh_qwen3_scaling",
+    "muonremez_qwen3_scaling",
+    "parallel_llama",
+    "prism_berkeley_qwen3_scaling"
+  ],
+  "task_1": {
+    "procedure": {
+      "source": "marin-community/speedrun@31fe8028 website/src/utils/regression.ts, hooks/useSpeedrunData.ts, App.tsx",
+      "grouping": "run-name prefix (getScalingGroupName)",
+      "x_axis": "model_flops (App.tsx default)",
+      "y": "eval_paloma_c4_en_bpb",
+      "form": "L = a x^(-b) + c, all of a submission's runs, unweighted",
+      "fit": "Levenberg-Marquardt (ml-levenberg-marquardt ^5.0.0, resolved 5.1.0): damping 1.5, gradient difference 1e-6, 200 iterations, error tolerance 1e-8; a in [1e-10, 1e30], b in [1e-6, 2], c in [0, 0.999 min y]; c0 = min(0.7, 0.7 min y), a0 and b0 from a log-log regression of y - c0",
+      "target": "forecast at x = 1e22 model FLOPs, used to rank submissions",
+      "qualification": "a submission ranks only if some run exceeds 3e20 training hardware FLOPs",
+      "published_values": "computed in the browser from runs.json; nothing stored elsewhere, so 'published' means this code's output"
+    },
+    "regression_ts_sha256": "adae8f5013d776b89ccc2d79dfc774924f626c6ba46cb5ba98c63f055d5f4b19",
+    "runs_json_sha256": "957febaba0917624bedeab610ac27ede629e638080baa1629bcae28f0124d2cd",
+    "forecast_1e22_their_code": {
+      "adamc_llama_scaling": 0.835122758448041,
+      "adamh_llama_scaling": 0.8275526995626611,
+      "adamw_llama_scaling": 0.8409630334796213,
+      "c-adamc_llama_scaling": 0.8311987352720056,
+      "cautious_llama_scaling": 0.8304973396958902,
+      "hackable_transformer_attn_gate/lr_x1": 0.8335161875233545,
+      "hackable_transformer_attn_gate/lr_x2": 0.8290359832886587,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.827101657776762,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.8374153923585237,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.8372098297571695,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.8372098297571695,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.864332547054535,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.8476928312297491,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.8302841603076951,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.8331304168932665,
+      "muon_llama_scaling": 0.8360635088884977,
+      "muon_qwen3_scaling": 0.8360837979606708,
+      "muonh_qwen3_scaling": 0.8246807708595969,
+      "muonremez_qwen3_scaling": 0.8532737309738719,
+      "parallel_llama": 0.8388188663280308,
+      "prism_berkeley_qwen3_scaling": 0.8615690624965602
+    },
+    "forecast_1e22_python_reimplementation": {
+      "adamc_llama_scaling": 0.8544487208669694,
+      "adamh_llama_scaling": 0.8373686644828157,
+      "adamw_llama_scaling": 0.8678057913580383,
+      "c-adamc_llama_scaling": 0.850489825383324,
+      "cautious_llama_scaling": 0.8477196850616207,
+      "hackable_transformer_attn_gate/lr_x1": 0.8571763982959745,
+      "hackable_transformer_attn_gate/lr_x2": 0.8424193091663882,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.8345892200055288,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.8639526813839666,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.8636659433978251,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.8636659433978251,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.9091734404059397,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.8809407573085426,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.8444955800699113,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.8373359511894765,
+      "muon_llama_scaling": 0.8530920946411742,
+      "muon_qwen3_scaling": 0.8546581978190024,
+      "muonh_qwen3_scaling": 0.8320699616423465,
+      "muonremez_qwen3_scaling": 0.8770667109701265,
+      "parallel_llama": 0.8749398306363215,
+      "prism_berkeley_qwen3_scaling": 0.8814331329450926
+    },
+    "max_abs_difference": 0.04484089335140473,
+    "rank_spearman_their_vs_python": 0.9688109161793371,
+    "convergence": {
+      "sse_theirs_over_converged": {
+        "adamc_llama_scaling": 457.45983989323133,
+        "adamh_llama_scaling": 3.238774374870472,
+        "adamw_llama_scaling": 185.90855505466814,
+        "c-adamc_llama_scaling": 595.4626917719795,
+        "cautious_llama_scaling": 17.96905560176893,
+        "hackable_transformer_attn_gate/lr_x1": 274.37034646528315,
+        "hackable_transformer_attn_gate/lr_x2": 1.3698416180374355,
+        "hackable_transformer_attn_gate/lr_x2_5": 1.0699533277490472,
+        "hackable_transformer_attn_sink/attnsink/jax": 71.56002788246381,
+        "hackable_transformer_attn_sink/attnsink/splash": 112.54429563398142,
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr": 112.54429563398142,
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 3.144821504905719,
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 8.64532731605126,
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2": 2.0257723803437893,
+        "hackable_transformer_attn_sink/attnsink/splash/default_x4": 1.00818080395096,
+        "muon_llama_scaling": 4.979724686245224,
+        "muon_qwen3_scaling": 7.51066175274426,
+        "muonh_qwen3_scaling": 4.7737756324918,
+        "muonremez_qwen3_scaling": 8.575945769605628,
+        "parallel_llama": 20.972187191055085,
+        "prism_berkeley_qwen3_scaling": 1.7576932968438472
+      },
+      "submissions_more_than_1pct_above_converged": 20,
+      "median_ratio": 8.575945769605628,
+      "reading": "the leaderboard's LM fit (200 iterations, damping 1.5) stops short of the least-squares optimum; its 1e22 forecasts come from unconverged fits. No claim is made about error at 1e22."
+    },
+    "qualified": {
+      "adamc_llama_scaling": true,
+      "adamh_llama_scaling": true,
+      "adamw_llama_scaling": true,
+      "c-adamc_llama_scaling": true,
+      "cautious_llama_scaling": true,
+      "hackable_transformer_attn_gate/lr_x1": true,
+      "hackable_transformer_attn_gate/lr_x2": true,
+      "hackable_transformer_attn_gate/lr_x2_5": true,
+      "hackable_transformer_attn_sink/attnsink/jax": true,
+      "hackable_transformer_attn_sink/attnsink/splash": true,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": true,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": true,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": true,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": true,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": true,
+      "muon_llama_scaling": true,
+      "muon_qwen3_scaling": true,
+      "muonh_qwen3_scaling": true,
+      "muonremez_qwen3_scaling": true,
+      "parallel_llama": true,
+      "prism_berkeley_qwen3_scaling": true
+    },
+    "their_ranking": [
+      "muonh_qwen3_scaling",
+      "hackable_transformer_attn_gate/lr_x2_5",
+      "adamh_llama_scaling",
+      "hackable_transformer_attn_gate/lr_x2",
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+      "cautious_llama_scaling",
+      "c-adamc_llama_scaling",
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4",
+      "hackable_transformer_attn_gate/lr_x1",
+      "adamc_llama_scaling",
+      "muon_llama_scaling",
+      "muon_qwen3_scaling",
+      "hackable_transformer_attn_sink/attnsink/splash",
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+      "hackable_transformer_attn_sink/attnsink/jax",
+      "parallel_llama",
+      "adamw_llama_scaling",
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5",
+      "muonremez_qwen3_scaling",
+      "prism_berkeley_qwen3_scaling",
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+    ]
+  },
+  "task_2": {
+    "pairs": 210,
+    "single_scale_wrong": 46,
+    "forms": {
+      "i_marin": {
+        "projection_wrong": 57,
+        "failed_fits": [],
+        "introduced": 14,
+        "corrected": 3,
+        "shared": 43,
+        "both_correct": 149
+      },
+      "iv_exact_three": {
+        "projection_wrong": 95,
+        "failed_fits": [],
+        "introduced": 50,
+        "corrected": 1,
+        "shared": 45,
+        "both_correct": 113
+      },
+      "ii_loglog": {
+        "projection_wrong": 64,
+        "failed_fits": [],
+        "introduced": 21,
+        "corrected": 3,
+        "shared": 43,
+        "both_correct": 142
+      },
+      "iii_shared_exponent": {
+        "projection_wrong": 43,
+        "failed_fits": [],
+        "introduced": 15,
+        "corrected": 18,
+        "shared": 28,
+        "both_correct": 148
+      }
+    }
+  },
+  "task_3": {
+    "designs": {
+      "{130m,300m}->520m": {
+        "lever_arm": 4.888651617803885,
+        "single_wrong": 48,
+        "excess_pp": {
+          "ii_loglog": -3.3333333333333335,
+          "iii_shared_exponent": -2.857142857142857
+        }
+      },
+      "{130m,300m}->1_2b": {
+        "lever_arm": 24.76476875624931,
+        "single_wrong": 52,
+        "excess_pp": {
+          "ii_loglog": -3.3333333333333335,
+          "iii_shared_exponent": -3.3333333333333335
+        }
+      },
+      "{300m,520m}->1_2b": {
+        "lever_arm": 5.065766737408529,
+        "single_wrong": 46,
+        "excess_pp": {
+          "ii_loglog": 15.714285714285714,
+          "iii_shared_exponent": -3.3333333333333335
+        }
+      },
+      "{130m,300m,520m}->1_2b": {
+        "lever_arm": 5.065766737408529,
+        "single_wrong": 46,
+        "excess_pp": {
+          "ii_loglog": 8.571428571428571,
+          "iii_shared_exponent": -1.4285714285714286
+        }
+      }
+    },
+    "spearman_excess_vs_log_lever": {
+      "ii_loglog": 0.0,
+      "iii_shared_exponent": -0.5000000000000001
+    },
+    "leaderboard_extrapolation": {
+      "forecast_x": 1e+22,
+      "median_ratio_1e22_over_1_2b_model_flops": 40.46842075101213,
+      "note": "the leaderboard extrapolates to 1e22, far beyond any design here; no error at 1e22 is claimed"
+    }
+  },
+  "task_4": {
+    "repeated_runs_any_submission": {},
+    "borrowed": {
+      "datadecide_c4_1B": {
+        "cv": 0.000511266156200176,
+        "basis": "moderated per-run sd / cell mean at 1B, mean over 25 recipes"
+      },
+      "delphi_1e+21": {
+        "cv": 0.0004399989046088219,
+        "seeds": 3,
+        "losses": [
+          2.758140563964844,
+          2.760561943054199,
+          2.759509563446045
+        ],
+        "basis": "sd over seed replicates / mean, held-out loss"
+      },
+      "delphi_1e+22": {
+        "cv": 0.0007518208202287208,
+        "seeds": 3,
+        "losses": [
+          2.530787467956543,
+          2.534245729446411,
+          2.531137466430664
+        ],
+        "basis": "sd over seed replicates / mean, held-out loss"
+      }
+    },
+    "by_borrowed_sd": {
+      "datadecide_c4_1B": {
+        "z_1_96": {
+          "determined_fraction": 0.9047619047619048,
+          "single_wrong_on_undetermined": 5,
+          "single_wrong_total": 46,
+          "single_wrong_determined_only": 41,
+          "expected_errors_single": 46.607086553079775,
+          "forms": {
+            "i_marin": {
+              "wrong_determined_only": 52,
+              "expected_errors": 57.80595565479437
+            },
+            "iv_exact_three": {
+              "wrong_determined_only": 88,
+              "expected_errors": 94.43657243566454
+            },
+            "ii_loglog": {
+              "wrong_determined_only": 59,
+              "expected_errors": 64.80595565479436
+            },
+            "iii_shared_exponent": {
+              "wrong_determined_only": 39,
+              "expected_errors": 44.51669347374247
+            }
+          }
+        },
+        "bonferroni": {
+          "determined_fraction": 0.8714285714285714,
+          "single_wrong_on_undetermined": 8,
+          "single_wrong_total": 46,
+          "single_wrong_determined_only": 38,
+          "expected_errors_single": 46.607086553079775,
+          "forms": {
+            "i_marin": {
+              "wrong_determined_only": 49,
+              "expected_errors": 57.80595565479437
+            },
+            "iv_exact_three": {
+              "wrong_determined_only": 84,
+              "expected_errors": 94.43657243566454
+            },
+            "ii_loglog": {
+              "wrong_determined_only": 56,
+              "expected_errors": 64.80595565479436
+            },
+            "iii_shared_exponent": {
+              "wrong_determined_only": 34,
+              "expected_errors": 44.51669347374247
+            }
+          }
+        }
+      },
+      "delphi_1e+21": {
+        "z_1_96": {
+          "determined_fraction": 0.919047619047619,
+          "single_wrong_on_undetermined": 5,
+          "single_wrong_total": 46,
+          "single_wrong_determined_only": 41,
+          "expected_errors_single": 46.350425420504905,
+          "forms": {
+            "i_marin": {
+              "wrong_determined_only": 52,
+              "expected_errors": 57.5791090389437
+            },
+            "iv_exact_three": {
+              "wrong_determined_only": 88,
+              "expected_errors": 94.29925780877541
+            },
+            "ii_loglog": {
+              "wrong_determined_only": 59,
+              "expected_errors": 64.5791090389437
+            },
+            "iii_shared_exponent": {
+              "wrong_determined_only": 39,
+              "expected_errors": 44.25148198803131
+            }
+          }
+        },
+        "bonferroni": {
+          "determined_fraction": 0.8904761904761904,
+          "single_wrong_on_undetermined": 7,
+          "single_wrong_total": 46,
+          "single_wrong_determined_only": 39,
+          "expected_errors_single": 46.350425420504905,
+          "forms": {
+            "i_marin": {
+              "wrong_determined_only": 50,
+              "expected_errors": 57.5791090389437
+            },
+            "iv_exact_three": {
+              "wrong_determined_only": 86,
+              "expected_errors": 94.29925780877541
+            },
+            "ii_loglog": {
+              "wrong_determined_only": 57,
+              "expected_errors": 64.5791090389437
+            },
+            "iii_shared_exponent": {
+              "wrong_determined_only": 36,
+              "expected_errors": 44.25148198803131
+            }
+          }
+        }
+      },
+      "delphi_1e+22": {
+        "z_1_96": {
+          "determined_fraction": 0.8952380952380953,
+          "single_wrong_on_undetermined": 6,
+          "single_wrong_total": 46,
+          "single_wrong_determined_only": 40,
+          "expected_errors_single": 47.416798303818865,
+          "forms": {
+            "i_marin": {
+              "wrong_determined_only": 51,
+              "expected_errors": 58.554116643342155
+            },
+            "iv_exact_three": {
+              "wrong_determined_only": 87,
+              "expected_errors": 94.96008843323344
+            },
+            "ii_loglog": {
+              "wrong_determined_only": 58,
+              "expected_errors": 65.55411647096966
+            },
+            "iii_shared_exponent": {
+              "wrong_determined_only": 37,
+              "expected_errors": 45.271749394899395
+            }
+          }
+        },
+        "bonferroni": {
+          "determined_fraction": 0.819047619047619,
+          "single_wrong_on_undetermined": 12,
+          "single_wrong_total": 46,
+          "single_wrong_determined_only": 34,
+          "expected_errors_single": 47.416798303818865,
+          "forms": {
+            "i_marin": {
+              "wrong_determined_only": 45,
+              "expected_errors": 58.554116643342155
+            },
+            "iv_exact_three": {
+              "wrong_determined_only": 77,
+              "expected_errors": 94.96008843323344
+            },
+            "ii_loglog": {
+              "wrong_determined_only": 52,
+              "expected_errors": 65.55411647096966
+            },
+            "iii_shared_exponent": {
+              "wrong_determined_only": 29,
+              "expected_errors": 45.271749394899395
+            }
+          }
+        }
+      }
+    }
+  },
+  "task_5": {
+    "families": {
+      "adamc_llama_scaling": [
+        "adamc_llama_scaling"
+      ],
+      "adamh_llama_scaling": [
+        "adamh_llama_scaling"
+      ],
+      "adamw_llama_scaling": [
+        "adamw_llama_scaling"
+      ],
+      "c-adamc_llama_scaling": [
+        "c-adamc_llama_scaling"
+      ],
+      "cautious_llama_scaling": [
+        "cautious_llama_scaling"
+      ],
+      "hackable_transformer_attn_gate": [
+        "hackable_transformer_attn_gate/lr_x1",
+        "hackable_transformer_attn_gate/lr_x2",
+        "hackable_transformer_attn_gate/lr_x2_5"
+      ],
+      "hackable_transformer_attn_sink": [
+        "hackable_transformer_attn_sink/attnsink/jax",
+        "hackable_transformer_attn_sink/attnsink/splash",
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+      ],
+      "muon_llama_scaling": [
+        "muon_llama_scaling"
+      ],
+      "muon_qwen3_scaling": [
+        "muon_qwen3_scaling"
+      ],
+      "muonh_qwen3_scaling": [
+        "muonh_qwen3_scaling"
+      ],
+      "muonremez_qwen3_scaling": [
+        "muonremez_qwen3_scaling"
+      ],
+      "parallel_llama": [
+        "parallel_llama"
+      ],
+      "prism_berkeley_qwen3_scaling": [
+        "prism_berkeley_qwen3_scaling"
+      ]
+    },
+    "n_families": 13,
+    "within_family_pairs": 24,
+    "cross_family_pairs": 186,
+    "errors_within_cross": {
+      "single": [
+        7,
+        39
+      ],
+      "i_marin": [
+        8,
+        49
+      ],
+      "iv_exact_three": [
+        15,
+        80
+      ],
+      "ii_loglog": [
+        8,
+        56
+      ],
+      "iii_shared_exponent": [
+        6,
+        37
+      ]
+    },
+    "one_per_family": {
+      "combinations": 21,
+      "pairs_per_combination": 78,
+      "errors_mean_min_max": {
+        "single": [
+          10.428571428571429,
+          8,
+          16
+        ],
+        "i_marin": [
+          16.428571428571427,
+          12,
+          22
+        ],
+        "iv_exact_three": [
+          22.095238095238095,
+          14,
+          29
+        ],
+        "ii_loglog": [
+          20.0,
+          15,
+          25
+        ],
+        "iii_shared_exponent": [
+          22.428571428571427,
+          20,
+          26
+        ]
+      }
+    },
+    "singleton_family_pairs": {
+      "pairs": 55,
+      "single": 6,
+      "i_marin": 11,
+      "iv_exact_three": 10,
+      "ii_loglog": 14,
+      "iii_shared_exponent": 20
+    },
+    "exclusions": {
+      "non_finite_or_failed": [],
+      "missing_budgets": [],
+      "rising_beyond_noise": [],
+      "rule": "rise between consecutive budgets > 2 sqrt(2) sigma, sigma = largest borrowed relative SD x BPB",
+      "count": 0
+    },
+    "u_statistic_tests": {
+      "note": "no Marin-specific calibration exists; reported under the most conservative earlier calibrated U critical value (2.99, C4 random-candidate) and under 1.96",
+      "forms": {
+        "i_marin": {
+          "mean_pp": 5.238095238095238,
+          "se_pp": 2.145408302218464,
+          "abs_t": 2.4415376936309863,
+          "significant_at_1_96": true,
+          "significant_at_2_99": false
+        },
+        "iv_exact_three": {
+          "mean_pp": 23.333333333333332,
+          "se_pp": 7.882102579572884,
+          "abs_t": 2.9602930306697077,
+          "significant_at_1_96": true,
+          "significant_at_2_99": false
+        },
+        "ii_loglog": {
+          "mean_pp": 8.571428571428571,
+          "se_pp": 3.330348347211821,
+          "abs_t": 2.573733338917714,
+          "significant_at_1_96": true,
+          "significant_at_2_99": false
+        },
+        "iii_shared_exponent": {
+          "mean_pp": -1.4285714285714286,
+          "se_pp": 6.576850523148218,
+          "abs_t": 0.2172120870838338,
+          "significant_at_1_96": false,
+          "significant_at_2_99": false
+        }
+      }
+    }
+  },
+  "predictions": {
+    "PT2_projection_loses_under_every_form": false,
+    "PT2_gap_smallest_under_ii_or_iii": true
+  }
+}

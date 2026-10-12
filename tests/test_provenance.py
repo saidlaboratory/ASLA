@@ -57,7 +57,7 @@ ALLOWED_FLOATS: dict[str, frozenset[float]] = {
     # the section itself. Structural facts about the prose, not quantities read
     # off the data, and centralised precisely so the four places that state them
     # cannot drift apart.
-    "render_consolidated_findings.py": frozenset({5.0, 6.0, 8.0}),
+    "render_consolidated_findings.py": frozenset({5.0, 6.0, 9.0}),
     "render_curvature_results.py": frozenset(),
     "render_macros.py": frozenset(),
 }

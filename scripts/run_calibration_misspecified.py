@@ -253,6 +253,19 @@ def main() -> None:
             "random_candidate": coverage(random_rows, K_RANDOM, "u_se"),
             "fixed_candidate": coverage(fixed_rows, K_FIXED, "boot_se"),
         }
+    invalid = CACHE.with_name("calibration_misspecified_invalid_first_run.jsonl")
+    if invalid.exists():
+        bad = [json.loads(line) for line in invalid.read_text().splitlines() if line.strip()]
+        rows = [r for r in bad if r["condition"] == "misspec_0_5" and r["kind"] == "fixed"]
+        control = [cache[("control", "fixed", i)] for i in range(N_FIXED)]
+        out["invalid_first_run"] = {
+            "condition": "misspec_0_5, fixed-candidate",
+            "coverage": coverage(rows, K_FIXED, "boot_se")["coverage"],
+            "theta": float(np.mean([r["true_difference"] for r in rows])),
+            "mean_estimate": float(np.mean([r["estimate"] for r in rows])),
+            "control_theta": float(np.mean([r["true_difference"] for r in control])),
+            "control_mean_estimate": float(np.mean([r["estimate"] for r in control])),
+        }
     out["limits"] = [
         f"{c}: {e} coverage {v[e]['coverage']:.2f}"
         for c, v in out["conditions"].items()

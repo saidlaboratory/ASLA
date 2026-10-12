@@ -21,6 +21,7 @@ OUT = RESULTS / "mechanism_record.json"
 
 def main() -> None:
     pattern = json.loads((RESULTS / "pattern.json").read_text())
+    robust = json.loads((RESULTS / "mechanism_robustness.json").read_text())
     swap = json.loads((RESULTS / "structure_swap.json").read_text())["configurations"]
     sweep = pattern["task_2"]["sweep"]
     points = [(d, c, p) for d, g in sweep.items() for c, p in g["points"].items()]
@@ -34,6 +35,28 @@ def main() -> None:
                 "OLMES's residuals can. The driver is the shape of the recipe-specific residuals, which no tested "
                 "summary captures and which cannot be measured without the target."
             ),
+            "primary_evidence": {
+                "noiseless_counts_on_real_curves": {
+                    "projection_wrong_pairs": robust["noiseless"]["projection_wrong_total"],
+                    "single_scale_wrong_pairs": robust["noiseless"]["single_wrong_total"],
+                    "designs": len(robust["noiseless"]["designs"]),
+                    "designs_where_projection_beats_single": robust["noiseless"]["designs_where_projection_beats_single"],
+                    "source": "mechanism_robustness.json: fixed-candidate real shrunk C4 curves, no noise",
+                },
+                "reading": (
+                    "with the noise removed, projection is wrong on more pairs than single-scale at every one of "
+                    "the 55 designs; this is the primary mechanism evidence"
+                ),
+            },
+            "attribution_depends_on_base_form": {
+                "power_law_base": robust["variants"]["baseline"]["attribution"],
+                "chinchilla_base": robust["variants"]["chinchilla"]["attribution"],
+                "reading": (
+                    "the variance / misspecification split of the lever-arm slope depends on which functional form "
+                    "counts as correctly specified; a Chinchilla-form truth is itself misspecified relative to the "
+                    "compute power law projection fits, so its arm A no longer isolates variance"
+                ),
+            },
             "support": {
                 "c4_reassignment_sweep": {
                     "points": len(points),

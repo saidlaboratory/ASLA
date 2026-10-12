@@ -33,13 +33,16 @@ def load(relative: str) -> Any:
 # The instance count is stated in four places in this section; deriving them
 # from one pair of constants is what stopped "five anecdotes" surviving the
 # addition of a sixth.
-N_INSTANCES = 8
-N_INSTANCES_WORD = "Eight"
+N_INSTANCES = 9
+N_INSTANCES_WORD = "Nine"
 N_FLATTERING = 6
 
 
 def methods_practice() -> str:
     theory_v2 = load("theory_v2/theory_v2.json")
+    misspecified = load("target_scoring/calibration_misspecified.json")
+    bad = misspecified["invalid_first_run"]
+    fixed_misspec = misspecified["conditions"]["misspec_0_5"]["fixed_candidate"]["coverage"]
     checkpoints = load("checkpoints/checkpoint_study.json")
     hnorm = load("common_mode/hnorm_hcurv_test.json")
     gate = theory_v2["gate"]
@@ -215,11 +218,28 @@ def methods_practice() -> str:
         "both ends. Two independent implementations agreeing with each other and disagreeing "
         "with the file is what makes the conclusion safe.",
         "",
-        "**Why it is the most consequential of the eight:** every downstream number inherited it, "
+        f"**Why it is the most consequential of the {N_INSTANCES_WORD.lower()}:** every downstream number inherited it, "
         "including an external reviewer's own arithmetic about what the counts implied. The "
         "direction of the finding survived; the magnitudes did not. A results file is not "
         "evidence unless it can be regenerated from committed state, and nothing in the project "
         "checked that until now.",
+        "",
+        "## Instance 9: a perturbation that moved the truth but not the data",
+        "",
+        "A coverage check of the calibrated procedure under a wrong simulator perturbed the true curves "
+        "(misspecification scaled, candidate spread doubled) and reported fixed-candidate coverage of "
+        f"**{bad['coverage']:.2f}** under half the measured misspecification, which would have been recorded "
+        "as a severe limit of the procedure. The perturbation was applied to the final table's truth only. "
+        "The simulator draws each final observation from the matching checkpoint row, so the change moved "
+        "the true value and left the data untouched.",
+        "",
+        f"**How it was caught:** the true value moved from {bad['control_theta']:.2f} to {bad['theta']:.2f} "
+        f"while the procedure's mean estimate stayed at {bad['control_mean_estimate']:.2f} and "
+        f"{bad['mean_estimate']:.2f}. An estimate that does not track its target under a perturbation "
+        "built to move it is the signature of an apparatus that cannot see the change. The fix applies the "
+        "same change to both tables, a test asserts that simulated observations shift exactly as much as "
+        "the truth, and the three affected conditions were rerun: the same condition now covers at "
+        f"{fixed_misspec:.2f}. The invalid rows are kept, and the output says so.",
         "",
         "## A numerical fingerprint for this class",
         "",
@@ -244,7 +264,8 @@ def methods_practice() -> str:
         "1. **Can the measurement see what the correction is supposed to change?** Instance 1's correction "
         "was a mathematical no-op; instance 2 compared a summary rate instead of the fit that moved; "
         "instance 4 ran a decomposition on floating-point noise. In each the apparatus could not have "
-        "detected the effect it was asked about, whatever the truth.",
+        "detected the effect it was asked about, whatever the truth. Instance 9's perturbation never "
+        "reached the simulated observations.",
         "2. **Can the number be reconstructed from shipped inputs, rather than merely being "
         "self-consistent?** Instance 5's pair satisfied every internal check --- 4.22 squared is 17.81 --- "
         "and was still wrong, because both halves were typed together. Instances 3 and 6 were computed "
@@ -268,7 +289,7 @@ def methods_practice() -> str:
         "| 6 | the omitted third parameter explains the misses | half of it was our own pooling error | "
         "a sweep for the pattern, not for literals |",
         "",
-        "**Status is not uniform, and the uneven version is the stronger one.** Instances 1-4 and 6 were "
+        "**Status is not uniform, and the uneven version is the stronger one.** Instances 1-4, 6 and 9 were "
         "caught before any claim built on them left the repository. Instance 5 was not: it propagated into "
         "five committed documents and a paper draft as the opening premise of a headline section, and it is "
         "the reason this is a finding rather than a note on good hygiene. A defect class that is always "

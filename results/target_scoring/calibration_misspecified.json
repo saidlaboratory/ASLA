@@ -161,6 +161,14 @@
       }
     }
   },
+  "invalid_first_run": {
+    "condition": "misspec_0_5, fixed-candidate",
+    "coverage": 0.1125,
+    "theta": -0.7041666666666666,
+    "mean_estimate": 1.7845660024040182,
+    "control_theta": 2.270833333333333,
+    "control_mean_estimate": 1.8036463219233994
+  },
   "limits": [
     "profile_flat: fixed_candidate coverage 0.86"
   ]
