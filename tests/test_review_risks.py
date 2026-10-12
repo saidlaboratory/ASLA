@@ -97,3 +97,13 @@ def test_noise_profile_summary() -> None:
     npf = importlib.import_module("scripts.run_noise_profiles")
     out = npf.summarise(pd.Series({"a": 1.0, "b": np.e}), pd.Series({"a": 1.0, "b": 10.0}))
     assert np.isclose(out["log_range"], 1.0) and np.isclose(out["log_sd_slope_per_decade"], 1.0)
+
+
+def test_reorder_rate_counts_only_determined_pairs() -> None:
+    ref = importlib.import_module("scripts.run_marin_reference")
+    target = {"a": 1.0, "b": 2.0, "c": 3.0}
+    fit = {"a": 2.5, "b": 2.0, "c": 3.0}  # a misordered against b and c at the fit rung
+    se = {("a", "b"): 0.1, ("a", "c"): 0.1, ("b", "c"): 1.0}  # b-c undetermined (gap 1 < 1.96)
+    out = ref.reorder(fit, target, se)
+    assert out["determined"] == 2 and out["reordered"] == 1 and out["rate"] == 0.5
+    assert ref.reorder(fit, target, se, m=100.0)["determined"] == 0
