@@ -1,0 +1,102 @@
+{
+  "source": "marin-community/speedrun data/runs.json @ 31fe8028f8caa6e47082c02de095b1fed4f517a8",
+  "run_records": 118,
+  "records_without_a_size_suffix": 12,
+  "submissions_with_size_ladders": 25,
+  "submissions_by_number_of_budgets": {
+    "3": 1,
+    "4": 23,
+    "11": 1
+  },
+  "submissions_with_at_least_4_budgets": [
+    "adamc_llama_scaling",
+    "adamh_llama_scaling",
+    "adamw_llama_scaling",
+    "c-adamc_llama_scaling",
+    "cautious_llama_scaling",
+    "hackable_transformer_attn_gate/lr_x1",
+    "hackable_transformer_attn_gate/lr_x2",
+    "hackable_transformer_attn_gate/lr_x2_5",
+    "hackable_transformer_attn_sink/attnsink/jax",
+    "hackable_transformer_attn_sink/attnsink/splash",
+    "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+    "hackable_transformer_attn_sink/attnsink/splash/default_x0.25",
+    "hackable_transformer_attn_sink/attnsink/splash/default_x0.5",
+    "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+    "hackable_transformer_attn_sink/attnsink/splash/default_x4",
+    "hackable_transformer_attn_sink/std_attn",
+    "muon_llama_scaling",
+    "muon_qwen3_scaling",
+    "muonh_qwen3_scaling",
+    "muonremez_qwen3_scaling",
+    "nano_arch_ablations",
+    "parallel_llama",
+    "parallel_llama/old_scaling/tpu",
+    "prism_berkeley_qwen3_scaling"
+  ],
+  "best_shared_set": {
+    "submissions": 21,
+    "budgets": [
+      "130m",
+      "1_2b",
+      "300m",
+      "520m"
+    ],
+    "members": [
+      "adamc_llama_scaling",
+      "adamh_llama_scaling",
+      "adamw_llama_scaling",
+      "c-adamc_llama_scaling",
+      "cautious_llama_scaling",
+      "hackable_transformer_attn_gate/lr_x1",
+      "hackable_transformer_attn_gate/lr_x2",
+      "hackable_transformer_attn_gate/lr_x2_5",
+      "hackable_transformer_attn_sink/attnsink/jax",
+      "hackable_transformer_attn_sink/attnsink/splash",
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25",
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5",
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4",
+      "muon_llama_scaling",
+      "muon_qwen3_scaling",
+      "muonh_qwen3_scaling",
+      "muonremez_qwen3_scaling",
+      "parallel_llama",
+      "prism_berkeley_qwen3_scaling"
+    ]
+  },
+  "gate": ">= 8 submissions sharing the same >= 4 budgets",
+  "passes": true,
+  "comparison": {
+    "fit_budgets": [
+      "130m",
+      "300m",
+      "520m"
+    ],
+    "held_out_target": "1_2b",
+    "single_scale_rung": "520m",
+    "pairs": 210,
+    "single_scale_wrong": 46,
+    "projection_wrong": 95,
+    "projection_failed_fits": [],
+    "decomposition_projection_vs_single": {
+      "introduced": 50,
+      "corrected": 1,
+      "shared": 45,
+      "both_correct": 113,
+      "net_introduced": 49,
+      "shared_determined": 0,
+      "shared_undetermined": 45,
+      "corrected_determined": 0,
+      "corrected_undetermined": 1
+    },
+    "duplicate_cells_averaged": {},
+    "caveats": [
+      "three fitted budgets for a three-parameter power law: an exact fit, so projection is fragile",
+      "one run per cell: no seed noise estimate, so no pair is tested for resolvability; descriptive only",
+      "submissions are not independent candidates: several are learning-rate variants of one architecture",
+      "the target is the observed 1.2B BPB, itself a single run"
+    ]
+  }
+}

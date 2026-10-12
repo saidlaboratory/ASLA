@@ -137,6 +137,24 @@ METRICS: dict[str, dict[str, Any]] = {
         "transform": _one_minus,
         "description": "1 - OLMES macro-average correct_prob_per_char (lower is better)",
     },
+    "olmes_macro_margin_per_char_deficit": {
+        "source": "eval",
+        "field": "margin_per_char",
+        "transform": _one_minus,
+        "description": "1 - OLMES macro-average margin_per_char (lower is better)",
+    },
+    "olmes_macro_norm_correct_prob_per_char_deficit": {
+        "source": "eval",
+        "field": "norm_correct_prob_per_char",
+        "transform": _one_minus,
+        "description": "1 - OLMES macro-average norm_correct_prob_per_char (lower is better)",
+    },
+    "olmes_macro_total_prob_per_char_deficit": {
+        "source": "eval",
+        "field": "total_prob_per_char",
+        "transform": _one_minus,
+        "description": "1 - OLMES macro-average total_prob_per_char (lower is better)",
+    },
 }
 DEFAULT_METRIC = "c4_en_bits_per_token"
 
