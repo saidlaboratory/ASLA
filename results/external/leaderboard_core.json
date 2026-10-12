@@ -1,0 +1,4029 @@
+{
+  "preregistration": "PREDICTIONS_TASK_MARIN_NOISE_2.md",
+  "core_56": {
+    "rankings": 56,
+    "pairs": 210,
+    "invariant_pairs": 14,
+    "largest_invariant_top_k": 0,
+    "all_invariant_k": [
+      21
+    ],
+    "invariant_pair_list": [
+      [
+        "hackable_transformer_attn_gate/lr_x1",
+        "adamw_llama_scaling"
+      ],
+      [
+        "muon_qwen3_scaling",
+        "adamw_llama_scaling"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x1",
+        "hackable_transformer_attn_sink/attnsink/jax"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x1",
+        "hackable_transformer_attn_sink/attnsink/splash"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x1",
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2",
+        "muon_llama_scaling"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2_5",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash",
+        "hackable_transformer_attn_sink/attnsink/jax"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+        "hackable_transformer_attn_sink/attnsink/jax"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+        "hackable_transformer_attn_sink/attnsink/splash"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+      ],
+      [
+        "muonremez_qwen3_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+      ],
+      [
+        "parallel_llama",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "muon_llama_scaling"
+      ]
+    ],
+    "rank_range": {
+      "muonh_qwen3_scaling": [
+        1,
+        14
+      ],
+      "hackable_transformer_attn_gate/lr_x2_5": [
+        2,
+        13
+      ],
+      "adamh_llama_scaling": [
+        2,
+        16
+      ],
+      "hackable_transformer_attn_gate/lr_x2": [
+        1,
+        13
+      ],
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": [
+        4,
+        15
+      ],
+      "cautious_llama_scaling": [
+        1,
+        19
+      ],
+      "c-adamc_llama_scaling": [
+        3,
+        20
+      ],
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": [
+        3,
+        20
+      ],
+      "adamc_llama_scaling": [
+        2,
+        21
+      ],
+      "muon_llama_scaling": [
+        5,
+        18
+      ],
+      "hackable_transformer_attn_gate/lr_x1": [
+        2,
+        13
+      ],
+      "muon_qwen3_scaling": [
+        1,
+        16
+      ],
+      "hackable_transformer_attn_sink/attnsink/splash": [
+        3,
+        17
+      ],
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": [
+        4,
+        18
+      ],
+      "hackable_transformer_attn_sink/attnsink/jax": [
+        5,
+        19
+      ],
+      "parallel_llama": [
+        1,
+        19
+      ],
+      "adamw_llama_scaling": [
+        6,
+        20
+      ],
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": [
+        2,
+        20
+      ],
+      "muonremez_qwen3_scaling": [
+        3,
+        20
+      ],
+      "prism_berkeley_qwen3_scaling": [
+        1,
+        21
+      ],
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": [
+        4,
+        21
+      ]
+    },
+    "top1_share": {
+      "cautious_llama_scaling": 0.017857142857142856,
+      "hackable_transformer_attn_gate/lr_x2": 0.25,
+      "muon_qwen3_scaling": 0.017857142857142856,
+      "muonh_qwen3_scaling": 0.6785714285714286,
+      "parallel_llama": 0.017857142857142856,
+      "prism_berkeley_qwen3_scaling": 0.017857142857142856
+    },
+    "top1_by_ranking": {
+      "lm200|c0=0.0,b0x0.5": "muonh_qwen3_scaling",
+      "lm100000|c0=0.0,b0x0.5": "muonh_qwen3_scaling",
+      "least_squares|c0=0.0,b0x0.5": "muonh_qwen3_scaling",
+      "lm200|c0=0.0,b0x1.0": "muonh_qwen3_scaling",
+      "lm100000|c0=0.0,b0x1.0": "cautious_llama_scaling",
+      "least_squares|c0=0.0,b0x1.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.0,b0x2.0": "parallel_llama",
+      "lm100000|c0=0.0,b0x2.0": "muonh_qwen3_scaling",
+      "least_squares|c0=0.0,b0x2.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.25,b0x0.5": "muonh_qwen3_scaling",
+      "lm100000|c0=0.25,b0x0.5": "muonh_qwen3_scaling",
+      "least_squares|c0=0.25,b0x0.5": "muonh_qwen3_scaling",
+      "lm200|c0=0.25,b0x1.0": "muonh_qwen3_scaling",
+      "lm100000|c0=0.25,b0x1.0": "muonh_qwen3_scaling",
+      "least_squares|c0=0.25,b0x1.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.25,b0x2.0": "muonh_qwen3_scaling",
+      "lm100000|c0=0.25,b0x2.0": "muonh_qwen3_scaling",
+      "least_squares|c0=0.25,b0x2.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.5,b0x0.5": "muonh_qwen3_scaling",
+      "lm100000|c0=0.5,b0x0.5": "muonh_qwen3_scaling",
+      "least_squares|c0=0.5,b0x0.5": "muonh_qwen3_scaling",
+      "lm200|c0=0.5,b0x1.0": "muonh_qwen3_scaling",
+      "lm100000|c0=0.5,b0x1.0": "muonh_qwen3_scaling",
+      "least_squares|c0=0.5,b0x1.0": "prism_berkeley_qwen3_scaling",
+      "lm200|c0=0.5,b0x2.0": "muonh_qwen3_scaling",
+      "lm100000|c0=0.5,b0x2.0": "muonh_qwen3_scaling",
+      "least_squares|c0=0.5,b0x2.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.7,b0x0.5": "muonh_qwen3_scaling",
+      "lm100000|c0=0.7,b0x0.5": "muonh_qwen3_scaling",
+      "least_squares|c0=0.7,b0x0.5": "muonh_qwen3_scaling",
+      "lm200|c0=0.7,b0x1.0": "muonh_qwen3_scaling",
+      "lm100000|c0=0.7,b0x1.0": "muonh_qwen3_scaling",
+      "least_squares|c0=0.7,b0x1.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.7,b0x2.0": "muonh_qwen3_scaling",
+      "lm100000|c0=0.7,b0x2.0": "muonh_qwen3_scaling",
+      "least_squares|c0=0.7,b0x2.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.9,b0x0.5": "hackable_transformer_attn_gate/lr_x2",
+      "lm100000|c0=0.9,b0x0.5": "hackable_transformer_attn_gate/lr_x2",
+      "least_squares|c0=0.9,b0x0.5": "muonh_qwen3_scaling",
+      "lm200|c0=0.9,b0x1.0": "hackable_transformer_attn_gate/lr_x2",
+      "lm100000|c0=0.9,b0x1.0": "hackable_transformer_attn_gate/lr_x2",
+      "least_squares|c0=0.9,b0x1.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.9,b0x2.0": "hackable_transformer_attn_gate/lr_x2",
+      "lm100000|c0=0.9,b0x2.0": "hackable_transformer_attn_gate/lr_x2",
+      "least_squares|c0=0.9,b0x2.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.99,b0x0.5": "hackable_transformer_attn_gate/lr_x2",
+      "lm100000|c0=0.99,b0x0.5": "hackable_transformer_attn_gate/lr_x2",
+      "least_squares|c0=0.99,b0x0.5": "hackable_transformer_attn_gate/lr_x2",
+      "lm200|c0=0.99,b0x1.0": "hackable_transformer_attn_gate/lr_x2",
+      "lm100000|c0=0.99,b0x1.0": "hackable_transformer_attn_gate/lr_x2",
+      "least_squares|c0=0.99,b0x1.0": "muon_qwen3_scaling",
+      "lm200|c0=0.99,b0x2.0": "hackable_transformer_attn_gate/lr_x2",
+      "lm100000|c0=0.99,b0x2.0": "hackable_transformer_attn_gate/lr_x2",
+      "least_squares|c0=0.99,b0x2.0": "hackable_transformer_attn_gate/lr_x2",
+      "two_parameter_loglog": "muonh_qwen3_scaling",
+      "shared_exponent": "muonh_qwen3_scaling"
+    },
+    "distinct_top1": [
+      "cautious_llama_scaling",
+      "hackable_transformer_attn_gate/lr_x2",
+      "muon_qwen3_scaling",
+      "muonh_qwen3_scaling",
+      "parallel_llama",
+      "prism_berkeley_qwen3_scaling"
+    ],
+    "groups_by_median_rank": [
+      {
+        "members": [
+          "muonh_qwen3_scaling",
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "adamh_llama_scaling",
+          "hackable_transformer_attn_gate/lr_x2",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "cautious_llama_scaling",
+          "c-adamc_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x4",
+          "adamc_llama_scaling",
+          "muon_llama_scaling",
+          "hackable_transformer_attn_gate/lr_x1",
+          "muon_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash",
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+          "hackable_transformer_attn_sink/attnsink/jax",
+          "parallel_llama",
+          "adamw_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5",
+          "muonremez_qwen3_scaling",
+          "prism_berkeley_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        "median_ranks": [
+          1.0,
+          2.0,
+          4.0,
+          5.0,
+          6.0,
+          7.0,
+          8.0,
+          8.0,
+          10.0,
+          10.5,
+          11.0,
+          11.0,
+          13.0,
+          14.0,
+          15.0,
+          16.0,
+          17.0,
+          18.0,
+          19.0,
+          20.0,
+          21.0
+        ],
+        "rank_range": [
+          1,
+          21
+        ]
+      }
+    ]
+  },
+  "core_58_sensitivity": {
+    "rankings": 58,
+    "pairs": 210,
+    "invariant_pairs": 14,
+    "largest_invariant_top_k": 0,
+    "all_invariant_k": [
+      21
+    ],
+    "invariant_pair_list": [
+      [
+        "hackable_transformer_attn_gate/lr_x1",
+        "adamw_llama_scaling"
+      ],
+      [
+        "muon_qwen3_scaling",
+        "adamw_llama_scaling"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x1",
+        "hackable_transformer_attn_sink/attnsink/jax"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x1",
+        "hackable_transformer_attn_sink/attnsink/splash"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x1",
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2",
+        "muon_llama_scaling"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2_5",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash",
+        "hackable_transformer_attn_sink/attnsink/jax"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+        "hackable_transformer_attn_sink/attnsink/jax"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+        "hackable_transformer_attn_sink/attnsink/splash"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+      ],
+      [
+        "muonremez_qwen3_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+      ],
+      [
+        "parallel_llama",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "muon_llama_scaling"
+      ]
+    ],
+    "rank_range": {
+      "muonh_qwen3_scaling": [
+        1,
+        14
+      ],
+      "hackable_transformer_attn_gate/lr_x2_5": [
+        2,
+        13
+      ],
+      "adamh_llama_scaling": [
+        2,
+        16
+      ],
+      "hackable_transformer_attn_gate/lr_x2": [
+        1,
+        13
+      ],
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": [
+        4,
+        15
+      ],
+      "cautious_llama_scaling": [
+        1,
+        19
+      ],
+      "c-adamc_llama_scaling": [
+        3,
+        20
+      ],
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": [
+        3,
+        20
+      ],
+      "adamc_llama_scaling": [
+        2,
+        21
+      ],
+      "muon_llama_scaling": [
+        5,
+        18
+      ],
+      "hackable_transformer_attn_gate/lr_x1": [
+        2,
+        13
+      ],
+      "muon_qwen3_scaling": [
+        1,
+        16
+      ],
+      "hackable_transformer_attn_sink/attnsink/splash": [
+        3,
+        17
+      ],
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": [
+        4,
+        18
+      ],
+      "hackable_transformer_attn_sink/attnsink/jax": [
+        5,
+        19
+      ],
+      "parallel_llama": [
+        1,
+        19
+      ],
+      "adamw_llama_scaling": [
+        6,
+        20
+      ],
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": [
+        2,
+        20
+      ],
+      "muonremez_qwen3_scaling": [
+        3,
+        20
+      ],
+      "prism_berkeley_qwen3_scaling": [
+        1,
+        21
+      ],
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": [
+        4,
+        21
+      ]
+    },
+    "top1_share": {
+      "cautious_llama_scaling": 0.017241379310344827,
+      "hackable_transformer_attn_gate/lr_x2": 0.2413793103448276,
+      "muon_qwen3_scaling": 0.017241379310344827,
+      "muonh_qwen3_scaling": 0.6896551724137931,
+      "parallel_llama": 0.017241379310344827,
+      "prism_berkeley_qwen3_scaling": 0.017241379310344827
+    },
+    "top1_by_ranking": {
+      "lm200|c0=0.0,b0x0.5": "muonh_qwen3_scaling",
+      "lm100000|c0=0.0,b0x0.5": "muonh_qwen3_scaling",
+      "least_squares|c0=0.0,b0x0.5": "muonh_qwen3_scaling",
+      "lm200|c0=0.0,b0x1.0": "muonh_qwen3_scaling",
+      "lm100000|c0=0.0,b0x1.0": "cautious_llama_scaling",
+      "least_squares|c0=0.0,b0x1.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.0,b0x2.0": "parallel_llama",
+      "lm100000|c0=0.0,b0x2.0": "muonh_qwen3_scaling",
+      "least_squares|c0=0.0,b0x2.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.25,b0x0.5": "muonh_qwen3_scaling",
+      "lm100000|c0=0.25,b0x0.5": "muonh_qwen3_scaling",
+      "least_squares|c0=0.25,b0x0.5": "muonh_qwen3_scaling",
+      "lm200|c0=0.25,b0x1.0": "muonh_qwen3_scaling",
+      "lm100000|c0=0.25,b0x1.0": "muonh_qwen3_scaling",
+      "least_squares|c0=0.25,b0x1.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.25,b0x2.0": "muonh_qwen3_scaling",
+      "lm100000|c0=0.25,b0x2.0": "muonh_qwen3_scaling",
+      "least_squares|c0=0.25,b0x2.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.5,b0x0.5": "muonh_qwen3_scaling",
+      "lm100000|c0=0.5,b0x0.5": "muonh_qwen3_scaling",
+      "least_squares|c0=0.5,b0x0.5": "muonh_qwen3_scaling",
+      "lm200|c0=0.5,b0x1.0": "muonh_qwen3_scaling",
+      "lm100000|c0=0.5,b0x1.0": "muonh_qwen3_scaling",
+      "least_squares|c0=0.5,b0x1.0": "prism_berkeley_qwen3_scaling",
+      "lm200|c0=0.5,b0x2.0": "muonh_qwen3_scaling",
+      "lm100000|c0=0.5,b0x2.0": "muonh_qwen3_scaling",
+      "least_squares|c0=0.5,b0x2.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.7,b0x0.5": "muonh_qwen3_scaling",
+      "lm100000|c0=0.7,b0x0.5": "muonh_qwen3_scaling",
+      "least_squares|c0=0.7,b0x0.5": "muonh_qwen3_scaling",
+      "lm200|c0=0.7,b0x1.0": "muonh_qwen3_scaling",
+      "lm100000|c0=0.7,b0x1.0": "muonh_qwen3_scaling",
+      "least_squares|c0=0.7,b0x1.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.7,b0x2.0": "muonh_qwen3_scaling",
+      "lm100000|c0=0.7,b0x2.0": "muonh_qwen3_scaling",
+      "least_squares|c0=0.7,b0x2.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.9,b0x0.5": "hackable_transformer_attn_gate/lr_x2",
+      "lm100000|c0=0.9,b0x0.5": "hackable_transformer_attn_gate/lr_x2",
+      "least_squares|c0=0.9,b0x0.5": "muonh_qwen3_scaling",
+      "lm200|c0=0.9,b0x1.0": "hackable_transformer_attn_gate/lr_x2",
+      "lm100000|c0=0.9,b0x1.0": "hackable_transformer_attn_gate/lr_x2",
+      "least_squares|c0=0.9,b0x1.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.9,b0x2.0": "hackable_transformer_attn_gate/lr_x2",
+      "lm100000|c0=0.9,b0x2.0": "hackable_transformer_attn_gate/lr_x2",
+      "least_squares|c0=0.9,b0x2.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.99,b0x0.5": "hackable_transformer_attn_gate/lr_x2",
+      "lm100000|c0=0.99,b0x0.5": "hackable_transformer_attn_gate/lr_x2",
+      "least_squares|c0=0.99,b0x0.5": "hackable_transformer_attn_gate/lr_x2",
+      "lm200|c0=0.99,b0x1.0": "hackable_transformer_attn_gate/lr_x2",
+      "lm100000|c0=0.99,b0x1.0": "hackable_transformer_attn_gate/lr_x2",
+      "least_squares|c0=0.99,b0x1.0": "muon_qwen3_scaling",
+      "lm200|c0=0.99,b0x2.0": "hackable_transformer_attn_gate/lr_x2",
+      "lm100000|c0=0.99,b0x2.0": "hackable_transformer_attn_gate/lr_x2",
+      "least_squares|c0=0.99,b0x2.0": "hackable_transformer_attn_gate/lr_x2",
+      "two_parameter_loglog": "muonh_qwen3_scaling",
+      "shared_exponent": "muonh_qwen3_scaling",
+      "as_implemented_default": "muonh_qwen3_scaling",
+      "exact_three_parameter": "muonh_qwen3_scaling"
+    },
+    "distinct_top1": [
+      "cautious_llama_scaling",
+      "hackable_transformer_attn_gate/lr_x2",
+      "muon_qwen3_scaling",
+      "muonh_qwen3_scaling",
+      "parallel_llama",
+      "prism_berkeley_qwen3_scaling"
+    ],
+    "groups_by_median_rank": [
+      {
+        "members": [
+          "muonh_qwen3_scaling",
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "adamh_llama_scaling",
+          "hackable_transformer_attn_gate/lr_x2",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "cautious_llama_scaling",
+          "c-adamc_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x4",
+          "adamc_llama_scaling",
+          "muon_llama_scaling",
+          "hackable_transformer_attn_gate/lr_x1",
+          "muon_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash",
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+          "hackable_transformer_attn_sink/attnsink/jax",
+          "parallel_llama",
+          "adamw_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5",
+          "muonremez_qwen3_scaling",
+          "prism_berkeley_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        "median_ranks": [
+          1.0,
+          2.0,
+          4.0,
+          5.0,
+          6.0,
+          7.0,
+          8.0,
+          8.0,
+          10.0,
+          10.5,
+          11.0,
+          11.0,
+          13.0,
+          14.0,
+          15.0,
+          16.0,
+          17.0,
+          18.0,
+          19.0,
+          20.0,
+          21.0
+        ],
+        "rank_range": [
+          1,
+          21
+        ]
+      }
+    ]
+  },
+  "core_three_parameter_only_54": {
+    "rankings": 54,
+    "pairs": 210,
+    "invariant_pairs": 18,
+    "largest_invariant_top_k": 0,
+    "all_invariant_k": [
+      21
+    ],
+    "invariant_pair_list": [
+      [
+        "adamh_llama_scaling",
+        "muon_llama_scaling"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x1",
+        "adamw_llama_scaling"
+      ],
+      [
+        "muon_qwen3_scaling",
+        "adamw_llama_scaling"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x1",
+        "hackable_transformer_attn_sink/attnsink/jax"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x1",
+        "hackable_transformer_attn_sink/attnsink/splash"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x1",
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2",
+        "muon_llama_scaling"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2_5",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2_5",
+        "muon_llama_scaling"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash",
+        "hackable_transformer_attn_sink/attnsink/jax"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+        "hackable_transformer_attn_sink/attnsink/jax"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+        "hackable_transformer_attn_sink/attnsink/splash"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+      ],
+      [
+        "muonremez_qwen3_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+      ],
+      [
+        "parallel_llama",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+        "muon_llama_scaling"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "muon_llama_scaling"
+      ],
+      [
+        "parallel_llama",
+        "muonremez_qwen3_scaling"
+      ]
+    ],
+    "rank_range": {
+      "muonh_qwen3_scaling": [
+        1,
+        14
+      ],
+      "hackable_transformer_attn_gate/lr_x2_5": [
+        2,
+        13
+      ],
+      "adamh_llama_scaling": [
+        2,
+        16
+      ],
+      "hackable_transformer_attn_gate/lr_x2": [
+        1,
+        13
+      ],
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": [
+        4,
+        15
+      ],
+      "cautious_llama_scaling": [
+        1,
+        19
+      ],
+      "c-adamc_llama_scaling": [
+        3,
+        20
+      ],
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": [
+        3,
+        17
+      ],
+      "adamc_llama_scaling": [
+        2,
+        21
+      ],
+      "hackable_transformer_attn_gate/lr_x1": [
+        2,
+        13
+      ],
+      "muon_llama_scaling": [
+        9,
+        18
+      ],
+      "muon_qwen3_scaling": [
+        1,
+        16
+      ],
+      "hackable_transformer_attn_sink/attnsink/splash": [
+        3,
+        17
+      ],
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": [
+        4,
+        18
+      ],
+      "hackable_transformer_attn_sink/attnsink/jax": [
+        5,
+        19
+      ],
+      "parallel_llama": [
+        1,
+        19
+      ],
+      "adamw_llama_scaling": [
+        6,
+        20
+      ],
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": [
+        2,
+        20
+      ],
+      "muonremez_qwen3_scaling": [
+        3,
+        20
+      ],
+      "prism_berkeley_qwen3_scaling": [
+        1,
+        21
+      ],
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": [
+        4,
+        21
+      ]
+    },
+    "top1_share": {
+      "cautious_llama_scaling": 0.018518518518518517,
+      "hackable_transformer_attn_gate/lr_x2": 0.25925925925925924,
+      "muon_qwen3_scaling": 0.018518518518518517,
+      "muonh_qwen3_scaling": 0.6666666666666666,
+      "parallel_llama": 0.018518518518518517,
+      "prism_berkeley_qwen3_scaling": 0.018518518518518517
+    },
+    "top1_by_ranking": {
+      "lm200|c0=0.0,b0x0.5": "muonh_qwen3_scaling",
+      "lm100000|c0=0.0,b0x0.5": "muonh_qwen3_scaling",
+      "least_squares|c0=0.0,b0x0.5": "muonh_qwen3_scaling",
+      "lm200|c0=0.0,b0x1.0": "muonh_qwen3_scaling",
+      "lm100000|c0=0.0,b0x1.0": "cautious_llama_scaling",
+      "least_squares|c0=0.0,b0x1.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.0,b0x2.0": "parallel_llama",
+      "lm100000|c0=0.0,b0x2.0": "muonh_qwen3_scaling",
+      "least_squares|c0=0.0,b0x2.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.25,b0x0.5": "muonh_qwen3_scaling",
+      "lm100000|c0=0.25,b0x0.5": "muonh_qwen3_scaling",
+      "least_squares|c0=0.25,b0x0.5": "muonh_qwen3_scaling",
+      "lm200|c0=0.25,b0x1.0": "muonh_qwen3_scaling",
+      "lm100000|c0=0.25,b0x1.0": "muonh_qwen3_scaling",
+      "least_squares|c0=0.25,b0x1.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.25,b0x2.0": "muonh_qwen3_scaling",
+      "lm100000|c0=0.25,b0x2.0": "muonh_qwen3_scaling",
+      "least_squares|c0=0.25,b0x2.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.5,b0x0.5": "muonh_qwen3_scaling",
+      "lm100000|c0=0.5,b0x0.5": "muonh_qwen3_scaling",
+      "least_squares|c0=0.5,b0x0.5": "muonh_qwen3_scaling",
+      "lm200|c0=0.5,b0x1.0": "muonh_qwen3_scaling",
+      "lm100000|c0=0.5,b0x1.0": "muonh_qwen3_scaling",
+      "least_squares|c0=0.5,b0x1.0": "prism_berkeley_qwen3_scaling",
+      "lm200|c0=0.5,b0x2.0": "muonh_qwen3_scaling",
+      "lm100000|c0=0.5,b0x2.0": "muonh_qwen3_scaling",
+      "least_squares|c0=0.5,b0x2.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.7,b0x0.5": "muonh_qwen3_scaling",
+      "lm100000|c0=0.7,b0x0.5": "muonh_qwen3_scaling",
+      "least_squares|c0=0.7,b0x0.5": "muonh_qwen3_scaling",
+      "lm200|c0=0.7,b0x1.0": "muonh_qwen3_scaling",
+      "lm100000|c0=0.7,b0x1.0": "muonh_qwen3_scaling",
+      "least_squares|c0=0.7,b0x1.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.7,b0x2.0": "muonh_qwen3_scaling",
+      "lm100000|c0=0.7,b0x2.0": "muonh_qwen3_scaling",
+      "least_squares|c0=0.7,b0x2.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.9,b0x0.5": "hackable_transformer_attn_gate/lr_x2",
+      "lm100000|c0=0.9,b0x0.5": "hackable_transformer_attn_gate/lr_x2",
+      "least_squares|c0=0.9,b0x0.5": "muonh_qwen3_scaling",
+      "lm200|c0=0.9,b0x1.0": "hackable_transformer_attn_gate/lr_x2",
+      "lm100000|c0=0.9,b0x1.0": "hackable_transformer_attn_gate/lr_x2",
+      "least_squares|c0=0.9,b0x1.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.9,b0x2.0": "hackable_transformer_attn_gate/lr_x2",
+      "lm100000|c0=0.9,b0x2.0": "hackable_transformer_attn_gate/lr_x2",
+      "least_squares|c0=0.9,b0x2.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.99,b0x0.5": "hackable_transformer_attn_gate/lr_x2",
+      "lm100000|c0=0.99,b0x0.5": "hackable_transformer_attn_gate/lr_x2",
+      "least_squares|c0=0.99,b0x0.5": "hackable_transformer_attn_gate/lr_x2",
+      "lm200|c0=0.99,b0x1.0": "hackable_transformer_attn_gate/lr_x2",
+      "lm100000|c0=0.99,b0x1.0": "hackable_transformer_attn_gate/lr_x2",
+      "least_squares|c0=0.99,b0x1.0": "muon_qwen3_scaling",
+      "lm200|c0=0.99,b0x2.0": "hackable_transformer_attn_gate/lr_x2",
+      "lm100000|c0=0.99,b0x2.0": "hackable_transformer_attn_gate/lr_x2",
+      "least_squares|c0=0.99,b0x2.0": "hackable_transformer_attn_gate/lr_x2"
+    },
+    "distinct_top1": [
+      "cautious_llama_scaling",
+      "hackable_transformer_attn_gate/lr_x2",
+      "muon_qwen3_scaling",
+      "muonh_qwen3_scaling",
+      "parallel_llama",
+      "prism_berkeley_qwen3_scaling"
+    ],
+    "groups_by_median_rank": [
+      {
+        "members": [
+          "muonh_qwen3_scaling",
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "adamh_llama_scaling",
+          "hackable_transformer_attn_gate/lr_x2",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "cautious_llama_scaling",
+          "c-adamc_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x4",
+          "adamc_llama_scaling",
+          "hackable_transformer_attn_gate/lr_x1",
+          "muon_llama_scaling",
+          "muon_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash",
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+          "hackable_transformer_attn_sink/attnsink/jax",
+          "parallel_llama",
+          "adamw_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5",
+          "muonremez_qwen3_scaling",
+          "prism_berkeley_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        "median_ranks": [
+          1.0,
+          2.0,
+          4.0,
+          5.0,
+          6.0,
+          7.0,
+          8.0,
+          8.0,
+          10.0,
+          11.0,
+          11.0,
+          11.0,
+          13.0,
+          14.0,
+          15.0,
+          16.0,
+          17.0,
+          18.0,
+          19.0,
+          20.0,
+          21.0
+        ],
+        "rank_range": [
+          1,
+          21
+        ]
+      }
+    ]
+  },
+  "core_39_least_squares_as_verified_optimum": {
+    "rankings": 39,
+    "pairs": 210,
+    "invariant_pairs": 55,
+    "largest_invariant_top_k": 0,
+    "all_invariant_k": [
+      21
+    ],
+    "invariant_pair_list": [
+      [
+        "adamh_llama_scaling",
+        "adamc_llama_scaling"
+      ],
+      [
+        "adamc_llama_scaling",
+        "adamw_llama_scaling"
+      ],
+      [
+        "c-adamc_llama_scaling",
+        "adamc_llama_scaling"
+      ],
+      [
+        "cautious_llama_scaling",
+        "adamc_llama_scaling"
+      ],
+      [
+        "adamc_llama_scaling",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "adamh_llama_scaling",
+        "adamw_llama_scaling"
+      ],
+      [
+        "adamh_llama_scaling",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "c-adamc_llama_scaling",
+        "adamw_llama_scaling"
+      ],
+      [
+        "cautious_llama_scaling",
+        "adamw_llama_scaling"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x1",
+        "adamw_llama_scaling"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2",
+        "adamw_llama_scaling"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2_5",
+        "adamw_llama_scaling"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+        "adamw_llama_scaling"
+      ],
+      [
+        "muon_llama_scaling",
+        "adamw_llama_scaling"
+      ],
+      [
+        "muon_qwen3_scaling",
+        "adamw_llama_scaling"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "adamw_llama_scaling"
+      ],
+      [
+        "c-adamc_llama_scaling",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "cautious_llama_scaling",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x1",
+        "hackable_transformer_attn_sink/attnsink/jax"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x1",
+        "hackable_transformer_attn_sink/attnsink/splash"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x1",
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x1",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2",
+        "hackable_transformer_attn_sink/attnsink/jax"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2",
+        "hackable_transformer_attn_sink/attnsink/splash"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2",
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2",
+        "muon_llama_scaling"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2_5",
+        "hackable_transformer_attn_sink/attnsink/jax"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2_5",
+        "hackable_transformer_attn_sink/attnsink/splash"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2_5",
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2_5",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2_5",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash",
+        "hackable_transformer_attn_sink/attnsink/jax"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+        "hackable_transformer_attn_sink/attnsink/jax"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+        "hackable_transformer_attn_sink/attnsink/jax"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "hackable_transformer_attn_sink/attnsink/jax"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/jax",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+        "hackable_transformer_attn_sink/attnsink/splash"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+        "hackable_transformer_attn_sink/attnsink/splash"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+      ],
+      [
+        "muonremez_qwen3_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+      ],
+      [
+        "parallel_llama",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "muon_llama_scaling"
+      ],
+      [
+        "muon_llama_scaling",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "muon_qwen3_scaling"
+      ],
+      [
+        "muon_qwen3_scaling",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "muonremez_qwen3_scaling",
+        "prism_berkeley_qwen3_scaling"
+      ]
+    ],
+    "rank_range": {
+      "muonh_qwen3_scaling": [
+        1,
+        6
+      ],
+      "hackable_transformer_attn_gate/lr_x2_5": [
+        2,
+        7
+      ],
+      "adamh_llama_scaling": [
+        2,
+        10
+      ],
+      "hackable_transformer_attn_gate/lr_x2": [
+        1,
+        9
+      ],
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": [
+        4,
+        10
+      ],
+      "cautious_llama_scaling": [
+        1,
+        14
+      ],
+      "c-adamc_llama_scaling": [
+        3,
+        14
+      ],
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": [
+        3,
+        20
+      ],
+      "hackable_transformer_attn_gate/lr_x1": [
+        2,
+        13
+      ],
+      "adamc_llama_scaling": [
+        4,
+        15
+      ],
+      "muon_llama_scaling": [
+        5,
+        15
+      ],
+      "muon_qwen3_scaling": [
+        3,
+        16
+      ],
+      "hackable_transformer_attn_sink/attnsink/splash": [
+        6,
+        17
+      ],
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": [
+        7,
+        18
+      ],
+      "hackable_transformer_attn_sink/attnsink/jax": [
+        8,
+        19
+      ],
+      "parallel_llama": [
+        1,
+        19
+      ],
+      "adamw_llama_scaling": [
+        12,
+        20
+      ],
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": [
+        2,
+        19
+      ],
+      "muonremez_qwen3_scaling": [
+        3,
+        19
+      ],
+      "prism_berkeley_qwen3_scaling": [
+        16,
+        21
+      ],
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": [
+        4,
+        21
+      ]
+    },
+    "top1_share": {
+      "cautious_llama_scaling": 0.02564102564102564,
+      "hackable_transformer_attn_gate/lr_x2": 0.3076923076923077,
+      "muonh_qwen3_scaling": 0.6410256410256411,
+      "parallel_llama": 0.02564102564102564
+    },
+    "top1_by_ranking": {
+      "lm200|c0=0.0,b0x0.5": "muonh_qwen3_scaling",
+      "lm100000|c0=0.0,b0x0.5": "muonh_qwen3_scaling",
+      "lm200|c0=0.0,b0x1.0": "muonh_qwen3_scaling",
+      "lm100000|c0=0.0,b0x1.0": "cautious_llama_scaling",
+      "lm200|c0=0.0,b0x2.0": "parallel_llama",
+      "lm100000|c0=0.0,b0x2.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.25,b0x0.5": "muonh_qwen3_scaling",
+      "lm100000|c0=0.25,b0x0.5": "muonh_qwen3_scaling",
+      "lm200|c0=0.25,b0x1.0": "muonh_qwen3_scaling",
+      "lm100000|c0=0.25,b0x1.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.25,b0x2.0": "muonh_qwen3_scaling",
+      "lm100000|c0=0.25,b0x2.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.5,b0x0.5": "muonh_qwen3_scaling",
+      "lm100000|c0=0.5,b0x0.5": "muonh_qwen3_scaling",
+      "lm200|c0=0.5,b0x1.0": "muonh_qwen3_scaling",
+      "lm100000|c0=0.5,b0x1.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.5,b0x2.0": "muonh_qwen3_scaling",
+      "lm100000|c0=0.5,b0x2.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.7,b0x0.5": "muonh_qwen3_scaling",
+      "lm100000|c0=0.7,b0x0.5": "muonh_qwen3_scaling",
+      "lm200|c0=0.7,b0x1.0": "muonh_qwen3_scaling",
+      "lm100000|c0=0.7,b0x1.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.7,b0x2.0": "muonh_qwen3_scaling",
+      "lm100000|c0=0.7,b0x2.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.9,b0x0.5": "hackable_transformer_attn_gate/lr_x2",
+      "lm100000|c0=0.9,b0x0.5": "hackable_transformer_attn_gate/lr_x2",
+      "lm200|c0=0.9,b0x1.0": "hackable_transformer_attn_gate/lr_x2",
+      "lm100000|c0=0.9,b0x1.0": "hackable_transformer_attn_gate/lr_x2",
+      "lm200|c0=0.9,b0x2.0": "hackable_transformer_attn_gate/lr_x2",
+      "lm100000|c0=0.9,b0x2.0": "hackable_transformer_attn_gate/lr_x2",
+      "lm200|c0=0.99,b0x0.5": "hackable_transformer_attn_gate/lr_x2",
+      "lm100000|c0=0.99,b0x0.5": "hackable_transformer_attn_gate/lr_x2",
+      "lm200|c0=0.99,b0x1.0": "hackable_transformer_attn_gate/lr_x2",
+      "lm100000|c0=0.99,b0x1.0": "hackable_transformer_attn_gate/lr_x2",
+      "lm200|c0=0.99,b0x2.0": "hackable_transformer_attn_gate/lr_x2",
+      "lm100000|c0=0.99,b0x2.0": "hackable_transformer_attn_gate/lr_x2",
+      "two_parameter_loglog": "muonh_qwen3_scaling",
+      "shared_exponent": "muonh_qwen3_scaling",
+      "least_squares_optimum": "muonh_qwen3_scaling"
+    },
+    "distinct_top1": [
+      "cautious_llama_scaling",
+      "hackable_transformer_attn_gate/lr_x2",
+      "muonh_qwen3_scaling",
+      "parallel_llama"
+    ],
+    "groups_by_median_rank": [
+      {
+        "members": [
+          "muonh_qwen3_scaling",
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "adamh_llama_scaling",
+          "hackable_transformer_attn_gate/lr_x2",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "cautious_llama_scaling",
+          "c-adamc_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x4",
+          "hackable_transformer_attn_gate/lr_x1",
+          "adamc_llama_scaling",
+          "muon_llama_scaling",
+          "muon_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash",
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+          "hackable_transformer_attn_sink/attnsink/jax",
+          "parallel_llama",
+          "adamw_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5",
+          "muonremez_qwen3_scaling",
+          "prism_berkeley_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        "median_ranks": [
+          1.0,
+          2.0,
+          4.0,
+          4.0,
+          6.0,
+          7.0,
+          8.0,
+          8.0,
+          9.0,
+          10.0,
+          11.0,
+          11.0,
+          13.0,
+          14.0,
+          15.0,
+          16.0,
+          17.0,
+          18.0,
+          19.0,
+          20.0,
+          21.0
+        ],
+        "rank_range": [
+          1,
+          21
+        ]
+      }
+    ]
+  },
+  "core_four_forms_default_starts": {
+    "rankings": 4,
+    "pairs": 210,
+    "invariant_pairs": 129,
+    "largest_invariant_top_k": 1,
+    "all_invariant_k": [
+      1,
+      20,
+      21
+    ],
+    "invariant_pair_list": [
+      [
+        "adamh_llama_scaling",
+        "adamc_llama_scaling"
+      ],
+      [
+        "adamc_llama_scaling",
+        "adamw_llama_scaling"
+      ],
+      [
+        "c-adamc_llama_scaling",
+        "adamc_llama_scaling"
+      ],
+      [
+        "cautious_llama_scaling",
+        "adamc_llama_scaling"
+      ],
+      [
+        "adamc_llama_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+      ],
+      [
+        "adamc_llama_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "adamc_llama_scaling"
+      ],
+      [
+        "adamc_llama_scaling",
+        "muonremez_qwen3_scaling"
+      ],
+      [
+        "adamc_llama_scaling",
+        "parallel_llama"
+      ],
+      [
+        "adamc_llama_scaling",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "adamh_llama_scaling",
+        "adamw_llama_scaling"
+      ],
+      [
+        "adamh_llama_scaling",
+        "hackable_transformer_attn_sink/attnsink/jax"
+      ],
+      [
+        "adamh_llama_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+      ],
+      [
+        "adamh_llama_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "adamh_llama_scaling"
+      ],
+      [
+        "adamh_llama_scaling",
+        "muonremez_qwen3_scaling"
+      ],
+      [
+        "adamh_llama_scaling",
+        "parallel_llama"
+      ],
+      [
+        "adamh_llama_scaling",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "c-adamc_llama_scaling",
+        "adamw_llama_scaling"
+      ],
+      [
+        "cautious_llama_scaling",
+        "adamw_llama_scaling"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x1",
+        "adamw_llama_scaling"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2",
+        "adamw_llama_scaling"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2_5",
+        "adamw_llama_scaling"
+      ],
+      [
+        "adamw_llama_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+      ],
+      [
+        "adamw_llama_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+        "adamw_llama_scaling"
+      ],
+      [
+        "muon_llama_scaling",
+        "adamw_llama_scaling"
+      ],
+      [
+        "muon_qwen3_scaling",
+        "adamw_llama_scaling"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "adamw_llama_scaling"
+      ],
+      [
+        "cautious_llama_scaling",
+        "c-adamc_llama_scaling"
+      ],
+      [
+        "c-adamc_llama_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+      ],
+      [
+        "c-adamc_llama_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "c-adamc_llama_scaling"
+      ],
+      [
+        "c-adamc_llama_scaling",
+        "muonremez_qwen3_scaling"
+      ],
+      [
+        "c-adamc_llama_scaling",
+        "parallel_llama"
+      ],
+      [
+        "c-adamc_llama_scaling",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "cautious_llama_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+      ],
+      [
+        "cautious_llama_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "cautious_llama_scaling"
+      ],
+      [
+        "cautious_llama_scaling",
+        "muonremez_qwen3_scaling"
+      ],
+      [
+        "cautious_llama_scaling",
+        "parallel_llama"
+      ],
+      [
+        "cautious_llama_scaling",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x1",
+        "hackable_transformer_attn_sink/attnsink/jax"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x1",
+        "hackable_transformer_attn_sink/attnsink/splash"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x1",
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x1",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x1",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "hackable_transformer_attn_gate/lr_x1"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x1",
+        "muonremez_qwen3_scaling"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x1",
+        "parallel_llama"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x1",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2",
+        "hackable_transformer_attn_sink/attnsink/jax"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2",
+        "hackable_transformer_attn_sink/attnsink/splash"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2",
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2",
+        "muon_llama_scaling"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "hackable_transformer_attn_gate/lr_x2"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2",
+        "muonremez_qwen3_scaling"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2",
+        "parallel_llama"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2_5",
+        "hackable_transformer_attn_sink/attnsink/jax"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2_5",
+        "hackable_transformer_attn_sink/attnsink/splash"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2_5",
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2_5",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2_5",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2_5",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2_5",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "hackable_transformer_attn_gate/lr_x2_5"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2_5",
+        "muonremez_qwen3_scaling"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2_5",
+        "parallel_llama"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2_5",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash",
+        "hackable_transformer_attn_sink/attnsink/jax"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+        "hackable_transformer_attn_sink/attnsink/jax"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/jax",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/jax",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+        "hackable_transformer_attn_sink/attnsink/jax"
+      ],
+      [
+        "muon_llama_scaling",
+        "hackable_transformer_attn_sink/attnsink/jax"
+      ],
+      [
+        "muon_qwen3_scaling",
+        "hackable_transformer_attn_sink/attnsink/jax"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "hackable_transformer_attn_sink/attnsink/jax"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/jax",
+        "muonremez_qwen3_scaling"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/jax",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+        "hackable_transformer_attn_sink/attnsink/splash"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+        "hackable_transformer_attn_sink/attnsink/splash"
+      ],
+      [
+        "muon_llama_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash"
+      ],
+      [
+        "muon_qwen3_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash",
+        "muonremez_qwen3_scaling"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+      ],
+      [
+        "muon_llama_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+      ],
+      [
+        "muon_qwen3_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+        "muonremez_qwen3_scaling"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_x4",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+      ],
+      [
+        "muon_llama_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+      ],
+      [
+        "muon_qwen3_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+      ],
+      [
+        "muonremez_qwen3_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+      ],
+      [
+        "parallel_llama",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+      ],
+      [
+        "prism_berkeley_qwen3_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+      ],
+      [
+        "muon_llama_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+      ],
+      [
+        "muon_qwen3_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+        "muonremez_qwen3_scaling"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+        "parallel_llama"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "muon_llama_scaling"
+      ],
+      [
+        "muon_llama_scaling",
+        "muonremez_qwen3_scaling"
+      ],
+      [
+        "muon_llama_scaling",
+        "parallel_llama"
+      ],
+      [
+        "muon_llama_scaling",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "muon_qwen3_scaling"
+      ],
+      [
+        "muon_qwen3_scaling",
+        "muonremez_qwen3_scaling"
+      ],
+      [
+        "muon_qwen3_scaling",
+        "parallel_llama"
+      ],
+      [
+        "muon_qwen3_scaling",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "muonremez_qwen3_scaling"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "parallel_llama"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "muonremez_qwen3_scaling",
+        "prism_berkeley_qwen3_scaling"
+      ]
+    ],
+    "rank_range": {
+      "muonh_qwen3_scaling": [
+        1,
+        1
+      ],
+      "adamh_llama_scaling": [
+        3,
+        10
+      ],
+      "hackable_transformer_attn_gate/lr_x2_5": [
+        2,
+        6
+      ],
+      "hackable_transformer_attn_gate/lr_x2": [
+        4,
+        8
+      ],
+      "cautious_llama_scaling": [
+        2,
+        12
+      ],
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": [
+        5,
+        7
+      ],
+      "c-adamc_llama_scaling": [
+        3,
+        13
+      ],
+      "muon_llama_scaling": [
+        5,
+        11
+      ],
+      "adamc_llama_scaling": [
+        5,
+        14
+      ],
+      "hackable_transformer_attn_gate/lr_x1": [
+        2,
+        12
+      ],
+      "muon_qwen3_scaling": [
+        3,
+        12
+      ],
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": [
+        3,
+        20
+      ],
+      "hackable_transformer_attn_sink/attnsink/splash": [
+        8,
+        14
+      ],
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": [
+        9,
+        15
+      ],
+      "hackable_transformer_attn_sink/attnsink/jax": [
+        11,
+        16
+      ],
+      "adamw_llama_scaling": [
+        12,
+        17
+      ],
+      "parallel_llama": [
+        13,
+        19
+      ],
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": [
+        18,
+        19
+      ],
+      "muonremez_qwen3_scaling": [
+        15,
+        19
+      ],
+      "prism_berkeley_qwen3_scaling": [
+        16,
+        20
+      ],
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": [
+        21,
+        21
+      ]
+    },
+    "top1_share": {
+      "muonh_qwen3_scaling": 1.0
+    },
+    "top1_by_ranking": {
+      "as_implemented_default": "muonh_qwen3_scaling",
+      "least_squares_optimum": "muonh_qwen3_scaling",
+      "two_parameter_loglog": "muonh_qwen3_scaling",
+      "shared_exponent": "muonh_qwen3_scaling"
+    },
+    "distinct_top1": [
+      "muonh_qwen3_scaling"
+    ],
+    "groups_by_median_rank": [
+      {
+        "members": [
+          "muonh_qwen3_scaling"
+        ],
+        "median_ranks": [
+          1.0
+        ],
+        "rank_range": [
+          1,
+          1
+        ]
+      },
+      {
+        "members": [
+          "adamh_llama_scaling",
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "hackable_transformer_attn_gate/lr_x2",
+          "cautious_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "c-adamc_llama_scaling",
+          "muon_llama_scaling",
+          "adamc_llama_scaling",
+          "hackable_transformer_attn_gate/lr_x1",
+          "muon_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x4",
+          "hackable_transformer_attn_sink/attnsink/splash",
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+          "hackable_transformer_attn_sink/attnsink/jax",
+          "adamw_llama_scaling",
+          "parallel_llama",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5",
+          "muonremez_qwen3_scaling",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        "median_ranks": [
+          4.0,
+          4.0,
+          4.5,
+          6.5,
+          6.5,
+          7.5,
+          9.0,
+          10.0,
+          10.0,
+          10.5,
+          12.5,
+          13.0,
+          14.0,
+          15.0,
+          16.5,
+          16.5,
+          18.0,
+          18.5,
+          20.0
+        ],
+        "rank_range": [
+          2,
+          20
+        ]
+      },
+      {
+        "members": [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        "median_ranks": [
+          21.0
+        ],
+        "rank_range": [
+          21,
+          21
+        ]
+      }
+    ]
+  },
+  "core_lm_cap200_18_starts": {
+    "rankings": 18,
+    "pairs": 210,
+    "invariant_pairs": 77,
+    "largest_invariant_top_k": 0,
+    "all_invariant_k": [
+      21
+    ],
+    "invariant_pair_list": [
+      [
+        "adamh_llama_scaling",
+        "adamc_llama_scaling"
+      ],
+      [
+        "adamc_llama_scaling",
+        "adamw_llama_scaling"
+      ],
+      [
+        "c-adamc_llama_scaling",
+        "adamc_llama_scaling"
+      ],
+      [
+        "cautious_llama_scaling",
+        "adamc_llama_scaling"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "adamc_llama_scaling"
+      ],
+      [
+        "adamc_llama_scaling",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "adamh_llama_scaling",
+        "adamw_llama_scaling"
+      ],
+      [
+        "adamh_llama_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+      ],
+      [
+        "adamh_llama_scaling",
+        "muon_llama_scaling"
+      ],
+      [
+        "adamh_llama_scaling",
+        "muon_qwen3_scaling"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "adamh_llama_scaling"
+      ],
+      [
+        "adamh_llama_scaling",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "c-adamc_llama_scaling",
+        "adamw_llama_scaling"
+      ],
+      [
+        "cautious_llama_scaling",
+        "adamw_llama_scaling"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x1",
+        "adamw_llama_scaling"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2",
+        "adamw_llama_scaling"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2_5",
+        "adamw_llama_scaling"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+        "adamw_llama_scaling"
+      ],
+      [
+        "muon_llama_scaling",
+        "adamw_llama_scaling"
+      ],
+      [
+        "muon_qwen3_scaling",
+        "adamw_llama_scaling"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "adamw_llama_scaling"
+      ],
+      [
+        "adamw_llama_scaling",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "c-adamc_llama_scaling"
+      ],
+      [
+        "c-adamc_llama_scaling",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "cautious_llama_scaling"
+      ],
+      [
+        "cautious_llama_scaling",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2",
+        "hackable_transformer_attn_gate/lr_x1"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x1",
+        "hackable_transformer_attn_sink/attnsink/jax"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x1",
+        "hackable_transformer_attn_sink/attnsink/splash"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x1",
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x1",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2",
+        "hackable_transformer_attn_sink/attnsink/jax"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2",
+        "hackable_transformer_attn_sink/attnsink/splash"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2",
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2",
+        "muon_llama_scaling"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2",
+        "muon_qwen3_scaling"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2_5",
+        "hackable_transformer_attn_sink/attnsink/jax"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2_5",
+        "hackable_transformer_attn_sink/attnsink/splash"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2_5",
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2_5",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2_5",
+        "muon_llama_scaling"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2_5",
+        "muon_qwen3_scaling"
+      ],
+      [
+        "hackable_transformer_attn_gate/lr_x2_5",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash",
+        "hackable_transformer_attn_sink/attnsink/jax"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+        "hackable_transformer_attn_sink/attnsink/jax"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+        "hackable_transformer_attn_sink/attnsink/jax"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "hackable_transformer_attn_sink/attnsink/jax"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/jax",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+        "hackable_transformer_attn_sink/attnsink/splash"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+        "hackable_transformer_attn_sink/attnsink/splash"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+      ],
+      [
+        "muonremez_qwen3_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+      ],
+      [
+        "parallel_llama",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5",
+        "muonremez_qwen3_scaling"
+      ],
+      [
+        "parallel_llama",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+        "muon_llama_scaling"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+        "muon_qwen3_scaling"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+      ],
+      [
+        "hackable_transformer_attn_sink/attnsink/splash/default_x4",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "muon_llama_scaling"
+      ],
+      [
+        "muon_llama_scaling",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "muon_qwen3_scaling"
+      ],
+      [
+        "muon_qwen3_scaling",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "muonh_qwen3_scaling",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "parallel_llama",
+        "muonremez_qwen3_scaling"
+      ],
+      [
+        "muonremez_qwen3_scaling",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      [
+        "parallel_llama",
+        "prism_berkeley_qwen3_scaling"
+      ]
+    ],
+    "rank_range": {
+      "muonh_qwen3_scaling": [
+        1,
+        5
+      ],
+      "hackable_transformer_attn_gate/lr_x2_5": [
+        2,
+        7
+      ],
+      "adamh_llama_scaling": [
+        3,
+        9
+      ],
+      "hackable_transformer_attn_gate/lr_x2": [
+        1,
+        8
+      ],
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": [
+        4,
+        10
+      ],
+      "cautious_llama_scaling": [
+        2,
+        14
+      ],
+      "c-adamc_llama_scaling": [
+        3,
+        14
+      ],
+      "hackable_transformer_attn_gate/lr_x1": [
+        2,
+        13
+      ],
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": [
+        8,
+        17
+      ],
+      "adamc_llama_scaling": [
+        5,
+        15
+      ],
+      "muon_llama_scaling": [
+        9,
+        15
+      ],
+      "muon_qwen3_scaling": [
+        9,
+        16
+      ],
+      "hackable_transformer_attn_sink/attnsink/splash": [
+        6,
+        17
+      ],
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": [
+        7,
+        18
+      ],
+      "hackable_transformer_attn_sink/attnsink/jax": [
+        8,
+        19
+      ],
+      "parallel_llama": [
+        1,
+        16
+      ],
+      "adamw_llama_scaling": [
+        12,
+        20
+      ],
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": [
+        2,
+        18
+      ],
+      "muonremez_qwen3_scaling": [
+        3,
+        19
+      ],
+      "prism_berkeley_qwen3_scaling": [
+        20,
+        21
+      ],
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": [
+        4,
+        21
+      ]
+    },
+    "top1_share": {
+      "hackable_transformer_attn_gate/lr_x2": 0.3333333333333333,
+      "muonh_qwen3_scaling": 0.6111111111111112,
+      "parallel_llama": 0.05555555555555555
+    },
+    "top1_by_ranking": {
+      "lm200|c0=0.0,b0x0.5": "muonh_qwen3_scaling",
+      "lm200|c0=0.0,b0x1.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.0,b0x2.0": "parallel_llama",
+      "lm200|c0=0.25,b0x0.5": "muonh_qwen3_scaling",
+      "lm200|c0=0.25,b0x1.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.25,b0x2.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.5,b0x0.5": "muonh_qwen3_scaling",
+      "lm200|c0=0.5,b0x1.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.5,b0x2.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.7,b0x0.5": "muonh_qwen3_scaling",
+      "lm200|c0=0.7,b0x1.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.7,b0x2.0": "muonh_qwen3_scaling",
+      "lm200|c0=0.9,b0x0.5": "hackable_transformer_attn_gate/lr_x2",
+      "lm200|c0=0.9,b0x1.0": "hackable_transformer_attn_gate/lr_x2",
+      "lm200|c0=0.9,b0x2.0": "hackable_transformer_attn_gate/lr_x2",
+      "lm200|c0=0.99,b0x0.5": "hackable_transformer_attn_gate/lr_x2",
+      "lm200|c0=0.99,b0x1.0": "hackable_transformer_attn_gate/lr_x2",
+      "lm200|c0=0.99,b0x2.0": "hackable_transformer_attn_gate/lr_x2"
+    },
+    "distinct_top1": [
+      "hackable_transformer_attn_gate/lr_x2",
+      "muonh_qwen3_scaling",
+      "parallel_llama"
+    ],
+    "groups_by_median_rank": [
+      {
+        "members": [
+          "muonh_qwen3_scaling",
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "adamh_llama_scaling",
+          "hackable_transformer_attn_gate/lr_x2",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "cautious_llama_scaling",
+          "c-adamc_llama_scaling",
+          "hackable_transformer_attn_gate/lr_x1",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x4",
+          "adamc_llama_scaling",
+          "muon_llama_scaling",
+          "muon_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash",
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+          "hackable_transformer_attn_sink/attnsink/jax",
+          "parallel_llama",
+          "adamw_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5",
+          "muonremez_qwen3_scaling",
+          "prism_berkeley_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        "median_ranks": [
+          1.0,
+          2.0,
+          3.5,
+          4.0,
+          5.0,
+          6.0,
+          7.0,
+          9.0,
+          9.0,
+          10.0,
+          11.0,
+          12.0,
+          13.0,
+          14.0,
+          15.0,
+          16.0,
+          17.0,
+          18.0,
+          19.0,
+          20.0,
+          21.0
+        ],
+        "rank_range": [
+          1,
+          21
+        ]
+      }
+    ]
+  },
+  "least_squares_from_18_starts": {
+    "optimum": "rig.python_marin (default start); its SSE equals the minimum over all 36 multistart fits",
+    "same_optimum_criterion": "forecast within 1e-06 BPB",
+    "trust_region_default_tolerances_preregistered": {
+      "starts": 18,
+      "submissions_reaching_optimum_from_every_start": 0,
+      "starts_off_optimum_per_submission": {
+        "adamc_llama_scaling": 5,
+        "adamh_llama_scaling": 3,
+        "adamw_llama_scaling": 2,
+        "c-adamc_llama_scaling": 3,
+        "cautious_llama_scaling": 3,
+        "hackable_transformer_attn_gate/lr_x1": 4,
+        "hackable_transformer_attn_gate/lr_x2": 3,
+        "hackable_transformer_attn_gate/lr_x2_5": 5,
+        "hackable_transformer_attn_sink/attnsink/jax": 3,
+        "hackable_transformer_attn_sink/attnsink/splash": 3,
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr": 3,
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 2,
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 3,
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2": 3,
+        "hackable_transformer_attn_sink/attnsink/splash/default_x4": 4,
+        "muon_llama_scaling": 3,
+        "muon_qwen3_scaling": 4,
+        "muonh_qwen3_scaling": 5,
+        "muonremez_qwen3_scaling": 2,
+        "parallel_llama": 3,
+        "prism_berkeley_qwen3_scaling": 4
+      },
+      "off_optimum_starts_with_higher_sse": 70,
+      "off_optimum_starts_total": 70,
+      "off_optimum_count_by_start": {
+        "c0=0.99,b0x0.5": 21,
+        "c0=0.99,b0x2.0": 21,
+        "c0=0.0,b0x0.5": 11,
+        "c0=0.99,b0x1.0": 10,
+        "c0=0.25,b0x0.5": 6,
+        "c0=0.5,b0x1.0": 1
+      },
+      "max_forecast_departure_bpb": 0.09568791695927592,
+      "distinct_rankings": 7,
+      "same_ranking_from_all_starts": false
+    },
+    "trust_region_log_a_tight_tolerances_diagnostic": {
+      "starts": 18,
+      "submissions_reaching_optimum_from_every_start": 0,
+      "starts_off_optimum_per_submission": {
+        "adamc_llama_scaling": 1,
+        "adamh_llama_scaling": 1,
+        "adamw_llama_scaling": 1,
+        "c-adamc_llama_scaling": 1,
+        "cautious_llama_scaling": 1,
+        "hackable_transformer_attn_gate/lr_x1": 1,
+        "hackable_transformer_attn_gate/lr_x2": 1,
+        "hackable_transformer_attn_gate/lr_x2_5": 1,
+        "hackable_transformer_attn_sink/attnsink/jax": 1,
+        "hackable_transformer_attn_sink/attnsink/splash": 1,
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr": 1,
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 1,
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 1,
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2": 1,
+        "hackable_transformer_attn_sink/attnsink/splash/default_x4": 1,
+        "muon_llama_scaling": 1,
+        "muon_qwen3_scaling": 1,
+        "muonh_qwen3_scaling": 1,
+        "muonremez_qwen3_scaling": 1,
+        "parallel_llama": 1,
+        "prism_berkeley_qwen3_scaling": 1
+      },
+      "off_optimum_starts_with_higher_sse": 21,
+      "off_optimum_starts_total": 21,
+      "off_optimum_count_by_start": {
+        "c0=0.99,b0x2.0": 21
+      },
+      "max_forecast_departure_bpb": 0.09550272109083502,
+      "distinct_rankings": 2,
+      "same_ranking_from_all_starts": false
+    },
+    "optimum_sse_equals_multistart_minimum": true
+  },
+  "monotone_distortion": {
+    "spearman_forecasts": 0.9688109161793371,
+    "kendall_forecasts": 0.894736842105263,
+    "pearson_forecasts": 0.923783489674442,
+    "spearman_forecast_vs_shift": 0.8518518518518517,
+    "discordant_pairs": 11,
+    "discordant_rank_distance_counts": {
+      "1": 5,
+      "2": 2,
+      "3": 2,
+      "4": 1,
+      "5": 1
+    },
+    "discordant_share_rank_distance_le_2": 0.6363636363636364,
+    "discordant": [
+      {
+        "pair": [
+          "adamc_llama_scaling",
+          "hackable_transformer_attn_gate/lr_x1"
+        ],
+        "impl_ranks": [
+          10,
+          9
+        ],
+        "impl_rank_distance": 1,
+        "impl_gap_bpb": 0.0016065709246864124,
+        "optimum_gap_bpb": -0.0027276774290050376
+      },
+      {
+        "pair": [
+          "adamc_llama_scaling",
+          "muon_llama_scaling"
+        ],
+        "impl_ranks": [
+          10,
+          11
+        ],
+        "impl_rank_distance": 1,
+        "impl_gap_bpb": -0.0009407504404567169,
+        "optimum_gap_bpb": 0.0013566262257952433
+      },
+      {
+        "pair": [
+          "adamw_llama_scaling",
+          "parallel_llama"
+        ],
+        "impl_ranks": [
+          17,
+          16
+        ],
+        "impl_rank_distance": 1,
+        "impl_gap_bpb": 0.0021441671515904925,
+        "optimum_gap_bpb": -0.007134039278283266
+      },
+      {
+        "pair": [
+          "c-adamc_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+        ],
+        "impl_ranks": [
+          7,
+          8
+        ],
+        "impl_rank_distance": 1,
+        "impl_gap_bpb": -0.0019316816212608945,
+        "optimum_gap_bpb": 0.013153874193847503
+      },
+      {
+        "pair": [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5",
+          "muonremez_qwen3_scaling"
+        ],
+        "impl_ranks": [
+          18,
+          19
+        ],
+        "impl_rank_distance": 1,
+        "impl_gap_bpb": -0.0055808997441227914,
+        "optimum_gap_bpb": 0.0038740463384161483
+      },
+      {
+        "pair": [
+          "cautious_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+        ],
+        "impl_ranks": [
+          6,
+          8
+        ],
+        "impl_rank_distance": 2,
+        "impl_gap_bpb": -0.0026330771973762657,
+        "optimum_gap_bpb": 0.010383733872144196
+      },
+      {
+        "pair": [
+          "hackable_transformer_attn_gate/lr_x1",
+          "muon_llama_scaling"
+        ],
+        "impl_ranks": [
+          9,
+          11
+        ],
+        "impl_rank_distance": 2,
+        "impl_gap_bpb": -0.0025473213651431292,
+        "optimum_gap_bpb": 0.004084303654800281
+      },
+      {
+        "pair": [
+          "hackable_transformer_attn_gate/lr_x1",
+          "muon_qwen3_scaling"
+        ],
+        "impl_ranks": [
+          9,
+          12
+        ],
+        "impl_rank_distance": 3,
+        "impl_gap_bpb": -0.0025676104373162367,
+        "optimum_gap_bpb": 0.0025182004769720434
+      },
+      {
+        "pair": [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+        ],
+        "impl_ranks": [
+          5,
+          8
+        ],
+        "impl_rank_distance": 3,
+        "impl_gap_bpb": -0.0028462565855713606,
+        "optimum_gap_bpb": 0.007159628880434865
+      },
+      {
+        "pair": [
+          "hackable_transformer_attn_gate/lr_x2",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+        ],
+        "impl_ranks": [
+          4,
+          8
+        ],
+        "impl_rank_distance": 4,
+        "impl_gap_bpb": -0.004094433604607817,
+        "optimum_gap_bpb": 0.005083357976911729
+      },
+      {
+        "pair": [
+          "adamh_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+        ],
+        "impl_ranks": [
+          3,
+          8
+        ],
+        "impl_rank_distance": 5,
+        "impl_gap_bpb": -0.005577717330605414,
+        "optimum_gap_bpb": 3.271329333920381e-05
+      }
+    ],
+    "approximately_monotone": true,
+    "reading": "approximately monotone: a monotone map of forecasts preserves every pairwise order, so differential shifts of median 8.7x the nearest-neighbour gap (marin_noise.json) that are close to order-preserving change only the 11 orders listed, which sit where the map is locally non-monotone",
+    "discordant_per_submission": {
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 5,
+      "hackable_transformer_attn_gate/lr_x1": 3,
+      "adamc_llama_scaling": 2,
+      "muon_llama_scaling": 2,
+      "adamh_llama_scaling": 1,
+      "adamw_llama_scaling": 1,
+      "parallel_llama": 1,
+      "c-adamc_llama_scaling": 1,
+      "cautious_llama_scaling": 1,
+      "muon_qwen3_scaling": 1,
+      "hackable_transformer_attn_gate/lr_x2": 1,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 1,
+      "muonremez_qwen3_scaling": 1,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 1
+    }
+  },
+  "predictions": {
+    "PM4_core_small": "no threshold was pre-registered; invariant share 14/210 is reported and judged in the report",
+    "PM4_top1_invariant": false,
+    "PM4_top3_not_invariant": true
+  },
+  "rankings": {
+    "lm200|c0=0.0,b0x0.5": {
+      "adamc_llama_scaling": 0.7704153681948169,
+      "adamh_llama_scaling": 0.7660726847217445,
+      "adamw_llama_scaling": 0.7752179304607147,
+      "c-adamc_llama_scaling": 0.7659767733997039,
+      "cautious_llama_scaling": 0.7657170575053438,
+      "hackable_transformer_attn_gate/lr_x1": 0.7748363096841832,
+      "hackable_transformer_attn_gate/lr_x2": 0.7723810969396625,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.7723111058088645,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.7772018705671409,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.7770550171353166,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.7770550171353166,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.8014630041306119,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.7866008226745479,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.7722636672124915,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.7784514639021072,
+      "muon_llama_scaling": 0.773434271076645,
+      "muon_qwen3_scaling": 0.7734329117222135,
+      "muonh_qwen3_scaling": 0.7654805243244522,
+      "muonremez_qwen3_scaling": 0.7898498002463099,
+      "parallel_llama": 0.7759280935620224,
+      "prism_berkeley_qwen3_scaling": 0.8001857012985876
+    },
+    "lm100000|c0=0.0,b0x0.5": {
+      "adamc_llama_scaling": 0.8538319402158717,
+      "adamh_llama_scaling": 0.837120625776732,
+      "adamw_llama_scaling": 0.8646932315172065,
+      "c-adamc_llama_scaling": 0.8461618992150188,
+      "cautious_llama_scaling": 0.843899208474595,
+      "hackable_transformer_attn_gate/lr_x1": 0.8553987382296636,
+      "hackable_transformer_attn_gate/lr_x2": 0.8422186028931478,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.8342755876027386,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.8606831201005553,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.8604589639948049,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.8604589639948049,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.8910600522891338,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.8728940552363372,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.8443416884513215,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.8370045904652391,
+      "muon_llama_scaling": 0.8527415017117085,
+      "muon_qwen3_scaling": 0.8543105871298533,
+      "muonh_qwen3_scaling": 0.8318129613396859,
+      "muonremez_qwen3_scaling": 0.8759032863578484,
+      "parallel_llama": 0.863366339873052,
+      "prism_berkeley_qwen3_scaling": 0.8811932241602073
+    },
+    "least_squares|c0=0.0,b0x0.5": {
+      "adamc_llama_scaling": 0.7707516645945798,
+      "adamh_llama_scaling": 0.837368661344225,
+      "adamw_llama_scaling": 0.8678057915904412,
+      "c-adamc_llama_scaling": 0.8504898269575363,
+      "cautious_llama_scaling": 0.8477196855329828,
+      "hackable_transformer_attn_gate/lr_x1": 0.7748543563462158,
+      "hackable_transformer_attn_gate/lr_x2": 0.8424193376816909,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.7726936485856507,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.7772340363997418,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.7770832232395516,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.7770832232395516,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.9091733090558693,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.7864280972727953,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.844495578043924,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.7789990987179116,
+      "muon_llama_scaling": 0.8530920955035851,
+      "muon_qwen3_scaling": 0.773542585319394,
+      "muonh_qwen3_scaling": 0.7658612904711187,
+      "muonremez_qwen3_scaling": 0.8770667113079186,
+      "parallel_llama": 0.8749398255523426,
+      "prism_berkeley_qwen3_scaling": 0.7999937885176756
+    },
+    "lm200|c0=0.0,b0x1.0": {
+      "adamc_llama_scaling": 0.7709674564269231,
+      "adamh_llama_scaling": 0.7665101486860438,
+      "adamw_llama_scaling": 0.775892346086305,
+      "c-adamc_llama_scaling": 0.7664870911735174,
+      "cautious_llama_scaling": 0.7662110921421798,
+      "hackable_transformer_attn_gate/lr_x1": 0.7755443602081946,
+      "hackable_transformer_attn_gate/lr_x2": 0.7728973601441003,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.7727410778310195,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.7779175750328229,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.7777680261084664,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.7777680261084664,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.8026297810954,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.7874841991894725,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.77276087431199,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.7787852732764629,
+      "muon_llama_scaling": 0.7740493526765568,
+      "muon_qwen3_scaling": 0.7740806715923184,
+      "muonh_qwen3_scaling": 0.7659262123194419,
+      "muonremez_qwen3_scaling": 0.790652902467911,
+      "parallel_llama": 0.7766724335435948,
+      "prism_berkeley_qwen3_scaling": 0.8010216552320882
+    },
+    "lm100000|c0=0.0,b0x1.0": {
+      "adamc_llama_scaling": 0.7697473517682343,
+      "adamh_llama_scaling": 0.7655059025676997,
+      "adamw_llama_scaling": 0.8592666192636513,
+      "c-adamc_llama_scaling": 0.7656176096373036,
+      "cautious_llama_scaling": 0.7653793481716099,
+      "hackable_transformer_attn_gate/lr_x1": 0.8543916332738726,
+      "hackable_transformer_attn_gate/lr_x2": 0.842195375743103,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.8342798507070401,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.8591559202033329,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.8589496866323147,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.8589496866323147,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.8899440859232675,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.8716385976961041,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.844100148004101,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.8370037971448027,
+      "muon_llama_scaling": 0.8527413400172478,
+      "muon_qwen3_scaling": 0.8541880051804169,
+      "muonh_qwen3_scaling": 0.8316863960093427,
+      "muonremez_qwen3_scaling": 0.8754329317697385,
+      "parallel_llama": 0.7746871321032188,
+      "prism_berkeley_qwen3_scaling": 0.8809691633389685
+    },
+    "least_squares|c0=0.0,b0x1.0": {
+      "adamc_llama_scaling": 0.8544487226419412,
+      "adamh_llama_scaling": 0.8373686565147672,
+      "adamw_llama_scaling": 0.8678057911192911,
+      "c-adamc_llama_scaling": 0.8504898265026108,
+      "cautious_llama_scaling": 0.8477196816287081,
+      "hackable_transformer_attn_gate/lr_x1": 0.8571763999247565,
+      "hackable_transformer_attn_gate/lr_x2": 0.842419298246411,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.834589288497559,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.8639526830602364,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.8636659433271959,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.8636659433271959,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.9091734709558166,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.8809407918617385,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.8444955771944085,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.8373358640798779,
+      "muon_llama_scaling": 0.8530921372490025,
+      "muon_qwen3_scaling": 0.854658194903109,
+      "muonh_qwen3_scaling": 0.8320699651422955,
+      "muonremez_qwen3_scaling": 0.8770667218739955,
+      "parallel_llama": 0.8749398190897492,
+      "prism_berkeley_qwen3_scaling": 0.88143313492048
+    },
+    "lm200|c0=0.0,b0x2.0": {
+      "adamc_llama_scaling": 0.8341581974186162,
+      "adamh_llama_scaling": 0.8263884103384093,
+      "adamw_llama_scaling": 0.8402681817634209,
+      "c-adamc_llama_scaling": 0.8300829608527291,
+      "cautious_llama_scaling": 0.8293272645469884,
+      "hackable_transformer_attn_gate/lr_x1": 0.8330006098889287,
+      "hackable_transformer_attn_gate/lr_x2": 0.8283431200937079,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.8261871473523674,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.8368714815994451,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.8366679884276131,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.8366679884276131,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.8016329900069118,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.7867312047687296,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.8294925780295068,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.831622429364593,
+      "muon_llama_scaling": 0.8353847023796616,
+      "muon_qwen3_scaling": 0.8354618676132703,
+      "muonh_qwen3_scaling": 0.8236922105930373,
+      "muonremez_qwen3_scaling": 0.7899629426668611,
+      "parallel_llama": 0.7760440129733472,
+      "prism_berkeley_qwen3_scaling": 0.8611770549673143
+    },
+    "lm100000|c0=0.0,b0x2.0": {
+      "adamc_llama_scaling": 0.8543047777821943,
+      "adamh_llama_scaling": 0.8370856888622878,
+      "adamw_llama_scaling": 0.8660937236069591,
+      "c-adamc_llama_scaling": 0.8502078083136534,
+      "cautious_llama_scaling": 0.8474023054358247,
+      "hackable_transformer_attn_gate/lr_x1": 0.8557950902329434,
+      "hackable_transformer_attn_gate/lr_x2": 0.8420909533500442,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.8342657790512924,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.8613558732565025,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.8610885038808557,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.8610885038808557,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.8909417440122004,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.8727660005105642,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.844341712132036,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.8370039683412009,
+      "muon_llama_scaling": 0.8527414382465588,
+      "muon_qwen3_scaling": 0.8543105869983191,
+      "muonh_qwen3_scaling": 0.8316989404133773,
+      "muonremez_qwen3_scaling": 0.8758528058973082,
+      "parallel_llama": 0.8627499368660072,
+      "prism_berkeley_qwen3_scaling": 0.8811931957513806
+    },
+    "least_squares|c0=0.0,b0x2.0": {
+      "adamc_llama_scaling": 0.8544487221139546,
+      "adamh_llama_scaling": 0.8373686637550091,
+      "adamw_llama_scaling": 0.8678057924840612,
+      "c-adamc_llama_scaling": 0.8504898261781833,
+      "cautious_llama_scaling": 0.8477196825102011,
+      "hackable_transformer_attn_gate/lr_x1": 0.8571764021472341,
+      "hackable_transformer_attn_gate/lr_x2": 0.8424191988144245,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.8345893140647115,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.8639526768775749,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.8636659485146565,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.8636659485146565,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.909173552027239,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.8809407724508831,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.8444955829682906,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.8373360167585087,
+      "muon_llama_scaling": 0.8530921330420559,
+      "muon_qwen3_scaling": 0.8546581953401711,
+      "muonh_qwen3_scaling": 0.8320699612296056,
+      "muonremez_qwen3_scaling": 0.8770667128079218,
+      "parallel_llama": 0.874939840246991,
+      "prism_berkeley_qwen3_scaling": 0.8814332019155503
+    },
+    "lm200|c0=0.25,b0x0.5": {
+      "adamc_llama_scaling": 0.834057565175181,
+      "adamh_llama_scaling": 0.8264540575891195,
+      "adamw_llama_scaling": 0.840102904937216,
+      "c-adamc_llama_scaling": 0.8299807685050293,
+      "cautious_llama_scaling": 0.8294005453641071,
+      "hackable_transformer_attn_gate/lr_x1": 0.8330559800755134,
+      "hackable_transformer_attn_gate/lr_x2": 0.828206798230022,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.8261114003246535,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.836928659343153,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.8367250987028636,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.8367250987028636,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.8640082206872288,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.8473015381627248,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.8293513359181195,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.8318112405443621,
+      "muon_llama_scaling": 0.835233705404271,
+      "muon_qwen3_scaling": 0.8353102245729422,
+      "muonh_qwen3_scaling": 0.8236123141838362,
+      "muonremez_qwen3_scaling": 0.8528568203048241,
+      "parallel_llama": 0.8382603782722146,
+      "prism_berkeley_qwen3_scaling": 0.8612318337962194
+    },
+    "lm100000|c0=0.25,b0x0.5": {
+      "adamc_llama_scaling": 0.85410327360064,
+      "adamh_llama_scaling": 0.8371215466794532,
+      "adamw_llama_scaling": 0.8660923558794611,
+      "c-adamc_llama_scaling": 0.8503737353894741,
+      "cautious_llama_scaling": 0.8476213349019703,
+      "hackable_transformer_attn_gate/lr_x1": 0.8558004884491551,
+      "hackable_transformer_attn_gate/lr_x2": 0.8420908866760257,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.8342798589552111,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.8613558764350538,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.8610885058935971,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.8610885058935971,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.891482217673022,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.8734256473370007,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.8442986314029689,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.8370037857081315,
+      "muon_llama_scaling": 0.8527413454153107,
+      "muon_qwen3_scaling": 0.8543021800148383,
+      "muonh_qwen3_scaling": 0.8316867535787987,
+      "muonremez_qwen3_scaling": 0.8760429748460563,
+      "parallel_llama": 0.8661941791863109,
+      "prism_berkeley_qwen3_scaling": 0.8811933208590375
+    },
+    "least_squares|c0=0.25,b0x0.5": {
+      "adamc_llama_scaling": 0.7816105439084486,
+      "adamh_llama_scaling": 0.8373686433110596,
+      "adamw_llama_scaling": 0.8678057936029651,
+      "c-adamc_llama_scaling": 0.8504898252286731,
+      "cautious_llama_scaling": 0.8477196863033514,
+      "hackable_transformer_attn_gate/lr_x1": 0.7842654733481271,
+      "hackable_transformer_attn_gate/lr_x2": 0.8424192189167011,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.7819359531676648,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.8639526745766609,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.8636659455594341,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.8636659455594341,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.909173442791277,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.8809407447960831,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.8444955516753807,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.8373358902560442,
+      "muon_llama_scaling": 0.8530920985118942,
+      "muon_qwen3_scaling": 0.7837201592593765,
+      "muonh_qwen3_scaling": 0.7759861411209279,
+      "muonremez_qwen3_scaling": 0.8770667111650834,
+      "parallel_llama": 0.7864530744828969,
+      "prism_berkeley_qwen3_scaling": 0.8814331182772829
+    },
+    "lm200|c0=0.25,b0x1.0": {
+      "adamc_llama_scaling": 0.8340575650715588,
+      "adamh_llama_scaling": 0.8264540559642206,
+      "adamw_llama_scaling": 0.8401029007361072,
+      "c-adamc_llama_scaling": 0.8299807692774519,
+      "cautious_llama_scaling": 0.8294005501016715,
+      "hackable_transformer_attn_gate/lr_x1": 0.8330559838501641,
+      "hackable_transformer_attn_gate/lr_x2": 0.8282067943883664,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.8261113900197392,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.8369286599253004,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.8367250969089963,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.8367250969089963,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.8640082187417052,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.8473015375743508,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.8293513400488125,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.8318112377954623,
+      "muon_llama_scaling": 0.8352337043266176,
+      "muon_qwen3_scaling": 0.8353102255951008,
+      "muonh_qwen3_scaling": 0.8236123158372592,
+      "muonremez_qwen3_scaling": 0.8528568173273916,
+      "parallel_llama": 0.8382603843237242,
+      "prism_berkeley_qwen3_scaling": 0.861231829927499
+    },
+    "lm100000|c0=0.25,b0x1.0": {
+      "adamc_llama_scaling": 0.8541032733782646,
+      "adamh_llama_scaling": 0.837120638894823,
+      "adamw_llama_scaling": 0.8660923559035602,
+      "c-adamc_llama_scaling": 0.8503737349451427,
+      "cautious_llama_scaling": 0.847621345440501,
+      "hackable_transformer_attn_gate/lr_x1": 0.8558004542037602,
+      "hackable_transformer_attn_gate/lr_x2": 0.8420908896810456,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.8342798548626164,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.8613558758284868,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.8610885056446657,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.8610885056446657,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.8914802569590485,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.8734256139861555,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.8442986369693548,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.8370037909126912,
+      "muon_llama_scaling": 0.8527413425492979,
+      "muon_qwen3_scaling": 0.8543021791004878,
+      "muonh_qwen3_scaling": 0.8316867540329651,
+      "muonremez_qwen3_scaling": 0.8760429761731082,
+      "parallel_llama": 0.8661941812683029,
+      "prism_berkeley_qwen3_scaling": 0.8811931966486295
+    },
+    "least_squares|c0=0.25,b0x1.0": {
+      "adamc_llama_scaling": 0.8544487221522958,
+      "adamh_llama_scaling": 0.8373686582275038,
+      "adamw_llama_scaling": 0.8678057935138486,
+      "c-adamc_llama_scaling": 0.8504898269590542,
+      "cautious_llama_scaling": 0.8477196749903563,
+      "hackable_transformer_attn_gate/lr_x1": 0.8571764026194124,
+      "hackable_transformer_attn_gate/lr_x2": 0.8424192705526503,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.8345891989575364,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.8639526745573621,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.8636659389945401,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.8636659389945401,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.9091734329856453,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.8809408036041376,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.8444955550240238,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.8373360689465703,
+      "muon_llama_scaling": 0.8530921039930038,
+      "muon_qwen3_scaling": 0.8546581939260776,
+      "muonh_qwen3_scaling": 0.8320699630491165,
+      "muonremez_qwen3_scaling": 0.8770666936900081,
+      "parallel_llama": 0.8749398320982067,
+      "prism_berkeley_qwen3_scaling": 0.8814331022381307
+    },
+    "lm200|c0=0.25,b0x2.0": {
+      "adamc_llama_scaling": 0.8342793124970723,
+      "adamh_llama_scaling": 0.8262997331625687,
+      "adamw_llama_scaling": 0.8400211074804308,
+      "c-adamc_llama_scaling": 0.8302062579476038,
+      "cautious_llama_scaling": 0.8294488164871872,
+      "hackable_transformer_attn_gate/lr_x1": 0.8327820651826094,
+      "hackable_transformer_attn_gate/lr_x2": 0.8283952518896582,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.826110661084237,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.8366452749276029,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.8364420833254043,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.8364420833254043,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.8639511742377591,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.8472450382912399,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.829546597441265,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.8317653076652075,
+      "muon_llama_scaling": 0.835158661328078,
+      "muon_qwen3_scaling": 0.8352349516079237,
+      "muonh_qwen3_scaling": 0.8236115543637272,
+      "muonremez_qwen3_scaling": 0.8527994415797429,
+      "parallel_llama": 0.8379570417024564,
+      "prism_berkeley_qwen3_scaling": 0.8611777918443682
+    },
+    "lm100000|c0=0.25,b0x2.0": {
+      "adamc_llama_scaling": 0.8543047864096455,
+      "adamh_llama_scaling": 0.8370083804065531,
+      "adamw_llama_scaling": 0.8660930946916316,
+      "c-adamc_llama_scaling": 0.8502083511741999,
+      "cautious_llama_scaling": 0.8474056284018034,
+      "hackable_transformer_attn_gate/lr_x1": 0.8557930257569908,
+      "hackable_transformer_attn_gate/lr_x2": 0.8421929672263943,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.8342798498289956,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.8613558722195924,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.8610872923322519,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.8610872923322519,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.8914821415563616,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.8734194277238433,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.8442377552652811,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.8370036829956714,
+      "muon_llama_scaling": 0.8527414380231743,
+      "muon_qwen3_scaling": 0.8543105881118377,
+      "muonh_qwen3_scaling": 0.8316867443189276,
+      "muonremez_qwen3_scaling": 0.8760429749731407,
+      "parallel_llama": 0.8661941777708406,
+      "prism_berkeley_qwen3_scaling": 0.8811931917834617
+    },
+    "least_squares|c0=0.25,b0x2.0": {
+      "adamc_llama_scaling": 0.8544487241121578,
+      "adamh_llama_scaling": 0.8373686557659074,
+      "adamw_llama_scaling": 0.8678057922655992,
+      "c-adamc_llama_scaling": 0.8504898269389188,
+      "cautious_llama_scaling": 0.8477196821024612,
+      "hackable_transformer_attn_gate/lr_x1": 0.8571764026976044,
+      "hackable_transformer_attn_gate/lr_x2": 0.8424193134160987,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.834589185661989,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.8639526807215321,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.8636659417501086,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.8636659417501086,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.9091734203709526,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.8809407682240543,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.8444955675072026,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.8373360295336165,
+      "muon_llama_scaling": 0.8530921140782886,
+      "muon_qwen3_scaling": 0.8546581947774572,
+      "muonh_qwen3_scaling": 0.8320699682040744,
+      "muonremez_qwen3_scaling": 0.877066711560865,
+      "parallel_llama": 0.8749398268157377,
+      "prism_berkeley_qwen3_scaling": 0.881433179133395
+    },
+    "lm200|c0=0.5,b0x0.5": {
+      "adamc_llama_scaling": 0.8342928366139081,
+      "adamh_llama_scaling": 0.8264776621599011,
+      "adamw_llama_scaling": 0.8403719536953501,
+      "c-adamc_llama_scaling": 0.8302221352240697,
+      "cautious_llama_scaling": 0.8294655579433173,
+      "hackable_transformer_attn_gate/lr_x1": 0.8330621208026141,
+      "hackable_transformer_attn_gate/lr_x2": 0.8283716673674795,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.8262638567533456,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.8369350343580996,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.8367314489738683,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.8367314489738683,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.8640406959043946,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.8473354172121575,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.829523227827766,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.8319113029050231,
+      "muon_llama_scaling": 0.8354135960807735,
+      "muon_qwen3_scaling": 0.8354896312969764,
+      "muonh_qwen3_scaling": 0.8237725201522708,
+      "muonremez_qwen3_scaling": 0.8528419797625536,
+      "parallel_llama": 0.8382989259750852,
+      "prism_berkeley_qwen3_scaling": 0.8611886142033909
+    },
+    "lm100000|c0=0.5,b0x0.5": {
+      "adamc_llama_scaling": 0.8541032338438959,
+      "adamh_llama_scaling": 0.8371206277088457,
+      "adamw_llama_scaling": 0.8660922723612375,
+      "c-adamc_llama_scaling": 0.8503737354604789,
+      "cautious_llama_scaling": 0.847362420964411,
+      "hackable_transformer_attn_gate/lr_x1": 0.8557663337102696,
+      "hackable_transformer_attn_gate/lr_x2": 0.8421929715083117,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.8342784966135374,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.8613558810421349,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.8611002319621885,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.8611002319621885,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.8914816770587826,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.873420632634278,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.8442389002365966,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.8370036950060314,
+      "muon_llama_scaling": 0.8527414415554174,
+      "muon_qwen3_scaling": 0.85431058680914,
+      "muonh_qwen3_scaling": 0.831967486791371,
+      "muonremez_qwen3_scaling": 0.8760684125793182,
+      "parallel_llama": 0.8661948729384996,
+      "prism_berkeley_qwen3_scaling": 0.8810625496536281
+    },
+    "least_squares|c0=0.5,b0x0.5": {
+      "adamc_llama_scaling": 0.8544487226109164,
+      "adamh_llama_scaling": 0.8373686507837961,
+      "adamw_llama_scaling": 0.8678057904847655,
+      "c-adamc_llama_scaling": 0.8504898269477763,
+      "cautious_llama_scaling": 0.8477196857984196,
+      "hackable_transformer_attn_gate/lr_x1": 0.8571764033027791,
+      "hackable_transformer_attn_gate/lr_x2": 0.8424192974069518,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.8345891944972884,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.8639526813554994,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.8636659435574178,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.8636659435574178,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.9091735914849218,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.8809407653009599,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.8444955860205832,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.8373357843349268,
+      "muon_llama_scaling": 0.8530921129612847,
+      "muon_qwen3_scaling": 0.8546581939797221,
+      "muonh_qwen3_scaling": 0.8320699568563793,
+      "muonremez_qwen3_scaling": 0.8770667175168815,
+      "parallel_llama": 0.8749398482587498,
+      "prism_berkeley_qwen3_scaling": 0.8814331476503696
+    },
+    "lm200|c0=0.5,b0x1.0": {
+      "adamc_llama_scaling": 0.8342928403398263,
+      "adamh_llama_scaling": 0.8264776644671173,
+      "adamw_llama_scaling": 0.8403719570249685,
+      "c-adamc_llama_scaling": 0.8302221364646072,
+      "cautious_llama_scaling": 0.8294655618653177,
+      "hackable_transformer_attn_gate/lr_x1": 0.8330621233691665,
+      "hackable_transformer_attn_gate/lr_x2": 0.8283716670763567,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.8262638561226265,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.836935034934499,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.8367314455244108,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.8367314455244108,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.8640407047376858,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.8473354252161474,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.8295232281621242,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.83191131423148,
+      "muon_llama_scaling": 0.835413600142841,
+      "muon_qwen3_scaling": 0.8354896327176808,
+      "muonh_qwen3_scaling": 0.8237725196863006,
+      "muonremez_qwen3_scaling": 0.8528419850594015,
+      "parallel_llama": 0.8382989312805633,
+      "prism_berkeley_qwen3_scaling": 0.8611886228692452
+    },
+    "lm100000|c0=0.5,b0x1.0": {
+      "adamc_llama_scaling": 0.8541032342550163,
+      "adamh_llama_scaling": 0.8371206287718572,
+      "adamw_llama_scaling": 0.8660922723655495,
+      "c-adamc_llama_scaling": 0.8503737353674277,
+      "cautious_llama_scaling": 0.8473624211515456,
+      "hackable_transformer_attn_gate/lr_x1": 0.8558028495145253,
+      "hackable_transformer_attn_gate/lr_x2": 0.8421930054577396,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.8342784877881111,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.8613558805397913,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.86110027643942,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.86110027643942,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.8914817164653699,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.8734206644039915,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.8442389000501431,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.8370036946043888,
+      "muon_llama_scaling": 0.8527414398089195,
+      "muon_qwen3_scaling": 0.8543105898991701,
+      "muonh_qwen3_scaling": 0.8319674871859503,
+      "muonremez_qwen3_scaling": 0.8760684103283052,
+      "parallel_llama": 0.8661955521404813,
+      "prism_berkeley_qwen3_scaling": 0.8810625428849772
+    },
+    "least_squares|c0=0.5,b0x1.0": {
+      "adamc_llama_scaling": 0.8544487241054263,
+      "adamh_llama_scaling": 0.8373686468393444,
+      "adamw_llama_scaling": 0.8678057903993838,
+      "c-adamc_llama_scaling": 0.8504898269595912,
+      "cautious_llama_scaling": 0.847719685515711,
+      "hackable_transformer_attn_gate/lr_x1": 0.8571764014488014,
+      "hackable_transformer_attn_gate/lr_x2": 0.8424193321942731,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.8345892926839962,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.86395268604525,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.8636659383639429,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.8636659383639429,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.9091734458317854,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.8809407661820413,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.8444956061046562,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.8373358586391358,
+      "muon_llama_scaling": 0.8530921023277729,
+      "muon_qwen3_scaling": 0.8546581948167741,
+      "muonh_qwen3_scaling": 0.8320699528620351,
+      "muonremez_qwen3_scaling": 0.8770667120924345,
+      "parallel_llama": 0.8749398263559958,
+      "prism_berkeley_qwen3_scaling": 0.8244863405348761
+    },
+    "lm200|c0=0.5,b0x2.0": {
+      "adamc_llama_scaling": 0.834188902179079,
+      "adamh_llama_scaling": 0.826421567519377,
+      "adamw_llama_scaling": 0.8402754097838497,
+      "c-adamc_llama_scaling": 0.8301582862128083,
+      "cautious_llama_scaling": 0.82936154529734,
+      "hackable_transformer_attn_gate/lr_x1": 0.8329679884363226,
+      "hackable_transformer_attn_gate/lr_x2": 0.8283177309452123,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.8262152515873052,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.8368376912553752,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.8366342246477959,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.8366342246477959,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.8639812507736309,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.8472767621205223,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.8294673866684553,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.8319041712072799,
+      "muon_llama_scaling": 0.8353541294676078,
+      "muon_qwen3_scaling": 0.8354299788753989,
+      "muonh_qwen3_scaling": 0.8237213917479576,
+      "muonremez_qwen3_scaling": 0.8527632466578585,
+      "parallel_llama": 0.8382365069736581,
+      "prism_berkeley_qwen3_scaling": 0.8610936041501409
+    },
+    "lm100000|c0=0.5,b0x2.0": {
+      "adamc_llama_scaling": 0.8543047781738261,
+      "adamh_llama_scaling": 0.8371206091428329,
+      "adamw_llama_scaling": 0.8661106155536387,
+      "c-adamc_llama_scaling": 0.8503694671877542,
+      "cautious_llama_scaling": 0.8474056295289487,
+      "hackable_transformer_attn_gate/lr_x1": 0.8557919038792332,
+      "hackable_transformer_attn_gate/lr_x2": 0.8420909585028449,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.8342756179540166,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.8613558690044795,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.861100401064768,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.861100401064768,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.8914815235606173,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.8734206595681686,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.8442377585713572,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.8369414106250823,
+      "muon_llama_scaling": 0.8527414342938393,
+      "muon_qwen3_scaling": 0.8543105850185702,
+      "muonh_qwen3_scaling": 0.8318129640390531,
+      "muonremez_qwen3_scaling": 0.8760683981205105,
+      "parallel_llama": 0.8661954790119732,
+      "prism_berkeley_qwen3_scaling": 0.8811932720008352
+    },
+    "least_squares|c0=0.5,b0x2.0": {
+      "adamc_llama_scaling": 0.8544487236071444,
+      "adamh_llama_scaling": 0.837368657864075,
+      "adamw_llama_scaling": 0.8678057936320568,
+      "c-adamc_llama_scaling": 0.8504898262339674,
+      "cautious_llama_scaling": 0.8477196903959952,
+      "hackable_transformer_attn_gate/lr_x1": 0.8571763986664993,
+      "hackable_transformer_attn_gate/lr_x2": 0.8424193510420296,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.8345893387450494,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.863952676885333,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.8636659441580299,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.8636659441580299,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.909173495540599,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.880940760264335,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.8444955854987131,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.837336221994815,
+      "muon_llama_scaling": 0.85309211307934,
+      "muon_qwen3_scaling": 0.8546581904474554,
+      "muonh_qwen3_scaling": 0.8320699602266766,
+      "muonremez_qwen3_scaling": 0.8770667124676756,
+      "parallel_llama": 0.8749398352164262,
+      "prism_berkeley_qwen3_scaling": 0.8814331852337193
+    },
+    "lm200|c0=0.7,b0x0.5": {
+      "adamc_llama_scaling": 0.8351227374410284,
+      "adamh_llama_scaling": 0.8275526682713881,
+      "adamw_llama_scaling": 0.8409630155311951,
+      "c-adamc_llama_scaling": 0.8311987143898502,
+      "cautious_llama_scaling": 0.8304973089802465,
+      "hackable_transformer_attn_gate/lr_x1": 0.8335161720736441,
+      "hackable_transformer_attn_gate/lr_x2": 0.829035958765332,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.8271016299490895,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.8374153796507051,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.8372098221830487,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.8372098221830487,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.8643325369925035,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.8476928210097966,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.8302841401479002,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.8331303843915564,
+      "muon_llama_scaling": 0.8360634895028015,
+      "muon_qwen3_scaling": 0.8360837787384087,
+      "muonh_qwen3_scaling": 0.8246807415399936,
+      "muonremez_qwen3_scaling": 0.8532737196326858,
+      "parallel_llama": 0.8388188561488766,
+      "prism_berkeley_qwen3_scaling": 0.8615690570308839
+    },
+    "lm100000|c0=0.7,b0x0.5": {
+      "adamc_llama_scaling": 0.8541474435179747,
+      "adamh_llama_scaling": 0.8370856896459844,
+      "adamw_llama_scaling": 0.8660924598419852,
+      "c-adamc_llama_scaling": 0.8503694520606588,
+      "cautious_llama_scaling": 0.8474740973488083,
+      "hackable_transformer_attn_gate/lr_x1": 0.8558035172407785,
+      "hackable_transformer_attn_gate/lr_x2": 0.8421930017982662,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.8344178639384797,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.8613558730300702,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.8610872906304782,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.8610872906304782,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.8914810591451447,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.8734256120411098,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.8442950144744245,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.8369561443462625,
+      "muon_llama_scaling": 0.852741340284075,
+      "muon_qwen3_scaling": 0.8543105882586777,
+      "muonh_qwen3_scaling": 0.8319673179858359,
+      "muonremez_qwen3_scaling": 0.8760684170870889,
+      "parallel_llama": 0.8661948377042985,
+      "prism_berkeley_qwen3_scaling": 0.8811386707111171
+    },
+    "least_squares|c0=0.7,b0x0.5": {
+      "adamc_llama_scaling": 0.8544487217955239,
+      "adamh_llama_scaling": 0.8373686333342398,
+      "adamw_llama_scaling": 0.8678057905358876,
+      "c-adamc_llama_scaling": 0.8504898265368847,
+      "cautious_llama_scaling": 0.8477196832139452,
+      "hackable_transformer_attn_gate/lr_x1": 0.8571763998233061,
+      "hackable_transformer_attn_gate/lr_x2": 0.8424193349029034,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.8345891360958124,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.8639526758761144,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.863665946151587,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.863665946151587,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.9091734344500304,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.8809407765758897,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.8444955730660012,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.837335808610632,
+      "muon_llama_scaling": 0.8530921222616378,
+      "muon_qwen3_scaling": 0.854658179692532,
+      "muonh_qwen3_scaling": 0.8320699641660134,
+      "muonremez_qwen3_scaling": 0.8770667348773638,
+      "parallel_llama": 0.8749398119383032,
+      "prism_berkeley_qwen3_scaling": 0.8814331488553355
+    },
+    "lm200|c0=0.7,b0x1.0": {
+      "adamc_llama_scaling": 0.8351227590707837,
+      "adamh_llama_scaling": 0.8275526946778562,
+      "adamw_llama_scaling": 0.8409630316853756,
+      "c-adamc_llama_scaling": 0.8311987386655446,
+      "cautious_llama_scaling": 0.8304973333672598,
+      "hackable_transformer_attn_gate/lr_x1": 0.8335161818823056,
+      "hackable_transformer_attn_gate/lr_x2": 0.8290359740698019,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.8271016615287765,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.8374153941313507,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.8372098325737128,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.8372098325737128,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.8643325472259993,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.8476928314428686,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.8302841609059699,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.833130418746592,
+      "muon_llama_scaling": 0.8360635085488731,
+      "muon_qwen3_scaling": 0.8360837970135852,
+      "muonh_qwen3_scaling": 0.824680773280218,
+      "muonremez_qwen3_scaling": 0.8532737265671235,
+      "parallel_llama": 0.8388188678002668,
+      "prism_berkeley_qwen3_scaling": 0.8615690619039388
+    },
+    "lm100000|c0=0.7,b0x1.0": {
+      "adamc_llama_scaling": 0.8541479728353789,
+      "adamh_llama_scaling": 0.8370856896666443,
+      "adamw_llama_scaling": 0.8660923594783827,
+      "c-adamc_llama_scaling": 0.8503694522927516,
+      "cautious_llama_scaling": 0.8474740976062307,
+      "hackable_transformer_attn_gate/lr_x1": 0.8558034837924816,
+      "hackable_transformer_attn_gate/lr_x2": 0.8421930001399046,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.8344178698127769,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.8613558726772258,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.8610872922039342,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.8610872922039342,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.8914822951993517,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.8734257062643745,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.8442950145076829,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.8369561535416972,
+      "muon_llama_scaling": 0.852741340620232,
+      "muon_qwen3_scaling": 0.8543105890381328,
+      "muonh_qwen3_scaling": 0.8319673172074271,
+      "muonremez_qwen3_scaling": 0.8760684323565872,
+      "parallel_llama": 0.8661932373632617,
+      "prism_berkeley_qwen3_scaling": 0.8811386680077999
+    },
+    "least_squares|c0=0.7,b0x1.0": {
+      "adamc_llama_scaling": 0.8544487208669694,
+      "adamh_llama_scaling": 0.8373686644828157,
+      "adamw_llama_scaling": 0.8678057913580383,
+      "c-adamc_llama_scaling": 0.850489825383324,
+      "cautious_llama_scaling": 0.8477196850616207,
+      "hackable_transformer_attn_gate/lr_x1": 0.8571763982959745,
+      "hackable_transformer_attn_gate/lr_x2": 0.8424193091663882,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.8345892200055288,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.8639526813839666,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.8636659433978251,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.8636659433978251,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.9091734404059397,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.8809407573085426,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.8444955800699113,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.8373359511894765,
+      "muon_llama_scaling": 0.8530920946411742,
+      "muon_qwen3_scaling": 0.8546581978190024,
+      "muonh_qwen3_scaling": 0.8320699616423465,
+      "muonremez_qwen3_scaling": 0.8770667109701265,
+      "parallel_llama": 0.8749398306363215,
+      "prism_berkeley_qwen3_scaling": 0.8814331329450926
+    },
+    "lm200|c0=0.7,b0x2.0": {
+      "adamc_llama_scaling": 0.8350719823705751,
+      "adamh_llama_scaling": 0.8275115312591526,
+      "adamw_llama_scaling": 0.8408537076978162,
+      "c-adamc_llama_scaling": 0.8311987363491209,
+      "cautious_llama_scaling": 0.8304973363532608,
+      "hackable_transformer_attn_gate/lr_x1": 0.8334668971243371,
+      "hackable_transformer_attn_gate/lr_x2": 0.8289920640396682,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.8270652435476162,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.8373645248629362,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.8371590114924463,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.8371590114924463,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.8642788335887259,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.8476406400115887,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.8302394558135688,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.8331031915919254,
+      "muon_llama_scaling": 0.836014068905602,
+      "muon_qwen3_scaling": 0.8360335297436302,
+      "muonh_qwen3_scaling": 0.8246047923429962,
+      "muonremez_qwen3_scaling": 0.8532212445495905,
+      "parallel_llama": 0.8387105288021847,
+      "prism_berkeley_qwen3_scaling": 0.861518818038606
+    },
+    "lm100000|c0=0.7,b0x2.0": {
+      "adamc_llama_scaling": 0.854104020378192,
+      "adamh_llama_scaling": 0.837082926432705,
+      "adamw_llama_scaling": 0.8660923563094463,
+      "c-adamc_llama_scaling": 0.8503694524014459,
+      "cautious_llama_scaling": 0.847474097387021,
+      "hackable_transformer_attn_gate/lr_x1": 0.8558035165224648,
+      "hackable_transformer_attn_gate/lr_x2": 0.842193001149184,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.8342798478628048,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.8613558711035665,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.8611004023970994,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.8611004023970994,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.8914816407605866,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.8734256122884604,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.8442950090501673,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.83695609927561,
+      "muon_llama_scaling": 0.8527413399058857,
+      "muon_qwen3_scaling": 0.8543105868905986,
+      "muonh_qwen3_scaling": 0.8318112879593067,
+      "muonremez_qwen3_scaling": 0.8760684306900143,
+      "parallel_llama": 0.8661943253652621,
+      "prism_berkeley_qwen3_scaling": 0.8811365630067456
+    },
+    "least_squares|c0=0.7,b0x2.0": {
+      "adamc_llama_scaling": 0.8544487235362781,
+      "adamh_llama_scaling": 0.8373686407072201,
+      "adamw_llama_scaling": 0.8678057916880528,
+      "c-adamc_llama_scaling": 0.8504898274643783,
+      "cautious_llama_scaling": 0.8477196823654102,
+      "hackable_transformer_attn_gate/lr_x1": 0.8571764008518102,
+      "hackable_transformer_attn_gate/lr_x2": 0.842419297906073,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.8345892178719772,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.863952685213448,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.8636659424759252,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.8636659424759252,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.9091733855178703,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.8809407588864469,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.8444955483820923,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.8373361631120628,
+      "muon_llama_scaling": 0.8530920987522369,
+      "muon_qwen3_scaling": 0.8546581901898342,
+      "muonh_qwen3_scaling": 0.8320699685766935,
+      "muonremez_qwen3_scaling": 0.8770667070763305,
+      "parallel_llama": 0.8749398193002054,
+      "prism_berkeley_qwen3_scaling": 0.8814331033152724
+    },
+    "lm200|c0=0.9,b0x0.5": {
+      "adamc_llama_scaling": 0.8849323672837789,
+      "adamh_llama_scaling": 0.8803848688514859,
+      "adamw_llama_scaling": 0.8870104781156403,
+      "c-adamc_llama_scaling": 0.8830696188414027,
+      "cautious_llama_scaling": 0.8831230771749808,
+      "hackable_transformer_attn_gate/lr_x1": 0.8727967734241453,
+      "hackable_transformer_attn_gate/lr_x2": 0.8726027197878169,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.874356575102154,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.8779045124985231,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.8776179392160397,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.8776179392160397,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.899842839553485,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.8853858544901939,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.8759850339667938,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.8860904312763792,
+      "muon_llama_scaling": 0.8818799180138975,
+      "muon_qwen3_scaling": 0.880424136752949,
+      "muonh_qwen3_scaling": 0.8757948805969209,
+      "muonremez_qwen3_scaling": 0.8929903829154253,
+      "parallel_llama": 0.8817540343953737,
+      "prism_berkeley_qwen3_scaling": 0.8977431702900176
+    },
+    "lm100000|c0=0.9,b0x0.5": {
+      "adamc_llama_scaling": 0.8846265007321457,
+      "adamh_llama_scaling": 0.87995381186062,
+      "adamw_llama_scaling": 0.8867605423391747,
+      "c-adamc_llama_scaling": 0.8828225097255727,
+      "cautious_llama_scaling": 0.8828623130760411,
+      "hackable_transformer_attn_gate/lr_x1": 0.8724465705978969,
+      "hackable_transformer_attn_gate/lr_x2": 0.8720326461660871,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.8737132893844038,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.8776490064459939,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.8773588756836197,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.8773588756836197,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.9000683118767542,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.8852809636580459,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.8755534065518633,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.8855547236778634,
+      "muon_llama_scaling": 0.8813646135274386,
+      "muon_qwen3_scaling": 0.8799021859582172,
+      "muonh_qwen3_scaling": 0.8751699812340835,
+      "muonremez_qwen3_scaling": 0.8924300857844213,
+      "parallel_llama": 0.881684803078902,
+      "prism_berkeley_qwen3_scaling": 0.8965848502821585
+    },
+    "least_squares|c0=0.9,b0x0.5": {
+      "adamc_llama_scaling": 0.8544487221105632,
+      "adamh_llama_scaling": 0.8373686613565521,
+      "adamw_llama_scaling": 0.867805792264156,
+      "c-adamc_llama_scaling": 0.8504898261250494,
+      "cautious_llama_scaling": 0.8477196858514009,
+      "hackable_transformer_attn_gate/lr_x1": 0.8571764023946411,
+      "hackable_transformer_attn_gate/lr_x2": 0.8424193556953824,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.8345892882492764,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.8639526892894773,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.8636659417557216,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.8636659417557216,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.9091732893675786,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.8809407607504166,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.8444955944439466,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.837336281492401,
+      "muon_llama_scaling": 0.8530921100564794,
+      "muon_qwen3_scaling": 0.8546582069239286,
+      "muonh_qwen3_scaling": 0.8320699640762643,
+      "muonremez_qwen3_scaling": 0.8770667308528651,
+      "parallel_llama": 0.8749398266731441,
+      "prism_berkeley_qwen3_scaling": 0.8814331096714693
+    },
+    "lm200|c0=0.9,b0x1.0": {
+      "adamc_llama_scaling": 0.8849092530509273,
+      "adamh_llama_scaling": 0.8803527819773098,
+      "adamw_llama_scaling": 0.8869953375622939,
+      "c-adamc_llama_scaling": 0.8830460262465388,
+      "cautious_llama_scaling": 0.8830981666118713,
+      "hackable_transformer_attn_gate/lr_x1": 0.8727785286759149,
+      "hackable_transformer_attn_gate/lr_x2": 0.8725696789053264,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.874356156124366,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.8778866180059987,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.8776000629337852,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.8776000629337852,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.8998539646607187,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.8853265846159085,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.8759580707880165,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.8860896161395656,
+      "muon_llama_scaling": 0.8818523444271876,
+      "muon_qwen3_scaling": 0.8803994391382656,
+      "muonh_qwen3_scaling": 0.8757941209816759,
+      "muonremez_qwen3_scaling": 0.8929727939757053,
+      "parallel_llama": 0.8817497786668346,
+      "prism_berkeley_qwen3_scaling": 0.8977227929094572
+    },
+    "lm100000|c0=0.9,b0x1.0": {
+      "adamc_llama_scaling": 0.8846265911030222,
+      "adamh_llama_scaling": 0.8799527650222445,
+      "adamw_llama_scaling": 0.8867605933363698,
+      "c-adamc_llama_scaling": 0.8828225857769897,
+      "cautious_llama_scaling": 0.8828623910209643,
+      "hackable_transformer_attn_gate/lr_x1": 0.8724461754033518,
+      "hackable_transformer_attn_gate/lr_x2": 0.8720323139024375,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.8737128581355377,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.8776480451646957,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.8773579601396222,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.8773579601396222,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.9000686119496905,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.8852820846204085,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.875553895142946,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.8855538354206632,
+      "muon_llama_scaling": 0.8813657505297794,
+      "muon_qwen3_scaling": 0.8799017665750359,
+      "muonh_qwen3_scaling": 0.8751704106138597,
+      "muonremez_qwen3_scaling": 0.8924300625051378,
+      "parallel_llama": 0.8816848139389881,
+      "prism_berkeley_qwen3_scaling": 0.8965849663365814
+    },
+    "least_squares|c0=0.9,b0x1.0": {
+      "adamc_llama_scaling": 0.8544487226337919,
+      "adamh_llama_scaling": 0.8373686539804633,
+      "adamw_llama_scaling": 0.8678057904023262,
+      "c-adamc_llama_scaling": 0.8504898281674167,
+      "cautious_llama_scaling": 0.8477196790306558,
+      "hackable_transformer_attn_gate/lr_x1": 0.8571763998498185,
+      "hackable_transformer_attn_gate/lr_x2": 0.8424193124594909,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.8345893540619536,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.8639526809827834,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.8636659415726097,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.8636659415726097,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.9091733937701589,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.880940731432802,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.8444956052867516,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.8373360562278618,
+      "muon_llama_scaling": 0.8530921125576385,
+      "muon_qwen3_scaling": 0.8546581979122211,
+      "muonh_qwen3_scaling": 0.8320699540783046,
+      "muonremez_qwen3_scaling": 0.8770667278847919,
+      "parallel_llama": 0.8749398195772208,
+      "prism_berkeley_qwen3_scaling": 0.8814331601098288
+    },
+    "lm200|c0=0.9,b0x2.0": {
+      "adamc_llama_scaling": 0.9390751625337248,
+      "adamh_llama_scaling": 0.931683481187368,
+      "adamw_llama_scaling": 0.943274522704436,
+      "c-adamc_llama_scaling": 0.9371627478335955,
+      "cautious_llama_scaling": 0.9369171835784847,
+      "hackable_transformer_attn_gate/lr_x1": 0.9254526583961017,
+      "hackable_transformer_attn_gate/lr_x2": 0.9214886832896203,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.9215934787390704,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.9323453440672144,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.931977118118995,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.931977118118995,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.962638472957704,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.942578762421972,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.9263100916004087,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.9328387270820319,
+      "muon_llama_scaling": 0.9358695716297923,
+      "muon_qwen3_scaling": 0.9346369340590363,
+      "muonh_qwen3_scaling": 0.926380826909645,
+      "muonremez_qwen3_scaling": 0.9481607122925024,
+      "parallel_llama": 0.93920396003954,
+      "prism_berkeley_qwen3_scaling": 0.9512605020596973
+    },
+    "lm100000|c0=0.9,b0x2.0": {
+      "adamc_llama_scaling": 0.9390751625337248,
+      "adamh_llama_scaling": 0.931683481187368,
+      "adamw_llama_scaling": 0.943274522704436,
+      "c-adamc_llama_scaling": 0.9371627478335955,
+      "cautious_llama_scaling": 0.9369171835784847,
+      "hackable_transformer_attn_gate/lr_x1": 0.9254526583961017,
+      "hackable_transformer_attn_gate/lr_x2": 0.9214886832896203,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.9215934787390704,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.9323453440672144,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.931977118118995,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.931977118118995,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.962638472957704,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.942578762421972,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.9263100916004087,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.9328387270820319,
+      "muon_llama_scaling": 0.9358695716297923,
+      "muon_qwen3_scaling": 0.9346369340590363,
+      "muonh_qwen3_scaling": 0.926380826909645,
+      "muonremez_qwen3_scaling": 0.9481607122925024,
+      "parallel_llama": 0.93920396003954,
+      "prism_berkeley_qwen3_scaling": 0.9512605020596973
+    },
+    "least_squares|c0=0.9,b0x2.0": {
+      "adamc_llama_scaling": 0.8544487226899837,
+      "adamh_llama_scaling": 0.8373686456709197,
+      "adamw_llama_scaling": 0.867805791145448,
+      "c-adamc_llama_scaling": 0.8504898257249881,
+      "cautious_llama_scaling": 0.8477196854036796,
+      "hackable_transformer_attn_gate/lr_x1": 0.8571764017035389,
+      "hackable_transformer_attn_gate/lr_x2": 0.8424192882893965,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.8345893982572977,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.8639526785732328,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.8636659434075831,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.8636659434075831,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.9091734922062304,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.8809407316657022,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.8444956224401164,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.8373361572175504,
+      "muon_llama_scaling": 0.8530921007912295,
+      "muon_qwen3_scaling": 0.8546582020422789,
+      "muonh_qwen3_scaling": 0.8320699600830238,
+      "muonremez_qwen3_scaling": 0.8770666994010948,
+      "parallel_llama": 0.874939830051032,
+      "prism_berkeley_qwen3_scaling": 0.881433082138637
+    },
+    "lm200|c0=0.99,b0x0.5": {
+      "adamc_llama_scaling": 0.9398224927379445,
+      "adamh_llama_scaling": 0.9324425549792822,
+      "adamw_llama_scaling": 0.944021572599355,
+      "c-adamc_llama_scaling": 0.9378965138564228,
+      "cautious_llama_scaling": 0.9376476958315031,
+      "hackable_transformer_attn_gate/lr_x1": 0.9263469155099076,
+      "hackable_transformer_attn_gate/lr_x2": 0.922420891013552,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.922535603246859,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.9331891762881909,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.9328224142302645,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.9328224142302645,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.9634192641345404,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.9434116305035208,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.9271830008638414,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.9337604992793634,
+      "muon_llama_scaling": 0.9366231234646603,
+      "muon_qwen3_scaling": 0.9353936313309797,
+      "muonh_qwen3_scaling": 0.9271476282498725,
+      "muonremez_qwen3_scaling": 0.9489680059923954,
+      "parallel_llama": 0.9400111462735423,
+      "prism_berkeley_qwen3_scaling": 0.9521253553629144
+    },
+    "lm100000|c0=0.99,b0x0.5": {
+      "adamc_llama_scaling": 0.9398225949887414,
+      "adamh_llama_scaling": 0.9324426588418434,
+      "adamw_llama_scaling": 0.9440216019034706,
+      "c-adamc_llama_scaling": 0.9378967124511858,
+      "cautious_llama_scaling": 0.9376478961822078,
+      "hackable_transformer_attn_gate/lr_x1": 0.9263470801445898,
+      "hackable_transformer_attn_gate/lr_x2": 0.9224213146099872,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.9225356499333415,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.9331893635158535,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.9328226020457475,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.9328226020457475,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.9634193151638271,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.9434116795760031,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.9271830008638414,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.9337608114368874,
+      "muon_llama_scaling": 0.9366233194012574,
+      "muon_qwen3_scaling": 0.9353937487916113,
+      "muonh_qwen3_scaling": 0.927147941436202,
+      "muonremez_qwen3_scaling": 0.9489680367798966,
+      "parallel_llama": 0.9400112320733772,
+      "prism_berkeley_qwen3_scaling": 0.9521256080604977
+    },
+    "least_squares|c0=0.99,b0x0.5": {
+      "adamc_llama_scaling": 0.9337649608331258,
+      "adamh_llama_scaling": 0.9321134855261028,
+      "adamw_llama_scaling": 0.938644171531776,
+      "c-adamc_llama_scaling": 0.9329060656936953,
+      "cautious_llama_scaling": 0.9326541517304601,
+      "hackable_transformer_attn_gate/lr_x1": 0.9221218893791923,
+      "hackable_transformer_attn_gate/lr_x2": 0.9152857326737404,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.9194520903953807,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.9317975479613793,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.931312080692475,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.931312080692475,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.9578443238685351,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.9433196835821586,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.9232763092804994,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.9269937956941539,
+      "muon_llama_scaling": 0.9361015195326416,
+      "muon_qwen3_scaling": 0.9350013578612688,
+      "muonh_qwen3_scaling": 0.9277578786016224,
+      "muonremez_qwen3_scaling": 0.9498359567465423,
+      "parallel_llama": 0.9373926914221397,
+      "prism_berkeley_qwen3_scaling": 0.9496907992548422
+    },
+    "lm200|c0=0.99,b0x1.0": {
+      "adamc_llama_scaling": 0.9398238116834013,
+      "adamh_llama_scaling": 0.9324424341300622,
+      "adamw_llama_scaling": 0.9440247820541503,
+      "c-adamc_llama_scaling": 0.9378974617976191,
+      "cautious_llama_scaling": 0.9376485069433153,
+      "hackable_transformer_attn_gate/lr_x1": 0.92634955023571,
+      "hackable_transformer_attn_gate/lr_x2": 0.9224212305299962,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.9225354571775561,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.9331922671161373,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.9328254792005315,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.9328254792005315,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.9634192163851032,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.9434115099571855,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.9271828756303205,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.9337608175337161,
+      "muon_llama_scaling": 0.9366262106841378,
+      "muon_qwen3_scaling": 0.9353972196480592,
+      "muonh_qwen3_scaling": 0.9271479743654566,
+      "muonremez_qwen3_scaling": 0.948967881307418,
+      "parallel_llama": 0.9400145206420677,
+      "prism_berkeley_qwen3_scaling": 0.9521310286740344
+    },
+    "lm100000|c0=0.99,b0x1.0": {
+      "adamc_llama_scaling": 0.9398238116834013,
+      "adamh_llama_scaling": 0.9324426586289436,
+      "adamw_llama_scaling": 0.9440247820541503,
+      "c-adamc_llama_scaling": 0.9378974617976191,
+      "cautious_llama_scaling": 0.9376485069433153,
+      "hackable_transformer_attn_gate/lr_x1": 0.92634955023571,
+      "hackable_transformer_attn_gate/lr_x2": 0.9224213091203368,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.9225356496669628,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.9331922671161373,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.9328254792005315,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.9328254792005315,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.9634192756120179,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.9434117029252487,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.9271830006308527,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.9337608175337161,
+      "muon_llama_scaling": 0.9366262106841378,
+      "muon_qwen3_scaling": 0.9353972196480592,
+      "muonh_qwen3_scaling": 0.9271479743654566,
+      "muonremez_qwen3_scaling": 0.9489680365513898,
+      "parallel_llama": 0.9400112179663237,
+      "prism_berkeley_qwen3_scaling": 0.9521310286740344
+    },
+    "least_squares|c0=0.99,b0x1.0": {
+      "adamc_llama_scaling": 0.9313043614021629,
+      "adamh_llama_scaling": 0.923994929614941,
+      "adamw_llama_scaling": 0.8678057915999449,
+      "c-adamc_llama_scaling": 0.9293947534211204,
+      "cautious_llama_scaling": 0.9291480664070487,
+      "hackable_transformer_attn_gate/lr_x1": 0.8571764048235865,
+      "hackable_transformer_attn_gate/lr_x2": 0.914084601846102,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.9142012526556073,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.8639526807948781,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.8636659417439401,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.8636659417439401,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.9091734356185912,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.8809407701807038,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.9187961487377048,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.9253259371190092,
+      "muon_llama_scaling": 0.9281336840050172,
+      "muon_qwen3_scaling": 0.8546581994027423,
+      "muonh_qwen3_scaling": 0.9187487501902596,
+      "muonremez_qwen3_scaling": 0.877066705837397,
+      "parallel_llama": 0.8749398294842672,
+      "prism_berkeley_qwen3_scaling": 0.8814331231928997
+    },
+    "lm200|c0=0.99,b0x2.0": {
+      "adamc_llama_scaling": 0.9390751220583916,
+      "adamh_llama_scaling": 0.9316834389567374,
+      "adamw_llama_scaling": 0.9432744764685631,
+      "c-adamc_llama_scaling": 0.9371627140045166,
+      "cautious_llama_scaling": 0.9369171502590179,
+      "hackable_transformer_attn_gate/lr_x1": 0.9254525864124298,
+      "hackable_transformer_attn_gate/lr_x2": 0.9214886135458946,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.9215934128165245,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.9323452820777893,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.9319770555496216,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.9319770555496216,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.9626384044289589,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.9425786926746368,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.9263100349903106,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.9328386722803116,
+      "muon_llama_scaling": 0.9358695148229599,
+      "muon_qwen3_scaling": 0.934636872947216,
+      "muonh_qwen3_scaling": 0.9263807744979858,
+      "muonremez_qwen3_scaling": 0.9481606233716011,
+      "parallel_llama": 0.9392039179801941,
+      "prism_berkeley_qwen3_scaling": 0.9512603595256807
+    },
+    "lm100000|c0=0.99,b0x2.0": {
+      "adamc_llama_scaling": 0.9390751220583916,
+      "adamh_llama_scaling": 0.9316834389567374,
+      "adamw_llama_scaling": 0.9432744764685631,
+      "c-adamc_llama_scaling": 0.9371627140045166,
+      "cautious_llama_scaling": 0.9369171502590179,
+      "hackable_transformer_attn_gate/lr_x1": 0.9254525864124298,
+      "hackable_transformer_attn_gate/lr_x2": 0.9214886135458946,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.9215934128165245,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.9323452820777893,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.9319770555496216,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.9319770555496216,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.9626384044289589,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.9425786926746368,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.9263100349903106,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.9328386722803116,
+      "muon_llama_scaling": 0.9358695148229599,
+      "muon_qwen3_scaling": 0.934636872947216,
+      "muonh_qwen3_scaling": 0.9263807744979858,
+      "muonremez_qwen3_scaling": 0.9481606233716011,
+      "parallel_llama": 0.9392039179801941,
+      "prism_berkeley_qwen3_scaling": 0.9512603595256807
+    },
+    "least_squares|c0=0.99,b0x2.0": {
+      "adamc_llama_scaling": 0.9385095207340498,
+      "adamh_llama_scaling": 0.9311311270941022,
+      "adamw_llama_scaling": 0.9426890586701058,
+      "c-adamc_llama_scaling": 0.9366079946380383,
+      "cautious_llama_scaling": 0.9363634628520684,
+      "hackable_transformer_attn_gate/lr_x1": 0.9248754839089234,
+      "hackable_transformer_attn_gate/lr_x2": 0.9209384255622768,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.9210547680217165,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.9317615504975411,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.9313934783908455,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.9313934783908455,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.961980502288662,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.9419665054707318,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.9257581053474979,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.9323089375774746,
+      "muon_llama_scaling": 0.9352808338636197,
+      "muon_qwen3_scaling": 0.9340432173044237,
+      "muonh_qwen3_scaling": 0.9258194657842365,
+      "muonremez_qwen3_scaling": 0.9475396765923628,
+      "parallel_llama": 0.9386276038937728,
+      "prism_berkeley_qwen3_scaling": 0.9506192411689359
+    },
+    "two_parameter_loglog": {
+      "adamc_llama_scaling": 0.7708856597924881,
+      "adamh_llama_scaling": 0.7664526506337445,
+      "adamw_llama_scaling": 0.7758008520992625,
+      "c-adamc_llama_scaling": 0.7664043576909111,
+      "cautious_llama_scaling": 0.7661293960012721,
+      "hackable_transformer_attn_gate/lr_x1": 0.775465996379164,
+      "hackable_transformer_attn_gate/lr_x2": 0.7728376505868843,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.7726804730628518,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.7778347855432831,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.7776859051262719,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.7776859051262719,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.8024809576212166,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.7873851691908699,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.7726992952522836,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.7787342584070672,
+      "muon_llama_scaling": 0.773980512127775,
+      "muon_qwen3_scaling": 0.7740148535155801,
+      "muonh_qwen3_scaling": 0.7658779181359431,
+      "muonremez_qwen3_scaling": 0.790585639303336,
+      "parallel_llama": 0.7765510864119239,
+      "prism_berkeley_qwen3_scaling": 0.8009735815184882
+    },
+    "shared_exponent": {
+      "adamc_llama_scaling": 0.7795977945285193,
+      "adamh_llama_scaling": 0.7749730105005791,
+      "adamw_llama_scaling": 0.7803820921524218,
+      "c-adamc_llama_scaling": 0.779545140217078,
+      "cautious_llama_scaling": 0.7794909219691939,
+      "hackable_transformer_attn_gate/lr_x1": 0.7708813142086646,
+      "hackable_transformer_attn_gate/lr_x2": 0.7715067915528782,
+      "hackable_transformer_attn_gate/lr_x2_5": 0.7735680692861587,
+      "hackable_transformer_attn_sink/attnsink/jax": 0.7751528591534865,
+      "hackable_transformer_attn_sink/attnsink/splash": 0.7748392311030112,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0.7748392311030112,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0.7926172664135702,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0.7804542923550866,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0.7746047936358827,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0.7846508878101005,
+      "muon_llama_scaling": 0.7731837187857972,
+      "muon_qwen3_scaling": 0.7713386326918535,
+      "muonh_qwen3_scaling": 0.7686644577201039,
+      "muonremez_qwen3_scaling": 0.7799606119886514,
+      "parallel_llama": 0.7824700537708791,
+      "prism_berkeley_qwen3_scaling": 0.7802526686358403
+    }
+  }
+}

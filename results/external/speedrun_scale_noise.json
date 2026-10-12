@@ -1,0 +1,31 @@
+{
+  "preregistration": "PREDICTIONS_TASK_MARIN_NOISE_2.md",
+  "paper": {
+    "source": "arXiv:2509.02046 (HTML), searched for seed / random seed / standard deviation / run-to-run",
+    "reported_seed_variance": null,
+    "note": "no seed variance is reported; the sweep accepts a hyperparameter change only if validation loss improves by more than 3e-3, an assumed threshold, not a measured noise level"
+  },
+  "sweep": {
+    "result_files": 148,
+    "runs": 1727,
+    "records": 1766,
+    "sizes": [
+      "1.2b",
+      "130m",
+      "300m",
+      "520m"
+    ],
+    "run_name_check": {
+      "ids_listed_more_than_once": 9,
+      "ids_listed_with_differing_loss": 0,
+      "name_prefixes_with_more_than_one_hash": 0
+    },
+    "repeated_configurations": [],
+    "estimate": null
+  },
+  "smooth_fit_row_correction": "marin_noise.json's 'smooth fits alone' row used two-parameter log-log fits (2 residual df each), not three-parameter fits; they do not interpolate. Its two-change pairs come from comparing fitted lines at misaligned model FLOPs across submissions. Its match to the observed pattern is not evidence of crossing because the fits inherit the observations' noise.",
+  "bracket": "about 0.05% (borrowed) to under 0.43% (three-parameter bound); one replicate pair at 520m or 1.2b would settle it",
+  "predictions": {
+    "PM3_bracket_stands": true
+  }
+}
