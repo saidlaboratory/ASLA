@@ -1,0 +1,50 @@
+--- a/website/src/utils/regression.ts
++++ b/website/src/utils/regression.ts
+@@ -77,6 +77,9 @@
+  * @param points - Array of {x, y} where x is compute (FLOPs) and y is loss (BPB)
+  * @returns PowerLawResult or null if fitting fails
+  */
++// Fit in units of 1e18 FLOPs: raw FLOPs (1e18-1e20) leave the a and b Jacobian columns nearly collinear.
++const X_SCALE = 1e18;
++
+ export function computePowerLawWithOffset(
+   points: RegressionPoint[]
+ ): PowerLawResult | null {
+@@ -94,7 +97,7 @@
+     return null;
+   }
+ 
+-  const xData = validPoints.map((p) => p.x);
++  const xData = validPoints.map((p) => p.x / X_SCALE);
+   const yData = validPoints.map((p) => p.y);
+ 
+   // Estimate initial parameters from the data
+@@ -110,7 +113,7 @@
+ 
+   // Use log-log regression on (y - cInit) to estimate a and b
+   const adjustedPoints = validPoints
+-    .map((p) => ({ x: p.x, y: p.y - cInit }))
++    .map((p) => ({ x: p.x / X_SCALE, y: p.y - cInit }))
+     .filter((p) => p.y > 0);
+ 
+   let aInit = 1;
+@@ -149,7 +152,8 @@
+         damping: 1.5,
+         gradientDifference: 1e-6,
+         maxIterations: 200,
+-        errorTolerance: 1e-8,
++        // An absolute SSE gate: 1e-8 discards the final improvements when the SSE is 1e-7 to 1e-4.
++        errorTolerance: 1e-15,
+         // Constraints: intercept > 0, slope > 0, asymptote >= 0
+         minValues: [1e-10, 1e-6, 0],
+         maxValues: [1e30, 2, asymptoteMax],
+@@ -188,7 +192,8 @@
+     const r2 = ssTot === 0 ? 1 : 1 - ssRes / ssTot;
+ 
+     // Return slope as negative to match log-log linear convention
+-    return { intercept, slope: -slope, asymptote, r2 };
++    // Return the intercept in raw-FLOPs units so predictWithPowerLaw and callers are unchanged.
++    return { intercept: intercept * Math.pow(X_SCALE, slope), slope: -slope, asymptote, r2 };
+   } catch {
+     // Levenberg-Marquardt can fail to converge
+     return null;

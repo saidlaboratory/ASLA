@@ -33,8 +33,8 @@ def load(relative: str) -> Any:
 # The instance count is stated in four places in this section; deriving them
 # from one pair of constants is what stopped "five anecdotes" surviving the
 # addition of a sixth.
-N_INSTANCES = 9
-N_INSTANCES_WORD = "Nine"
+N_INSTANCES = 10
+N_INSTANCES_WORD = "Ten"
 N_FLATTERING = 6
 
 
@@ -63,6 +63,14 @@ def methods_practice() -> str:
     superseded_ratio = superseded["residual_scatter_over_seed_se"]
     superseded_inflation = superseded["variance_inflation"]
     pooling_factor = superseded_ratio / real["residual_scatter_over_seed_se"]
+    aligned = load("external/marin_aligned.json")
+    ties = load("external/sign_ties.json")["task1"]
+    off = aligned["task1a"]["offsets_by_rung"]["1_2b"]
+    designs = aligned["task1"]["designs"]
+    rate = {k: v["reorder"]["datadecide_c4_1B"] for k, v in designs.items()}
+    primary = f"{ties['tau_primary']:.6g}"
+    multi = {k: designs[k]["sign_changes"][primary]["observed"]["share_two_or_more"] for k in ("named_rungs", "C2", "C3")}
+    lq_class = designs["W_LQ"]["class_vs_datadecide"]["300M->1B"]
     lines = [
         "# Methods practice: verify that the measurement can see what you think it sees",
         "",
@@ -241,6 +249,34 @@ def methods_practice() -> str:
         "the truth, and the three affected conditions were rerun: the same condition now covers at "
         f"{fixed_misspec:.2f}. The invalid rows are kept, and the output says so.",
         "",
+        "## Instance 10: comparisons at a named rung that were not at equal compute",
+        "",
+        "Every Marin speedrun analysis compared submissions at the four named rungs (130m to 1.2b) as if each "
+        f"rung were one compute budget. It is not: the 21 submissions fall into {len(aligned['groups'])} groups "
+        "with distinct FLOPs ladders, nearly aligned at 300m and apart at the other rungs. At 1.2b the offset "
+        f"is worth a median {off['abs_delta_bpb_median_p90'][0]:.4f} BPB across groups, "
+        f"{off['over_borrowed_sd_median_p90']['datadecide_c4_1B'][0]:.0f}x the borrowed seed SD and "
+        f"{off['over_gap_median_p90'][0]:.2f}x the observed gap; it exceeds the gap in "
+        f"{off['share_delta_exceeds_gap']:.0%} of cross-group pairs.",
+        "",
+        f"**How it was caught:** a noiseless row of two-parameter fits showed two sign changes in "
+        f"{len(ties['noiseless_own_x_two_change_pairs_at_tie_tolerance'])} pairs. A gap that is linear in log "
+        "compute cannot change sign twice; each fit had been evaluated at its own submission's FLOPs.",
+        "",
+        "**What it changed, and what it did not:** the noiseless two-change pairs were entirely the confound; at "
+        "common compute there are none. In the observed data the share of pairs changing sign twice or more "
+        f"fell only from {multi['named_rungs']:.1%} to {multi['C2']:.1%} and {multi['C3']:.1%} (two- and "
+        "three-parameter alignment, primary tolerance). The headline reorder rate did not fall: "
+        f"{rate['named_rungs']['rate']:.1%} at named rungs, {rate['C2']['rate']:.1%} and "
+        f"{rate['C3']['rate']:.1%} with every pair moved to common compute, because the offset is nearly equal "
+        "at the 520m and 1.2b rungs and cancels in that comparison. Within the Llama/Qwen group, where compute "
+        f"is identical and the recipes differ, it is {rate['W_LQ']['rate']:.1%} ({rate['W_LQ']['reordered']} of "
+        f"{rate['W_LQ']['determined']}), and the class difference from DataDecide no longer meets its "
+        f"pre-registered threshold (one-sided Fisher p = {lq_class['fisher_p_one_sided']:.2f}).",
+        "",
+        "**The general form:** before comparing candidates at a shared label, check that the label fixes the "
+        "quantity the comparison assumes. It was caught before any claim built on it left the repository.",
+        "",
         "## A numerical fingerprint for this class",
         "",
         f"Instances 3, 5 and 6 are one defect: a quantity aggregated in one space and consumed in another, "
@@ -289,7 +325,7 @@ def methods_practice() -> str:
         "| 6 | the omitted third parameter explains the misses | half of it was our own pooling error | "
         "a sweep for the pattern, not for literals |",
         "",
-        "**Status is not uniform, and the uneven version is the stronger one.** Instances 1-4, 6 and 9 were "
+        "**Status is not uniform, and the uneven version is the stronger one.** Instances 1-4, 6, 9 and 10 were "
         "caught before any claim built on them left the repository. Instance 5 was not: it propagated into "
         "five committed documents and a paper draft as the opening premise of a headline section, and it is "
         "the reason this is a finding rather than a note on good hygiene. A defect class that is always "

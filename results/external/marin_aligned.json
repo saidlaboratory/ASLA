@@ -1,0 +1,3477 @@
+{
+  "preregistration": "PREDICTIONS_TASK_ALIGNED.md",
+  "groups": {
+    "llama_qwen": [
+      "adamc_llama_scaling",
+      "adamh_llama_scaling",
+      "adamw_llama_scaling",
+      "c-adamc_llama_scaling",
+      "cautious_llama_scaling",
+      "muon_llama_scaling",
+      "muon_qwen3_scaling",
+      "muonh_qwen3_scaling",
+      "muonremez_qwen3_scaling",
+      "prism_berkeley_qwen3_scaling"
+    ],
+    "attn_gate": [
+      "hackable_transformer_attn_gate/lr_x1",
+      "hackable_transformer_attn_gate/lr_x2",
+      "hackable_transformer_attn_gate/lr_x2_5"
+    ],
+    "attn_sink_parallel": [
+      "hackable_transformer_attn_sink/attnsink/jax",
+      "hackable_transformer_attn_sink/attnsink/splash",
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25",
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5",
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4",
+      "parallel_llama"
+    ]
+  },
+  "task1a": {
+    "flops": {
+      "adamc_llama_scaling": {
+        "130m": 1.777337490915459e+18,
+        "300m": 9.99035877535934e+18,
+        "520m": 4.210403636805422e+19,
+        "1_2b": 2.071634014279733e+20
+      },
+      "adamh_llama_scaling": {
+        "130m": 1.777337490915459e+18,
+        "300m": 9.99035877535934e+18,
+        "520m": 4.210403636805422e+19,
+        "1_2b": 2.071634014279733e+20
+      },
+      "adamw_llama_scaling": {
+        "130m": 1.777337490915459e+18,
+        "300m": 9.99035877535934e+18,
+        "520m": 4.210403636805422e+19,
+        "1_2b": 2.071634014279733e+20
+      },
+      "c-adamc_llama_scaling": {
+        "130m": 1.777337490915459e+18,
+        "300m": 9.99035877535934e+18,
+        "520m": 4.210403636805422e+19,
+        "1_2b": 2.071634014279733e+20
+      },
+      "cautious_llama_scaling": {
+        "130m": 1.777337490915459e+18,
+        "300m": 9.99035877535934e+18,
+        "520m": 4.210403636805422e+19,
+        "1_2b": 2.071634014279733e+20
+      },
+      "hackable_transformer_attn_gate/lr_x1": {
+        "130m": 2.1289341996446515e+18,
+        "300m": 1.021384111077458e+19,
+        "520m": 5.081733891346976e+19,
+        "1_2b": 2.5869176757309093e+20
+      },
+      "hackable_transformer_attn_gate/lr_x2": {
+        "130m": 2.1289341996446515e+18,
+        "300m": 1.021384111077458e+19,
+        "520m": 5.081733891346976e+19,
+        "1_2b": 2.5869176757309093e+20
+      },
+      "hackable_transformer_attn_gate/lr_x2_5": {
+        "130m": 2.1289341996446515e+18,
+        "300m": 1.021384111077458e+19,
+        "520m": 5.081733891346976e+19,
+        "1_2b": 2.5869176757309093e+20
+      },
+      "hackable_transformer_attn_sink/attnsink/jax": {
+        "130m": 2.107429813789655e+18,
+        "300m": 9.97813708514132e+18,
+        "520m": 4.8779636003945054e+19,
+        "1_2b": 2.4710625753168033e+20
+      },
+      "hackable_transformer_attn_sink/attnsink/splash": {
+        "130m": 2.107429813789655e+18,
+        "300m": 9.97813708514132e+18,
+        "520m": 4.8779636003945054e+19,
+        "1_2b": 2.4710625753168033e+20
+      },
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": {
+        "130m": 2.107429813789655e+18,
+        "300m": 9.97813708514132e+18,
+        "520m": 4.8779636003945054e+19,
+        "1_2b": 2.4710625753168033e+20
+      },
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": {
+        "130m": 2.107429813789655e+18,
+        "300m": 9.97813708514132e+18,
+        "520m": 4.8779636003945054e+19,
+        "1_2b": 2.4710625753168033e+20
+      },
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": {
+        "130m": 2.107429813789655e+18,
+        "300m": 9.97813708514132e+18,
+        "520m": 4.8779636003945054e+19,
+        "1_2b": 2.4710625753168033e+20
+      },
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": {
+        "130m": 2.107429813789655e+18,
+        "300m": 9.97813708514132e+18,
+        "520m": 4.8779636003945054e+19,
+        "1_2b": 2.4710625753168033e+20
+      },
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": {
+        "130m": 2.107429813789655e+18,
+        "300m": 9.97813708514132e+18,
+        "520m": 4.8779636003945054e+19,
+        "1_2b": 2.4710625753168033e+20
+      },
+      "muon_llama_scaling": {
+        "130m": 1.777337490915459e+18,
+        "300m": 9.99035877535934e+18,
+        "520m": 4.210403636805422e+19,
+        "1_2b": 2.071634014279733e+20
+      },
+      "muon_qwen3_scaling": {
+        "130m": 1.777337490915459e+18,
+        "300m": 9.99035877535934e+18,
+        "520m": 4.210403636805422e+19,
+        "1_2b": 2.071634014279733e+20
+      },
+      "muonh_qwen3_scaling": {
+        "130m": 1.777337490915459e+18,
+        "300m": 9.99035877535934e+18,
+        "520m": 4.210403636805422e+19,
+        "1_2b": 2.071634014279733e+20
+      },
+      "muonremez_qwen3_scaling": {
+        "130m": 1.777337490915459e+18,
+        "300m": 9.99035877535934e+18,
+        "520m": 4.210403636805422e+19,
+        "1_2b": 2.071634014279733e+20
+      },
+      "parallel_llama": {
+        "130m": 2.107429813789655e+18,
+        "300m": 9.97813708514132e+18,
+        "520m": 4.8779636003945054e+19,
+        "1_2b": 2.4710625753168033e+20
+      },
+      "prism_berkeley_qwen3_scaling": {
+        "130m": 1.777337490915459e+18,
+        "300m": 9.99035877535934e+18,
+        "520m": 4.210403636805422e+19,
+        "1_2b": 2.071634014279733e+20
+      }
+    },
+    "loglog_slope": {
+      "adamc_llama_scaling": -0.0488543843539053,
+      "adamh_llama_scaling": -0.04882500878749699,
+      "adamw_llama_scaling": -0.047994591668376684,
+      "c-adamc_llama_scaling": -0.049780439944742905,
+      "cautious_llama_scaling": -0.04982692736041307,
+      "hackable_transformer_attn_gate/lr_x1": -0.04607145244798135,
+      "hackable_transformer_attn_gate/lr_x2": -0.046764452272831825,
+      "hackable_transformer_attn_gate/lr_x2_5": -0.047237568093985494,
+      "hackable_transformer_attn_sink/attnsink/jax": -0.046482165580613584,
+      "hackable_transformer_attn_sink/attnsink/splash": -0.04644720234277657,
+      "hackable_transformer_attn_sink/attnsink/splash/default_lr": -0.04644720234277657,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": -0.04502079473690053,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": -0.04559891445673939,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2": -0.04745221238485488,
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4": -0.04828932443787762,
+      "muon_llama_scaling": -0.04688289337362625,
+      "muon_qwen3_scaling": -0.04649181672360173,
+      "muonh_qwen3_scaling": -0.04763204241274038,
+      "muonremez_qwen3_scaling": -0.04487404294356182,
+      "parallel_llama": -0.04829328973951774,
+      "prism_berkeley_qwen3_scaling": -0.042836421062575576
+    },
+    "offsets_by_rung": {
+      "130m": {
+        "cross_group_pairs": 134,
+        "abs_delta_bpb_median_p90": [
+          0.00965908598975166,
+          0.010232241164261786
+        ],
+        "over_gap_median_p90": [
+          0.6517690529017257,
+          3.1237158189177747
+        ],
+        "share_delta_exceeds_gap": 0.3358208955223881,
+        "over_borrowed_sd_median_p90": {
+          "datadecide_c4_1B": [
+            16.15624811150979,
+            16.87153932938025
+          ],
+          "delphi_1e+21": [
+            18.77309871471518,
+            19.604246673707262
+          ],
+          "delphi_1e+22": [
+            10.986850388201592,
+            11.473275054404796
+          ]
+        }
+      },
+      "300m": {
+        "cross_group_pairs": 134,
+        "abs_delta_bpb_median_p90": [
+          6.523644383309834e-05,
+          0.0011638821035689668
+        ],
+        "over_gap_median_p90": [
+          0.029627897471327543,
+          0.20056200813182062
+        ],
+        "share_delta_exceeds_gap": 0.007462686567164179,
+        "over_borrowed_sd_median_p90": {
+          "datadecide_c4_1B": [
+            0.11919029271095379,
+            2.1480332359785814
+          ],
+          "delphi_1e+21": [
+            0.1384957148129259,
+            2.4959532499867403
+          ],
+          "delphi_1e+22": [
+            0.08105383779098388,
+            1.4607425950439792
+          ]
+        }
+      },
+      "520m": {
+        "cross_group_pairs": 134,
+        "abs_delta_bpb_median_p90": [
+          0.007097663848612011,
+          0.008977963984094516
+        ],
+        "over_gap_median_p90": [
+          0.7223562311666764,
+          4.808635532521562
+        ],
+        "share_delta_exceeds_gap": 0.373134328358209,
+        "over_borrowed_sd_median_p90": {
+          "datadecide_c4_1B": [
+            13.949719677475755,
+            17.577673015382864
+          ],
+          "delphi_1e+21": [
+            16.209175715820617,
+            20.42475384230347
+          ],
+          "delphi_1e+22": [
+            9.486328880069147,
+            11.953472257903613
+          ]
+        }
+      },
+      "1_2b": {
+        "cross_group_pairs": 134,
+        "abs_delta_bpb_median_p90": [
+          0.007984001925963971,
+          0.010012856647118326
+        ],
+        "over_gap_median_p90": [
+          0.7153991678718737,
+          2.806313035374992
+        ],
+        "share_delta_exceeds_gap": 0.3656716417910448,
+        "over_borrowed_sd_median_p90": {
+          "datadecide_c4_1B": [
+            16.72370638153168,
+            20.741413913950122
+          ],
+          "delphi_1e+21": [
+            19.432469011957227,
+            24.100930377019647
+          ],
+          "delphi_1e+22": [
+            11.372743144443477,
+            14.104933889322238
+          ]
+        }
+      }
+    },
+    "MA3": {
+      "median_over_each_borrowed_sd_at_least_5": true,
+      "median_over_gap_in_0_3_to_3": true
+    }
+  },
+  "task1": {
+    "common_x": {
+      "130m": 2.1289341996446515e+18,
+      "300m": 9.99035877535934e+18,
+      "520m": 4.8779636003945054e+19,
+      "1_2b": 2.071634014279733e+20
+    },
+    "median_x_unclipped": {
+      "130m": 2.107429813789655e+18,
+      "300m": 9.99035877535934e+18,
+      "520m": 4.8779636003945054e+19,
+      "1_2b": 2.4710625753168033e+20
+    },
+    "clip_shift_ratio": {
+      "130m": 1.010204081632653,
+      "300m": 1.0,
+      "520m": 1.0,
+      "1_2b": 0.8383575693198051
+    },
+    "designs": {
+      "named_rungs": {
+        "pairs": 210,
+        "reorder": {
+          "datadecide_c4_1B": {
+            "pairs": 210,
+            "determined": 190,
+            "reordered": 41,
+            "rate": 0.21578947368421053,
+            "both_rung_determined": 168,
+            "both_rung_genuine": 33,
+            "both_rung_rate": 0.19642857142857142
+          },
+          "delphi_1e+21": {
+            "pairs": 210,
+            "determined": 193,
+            "reordered": 41,
+            "rate": 0.21243523316062177,
+            "both_rung_determined": 173,
+            "both_rung_genuine": 34,
+            "both_rung_rate": 0.19653179190751446
+          },
+          "delphi_1e+22": {
+            "pairs": 210,
+            "determined": 188,
+            "reordered": 40,
+            "rate": 0.2127659574468085,
+            "both_rung_determined": 159,
+            "both_rung_genuine": 31,
+            "both_rung_rate": 0.1949685534591195
+          },
+          "empirical_three_parameter_0_43pct": {
+            "pairs": 210,
+            "determined": 84,
+            "reordered": 5,
+            "rate": 0.05952380952380952,
+            "both_rung_determined": 38,
+            "both_rung_genuine": 0,
+            "both_rung_rate": 0.0
+          }
+        },
+        "class_vs_datadecide": {
+          "300M->1B": {
+            "marin_rate": 0.21578947368421053,
+            "dd_rate": 0.010135135135135136,
+            "difference_pp": 20.56543385490754,
+            "fisher_p_one_sided": 4.093957006644492e-15,
+            "survives": true
+          },
+          "530M->1B": {
+            "marin_rate": 0.21578947368421053,
+            "dd_rate": 0.0033783783783783786,
+            "difference_pp": 21.241109530583216,
+            "fisher_p_one_sided": 2.873183398748002e-17,
+            "survives": true
+          }
+        },
+        "heldout": {
+          "pairs": 210,
+          "single_wrong": 46,
+          "forms": {
+            "i_marin": {
+              "wrong": 57,
+              "failed": [],
+              "u_test": {
+                "mean_pp": 5.238095238095238,
+                "se_pp": 2.145408302218464,
+                "abs_t": 2.4415376936309863,
+                "significant_at_1_96": true,
+                "significant_at_2_99": false
+              }
+            },
+            "iv_exact_three": {
+              "wrong": 95,
+              "failed": [],
+              "u_test": {
+                "mean_pp": 23.333333333333332,
+                "se_pp": 7.882102579572884,
+                "abs_t": 2.9602930306697077,
+                "significant_at_1_96": true,
+                "significant_at_2_99": false
+              }
+            },
+            "ii_loglog": {
+              "wrong": 64,
+              "failed": [],
+              "u_test": {
+                "mean_pp": 8.571428571428571,
+                "se_pp": 3.330348347211821,
+                "abs_t": 2.573733338917714,
+                "significant_at_1_96": true,
+                "significant_at_2_99": false
+              }
+            },
+            "iii_shared_exponent": {
+              "wrong": 43,
+              "failed": [],
+              "u_test": {
+                "mean_pp": -1.4285714285714286,
+                "se_pp": 6.576850523148218,
+                "abs_t": 0.2172120870838338,
+                "significant_at_1_96": false,
+                "significant_at_2_99": false
+              }
+            }
+          }
+        },
+        "sign_changes": {
+          "1e-09": {
+            "observed": {
+              "mean": 0.5476190476190477,
+              "share_two_or_more": 0.1761904761904762,
+              "distribution": {
+                "0": 0.6476190476190476,
+                "1": 0.1761904761904762,
+                "2": 0.15714285714285714,
+                "3": 0.01904761904761905
+              }
+            },
+            "noiseless": {
+              "mean": 0.40476190476190477,
+              "share_two_or_more": 0.1,
+              "distribution": {
+                "0": 0.6952380952380952,
+                "1": 0.20476190476190476,
+                "2": 0.1,
+                "3": 0.0
+              }
+            },
+            "datadecide_c4": {
+              "mean": 0.03666666666666667,
+              "share_two_or_more": 0.013333333333333334,
+              "distribution": {
+                "0": 0.98,
+                "1": 0.006666666666666667,
+                "2": 0.01,
+                "3": 0.0033333333333333335
+              }
+            },
+            "null_empirical_two_parameter_1.36pct": {
+              "mean_95": [
+                0.9952380952380953,
+                1.561904761904762
+              ],
+              "share_two_or_more_95": [
+                0.2761904761904762,
+                0.5666666666666667
+              ],
+              "mean_of_means": 1.2721357142857141
+            },
+            "null_empirical_three_parameter_0.43pct": {
+              "mean_95": [
+                0.5761904761904761,
+                0.9285714285714286
+              ],
+              "share_two_or_more_95": [
+                0.14285714285714285,
+                0.3142857142857143
+              ],
+              "mean_of_means": 0.7424761904761904
+            },
+            "null_borrowed_datadecide_1b_0.0511pct_added": {
+              "mean_95": [
+                0.40476190476190477,
+                0.47619047619047616
+              ],
+              "share_two_or_more_95": [
+                0.09523809523809523,
+                0.12857142857142856
+              ],
+              "mean_of_means": 0.43830238095238105
+            },
+            "observed_over_datadecide": 14.935064935064936
+          },
+          "0.00141639": {
+            "observed": {
+              "mean": 0.3904761904761905,
+              "share_two_or_more": 0.10476190476190476,
+              "distribution": {
+                "0": 0.719047619047619,
+                "1": 0.1761904761904762,
+                "2": 0.1,
+                "3": 0.004761904761904762
+              }
+            },
+            "noiseless": {
+              "mean": 0.32857142857142857,
+              "share_two_or_more": 0.0761904761904762,
+              "distribution": {
+                "0": 0.7476190476190476,
+                "1": 0.1761904761904762,
+                "2": 0.0761904761904762,
+                "3": 0.0
+              }
+            },
+            "datadecide_c4": {
+              "mean": 0.0033333333333333335,
+              "share_two_or_more": 0.0,
+              "distribution": {
+                "0": 0.9966666666666667,
+                "1": 0.0033333333333333335,
+                "2": 0.0,
+                "3": 0.0
+              }
+            },
+            "null_empirical_two_parameter_1.36pct": {
+              "mean_95": [
+                0.9046428571428572,
+                1.438214285714285
+              ],
+              "share_two_or_more_95": [
+                0.23333333333333334,
+                0.5142857142857142
+              ],
+              "mean_of_means": 1.1670071428571427
+            },
+            "null_empirical_three_parameter_0.43pct": {
+              "mean_95": [
+                0.41904761904761906,
+                0.7380952380952381
+              ],
+              "share_two_or_more_95": [
+                0.0761904761904762,
+                0.22869047619047553
+              ],
+              "mean_of_means": 0.5705261904761905
+            },
+            "null_borrowed_datadecide_1b_0.0511pct_added": {
+              "mean_95": [
+                0.28095238095238095,
+                0.3476190476190476
+              ],
+              "share_two_or_more_95": [
+                0.05238095238095238,
+                0.08571428571428572
+              ],
+              "mean_of_means": 0.31770238095238096
+            },
+            "observed_over_datadecide": 117.14285714285714
+          }
+        }
+      },
+      "W": {
+        "pairs": 76,
+        "reorder": {
+          "datadecide_c4_1B": {
+            "pairs": 76,
+            "determined": 65,
+            "reordered": 11,
+            "rate": 0.16923076923076924,
+            "both_rung_determined": 58,
+            "both_rung_genuine": 10,
+            "both_rung_rate": 0.1724137931034483
+          },
+          "delphi_1e+21": {
+            "pairs": 76,
+            "determined": 67,
+            "reordered": 11,
+            "rate": 0.16417910447761194,
+            "both_rung_determined": 61,
+            "both_rung_genuine": 10,
+            "both_rung_rate": 0.16393442622950818
+          },
+          "delphi_1e+22": {
+            "pairs": 76,
+            "determined": 64,
+            "reordered": 11,
+            "rate": 0.171875,
+            "both_rung_determined": 55,
+            "both_rung_genuine": 10,
+            "both_rung_rate": 0.18181818181818182
+          },
+          "empirical_three_parameter_0_43pct": {
+            "pairs": 76,
+            "determined": 24,
+            "reordered": 1,
+            "rate": 0.041666666666666664,
+            "both_rung_determined": 10,
+            "both_rung_genuine": 0,
+            "both_rung_rate": 0.0
+          }
+        },
+        "class_vs_datadecide": {
+          "300M->1B": {
+            "marin_rate": 0.16923076923076924,
+            "dd_rate": 0.010135135135135136,
+            "difference_pp": 15.90956340956341,
+            "fisher_p_one_sided": 7.069220763257206e-07,
+            "survives": true
+          },
+          "530M->1B": {
+            "marin_rate": 0.16923076923076924,
+            "dd_rate": 0.0033783783783783786,
+            "difference_pp": 16.58523908523909,
+            "fisher_p_one_sided": 3.163795601945658e-08,
+            "survives": true
+          }
+        },
+        "heldout": {
+          "pairs": 76,
+          "single_wrong": 11,
+          "forms": {
+            "i_marin": {
+              "wrong": 14,
+              "failed": [],
+              "u_test_by_group": {
+                "llama_qwen": {
+                  "mean_pp": 4.444444444444445,
+                  "se_pp": 1.9697894676175962,
+                  "abs_t": 2.256304299271065,
+                  "significant_at_1_96": true,
+                  "significant_at_2_99": false,
+                  "pairs": 45
+                },
+                "attn_sink_parallel": {
+                  "mean_pp": 3.5714285714285716,
+                  "se_pp": 3.5714285714285707,
+                  "abs_t": 1.0000000000000002,
+                  "significant_at_1_96": false,
+                  "significant_at_2_99": false,
+                  "pairs": 28
+                }
+              },
+              "u_test_combined": {
+                "mean_pp": 4.109589041095891,
+                "abs_z": 2.244994432064365
+              }
+            },
+            "iv_exact_three": {
+              "wrong": 25,
+              "failed": [],
+              "u_test_by_group": {
+                "llama_qwen": {
+                  "mean_pp": 8.88888888888889,
+                  "se_pp": 3.939578935235193,
+                  "abs_t": 2.256304299271065,
+                  "significant_at_1_96": true,
+                  "significant_at_2_99": false,
+                  "pairs": 45
+                },
+                "attn_sink_parallel": {
+                  "mean_pp": 35.714285714285715,
+                  "se_pp": 17.975796274454165,
+                  "abs_t": 1.986798535597566,
+                  "significant_at_1_96": true,
+                  "significant_at_2_99": false,
+                  "pairs": 28
+                }
+              },
+              "u_test_combined": {
+                "mean_pp": 19.17808219178082,
+                "abs_z": 2.6235363812634103
+              }
+            },
+            "ii_loglog": {
+              "wrong": 20,
+              "failed": [],
+              "u_test_by_group": {
+                "llama_qwen": {
+                  "mean_pp": 11.11111111111111,
+                  "se_pp": 3.5136418446315325,
+                  "abs_t": 3.162277660168379,
+                  "significant_at_1_96": true,
+                  "significant_at_2_99": true,
+                  "pairs": 45
+                },
+                "attn_sink_parallel": {
+                  "mean_pp": 14.285714285714286,
+                  "se_pp": 7.824607964359515,
+                  "abs_t": 1.825741858350554,
+                  "significant_at_1_96": false,
+                  "significant_at_2_99": false,
+                  "pairs": 28
+                }
+              },
+              "u_test_combined": {
+                "mean_pp": 12.32876712328767,
+                "abs_z": 3.3310494458892244
+              }
+            },
+            "iii_shared_exponent": {
+              "wrong": 24,
+              "failed": [],
+              "u_test_by_group": {
+                "llama_qwen": {
+                  "mean_pp": 31.11111111111111,
+                  "se_pp": 18.67762339057842,
+                  "abs_t": 1.6656889616269128,
+                  "significant_at_1_96": false,
+                  "significant_at_2_99": false,
+                  "pairs": 45
+                },
+                "attn_sink_parallel": {
+                  "mean_pp": -3.5714285714285716,
+                  "se_pp": 3.5714285714285716,
+                  "abs_t": 1.0,
+                  "significant_at_1_96": false,
+                  "significant_at_2_99": false,
+                  "pairs": 28
+                }
+              },
+              "u_test_combined": {
+                "mean_pp": 17.80821917808219,
+                "abs_z": 1.5358786509060776
+              }
+            }
+          }
+        },
+        "sign_changes": {
+          "1e-09": {
+            "observed": {
+              "mean": 0.4342105263157895,
+              "share_two_or_more": 0.06578947368421052,
+              "distribution": {
+                "0": 0.631578947368421,
+                "1": 0.3026315789473684,
+                "2": 0.06578947368421052,
+                "3": 0.0
+              }
+            },
+            "noiseless": {
+              "mean": 0.34210526315789475,
+              "share_two_or_more": 0.0,
+              "distribution": {
+                "0": 0.6578947368421053,
+                "1": 0.34210526315789475,
+                "2": 0.0,
+                "3": 0.0
+              }
+            },
+            "datadecide_c4": {
+              "mean": 0.03666666666666667,
+              "share_two_or_more": 0.013333333333333334,
+              "distribution": {
+                "0": 0.98,
+                "1": 0.006666666666666667,
+                "2": 0.01,
+                "3": 0.0033333333333333335
+              }
+            },
+            "null_empirical_two_parameter_1.36pct": {
+              "mean_95": [
+                1.013157894736842,
+                1.631578947368421
+              ],
+              "share_two_or_more_95": [
+                0.25,
+                0.5921052631578947
+              ],
+              "mean_of_means": 1.3071973684210525
+            },
+            "null_empirical_three_parameter_0.43pct": {
+              "mean_95": [
+                0.5921052631578947,
+                1.013157894736842
+              ],
+              "share_two_or_more_95": [
+                0.10526315789473684,
+                0.3157894736842105
+              ],
+              "mean_of_means": 0.7858684210526317
+            },
+            "null_borrowed_datadecide_1b_0.0511pct_added": {
+              "mean_95": [
+                0.34210526315789475,
+                0.4605263157894737
+              ],
+              "share_two_or_more_95": [
+                0.0,
+                0.05263157894736842
+              ],
+              "mean_of_means": 0.4029210526315789
+            },
+            "observed_over_datadecide": 11.842105263157896
+          },
+          "0.00141639": {
+            "observed": {
+              "mean": 0.35526315789473684,
+              "share_two_or_more": 0.02631578947368421,
+              "distribution": {
+                "0": 0.6710526315789473,
+                "1": 0.3026315789473684,
+                "2": 0.02631578947368421,
+                "3": 0.0
+              }
+            },
+            "noiseless": {
+              "mean": 0.2631578947368421,
+              "share_two_or_more": 0.0,
+              "distribution": {
+                "0": 0.7368421052631579,
+                "1": 0.2631578947368421,
+                "2": 0.0,
+                "3": 0.0
+              }
+            },
+            "datadecide_c4": {
+              "mean": 0.0033333333333333335,
+              "share_two_or_more": 0.0,
+              "distribution": {
+                "0": 0.9966666666666667,
+                "1": 0.0033333333333333335,
+                "2": 0.0,
+                "3": 0.0
+              }
+            },
+            "null_empirical_two_parameter_1.36pct": {
+              "mean_95": [
+                0.9078947368421053,
+                1.513157894736842
+              ],
+              "share_two_or_more_95": [
+                0.21052631578947367,
+                0.5394736842105263
+              ],
+              "mean_of_means": 1.2014539473684211
+            },
+            "null_empirical_three_parameter_0.43pct": {
+              "mean_95": [
+                0.4342105263157895,
+                0.8026315789473685
+              ],
+              "share_two_or_more_95": [
+                0.039473684210526314,
+                0.21052631578947367
+              ],
+              "mean_of_means": 0.6034013157894738
+            },
+            "null_borrowed_datadecide_1b_0.0511pct_added": {
+              "mean_95": [
+                0.2236842105263158,
+                0.3026315789473684
+              ],
+              "share_two_or_more_95": [
+                0.0,
+                0.0
+              ],
+              "mean_of_means": 0.2630921052631579
+            },
+            "observed_over_datadecide": 106.57894736842104
+          }
+        }
+      },
+      "W_LQ": {
+        "pairs": 45,
+        "reorder": {
+          "datadecide_c4_1B": {
+            "pairs": 45,
+            "determined": 41,
+            "reordered": 2,
+            "rate": 0.04878048780487805,
+            "both_rung_determined": 37,
+            "both_rung_genuine": 2,
+            "both_rung_rate": 0.05405405405405406
+          },
+          "delphi_1e+21": {
+            "pairs": 45,
+            "determined": 43,
+            "reordered": 2,
+            "rate": 0.046511627906976744,
+            "both_rung_determined": 39,
+            "both_rung_genuine": 2,
+            "both_rung_rate": 0.05128205128205128
+          },
+          "delphi_1e+22": {
+            "pairs": 45,
+            "determined": 40,
+            "reordered": 2,
+            "rate": 0.05,
+            "both_rung_determined": 34,
+            "both_rung_genuine": 2,
+            "both_rung_rate": 0.058823529411764705
+          },
+          "empirical_three_parameter_0_43pct": {
+            "pairs": 45,
+            "determined": 15,
+            "reordered": 0,
+            "rate": 0.0,
+            "both_rung_determined": 7,
+            "both_rung_genuine": 0,
+            "both_rung_rate": 0.0
+          }
+        },
+        "class_vs_datadecide": {
+          "300M->1B": {
+            "marin_rate": 0.04878048780487805,
+            "dd_rate": 0.010135135135135136,
+            "difference_pp": 3.8645352669742916,
+            "fisher_p_one_sided": 0.11390480624000829,
+            "survives": false
+          },
+          "530M->1B": {
+            "marin_rate": 0.04878048780487805,
+            "dd_rate": 0.0033783783783783786,
+            "difference_pp": 4.540210942649967,
+            "fisher_p_one_sided": 0.04007832815574522,
+            "survives": false
+          }
+        },
+        "heldout": {
+          "pairs": 45,
+          "single_wrong": 2,
+          "forms": {
+            "i_marin": {
+              "wrong": 4,
+              "failed": [],
+              "u_test": {
+                "mean_pp": 4.444444444444445,
+                "se_pp": 1.9697894676175962,
+                "abs_t": 2.256304299271065,
+                "significant_at_1_96": true,
+                "significant_at_2_99": false
+              }
+            },
+            "iv_exact_three": {
+              "wrong": 6,
+              "failed": [],
+              "u_test": {
+                "mean_pp": 8.88888888888889,
+                "se_pp": 3.939578935235193,
+                "abs_t": 2.256304299271065,
+                "significant_at_1_96": true,
+                "significant_at_2_99": false
+              }
+            },
+            "ii_loglog": {
+              "wrong": 7,
+              "failed": [],
+              "u_test": {
+                "mean_pp": 11.11111111111111,
+                "se_pp": 3.5136418446315325,
+                "abs_t": 3.162277660168379,
+                "significant_at_1_96": true,
+                "significant_at_2_99": true
+              }
+            },
+            "iii_shared_exponent": {
+              "wrong": 16,
+              "failed": [],
+              "u_test": {
+                "mean_pp": 31.11111111111111,
+                "se_pp": 18.67762339057842,
+                "abs_t": 1.6656889616269128,
+                "significant_at_1_96": false,
+                "significant_at_2_99": false
+              }
+            }
+          }
+        },
+        "sign_changes": {
+          "1e-09": {
+            "observed": {
+              "mean": 0.4666666666666667,
+              "share_two_or_more": 0.044444444444444446,
+              "distribution": {
+                "0": 0.5777777777777777,
+                "1": 0.37777777777777777,
+                "2": 0.044444444444444446,
+                "3": 0.0
+              }
+            },
+            "noiseless": {
+              "mean": 0.4444444444444444,
+              "share_two_or_more": 0.0,
+              "distribution": {
+                "0": 0.5555555555555556,
+                "1": 0.4444444444444444,
+                "2": 0.0,
+                "3": 0.0
+              }
+            },
+            "datadecide_c4": {
+              "mean": 0.03666666666666667,
+              "share_two_or_more": 0.013333333333333334,
+              "distribution": {
+                "0": 0.98,
+                "1": 0.006666666666666667,
+                "2": 0.01,
+                "3": 0.0033333333333333335
+              }
+            },
+            "null_empirical_two_parameter_1.36pct": {
+              "mean_95": [
+                0.9111111111111111,
+                1.7777777777777777
+              ],
+              "share_two_or_more_95": [
+                0.2,
+                0.6666666666666666
+              ],
+              "mean_of_means": 1.3480444444444442
+            },
+            "null_empirical_three_parameter_0.43pct": {
+              "mean_95": [
+                0.5777777777777777,
+                1.1555555555555554
+              ],
+              "share_two_or_more_95": [
+                0.06666666666666667,
+                0.35555555555555557
+              ],
+              "mean_of_means": 0.8408777777777777
+            },
+            "null_borrowed_datadecide_1b_0.0511pct_added": {
+              "mean_95": [
+                0.4,
+                0.5111111111111111
+              ],
+              "share_two_or_more_95": [
+                0.0,
+                0.044444444444444446
+              ],
+              "mean_of_means": 0.45700000000000013
+            },
+            "observed_over_datadecide": 12.727272727272727
+          },
+          "0.00141639": {
+            "observed": {
+              "mean": 0.35555555555555557,
+              "share_two_or_more": 0.0,
+              "distribution": {
+                "0": 0.6444444444444445,
+                "1": 0.35555555555555557,
+                "2": 0.0,
+                "3": 0.0
+              }
+            },
+            "noiseless": {
+              "mean": 0.35555555555555557,
+              "share_two_or_more": 0.0,
+              "distribution": {
+                "0": 0.6444444444444445,
+                "1": 0.35555555555555557,
+                "2": 0.0,
+                "3": 0.0
+              }
+            },
+            "datadecide_c4": {
+              "mean": 0.0033333333333333335,
+              "share_two_or_more": 0.0,
+              "distribution": {
+                "0": 0.9966666666666667,
+                "1": 0.0033333333333333335,
+                "2": 0.0,
+                "3": 0.0
+              }
+            },
+            "null_empirical_two_parameter_1.36pct": {
+              "mean_95": [
+                0.8222222222222222,
+                1.6888888888888889
+              ],
+              "share_two_or_more_95": [
+                0.15555555555555556,
+                0.6222222222222222
+              ],
+              "mean_of_means": 1.242711111111111
+            },
+            "null_empirical_three_parameter_0.43pct": {
+              "mean_95": [
+                0.4444444444444444,
+                0.9333333333333333
+              ],
+              "share_two_or_more_95": [
+                0.022222222222222223,
+                0.24444444444444444
+              ],
+              "mean_of_means": 0.6625333333333333
+            },
+            "null_borrowed_datadecide_1b_0.0511pct_added": {
+              "mean_95": [
+                0.3111111111111111,
+                0.4
+              ],
+              "share_two_or_more_95": [
+                0.0,
+                0.0
+              ],
+              "mean_of_means": 0.3589888888888888
+            },
+            "observed_over_datadecide": 106.66666666666666
+          }
+        }
+      },
+      "C2": {
+        "pairs": 210,
+        "reorder": {
+          "datadecide_c4_1B": {
+            "pairs": 210,
+            "determined": 188,
+            "reordered": 49,
+            "rate": 0.26063829787234044,
+            "both_rung_determined": 169,
+            "both_rung_genuine": 42,
+            "both_rung_rate": 0.2485207100591716
+          },
+          "delphi_1e+21": {
+            "pairs": 210,
+            "determined": 192,
+            "reordered": 49,
+            "rate": 0.2552083333333333,
+            "both_rung_determined": 176,
+            "both_rung_genuine": 42,
+            "both_rung_rate": 0.23863636363636365
+          },
+          "delphi_1e+22": {
+            "pairs": 210,
+            "determined": 184,
+            "reordered": 48,
+            "rate": 0.2608695652173913,
+            "both_rung_determined": 152,
+            "both_rung_genuine": 36,
+            "both_rung_rate": 0.23684210526315788
+          },
+          "empirical_three_parameter_0_43pct": {
+            "pairs": 210,
+            "determined": 70,
+            "reordered": 6,
+            "rate": 0.08571428571428572,
+            "both_rung_determined": 24,
+            "both_rung_genuine": 0,
+            "both_rung_rate": 0.0
+          }
+        },
+        "class_vs_datadecide": {
+          "300M->1B": {
+            "marin_rate": 0.26063829787234044,
+            "dd_rate": 0.010135135135135136,
+            "difference_pp": 25.05031627372053,
+            "fisher_p_one_sided": 6.860892219150439e-19,
+            "survives": true
+          },
+          "530M->1B": {
+            "marin_rate": 0.26063829787234044,
+            "dd_rate": 0.0033783783783783786,
+            "difference_pp": 25.725991949396203,
+            "fisher_p_one_sided": 3.2995633372238815e-21,
+            "survives": true
+          }
+        },
+        "heldout": {
+          "pairs": 210,
+          "single_wrong": 56,
+          "forms": {
+            "i_marin": {
+              "wrong": 69,
+              "failed": [],
+              "u_test": {
+                "mean_pp": 6.190476190476191,
+                "se_pp": 3.4850312728167365,
+                "abs_t": 1.7763043444579507,
+                "significant_at_1_96": false,
+                "significant_at_2_99": false
+              }
+            },
+            "iv_exact_three": {
+              "wrong": 77,
+              "failed": [],
+              "u_test": {
+                "mean_pp": 10.0,
+                "se_pp": 5.854924833544884,
+                "abs_t": 1.7079638568041984,
+                "significant_at_1_96": false,
+                "significant_at_2_99": false
+              }
+            },
+            "ii_loglog": {
+              "wrong": 74,
+              "failed": [],
+              "u_test": {
+                "mean_pp": 8.571428571428571,
+                "se_pp": 3.7250449313560496,
+                "abs_t": 2.301026894810706,
+                "significant_at_1_96": true,
+                "significant_at_2_99": false
+              }
+            },
+            "iii_shared_exponent": {
+              "wrong": 58,
+              "failed": [],
+              "u_test": {
+                "mean_pp": 0.9523809523809523,
+                "se_pp": 6.824716796960461,
+                "abs_t": 0.13954878725592193,
+                "significant_at_1_96": false,
+                "significant_at_2_99": false
+              }
+            }
+          }
+        },
+        "sign_changes": {
+          "1e-09": {
+            "observed": {
+              "mean": 0.5619047619047619,
+              "share_two_or_more": 0.14285714285714285,
+              "distribution": {
+                "0": 0.5904761904761905,
+                "1": 0.26666666666666666,
+                "2": 0.13333333333333333,
+                "3": 0.009523809523809525
+              }
+            },
+            "noiseless": {
+              "mean": 0.2857142857142857,
+              "share_two_or_more": 0.0,
+              "distribution": {
+                "0": 0.7142857142857143,
+                "1": 0.2857142857142857,
+                "2": 0.0,
+                "3": 0.0
+              }
+            },
+            "datadecide_c4": {
+              "mean": 0.03666666666666667,
+              "share_two_or_more": 0.013333333333333334,
+              "distribution": {
+                "0": 0.98,
+                "1": 0.006666666666666667,
+                "2": 0.01,
+                "3": 0.0033333333333333335
+              }
+            },
+            "null_empirical_two_parameter_1.36pct": {
+              "mean_95": [
+                1.0095238095238095,
+                1.5666666666666667
+              ],
+              "share_two_or_more_95": [
+                0.2714285714285714,
+                0.5666666666666667
+              ],
+              "mean_of_means": 1.28975
+            },
+            "null_empirical_three_parameter_0.43pct": {
+              "mean_95": [
+                0.5904761904761905,
+                0.9380952380952381
+              ],
+              "share_two_or_more_95": [
+                0.11428571428571428,
+                0.2904761904761905
+              ],
+              "mean_of_means": 0.7555571428571428
+            },
+            "null_borrowed_datadecide_1b_0.0511pct_added": {
+              "mean_95": [
+                0.2857142857142857,
+                0.3523809523809524
+              ],
+              "share_two_or_more_95": [
+                0.0,
+                0.02857142857142857
+              ],
+              "mean_of_means": 0.3171428571428571
+            },
+            "observed_over_datadecide": 15.324675324675324
+          },
+          "0.00141639": {
+            "observed": {
+              "mean": 0.40476190476190477,
+              "share_two_or_more": 0.08095238095238096,
+              "distribution": {
+                "0": 0.6761904761904762,
+                "1": 0.24285714285714285,
+                "2": 0.08095238095238096,
+                "3": 0.0
+              }
+            },
+            "noiseless": {
+              "mean": 0.2,
+              "share_two_or_more": 0.0,
+              "distribution": {
+                "0": 0.8,
+                "1": 0.2,
+                "2": 0.0,
+                "3": 0.0
+              }
+            },
+            "datadecide_c4": {
+              "mean": 0.0033333333333333335,
+              "share_two_or_more": 0.0,
+              "distribution": {
+                "0": 0.9966666666666667,
+                "1": 0.0033333333333333335,
+                "2": 0.0,
+                "3": 0.0
+              }
+            },
+            "null_empirical_two_parameter_1.36pct": {
+              "mean_95": [
+                0.9189285714285714,
+                1.457142857142857
+              ],
+              "share_two_or_more_95": [
+                0.22380952380952382,
+                0.5142857142857142
+              ],
+              "mean_of_means": 1.1835190476190476
+            },
+            "null_empirical_three_parameter_0.43pct": {
+              "mean_95": [
+                0.41904761904761906,
+                0.7333333333333333
+              ],
+              "share_two_or_more_95": [
+                0.05238095238095238,
+                0.2
+              ],
+              "mean_of_means": 0.5710666666666666
+            },
+            "null_borrowed_datadecide_1b_0.0511pct_added": {
+              "mean_95": [
+                0.16666666666666666,
+                0.22380952380952382
+              ],
+              "share_two_or_more_95": [
+                0.0,
+                0.0
+              ],
+              "mean_of_means": 0.19561666666666666
+            },
+            "observed_over_datadecide": 121.42857142857142
+          }
+        }
+      },
+      "C3": {
+        "pairs": 210,
+        "reorder": {
+          "datadecide_c4_1B": {
+            "pairs": 210,
+            "determined": 188,
+            "reordered": 44,
+            "rate": 0.23404255319148937,
+            "both_rung_determined": 167,
+            "both_rung_genuine": 35,
+            "both_rung_rate": 0.20958083832335328
+          },
+          "delphi_1e+21": {
+            "pairs": 210,
+            "determined": 190,
+            "reordered": 44,
+            "rate": 0.23157894736842105,
+            "both_rung_determined": 175,
+            "both_rung_genuine": 36,
+            "both_rung_rate": 0.2057142857142857
+          },
+          "delphi_1e+22": {
+            "pairs": 210,
+            "determined": 183,
+            "reordered": 44,
+            "rate": 0.24043715846994534,
+            "both_rung_determined": 154,
+            "both_rung_genuine": 32,
+            "both_rung_rate": 0.2077922077922078
+          },
+          "empirical_three_parameter_0_43pct": {
+            "pairs": 210,
+            "determined": 68,
+            "reordered": 5,
+            "rate": 0.07352941176470588,
+            "both_rung_determined": 26,
+            "both_rung_genuine": 0,
+            "both_rung_rate": 0.0
+          }
+        },
+        "class_vs_datadecide": {
+          "300M->1B": {
+            "marin_rate": 0.23404255319148937,
+            "dd_rate": 0.010135135135135136,
+            "difference_pp": 22.39074180563542,
+            "fisher_p_one_sided": 1.3642150416339191e-16,
+            "survives": true
+          },
+          "530M->1B": {
+            "marin_rate": 0.23404255319148937,
+            "dd_rate": 0.0033783783783783786,
+            "difference_pp": 23.0664174813111,
+            "fisher_p_one_sided": 8.210523277740545e-19,
+            "survives": true
+          }
+        },
+        "heldout": {
+          "pairs": 210,
+          "single_wrong": 47,
+          "forms": {
+            "i_marin": {
+              "wrong": 59,
+              "failed": [],
+              "u_test": {
+                "mean_pp": 5.714285714285714,
+                "se_pp": 2.652066488140297,
+                "abs_t": 2.1546540178533498,
+                "significant_at_1_96": true,
+                "significant_at_2_99": false
+              }
+            },
+            "iv_exact_three": {
+              "wrong": 81,
+              "failed": [],
+              "u_test": {
+                "mean_pp": 16.19047619047619,
+                "se_pp": 5.812303319089209,
+                "abs_t": 2.7855525256746656,
+                "significant_at_1_96": true,
+                "significant_at_2_99": false
+              }
+            },
+            "ii_loglog": {
+              "wrong": 71,
+              "failed": [],
+              "u_test": {
+                "mean_pp": 11.428571428571429,
+                "se_pp": 4.122483247108189,
+                "abs_t": 2.7722541835890455,
+                "significant_at_1_96": true,
+                "significant_at_2_99": false
+              }
+            },
+            "iii_shared_exponent": {
+              "wrong": 51,
+              "failed": [],
+              "u_test": {
+                "mean_pp": 1.9047619047619047,
+                "se_pp": 6.901232065217156,
+                "abs_t": 0.27600316679134435,
+                "significant_at_1_96": false,
+                "significant_at_2_99": false
+              }
+            }
+          }
+        },
+        "sign_changes": {
+          "1e-09": {
+            "observed": {
+              "mean": 0.5619047619047619,
+              "share_two_or_more": 0.14285714285714285,
+              "distribution": {
+                "0": 0.6,
+                "1": 0.2571428571428571,
+                "2": 0.12380952380952381,
+                "3": 0.01904761904761905
+              }
+            },
+            "noiseless": {
+              "mean": 0.2857142857142857,
+              "share_two_or_more": 0.0,
+              "distribution": {
+                "0": 0.7142857142857143,
+                "1": 0.2857142857142857,
+                "2": 0.0,
+                "3": 0.0
+              }
+            },
+            "datadecide_c4": {
+              "mean": 0.03666666666666667,
+              "share_two_or_more": 0.013333333333333334,
+              "distribution": {
+                "0": 0.98,
+                "1": 0.006666666666666667,
+                "2": 0.01,
+                "3": 0.0033333333333333335
+              }
+            },
+            "null_empirical_two_parameter_1.36pct": {
+              "mean_95": [
+                1.0095238095238095,
+                1.5666666666666667
+              ],
+              "share_two_or_more_95": [
+                0.2714285714285714,
+                0.5666666666666667
+              ],
+              "mean_of_means": 1.28975
+            },
+            "null_empirical_three_parameter_0.43pct": {
+              "mean_95": [
+                0.5904761904761905,
+                0.9380952380952381
+              ],
+              "share_two_or_more_95": [
+                0.11428571428571428,
+                0.2904761904761905
+              ],
+              "mean_of_means": 0.7555571428571428
+            },
+            "null_borrowed_datadecide_1b_0.0511pct_added": {
+              "mean_95": [
+                0.2857142857142857,
+                0.3523809523809524
+              ],
+              "share_two_or_more_95": [
+                0.0,
+                0.02857142857142857
+              ],
+              "mean_of_means": 0.3171428571428571
+            },
+            "observed_over_datadecide": 15.324675324675324
+          },
+          "0.00141639": {
+            "observed": {
+              "mean": 0.38571428571428573,
+              "share_two_or_more": 0.0761904761904762,
+              "distribution": {
+                "0": 0.7,
+                "1": 0.22380952380952382,
+                "2": 0.06666666666666667,
+                "3": 0.009523809523809525
+              }
+            },
+            "noiseless": {
+              "mean": 0.2,
+              "share_two_or_more": 0.0,
+              "distribution": {
+                "0": 0.8,
+                "1": 0.2,
+                "2": 0.0,
+                "3": 0.0
+              }
+            },
+            "datadecide_c4": {
+              "mean": 0.0033333333333333335,
+              "share_two_or_more": 0.0,
+              "distribution": {
+                "0": 0.9966666666666667,
+                "1": 0.0033333333333333335,
+                "2": 0.0,
+                "3": 0.0
+              }
+            },
+            "null_empirical_two_parameter_1.36pct": {
+              "mean_95": [
+                0.9189285714285714,
+                1.457142857142857
+              ],
+              "share_two_or_more_95": [
+                0.22380952380952382,
+                0.5142857142857142
+              ],
+              "mean_of_means": 1.1835190476190476
+            },
+            "null_empirical_three_parameter_0.43pct": {
+              "mean_95": [
+                0.41904761904761906,
+                0.7333333333333333
+              ],
+              "share_two_or_more_95": [
+                0.05238095238095238,
+                0.2
+              ],
+              "mean_of_means": 0.5710666666666666
+            },
+            "null_borrowed_datadecide_1b_0.0511pct_added": {
+              "mean_95": [
+                0.16666666666666666,
+                0.22380952380952382
+              ],
+              "share_two_or_more_95": [
+                0.0,
+                0.0
+              ],
+              "mean_of_means": 0.19561666666666666
+            },
+            "observed_over_datadecide": 115.71428571428571
+          }
+        }
+      },
+      "C_drop": {
+        "coverage": {
+          "130m": 18,
+          "300m": 21,
+          "520m": 21,
+          "1_2b": 11
+        },
+        "submissions_complete_at_520m_and_1_2b": 11,
+        "reorder": {
+          "datadecide_c4_1B": {
+            "pairs": 55,
+            "determined": 47,
+            "reordered": 18,
+            "rate": 0.3829787234042553,
+            "both_rung_determined": 43,
+            "both_rung_genuine": 16,
+            "both_rung_rate": 0.37209302325581395
+          },
+          "delphi_1e+21": {
+            "pairs": 55,
+            "determined": 47,
+            "reordered": 18,
+            "rate": 0.3829787234042553,
+            "both_rung_determined": 44,
+            "both_rung_genuine": 16,
+            "both_rung_rate": 0.36363636363636365
+          },
+          "delphi_1e+22": {
+            "pairs": 55,
+            "determined": 47,
+            "reordered": 18,
+            "rate": 0.3829787234042553,
+            "both_rung_determined": 41,
+            "both_rung_genuine": 15,
+            "both_rung_rate": 0.36585365853658536
+          },
+          "empirical_three_parameter_0_43pct": {
+            "pairs": 55,
+            "determined": 18,
+            "reordered": 3,
+            "rate": 0.16666666666666666,
+            "both_rung_determined": 4,
+            "both_rung_genuine": 0,
+            "both_rung_rate": 0.0
+          }
+        }
+      }
+    },
+    "datadecide_class": {
+      "300M->1B": {
+        "determined": 296,
+        "reordered": 3,
+        "rate": 0.010135135135135136,
+        "by_gap_bin": {
+          "[16,inf)": {
+            "determined": 275,
+            "reordered": 0,
+            "rate": 0.0
+          },
+          "[8,16)": {
+            "determined": 11,
+            "reordered": 0,
+            "rate": 0.0
+          },
+          "[1.96,4)": {
+            "determined": 6,
+            "reordered": 3,
+            "rate": 0.5
+          },
+          "[4,8)": {
+            "determined": 4,
+            "reordered": 0,
+            "rate": 0.0
+          }
+        }
+      },
+      "530M->1B": {
+        "determined": 296,
+        "reordered": 1,
+        "rate": 0.0033783783783783786,
+        "by_gap_bin": {
+          "[16,inf)": {
+            "determined": 275,
+            "reordered": 0,
+            "rate": 0.0
+          },
+          "[8,16)": {
+            "determined": 11,
+            "reordered": 0,
+            "rate": 0.0
+          },
+          "[1.96,4)": {
+            "determined": 6,
+            "reordered": 1,
+            "rate": 0.16666666666666666
+          },
+          "[4,8)": {
+            "determined": 4,
+            "reordered": 0,
+            "rate": 0.0
+          }
+        }
+      }
+    },
+    "predictions": {
+      "UA1_rate_at_most_half_named": {
+        "W": false,
+        "W_LQ": true,
+        "C2": false,
+        "C3": false
+      },
+      "UA2_class_difference_shrinks": {
+        "W": true,
+        "W_LQ": true,
+        "C2": false,
+        "C3": false
+      },
+      "MA1_falls_less_than_a_third_and_above_10pct": {
+        "W": true,
+        "W_LQ": false,
+        "C2": true,
+        "C3": true
+      },
+      "MA2_class_difference_survives": {
+        "W": true,
+        "W_LQ": false,
+        "C2": true,
+        "C3": true
+      },
+      "MA4_projection_at_least_single_errors": {
+        "W": true,
+        "W_LQ": true,
+        "C2": true,
+        "C3": true
+      },
+      "MA5_sign_changes_5x_datadecide": {
+        "W": true,
+        "W_LQ": true,
+        "C2": true,
+        "C3": true
+      },
+      "MA5_two_or_more_at_most_5pct_within": {
+        "W": true,
+        "W_LQ": true
+      }
+    }
+  },
+  "task2": {
+    "reason": "the shared exponent imposes one scaling exponent on every submission, assuming away the differences in scaling an architecture leaderboard exists to detect; it tests offsets given a common slope, not each submission's own curve",
+    "two_forms": {
+      "rankings": 2,
+      "pairs": 210,
+      "invariant_pairs": 175,
+      "largest_invariant_top_k": 1,
+      "all_invariant_k": [
+        1,
+        17,
+        19,
+        20,
+        21
+      ],
+      "invariant_pair_list": [
+        [
+          "adamh_llama_scaling",
+          "adamc_llama_scaling"
+        ],
+        [
+          "adamc_llama_scaling",
+          "adamw_llama_scaling"
+        ],
+        [
+          "c-adamc_llama_scaling",
+          "adamc_llama_scaling"
+        ],
+        [
+          "cautious_llama_scaling",
+          "adamc_llama_scaling"
+        ],
+        [
+          "adamc_llama_scaling",
+          "hackable_transformer_attn_gate/lr_x1"
+        ],
+        [
+          "adamc_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/jax"
+        ],
+        [
+          "adamc_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash"
+        ],
+        [
+          "adamc_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+        ],
+        [
+          "adamc_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "adamc_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "adamc_llama_scaling",
+          "muon_qwen3_scaling"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "adamc_llama_scaling"
+        ],
+        [
+          "adamc_llama_scaling",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "adamc_llama_scaling",
+          "parallel_llama"
+        ],
+        [
+          "adamc_llama_scaling",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "adamh_llama_scaling",
+          "adamw_llama_scaling"
+        ],
+        [
+          "adamh_llama_scaling",
+          "hackable_transformer_attn_gate/lr_x1"
+        ],
+        [
+          "adamh_llama_scaling",
+          "hackable_transformer_attn_gate/lr_x2"
+        ],
+        [
+          "adamh_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/jax"
+        ],
+        [
+          "adamh_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash"
+        ],
+        [
+          "adamh_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+        ],
+        [
+          "adamh_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "adamh_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "adamh_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2"
+        ],
+        [
+          "adamh_llama_scaling",
+          "muon_llama_scaling"
+        ],
+        [
+          "adamh_llama_scaling",
+          "muon_qwen3_scaling"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "adamh_llama_scaling"
+        ],
+        [
+          "adamh_llama_scaling",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "adamh_llama_scaling",
+          "parallel_llama"
+        ],
+        [
+          "adamh_llama_scaling",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "c-adamc_llama_scaling",
+          "adamw_llama_scaling"
+        ],
+        [
+          "cautious_llama_scaling",
+          "adamw_llama_scaling"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x1",
+          "adamw_llama_scaling"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2",
+          "adamw_llama_scaling"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "adamw_llama_scaling"
+        ],
+        [
+          "adamw_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "adamw_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "adamw_llama_scaling"
+        ],
+        [
+          "muon_llama_scaling",
+          "adamw_llama_scaling"
+        ],
+        [
+          "muon_qwen3_scaling",
+          "adamw_llama_scaling"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "adamw_llama_scaling"
+        ],
+        [
+          "adamw_llama_scaling",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "adamw_llama_scaling",
+          "parallel_llama"
+        ],
+        [
+          "adamw_llama_scaling",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "cautious_llama_scaling",
+          "c-adamc_llama_scaling"
+        ],
+        [
+          "c-adamc_llama_scaling",
+          "hackable_transformer_attn_gate/lr_x1"
+        ],
+        [
+          "c-adamc_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/jax"
+        ],
+        [
+          "c-adamc_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash"
+        ],
+        [
+          "c-adamc_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+        ],
+        [
+          "c-adamc_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "c-adamc_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "c-adamc_llama_scaling",
+          "muon_llama_scaling"
+        ],
+        [
+          "c-adamc_llama_scaling",
+          "muon_qwen3_scaling"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "c-adamc_llama_scaling"
+        ],
+        [
+          "c-adamc_llama_scaling",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "c-adamc_llama_scaling",
+          "parallel_llama"
+        ],
+        [
+          "c-adamc_llama_scaling",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "cautious_llama_scaling",
+          "hackable_transformer_attn_gate/lr_x1"
+        ],
+        [
+          "cautious_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/jax"
+        ],
+        [
+          "cautious_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash"
+        ],
+        [
+          "cautious_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+        ],
+        [
+          "cautious_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "cautious_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "cautious_llama_scaling",
+          "muon_llama_scaling"
+        ],
+        [
+          "cautious_llama_scaling",
+          "muon_qwen3_scaling"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "cautious_llama_scaling"
+        ],
+        [
+          "cautious_llama_scaling",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "cautious_llama_scaling",
+          "parallel_llama"
+        ],
+        [
+          "cautious_llama_scaling",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2",
+          "hackable_transformer_attn_gate/lr_x1"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "hackable_transformer_attn_gate/lr_x1"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x1",
+          "hackable_transformer_attn_sink/attnsink/jax"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x1",
+          "hackable_transformer_attn_sink/attnsink/splash"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x1",
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x1",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x1",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "hackable_transformer_attn_gate/lr_x1"
+        ],
+        [
+          "muon_llama_scaling",
+          "hackable_transformer_attn_gate/lr_x1"
+        ],
+        [
+          "muon_qwen3_scaling",
+          "hackable_transformer_attn_gate/lr_x1"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "hackable_transformer_attn_gate/lr_x1"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x1",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x1",
+          "parallel_llama"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x1",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "hackable_transformer_attn_gate/lr_x2"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2",
+          "hackable_transformer_attn_sink/attnsink/jax"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2",
+          "hackable_transformer_attn_sink/attnsink/splash"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2",
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2",
+          "muon_llama_scaling"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2",
+          "muon_qwen3_scaling"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "hackable_transformer_attn_gate/lr_x2"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2",
+          "parallel_llama"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "hackable_transformer_attn_sink/attnsink/jax"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "hackable_transformer_attn_sink/attnsink/splash"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "muon_llama_scaling"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "muon_qwen3_scaling"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "hackable_transformer_attn_gate/lr_x2_5"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "parallel_llama"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash",
+          "hackable_transformer_attn_sink/attnsink/jax"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+          "hackable_transformer_attn_sink/attnsink/jax"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/jax",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/jax",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "hackable_transformer_attn_sink/attnsink/jax"
+        ],
+        [
+          "muon_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/jax"
+        ],
+        [
+          "muon_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/jax"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/jax"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/jax",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/jax",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+          "hackable_transformer_attn_sink/attnsink/splash"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "hackable_transformer_attn_sink/attnsink/splash"
+        ],
+        [
+          "muon_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash"
+        ],
+        [
+          "muon_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+        ],
+        [
+          "muon_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+        ],
+        [
+          "muon_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x4",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "muon_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "muon_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "muonremez_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "parallel_llama",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "prism_berkeley_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x4",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "muon_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "muon_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "parallel_llama",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "muon_llama_scaling"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "muon_qwen3_scaling"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "parallel_llama"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x4",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x4",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "muon_llama_scaling",
+          "muon_qwen3_scaling"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "muon_llama_scaling"
+        ],
+        [
+          "muon_llama_scaling",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "muon_llama_scaling",
+          "parallel_llama"
+        ],
+        [
+          "muon_llama_scaling",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "muon_qwen3_scaling"
+        ],
+        [
+          "muon_qwen3_scaling",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "muon_qwen3_scaling",
+          "parallel_llama"
+        ],
+        [
+          "muon_qwen3_scaling",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "parallel_llama"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "parallel_llama",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "muonremez_qwen3_scaling",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "parallel_llama",
+          "prism_berkeley_qwen3_scaling"
+        ]
+      ],
+      "rank_range": {
+        "muonh_qwen3_scaling": [
+          1,
+          1
+        ],
+        "adamh_llama_scaling": [
+          4,
+          4
+        ],
+        "hackable_transformer_attn_gate/lr_x2_5": [
+          2,
+          6
+        ],
+        "cautious_llama_scaling": [
+          2,
+          7
+        ],
+        "c-adamc_llama_scaling": [
+          3,
+          8
+        ],
+        "hackable_transformer_attn_gate/lr_x2": [
+          5,
+          8
+        ],
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2": [
+          6,
+          7
+        ],
+        "adamc_llama_scaling": [
+          5,
+          10
+        ],
+        "muon_llama_scaling": [
+          9,
+          9
+        ],
+        "hackable_transformer_attn_sink/attnsink/splash/default_x4": [
+          3,
+          17
+        ],
+        "muon_qwen3_scaling": [
+          10,
+          11
+        ],
+        "hackable_transformer_attn_gate/lr_x1": [
+          11,
+          12
+        ],
+        "hackable_transformer_attn_sink/attnsink/splash": [
+          13,
+          14
+        ],
+        "adamw_llama_scaling": [
+          12,
+          16
+        ],
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr": [
+          14,
+          15
+        ],
+        "parallel_llama": [
+          13,
+          17
+        ],
+        "hackable_transformer_attn_sink/attnsink/jax": [
+          15,
+          16
+        ],
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": [
+          18,
+          19
+        ],
+        "muonremez_qwen3_scaling": [
+          18,
+          19
+        ],
+        "prism_berkeley_qwen3_scaling": [
+          20,
+          20
+        ],
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": [
+          21,
+          21
+        ]
+      },
+      "top1_share": {
+        "muonh_qwen3_scaling": 1.0
+      },
+      "top1_by_ranking": {
+        "three_parameter_global_optimum": "muonh_qwen3_scaling",
+        "two_parameter_loglog": "muonh_qwen3_scaling"
+      },
+      "distinct_top1": [
+        "muonh_qwen3_scaling"
+      ],
+      "groups_by_median_rank": [
+        {
+          "members": [
+            "muonh_qwen3_scaling"
+          ],
+          "median_ranks": [
+            1.0
+          ],
+          "rank_range": [
+            1,
+            1
+          ]
+        },
+        {
+          "members": [
+            "adamh_llama_scaling",
+            "hackable_transformer_attn_gate/lr_x2_5",
+            "cautious_llama_scaling",
+            "c-adamc_llama_scaling",
+            "hackable_transformer_attn_gate/lr_x2",
+            "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+            "adamc_llama_scaling",
+            "muon_llama_scaling",
+            "hackable_transformer_attn_sink/attnsink/splash/default_x4",
+            "muon_qwen3_scaling",
+            "hackable_transformer_attn_gate/lr_x1",
+            "hackable_transformer_attn_sink/attnsink/splash",
+            "adamw_llama_scaling",
+            "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+            "parallel_llama",
+            "hackable_transformer_attn_sink/attnsink/jax"
+          ],
+          "median_ranks": [
+            4.0,
+            4.0,
+            4.5,
+            5.5,
+            6.5,
+            6.5,
+            7.5,
+            9.0,
+            10.0,
+            10.5,
+            11.5,
+            13.5,
+            14.0,
+            14.5,
+            15.0,
+            15.5
+          ],
+          "rank_range": [
+            2,
+            17
+          ]
+        },
+        {
+          "members": [
+            "hackable_transformer_attn_sink/attnsink/splash/default_x0.5",
+            "muonremez_qwen3_scaling"
+          ],
+          "median_ranks": [
+            18.5,
+            18.5
+          ],
+          "rank_range": [
+            18,
+            19
+          ]
+        },
+        {
+          "members": [
+            "prism_berkeley_qwen3_scaling"
+          ],
+          "median_ranks": [
+            20.0
+          ],
+          "rank_range": [
+            20,
+            20
+          ]
+        },
+        {
+          "members": [
+            "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+          ],
+          "median_ranks": [
+            21.0
+          ],
+          "rank_range": [
+            21,
+            21
+          ]
+        }
+      ]
+    },
+    "three_forms": {
+      "rankings": 3,
+      "pairs": 210,
+      "invariant_pairs": 130,
+      "largest_invariant_top_k": 1,
+      "all_invariant_k": [
+        1,
+        20,
+        21
+      ],
+      "invariant_pair_list": [
+        [
+          "adamh_llama_scaling",
+          "adamc_llama_scaling"
+        ],
+        [
+          "adamc_llama_scaling",
+          "adamw_llama_scaling"
+        ],
+        [
+          "c-adamc_llama_scaling",
+          "adamc_llama_scaling"
+        ],
+        [
+          "cautious_llama_scaling",
+          "adamc_llama_scaling"
+        ],
+        [
+          "adamc_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "adamc_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "adamc_llama_scaling"
+        ],
+        [
+          "adamc_llama_scaling",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "adamc_llama_scaling",
+          "parallel_llama"
+        ],
+        [
+          "adamc_llama_scaling",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "adamh_llama_scaling",
+          "adamw_llama_scaling"
+        ],
+        [
+          "adamh_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/jax"
+        ],
+        [
+          "adamh_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "adamh_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "adamh_llama_scaling"
+        ],
+        [
+          "adamh_llama_scaling",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "adamh_llama_scaling",
+          "parallel_llama"
+        ],
+        [
+          "adamh_llama_scaling",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "c-adamc_llama_scaling",
+          "adamw_llama_scaling"
+        ],
+        [
+          "cautious_llama_scaling",
+          "adamw_llama_scaling"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x1",
+          "adamw_llama_scaling"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2",
+          "adamw_llama_scaling"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "adamw_llama_scaling"
+        ],
+        [
+          "adamw_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "adamw_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "adamw_llama_scaling"
+        ],
+        [
+          "muon_llama_scaling",
+          "adamw_llama_scaling"
+        ],
+        [
+          "muon_qwen3_scaling",
+          "adamw_llama_scaling"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "adamw_llama_scaling"
+        ],
+        [
+          "adamw_llama_scaling",
+          "parallel_llama"
+        ],
+        [
+          "cautious_llama_scaling",
+          "c-adamc_llama_scaling"
+        ],
+        [
+          "c-adamc_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "c-adamc_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "c-adamc_llama_scaling"
+        ],
+        [
+          "c-adamc_llama_scaling",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "c-adamc_llama_scaling",
+          "parallel_llama"
+        ],
+        [
+          "c-adamc_llama_scaling",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "cautious_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "cautious_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "cautious_llama_scaling"
+        ],
+        [
+          "cautious_llama_scaling",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "cautious_llama_scaling",
+          "parallel_llama"
+        ],
+        [
+          "cautious_llama_scaling",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x1",
+          "hackable_transformer_attn_sink/attnsink/jax"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x1",
+          "hackable_transformer_attn_sink/attnsink/splash"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x1",
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x1",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x1",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "hackable_transformer_attn_gate/lr_x1"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x1",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x1",
+          "parallel_llama"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x1",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2",
+          "hackable_transformer_attn_sink/attnsink/jax"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2",
+          "hackable_transformer_attn_sink/attnsink/splash"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2",
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2",
+          "muon_llama_scaling"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "hackable_transformer_attn_gate/lr_x2"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2",
+          "parallel_llama"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "hackable_transformer_attn_sink/attnsink/jax"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "hackable_transformer_attn_sink/attnsink/splash"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "hackable_transformer_attn_gate/lr_x2_5"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "parallel_llama"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash",
+          "hackable_transformer_attn_sink/attnsink/jax"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+          "hackable_transformer_attn_sink/attnsink/jax"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/jax",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/jax",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "hackable_transformer_attn_sink/attnsink/jax"
+        ],
+        [
+          "muon_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/jax"
+        ],
+        [
+          "muon_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/jax"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/jax"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/jax",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/jax",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+          "hackable_transformer_attn_sink/attnsink/splash"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "hackable_transformer_attn_sink/attnsink/splash"
+        ],
+        [
+          "muon_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash"
+        ],
+        [
+          "muon_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+        ],
+        [
+          "muon_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+        ],
+        [
+          "muon_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x4",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "muon_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "muon_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "muonremez_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "parallel_llama",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "prism_berkeley_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "muon_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "muon_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "parallel_llama"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "muon_llama_scaling"
+        ],
+        [
+          "muon_llama_scaling",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "muon_llama_scaling",
+          "parallel_llama"
+        ],
+        [
+          "muon_llama_scaling",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "muon_qwen3_scaling"
+        ],
+        [
+          "muon_qwen3_scaling",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "muon_qwen3_scaling",
+          "parallel_llama"
+        ],
+        [
+          "muon_qwen3_scaling",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "parallel_llama"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "muonremez_qwen3_scaling",
+          "prism_berkeley_qwen3_scaling"
+        ]
+      ],
+      "rank_range": {
+        "muonh_qwen3_scaling": [
+          1,
+          1
+        ],
+        "adamh_llama_scaling": [
+          4,
+          10
+        ],
+        "hackable_transformer_attn_gate/lr_x2": [
+          4,
+          8
+        ],
+        "hackable_transformer_attn_gate/lr_x2_5": [
+          2,
+          6
+        ],
+        "cautious_llama_scaling": [
+          2,
+          12
+        ],
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2": [
+          6,
+          7
+        ],
+        "c-adamc_llama_scaling": [
+          3,
+          13
+        ],
+        "muon_llama_scaling": [
+          5,
+          9
+        ],
+        "adamc_llama_scaling": [
+          5,
+          14
+        ],
+        "muon_qwen3_scaling": [
+          3,
+          11
+        ],
+        "hackable_transformer_attn_gate/lr_x1": [
+          2,
+          12
+        ],
+        "hackable_transformer_attn_sink/attnsink/splash": [
+          8,
+          14
+        ],
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr": [
+          9,
+          15
+        ],
+        "hackable_transformer_attn_sink/attnsink/jax": [
+          11,
+          16
+        ],
+        "adamw_llama_scaling": [
+          12,
+          17
+        ],
+        "hackable_transformer_attn_sink/attnsink/splash/default_x4": [
+          3,
+          20
+        ],
+        "parallel_llama": [
+          13,
+          19
+        ],
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": [
+          18,
+          19
+        ],
+        "muonremez_qwen3_scaling": [
+          15,
+          19
+        ],
+        "prism_berkeley_qwen3_scaling": [
+          16,
+          20
+        ],
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": [
+          21,
+          21
+        ]
+      },
+      "top1_share": {
+        "muonh_qwen3_scaling": 1.0
+      },
+      "top1_by_ranking": {
+        "three_parameter_global_optimum": "muonh_qwen3_scaling",
+        "two_parameter_loglog": "muonh_qwen3_scaling",
+        "shared_exponent": "muonh_qwen3_scaling"
+      },
+      "distinct_top1": [
+        "muonh_qwen3_scaling"
+      ],
+      "groups_by_median_rank": [
+        {
+          "members": [
+            "muonh_qwen3_scaling"
+          ],
+          "median_ranks": [
+            1.0
+          ],
+          "rank_range": [
+            1,
+            1
+          ]
+        },
+        {
+          "members": [
+            "adamh_llama_scaling",
+            "hackable_transformer_attn_gate/lr_x2",
+            "hackable_transformer_attn_gate/lr_x2_5",
+            "cautious_llama_scaling",
+            "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+            "c-adamc_llama_scaling",
+            "muon_llama_scaling",
+            "adamc_llama_scaling",
+            "muon_qwen3_scaling",
+            "hackable_transformer_attn_gate/lr_x1",
+            "hackable_transformer_attn_sink/attnsink/splash",
+            "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+            "hackable_transformer_attn_sink/attnsink/jax",
+            "adamw_llama_scaling",
+            "hackable_transformer_attn_sink/attnsink/splash/default_x4",
+            "parallel_llama",
+            "hackable_transformer_attn_sink/attnsink/splash/default_x0.5",
+            "muonremez_qwen3_scaling",
+            "prism_berkeley_qwen3_scaling"
+          ],
+          "median_ranks": [
+            4.0,
+            5.0,
+            6.0,
+            7.0,
+            7.0,
+            8.0,
+            9.0,
+            10.0,
+            10.0,
+            11.0,
+            13.0,
+            14.0,
+            15.0,
+            16.0,
+            17.0,
+            17.0,
+            18.0,
+            18.0,
+            20.0
+          ],
+          "rank_range": [
+            2,
+            20
+          ]
+        },
+        {
+          "members": [
+            "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+          ],
+          "median_ranks": [
+            21.0
+          ],
+          "rank_range": [
+            21,
+            21
+          ]
+        }
+      ]
+    },
+    "MF1": {
+      "at_least_150": true,
+      "k_in_1_to_3": true,
+      "top1_muonh": true
+    }
+  },
+  "task3": {
+    "patch": "scripts/patches/regression_ts_fix.patch",
+    "regression_ts_sha256": "adae8f5013d776b89ccc2d79dfc774924f626c6ba46cb5ba98c63f055d5f4b19",
+    "change": "computePowerLawWithOffset fits x / 1e18 (the returned intercept is converted back to raw-x units, a * 1e18^b, so predictWithPowerLaw and every caller are unchanged) and uses errorTolerance 1e-15 instead of 1e-8. Equivalent: x / 1e18 and y * 100.",
+    "verification": {
+      "patched_function_default_start_at_optimum": 21,
+      "patched_max_abs_minus_optimum_bpb": 5.5675986043723924e-08,
+      "variants_13_starts_cap_200": {
+        "x_over_1e18_error_tolerance_1e-15": {
+          "fits": 273,
+          "fits_reaching_optimum": 273,
+          "max_departure_bpb": 1.2013093020346588e-07
+        },
+        "x_over_1e18_y_times_100": {
+          "fits": 273,
+          "fits_reaching_optimum": 273,
+          "max_departure_bpb": 3.222011323078533e-06
+        }
+      }
+    },
+    "qualified_all": true,
+    "displayed_vs_fixed": {
+      "changed_pairs": [
+        [
+          "adamc_llama_scaling",
+          "hackable_transformer_attn_gate/lr_x1"
+        ],
+        [
+          "adamc_llama_scaling",
+          "muon_llama_scaling"
+        ],
+        [
+          "adamh_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+        ],
+        [
+          "adamw_llama_scaling",
+          "parallel_llama"
+        ],
+        [
+          "c-adamc_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+        ],
+        [
+          "cautious_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x1",
+          "muon_llama_scaling"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x1",
+          "muon_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+        ]
+      ],
+      "count": 11,
+      "kendall": 0.894736842105263,
+      "top3_displayed": [
+        "muonh_qwen3_scaling",
+        "hackable_transformer_attn_gate/lr_x2_5",
+        "adamh_llama_scaling"
+      ],
+      "top3_fixed": [
+        "muonh_qwen3_scaling",
+        "hackable_transformer_attn_gate/lr_x2_5",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+      ],
+      "ranking_displayed": [
+        "muonh_qwen3_scaling",
+        "hackable_transformer_attn_gate/lr_x2_5",
+        "adamh_llama_scaling",
+        "hackable_transformer_attn_gate/lr_x2",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+        "cautious_llama_scaling",
+        "c-adamc_llama_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x4",
+        "hackable_transformer_attn_gate/lr_x1",
+        "adamc_llama_scaling",
+        "muon_llama_scaling",
+        "muon_qwen3_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash",
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+        "hackable_transformer_attn_sink/attnsink/jax",
+        "parallel_llama",
+        "adamw_llama_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5",
+        "muonremez_qwen3_scaling",
+        "prism_berkeley_qwen3_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+      ],
+      "ranking_fixed": [
+        "muonh_qwen3_scaling",
+        "hackable_transformer_attn_gate/lr_x2_5",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x4",
+        "adamh_llama_scaling",
+        "hackable_transformer_attn_gate/lr_x2",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+        "cautious_llama_scaling",
+        "c-adamc_llama_scaling",
+        "muon_llama_scaling",
+        "adamc_llama_scaling",
+        "muon_qwen3_scaling",
+        "hackable_transformer_attn_gate/lr_x1",
+        "hackable_transformer_attn_sink/attnsink/splash",
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+        "hackable_transformer_attn_sink/attnsink/jax",
+        "adamw_llama_scaling",
+        "parallel_llama",
+        "muonremez_qwen3_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5",
+        "prism_berkeley_qwen3_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+      ]
+    },
+    "MX1": {
+      "eleven_changed": true,
+      "top1_unchanged": true,
+      "adamh_replaced_by_default_x4": true
+    }
+  }
+}
