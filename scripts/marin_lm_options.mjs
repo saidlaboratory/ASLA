@@ -3,7 +3,8 @@
 // unmodified function exactly; the "reference" field carries that function's output for the check.
 //
 // Usage: node scripts/marin_lm_options.mjs <dir with regression.ts and node_modules> < input.json
-// Input:  {"fits": [{"id", "points": [{x, y}], "targets": [x], "maxIterations": n, "cInit": c|null, "bInit": b|null}]}
+// Input:  {"fits": [{"id", "points": [{x, y}], "targets": [x], "maxIterations": n, "cInit": c|null, "bInit": b|null,
+//                     "errorTolerance": e|null (default 1e-8, theirs)}]}
 import { readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { pathToFileURL } from "node:url";
@@ -14,7 +15,7 @@ const require = createRequire(path.join(dir, "package.json"));
 const { levenbergMarquardt } = require("ml-levenberg-marquardt");
 const reference = await import(pathToFileURL(path.join(dir, "regression.ts")).href);
 
-function fit(points, maxIterations, cOverride, bOverride) {
+function fit(points, maxIterations, cOverride, bOverride, errorTolerance = 1e-8) {
   const valid = points.filter((p) => p.x > 0 && Number.isFinite(p.x) && Number.isFinite(p.y)).sort((a, b) => a.x - b.x);
   if (valid.length < 3) return null;
   const xData = valid.map((p) => p.x);
@@ -39,7 +40,7 @@ function fit(points, maxIterations, cOverride, bOverride) {
       damping: 1.5,
       gradientDifference: 1e-6,
       maxIterations,
-      errorTolerance: 1e-8,
+      errorTolerance,
       minValues: [1e-10, 1e-6, 0],
       maxValues: [1e30, 2, yMin * 0.999],
     });
@@ -52,8 +53,8 @@ function fit(points, maxIterations, cOverride, bOverride) {
 }
 
 const input = JSON.parse(readFileSync(0, "utf8"));
-const out = input.fits.map(({ id, points, targets, maxIterations, cInit, bInit }) => {
-  const params = fit(points, maxIterations ?? 200, cInit ?? null, bInit ?? null);
+const out = input.fits.map(({ id, points, targets, maxIterations, cInit, bInit, errorTolerance }) => {
+  const params = fit(points, maxIterations ?? 200, cInit ?? null, bInit ?? null, errorTolerance ?? 1e-8);
   const ref = reference.computePowerLawWithOffset(points);
   return {
     id,
