@@ -1,0 +1,1247 @@
+{
+  "preregistration": "PREDICTIONS_TASK_BREAK.md",
+  "rule": {
+    "noise": "order holds in >= 95% of propagation draws (primary form refitted)",
+    "form": "primary and alternative form agree",
+    "nominal_false_certification": 0.05
+  },
+  "validation_datadecide": {
+    "recipes": 25,
+    "fit_rungs": [
+      "150M",
+      "300M",
+      "530M",
+      "750M"
+    ],
+    "by_seed": {
+      "0": {
+        "rows": {
+          "0.0001": {
+            "certified": 289,
+            "wrong": 2,
+            "rate": 0.006920415224913495
+          },
+          "0.0002": {
+            "certified": 287,
+            "wrong": 1,
+            "rate": 0.003484320557491289
+          },
+          "0.0005": {
+            "certified": 274,
+            "wrong": 0,
+            "rate": 0.0
+          },
+          "0.001": {
+            "certified": 253,
+            "wrong": 0,
+            "rate": 0.0
+          },
+          "0.0015": {
+            "certified": 232,
+            "wrong": 0,
+            "rate": 0.0
+          },
+          "0.002": {
+            "certified": 204,
+            "wrong": 0,
+            "rate": 0.0
+          },
+          "0.003": {
+            "certified": 177,
+            "wrong": 0,
+            "rate": 0.0
+          },
+          "0.0043": {
+            "certified": 147,
+            "wrong": 0,
+            "rate": 0.0
+          },
+          "0.007": {
+            "certified": 124,
+            "wrong": 0,
+            "rate": 0.0
+          },
+          "0.01": {
+            "certified": 102,
+            "wrong": 0,
+            "rate": 0.0
+          }
+        },
+        "sigma_star": {
+          "sigma_star": 0.0001,
+          "note": "at or below the smallest grid value"
+        }
+      },
+      "1": {
+        "rows": {
+          "0.0001": {
+            "certified": 289,
+            "wrong": 1,
+            "rate": 0.0034602076124567475
+          },
+          "0.0002": {
+            "certified": 285,
+            "wrong": 1,
+            "rate": 0.0035087719298245615
+          },
+          "0.0005": {
+            "certified": 279,
+            "wrong": 1,
+            "rate": 0.0035842293906810036
+          },
+          "0.001": {
+            "certified": 255,
+            "wrong": 1,
+            "rate": 0.00392156862745098
+          },
+          "0.0015": {
+            "certified": 233,
+            "wrong": 1,
+            "rate": 0.004291845493562232
+          },
+          "0.002": {
+            "certified": 214,
+            "wrong": 0,
+            "rate": 0.0
+          },
+          "0.003": {
+            "certified": 178,
+            "wrong": 0,
+            "rate": 0.0
+          },
+          "0.0043": {
+            "certified": 147,
+            "wrong": 0,
+            "rate": 0.0
+          },
+          "0.007": {
+            "certified": 121,
+            "wrong": 0,
+            "rate": 0.0
+          },
+          "0.01": {
+            "certified": 97,
+            "wrong": 0,
+            "rate": 0.0
+          }
+        },
+        "sigma_star": {
+          "sigma_star": 0.0001,
+          "note": "at or below the smallest grid value"
+        }
+      },
+      "2": {
+        "rows": {
+          "0.0001": {
+            "certified": 284,
+            "wrong": 0,
+            "rate": 0.0
+          },
+          "0.0002": {
+            "certified": 283,
+            "wrong": 0,
+            "rate": 0.0
+          },
+          "0.0005": {
+            "certified": 276,
+            "wrong": 0,
+            "rate": 0.0
+          },
+          "0.001": {
+            "certified": 253,
+            "wrong": 0,
+            "rate": 0.0
+          },
+          "0.0015": {
+            "certified": 237,
+            "wrong": 0,
+            "rate": 0.0
+          },
+          "0.002": {
+            "certified": 217,
+            "wrong": 0,
+            "rate": 0.0
+          },
+          "0.003": {
+            "certified": 178,
+            "wrong": 0,
+            "rate": 0.0
+          },
+          "0.0043": {
+            "certified": 154,
+            "wrong": 0,
+            "rate": 0.0
+          },
+          "0.007": {
+            "certified": 123,
+            "wrong": 0,
+            "rate": 0.0
+          },
+          "0.01": {
+            "certified": 109,
+            "wrong": 0,
+            "rate": 0.0
+          }
+        },
+        "sigma_star": {
+          "sigma_star": 0.0001,
+          "note": "at or below the smallest grid value"
+        }
+      }
+    },
+    "pooled": {
+      "rows": {
+        "0.0001": {
+          "certified": 862,
+          "wrong": 3,
+          "rate": 0.0034802784222737818
+        },
+        "0.0002": {
+          "certified": 855,
+          "wrong": 2,
+          "rate": 0.0023391812865497076
+        },
+        "0.0005": {
+          "certified": 829,
+          "wrong": 1,
+          "rate": 0.0012062726176115801
+        },
+        "0.001": {
+          "certified": 761,
+          "wrong": 1,
+          "rate": 0.001314060446780552
+        },
+        "0.0015": {
+          "certified": 702,
+          "wrong": 1,
+          "rate": 0.0014245014245014246
+        },
+        "0.002": {
+          "certified": 635,
+          "wrong": 0,
+          "rate": 0.0
+        },
+        "0.003": {
+          "certified": 533,
+          "wrong": 0,
+          "rate": 0.0
+        },
+        "0.0043": {
+          "certified": 448,
+          "wrong": 0,
+          "rate": 0.0
+        },
+        "0.007": {
+          "certified": 368,
+          "wrong": 0,
+          "rate": 0.0
+        },
+        "0.01": {
+          "certified": 308,
+          "wrong": 0,
+          "rate": 0.0
+        }
+      },
+      "sigma_star": {
+        "sigma_star": 0.0001,
+        "note": "at or below the smallest grid value"
+      }
+    }
+  },
+  "validation_marin": {
+    "pairs": 210,
+    "rows": {
+      "0.0001": {
+        "certified": 154,
+        "wrong": 51,
+        "rate": 0.33116883116883117
+      },
+      "0.0002": {
+        "certified": 154,
+        "wrong": 51,
+        "rate": 0.33116883116883117
+      },
+      "0.0005": {
+        "certified": 143,
+        "wrong": 44,
+        "rate": 0.3076923076923077
+      },
+      "0.001": {
+        "certified": 126,
+        "wrong": 36,
+        "rate": 0.2857142857142857
+      },
+      "0.0015": {
+        "certified": 112,
+        "wrong": 34,
+        "rate": 0.30357142857142855
+      },
+      "0.002": {
+        "certified": 97,
+        "wrong": 26,
+        "rate": 0.26804123711340205
+      },
+      "0.003": {
+        "certified": 76,
+        "wrong": 17,
+        "rate": 0.2236842105263158
+      },
+      "0.0043": {
+        "certified": 45,
+        "wrong": 6,
+        "rate": 0.13333333333333333
+      },
+      "0.007": {
+        "certified": 17,
+        "wrong": 0,
+        "rate": 0.0
+      },
+      "0.01": {
+        "certified": 2,
+        "wrong": 0,
+        "rate": 0.0
+      }
+    },
+    "sigma_star": {
+      "sigma_star": 0.0058309181591765825,
+      "bracket": [
+        0.0043,
+        0.007
+      ]
+    },
+    "alternative_failed": []
+  },
+  "applied_1e22": {
+    "at_sigma_star_marin": {
+      "sigma": 0.0058309181591765825,
+      "draws_used": 1000,
+      "certified_pairs": 16,
+      "pairs": [
+        [
+          "adamc_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "adamh_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "adamw_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "c-adamc_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "cautious_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x1",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/jax",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x4",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "muon_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "muon_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ]
+      ],
+      "certified_above_count": {
+        "muonh_qwen3_scaling": 1,
+        "hackable_transformer_attn_gate/lr_x2_5": 1,
+        "hackable_transformer_attn_sink/attnsink/splash/default_x4": 1,
+        "adamh_llama_scaling": 1,
+        "hackable_transformer_attn_gate/lr_x2": 1,
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2": 1,
+        "cautious_llama_scaling": 1,
+        "c-adamc_llama_scaling": 1,
+        "muon_llama_scaling": 1,
+        "adamc_llama_scaling": 1,
+        "muon_qwen3_scaling": 1,
+        "hackable_transformer_attn_gate/lr_x1": 1,
+        "hackable_transformer_attn_sink/attnsink/splash": 1,
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr": 1,
+        "hackable_transformer_attn_sink/attnsink/jax": 1,
+        "adamw_llama_scaling": 1,
+        "parallel_llama": 0,
+        "muonremez_qwen3_scaling": 0,
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0,
+        "prism_berkeley_qwen3_scaling": 0,
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0
+      },
+      "certified_below_count": {
+        "muonh_qwen3_scaling": 0,
+        "hackable_transformer_attn_gate/lr_x2_5": 0,
+        "hackable_transformer_attn_sink/attnsink/splash/default_x4": 0,
+        "adamh_llama_scaling": 0,
+        "hackable_transformer_attn_gate/lr_x2": 0,
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2": 0,
+        "cautious_llama_scaling": 0,
+        "c-adamc_llama_scaling": 0,
+        "muon_llama_scaling": 0,
+        "adamc_llama_scaling": 0,
+        "muon_qwen3_scaling": 0,
+        "hackable_transformer_attn_gate/lr_x1": 0,
+        "hackable_transformer_attn_sink/attnsink/splash": 0,
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr": 0,
+        "hackable_transformer_attn_sink/attnsink/jax": 0,
+        "adamw_llama_scaling": 0,
+        "parallel_llama": 0,
+        "muonremez_qwen3_scaling": 0,
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 0,
+        "prism_berkeley_qwen3_scaling": 0,
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 16
+      },
+      "maximal_elements": [
+        "adamc_llama_scaling",
+        "adamh_llama_scaling",
+        "adamw_llama_scaling",
+        "c-adamc_llama_scaling",
+        "cautious_llama_scaling",
+        "hackable_transformer_attn_gate/lr_x1",
+        "hackable_transformer_attn_gate/lr_x2",
+        "hackable_transformer_attn_gate/lr_x2_5",
+        "hackable_transformer_attn_sink/attnsink/jax",
+        "hackable_transformer_attn_sink/attnsink/splash",
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x4",
+        "muon_llama_scaling",
+        "muon_qwen3_scaling",
+        "muonh_qwen3_scaling",
+        "muonremez_qwen3_scaling",
+        "parallel_llama",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      "top1_certified_above_all": [],
+      "fixed_ranking": [
+        "muonh_qwen3_scaling",
+        "hackable_transformer_attn_gate/lr_x2_5",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x4",
+        "adamh_llama_scaling",
+        "hackable_transformer_attn_gate/lr_x2",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+        "cautious_llama_scaling",
+        "c-adamc_llama_scaling",
+        "muon_llama_scaling",
+        "adamc_llama_scaling",
+        "muon_qwen3_scaling",
+        "hackable_transformer_attn_gate/lr_x1",
+        "hackable_transformer_attn_sink/attnsink/splash",
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+        "hackable_transformer_attn_sink/attnsink/jax",
+        "adamw_llama_scaling",
+        "parallel_llama",
+        "muonremez_qwen3_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5",
+        "prism_berkeley_qwen3_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+      ]
+    },
+    "at_sigma_star_datadecide": {
+      "sigma": 0.0001,
+      "draws_used": 1000,
+      "certified_pairs": 170,
+      "pairs": [
+        [
+          "adamh_llama_scaling",
+          "adamc_llama_scaling"
+        ],
+        [
+          "adamc_llama_scaling",
+          "adamw_llama_scaling"
+        ],
+        [
+          "c-adamc_llama_scaling",
+          "adamc_llama_scaling"
+        ],
+        [
+          "cautious_llama_scaling",
+          "adamc_llama_scaling"
+        ],
+        [
+          "adamc_llama_scaling",
+          "hackable_transformer_attn_gate/lr_x1"
+        ],
+        [
+          "adamc_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/jax"
+        ],
+        [
+          "adamc_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash"
+        ],
+        [
+          "adamc_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+        ],
+        [
+          "adamc_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "adamc_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "adamc_llama_scaling"
+        ],
+        [
+          "adamc_llama_scaling",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "adamc_llama_scaling",
+          "parallel_llama"
+        ],
+        [
+          "adamc_llama_scaling",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "adamh_llama_scaling",
+          "adamw_llama_scaling"
+        ],
+        [
+          "adamh_llama_scaling",
+          "hackable_transformer_attn_gate/lr_x1"
+        ],
+        [
+          "adamh_llama_scaling",
+          "hackable_transformer_attn_gate/lr_x2"
+        ],
+        [
+          "adamh_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/jax"
+        ],
+        [
+          "adamh_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash"
+        ],
+        [
+          "adamh_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+        ],
+        [
+          "adamh_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "adamh_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "adamh_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2"
+        ],
+        [
+          "adamh_llama_scaling",
+          "muon_llama_scaling"
+        ],
+        [
+          "adamh_llama_scaling",
+          "muon_qwen3_scaling"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "adamh_llama_scaling"
+        ],
+        [
+          "adamh_llama_scaling",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "adamh_llama_scaling",
+          "parallel_llama"
+        ],
+        [
+          "adamh_llama_scaling",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "c-adamc_llama_scaling",
+          "adamw_llama_scaling"
+        ],
+        [
+          "cautious_llama_scaling",
+          "adamw_llama_scaling"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x1",
+          "adamw_llama_scaling"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2",
+          "adamw_llama_scaling"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "adamw_llama_scaling"
+        ],
+        [
+          "adamw_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "adamw_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "adamw_llama_scaling"
+        ],
+        [
+          "muon_llama_scaling",
+          "adamw_llama_scaling"
+        ],
+        [
+          "muon_qwen3_scaling",
+          "adamw_llama_scaling"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "adamw_llama_scaling"
+        ],
+        [
+          "adamw_llama_scaling",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "adamw_llama_scaling",
+          "parallel_llama"
+        ],
+        [
+          "adamw_llama_scaling",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "cautious_llama_scaling",
+          "c-adamc_llama_scaling"
+        ],
+        [
+          "c-adamc_llama_scaling",
+          "hackable_transformer_attn_gate/lr_x1"
+        ],
+        [
+          "c-adamc_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/jax"
+        ],
+        [
+          "c-adamc_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash"
+        ],
+        [
+          "c-adamc_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+        ],
+        [
+          "c-adamc_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "c-adamc_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "c-adamc_llama_scaling",
+          "muon_llama_scaling"
+        ],
+        [
+          "c-adamc_llama_scaling",
+          "muon_qwen3_scaling"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "c-adamc_llama_scaling"
+        ],
+        [
+          "c-adamc_llama_scaling",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "c-adamc_llama_scaling",
+          "parallel_llama"
+        ],
+        [
+          "c-adamc_llama_scaling",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "cautious_llama_scaling",
+          "hackable_transformer_attn_gate/lr_x1"
+        ],
+        [
+          "cautious_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/jax"
+        ],
+        [
+          "cautious_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash"
+        ],
+        [
+          "cautious_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+        ],
+        [
+          "cautious_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "cautious_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "cautious_llama_scaling",
+          "muon_llama_scaling"
+        ],
+        [
+          "cautious_llama_scaling",
+          "muon_qwen3_scaling"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "cautious_llama_scaling"
+        ],
+        [
+          "cautious_llama_scaling",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "cautious_llama_scaling",
+          "parallel_llama"
+        ],
+        [
+          "cautious_llama_scaling",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2",
+          "hackable_transformer_attn_gate/lr_x1"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "hackable_transformer_attn_gate/lr_x1"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x1",
+          "hackable_transformer_attn_sink/attnsink/jax"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x1",
+          "hackable_transformer_attn_sink/attnsink/splash"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x1",
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x1",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x1",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "hackable_transformer_attn_gate/lr_x1"
+        ],
+        [
+          "muon_llama_scaling",
+          "hackable_transformer_attn_gate/lr_x1"
+        ],
+        [
+          "muon_qwen3_scaling",
+          "hackable_transformer_attn_gate/lr_x1"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "hackable_transformer_attn_gate/lr_x1"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x1",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x1",
+          "parallel_llama"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x1",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "hackable_transformer_attn_gate/lr_x2"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2",
+          "hackable_transformer_attn_sink/attnsink/jax"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2",
+          "hackable_transformer_attn_sink/attnsink/splash"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2",
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2",
+          "muon_llama_scaling"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2",
+          "muon_qwen3_scaling"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "hackable_transformer_attn_gate/lr_x2"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2",
+          "parallel_llama"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "hackable_transformer_attn_sink/attnsink/jax"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "hackable_transformer_attn_sink/attnsink/splash"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "muon_llama_scaling"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "muon_qwen3_scaling"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "hackable_transformer_attn_gate/lr_x2_5"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "parallel_llama"
+        ],
+        [
+          "hackable_transformer_attn_gate/lr_x2_5",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/jax",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/jax",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "hackable_transformer_attn_sink/attnsink/jax"
+        ],
+        [
+          "muon_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/jax"
+        ],
+        [
+          "muon_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/jax"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/jax"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/jax",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/jax",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "hackable_transformer_attn_sink/attnsink/splash"
+        ],
+        [
+          "muon_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash"
+        ],
+        [
+          "muon_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+        ],
+        [
+          "muon_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+        ],
+        [
+          "muon_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x4",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "muon_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "muon_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "muonremez_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "parallel_llama",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "prism_berkeley_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x4",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "muon_llama_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "muon_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "parallel_llama",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x0.5"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "muon_llama_scaling"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "muon_qwen3_scaling"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "parallel_llama"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x4",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "hackable_transformer_attn_sink/attnsink/splash/default_x4",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "muon_llama_scaling",
+          "muon_qwen3_scaling"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "muon_llama_scaling"
+        ],
+        [
+          "muon_llama_scaling",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "muon_llama_scaling",
+          "parallel_llama"
+        ],
+        [
+          "muon_llama_scaling",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "muon_qwen3_scaling"
+        ],
+        [
+          "muon_qwen3_scaling",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "muon_qwen3_scaling",
+          "parallel_llama"
+        ],
+        [
+          "muon_qwen3_scaling",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "parallel_llama"
+        ],
+        [
+          "muonh_qwen3_scaling",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "parallel_llama",
+          "muonremez_qwen3_scaling"
+        ],
+        [
+          "muonremez_qwen3_scaling",
+          "prism_berkeley_qwen3_scaling"
+        ],
+        [
+          "parallel_llama",
+          "prism_berkeley_qwen3_scaling"
+        ]
+      ],
+      "certified_above_count": {
+        "muonh_qwen3_scaling": 20,
+        "hackable_transformer_attn_gate/lr_x2_5": 15,
+        "hackable_transformer_attn_sink/attnsink/splash/default_x4": 4,
+        "adamh_llama_scaling": 15,
+        "hackable_transformer_attn_gate/lr_x2": 12,
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2": 12,
+        "cautious_llama_scaling": 14,
+        "c-adamc_llama_scaling": 13,
+        "muon_llama_scaling": 11,
+        "adamc_llama_scaling": 10,
+        "muon_qwen3_scaling": 10,
+        "hackable_transformer_attn_gate/lr_x1": 9,
+        "hackable_transformer_attn_sink/attnsink/splash": 4,
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr": 4,
+        "hackable_transformer_attn_sink/attnsink/jax": 4,
+        "adamw_llama_scaling": 5,
+        "parallel_llama": 4,
+        "muonremez_qwen3_scaling": 2,
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 1,
+        "prism_berkeley_qwen3_scaling": 1,
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 0
+      },
+      "certified_below_count": {
+        "muonh_qwen3_scaling": 0,
+        "hackable_transformer_attn_gate/lr_x2_5": 1,
+        "hackable_transformer_attn_sink/attnsink/splash/default_x4": 2,
+        "adamh_llama_scaling": 1,
+        "hackable_transformer_attn_gate/lr_x2": 3,
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2": 3,
+        "cautious_llama_scaling": 1,
+        "c-adamc_llama_scaling": 2,
+        "muon_llama_scaling": 7,
+        "adamc_llama_scaling": 4,
+        "muon_qwen3_scaling": 8,
+        "hackable_transformer_attn_gate/lr_x1": 10,
+        "hackable_transformer_attn_sink/attnsink/splash": 11,
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr": 11,
+        "hackable_transformer_attn_sink/attnsink/jax": 11,
+        "adamw_llama_scaling": 11,
+        "parallel_llama": 12,
+        "muonremez_qwen3_scaling": 17,
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5": 17,
+        "prism_berkeley_qwen3_scaling": 18,
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25": 20
+      },
+      "maximal_elements": [
+        "muonh_qwen3_scaling"
+      ],
+      "top1_certified_above_all": [
+        "muonh_qwen3_scaling"
+      ],
+      "fixed_ranking": [
+        "muonh_qwen3_scaling",
+        "hackable_transformer_attn_gate/lr_x2_5",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x4",
+        "adamh_llama_scaling",
+        "hackable_transformer_attn_gate/lr_x2",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+        "cautious_llama_scaling",
+        "c-adamc_llama_scaling",
+        "muon_llama_scaling",
+        "adamc_llama_scaling",
+        "muon_qwen3_scaling",
+        "hackable_transformer_attn_gate/lr_x1",
+        "hackable_transformer_attn_sink/attnsink/splash",
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+        "hackable_transformer_attn_sink/attnsink/jax",
+        "adamw_llama_scaling",
+        "parallel_llama",
+        "muonremez_qwen3_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5",
+        "prism_berkeley_qwen3_scaling",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25"
+      ]
+    }
+  },
+  "predictions": {
+    "PC1_dd_sigma_star_in_0_05_to_0_3pct": false,
+    "PC2_marin_at_least_dd": true,
+    "PC3_at_most_120_certified": true,
+    "PC3_no_submission_above_all": true
+  }
+}
