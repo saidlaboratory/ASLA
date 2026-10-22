@@ -230,8 +230,10 @@ def fisher_vs_dd(marin: dict[str, Any], dd: dict[str, Any]) -> dict[str, Any]:
 # --- Task 3 ----------------------------------------------------------------------------------
 
 
-def patched_forecasts(points: dict[str, list[dict[str, float]]]) -> dict[str, float]:
-    """Apply the committed patch to a copy of their regression.ts and run the patched function."""
+def patched_predictions(
+    points: dict[str, list[dict[str, float]]], targets: tuple[float, ...] = (rig.FORECAST_X,)
+) -> dict[str, list[float | None]]:
+    """Apply the committed patch to a copy of their regression.ts and run the patched function at ``targets``."""
 
     with tempfile.TemporaryDirectory() as tmp:
         d = Path(tmp)
@@ -239,7 +241,7 @@ def patched_forecasts(points: dict[str, list[dict[str, float]]]) -> dict[str, fl
         shutil.copy(rig.NODE_DIR / "package.json", d / "package.json")
         (d / "node_modules").symlink_to(rig.NODE_DIR / "node_modules")
         subprocess.run(["patch", "-s", str(d / "regression.ts"), str(PATCH)], check=True)
-        jobs = [{"id": s, "points": p, "targets": [rig.FORECAST_X]} for s, p in points.items()]
+        jobs = [{"id": s, "points": p, "targets": list(targets)} for s, p in points.items()]
         proc = subprocess.run(
             ["node", str(REPO / "scripts" / "marin_lm_options.mjs"), str(d)],
             input=json.dumps({"fits": jobs}),
@@ -247,7 +249,11 @@ def patched_forecasts(points: dict[str, list[dict[str, float]]]) -> dict[str, fl
             text=True,
             check=True,
         )
-    return {f["id"]: f["reference_predictions"][0] for f in json.loads(proc.stdout)["fits"]}
+    return {f["id"]: f["reference_predictions"] for f in json.loads(proc.stdout)["fits"]}
+
+
+def patched_forecasts(points: dict[str, list[dict[str, float]]]) -> dict[str, float]:
+    return {k: v[0] for k, v in patched_predictions(points).items()}  # type: ignore[misc]
 
 
 def main() -> None:
