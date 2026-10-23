@@ -1,0 +1,140 @@
+{
+  "reruns": {
+    "520m": {
+      "board_run": "qwen3_520m_muonremez_4096_lrx1_5-7e7df4-b200-d178e4",
+      "board_project": "marin-community/marin",
+      "pr_selected_run": "qwen3_520m_muonremez_4096_lrx1_5-7e7df4",
+      "pr_project": "understanding-sam/marin",
+      "same_config_name": true,
+      "differing_board_fields": {
+        "training_hardware_flops": [
+          1.4031769395582771e+20,
+          1.4101543531993137e+20
+        ],
+        "training_time": [
+          38212.87961760014,
+          38402.896328957344
+        ],
+        "description": [
+          "Qwen3 ~520m LR sweep with MuonRemez centered on Muon-style lr=1.60e-2 and Adam lr=3.60e-3.",
+          "Qwen3 ~520m LR sweep with MuonRemez centered on Muon-style lr=1.20e-2 and Adam lr=3.60e-3."
+        ],
+        "run_completion_timestamp": [
+          "2026-04-21 15:45:07 UTC",
+          "2026-04-13 03:11:40 UTC"
+        ],
+        "eval_paloma_c4_en_bpb": [
+          1.0036576986312866,
+          1.0104573965072632
+        ]
+      },
+      "identical_board_fields": [
+        "model_size",
+        "model_flops",
+        "author"
+      ],
+      "throughput_flops_per_s": [
+        3672000000000000.0,
+        3672000000000000.0
+      ],
+      "pr_hardware": {
+        "device": {
+          "kind": "tpu",
+          "topology": null,
+          "variant": "v5p-16"
+        },
+        "num_devices": 8,
+        "device_flops": 459000000000000.0
+      },
+      "relative_difference": -0.006729326639084765
+    },
+    "1_2b": {
+      "board_run": "qwen3_1_2b_muonremez_4096_lrx1_5-31ebb4-b200-f97d99",
+      "board_project": "marin-community/marin",
+      "pr_selected_run": "qwen3_1_2b_muonremez_4096_lrx1_5-31ebb4",
+      "pr_project": "understanding-sam/marin",
+      "same_config_name": true,
+      "differing_board_fields": {
+        "training_hardware_flops": [
+          5.0150885764394294e+20,
+          5.0879370981235904e+20
+        ],
+        "training_time": [
+          68288.24314323842,
+          69280.18924460227
+        ],
+        "description": [
+          "Qwen3 ~1_2b LR sweep with MuonRemez centered on Muon-style lr=8.00e-3 and Adam lr=1.80e-3.",
+          "Qwen3 ~1_2b LR sweep with MuonRemez centered on Muon-style lr=6.00e-3 and Adam lr=1.80e-3."
+        ],
+        "run_completion_timestamp": [
+          "2026-04-22 00:33:03 UTC",
+          "2026-04-17 18:30:34 UTC"
+        ],
+        "eval_paloma_c4_en_bpb": [
+          0.9491097331047058,
+          0.9540287256240844
+        ]
+      },
+      "identical_board_fields": [
+        "model_size",
+        "model_flops",
+        "author"
+      ],
+      "throughput_flops_per_s": [
+        7344000000000000.0,
+        7344000000000000.0
+      ],
+      "pr_hardware": {
+        "device": {
+          "kind": "tpu",
+          "topology": null,
+          "variant": "v5p-32"
+        },
+        "num_devices": 16,
+        "device_flops": 459000000000000.0
+      },
+      "relative_difference": -0.005156021393549537
+    }
+  },
+  "b200": "inferred from the board descriptions: the reruns are 'centered on Muon-style lr' 1.60e-2 (520m) and 8.00e-3 (1.2b) against 1.20e-2 and 6.00e-3 for the PR's selected runs. The PR sweeps covered 0.5x-1.5x a base LR of 8e-3 (520m) and 4e-3 (1.2b); the reruns are at exactly 2.00x base, so 'b200' reads as 200% of the base LR: a sweep extension past the PR's range, named after the run it was forked from. (In Marin's code B200 is also an NVIDIA GPU, but the board records carry the PR runs' TPU throughput.)",
+  "differ_only_in_seed_or_hardware": false,
+  "differing_setting": "learning rate (Muon-style LR x4/3 at 520m and 1.2b; Adam LR unchanged), per the descriptions; the full configs need the W&B key (anonymous GraphQL returns no project)",
+  "implied_relative_sd": null,
+  "implied_relative_sd_reason": "not replicates: they differ in learning rate, so no noise value is implied and the both-rung count and 1e22 resolution are not rerun",
+  "consequence": "the board's muonremez 520m and 1.2b points come from a sixth learning rate outside the submitted five-run sweep, which scored below all five; the 130m and 300m points are the best of the five",
+  "other_board_values_from_a_different_run": [
+    {
+      "run": "muonremez_qwen3_scaling/1_2b",
+      "board_run": "qwen3_1_2b_muonremez_4096_lrx1_5-31ebb4-b200-f97d99",
+      "own_run": "qwen3_1_2b_muonremez_4096_lrx1_5-31ebb4",
+      "board_bpb": 0.9491097331047058,
+      "own_bpb": 0.9540287256240844
+    },
+    {
+      "run": "muonremez_qwen3_scaling/520m",
+      "board_run": "qwen3_520m_muonremez_4096_lrx1_5-7e7df4-b200-d178e4",
+      "own_run": "qwen3_520m_muonremez_4096_lrx1_5-7e7df4",
+      "board_bpb": 1.0036576986312866,
+      "own_bpb": 1.0104573965072632
+    }
+  ],
+  "official_runs_whose_value_or_link_changed_in_history": {
+    "parallel_llama/300m": [
+      [
+        "d75aeea543",
+        [
+          1.1177308559417725,
+          "parallel_llama_300m_20250928_005125-5ab6f2"
+        ]
+      ],
+      [
+        "2870661495",
+        [
+          1.071972370147705,
+          "hacktx_300m_stdattn_parallel_4096-a454c2"
+        ]
+      ]
+    ]
+  }
+}

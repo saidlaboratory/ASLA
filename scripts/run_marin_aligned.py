@@ -487,6 +487,11 @@ def main() -> None:
         and "hackable_transformer_attn_sink/attnsink/splash/default_x4" in dv["top3_fixed"]
         and "adamh_llama_scaling" not in dv["top3_fixed"],
     }
+    out["task1"]["predictions_note"] = (
+        "MA4 covers the aligned designs W, W_LQ, C2 and C3 only. At named rungs the shared exponent has fewer "
+        "point errors than single-scale (43 against 46 on the 21; 48 against 52 on the official 22), and no "
+        "projection form beats single-scale significantly."
+    )
     OUT.write_text(json.dumps(out, indent=2, default=str) + "\n", encoding="utf-8")
 
 

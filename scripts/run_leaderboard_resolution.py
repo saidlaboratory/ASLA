@@ -116,13 +116,17 @@ def delphi_check(fixed: dict[str, float]) -> dict[str, Any]:
 
 
 def listing() -> tuple[list[dict[str, Any]], dict[tuple[str, str], dict[str, float]]]:
+    from scripts import marin_official
+
     runs = json.loads((rig.RAW / "runs.json").read_text())
+    official = set(marin_official.official_groups(runs))
     by: dict[str, dict[str, dict[str, float]]] = defaultdict(dict)
     unlabelled = []
     for r in runs:
         if "/" not in r["run_name"]:
             unlabelled.append(r["run_name"])
             continue
+        marin_official.rung(r["run_name"], official)  # instance 11 guard: raises on an unrecognised rung label
         prefix, label = r["run_name"].rsplit("/", 1)
         label = {"1.2b": "1_2b"}.get(label.lower(), label.lower())
         by[prefix][label] = {"x": float(r["model_flops"]), "y": float(r["eval_paloma_c4_en_bpb"])}
@@ -131,6 +135,7 @@ def listing() -> tuple[list[dict[str, Any]], dict[tuple[str, str], dict[str, flo
     ]
     rows += [{"prefix": n, "budgets": [], "note": "no budget label"} for n in sorted(unlabelled)]
     cells = {(p, b): v[b] for p, v in by.items() for b in v if set(RUNGS) <= set(v)}
+    marin_official.check_members(sorted({k[0] for k in cells}), runs, allow_documented=False)
     return rows, cells
 
 

@@ -318,7 +318,8 @@
             "u_abs_t": 0.2172120870838338
           }
         }
-      }
+      },
+      "correction": "no projection form beats single-scale significantly (no candidate-level U test exceeds the conservative 2.99); the shared exponent has fewer point errors than single-scale: 48 against 52 on the official 22 (43 against 46 on the 21). Statements that projection never beats single-scale were wrong."
     },
     "fix_effect": {
       "official_22": {

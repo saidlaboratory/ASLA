@@ -562,6 +562,11 @@ def main() -> None:
         and v["sigma_star"]["sigma_star"] < SIGMA_STAR_PREVIOUS,
         "PF1_at_least_half_marked": out["task2c"]["marked_count"] >= len(subs) / 2,
     }
+    out["task1b"]["heldout_projection"]["correction"] = (
+        "no projection form beats single-scale significantly (no candidate-level U test exceeds the conservative "
+        "2.99); the shared exponent has fewer point errors than single-scale: 48 against 52 on the official 22 "
+        "(43 against 46 on the 21). Statements that projection never beats single-scale were wrong."
+    )
     OUT.write_text(json.dumps(out, indent=2, default=float) + "\n", encoding="utf-8")
 
 

@@ -1,0 +1,235 @@
+From ab0d41c6eb9ec0a81466fce7fb2355a0cffbf9d5 Mon Sep 17 00:00:00 2001
+From: Evan <evan.msaran@gmail.com>
+Date: Thu, 22 Oct 2026 21:29:39 -0400
+Subject: [PATCH] Fix power-law fit convergence on the Scaling leaderboard
+
+computePowerLawWithOffset fit raw model FLOPs (1e18-1e20), which leaves the
+intercept and exponent Jacobian columns nearly collinear, and used an absolute
+errorTolerance of 1e-8 that discards the final improvements when the residual
+sum of squares is 1e-7 to 1e-4. Together these stop the fit short of the
+least-squares optimum, by up to 0.045 BPB at the 1e22 forecast.
+
+Fit in units of 1e18 FLOPs, return the intercept in raw-FLOPs units (so
+predictWithPowerLaw and callers are unchanged), and use errorTolerance 1e-15.
+scripts/check-power-law-fit.mjs reports each submission's forecast before and
+after, its departure from an independently computed optimum, and the change in
+order.
+
+Co-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>
+---
+ website/scripts/check-power-law-fit.mjs | 150 ++++++++++++++++++++++++
+ website/src/utils/regression.ts         |  13 +-
+ 2 files changed, 159 insertions(+), 4 deletions(-)
+ create mode 100644 website/scripts/check-power-law-fit.mjs
+
+diff --git a/website/scripts/check-power-law-fit.mjs b/website/scripts/check-power-law-fit.mjs
+new file mode 100644
+index 0000000..0dbb9e5
+--- /dev/null
++++ b/website/scripts/check-power-law-fit.mjs
+@@ -0,0 +1,150 @@
++// Reproduction for the computePowerLawWithOffset convergence fix.
++//
++// For every submission on the Scaling leaderboard (runs grouped by folder, ranked when a run exceeds 3e20
++// training FLOPs, x = model_flops, y = eval_paloma_c4_en_bpb), this reports the 1e22 forecast from
++//   before: the previous fit (raw FLOPs, errorTolerance 1e-8),
++//   after:  computePowerLawWithOffset as committed (FLOPs / 1e18, errorTolerance 1e-15),
++//   optimum: the least-squares optimum of the same form and bounds, found independently by variable projection
++//            (a is closed-form given b and c; b and c by grid search with successive zooms),
++// each forecast's departure from the optimum, and the leaderboard order before and after.
++//
++// Usage (Node >= 22.6 for TypeScript imports; Node 24 needs no flag), from website/ after `npm install`:
++//   node scripts/check-power-law-fit.mjs [path/to/runs.json] [--json]
++import { readFileSync } from "node:fs";
++import { createRequire } from "node:module";
++import { fileURLToPath } from "node:url";
++import path from "node:path";
++
++import { computePowerLawWithOffset, computeLinearRegression, predictWithPowerLaw } from "../src/utils/regression.ts";
++import { getScalingGroupName } from "../src/utils/scaling.ts";
++
++const require = createRequire(import.meta.url);
++const { levenbergMarquardt } = require("ml-levenberg-marquardt");
++
++const here = path.dirname(fileURLToPath(import.meta.url));
++const args = process.argv.slice(2);
++const runsPath = args.find((a) => !a.startsWith("--")) ?? path.join(here, "..", "..", "data", "runs.json");
++const asJson = args.includes("--json");
++const TARGET = 1e22;
++const MIN_SCALING_LEADERBOARD_FLOPS = 3e20;
++
++// The fit before this change, kept here only for comparison.
++function previousFit(points) {
++  const valid = points.filter((p) => p.x > 0 && Number.isFinite(p.x) && Number.isFinite(p.y)).sort((a, b) => a.x - b.x);
++  const xData = valid.map((p) => p.x);
++  const yData = valid.map((p) => p.y);
++  const yMin = Math.min(...yData);
++  const cInit = Math.min(0.7, yMin * 0.7);
++  let aInit = 1;
++  let bInit = 0.1;
++  const reg = computeLinearRegression(
++    valid.filter((p) => p.y - cInit > 0).map((p) => ({ x: Math.log(p.x), y: Math.log(p.y - cInit) }))
++  );
++  if (reg) {
++    bInit = Math.max(0.01, -reg.slope);
++    aInit = Math.exp(reg.intercept);
++  }
++  const f = ([a, b, c]) => (x) => a * Math.pow(x, -b) + c;
++  const r = levenbergMarquardt({ x: xData, y: yData }, f, {
++    initialValues: [aInit, bInit, cInit],
++    damping: 1.5,
++    gradientDifference: 1e-6,
++    maxIterations: 200,
++    errorTolerance: 1e-8,
++    minValues: [1e-10, 1e-6, 0],
++    maxValues: [1e30, 2, yMin * 0.999],
++  });
++  const [a, b, c] = r.parameterValues;
++  return { intercept: a, slope: -b, asymptote: c };
++}
++
++// Least-squares optimum of a x^-b + c with a >= 1e-10, b in [1e-6, 2], c in [0, 0.999 min y].
++function optimum(points) {
++  const x = points.map((p) => p.x / 1e18);
++  const y = points.map((p) => p.y);
++  const yMin = Math.min(...y);
++  const sse = (b, c) => {
++    const w = x.map((v) => Math.pow(v, -b));
++    let num = 0;
++    let den = 0;
++    for (let i = 0; i < x.length; i++) {
++      num += w[i] * (y[i] - c);
++      den += w[i] * w[i];
++    }
++    const a = Math.max(1e-10, num / den);
++    let s = 0;
++    for (let i = 0; i < x.length; i++) s += (a * w[i] + c - y[i]) ** 2;
++    return { s, a };
++  };
++  let lo = [1e-6, 0];
++  let hi = [2, 0.999 * yMin];
++  let best = { s: Infinity, a: 0, b: 0, c: 0 };
++  for (let round = 0; round < 40; round++) {
++    const n = 40;
++    for (let i = 0; i <= n; i++) {
++      const b = lo[0] + ((hi[0] - lo[0]) * i) / n;
++      for (let j = 0; j <= n; j++) {
++        const c = lo[1] + ((hi[1] - lo[1]) * j) / n;
++        const r = sse(b, c);
++        if (r.s < best.s) best = { s: r.s, a: r.a, b, c };
++      }
++    }
++    const span = [(hi[0] - lo[0]) / 8, (hi[1] - lo[1]) / 8];
++    lo = [Math.max(1e-6, best.b - span[0]), Math.max(0, best.c - span[1])];
++    hi = [Math.min(2, best.b + span[0]), Math.min(0.999 * yMin, best.c + span[1])];
++  }
++  return { forecast: best.a * Math.pow(TARGET / 1e18, -best.b) + best.c, sse: best.s };
++}
++
++const runs = JSON.parse(readFileSync(runsPath, "utf8")).filter((r) => r.run_name.includes("/"));
++const groups = new Map();
++for (const r of runs) {
++  const g = getScalingGroupName(r.run_name);
++  if (!groups.has(g)) groups.set(g, []);
++  groups.get(g).push(r);
++}
++const rows = [];
++for (const [name, rs] of groups) {
++  if (!rs.some((r) => (r.training_hardware_flops ?? 0) > MIN_SCALING_LEADERBOARD_FLOPS)) continue;
++  const points = rs.map((r) => ({ x: r.model_flops, y: r.eval_paloma_c4_en_bpb })).filter((p) => p.x > 0 && p.y > 0);
++  const before = predictWithPowerLaw(previousFit(points), TARGET);
++  const fitted = computePowerLawWithOffset(points);
++  const after = fitted ? predictWithPowerLaw(fitted, TARGET) : NaN;
++  const opt = optimum(points).forecast;
++  rows.push({ name, before, after, optimum: opt, departureBefore: Math.abs(before - opt), departureAfter: Math.abs(after - opt) });
++}
++const rank = (key) => [...rows].sort((a, b) => a[key] - b[key]).map((r) => r.name);
++const orderBefore = rank("before");
++const orderAfter = rank("after");
++const changed = [];
++for (let i = 0; i < rows.length; i++) {
++  for (let j = i + 1; j < rows.length; j++) {
++    const a = rows[i];
++    const b = rows[j];
++    if (Math.sign(a.before - b.before) !== Math.sign(a.after - b.after)) changed.push([a.name, b.name]);
++  }
++}
++const nPairs = (rows.length * (rows.length - 1)) / 2;
++const kendall = (nPairs - 2 * changed.length) / nPairs;
++const dep = (key) => rows.map((r) => r[key]).sort((a, b) => a - b);
++const median = (v) => (v.length % 2 ? v[(v.length - 1) / 2] : (v[v.length / 2 - 1] + v[v.length / 2]) / 2);
++const summary = {
++  submissions: rows.length,
++  maxDepartureBefore: Math.max(...dep("departureBefore")),
++  medianDepartureBefore: median(dep("departureBefore")),
++  maxDepartureAfter: Math.max(...dep("departureAfter")),
++  pairsChanged: changed.length,
++  kendallTau: kendall,
++  top5Before: orderBefore.slice(0, 5),
++  top5After: orderAfter.slice(0, 5),
++};
++if (asJson) {
++  process.stdout.write(JSON.stringify({ summary, rows, changed, orderBefore, orderAfter }, null, 2) + "\n");
++} else {
++  const pad = (s, n) => String(s).padEnd(n);
++  console.log(pad("submission", 60), "before    after     optimum   |before-opt| |after-opt|");
++  for (const r of [...rows].sort((a, b) => a.after - b.after)) {
++    console.log(pad(r.name, 60), r.before.toFixed(5), r.after.toFixed(5), r.optimum.toFixed(5), r.departureBefore.toExponential(2), r.departureAfter.toExponential(2));
++  }
++  console.log(JSON.stringify(summary, null, 2));
++}
+diff --git a/website/src/utils/regression.ts b/website/src/utils/regression.ts
+index 6de0a99..347cd38 100644
+--- a/website/src/utils/regression.ts
++++ b/website/src/utils/regression.ts
+@@ -77,6 +77,9 @@ export function computeLinearRegression(
+  * @param points - Array of {x, y} where x is compute (FLOPs) and y is loss (BPB)
+  * @returns PowerLawResult or null if fitting fails
+  */
++// Fit in units of 1e18 FLOPs: raw FLOPs (1e18-1e20) leave the a and b Jacobian columns nearly collinear.
++const X_SCALE = 1e18;
++
+ export function computePowerLawWithOffset(
+   points: RegressionPoint[]
+ ): PowerLawResult | null {
+@@ -94,7 +97,7 @@ export function computePowerLawWithOffset(
+     return null;
+   }
+ 
+-  const xData = validPoints.map((p) => p.x);
++  const xData = validPoints.map((p) => p.x / X_SCALE);
+   const yData = validPoints.map((p) => p.y);
+ 
+   // Estimate initial parameters from the data
+@@ -110,7 +113,7 @@ export function computePowerLawWithOffset(
+ 
+   // Use log-log regression on (y - cInit) to estimate a and b
+   const adjustedPoints = validPoints
+-    .map((p) => ({ x: p.x, y: p.y - cInit }))
++    .map((p) => ({ x: p.x / X_SCALE, y: p.y - cInit }))
+     .filter((p) => p.y > 0);
+ 
+   let aInit = 1;
+@@ -149,7 +152,8 @@ export function computePowerLawWithOffset(
+         damping: 1.5,
+         gradientDifference: 1e-6,
+         maxIterations: 200,
+-        errorTolerance: 1e-8,
++        // An absolute SSE gate: 1e-8 discards the final improvements when the SSE is 1e-7 to 1e-4.
++        errorTolerance: 1e-15,
+         // Constraints: intercept > 0, slope > 0, asymptote >= 0
+         minValues: [1e-10, 1e-6, 0],
+         maxValues: [1e30, 2, asymptoteMax],
+@@ -188,7 +192,8 @@ export function computePowerLawWithOffset(
+     const r2 = ssTot === 0 ? 1 : 1 - ssRes / ssTot;
+ 
+     // Return slope as negative to match log-log linear convention
+-    return { intercept, slope: -slope, asymptote, r2 };
++    // Return the intercept in raw-FLOPs units so predictWithPowerLaw and callers are unchanged.
++    return { intercept: intercept * Math.pow(X_SCALE, slope), slope: -slope, asymptote, r2 };
+   } catch {
+     // Levenberg-Marquardt can fail to converge
+     return null;
+-- 
+2.50.1 (Apple Git-155)
+

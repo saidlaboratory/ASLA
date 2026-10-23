@@ -1,0 +1,121 @@
+{
+  "source": "marin-community/speedrun@31fe8028 data/runs.json (the displayed Scaling leaderboard, 22 submissions)",
+  "branch": "fix-power-law-convergence in data/cache/speedrun_upstream (local only; no PR opened)",
+  "optimum": "global least-squares optimum of a x^-b + c with the leaderboard's bounds (18 starts, log a, tolerances 1e-15)",
+  "current_code_default_start": {
+    "max_departure_bpb": 0.044840888072914864,
+    "median_departure_bpb": 0.01959503023693654
+  },
+  "fixed_max_departure_bpb": 5.381324674758048e-08,
+  "multistart_13_starts_cap_200": {
+    "x_over_1e18_error_tolerance_1e-15": {
+      "fits": 286,
+      "fits_reaching_optimum": 286,
+      "max_departure_bpb": 1.2090240908424477e-07,
+      "submissions_reaching_optimum_from_every_start": 22
+    },
+    "x_over_1e18_y_times_100": {
+      "fits": 286,
+      "fits_reaching_optimum": 286,
+      "max_departure_bpb": 3.223471815472223e-06,
+      "submissions_reaching_optimum_from_every_start": 22
+    }
+  },
+  "pairs_changed": 13,
+  "pairs": 231,
+  "kendall_tau": 0.8869565217391304,
+  "top5_displayed": [
+    "muonh_qwen3_scaling",
+    "hackable_transformer_attn_gate/lr_x2_5",
+    "adamh_llama_scaling",
+    "hackable_transformer_attn_gate/lr_x2",
+    "hackable_transformer_attn_sink/attnsink/splash/default_x2"
+  ],
+  "top5_fixed": [
+    "muonh_qwen3_scaling",
+    "hackable_transformer_attn_gate/lr_x2_5",
+    "hackable_transformer_attn_sink/attnsink/splash/default_x4",
+    "adamh_llama_scaling",
+    "hackable_transformer_attn_gate/lr_x2"
+  ],
+  "changed_pairs": [
+    [
+      "adamc_llama_scaling",
+      "hackable_transformer_attn_gate/lr_x1"
+    ],
+    [
+      "adamc_llama_scaling",
+      "muon_llama_scaling"
+    ],
+    [
+      "adamh_llama_scaling",
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+    ],
+    [
+      "adamw_llama_scaling",
+      "parallel_llama"
+    ],
+    [
+      "c-adamc_llama_scaling",
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+    ],
+    [
+      "cautious_llama_scaling",
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+    ],
+    [
+      "hackable_transformer_attn_gate/lr_x1",
+      "muon_llama_scaling"
+    ],
+    [
+      "hackable_transformer_attn_gate/lr_x1",
+      "muon_qwen3_scaling"
+    ],
+    [
+      "hackable_transformer_attn_gate/lr_x2",
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+    ],
+    [
+      "hackable_transformer_attn_sink/attnsink/splash/default_x0.5",
+      "muonremez_qwen3_scaling"
+    ],
+    [
+      "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+      "hackable_transformer_attn_sink/attnsink/splash/default_x4"
+    ],
+    [
+      "hackable_transformer_attn_sink/std_attn",
+      "muon_llama_scaling"
+    ],
+    [
+      "hackable_transformer_attn_sink/std_attn",
+      "muon_qwen3_scaling"
+    ]
+  ],
+  "reproduction_script_cross_check": {
+    "summary": {
+      "submissions": 22,
+      "maxDepartureBefore": 0.04484088587760238,
+      "medianDepartureBefore": 0.019595030110281464,
+      "maxDepartureAfter": 5.161793426022854e-08,
+      "pairsChanged": 13,
+      "kendallTau": 0.8874458874458875,
+      "top5Before": [
+        "muonh_qwen3_scaling",
+        "hackable_transformer_attn_gate/lr_x2_5",
+        "adamh_llama_scaling",
+        "hackable_transformer_attn_gate/lr_x2",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2"
+      ],
+      "top5After": [
+        "muonh_qwen3_scaling",
+        "hackable_transformer_attn_gate/lr_x2_5",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x4",
+        "adamh_llama_scaling",
+        "hackable_transformer_attn_gate/lr_x2"
+      ]
+    },
+    "agrees": true,
+    "max_abs_optimum_difference_js_vs_python": 4.951283605336698e-09
+  }
+}

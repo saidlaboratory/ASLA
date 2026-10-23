@@ -33,8 +33,8 @@ def load(relative: str) -> Any:
 # The instance count is stated in four places in this section; deriving them
 # from one pair of constants is what stopped "five anecdotes" surviving the
 # addition of a sixth.
-N_INSTANCES = 10
-N_INSTANCES_WORD = "Ten"
+N_INSTANCES = 11
+N_INSTANCES_WORD = "Eleven"
 N_FLATTERING = 6
 
 
@@ -71,6 +71,9 @@ def methods_practice() -> str:
     primary = f"{ties['tau_primary']:.6g}"
     multi = {k: designs[k]["sign_changes"][primary]["observed"]["share_two_or_more"] for k in ("named_rungs", "C2", "C3")}
     lq_class = designs["W_LQ"]["class_vs_datadecide"]["300M->1B"]
+    recount = load("external/inclusion_recount.json")
+    rc = recount["task1b"]
+    n_official = len(recount["official_set"])
     lines = [
         "# Methods practice: verify that the measurement can see what you think it sees",
         "",
@@ -277,6 +280,31 @@ def methods_practice() -> str:
         "**The general form:** before comparing candidates at a shared label, check that the label fixes the "
         "quantity the comparison assumes. It was caught before any claim built on it left the repository.",
         "",
+        "## Instance 11: an official board member silently dropped by rung-label parsing",
+        "",
+        f"The official Marin scaling board ranks {n_official} submissions. Every analysis before the inclusion "
+        f"audit used {n_official - 1}: `hackable_transformer_attn_sink/std_attn` labels its top rung `1.2b` where "
+        "every other submission writes `1_2b`, and the loader kept only labels it recognised, so the submission "
+        "lost a rung and fell out of the four-rung member set without an error.",
+        "",
+        "**How it was caught:** listing every board link by the budgets it covers turned up a 22nd submission on "
+        "the same four-rung ladder, and comparing the analysed set with the board's own display rule confirmed it "
+        "was official.",
+        "",
+        "**What it changed:** little, which is why it was invisible. On the official set the "
+        f"520m-to-1.2b reorder rate is {rc['reorder_520m_1_2b']['official_22']['dd_1b_sd']['rate']:.1%} against "
+        f"{rc['reorder_520m_1_2b']['previous_21']['dd_1b_sd']['rate']:.1%}, the form-robust core is "
+        f"{rc['form_core']['official_22']['robust']} of {rc['form_core']['official_22']['pairs']} pairs against "
+        f"{rc['form_core']['previous_21']['robust']} of 210, and the certified pairs at 1e22 are "
+        f"{rc['certified_at_0_58pct']['official_22']['certified']} against "
+        f"{rc['certified_at_0_58pct']['previous_21']['certified']}. The omitted submission ranks "
+        f"{rc['fix_effect']['official_22']['std_attn_rank_fixed']} on the fixed leaderboard.",
+        "",
+        "**The guards now in place:** every load checks the member set against the board's display rule and fails "
+        "on any undocumented difference, and any unrecognised rung label in an official group is a hard error "
+        "(`scripts/marin_official.py`). The general form: a parser that skips what it does not recognise turns a "
+        "naming inconsistency into a silent change of population; count the population against its source.",
+        "",
         "## A numerical fingerprint for this class",
         "",
         f"Instances 3, 5 and 6 are one defect: a quantity aggregated in one space and consumed in another, "
@@ -325,7 +353,7 @@ def methods_practice() -> str:
         "| 6 | the omitted third parameter explains the misses | half of it was our own pooling error | "
         "a sweep for the pattern, not for literals |",
         "",
-        "**Status is not uniform, and the uneven version is the stronger one.** Instances 1-4, 6, 9 and 10 were "
+        "**Status is not uniform, and the uneven version is the stronger one.** Instances 1-4, 6, 9, 10 and 11 were "
         "caught before any claim built on them left the repository. Instance 5 was not: it propagated into "
         "five committed documents and a paper draft as the opening premise of a headline section, and it is "
         "the reason this is a finding rather than a note on good hygiene. A defect class that is always "

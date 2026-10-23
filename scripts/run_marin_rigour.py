@@ -53,6 +53,12 @@ def load_cells() -> tuple[list[str], dict[tuple[str, str], dict[str, float]], di
     members = json.loads((REPO / "results" / "external" / "marin_speedrun_gate.json").read_text())["best_shared_set"][
         "members"
     ]
+    from scripts import marin_official
+
+    # instance 11 guards: fail on an unrecognised rung label, and on any member-set difference from the official
+    # board other than the documented std_attn omission (kept so earlier rounds reproduce)
+    marin_official.check_members(members, runs, allow_documented=True)
+    official = set(marin_official.official_groups(runs))
     cells: dict[tuple[str, str], list[dict[str, float]]] = defaultdict(list)
     replicate_counts: dict[str, int] = defaultdict(int)
     for run in runs:
@@ -60,8 +66,9 @@ def load_cells() -> tuple[list[str], dict[tuple[str, str], dict[str, float]], di
             continue
         prefix, label = run["run_name"].rsplit("/", 1)
         replicate_counts[f"{prefix}|{label.lower()}"] += 1
-        if prefix in members and label.lower() in BUDGETS:
-            cells[(prefix, label.lower())].append(
+        rung = marin_official.rung(run["run_name"], official)
+        if prefix in members and rung is not None:
+            cells[(prefix, rung)].append(
                 {
                     "x": float(run["model_flops"]),
                     "y": float(run["eval_paloma_c4_en_bpb"]),

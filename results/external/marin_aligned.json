@@ -1722,7 +1722,8 @@
         "W": true,
         "W_LQ": true
       }
-    }
+    },
+    "predictions_note": "MA4 covers the aligned designs W, W_LQ, C2 and C3 only. At named rungs the shared exponent has fewer point errors than single-scale (43 against 46 on the 21; 48 against 52 on the official 22), and no projection form beats single-scale significantly."
   },
   "task2": {
     "reason": "the shared exponent imposes one scaling exponent on every submission, assuming away the differences in scaling an architecture leaderboard exists to detect; it tests offsets given a common slope, not each submission's own curve",
