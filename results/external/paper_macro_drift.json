@@ -1,0 +1,481 @@
+{
+  "reference_commit": "dfc4c4aaba",
+  "reference": "the commit that first wrote results/external/prose_corrections.json",
+  "latest_commit_touching_list": "dfc4c4aaba",
+  "macros_used_in_main_tex": 218,
+  "claims_with_changed_source": 47,
+  "claims_whose_value_changed": 1,
+  "new_claims_since_reference": 10,
+  "rows": [
+    {
+      "macro": "curveCFour",
+      "sources_changed": {
+        "results/external/published_comparisons.json": "working tree"
+      },
+      "old": "1.62",
+      "new": "1.62",
+      "new_claim": false,
+      "value_changed": false
+    },
+    {
+      "macro": "curveCheckLargeMinM",
+      "sources_changed": {
+        "results/external/published_comparisons.json": "working tree"
+      },
+      "old": null,
+      "new": "12",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "curveCheckSmallest",
+      "sources_changed": {
+        "results/external/published_comparisons.json": "working tree"
+      },
+      "old": "44",
+      "new": "44",
+      "new_claim": false,
+      "value_changed": false
+    },
+    {
+      "macro": "curveCheckSmallestM",
+      "sources_changed": {
+        "results/external/published_comparisons.json": "working tree"
+      },
+      "old": "8",
+      "new": "8",
+      "new_claim": false,
+      "value_changed": false
+    },
+    {
+      "macro": "curveCheckWorstLarge",
+      "sources_changed": {
+        "results/external/published_comparisons.json": "working tree"
+      },
+      "old": "11",
+      "new": "11",
+      "new_claim": false,
+      "value_changed": false
+    },
+    {
+      "macro": "curveComparisons",
+      "sources_changed": {
+        "results/external/published_comparisons.json": "working tree"
+      },
+      "old": "495",
+      "new": "495",
+      "new_claim": false,
+      "value_changed": false
+    },
+    {
+      "macro": "curveHighTwentyFive",
+      "sources_changed": {
+        "results/external/published_comparisons.json": "working tree"
+      },
+      "old": "2.55",
+      "new": "2.55",
+      "new_claim": false,
+      "value_changed": false
+    },
+    {
+      "macro": "curveLowTwentyFive",
+      "sources_changed": {
+        "results/external/published_comparisons.json": "working tree"
+      },
+      "old": "1.33",
+      "new": "1.33",
+      "new_claim": false,
+      "value_changed": false
+    },
+    {
+      "macro": "curveMLarge",
+      "sources_changed": {
+        "results/external/published_comparisons.json": "working tree"
+      },
+      "old": null,
+      "new": "100",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "curveMMid",
+      "sources_changed": {
+        "results/external/published_comparisons.json": "working tree"
+      },
+      "old": null,
+      "new": "25",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "curveMSmall",
+      "sources_changed": {
+        "results/external/published_comparisons.json": "working tree"
+      },
+      "old": null,
+      "new": "10",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "curveMedHundred",
+      "sources_changed": {
+        "results/external/published_comparisons.json": "working tree"
+      },
+      "old": "3.79",
+      "new": "3.79",
+      "new_claim": false,
+      "value_changed": false
+    },
+    {
+      "macro": "curveMedTen",
+      "sources_changed": {
+        "results/external/published_comparisons.json": "working tree"
+      },
+      "old": "1.45",
+      "new": "1.45",
+      "new_claim": false,
+      "value_changed": false
+    },
+    {
+      "macro": "curveMedTwentyFive",
+      "sources_changed": {
+        "results/external/published_comparisons.json": "working tree"
+      },
+      "old": "2.03",
+      "new": "2.03",
+      "new_claim": false,
+      "value_changed": false
+    },
+    {
+      "macro": "curveZetaMedian",
+      "sources_changed": {
+        "results/external/published_comparisons.json": "working tree"
+      },
+      "old": "0.068",
+      "new": "0.068",
+      "new_claim": false,
+      "value_changed": false
+    },
+    {
+      "macro": "dOneAll",
+      "sources_changed": {
+        "results/external/published_comparisons.json": "working tree"
+      },
+      "old": "176",
+      "new": "176",
+      "new_claim": false,
+      "value_changed": false
+    },
+    {
+      "macro": "dOneAllBetter",
+      "sources_changed": {
+        "results/external/published_comparisons.json": "working tree"
+      },
+      "old": "25",
+      "new": "25",
+      "new_claim": false,
+      "value_changed": false
+    },
+    {
+      "macro": "dOneAllWorse",
+      "sources_changed": {
+        "results/external/published_comparisons.json": "working tree"
+      },
+      "old": "28",
+      "new": "28",
+      "new_claim": false,
+      "value_changed": false
+    },
+    {
+      "macro": "dOneMacroExcl",
+      "sources_changed": {
+        "results/external/published_comparisons.json": "working tree"
+      },
+      "old": "1",
+      "new": "1",
+      "new_claim": false,
+      "value_changed": false
+    },
+    {
+      "macro": "dOneTypicalHalfWidth",
+      "sources_changed": {
+        "results/external/published_comparisons.json": "working tree"
+      },
+      "old": "8",
+      "new": "8",
+      "new_claim": false,
+      "value_changed": false
+    },
+    {
+      "macro": "dOneVariants",
+      "sources_changed": {
+        "results/external/published_comparisons.json": "working tree"
+      },
+      "old": "8",
+      "new": "8",
+      "new_claim": false,
+      "value_changed": false
+    },
+    {
+      "macro": "dOneWorstDiff",
+      "sources_changed": {
+        "results/external/published_comparisons.json": "working tree"
+      },
+      "old": "-15.2",
+      "new": "-15.2",
+      "new_claim": false,
+      "value_changed": false
+    },
+    {
+      "macro": "dOneWorstHigh",
+      "sources_changed": {
+        "results/external/published_comparisons.json": "working tree"
+      },
+      "old": "-2.3",
+      "new": "-2.3",
+      "new_claim": false,
+      "value_changed": false
+    },
+    {
+      "macro": "dOneWorstLow",
+      "sources_changed": {
+        "results/external/published_comparisons.json": "working tree"
+      },
+      "old": "-28.1",
+      "new": "-28.1",
+      "new_claim": false,
+      "value_changed": false
+    },
+    {
+      "macro": "dTwoAll",
+      "sources_changed": {
+        "results/external/published_comparisons.json": "working tree"
+      },
+      "old": "143",
+      "new": "143",
+      "new_claim": false,
+      "value_changed": false
+    },
+    {
+      "macro": "dTwoAllBetter",
+      "sources_changed": {
+        "results/external/published_comparisons.json": "working tree"
+      },
+      "old": "56",
+      "new": "56",
+      "new_claim": false,
+      "value_changed": false
+    },
+    {
+      "macro": "dTwoAllWorse",
+      "sources_changed": {
+        "results/external/published_comparisons.json": "working tree"
+      },
+      "old": "9",
+      "new": "9",
+      "new_claim": false,
+      "value_changed": false
+    },
+    {
+      "macro": "dTwoMacroBetter",
+      "sources_changed": {
+        "results/external/published_comparisons.json": "working tree"
+      },
+      "old": "1",
+      "new": "1",
+      "new_claim": false,
+      "value_changed": false
+    },
+    {
+      "macro": "dTwoMacroPointWorse",
+      "sources_changed": {
+        "results/external/published_comparisons.json": "working tree"
+      },
+      "old": "5",
+      "new": "5",
+      "new_claim": false,
+      "value_changed": false
+    },
+    {
+      "macro": "dTwoMacroWorse",
+      "sources_changed": {
+        "results/external/published_comparisons.json": "working tree"
+      },
+      "old": "1",
+      "new": "1",
+      "new_claim": false,
+      "value_changed": false
+    },
+    {
+      "macro": "dTwoScales",
+      "sources_changed": {
+        "results/external/published_comparisons.json": "working tree"
+      },
+      "old": "13",
+      "new": "13",
+      "new_claim": false,
+      "value_changed": false
+    },
+    {
+      "macro": "gateExact",
+      "sources_changed": {
+        "results/external/published_comparisons.json": "working tree"
+      },
+      "old": "30",
+      "new": "30",
+      "new_claim": false,
+      "value_changed": false
+    },
+    {
+      "macro": "gateRows",
+      "sources_changed": {
+        "results/external/published_comparisons.json": "working tree"
+      },
+      "old": "88",
+      "new": "88",
+      "new_claim": false,
+      "value_changed": false
+    },
+    {
+      "macro": "marinBoundHigh",
+      "sources_changed": {
+        "results/external/noise_bracket.json": "9bdd7c6 2026-10-22"
+      },
+      "old": null,
+      "new": "0.35",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "marinBoundLow",
+      "sources_changed": {
+        "results/external/noise_bracket.json": "9bdd7c6 2026-10-22"
+      },
+      "old": null,
+      "new": "0.21",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "marinHold",
+      "sources_changed": {
+        "results/external/inclusion_recount.json": "0ff90cc 2026-10-22"
+      },
+      "old": null,
+      "new": "82",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "marinPairs",
+      "sources_changed": {
+        "results/external/pr_numbers.json": "0ff90cc 2026-10-22"
+      },
+      "old": null,
+      "new": "231",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "marinSubmissions",
+      "sources_changed": {
+        "results/external/inclusion_recount.json": "0ff90cc 2026-10-22"
+      },
+      "old": null,
+      "new": "22",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "marinTopOneShare",
+      "sources_changed": {
+        "results/external/inclusion_recount.json": "0ff90cc 2026-10-22"
+      },
+      "old": null,
+      "new": "30",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "restatedFixedBY",
+      "sources_changed": {
+        "results/target_scoring/restated_claims.json": "working tree"
+      },
+      "old": "1",
+      "new": "1",
+      "new_claim": false,
+      "value_changed": false
+    },
+    {
+      "macro": "restatedFixedM",
+      "sources_changed": {
+        "results/target_scoring/restated_claims.json": "working tree"
+      },
+      "old": "10",
+      "new": "10",
+      "new_claim": false,
+      "value_changed": false
+    },
+    {
+      "macro": "restatedFixedRows",
+      "sources_changed": {
+        "results/target_scoring/restated_claims.json": "working tree"
+      },
+      "old": "projection vs single-scale, c4\\_en\\_bits\\_per\\_token (these 25 recipes) & $+1.82$ & $[+0.2,\\ +3.5]$ & 0.03 & nominal \\\\ shared\\_exponent vs single-scale, c4\\_en\\_bits\\_per\\_token (these 25 recipes) & $-0.23$ & $[-1.8,\\ +1.3]$ & 0.75 & --- \\\\ eb\\_shrinkage vs single-scale, c4\\_en\\_bits\\_per\\_token (these 25 recipes) & $+1.49$ & $[+0.3,\\ +2.7]$ & 0.014 & nominal \\\\ ensemble vs single-scale, c4\\_en\\_bits\\_per\\_token (these 25 recipes) & $+8.53$ & $[+5.4,\\ +11.7]$ & 0.00074 & Holm \\\\ checkpoint\\_augmented vs single-scale, c4\\_en\\_bits\\_per\\_token (these 25 recipes) & $+1.44$ & $[+0.3,\\ +2.6]$ & 0.013 & nominal \\\\ projection vs single-scale, olmes\\_macro\\_error (these 25 recipes) & $+0.37$ & $[-2.1,\\ +2.8]$ & 0.77 & --- \\\\ shared\\_exponent vs single-scale, olmes\\_macro\\_error (these 25 recipes) & $+1.00$ & $[-1.5,\\ +3.5]$ & 0.4 & --- \\\\ eb\\_shrinkage vs single-scale, olmes\\_macro\\_error (these 25 recipes) & $+0.37$ & $[-2.1,\\ +2.8]$ & 0.77 & --- \\\\ ensemble vs single-scale, olmes\\_macro\\_error (these 25 recipes) & $-0.54$ & $[-3.7,\\ +2.6]$ & 0.72 & --- \\\\ checkpoint\\_augmented vs single-scale, olmes\\_macro\\_error (these 25 recipes) & $-0.01$ & $[-3.0,\\ +3.0]$ & 1 & --- \\\\",
+      "new": "projection vs single-scale, c4\\_en\\_bits\\_per\\_token (these 25 recipes) & $+1.82$ & $[+0.2,\\ +3.5]$ & 0.03 & nominal \\\\ shared\\_exponent vs single-scale, c4\\_en\\_bits\\_per\\_token (these 25 recipes) & $-0.23$ & $[-1.8,\\ +1.3]$ & 0.75 & --- \\\\ eb\\_shrinkage vs single-scale, c4\\_en\\_bits\\_per\\_token (these 25 recipes) & $+1.49$ & $[+0.3,\\ +2.7]$ & 0.014 & nominal \\\\ ensemble vs single-scale, c4\\_en\\_bits\\_per\\_token (these 25 recipes) & $+8.53$ & $[+5.4,\\ +11.7]$ & 0.00074 & Holm \\\\ checkpoint\\_augmented vs single-scale, c4\\_en\\_bits\\_per\\_token (these 25 recipes) & $+1.44$ & $[+0.3,\\ +2.6]$ & 0.013 & nominal \\\\ projection vs single-scale, olmes\\_macro\\_error (these 25 recipes) & $+0.37$ & $[-2.1,\\ +2.8]$ & 0.77 & --- \\\\ shared\\_exponent vs single-scale, olmes\\_macro\\_error (these 25 recipes) & $+1.00$ & $[-1.5,\\ +3.5]$ & 0.4 & --- \\\\ eb\\_shrinkage vs single-scale, olmes\\_macro\\_error (these 25 recipes) & $+0.37$ & $[-2.1,\\ +2.8]$ & 0.77 & --- \\\\ ensemble vs single-scale, olmes\\_macro\\_error (these 25 recipes) & $-0.54$ & $[-3.7,\\ +2.6]$ & 0.72 & --- \\\\ checkpoint\\_augmented vs single-scale, olmes\\_macro\\_error (these 25 recipes) & $-0.01$ & $[-3.0,\\ +3.0]$ & 1 & --- \\\\",
+      "new_claim": false,
+      "value_changed": false
+    },
+    {
+      "macro": "restatedPrimaryBY",
+      "sources_changed": {
+        "results/target_scoring/restated_claims.json": "working tree"
+      },
+      "old": "1",
+      "new": "1",
+      "new_claim": false,
+      "value_changed": false
+    },
+    {
+      "macro": "restatedPrimaryHolm",
+      "sources_changed": {
+        "results/target_scoring/restated_claims.json": "working tree"
+      },
+      "old": "1",
+      "new": "1",
+      "new_claim": false,
+      "value_changed": false
+    },
+    {
+      "macro": "restatedPrimaryM",
+      "sources_changed": {
+        "results/target_scoring/restated_claims.json": "working tree"
+      },
+      "old": "38",
+      "new": "38",
+      "new_claim": false,
+      "value_changed": false
+    },
+    {
+      "macro": "restatedPrimaryNominal",
+      "sources_changed": {
+        "results/target_scoring/restated_claims.json": "working tree"
+      },
+      "old": "6",
+      "new": "6",
+      "new_claim": false,
+      "value_changed": false
+    },
+    {
+      "macro": "restatedPrimaryRows",
+      "sources_changed": {
+        "results/target_scoring/restated_claims.json": "working tree"
+      },
+      "old": "projection vs single-scale, c4\\_en\\_bits\\_per\\_token & $+1.82$ & $[-2.3,\\ +6.0]$ & 0.26 & --- \\\\ shared\\_exponent vs single-scale, c4\\_en\\_bits\\_per\\_token & $-0.23$ & $[-1.3,\\ +0.8]$ & 0.57 & --- \\\\ eb\\_shrinkage vs single-scale, c4\\_en\\_bits\\_per\\_token & $+1.49$ & $[-2.8,\\ +5.7]$ & 0.36 & --- \\\\ ensemble vs single-scale, c4\\_en\\_bits\\_per\\_token & $+8.53$ & $[+0.1,\\ +17.0]$ & 0.048 & nominal \\\\ checkpoint\\_augmented vs single-scale, c4\\_en\\_bits\\_per\\_token & $+1.44$ & $[-1.2,\\ +4.0]$ & 0.17 & --- \\\\ projection vs single-scale, olmes\\_macro\\_error & $+0.37$ & $[-3.3,\\ +4.0]$ & 0.81 & --- \\\\ shared\\_exponent vs single-scale, olmes\\_macro\\_error & $+1.00$ & $[-3.8,\\ +5.8]$ & 0.61 & --- \\\\ eb\\_shrinkage vs single-scale, olmes\\_macro\\_error & $+0.37$ & $[-3.3,\\ +4.0]$ & 0.81 & --- \\\\ ensemble vs single-scale, olmes\\_macro\\_error & $-0.54$ & $[-3.9,\\ +2.9]$ & 0.7 & --- \\\\ checkpoint\\_augmented vs single-scale, olmes\\_macro\\_error & $-0.01$ & $[-3.9,\\ +3.9]$ & 0.99 & --- \\\\ optimised allocation at 0.01 of budget vs single-scale, c4 & $+9.72$ & $[+0.6,\\ +18.9]$ & 0.039 & nominal \\\\ optimised allocation at 0.03 of budget vs single-scale, c4 & $+9.50$ & $[-1.4,\\ +20.4]$ & 0.068 & --- \\\\ optimised allocation at 0.1 of budget vs single-scale, c4 & $+7.84$ & $[-2.8,\\ +18.5]$ & 0.099 & --- \\\\ optimised allocation at 0.3 of budget vs single-scale, c4 & $+4.18$ & $[-2.2,\\ +10.6]$ & 0.12 & --- \\\\ optimised allocation at 0.5 of budget vs single-scale, c4 & $+4.18$ & $[-2.2,\\ +10.6]$ & 0.12 & --- \\\\ optimised allocation at 1 of budget vs single-scale, c4 & $+1.96$ & $[-1.6,\\ +5.5]$ & 0.17 & --- \\\\ projection excess rises with log lever arm (expected-error scoring) & --- & $[+0.8,\\ +0.9]$ & 0.00012 & Holm \\\\ DataDecide 2\\_param-default vs single-scale at 750M (exploratory: open discrepancy) & $-8.22$ & $[-20.4,\\ +4.0]$ & 0.18 & --- \\\\ DataDecide 3\\_param-1\\_step vs single-scale at 750M (exploratory: open discrepancy) & $+1.11$ & $[-7.1,\\ +9.3]$ & 0.78 & --- \\\\ DataDecide 3\\_param-default-helper\\_points-step2=0.5 vs single-scale at 750M (exploratory: open discrepancy) & $-1.56$ & $[-10.4,\\ +7.3]$ & 0.72 & --- \\\\ DataDecide 3\\_param-default-helper\\_points vs single-scale at 750M (exploratory: open discrepancy) & $-0.89$ & $[-8.1,\\ +6.3]$ & 0.8 & --- \\\\ DataDecide 3\\_param-default-step2=0.5 vs single-scale at 750M (exploratory: open discrepancy) & $-1.89$ & $[-10.7,\\ +6.9]$ & 0.66 & --- \\\\ DataDecide 3\\_param-default vs single-scale at 750M (exploratory: open discrepancy) & $-1.89$ & $[-10.8,\\ +7.0]$ & 0.66 & --- \\\\ DataDecide 5\\_param-1\\_step-ai2 vs single-scale at 750M (exploratory: open discrepancy) & $-15.22$ & $[-28.6,\\ -1.8]$ & 0.028 & nominal \\\\ DataDecide 5\\_param-ai2 vs single-scale at 750M (exploratory: open discrepancy) & $-2.22$ & $[-11.6,\\ +7.2]$ & 0.62 & --- \\\\ Correct Prob vs accuracy at 10M, OLMES macro & $-5.44$ & $[-20.3,\\ +9.5]$ & 0.44 & --- \\\\ Correct Prob vs accuracy at 14M, OLMES macro & $+2.33$ & $[-10.8,\\ +15.5]$ & 0.69 & --- \\\\ Correct Prob vs accuracy at 150M, OLMES macro & $-1.67$ & $[-5.6,\\ +2.3]$ & 0.37 & --- \\\\ Correct Prob vs accuracy at 16M, OLMES macro & $+6.44$ & $[-5.3,\\ +18.2]$ & 0.25 & --- \\\\ Correct Prob vs accuracy at 20M, OLMES macro & $+4.44$ & $[-7.5,\\ +16.4]$ & 0.43 & --- \\\\ Correct Prob vs accuracy at 300M, OLMES macro & $+1.00$ & $[-5.7,\\ +7.7]$ & 0.74 & --- \\\\ Correct Prob vs accuracy at 4M, OLMES macro & $+29.11$ & $[+15.4,\\ +42.8]$ & 0.002 & nominal \\\\ Correct Prob vs accuracy at 530M, OLMES macro & $+0.56$ & $[-5.1,\\ +6.2]$ & 0.83 & --- \\\\ Correct Prob vs accuracy at 60M, OLMES macro & $+4.00$ & $[-4.2,\\ +12.2]$ & 0.3 & --- \\\\ Correct Prob vs accuracy at 6M, OLMES macro & $-5.11$ & $[-18.3,\\ +8.1]$ & 0.41 & --- \\\\ Correct Prob vs accuracy at 750M, OLMES macro & $+1.22$ & $[-4.5,\\ +6.9]$ & 0.64 & --- \\\\ Correct Prob vs accuracy at 8M, OLMES macro & $-13.78$ & $[-27.5,\\ -0.0]$ & 0.049 & nominal \\\\ Correct Prob vs accuracy at 90M, OLMES macro & $-1.56$ & $[-5.9,\\ +2.8]$ & 0.45 & --- \\\\",
+      "new": "projection vs single-scale, c4\\_en\\_bits\\_per\\_token & $+1.82$ & $[-2.3,\\ +6.0]$ & 0.26 & --- \\\\ shared\\_exponent vs single-scale, c4\\_en\\_bits\\_per\\_token & $-0.23$ & $[-1.3,\\ +0.8]$ & 0.57 & --- \\\\ eb\\_shrinkage vs single-scale, c4\\_en\\_bits\\_per\\_token & $+1.49$ & $[-2.8,\\ +5.7]$ & 0.36 & --- \\\\ ensemble vs single-scale, c4\\_en\\_bits\\_per\\_token & $+8.53$ & $[+0.1,\\ +17.0]$ & 0.048 & nominal \\\\ checkpoint\\_augmented vs single-scale, c4\\_en\\_bits\\_per\\_token & $+1.44$ & $[-1.2,\\ +4.0]$ & 0.17 & --- \\\\ projection vs single-scale, olmes\\_macro\\_error & $+0.37$ & $[-3.3,\\ +4.0]$ & 0.81 & --- \\\\ shared\\_exponent vs single-scale, olmes\\_macro\\_error & $+1.00$ & $[-3.8,\\ +5.8]$ & 0.61 & --- \\\\ eb\\_shrinkage vs single-scale, olmes\\_macro\\_error & $+0.37$ & $[-3.3,\\ +4.0]$ & 0.81 & --- \\\\ ensemble vs single-scale, olmes\\_macro\\_error & $-0.54$ & $[-3.9,\\ +2.9]$ & 0.7 & --- \\\\ checkpoint\\_augmented vs single-scale, olmes\\_macro\\_error & $-0.01$ & $[-3.9,\\ +3.9]$ & 0.99 & --- \\\\ optimised allocation at 0.01 of budget vs single-scale, c4 & $+9.72$ & $[+0.6,\\ +18.9]$ & 0.039 & nominal \\\\ optimised allocation at 0.03 of budget vs single-scale, c4 & $+9.50$ & $[-1.4,\\ +20.4]$ & 0.068 & --- \\\\ optimised allocation at 0.1 of budget vs single-scale, c4 & $+7.84$ & $[-2.8,\\ +18.5]$ & 0.099 & --- \\\\ optimised allocation at 0.3 of budget vs single-scale, c4 & $+4.18$ & $[-2.2,\\ +10.6]$ & 0.12 & --- \\\\ optimised allocation at 0.5 of budget vs single-scale, c4 & $+4.18$ & $[-2.2,\\ +10.6]$ & 0.12 & --- \\\\ optimised allocation at 1 of budget vs single-scale, c4 & $+1.96$ & $[-1.6,\\ +5.5]$ & 0.17 & --- \\\\ projection excess rises with log lever arm (expected-error scoring) & --- & $[+0.8,\\ +0.9]$ & 0.00012 & Holm \\\\ DataDecide 2\\_param-default vs single-scale at 750M (consistent three-seed target) & $-8.22$ & $[-20.4,\\ +4.0]$ & 0.18 & --- \\\\ DataDecide 3\\_param-1\\_step vs single-scale at 750M (consistent three-seed target) & $+1.11$ & $[-7.1,\\ +9.3]$ & 0.78 & --- \\\\ DataDecide 3\\_param-default-helper\\_points-step2=0.5 vs single-scale at 750M (consistent three-seed target) & $-1.56$ & $[-10.4,\\ +7.3]$ & 0.72 & --- \\\\ DataDecide 3\\_param-default-helper\\_points vs single-scale at 750M (consistent three-seed target) & $-0.89$ & $[-8.1,\\ +6.3]$ & 0.8 & --- \\\\ DataDecide 3\\_param-default-step2=0.5 vs single-scale at 750M (consistent three-seed target) & $-1.89$ & $[-10.7,\\ +6.9]$ & 0.66 & --- \\\\ DataDecide 3\\_param-default vs single-scale at 750M (consistent three-seed target) & $-1.89$ & $[-10.8,\\ +7.0]$ & 0.66 & --- \\\\ DataDecide 5\\_param-1\\_step-ai2 vs single-scale at 750M (consistent three-seed target) & $-15.22$ & $[-28.6,\\ -1.8]$ & 0.028 & nominal \\\\ DataDecide 5\\_param-ai2 vs single-scale at 750M (consistent three-seed target) & $-2.22$ & $[-11.6,\\ +7.2]$ & 0.62 & --- \\\\ Correct Prob vs accuracy at 10M, OLMES macro & $-5.44$ & $[-20.3,\\ +9.5]$ & 0.44 & --- \\\\ Correct Prob vs accuracy at 14M, OLMES macro & $+2.33$ & $[-10.8,\\ +15.5]$ & 0.69 & --- \\\\ Correct Prob vs accuracy at 150M, OLMES macro & $-1.67$ & $[-5.6,\\ +2.3]$ & 0.37 & --- \\\\ Correct Prob vs accuracy at 16M, OLMES macro & $+6.44$ & $[-5.3,\\ +18.2]$ & 0.25 & --- \\\\ Correct Prob vs accuracy at 20M, OLMES macro & $+4.44$ & $[-7.5,\\ +16.4]$ & 0.43 & --- \\\\ Correct Prob vs accuracy at 300M, OLMES macro & $+1.00$ & $[-5.7,\\ +7.7]$ & 0.74 & --- \\\\ Correct Prob vs accuracy at 4M, OLMES macro & $+29.11$ & $[+15.4,\\ +42.8]$ & 0.002 & nominal \\\\ Correct Prob vs accuracy at 530M, OLMES macro & $+0.56$ & $[-5.1,\\ +6.2]$ & 0.83 & --- \\\\ Correct Prob vs accuracy at 60M, OLMES macro & $+4.00$ & $[-4.2,\\ +12.2]$ & 0.3 & --- \\\\ Correct Prob vs accuracy at 6M, OLMES macro & $-5.11$ & $[-18.3,\\ +8.1]$ & 0.41 & --- \\\\ Correct Prob vs accuracy at 750M, OLMES macro & $+1.22$ & $[-4.5,\\ +6.9]$ & 0.64 & --- \\\\ Correct Prob vs accuracy at 8M, OLMES macro & $-13.78$ & $[-27.5,\\ -0.0]$ & 0.049 & nominal \\\\ Correct Prob vs accuracy at 90M, OLMES macro & $-1.56$ & $[-5.9,\\ +2.8]$ & 0.45 & --- \\\\",
+      "new_claim": false,
+      "value_changed": true
+    }
+  ]
+}

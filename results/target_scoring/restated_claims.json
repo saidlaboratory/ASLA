@@ -401,7 +401,7 @@
           -20.44607268632867,
           4.001628241884228
         ],
-        "claim": "DataDecide 2_param-default vs single-scale at 750M (exploratory: open discrepancy)",
+        "claim": "DataDecide 2_param-default vs single-scale at 750M (consistent three-seed target)",
         "estimate_pp": -8.22222222222222,
         "family": "published re-test, scaling laws",
         "holm_reject": false,
@@ -415,7 +415,7 @@
           -7.100356662353281,
           9.322578884575506
         ],
-        "claim": "DataDecide 3_param-1_step vs single-scale at 750M (exploratory: open discrepancy)",
+        "claim": "DataDecide 3_param-1_step vs single-scale at 750M (consistent three-seed target)",
         "estimate_pp": 1.1111111111111123,
         "family": "published re-test, scaling laws",
         "holm_reject": false,
@@ -429,7 +429,7 @@
           -10.377628892227591,
           7.266517781116484
         ],
-        "claim": "DataDecide 3_param-default-helper_points-step2=0.5 vs single-scale at 750M (exploratory: open discrepancy)",
+        "claim": "DataDecide 3_param-default-helper_points-step2=0.5 vs single-scale at 750M (consistent three-seed target)",
         "estimate_pp": -1.5555555555555538,
         "family": "published re-test, scaling laws",
         "holm_reject": false,
@@ -443,7 +443,7 @@
           -8.105207718724271,
           6.327429940946495
         ],
-        "claim": "DataDecide 3_param-default-helper_points vs single-scale at 750M (exploratory: open discrepancy)",
+        "claim": "DataDecide 3_param-default-helper_points vs single-scale at 750M (consistent three-seed target)",
         "estimate_pp": -0.8888888888888876,
         "family": "published re-test, scaling laws",
         "holm_reject": false,
@@ -457,7 +457,7 @@
           -10.67097795447186,
           6.893200176694085
         ],
-        "claim": "DataDecide 3_param-default-step2=0.5 vs single-scale at 750M (exploratory: open discrepancy)",
+        "claim": "DataDecide 3_param-default-step2=0.5 vs single-scale at 750M (consistent three-seed target)",
         "estimate_pp": -1.8888888888888873,
         "family": "published re-test, scaling laws",
         "holm_reject": false,
@@ -471,7 +471,7 @@
           -10.794799145888632,
           7.017021368110857
         ],
-        "claim": "DataDecide 3_param-default vs single-scale at 750M (exploratory: open discrepancy)",
+        "claim": "DataDecide 3_param-default vs single-scale at 750M (consistent three-seed target)",
         "estimate_pp": -1.8888888888888877,
         "family": "published re-test, scaling laws",
         "holm_reject": false,
@@ -485,7 +485,7 @@
           -28.620072557945385,
           -1.8243718864990566
         ],
-        "claim": "DataDecide 5_param-1_step-ai2 vs single-scale at 750M (exploratory: open discrepancy)",
+        "claim": "DataDecide 5_param-1_step-ai2 vs single-scale at 750M (consistent three-seed target)",
         "estimate_pp": -15.22222222222222,
         "family": "published re-test, scaling laws",
         "holm_reject": false,
@@ -499,7 +499,7 @@
           -11.599345050508907,
           7.154900606064464
         ],
-        "claim": "DataDecide 5_param-ai2 vs single-scale at 750M (exploratory: open discrepancy)",
+        "claim": "DataDecide 5_param-ai2 vs single-scale at 750M (consistent three-seed target)",
         "estimate_pp": -2.222222222222221,
         "family": "published re-test, scaling laws",
         "holm_reject": false,

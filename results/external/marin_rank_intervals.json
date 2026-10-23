@@ -1,0 +1,237 @@
+{
+  "source": "inclusion_recount.json noise_resolution_bound (official 22), regenerated with the same seed",
+  "reproduces_frozen_pairs_holding": 82,
+  "draws_used": 1000,
+  "forecast_x": 1e+22,
+  "noise_rank_interval": "2.5th to 97.5th percentile of the rank over draws",
+  "interval_level": 0.95,
+  "hold_level": 0.95,
+  "sigma_by_rung": {
+    "130m": 0.0021383379220761226,
+    "300m": 0.0034685241079626438,
+    "520m": 0.0027790706974540036,
+    "1_2b": 0.0023391028582929003
+  },
+  "rows": [
+    {
+      "submission": "muonh_qwen3_scaling",
+      "rank_fixed": 1,
+      "rank_three_parameter_optimum": 1,
+      "rank_loglog": 1,
+      "noise_rank_2_5": 1.0,
+      "noise_rank_97_5": 10.0,
+      "noise_rank_median": 2.0,
+      "top1_share": 0.296
+    },
+    {
+      "submission": "hackable_transformer_attn_gate/lr_x2_5",
+      "rank_fixed": 2,
+      "rank_three_parameter_optimum": 2,
+      "rank_loglog": 6,
+      "noise_rank_2_5": 1.0,
+      "noise_rank_97_5": 11.0,
+      "noise_rank_median": 3.0,
+      "top1_share": 0.225
+    },
+    {
+      "submission": "hackable_transformer_attn_sink/attnsink/splash/default_x4",
+      "rank_fixed": 3,
+      "rank_three_parameter_optimum": 3,
+      "rank_loglog": 18,
+      "noise_rank_2_5": 1.0,
+      "noise_rank_97_5": 13.024999999999977,
+      "noise_rank_median": 4.0,
+      "top1_share": 0.17
+    },
+    {
+      "submission": "adamh_llama_scaling",
+      "rank_fixed": 4,
+      "rank_three_parameter_optimum": 4,
+      "rank_loglog": 4,
+      "noise_rank_2_5": 1.0,
+      "noise_rank_97_5": 12.0,
+      "noise_rank_median": 4.0,
+      "top1_share": 0.136
+    },
+    {
+      "submission": "hackable_transformer_attn_gate/lr_x2",
+      "rank_fixed": 5,
+      "rank_three_parameter_optimum": 5,
+      "rank_loglog": 8,
+      "noise_rank_2_5": 1.0,
+      "noise_rank_97_5": 14.0,
+      "noise_rank_median": 5.0,
+      "top1_share": 0.072
+    },
+    {
+      "submission": "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+      "rank_fixed": 6,
+      "rank_three_parameter_optimum": 6,
+      "rank_loglog": 7,
+      "noise_rank_2_5": 1.0,
+      "noise_rank_97_5": 15.0,
+      "noise_rank_median": 6.0,
+      "top1_share": 0.05
+    },
+    {
+      "submission": "cautious_llama_scaling",
+      "rank_fixed": 7,
+      "rank_three_parameter_optimum": 7,
+      "rank_loglog": 2,
+      "noise_rank_2_5": 2.0,
+      "noise_rank_97_5": 16.0,
+      "noise_rank_median": 7.5,
+      "top1_share": 0.018
+    },
+    {
+      "submission": "c-adamc_llama_scaling",
+      "rank_fixed": 8,
+      "rank_three_parameter_optimum": 8,
+      "rank_loglog": 3,
+      "noise_rank_2_5": 2.0,
+      "noise_rank_97_5": 16.024999999999977,
+      "noise_rank_median": 9.0,
+      "top1_share": 0.014
+    },
+    {
+      "submission": "muon_llama_scaling",
+      "rank_fixed": 9,
+      "rank_three_parameter_optimum": 9,
+      "rank_loglog": 9,
+      "noise_rank_2_5": 2.0,
+      "noise_rank_97_5": 18.0,
+      "noise_rank_median": 10.0,
+      "top1_share": 0.009
+    },
+    {
+      "submission": "adamc_llama_scaling",
+      "rank_fixed": 10,
+      "rank_three_parameter_optimum": 10,
+      "rank_loglog": 5,
+      "noise_rank_2_5": 3.0,
+      "noise_rank_97_5": 18.0,
+      "noise_rank_median": 10.0,
+      "top1_share": 0.003
+    },
+    {
+      "submission": "muon_qwen3_scaling",
+      "rank_fixed": 11,
+      "rank_three_parameter_optimum": 11,
+      "rank_loglog": 10,
+      "noise_rank_2_5": 3.0,
+      "noise_rank_97_5": 18.0,
+      "noise_rank_median": 11.0,
+      "top1_share": 0.003
+    },
+    {
+      "submission": "hackable_transformer_attn_gate/lr_x1",
+      "rank_fixed": 12,
+      "rank_three_parameter_optimum": 12,
+      "rank_loglog": 11,
+      "noise_rank_2_5": 4.0,
+      "noise_rank_97_5": 18.0,
+      "noise_rank_median": 12.0,
+      "top1_share": 0.002
+    },
+    {
+      "submission": "hackable_transformer_attn_sink/std_attn",
+      "rank_fixed": 13,
+      "rank_three_parameter_optimum": 13,
+      "rank_loglog": 13,
+      "noise_rank_2_5": 4.0,
+      "noise_rank_97_5": 18.0,
+      "noise_rank_median": 11.0,
+      "top1_share": 0.001
+    },
+    {
+      "submission": "hackable_transformer_attn_sink/attnsink/splash",
+      "rank_fixed": 14,
+      "rank_three_parameter_optimum": 14,
+      "rank_loglog": 15,
+      "noise_rank_2_5": 6.0,
+      "noise_rank_97_5": 20.0,
+      "noise_rank_median": 15.0,
+      "top1_share": 0.0
+    },
+    {
+      "submission": "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+      "rank_fixed": 15,
+      "rank_three_parameter_optimum": 15,
+      "rank_loglog": 16,
+      "noise_rank_2_5": 6.0,
+      "noise_rank_97_5": 20.0,
+      "noise_rank_median": 14.0,
+      "top1_share": 0.0
+    },
+    {
+      "submission": "hackable_transformer_attn_sink/attnsink/jax",
+      "rank_fixed": 16,
+      "rank_three_parameter_optimum": 16,
+      "rank_loglog": 17,
+      "noise_rank_2_5": 6.0,
+      "noise_rank_97_5": 20.0,
+      "noise_rank_median": 15.0,
+      "top1_share": 0.001
+    },
+    {
+      "submission": "adamw_llama_scaling",
+      "rank_fixed": 17,
+      "rank_three_parameter_optimum": 17,
+      "rank_loglog": 12,
+      "noise_rank_2_5": 7.0,
+      "noise_rank_97_5": 21.0,
+      "noise_rank_median": 16.0,
+      "top1_share": 0.0
+    },
+    {
+      "submission": "parallel_llama",
+      "rank_fixed": 18,
+      "rank_three_parameter_optimum": 18,
+      "rank_loglog": 14,
+      "noise_rank_2_5": 11.975000000000023,
+      "noise_rank_97_5": 21.0,
+      "noise_rank_median": 18.0,
+      "top1_share": 0.0
+    },
+    {
+      "submission": "muonremez_qwen3_scaling",
+      "rank_fixed": 19,
+      "rank_three_parameter_optimum": 19,
+      "rank_loglog": 20,
+      "noise_rank_2_5": 11.0,
+      "noise_rank_97_5": 21.0,
+      "noise_rank_median": 19.0,
+      "top1_share": 0.0
+    },
+    {
+      "submission": "hackable_transformer_attn_sink/attnsink/splash/default_x0.5",
+      "rank_fixed": 20,
+      "rank_three_parameter_optimum": 20,
+      "rank_loglog": 19,
+      "noise_rank_2_5": 14.0,
+      "noise_rank_97_5": 21.0,
+      "noise_rank_median": 20.0,
+      "top1_share": 0.0
+    },
+    {
+      "submission": "prism_berkeley_qwen3_scaling",
+      "rank_fixed": 21,
+      "rank_three_parameter_optimum": 21,
+      "rank_loglog": 21,
+      "noise_rank_2_5": 13.0,
+      "noise_rank_97_5": 21.0,
+      "noise_rank_median": 20.0,
+      "top1_share": 0.0
+    },
+    {
+      "submission": "hackable_transformer_attn_sink/attnsink/splash/default_x0.25",
+      "rank_fixed": 22,
+      "rank_three_parameter_optimum": 22,
+      "rank_loglog": 22,
+      "noise_rank_2_5": 21.0,
+      "noise_rank_97_5": 22.0,
+      "noise_rank_median": 22.0,
+      "top1_share": 0.0
+    }
+  ]
+}

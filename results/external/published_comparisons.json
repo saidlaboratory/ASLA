@@ -74,7 +74,7 @@
       "90": 0.11967864586191503
     }
   },
-  "d1_gate_note": "Open discrepancy under investigation with the authors: no convention tried (prediction column, target column or seed mean, tie rule) matches every released decision_acc. D1 is exploratory until it is resolved and makes no claim about the paper's numbers. Reproduction package: repro/datadecide_decision_acc.",
+  "d1_gate_note": "Resolved: DataDecide's compute_decision_accuracy, run unmodified on the released predictions, reproduces 88/88 tested rows and 5,271/5,280 overall; each of the other 9 matches under an ordering of tied predictions. Their protocol scores single-scale against the three-seed 1B mean and scaling-law variants against the default seed; D1 uses the three-seed target for both. See results/external/datadecide_code_check.json, datadecide_sensitivity.json, datadecide_single_scale.json and datadecide_paper_check.json.",
   "d1_scaling_laws_vs_single_scale": {
     "comparisons": {
       "arc_challenge|2_param-default|150M|default_seed": {

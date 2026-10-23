@@ -1,0 +1,53 @@
+{
+  "source": "results/external/prose_corrections.json",
+  "applied": [
+    {
+      "id": "paper-published-1",
+      "file": "paper/main.tex",
+      "action": "replace",
+      "line_before": 411
+    },
+    {
+      "id": "paper-published-2",
+      "file": "paper/main.tex",
+      "action": "replace",
+      "line_before": 411
+    },
+    {
+      "id": "paper-published-3",
+      "file": "paper/main.tex",
+      "action": "delete",
+      "line_before": 411
+    },
+    {
+      "id": "paper-published-4",
+      "file": "paper/main.tex",
+      "action": "replace",
+      "line_before": 411
+    },
+    {
+      "id": "paper-limitations-1",
+      "file": "paper/main.tex",
+      "action": "replace",
+      "line_before": 612
+    },
+    {
+      "id": "generated-restated-claims-label",
+      "file": "scripts/run_restated_claims.py",
+      "action": "replace",
+      "outputs_patched": {
+        "results/target_scoring/restated_claims.json": "8 claim labels"
+      }
+    },
+    {
+      "id": "generated-published-comparisons-gate-note",
+      "file": "scripts/run_published_comparisons.py",
+      "action": "replace",
+      "outputs_patched": {
+        "results/external/published_comparisons.json": "d1_gate_note"
+      }
+    }
+  ],
+  "count": 7,
+  "entries": 7
+}

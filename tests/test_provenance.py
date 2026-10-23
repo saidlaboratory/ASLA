@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import ast
 import json
+import re
 from pathlib import Path
 
 import pytest
@@ -59,7 +60,8 @@ ALLOWED_FLOATS: dict[str, frozenset[float]] = {
     # cannot drift apart.
     "render_consolidated_findings.py": frozenset({5.0, 6.0, 11.0}),
     "render_curvature_results.py": frozenset(),
-    "render_macros.py": frozenset(),
+    # QUOTED_M and QUOTED_DELTAS: the grid points the prose quotes (a stated choice, checked against the JSON grid)
+    "render_macros.py": frozenset({5.0, 10.0, 25.0}),
 }
 
 
@@ -235,6 +237,117 @@ def test_paper_macros_are_all_defined() -> None:
     assert not missing, f"paper references undefined macros: {missing}"
 
 
+# --- Spelled-out numbers must agree with their macros ---
+#
+# Digits are already banned from prose. A number written as a word ("twenty-five candidates") is still a claim, and
+# it can disagree with the macro it sits beside. Every spelled-out number of three or more must be bound, on the
+# same line, by a trailing annotation ``%% words: <item>, <item>`` with one item per spelled number, in order:
+#   \macro      the macro's value must equal the spelled number;
+#   ~\macro     an approximate count ("a few hundred"): the macro must have the same number of digits;
+#   - (reason)  structural (a model name, a rule's name, the paper's own outline), with the reason stated.
+# "one" and "two" are left out: they are almost always structural ("one pair", "two forms").
+
+_UNITS = "one two three four five six seven eight nine".split()
+_WORDS = {w: i for i, w in enumerate(
+    "zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen "
+    "seventeen eighteen nineteen twenty".split())}  # fmt: skip
+_TENS = {w: 10 * i for i, w in enumerate("_ _ twenty thirty forty fifty sixty seventy eighty ninety".split()) if i > 1}
+_NUMBER = re.compile(
+    r"\b(?:(?P<few>few\s+)?(?:a\s+)?(?P<hundred>hundred)"
+    r"|(?P<tens>" + "|".join(_TENS) + r")(?:-(?P<unit>" + "|".join(_UNITS) + r"))?"
+    r"|(?P<word>" + "|".join(sorted(_WORDS, key=len, reverse=True)) + r"))\b",
+    re.IGNORECASE,
+)
+
+
+def _spelled_numbers(prose: str) -> list[tuple[int, bool]]:
+    """(value, approximate) for each spelled-out number of three or more."""
+
+    out = []
+    for m in _NUMBER.finditer(prose):
+        if m.group("hundred"):
+            out.append((100, bool(m.group("few"))))
+        elif m.group("tens"):
+            out.append(
+                (
+                    _TENS[m.group("tens").lower()] + (_UNITS.index(m.group("unit").lower()) + 1 if m.group("unit") else 0),
+                    False,
+                )
+            )
+        elif _WORDS[m.group("word").lower()] >= 3:
+            out.append((_WORDS[m.group("word").lower()], False))
+    return out
+
+
+def _macro_values(text: str) -> dict[str, str]:
+    return dict(re.findall(r"^\\newcommand\{\\(\w+)\}\{(.*)\}  % ", text, flags=re.MULTILINE))
+
+
+def _as_number(value: str) -> float | None:
+    cleaned = re.sub(r"[${}\\,]", "", value).strip()
+    try:
+        return float(cleaned)
+    except ValueError:
+        return None
+
+
+def spelled_number_violations(tex: str, macro_values: dict[str, str]) -> list[str]:
+    problems = []
+    for number, line in enumerate(tex.splitlines(), start=1):
+        if line.strip().startswith("%"):
+            continue
+        prose, _, comment = re.split(r"(?<!\\)%", line, maxsplit=1)[0], None, ""
+        parts = re.split(r"(?<!\\)%", line, maxsplit=1)
+        prose, comment = parts[0], (parts[1] if len(parts) > 1 else "")
+        found = _spelled_numbers(prose)
+        m = re.search(r"words:\s*([^;]*)", comment)
+        items = [i.strip() for i in m.group(1).split(",")] if m else []
+        items = [i for i in items if i]
+        if not found and not items:
+            continue
+        if len(items) != len(found):
+            problems.append(f"line {number}: {len(found)} spelled number(s), {len(items)} binding(s): {prose.strip()[:70]}")
+            continue
+        for (value, approx), item in zip(found, items):
+            b = re.fullmatch(r"(~)?\\(\w+)", item)
+            if item.startswith("-"):
+                if not re.search(r"\(.+\)", item):
+                    problems.append(f"line {number}: structural binding without a reason")
+            elif not b or b.group(2) not in macro_values:
+                problems.append(f"line {number}: binding {item!r} is not a defined macro")
+            else:
+                v = _as_number(macro_values[b.group(2)])
+                if v is None:
+                    problems.append(f"line {number}: \\{b.group(2)} is not numeric")
+                elif b.group(1) or approx:
+                    if not (b.group(1) and approx) or len(str(int(v))) != len(str(value)):
+                        problems.append(f"line {number}: approximate {value} against \\{b.group(2)}={v:g}")
+                elif v != value:
+                    problems.append(f"line {number}: prose says {value}, \\{b.group(2)} is {v:g}")
+    return problems
+
+
+def test_spelled_numbers_lint_catches_disagreement() -> None:
+    values = {"seeds": "3", "worlds": "300", "label": "1B"}
+    assert spelled_number_violations("Three seeds.  %% words: \\seeds", values) == []
+    assert spelled_number_violations("ten seeds  %% words: \\seeds", values)  # disagrees
+    assert spelled_number_violations("three seeds", values)  # unbound
+    assert spelled_number_violations("a few hundred worlds  %% words: ~\\worlds", values) == []
+    assert spelled_number_violations("rule of three  %% words: - (name of a rule)", values) == []
+    assert spelled_number_violations("rule of three  %% words: -", values)  # no reason
+    assert spelled_number_violations("one or two forms", values) == []
+    assert spelled_number_violations("twenty-five candidates  %% words: \\worlds", values)
+
+
+def test_paper_spelled_numbers_match_their_macros() -> None:
+    if not PAPER.exists() or not MACROS.exists():  # pragma: no cover
+        pytest.skip("paper or macros not present")
+    problems = spelled_number_violations(
+        PAPER.read_text(encoding="utf-8"), _macro_values(MACROS.read_text(encoding="utf-8"))
+    )
+    assert not problems, "spelled-out numbers not bound to agreeing macros:\n" + "\n".join(problems)
+
+
 def test_every_results_directory_is_tracked() -> None:
     """A results directory outside the .gitignore allowlist is silently untracked.
 
@@ -251,3 +364,16 @@ def test_every_results_directory_is_tracked() -> None:
     present = {p.name for p in RESULTS.iterdir() if p.is_dir() and not p.name.startswith((".", "_"))}
     missing = sorted(present - allowlist)
     assert not missing, f"results directories not allowlisted in .gitignore: {missing}"
+
+
+def test_prose_correction_span_matches_across_line_breaks() -> None:
+    import importlib
+
+    apply = importlib.import_module("scripts.apply_prose_corrections")
+    raw = "Before. There is\nan open   discrepancy, which we\nare investigating. After."
+    entry = {"id": "x", "existing": "There is an open discrepancy, which we are investigating.", "action": "replace",
+             "replacement": "Resolved."}  # fmt: skip
+    out, line = apply.apply_text(raw, entry)
+    assert out == "Before. Resolved. After." and line == 1
+    deleted, _ = apply.apply_text(raw, dict(entry, action="delete"))
+    assert deleted == "Before. After."

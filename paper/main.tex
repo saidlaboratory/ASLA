@@ -1,6 +1,6 @@
 \documentclass[11pt]{article}  %% nolint
 \usepackage[margin=1in]{geometry}  %% nolint
-\usepackage{amsmath,amssymb,booktabs,hyperref}
+\usepackage{amsmath,amssymb,booktabs,graphicx,hyperref}
 \input{macros}
 
 \title{The Reference Is Part of the Measurement:\\
@@ -16,9 +16,9 @@ Small-scale experiments are routinely used to choose between training
 interventions, and selection rules are compared by \emph{decision accuracy}:
 agreement with an ordering measured at a larger target scale. We give a
 calibrated inference procedure for such comparisons and ask what it can
-establish at realistic candidate counts. The procedure has three parts. The
+establish at realistic candidate counts. The procedure has three parts. The  %% words: - (the outline of this paper)
 target reference's uncertainty is propagated with expected-error scoring, using
-variances moderated by empirical Bayes and validated against ten-seed ground
+variances moderated by empirical Bayes and validated against ten-seed ground  %% words: \ppSeeds
 truth. The unit of inference is the candidate, not the pair. And two estimands
 are separated: a fixed-candidate estimand for these recipes and a
 random-candidate estimand for recipes in general. Critical values come from an
@@ -90,7 +90,7 @@ observed gap is used.
 estimates of expected target performance. A systematic difference between them
 --- a different evaluation draw, a different checkpoint --- survives both.
 
-\paragraph{The noise model.} Three decisions determine every standard error in
+\paragraph{The noise model.} Three decisions determine every standard error in  %% words: - (the outline of this section)
 this paper, and each was tested against a known answer before it was adopted.
 
 \emph{Seeds are independent across scales.} DataDecide's seeds control
@@ -105,24 +105,24 @@ is what chance produces. The one pair that bears on the headline, 300M against  
 coupling in the benchmark below moves no estimate by more than
 \calCouplingShift\ points.
 
-\emph{Variances are moderated, but tail probabilities are not.} Three seeds give
+\emph{Variances are moderated, but tail probabilities are not.} Three seeds give  %% words: \ddSeeds
 a poor variance. Following Smyth (2004), we moderate each recipe's variance  %% nolint: citation year
 toward a prior fitted across recipes at the same scale. We checked this on
-PolyPythias, which has ten seeds per model. There, the tasks at each size and
-step play the role of recipes, and three-seed estimates are compared with the
-ten-seed truth. Moderation reduces the error in log standard deviation at
+PolyPythias, which has ten seeds per model. There, the tasks at each size and  %% words: \ppSeeds
+step play the role of recipes, and three-seed estimates are compared with the  %% words: \ddSeeds
+ten-seed truth. Moderation reduces the error in log standard deviation at  %% words: \ppSeeds
 \polyBetter\ of \polyCells\ cells (median \polyRmseRaw\ to \polyRmseMod). It
-only partly removes the low bias of a three-seed standard deviation, from
+only partly removes the low bias of a three-seed standard deviation, from  %% words: \ddSeeds
 \polyRatioRaw\ to \polyRatioMod\ of the truth; we had predicted it would
-remove it. The moderated $t$ test itself fails. Splitting ten seeds three
-against three, so that the null is true by construction, it rejects at
+remove it. The moderated $t$ test itself fails. Splitting ten seeds three  %% words: \ppSeeds, \ppNullSplit
+against three, so that the null is true by construction, it rejects at  %% words: \ppNullSplit
 \nullModFive\ times its nominal rate at $0.05$ and \nullModBonf\ times at the  %% nolint: stated test level
 Bonferroni level for this design, over \nullTests\ tests. Raw Welch rejects at
 \nullRawFive\ and \nullRawBonf\ times nominal. Target determination therefore
 stays with the raw Welch test. Adopting the moderated $t$ test would have raised
 the determined fraction on OLMES error from \detRawErrFiveThirty\% to
 \detModErr\%, most of which would be false. The expected-error weight uses the
-moderated standard error with the raw Welch degrees of freedom. Of three
+moderated standard error with the raw Welch degrees of freedom. Of three  %% words: \ppWeights
 candidate weights, that one scored the lowest Brier score against held-out
 seeds (\brierAdopted, against \brierRaw\ for the unmoderated normal weight).
 This choice was not pre-registered. The rule was written down after the null
@@ -139,7 +139,7 @@ questions, and they need different uncertainty.
 are fixed; only seed noise is random. We resample every cell mean and
 checkpoint parametrically from the moderated noise model around the observed
 means, re-run every rule and the scoring on each draw, and take the spread.
-Resampling three seeds instead would give about ten distinct multisets per cell.
+Resampling three seeds instead would give about ten distinct multisets per cell.  %% words: \ddSeeds, - (the multisets of three draws from three seeds: a combinatorial count)
 
 \emph{Random-candidate: would the difference hold for new recipes?} The recipes
 are a sample. The statistic is a mean over pairs of candidates, and its
@@ -205,7 +205,7 @@ number of candidates needed to detect a two-point difference with power 0.8  %% 
 under the calibrated test is \candShrunkTwo\ with shrunk truth and
 \candObsTwo\ with raw means. A known-variance calculation gives \powerNeededTwo;
 the calibrated procedure's larger critical value accounts for the difference.
-For one and five points the calibrated figures are \candShrunkOne\ and
+For one and five points the calibrated figures are \candShrunkOne\ and  %% words: \powerDeltaLarge
 \candShrunkFive.
 
 \begin{table}[t]
@@ -345,7 +345,7 @@ depend on it: every candidate-level estimator we computed gives $p$ between
 \paragraph{Power.} With the variance components held at their estimates, a
 two-sided test at level 0.05 with power 0.8 needs \powerNeededTwo\ candidates to  %% nolint: stated test level and power
 detect a true two-point difference, \powerNeededOne\ for one point and
-\powerNeededFive\ for five. At \nCandidates\ candidates the power against the
+\powerNeededFive\ for five. At \nCandidates\ candidates the power against the  %% words: \powerDeltaLarge
 observed difference is \powerAtObserved\%. This assumes a known standard error.
 The calibrated procedure pays for estimating it, so these counts are lower
 bounds. Published suites that compare selection rules typically have tens of
@@ -355,7 +355,7 @@ those suites can resolve.
 \paragraph{On the determined subset.} Scoring only on resolved pairs gives an
 excess of \excessDetermined\ points, but both rules make zero errors there, so
 the comparison is empty. That subset rules out only differences above
-\equivBoundPP\ points by the rule of three --- a bound set by subset size, not
+\equivBoundPP\ points by the rule of three --- a bound set by subset size, not  %% words: - (the name of the rule)
 by observed agreement. We report it as a diagnostic and not as evidence of
 equivalence.
 
@@ -399,7 +399,7 @@ cannot make.
 
 Neither DataDecide nor \emph{Signal and Noise} reports an interval on a difference
 between selection methods. DataDecide's shading is the standard deviation over
-three small-model seeds for single-scale ranking; its scaling-law predictions
+three small-model seeds for single-scale ranking; its scaling-law predictions  %% words: \ddSeeds
 are single attempts. \emph{Signal and Noise} reports point estimates and
 resamples only over final checkpoints. Neither resampled pairs or candidates.
 The question is therefore not which unit their intervals used, but whether
@@ -408,15 +408,9 @@ comparisons whose inputs were released.
 
 \paragraph{Scaling-law variants against single-scale ranking (DataDecide).} The
 released fits include per-recipe predictions and targets, and we pre-registered
-reproducing the released decision accuracies exactly before testing. There is
-an open discrepancy, which we are investigating with the authors. Using the
-released target column, \gateExact\ of \gateRows\ task--variant rows match
-our recomputation, and the largest difference is \gateMaxError. No convention
-we tried (prediction column, target column or seed mean, tie rule) matches them
-all. Until it is resolved, the re-test below is exploratory and makes no claim
-about the paper's numbers. Against single-scale ranking at the largest
+reproducing the released decision accuracies exactly before testing. DataDecide's own decision-accuracy function, run unmodified on the released predictions, reproduces \codeCheckTested\ of \codeCheckTestedN\ task--variant rows and \codeCheckAll\ of \codeCheckAllN\ rows overall; each of the other \ddRemainingRows\ matches under an ordering of tied predictions, which their sort leaves arbitrary. Our earlier recomputation, which scored tied pairs as one half, matched \gateExact\ of \gateRows; their function orders tied values by its sort and scores every pair as agreeing or not, and differs from ours only there. Their protocol, as implemented in the released code and consistent with the paper's description, scores single-scale ranking against the three-seed mean at \targetScaleLabel\ and each scaling-law variant against the default seed. The re-test below scores both against the three-seed mean. On that consistent target, \ddFindingVariantName\ reaches \ddFindingVariant\ against \ddFindingSingle\ for single-scale ranking at \ddFindingScale, a difference of \ddFindingDiff\ points inside its candidate-level interval ([\ddFindingLow, \ddFindingHigh]). Against single-scale ranking at the largest  %% words: \ddSeeds, \ddSeeds
 fitted size on the macro average, \dOneMacroExcl\ of \dOneVariants\ variants
-is nominally different: a five-parameter one-step fit, which is worse by
+is nominally different: a five-parameter one-step fit, which is worse by  %% words: - (a model name)
 \dOneWorstDiff\ points ([\dOneWorstLow, \dOneWorstHigh]). It does not survive
 correction across the paper's claims (\S\ref{sec:survives}). No variant is
 better, even nominally. The other intervals have a typical half-width of
@@ -437,7 +431,7 @@ task--scale cells, \dTwoAllBetter\ show a nominal advantage and
 \dTwoAllWorse\ a nominal disadvantage, uncorrected across cells.
 
 \paragraph{Uncheckable.} \emph{Signal and Noise}'s headline BPB comparison (the
-30-task average) cannot be rebuilt: the paper names fifteen of the thirty tasks,  %% nolint: counts of named tasks in the source table
+30-task average) cannot be rebuilt: the paper names fifteen of the thirty tasks,  %% nolint: counts of named tasks in the source table; words: - (a count in the cited paper's table), - (a count in the cited paper's table)
 and the released data does not identify the rest. Its checkpoint-averaging
 table does not state how source sizes are combined. Its high-SNR subsets and
 DataDecide's intermediate-checkpoint comparison have no released method
@@ -459,15 +453,15 @@ It grows without bound in $n$: more candidates make pair resampling
 pairs. On the C4 comparison $R(\nCandidates)=\curveCFour$. Across the
 \curveComparisons\ comparisons in this paper and the published re-tests, the
 median $\zeta_1/\zeta_2$ is \curveZetaMedian, which gives
-$R=\curveMedTen$, \curveMedTwentyFive\ and \curveMedHundred\ at ten,
-twenty-five and a hundred candidates. The 10th--90th percentile range at  %% nolint: names which percentiles, values are macros
-twenty-five candidates is \curveLowTwentyFive--\curveHighTwentyFive.  %% nolint: names which percentiles, values are macros
+$R=\curveMedTen$, \curveMedTwentyFive\ and \curveMedHundred\ at ten,  %% words: \curveMSmall
+twenty-five and a hundred candidates. The 10th--90th percentile range at  %% nolint: names which percentiles, values are macros; words: \curveMMid, \curveMLarge
+twenty-five candidates is \curveLowTwentyFive--\curveHighTwentyFive.  %% nolint: names which percentiles, values are macros; words: \curveMMid
 Subsampling the real candidates reproduces $R(m)$ to within
-\curveCheckWorstLarge\% at twelve or more candidates. At \curveCheckSmallestM\
+\curveCheckWorstLarge\% at twelve or more candidates. At \curveCheckSmallestM\  %% words: \curveCheckLargeMinM
 it misses by \curveCheckSmallest\%, a pre-registered prediction that failed:
 with so few pairs the pair-resampled standard error is itself unstable. Where
 $\zeta_1$ and $\zeta_2$ cannot be estimated, a pair-resampled interval at
-twenty-five candidates should be widened by about a factor of two.
+twenty-five candidates should be widened by about a factor of two.  %% words: \curveMMid
 
 \section{What survives the correct test}
 \label{sec:survives}
@@ -557,13 +551,13 @@ earlier one, which complicates the two-regime reading (\S\ref{sec:regimes}).
 \section{Resolvability and the reference distribution}
 \label{sec:resolvability}
 
-A three-seed comparison does not have \maxDfAtThreeSeeds\ degrees of freedom except when the two
+A three-seed comparison does not have \maxDfAtThreeSeeds\ degrees of freedom except when the two  %% words: \ddSeeds
 cells have equal variance; \maxDfAtThreeSeeds\ is the maximum. With per-pair Welch degrees of
 freedom, the normal quantile under Bonferroni correction is anti-conservative by
 a median factor of \tRatioMedian\ (10th--90th percentile \tRatioPTen--%  %% nolint: names which percentiles, values are macros
 \tRatioPNinety), against \tRatioAssumed\ under the assumed
 \maxDfAtThreeSeeds\ df. Reporting
-significance on a three-seed grid with a Gaussian threshold is worse than
+significance on a three-seed grid with a Gaussian threshold is worse than  %% words: \ddSeeds
 previously stated.
 
 \section{A reproducibility failure in our own results}
@@ -615,15 +609,12 @@ simulation showed the pre-registered bootstrap to be conservative here; both are
 reported. The allocation study's gradient solver stops \thmSolverExcess\% above
 the true optimum of the design problem on this ladder
 (Appendix~\ref{app:design}). We did not re-run the allocation study, because a
-variance difference of that size is far below the margins it reports. The
-scaling-law re-test is exploratory while the discrepancy between the released
-decision accuracies and our recomputation from the released predictions is
-under investigation.
+variance difference of that size is far below the margins it reports. The released decision accuracies are reproduced by DataDecide's own code (\S\ref{sec:published-comparisons}); the scaling-law re-test scores both methods against one target, the three-seed mean, where their protocol uses two.  %% words: \ddSeeds
 
 The calibration benchmarks are only as good as their assumptions. Their truth
 is the empirical-Bayes-shrunk seed-mean trajectories and their noise is
 Gaussian. Their random-candidate worlds come from a smoothed bootstrap over only
-\nCandidates\ recipes. Critical values are estimated from a few hundred worlds
+\nCandidates\ recipes. Critical values are estimated from a few hundred worlds  %% words: ~\calibRandomWorlds
 per family. Each family is calibrated on its own metric, but the allocation
 claims use the C4 calibration from a different design. The scaling-law re-test
 holds the released predictions fixed, because they cannot be regenerated. EB
@@ -640,8 +631,8 @@ $p=0.042$ against the reported \headFixedP.  %% nolint: a stated rerun value, no
 Resolvability figures for suites without seed replicates transfer a seed
 standard deviation from another scale. Whether seed noise changes with model
 size is untested, and cannot be tested on current public infrastructure. A
-trend needs replicates at three or more sizes on one recipe. Marin's Delphi
-ladder, the newest public suite, has them only at 1e21 and 1e22 FLOPs (three  %% nolint: compute-budget labels and a seed count read from the model listing, not measured values
+trend needs replicates at three or more sizes on one recipe. Marin's Delphi  %% words: - (the minimum ladder for a trend)
+ladder, the newest public suite, has them only at 1e21 and 1e22 FLOPs (three  %% nolint: compute-budget labels and a seed count read from the model listing, not measured values; words: \delphiSeeds
 seeds each); every other budget, including its largest, has a single run.
 
 \appendix
@@ -702,9 +693,9 @@ ranking.
 prediction variance over a region around $C_*$ is not covered by the theorem.
 Numerically it is nearly equivalent. On the DataDecide ladder, its correlation
 with the point objective over \thmDesigns\ random designs is \thmCorr, and the
-design optimal for a region spanning three decades costs \thmExcessThree\% extra
+design optimal for a region spanning three decades costs \thmExcessThree\% extra  %% words: \thmRegionDecades
 point variance at $C_*$. These optima come from an exhaustive search over two-
-and three-point supports. A gradient solver in run-count space stops
+and three-point supports. A gradient solver in run-count space stops  %% words: - (the support sizes searched)
 \thmSolverExcess\% short of the optimum on the same ladder, because run counts
 span orders of magnitude across the budgets.
 
@@ -742,4 +733,50 @@ claim (fixed-candidate estimand) & estimate & calibrated interval & $p$ & verdic
 recipes, corrected within their own family.}
 \label{tab:claims-fixed}
 \end{table}
+\section{Figures}
+\label{app:figures}
+
+Figure~\ref{fig:spec-curve} shows the specification curve behind the DataDecide
+headline, Figure~\ref{fig:flexibility} the cost of estimator flexibility on the
+primary design, and Figure~\ref{fig:marin-ranks} what the Marin speedrun
+leaderboard can resolve at its forecast target.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{figures/fig_spec_curve}
+\caption{Projection's excess mis-selection over single-scale ranking, in
+points, for each of the \specN\ specifications, ordered by size. Projection is
+worse in \specPositive, ties in \specTies, and is nominally better in
+\specBelow, of which \specBelowCFour\ are on C4 bits per token; the rest are
+OLMES metrics.}
+\label{fig:spec-curve}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{figures/fig_flexibility}
+\caption{Mis-selected pairs on DataDecide's primary design for projection
+estimators ordered from least to most flexible: the shared exponent, shrinkage
+toward it at fixed strengths, plain per-recipe projection (no shrinkage), and
+the multi-family ensemble. Bars are \flexLevel\% percentile-bootstrap
+intervals; the band is single-scale ranking's. Plain projection mis-selects
+\flexPlain\%, the shared exponent \flexShared\%, the ensemble \flexEnsemble\%,
+and single-scale ranking \flexSingle\%.}
+\label{fig:flexibility}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{figures/fig_marin_rank_intervals}
+\caption{Rank of each of the \marinSubmissions\ official Marin speedrun
+submissions at the \marinForecastX-FLOP forecast. Bars: the central
+\marinIntervalLevel\% of ranks over draws with per-point noise at the bound
+(\marinBoundLow--\marinBoundHigh\% by rung), refitted with the corrected
+solver. Filled circles: the converged three-parameter fit; open diamonds:  %% words: - (a model name)
+two-parameter log-log. Only \marinHold\ of \marinPairs\ pairs keep their order
+in at least \marinHoldLevel\% of draws, and the leading submission is first in
+\marinTopOneShare\% of them.}
+\label{fig:marin-ranks}
+\end{figure}
+
 \end{document}

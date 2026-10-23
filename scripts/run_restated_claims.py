@@ -180,7 +180,7 @@ def other_claims() -> list[dict[str, Any]]:
             )
             claims.append(
                 {
-                    "claim": f"DataDecide {setup} vs single-scale at 750M (exploratory: open discrepancy)",
+                    "claim": f"DataDecide {setup} vs single-scale at 750M (consistent three-seed target)",
                     "family": "published re-test, scaling laws",
                     "estimate_pp": row["difference_pp"],
                     "ci_pp": ci,

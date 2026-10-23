@@ -26,6 +26,7 @@ import numpy as np
 from asla.provenance import Source
 
 REPO = Path(__file__).resolve().parents[1]
+RESULTS_DIR = REPO / "results"
 
 
 def _source_commit() -> str:
@@ -139,11 +140,17 @@ def _power_entries(expected: Source, base: str) -> list[tuple[str, str, str]]:
         ("calibJack", f"{expected.number(calibration + '.jackknife'):.2f}", origin),
         ("calibUnique", f"{expected.number(calibration + '.unique_set_bootstrap'):.2f}", origin),
         ("powerNeeded", f"{expected.integer(base + '.power.candidates_at_point_estimate')}", origin),
-        ("powerNeededOne", f"{expected.integer(by_delta + '.1')}", origin),
-        ("powerNeededTwo", f"{expected.integer(by_delta + '.2')}", origin),
-        ("powerNeededFive", f"{expected.integer(by_delta + '.5')}", origin),
+        ("powerNeededOne", f"{expected.integer(by_delta + f'.{QUOTED_DELTAS[0]}')}", origin),
+        ("powerNeededTwo", f"{expected.integer(by_delta + f'.{QUOTED_DELTAS[1]}')}", origin),
+        ("powerNeededFive", f"{expected.integer(by_delta + f'.{QUOTED_DELTAS[2]}')}", origin),
         ("powerAtObserved", f"{100 * expected.number(base + '.power.power_at_observed_count'):.0f}", origin),
     ]
+
+
+# effect sizes (points) at which power is quoted; powerDeltaLarge carries the largest to the prose
+QUOTED_DELTAS = (1, 2, 5)
+# candidate counts at which the correction curve is quoted; the curveM* macros carry them to the prose
+QUOTED_M = (10, 25, 100)
 
 
 def _published_entries() -> list[tuple[str, str, str]]:
@@ -187,11 +194,11 @@ def _published_entries() -> list[tuple[str, str, str]]:
         ("dTwoAllWorse", f"{sum(v['excludes_zero'] and v['difference_pp'] < 0 for v in d2.values())}", origin),
         ("curveComparisons", f"{out.integer('correction_curve_range.n_comparisons')}", origin),
         ("curveZetaMedian", f"{out.number('correction_curve_range.zeta1_over_zeta2_percentiles.50'):.3f}", origin),
-        ("curveMedTen", f"{curve['50']['10']:.2f}", origin),
-        ("curveMedTwentyFive", f"{curve['50']['25']:.2f}", origin),
-        ("curveMedHundred", f"{curve['50']['100']:.2f}", origin),
-        ("curveLowTwentyFive", f"{curve['10']['25']:.2f}", origin),
-        ("curveHighTwentyFive", f"{curve['90']['25']:.2f}", origin),
+        ("curveMedTen", f"{curve['50'][str(QUOTED_M[0])]:.2f}", origin),
+        ("curveMedTwentyFive", f"{curve['50'][str(QUOTED_M[1])]:.2f}", origin),
+        ("curveMedHundred", f"{curve['50'][str(QUOTED_M[2])]:.2f}", origin),
+        ("curveLowTwentyFive", f"{curve['10'][str(QUOTED_M[1])]:.2f}", origin),
+        ("curveHighTwentyFive", f"{curve['90'][str(QUOTED_M[1])]:.2f}", origin),
         ("curveCFour", f"{out.number('correction_curve_c4.at_observed_n'):.2f}", origin),
         ("curveCheckWorstLarge", f"{100 * max(abs(r['relative_error']) for r in checks[1:]):.0f}", origin),
         ("curveCheckSmallest", f"{100 * abs(checks[0]['relative_error']):.0f}", origin),
@@ -616,6 +623,174 @@ def _pattern_entries() -> list[tuple[str, str, str]]:
     return entries
 
 
+def _count_entries() -> list[tuple[str, str, str]]:
+    """Counts the prose spells out, so the spelled-number lint can check each against its source."""
+
+    import re
+
+    ensemble = Source.load("ensemble_check/ensemble_check.json")
+    moderated = Source.load("target_scoring/moderated_variance.json")
+    published = Source.load("external/published_comparisons.json")
+    expected = Source.load("target_scoring/expected_error.json")
+    delphi = Source.load("external/counterexample_delphi.json")
+    calibration = Source.load("target_scoring/calibration.json")
+    fit = Source.load("target_scoring/fit_structure.json")
+    pp_seeds = {c["n_seeds"] for c in moderated.get("polypythias.cells").values()}
+    split = re.search(r"(\d+) vs (\d+) seeds", moderated.get("polypythias_null_test.design"))
+    assert len(pp_seeds) == 1 and split and split.group(1) == split.group(2)
+    grid = {int(m) for m in published.get("correction_curve_range.curve_by_percentile.50")}
+    assert set(QUOTED_M) <= grid
+    ms = list(QUOTED_M)
+    checks = published.get("correction_curve_c4.subsampling_check")
+    power = "regimes.c4_en_bits_per_token/primary_4M-300M_gate530M.significance.power.candidates_by_delta_pp"
+    assert {str(d) for d in QUOTED_DELTAS} <= set(expected.get(power))
+    deltas = list(QUOTED_DELTAS)
+    worlds = {v["n_random_worlds"] for v in calibration.get("calibration.by_comparator").values()}
+    decades = sorted(int(k.split("_")[0]) for k in fit.get("design_theorem.region_optimal_designs"))
+    assert len(worlds) == 1
+    return [
+        ("ddSeeds", f"{ensemble.integer('n_seeds')}", "ensemble_check.json"),
+        ("ppSeeds", f"{pp_seeds.pop()}", "moderated_variance.json"),
+        ("ppNullSplit", split.group(1), "moderated_variance.json (polypythias_null_test.design)"),
+        ("ppWeights", f"{len(moderated.get('polypythias_weight_calibration.brier'))}", "moderated_variance.json"),
+        ("curveMSmall", f"{ms[0]}", "published_comparisons.json"),
+        ("curveMMid", f"{ms[1]}", "published_comparisons.json"),
+        ("curveMLarge", f"{ms[2]}", "published_comparisons.json"),
+        ("curveCheckLargeMinM", f"{min(r['m'] for r in checks[1:])}", "published_comparisons.json"),
+        ("powerDeltaLarge", f"{deltas[-1]}", "expected_error.json"),
+        ("delphiSeeds", f"{delphi.integer('source.seeds_per_heldout_budget')}", "counterexample_delphi.json"),
+        ("calibRandomWorlds", f"{worlds.pop()}", "calibration.json"),
+        ("thmRegionDecades", f"{decades[-1]}", "fit_structure.json"),
+    ]
+
+
+def _sci(value: float, digits: int = 1) -> str:
+    mantissa, exponent = f"{value:.{digits}e}".split("e")
+    return f"${mantissa}\\times 10^{{{int(exponent)}}}$"
+
+
+def _name(submission: str) -> str:
+    return "\\texttt{" + submission.replace("_", "\\_") + "}"
+
+
+def _marin_entries() -> list[tuple[str, str, str]]:
+    """The Marin speedrun results that survive, from the frozen JSONs."""
+
+    pr = Source.load("external/pr_numbers.json")
+    rc = Source.load("external/inclusion_recount.json")
+    nb = Source.load("external/noise_bracket.json")
+    cert = Source.load("external/certified_leaderboard.json")
+    res = Source.load("external/leaderboard_resolution.json")
+    cal = Source.load("target_scoring/calibration.json")
+    ranks = Source.load("external/marin_rank_intervals.json")
+    b = "task1b"
+    multistart = pr.get("multistart_13_starts_cap_200.x_over_1e18_error_tolerance_1e-15")
+    forms = rc.get(f"{b}.heldout_projection.official_22.forms")
+    crit = cal.number("calibrated.random_u.critical_value")
+    sigma = nb.get("e_reruns.sigma_by_rung")
+    matched = [v["matched"] for v in rc.get("task2a").values() if isinstance(v, dict) and "matched" in v]
+    sens = rc.get("task2c")
+    designs = res.get("task3.designs")
+    top_displayed, top_fixed = pr.get("top5_displayed"), pr.get("top5_fixed")
+    changed_place = next(i for i, (a, c) in enumerate(zip(top_displayed, top_fixed)) if a != c)
+    x = ranks.number("forecast_x")
+    return [
+        ("marinForecastX", f"$10^{{{round(np.log10(x))}}}$", "marin_rank_intervals.json"),
+        ("marinIntervalLevel", f"{100 * ranks.number('interval_level'):.0f}", "marin_rank_intervals.json"),
+        ("marinHoldLevel", f"{100 * ranks.number('hold_level'):.0f}", "marin_rank_intervals.json"),
+        ("marinSubmissions", f"{len(rc.get('official_set'))}", "inclusion_recount.json"),
+        ("marinDepartMax", f"{pr.number('current_code_default_start.max_departure_bpb'):.3f}", "pr_numbers.json"),
+        ("marinDepartMedian", f"{pr.number('current_code_default_start.median_departure_bpb'):.3f}", "pr_numbers.json"),
+        ("marinFixedDepart", _sci(pr.number("fixed_max_departure_bpb")), "pr_numbers.json"),
+        ("marinMultistartFits", f"{multistart['fits']}", "pr_numbers.json"),
+        ("marinMultistartReached", f"{multistart['fits_reaching_optimum']}", "pr_numbers.json"),
+        ("marinPairsChanged", f"{pr.integer('pairs_changed')}", "pr_numbers.json"),
+        ("marinPairs", f"{pr.integer('pairs')}", "pr_numbers.json"),
+        ("marinKendall", f"{pr.number('kendall_tau'):.3f}", "pr_numbers.json"),
+        ("marinChangedPlace", f"{changed_place + 1}", "pr_numbers.json"),
+        ("marinDisplayedAtPlace", _name(top_displayed[changed_place]), "pr_numbers.json"),
+        ("marinFixedAtPlace", _name(top_fixed[changed_place]), "pr_numbers.json"),
+        ("marinFormCore", f"{rc.integer(f'{b}.form_core.official_22.robust')}", "inclusion_recount.json"),
+        ("marinFormTopK", f"{rc.integer(f'{b}.form_core.official_22.top_k')}", "inclusion_recount.json"),
+        ("marinFormTopOne", _name(rc.get(f"{b}.form_core.official_22.top1")[0]), "inclusion_recount.json"),
+        ("marinBoundLow", f"{100 * min(sigma.values()):.2f}", "noise_bracket.json"),
+        ("marinBoundHigh", f"{100 * max(sigma.values()):.2f}", "noise_bracket.json"),
+        ("marinHold", f"{rc.integer(f'{b}.noise_resolution_bound.official_22.holding_95')}", "inclusion_recount.json"),
+        (
+            "marinTopOneShare",
+            f"{100 * rc.number(f'{b}.noise_resolution_bound.official_22.top1_hold_share'):.0f}",
+            "inclusion_recount.json",
+        ),
+        (
+            "marinContiguousTopK",
+            f"{rc.integer(f'{b}.noise_resolution_bound.official_22.contiguous_top_k')}",
+            "inclusion_recount.json",
+        ),
+        (
+            "marinSigmaStar",
+            f"{100 * cert.number('validation_marin.sigma_star.sigma_star'):.2f}",
+            "certified_leaderboard.json",
+        ),
+        ("marinCertified", f"{rc.integer(f'{b}.certified_at_0_58pct.official_22.certified')}", "inclusion_recount.json"),
+        (
+            "marinCertifiedAboveAll",
+            f"{len(rc.get(f'{b}.certified_at_0_58pct.official_22.above_all'))}",
+            "inclusion_recount.json",
+        ),
+        (
+            "marinBatchChange",
+            f"{sum(1 for v in sens['by_submission'].values() if v['batch_change_rung'])}",
+            "inclusion_recount.json",
+        ),
+        ("marinConsistent", f"{len(rc.get('task2b.config_consistent_submissions'))}", "inclusion_recount.json"),
+        ("marinStepMarked", f"{sens['marked_count']}", "inclusion_recount.json"),
+        ("marinProjSingle", f"{rc.integer(f'{b}.heldout_projection.official_22.single_wrong')}", "inclusion_recount.json"),
+        ("marinProjShared", f"{forms['iii_shared_exponent']['wrong']}", "inclusion_recount.json"),
+        ("marinProjMaxT", f"{max(v['u_abs_t'] for v in forms.values()):.2f}", "inclusion_recount.json"),
+        ("marinProjCrit", f"{crit:.2f}", "calibration.json"),
+        ("marinProjSignificant", f"{sum(v['u_abs_t'] > crit for v in forms.values())}", "inclusion_recount.json"),
+        ("marinMatchedDetermined", f"{sum(m['determined'] for m in matched)}", "inclusion_recount.json"),
+        ("marinMatchedReordered", f"{sum(m['reordered'] for m in matched)}", "inclusion_recount.json"),
+        (
+            "marinPowerDelta",
+            f"{100 * res.number('task3.power.primary_530M_1B.difference'):.0f}",
+            "leaderboard_resolution.json",
+        ),
+        ("marinPowerN", f"{res.integer('task3.power.primary_530M_1B.n_for_80pct')}", "leaderboard_resolution.json"),
+        ("marinPowerNHigh", f"{res.integer('task3.power.sensitivity_300M_1B.n_for_80pct')}", "leaderboard_resolution.json"),
+        (
+            "marinMaxDetermined",
+            f"{max(v['marin_dd1b_sd']['determined'] for v in designs.values())}",
+            "leaderboard_resolution.json",
+        ),
+    ]
+
+
+def _figure_entries() -> list[tuple[str, str, str]]:
+    """Caption numbers for the specification-curve and flexibility figures."""
+
+    import pandas as pd
+
+    summary = Source.load("adversarial/a2_specification_summary.json")
+    df = pd.read_csv(RESULTS_DIR / "adversarial" / "a2_specification_curve.csv")
+    excess = df["projection_mis_selection"] - df["single_scale_mis_selection"]
+    below = df[(excess < 0) & ~np.isclose(excess, 0)]
+    task = Source.load("task_b/task_b.json")
+    rankers = task.get("designs.primary_4M-300M_target1B.rankers")
+    return [
+        ("specN", f"{summary.integer('n_specifications')}", "a2_specification_summary.json"),
+        ("specPositive", f"{summary.integer('n_with_positive_excess')}", "a2_specification_summary.json"),
+        ("specBelow", f"{len(below)}", "a2_specification_curve.csv"),
+        ("specBelowCFour", f"{int((below['metric'] == 'c4_en_bits_per_token').sum())}", "a2_specification_curve.csv"),
+        ("specTies", f"{int(np.isclose(excess, 0).sum())}", "a2_specification_curve.csv"),
+        ("flexEnsemble", f"{100 * rankers['ensemble']['mis_selection']['point']:.1f}", "task_b.json"),
+        ("flexPlain", f"{100 * rankers['plain_projection']['mis_selection']['point']:.1f}", "task_b.json"),
+        ("flexShared", f"{100 * rankers['shared_exponent']['mis_selection']['point']:.1f}", "task_b.json"),
+        ("flexSingle", f"{100 * rankers['single_scale']['mis_selection']['point']:.1f}", "task_b.json"),
+        ("flexLevel", f"{100 * rankers['plain_projection']['mis_selection']['confidence_level']:.0f}", "task_b.json"),
+    ]
+
+
 def _closeout_entries() -> list[tuple[str, str, str]]:
     """Close-out records: the DataDecide protocol finding and the mechanism statement (no prose uses these yet)."""
 
@@ -633,7 +808,14 @@ def _closeout_entries() -> list[tuple[str, str, str]]:
     )
     support = record.get("mechanism.support")
     cp = record.get("correct_prob_long_design")
+    # labels for the prose, read from the JSON's own keys rather than retyped
+    scale_key = next(k for k in check.payload if k.startswith("code_outputs_macro_"))
+    scale = scale_key[len("code_outputs_macro_") :]
+    variants = check.get(f"{scale_key}.variants")
+    name = next(k for k, v in variants.items() if np.isclose(v["three_seed_target"], variant))
     return [
+        ("ddFindingScale", scale, origin),
+        ("ddFindingVariantName", "\\texttt{" + name.replace("_", "\\_") + "}", origin),
         ("ddProtocolFinding", finding, origin),
         ("ddFindingVariant", f"{variant:.2f}", origin),
         ("ddFindingVariantDefault", f"{f['variant_3_param_1_step_default_seed_target']:.2f}", origin),
@@ -1215,6 +1397,9 @@ def build() -> str:
     entries.extend(_transfer_entries())
     entries.extend(_pattern_entries())
     entries.extend(_closeout_entries())
+    entries.extend(_count_entries())
+    entries.extend(_marin_entries())
+    entries.extend(_figure_entries())
     lines.extend(_macro(name, value, origin) for name, value, origin in entries)
     lines.append("")
     return "\n".join(lines)

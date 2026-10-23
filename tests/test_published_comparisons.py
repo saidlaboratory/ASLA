@@ -58,9 +58,16 @@ def test_mapping_refuses_an_inexact_match() -> None:
 
 
 def test_committed_result_reports_the_failed_gate_rather_than_hiding_it() -> None:
-    """D1 did not reproduce the released decision_acc; the JSON must say so."""
+    """Our recomputation did not reproduce the released decision_acc; the JSON must keep saying so.
+
+    The note now states the resolution (prose_corrections.json): DataDecide's own code reproduces the released
+    values, with its counts read from datadecide_code_check.json rather than typed.
+    """
 
     out = Source.load("external/published_comparisons.json")
     assert out.get("predictions.P1_gate.confirmed") is False
-    assert "exploratory" in out.get("d1_gate_note")
+    check = Source.load("external/datadecide_code_check.json")
+    note = out.get("d1_gate_note")
+    assert note.startswith("Resolved:") and "exploratory" not in note
+    assert f"{check.integer('tested_88_rows.matched')}/{check.integer('tested_88_rows.n')}" in note
     assert out.get("predictions.P4_signal_and_noise_bpb.status") == "not reconstructed"

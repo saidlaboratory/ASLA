@@ -267,6 +267,23 @@ def correction_curve(kernel: dict[tuple[str, str], float], rng: np.random.Genera
     }
 
 
+def gate_note() -> str:
+    """The D1 gate note, with its counts read from the code check and the paper check (prose_corrections.json)."""
+
+    check = json.loads((REPO / "results" / "external" / "datadecide_code_check.json").read_text(encoding="utf-8"))
+    paper = json.loads((REPO / "results" / "external" / "datadecide_paper_check.json").read_text(encoding="utf-8"))
+    tested, every = check["tested_88_rows"], check["all_rows"]
+    remaining = paper["finding"]["reproduction"]["remaining_rows"]
+    return (
+        f"Resolved: DataDecide's compute_decision_accuracy, run unmodified on the released predictions, reproduces "
+        f"{tested['matched']}/{tested['n']} tested rows and {every['matched']:,}/{every['n']:,} overall; each of the other "
+        f"{remaining} matches under an ordering of tied predictions. Their protocol scores single-scale against the "
+        "three-seed 1B mean and scaling-law variants against the default seed; D1 uses the three-seed target for both. "
+        "See results/external/datadecide_code_check.json, datadecide_sensitivity.json, datadecide_single_scale.json "
+        "and datadecide_paper_check.json."
+    )
+
+
 def predictions(d1_out: dict[str, Any], d2_out: dict[str, Any], curve: dict[str, Any]) -> dict[str, Any]:
     primary = {
         key: row
@@ -354,11 +371,7 @@ def main() -> None:
             "signal_and_noise_high_snr_subsets": "subset selections not released",
             "datadecide_intermediate_checkpoints": "figure-only, no released per-method outputs",
         },
-        "d1_gate_note": (
-            "Open discrepancy under investigation with the authors: no convention tried (prediction column, target "
-            "column or seed mean, tie rule) matches every released decision_acc. D1 is exploratory until it is "
-            "resolved and makes no claim about the paper's numbers. Reproduction package: repro/datadecide_decision_acc."
-        ),
+        "d1_gate_note": gate_note(),
         "d1_sign_breakdown_three_seed_target": _signs(d1_out["comparisons"], "three_seed_mean"),
     }
     out["predictions"] = predictions(d1_out, d2_out, curve)

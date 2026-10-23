@@ -74,13 +74,23 @@ CORRECTIONS: list[dict[str, Any]] = [
         "action": "replace",
         "replacement": (
             "Their protocol, as implemented in the released code and consistent with the paper's description, scores "
-            "single-scale ranking against the three-seed mean at 1B and each scaling-law variant against the default "
-            "seed. The re-test below scores both against the three-seed mean. On that consistent target, "
-            "\\texttt{3\\_param-1\\_step} reaches \\ddFindingVariant\\ against \\ddFindingSingle\\ for single-scale "
-            "ranking at 750M, a difference of \\ddFindingDiff\\ points inside its candidate-level interval "
-            "([\\ddFindingLow, \\ddFindingHigh])."
+            "single-scale ranking against the three-seed mean at \\targetScaleLabel\\ and each scaling-law variant "
+            "against the default seed. The re-test below scores both against the three-seed mean. On that consistent "
+            "target, \\ddFindingVariantName\\ reaches \\ddFindingVariant\\ against \\ddFindingSingle\\ for "
+            "single-scale ranking at \\ddFindingScale, a difference of \\ddFindingDiff\\ points inside its "
+            "candidate-level interval ([\\ddFindingLow, \\ddFindingHigh])."
         ),
-        "macros": ["ddFindingVariant", "ddFindingSingle", "ddFindingDiff", "ddFindingLow", "ddFindingHigh"],
+        "macros": [
+            "targetScaleLabel",
+            "ddFindingVariantName",
+            "ddFindingVariant",
+            "ddFindingSingle",
+            "ddFindingScale",
+            "ddFindingDiff",
+            "ddFindingLow",
+            "ddFindingHigh",
+        ],
+        "revised": "labels routed through macros (no digits in prose)",
         "note": (
             "the paper states the single-scale target (section 2.3, Figure 1) and that each scaling-law variant is one "
             "attempt with the default seed (section 3.2); it does not state the scaling-law target separately, hence "
@@ -126,14 +136,8 @@ CORRECTIONS: list[dict[str, Any]] = [
             '"Open discrepancy under investigation with the authors: no convention tried (prediction column, target "'
         ),
         "action": "replace",
-        "replacement": (
-            "Resolved: DataDecide's compute_decision_accuracy, run unmodified on the released predictions, "
-            "reproduces 88/88 tested rows and 5,271/5,280 overall; each of the other 9 matches under an ordering of "
-            "tied predictions. Their protocol scores single-scale against the three-seed 1B mean and scaling-law "
-            "variants against the default seed; D1 uses the three-seed target for both. See "
-            "results/external/datadecide_code_check.json, datadecide_sensitivity.json, datadecide_single_scale.json "
-            "and datadecide_paper_check.json."
-        ),
+        "replacement": None,  # filled from gate_note() so its counts come from the JSONs
+        "replacement_rendered_by": "scripts/run_published_comparisons.py:gate_note",
         "macros": [],
         "generated_outputs": ["results/external/published_comparisons.json (d1_gate_note)"],
         "occurrences_in_outputs": {"results/external/published_comparisons.json": "Open discrepancy under investigation"},
@@ -167,8 +171,16 @@ def locate(path: Path, existing: str) -> int | None:
 
 
 def main() -> None:
+    import sys
+
+    if str(REPO) not in sys.path:
+        sys.path.insert(0, str(REPO))
+    from scripts.run_published_comparisons import gate_note
+
     entries = []
     for entry in CORRECTIONS:
+        if entry.get("replacement_rendered_by", "").endswith(":gate_note"):
+            entry = dict(entry, replacement=gate_note())
         line = locate(REPO / entry["file"], entry["existing"])
         if line is None:
             raise SystemExit(f"{entry['id']}: existing text not found in {entry['file']}")
