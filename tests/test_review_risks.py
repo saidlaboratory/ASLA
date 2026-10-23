@@ -3,14 +3,22 @@
 from __future__ import annotations
 
 import importlib
+from pathlib import Path
 
 import numpy as np
+import pytest
 
 marin = importlib.import_module("scripts.run_marin_speedrun_gate")
 cmr = importlib.import_module("scripts.run_compute_multipliers_replication")
 mis = importlib.import_module("scripts.run_calibration_misspecified")
 mech = importlib.import_module("scripts.run_mechanism_robustness")
 lam = importlib.import_module("scripts.run_lever_arm_by_metric")
+
+# The OLMES context reads the raw DataDecide evaluation table, which is harvested locally (data/raw is not in git).
+NEEDS_RAW_EVAL = pytest.mark.skipif(
+    not (Path(__file__).resolve().parents[1] / "data" / "raw" / "datadecide" / "eval_macro_avg.parquet").exists(),
+    reason="raw DataDecide eval_macro_avg.parquet not harvested",
+)
 
 
 def test_marin_ladders_and_shared_budgets() -> None:
@@ -66,6 +74,7 @@ def test_lever_arm_subsets_drop_chance_rungs() -> None:
     assert lam.subset_index(designs, ["8M", "10M"]) == [1, 3]
 
 
+@NEEDS_RAW_EVAL
 def test_truth_perturbation_reaches_the_simulated_observations() -> None:
     from asla.analysis.calibration import simulate
 

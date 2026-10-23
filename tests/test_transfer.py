@@ -3,11 +3,19 @@
 from __future__ import annotations
 
 import importlib
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import pytest
 
 tw = importlib.import_module("scripts.transfer_worlds")
+
+# The OLMES context reads the raw DataDecide evaluation table, which is harvested locally (data/raw is not in git).
+NEEDS_RAW_EVAL = pytest.mark.skipif(
+    not (Path(__file__).resolve().parents[1] / "data" / "raw" / "datadecide" / "eval_macro_avg.parquet").exists(),
+    reason="raw DataDecide eval_macro_avg.parquet not harvested",
+)
 
 
 def test_median_gap_is_the_median_absolute_pairwise_difference() -> None:
@@ -21,6 +29,7 @@ def test_hybrid_without_swaps_is_the_base_metric() -> None:
     assert np.allclose(sigma.to_numpy(), c4["sigma_table"].to_numpy())
 
 
+@NEEDS_RAW_EVAL
 def test_all_swapped_hybrid_is_the_other_metric_in_base_units() -> None:
     c4, olmes = tw.context("c4"), tw.context("olmes")
     every = dict.fromkeys(("i", "ii", "iii", "iv", "v"), "olmes")
@@ -34,12 +43,14 @@ def test_all_swapped_hybrid_is_the_other_metric_in_base_units() -> None:
     )
 
 
+@NEEDS_RAW_EVAL
 def test_residual_split_recombines_to_the_full_swap() -> None:
     split = tw.hybrid("c4", {"iv_common": "olmes", "iv_specific": "olmes"})[0]
     whole = tw.hybrid("c4", {"iv": "olmes"})[0]
     assert np.allclose(split.to_numpy(), whole.to_numpy())
 
 
+@NEEDS_RAW_EVAL
 def test_transform_is_identity_at_own_coordinates_and_hits_the_target() -> None:
     c4 = tw.context("c4")
     design = tw.PRIMARY
