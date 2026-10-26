@@ -16,6 +16,7 @@ results/*
 !results/abstention/
 !results/adversarial/
 !results/allocation/
+!results/certify/
 !results/checkpoints/
 !results/common_mode/
 !results/confidence/

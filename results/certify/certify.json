@@ -1,0 +1,5479 @@
+{
+  "preregistration": "PREDICTIONS_TASK_CERTIFY.md",
+  "alpha": 0.05,
+  "calibrated_critical_value": 2.9890861649366043,
+  "datadecide": {
+    "designs": [
+      {
+        "design": "c4_en_bits_per_token|4M-150M|1B",
+        "lever_arm_median": 1.7205654939958734,
+        "kappa": {
+          "loglog": 0.004209031868651439,
+          "three": 0.0024538646060921986
+        },
+        "conformal_q": 0.06783450651998545,
+        "methods": {
+          "selector": {
+            "certified": 220,
+            "pairs": 300,
+            "coverage": 0.7333333333333333,
+            "charges": 0.0,
+            "fcr": 0.0,
+            "possibly_best_size": 9,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 3.198716692109989,
+            "fcr": 0.010662388973699963,
+            "possibly_best_size": 1,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 26.734458478208822,
+            "fcr": 0.08911486159402941,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0
+          },
+          "seed_se": {
+            "certified": 256,
+            "pairs": 300,
+            "coverage": 0.8533333333333334,
+            "charges": 2.9140742214608486,
+            "fcr": 0.01138310242758144,
+            "possibly_best_size": 2,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "bootstrap": {
+            "certified": 265,
+            "pairs": 300,
+            "coverage": 0.8833333333333333,
+            "charges": 5.914312679313801,
+            "fcr": 0.02231816105401434,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0
+          },
+          "conformal": {
+            "certified": 0,
+            "pairs": 300,
+            "coverage": 0.0,
+            "charges": 0.0,
+            "fcr": null,
+            "possibly_best_size": 25,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "linearization_check": {
+          "draws": 400,
+          "pairs": 300,
+          "certified_gaussian": 220,
+          "certified_draws": 221,
+          "agree_all_ordered_pairs": 0.9983333333333333,
+          "agree_among_certified_by_either": 0.995475113122172
+        },
+        "metric": "c4_en_bits_per_token",
+        "window": "4M-150M",
+        "target": "1B",
+        "lever_arm": 1.7205654939958734,
+        "calibration_predictions": {
+          "loglog": 12,
+          "three": 12
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "c4_en_bits_per_token|4M-150M|530M",
+        "lever_arm_median": 1.046422091752903,
+        "kappa": {
+          "loglog": 0.0032888276106931855,
+          "three": 0.0017928989416487215
+        },
+        "conformal_q": 0.07174242793245912,
+        "methods": {
+          "selector": {
+            "certified": 247,
+            "pairs": 300,
+            "coverage": 0.8233333333333334,
+            "charges": 1.0724977281443016e-120,
+            "fcr": 4.342096065361545e-123,
+            "possibly_best_size": 3,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 2.270483457813964,
+            "fcr": 0.007568278192713214,
+            "possibly_best_size": 1,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.96525
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 14.132208675431187,
+            "fcr": 0.04710736225143729,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0345
+          },
+          "seed_se": {
+            "certified": 261,
+            "pairs": 300,
+            "coverage": 0.87,
+            "charges": 1.3469210106944243e-43,
+            "fcr": 5.160616899212353e-46,
+            "possibly_best_size": 2,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "bootstrap": {
+            "certified": 270,
+            "pairs": 300,
+            "coverage": 0.9,
+            "charges": 4.569188943855798,
+            "fcr": 0.016922922014280736,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.03425
+          },
+          "conformal": {
+            "certified": 0,
+            "pairs": 300,
+            "coverage": 0.0,
+            "charges": 0.0,
+            "fcr": null,
+            "possibly_best_size": 25,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "c4_en_bits_per_token",
+        "window": "4M-150M",
+        "target": "530M",
+        "lever_arm": 1.046422091752903,
+        "calibration_predictions": {
+          "loglog": 7,
+          "three": 7
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "c4_en_bits_per_token|4M-300M|1B",
+        "lever_arm_median": 1.0959664975989196,
+        "kappa": {
+          "loglog": 0.003936877079032995,
+          "three": 0.0032535314123486436
+        },
+        "conformal_q": 0.06759860125554727,
+        "methods": {
+          "selector": {
+            "certified": 246,
+            "pairs": 300,
+            "coverage": 0.82,
+            "charges": 1.5492774618453354e-99,
+            "fcr": 6.2978758611599e-102,
+            "possibly_best_size": 2,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 4.265543525684375,
+            "fcr": 0.014218478418947918,
+            "possibly_best_size": 1,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 15.801594407140865,
+            "fcr": 0.052671981357136216,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0
+          },
+          "seed_se": {
+            "certified": 267,
+            "pairs": 300,
+            "coverage": 0.89,
+            "charges": 2.914074221518477,
+            "fcr": 0.010914135661117891,
+            "possibly_best_size": 2,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "bootstrap": {
+            "certified": 270,
+            "pairs": 300,
+            "coverage": 0.9,
+            "charges": 3.9143126793138006,
+            "fcr": 0.01449745436782889,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0
+          },
+          "conformal": {
+            "certified": 1,
+            "pairs": 300,
+            "coverage": 0.0033333333333333335,
+            "charges": 0.0,
+            "fcr": 0.0,
+            "possibly_best_size": 24,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "c4_en_bits_per_token",
+        "window": "4M-300M",
+        "target": "1B",
+        "lever_arm": 1.0959664975989196,
+        "calibration_predictions": {
+          "loglog": 13,
+          "three": 13
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "c4_en_bits_per_token|4M-300M|530M",
+        "lever_arm_median": 0.42182309535594925,
+        "kappa": {
+          "loglog": 0.0032026794280285275,
+          "three": 0.002833538579187822
+        },
+        "conformal_q": 0.06897611548331525,
+        "methods": {
+          "selector": {
+            "certified": 268,
+            "pairs": 300,
+            "coverage": 0.8933333333333333,
+            "charges": 5.225399947574123e-53,
+            "fcr": 1.9497760998410905e-55,
+            "possibly_best_size": 2,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 3.8679203966136138,
+            "fcr": 0.012893067988712046,
+            "possibly_best_size": 1,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.966
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 9.729517091670708,
+            "fcr": 0.03243172363890236,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.034
+          },
+          "seed_se": {
+            "certified": 276,
+            "pairs": 300,
+            "coverage": 0.92,
+            "charges": 6.151992919135916e-16,
+            "fcr": 2.2289829417159115e-18,
+            "possibly_best_size": 2,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "bootstrap": {
+            "certified": 282,
+            "pairs": 300,
+            "coverage": 0.94,
+            "charges": 4.569188943855798,
+            "fcr": 0.01620279767324751,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0365
+          },
+          "conformal": {
+            "certified": 95,
+            "pairs": 300,
+            "coverage": 0.31666666666666665,
+            "charges": 0.0,
+            "fcr": 0.0,
+            "possibly_best_size": 16,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "c4_en_bits_per_token",
+        "window": "4M-300M",
+        "target": "530M",
+        "lever_arm": 0.42182309535594925,
+        "calibration_predictions": {
+          "loglog": 8,
+          "three": 8
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "c4_en_bits_per_token|4M-530M|1B",
+        "lever_arm_median": 0.6741434022429703,
+        "kappa": {
+          "loglog": 0.004122210603466669,
+          "three": 0.00359674279359348
+        },
+        "conformal_q": 0.06737534302828485,
+        "methods": {
+          "selector": {
+            "certified": 259,
+            "pairs": 300,
+            "coverage": 0.8633333333333333,
+            "charges": 5.4516290202678453e-48,
+            "fcr": 2.1048760696014846e-50,
+            "possibly_best_size": 2,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 3.018302037600676,
+            "fcr": 0.010061006792002255,
+            "possibly_best_size": 1,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 9.079181127353284,
+            "fcr": 0.030263937091177612,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0
+          },
+          "seed_se": {
+            "certified": 281,
+            "pairs": 300,
+            "coverage": 0.9366666666666666,
+            "charges": 3.914313639523412,
+            "fcr": 0.013929941777663388,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0
+          },
+          "bootstrap": {
+            "certified": 282,
+            "pairs": 300,
+            "coverage": 0.94,
+            "charges": 3.914469147411852,
+            "fcr": 0.013881096267417915,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0
+          },
+          "conformal": {
+            "certified": 47,
+            "pairs": 300,
+            "coverage": 0.15666666666666668,
+            "charges": 0.0,
+            "fcr": 0.0,
+            "possibly_best_size": 19,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "c4_en_bits_per_token",
+        "window": "4M-530M",
+        "target": "1B",
+        "lever_arm": 0.6741434022429703,
+        "calibration_predictions": {
+          "loglog": 15,
+          "three": 15
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "c4_en_bits_per_token|14M-150M|1B",
+        "lever_arm_median": 1.7205654939958734,
+        "kappa": {
+          "loglog": 0.004146263130704119,
+          "three": 0.004114043118768825
+        },
+        "conformal_q": 0.06783450651998545,
+        "methods": {
+          "selector": {
+            "certified": 166,
+            "pairs": 300,
+            "coverage": 0.5533333333333333,
+            "charges": 0.0,
+            "fcr": 0.0,
+            "possibly_best_size": 13,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 3.198716692109989,
+            "fcr": 0.010662388973699963,
+            "possibly_best_size": 1,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 36.24450140449317,
+            "fcr": 0.1208150046816439,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0
+          },
+          "seed_se": {
+            "certified": 177,
+            "pairs": 300,
+            "coverage": 0.59,
+            "charges": 7.74494721236451e-30,
+            "fcr": 4.3756763911663893e-32,
+            "possibly_best_size": 12,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "bootstrap": {
+            "certified": 188,
+            "pairs": 300,
+            "coverage": 0.6266666666666667,
+            "charges": 2.000238416115965,
+            "fcr": 0.010639566043170028,
+            "possibly_best_size": 9,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "conformal": {
+            "certified": 0,
+            "pairs": 300,
+            "coverage": 0.0,
+            "charges": 0.0,
+            "fcr": null,
+            "possibly_best_size": 25,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "c4_en_bits_per_token",
+        "window": "14M-150M",
+        "target": "1B",
+        "lever_arm": 1.7205654939958734,
+        "calibration_predictions": {
+          "loglog": 12,
+          "three": 12
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "c4_en_bits_per_token|14M-150M|530M",
+        "lever_arm_median": 1.046422091752903,
+        "kappa": {
+          "loglog": 0.003138298162782735,
+          "three": 0.0035591224197773193
+        },
+        "conformal_q": 0.07174242793245912,
+        "methods": {
+          "selector": {
+            "certified": 207,
+            "pairs": 300,
+            "coverage": 0.69,
+            "charges": 1.5608249744524478e-105,
+            "fcr": 7.54021726788622e-108,
+            "possibly_best_size": 9,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 2.270483457813964,
+            "fcr": 0.007568278192713214,
+            "possibly_best_size": 1,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.96325
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 19.83463820223396,
+            "fcr": 0.06611546067411321,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0
+          },
+          "seed_se": {
+            "certified": 219,
+            "pairs": 300,
+            "coverage": 0.73,
+            "charges": 1.3469210101718843e-43,
+            "fcr": 6.1503242473602024e-46,
+            "possibly_best_size": 9,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "bootstrap": {
+            "certified": 226,
+            "pairs": 300,
+            "coverage": 0.7533333333333333,
+            "charges": 1.603093457577744,
+            "fcr": 0.007093333883087363,
+            "possibly_best_size": 9,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "conformal": {
+            "certified": 1,
+            "pairs": 300,
+            "coverage": 0.0033333333333333335,
+            "charges": 0.0,
+            "fcr": 0.0,
+            "possibly_best_size": 24,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "c4_en_bits_per_token",
+        "window": "14M-150M",
+        "target": "530M",
+        "lever_arm": 1.046422091752903,
+        "calibration_predictions": {
+          "loglog": 7,
+          "three": 7
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "c4_en_bits_per_token|14M-300M|1B",
+        "lever_arm_median": 1.0959664975989196,
+        "kappa": {
+          "loglog": 0.003936319658397884,
+          "three": 0.0035355193787442417
+        },
+        "conformal_q": 0.06069082691624168,
+        "methods": {
+          "selector": {
+            "certified": 236,
+            "pairs": 300,
+            "coverage": 0.7866666666666666,
+            "charges": 8.750537019488929e-110,
+            "fcr": 3.70785466927497e-112,
+            "possibly_best_size": 5,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 4.265543525684375,
+            "fcr": 0.014218478418947918,
+            "possibly_best_size": 1,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 9.244638901164816,
+            "fcr": 0.03081546300388272,
+            "possibly_best_size": 1,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "seed_se": {
+            "certified": 254,
+            "pairs": 300,
+            "coverage": 0.8466666666666667,
+            "charges": 9.602096113327401e-07,
+            "fcr": 3.780352800522599e-09,
+            "possibly_best_size": 4,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "bootstrap": {
+            "certified": 265,
+            "pairs": 300,
+            "coverage": 0.8833333333333333,
+            "charges": 1.1237772121975265,
+            "fcr": 0.004240668725273684,
+            "possibly_best_size": 4,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "conformal": {
+            "certified": 17,
+            "pairs": 300,
+            "coverage": 0.056666666666666664,
+            "charges": 0.0,
+            "fcr": 0.0,
+            "possibly_best_size": 23,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "c4_en_bits_per_token",
+        "window": "14M-300M",
+        "target": "1B",
+        "lever_arm": 1.0959664975989196,
+        "calibration_predictions": {
+          "loglog": 13,
+          "three": 13
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "c4_en_bits_per_token|14M-300M|530M",
+        "lever_arm_median": 0.42182309535594925,
+        "kappa": {
+          "loglog": 0.00312791429515773,
+          "three": 0.0029524581401878754
+        },
+        "conformal_q": 0.06504205524300162,
+        "methods": {
+          "selector": {
+            "certified": 273,
+            "pairs": 300,
+            "coverage": 0.91,
+            "charges": 5.842024334115534e-23,
+            "fcr": 2.1399356535221735e-25,
+            "possibly_best_size": 2,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 3.8679203966136138,
+            "fcr": 0.012893067988712046,
+            "possibly_best_size": 1,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.971
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 4.834638203737115,
+            "fcr": 0.016115460679123717,
+            "possibly_best_size": 1,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.96875
+          },
+          "seed_se": {
+            "certified": 279,
+            "pairs": 300,
+            "coverage": 0.93,
+            "charges": 6.453602239935352e-05,
+            "fcr": 2.313119082414105e-07,
+            "possibly_best_size": 2,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "bootstrap": {
+            "certified": 284,
+            "pairs": 300,
+            "coverage": 0.9466666666666667,
+            "charges": 1.9647658739597569,
+            "fcr": 0.006918189697041398,
+            "possibly_best_size": 2,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "conformal": {
+            "certified": 107,
+            "pairs": 300,
+            "coverage": 0.3566666666666667,
+            "charges": 0.0,
+            "fcr": 0.0,
+            "possibly_best_size": 16,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "c4_en_bits_per_token",
+        "window": "14M-300M",
+        "target": "530M",
+        "lever_arm": 0.42182309535594925,
+        "calibration_predictions": {
+          "loglog": 8,
+          "three": 8
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "c4_en_bits_per_token|14M-530M|1B",
+        "lever_arm_median": 0.6741434022429703,
+        "kappa": {
+          "loglog": 0.004122210603466669,
+          "three": 0.00359674279359348
+        },
+        "conformal_q": 0.06737534302828485,
+        "methods": {
+          "selector": {
+            "certified": 263,
+            "pairs": 300,
+            "coverage": 0.8766666666666667,
+            "charges": 1.2541672590483647e-73,
+            "fcr": 4.768696802465265e-76,
+            "possibly_best_size": 2,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 3.018302037600676,
+            "fcr": 0.010061006792002255,
+            "possibly_best_size": 1,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 3.2510326844315856,
+            "fcr": 0.010836775614771952,
+            "possibly_best_size": 1,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "seed_se": {
+            "certified": 280,
+            "pairs": 300,
+            "coverage": 0.9333333333333333,
+            "charges": 0.0002393763832015811,
+            "fcr": 8.549156542913611e-07,
+            "possibly_best_size": 2,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "bootstrap": {
+            "certified": 286,
+            "pairs": 300,
+            "coverage": 0.9533333333333334,
+            "charges": 0.08289951495314356,
+            "fcr": 0.00028985844389211034,
+            "possibly_best_size": 2,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "conformal": {
+            "certified": 53,
+            "pairs": 300,
+            "coverage": 0.17666666666666667,
+            "charges": 0.0,
+            "fcr": 0.0,
+            "possibly_best_size": 20,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "c4_en_bits_per_token",
+        "window": "14M-530M",
+        "target": "1B",
+        "lever_arm": 0.6741434022429703,
+        "calibration_predictions": {
+          "loglog": 15,
+          "three": 15
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "c4_en_bits_per_token|60M-150M|1B",
+        "lever_arm_median": 1.7205654939958734,
+        "kappa": {
+          "loglog": 0.0045075311931578365,
+          "three": 0.004448646829310676
+        },
+        "conformal_q": 0.06783450651998545,
+        "methods": {
+          "selector": {
+            "certified": 149,
+            "pairs": 300,
+            "coverage": 0.49666666666666665,
+            "charges": 7.74494721236451e-30,
+            "fcr": 5.197951149237926e-32,
+            "possibly_best_size": 13,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 3.198716692109989,
+            "fcr": 0.010662388973699963,
+            "possibly_best_size": 1,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 29.99603525372062,
+            "fcr": 0.09998678417906874,
+            "possibly_best_size": 1,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "seed_se": {
+            "certified": 168,
+            "pairs": 300,
+            "coverage": 0.56,
+            "charges": 7.74494721236451e-30,
+            "fcr": 4.610087626407446e-32,
+            "possibly_best_size": 11,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "bootstrap": {
+            "certified": 182,
+            "pairs": 300,
+            "coverage": 0.6066666666666667,
+            "charges": 2.999869354159192,
+            "fcr": 0.01648279864922633,
+            "possibly_best_size": 10,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "conformal": {
+            "certified": 0,
+            "pairs": 300,
+            "coverage": 0.0,
+            "charges": 0.0,
+            "fcr": null,
+            "possibly_best_size": 25,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "c4_en_bits_per_token",
+        "window": "60M-150M",
+        "target": "1B",
+        "lever_arm": 1.7205654939958734,
+        "calibration_predictions": {
+          "loglog": 12,
+          "three": 12
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "c4_en_bits_per_token|60M-150M|530M",
+        "lever_arm_median": 1.046422091752903,
+        "kappa": {
+          "loglog": 0.0036806895051046356,
+          "three": 0.004148389107469347
+        },
+        "conformal_q": 0.07174242793245912,
+        "methods": {
+          "selector": {
+            "certified": 207,
+            "pairs": 300,
+            "coverage": 0.69,
+            "charges": 1.6514383343584507e-25,
+            "fcr": 7.977962967915221e-28,
+            "possibly_best_size": 8,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 2.270483457813964,
+            "fcr": 0.007568278192713214,
+            "possibly_best_size": 1,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.969
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 13.69889160450122,
+            "fcr": 0.04566297201500407,
+            "possibly_best_size": 1,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.96525
+          },
+          "seed_se": {
+            "certified": 218,
+            "pairs": 300,
+            "coverage": 0.7266666666666667,
+            "charges": 1.6514383343584507e-25,
+            "fcr": 7.5754052034791315e-28,
+            "possibly_best_size": 8,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "bootstrap": {
+            "certified": 225,
+            "pairs": 300,
+            "coverage": 0.75,
+            "charges": 1.0,
+            "fcr": 0.0044444444444444444,
+            "possibly_best_size": 7,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "conformal": {
+            "certified": 0,
+            "pairs": 300,
+            "coverage": 0.0,
+            "charges": 0.0,
+            "fcr": null,
+            "possibly_best_size": 25,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "c4_en_bits_per_token",
+        "window": "60M-150M",
+        "target": "530M",
+        "lever_arm": 1.046422091752903,
+        "calibration_predictions": {
+          "loglog": 7,
+          "three": 7
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "c4_en_bits_per_token|60M-300M|1B",
+        "lever_arm_median": 1.0959664975989196,
+        "kappa": {
+          "loglog": 0.004108043290491599,
+          "three": 0.003584709224453743
+        },
+        "conformal_q": 0.060139903205456896,
+        "methods": {
+          "selector": {
+            "certified": 231,
+            "pairs": 300,
+            "coverage": 0.77,
+            "charges": 1.4835103998618065e-253,
+            "fcr": 6.422122943124703e-256,
+            "possibly_best_size": 4,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 4.265543525684375,
+            "fcr": 0.014218478418947918,
+            "possibly_best_size": 1,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 13.966388211427514,
+            "fcr": 0.046554627371425045,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0
+          },
+          "seed_se": {
+            "certified": 242,
+            "pairs": 300,
+            "coverage": 0.8066666666666666,
+            "charges": 7.973550977837886e-65,
+            "fcr": 3.294855775966069e-67,
+            "possibly_best_size": 2,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "bootstrap": {
+            "certified": 248,
+            "pairs": 300,
+            "coverage": 0.8266666666666667,
+            "charges": 0.9997615838840349,
+            "fcr": 0.004031296709209818,
+            "possibly_best_size": 2,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "conformal": {
+            "certified": 23,
+            "pairs": 300,
+            "coverage": 0.07666666666666666,
+            "charges": 0.0,
+            "fcr": 0.0,
+            "possibly_best_size": 22,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "c4_en_bits_per_token",
+        "window": "60M-300M",
+        "target": "1B",
+        "lever_arm": 1.0959664975989196,
+        "calibration_predictions": {
+          "loglog": 13,
+          "three": 13
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "c4_en_bits_per_token|60M-300M|530M",
+        "lever_arm_median": 0.42182309535594925,
+        "kappa": {
+          "loglog": 0.003266444092386934,
+          "three": 0.0029464159348946356
+        },
+        "conformal_q": 0.0674123930778521,
+        "methods": {
+          "selector": {
+            "certified": 273,
+            "pairs": 300,
+            "coverage": 0.91,
+            "charges": 1.5614495600215867e-51,
+            "fcr": 5.71959545795453e-54,
+            "possibly_best_size": 2,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 3.8679203966136138,
+            "fcr": 0.012893067988712046,
+            "possibly_best_size": 1,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.965
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 5.560811487279918,
+            "fcr": 0.01853603829093306,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.02925
+          },
+          "seed_se": {
+            "certified": 278,
+            "pairs": 300,
+            "coverage": 0.9266666666666666,
+            "charges": 1.5512333769386715e-19,
+            "fcr": 5.579976176038387e-22,
+            "possibly_best_size": 2,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "bootstrap": {
+            "certified": 285,
+            "pairs": 300,
+            "coverage": 0.95,
+            "charges": 1.361697795595587,
+            "fcr": 0.004777887002089779,
+            "possibly_best_size": 2,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "conformal": {
+            "certified": 102,
+            "pairs": 300,
+            "coverage": 0.34,
+            "charges": 0.0,
+            "fcr": 0.0,
+            "possibly_best_size": 17,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "c4_en_bits_per_token",
+        "window": "60M-300M",
+        "target": "530M",
+        "lever_arm": 0.42182309535594925,
+        "calibration_predictions": {
+          "loglog": 8,
+          "three": 8
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "c4_en_bits_per_token|60M-530M|1B",
+        "lever_arm_median": 0.6741434022429703,
+        "kappa": {
+          "loglog": 0.004122210603466669,
+          "three": 0.00359674279359348
+        },
+        "conformal_q": 0.06737534302828485,
+        "methods": {
+          "selector": {
+            "certified": 265,
+            "pairs": 300,
+            "coverage": 0.8833333333333333,
+            "charges": 7.97355099037956e-65,
+            "fcr": 3.008887166180966e-67,
+            "possibly_best_size": 2,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 3.018302037600676,
+            "fcr": 0.010061006792002255,
+            "possibly_best_size": 1,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 6.725416628126657,
+            "fcr": 0.022418055427088857,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0
+          },
+          "seed_se": {
+            "certified": 277,
+            "pairs": 300,
+            "coverage": 0.9233333333333333,
+            "charges": 4.5560993261602067e-32,
+            "fcr": 1.644801200779858e-34,
+            "possibly_best_size": 2,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "bootstrap": {
+            "certified": 282,
+            "pairs": 300,
+            "coverage": 0.94,
+            "charges": 0.0001307292571494721,
+            "fcr": 4.635789260619578e-07,
+            "possibly_best_size": 2,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "conformal": {
+            "certified": 56,
+            "pairs": 300,
+            "coverage": 0.18666666666666668,
+            "charges": 0.0,
+            "fcr": 0.0,
+            "possibly_best_size": 19,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "c4_en_bits_per_token",
+        "window": "60M-530M",
+        "target": "1B",
+        "lever_arm": 0.6741434022429703,
+        "calibration_predictions": {
+          "loglog": 15,
+          "three": 15
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "olmes_macro_error|4M-150M|1B",
+        "lever_arm_median": 1.7205654939958734,
+        "kappa": {
+          "loglog": 0.01732217959195189,
+          "three": 0.003820231418939459
+        },
+        "conformal_q": 0.22395914593864172,
+        "methods": {
+          "selector": {
+            "certified": 117,
+            "pairs": 300,
+            "coverage": 0.39,
+            "charges": 9.49241325659241,
+            "fcr": 0.08113173723583257,
+            "possibly_best_size": 11,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 54.1850662420958,
+            "fcr": 0.18061688747365268,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 54.520473362779285,
+            "fcr": 0.18173491120926427,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0
+          },
+          "seed_se": {
+            "certified": 256,
+            "pairs": 300,
+            "coverage": 0.8533333333333334,
+            "charges": 37.50331844943995,
+            "fcr": 0.1464973376931248,
+            "possibly_best_size": 2,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0
+          },
+          "bootstrap": {
+            "certified": 263,
+            "pairs": 300,
+            "coverage": 0.8766666666666667,
+            "charges": 38.97022207559106,
+            "fcr": 0.14817574933684813,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0
+          },
+          "conformal": {
+            "certified": 0,
+            "pairs": 300,
+            "coverage": 0.0,
+            "charges": 0.0,
+            "fcr": null,
+            "possibly_best_size": 25,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "linearization_check": {
+          "draws": 400,
+          "pairs": 300,
+          "certified_gaussian": 117,
+          "certified_draws": 109,
+          "agree_all_ordered_pairs": 0.9833333333333333,
+          "agree_among_certified_by_either": 0.9152542372881356
+        },
+        "metric": "olmes_macro_error",
+        "window": "4M-150M",
+        "target": "1B",
+        "lever_arm": 1.7205654939958734,
+        "calibration_predictions": {
+          "loglog": 12,
+          "three": 12
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "olmes_macro_error|4M-150M|530M",
+        "lever_arm_median": 1.046422091752903,
+        "kappa": {
+          "loglog": 0.01649051965281005,
+          "three": 0.0
+        },
+        "conformal_q": 0.2014535271689166,
+        "methods": {
+          "selector": {
+            "certified": 164,
+            "pairs": 300,
+            "coverage": 0.5466666666666666,
+            "charges": 3.7428179333389378,
+            "fcr": 0.022822060569139865,
+            "possibly_best_size": 7,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 32.91494697235944,
+            "fcr": 0.1097164899078648,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 30.924670592283523,
+            "fcr": 0.10308223530761174,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.40875
+          },
+          "seed_se": {
+            "certified": 257,
+            "pairs": 300,
+            "coverage": 0.8566666666666667,
+            "charges": 14.401839566676678,
+            "fcr": 0.05603828625166023,
+            "possibly_best_size": 2,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.3985
+          },
+          "bootstrap": {
+            "certified": 266,
+            "pairs": 300,
+            "coverage": 0.8866666666666667,
+            "charges": 17.21283079692594,
+            "fcr": 0.06470989021400729,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.3965
+          },
+          "conformal": {
+            "certified": 0,
+            "pairs": 300,
+            "coverage": 0.0,
+            "charges": 0.0,
+            "fcr": null,
+            "possibly_best_size": 25,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "olmes_macro_error",
+        "window": "4M-150M",
+        "target": "530M",
+        "lever_arm": 1.046422091752903,
+        "calibration_predictions": {
+          "loglog": 7,
+          "three": 7
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "olmes_macro_error|4M-300M|1B",
+        "lever_arm_median": 1.0959664975989196,
+        "kappa": {
+          "loglog": 0.015523057603559934,
+          "three": 0.005821398246323989
+        },
+        "conformal_q": 0.1573970808999689,
+        "methods": {
+          "selector": {
+            "certified": 188,
+            "pairs": 300,
+            "coverage": 0.6266666666666667,
+            "charges": 17.107528895958,
+            "fcr": 0.09099749412743617,
+            "possibly_best_size": 7,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.99075
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 44.586854092713125,
+            "fcr": 0.1486228469757104,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.00125
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 52.14341292785178,
+            "fcr": 0.1738113764261726,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0
+          },
+          "seed_se": {
+            "certified": 263,
+            "pairs": 300,
+            "coverage": 0.8766666666666667,
+            "charges": 36.218833686367404,
+            "fcr": 0.1377141965261118,
+            "possibly_best_size": 2,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.001
+          },
+          "bootstrap": {
+            "certified": 268,
+            "pairs": 300,
+            "coverage": 0.8933333333333333,
+            "charges": 39.53027703431187,
+            "fcr": 0.14750103371011894,
+            "possibly_best_size": 2,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0005
+          },
+          "conformal": {
+            "certified": 0,
+            "pairs": 300,
+            "coverage": 0.0,
+            "charges": 0.0,
+            "fcr": null,
+            "possibly_best_size": 25,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "olmes_macro_error",
+        "window": "4M-300M",
+        "target": "1B",
+        "lever_arm": 1.0959664975989196,
+        "calibration_predictions": {
+          "loglog": 13,
+          "three": 13
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "olmes_macro_error|4M-300M|530M",
+        "lever_arm_median": 0.42182309535594925,
+        "kappa": {
+          "loglog": 0.014774441045777506,
+          "three": 0.004996261653507355
+        },
+        "conformal_q": 0.13740397023209447,
+        "methods": {
+          "selector": {
+            "certified": 240,
+            "pairs": 300,
+            "coverage": 0.8,
+            "charges": 7.2892172025679365,
+            "fcr": 0.030371738344033068,
+            "possibly_best_size": 4,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.9685
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 27.861938492732722,
+            "fcr": 0.09287312830910907,
+            "possibly_best_size": 1,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.468
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 28.9509287394013,
+            "fcr": 0.09650309579800433,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.409
+          },
+          "seed_se": {
+            "certified": 265,
+            "pairs": 300,
+            "coverage": 0.8833333333333333,
+            "charges": 14.566009192989874,
+            "fcr": 0.05496607242637688,
+            "possibly_best_size": 2,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.84925
+          },
+          "bootstrap": {
+            "certified": 268,
+            "pairs": 300,
+            "coverage": 0.8933333333333333,
+            "charges": 16.789439022471065,
+            "fcr": 0.06264716053160845,
+            "possibly_best_size": 2,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.848
+          },
+          "conformal": {
+            "certified": 19,
+            "pairs": 300,
+            "coverage": 0.06333333333333334,
+            "charges": 6.148285890592709e-09,
+            "fcr": 3.2359399424172155e-10,
+            "possibly_best_size": 19,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "olmes_macro_error",
+        "window": "4M-300M",
+        "target": "530M",
+        "lever_arm": 0.42182309535594925,
+        "calibration_predictions": {
+          "loglog": 8,
+          "three": 8
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "olmes_macro_error|4M-530M|1B",
+        "lever_arm_median": 0.6741434022429703,
+        "kappa": {
+          "loglog": 0.015651205946284767,
+          "three": 0.0068097794093937795
+        },
+        "conformal_q": 0.21993684692948673,
+        "methods": {
+          "selector": {
+            "certified": 223,
+            "pairs": 300,
+            "coverage": 0.7433333333333333,
+            "charges": 19.407884898373325,
+            "fcr": 0.08703087398373688,
+            "possibly_best_size": 4,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.191
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 37.48339886905994,
+            "fcr": 0.12494466289686647,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.001
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 48.812883370846166,
+            "fcr": 0.16270961123615388,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0
+          },
+          "seed_se": {
+            "certified": 266,
+            "pairs": 300,
+            "coverage": 0.8866666666666667,
+            "charges": 32.70146802492026,
+            "fcr": 0.12293784971774534,
+            "possibly_best_size": 2,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.00075
+          },
+          "bootstrap": {
+            "certified": 272,
+            "pairs": 300,
+            "coverage": 0.9066666666666666,
+            "charges": 35.55955002859621,
+            "fcr": 0.1307336398110155,
+            "possibly_best_size": 2,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.001
+          },
+          "conformal": {
+            "certified": 0,
+            "pairs": 300,
+            "coverage": 0.0,
+            "charges": 0.0,
+            "fcr": null,
+            "possibly_best_size": 25,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "olmes_macro_error",
+        "window": "4M-530M",
+        "target": "1B",
+        "lever_arm": 0.6741434022429703,
+        "calibration_predictions": {
+          "loglog": 15,
+          "three": 15
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "olmes_macro_error|14M-150M|1B",
+        "lever_arm_median": 1.7205654939958734,
+        "kappa": {
+          "loglog": 0.01734082043546356,
+          "three": 0.005036594770344743
+        },
+        "conformal_q": 0.22395914593864172,
+        "methods": {
+          "selector": {
+            "certified": 125,
+            "pairs": 300,
+            "coverage": 0.4166666666666667,
+            "charges": 15.407310093327077,
+            "fcr": 0.12325848074661662,
+            "possibly_best_size": 8,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.995
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 54.1850662420958,
+            "fcr": 0.18061688747365268,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 59.18446005000835,
+            "fcr": 0.19728153350002783,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0
+          },
+          "seed_se": {
+            "certified": 242,
+            "pairs": 300,
+            "coverage": 0.8066666666666666,
+            "charges": 34.928934616408554,
+            "fcr": 0.1443344405636717,
+            "possibly_best_size": 3,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.00025
+          },
+          "bootstrap": {
+            "certified": 253,
+            "pairs": 300,
+            "coverage": 0.8433333333333334,
+            "charges": 38.39887977091905,
+            "fcr": 0.15177422834355356,
+            "possibly_best_size": 2,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0
+          },
+          "conformal": {
+            "certified": 0,
+            "pairs": 300,
+            "coverage": 0.0,
+            "charges": 0.0,
+            "fcr": null,
+            "possibly_best_size": 25,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "olmes_macro_error",
+        "window": "14M-150M",
+        "target": "1B",
+        "lever_arm": 1.7205654939958734,
+        "calibration_predictions": {
+          "loglog": 12,
+          "three": 12
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "olmes_macro_error|14M-150M|530M",
+        "lever_arm_median": 1.046422091752903,
+        "kappa": {
+          "loglog": 0.016563352182536274,
+          "three": 0.0033467946966038884
+        },
+        "conformal_q": 0.2014535271689166,
+        "methods": {
+          "selector": {
+            "certified": 169,
+            "pairs": 300,
+            "coverage": 0.5633333333333334,
+            "charges": 3.8940796602805174,
+            "fcr": 0.023041891480949806,
+            "possibly_best_size": 5,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.97925
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 32.91494697235944,
+            "fcr": 0.1097164899078648,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 33.866772253962274,
+            "fcr": 0.11288924084654091,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.416
+          },
+          "seed_se": {
+            "certified": 248,
+            "pairs": 300,
+            "coverage": 0.8266666666666667,
+            "charges": 12.575130799865313,
+            "fcr": 0.05070617258010207,
+            "possibly_best_size": 3,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.8455
+          },
+          "bootstrap": {
+            "certified": 255,
+            "pairs": 300,
+            "coverage": 0.85,
+            "charges": 15.02932288143074,
+            "fcr": 0.058938521103649964,
+            "possibly_best_size": 2,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.4145
+          },
+          "conformal": {
+            "certified": 0,
+            "pairs": 300,
+            "coverage": 0.0,
+            "charges": 0.0,
+            "fcr": null,
+            "possibly_best_size": 25,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "olmes_macro_error",
+        "window": "14M-150M",
+        "target": "530M",
+        "lever_arm": 1.046422091752903,
+        "calibration_predictions": {
+          "loglog": 7,
+          "three": 7
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "olmes_macro_error|14M-300M|1B",
+        "lever_arm_median": 1.0959664975989196,
+        "kappa": {
+          "loglog": 0.015474545702913123,
+          "three": 0.005760925930525147
+        },
+        "conformal_q": 0.22387188180967305,
+        "methods": {
+          "selector": {
+            "certified": 192,
+            "pairs": 300,
+            "coverage": 0.64,
+            "charges": 19.72656302711353,
+            "fcr": 0.1027425157662163,
+            "possibly_best_size": 6,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.62525
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 44.586854092713125,
+            "fcr": 0.1486228469757104,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0005
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 49.05027375574811,
+            "fcr": 0.16350091251916035,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0
+          },
+          "seed_se": {
+            "certified": 252,
+            "pairs": 300,
+            "coverage": 0.84,
+            "charges": 32.6694232657966,
+            "fcr": 0.1296405685150659,
+            "possibly_best_size": 4,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.156
+          },
+          "bootstrap": {
+            "certified": 259,
+            "pairs": 300,
+            "coverage": 0.8633333333333333,
+            "charges": 35.22311868651613,
+            "fcr": 0.13599659724523602,
+            "possibly_best_size": 2,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0005
+          },
+          "conformal": {
+            "certified": 0,
+            "pairs": 300,
+            "coverage": 0.0,
+            "charges": 0.0,
+            "fcr": null,
+            "possibly_best_size": 25,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "olmes_macro_error",
+        "window": "14M-300M",
+        "target": "1B",
+        "lever_arm": 1.0959664975989196,
+        "calibration_predictions": {
+          "loglog": 13,
+          "three": 13
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "olmes_macro_error|14M-300M|530M",
+        "lever_arm_median": 0.42182309535594925,
+        "kappa": {
+          "loglog": 0.014674431890724022,
+          "three": 0.004667573651581136
+        },
+        "conformal_q": 0.19763811003150475,
+        "methods": {
+          "selector": {
+            "certified": 238,
+            "pairs": 300,
+            "coverage": 0.7933333333333333,
+            "charges": 9.022387112306912,
+            "fcr": 0.037909189547508035,
+            "possibly_best_size": 4,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.9665
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 27.861938492732722,
+            "fcr": 0.09287312830910907,
+            "possibly_best_size": 1,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.449
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 27.006478344517976,
+            "fcr": 0.09002159448172659,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.41375
+          },
+          "seed_se": {
+            "certified": 257,
+            "pairs": 300,
+            "coverage": 0.8566666666666667,
+            "charges": 13.0083667042934,
+            "fcr": 0.05061621285717276,
+            "possibly_best_size": 3,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.9675
+          },
+          "bootstrap": {
+            "certified": 266,
+            "pairs": 300,
+            "coverage": 0.8866666666666667,
+            "charges": 14.818654335121549,
+            "fcr": 0.05570922682376522,
+            "possibly_best_size": 2,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.8585
+          },
+          "conformal": {
+            "certified": 0,
+            "pairs": 300,
+            "coverage": 0.0,
+            "charges": 0.0,
+            "fcr": null,
+            "possibly_best_size": 25,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "olmes_macro_error",
+        "window": "14M-300M",
+        "target": "530M",
+        "lever_arm": 0.42182309535594925,
+        "calibration_predictions": {
+          "loglog": 8,
+          "three": 8
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "olmes_macro_error|14M-530M|1B",
+        "lever_arm_median": 0.6741434022429703,
+        "kappa": {
+          "loglog": 0.015651205946284767,
+          "three": 0.0068097794093937795
+        },
+        "conformal_q": 0.21993684692948673,
+        "methods": {
+          "selector": {
+            "certified": 224,
+            "pairs": 300,
+            "coverage": 0.7466666666666667,
+            "charges": 17.215170434472473,
+            "fcr": 0.07685343943960925,
+            "possibly_best_size": 5,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.6135
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 37.48339886905994,
+            "fcr": 0.12494466289686647,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0005
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 45.724003002331514,
+            "fcr": 0.15241334334110504,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0
+          },
+          "seed_se": {
+            "certified": 260,
+            "pairs": 300,
+            "coverage": 0.8666666666666667,
+            "charges": 28.432012453180842,
+            "fcr": 0.10935389405069555,
+            "possibly_best_size": 3,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.1685
+          },
+          "bootstrap": {
+            "certified": 269,
+            "pairs": 300,
+            "coverage": 0.8966666666666666,
+            "charges": 33.445610450388294,
+            "fcr": 0.12433312435088585,
+            "possibly_best_size": 2,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.00075
+          },
+          "conformal": {
+            "certified": 0,
+            "pairs": 300,
+            "coverage": 0.0,
+            "charges": 0.0,
+            "fcr": null,
+            "possibly_best_size": 25,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "olmes_macro_error",
+        "window": "14M-530M",
+        "target": "1B",
+        "lever_arm": 0.6741434022429703,
+        "calibration_predictions": {
+          "loglog": 15,
+          "three": 15
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "olmes_macro_error|60M-150M|1B",
+        "lever_arm_median": 1.7205654939958734,
+        "kappa": {
+          "loglog": 0.012753107787423439,
+          "three": 0.012174479092143073
+        },
+        "conformal_q": 0.22395914593864172,
+        "methods": {
+          "selector": {
+            "certified": 86,
+            "pairs": 300,
+            "coverage": 0.2866666666666667,
+            "charges": 12.967459459316936,
+            "fcr": 0.15078441231763878,
+            "possibly_best_size": 9,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.63125
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 54.1850662420958,
+            "fcr": 0.18061688747365268,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 69.54602215640963,
+            "fcr": 0.23182007385469877,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0
+          },
+          "seed_se": {
+            "certified": 106,
+            "pairs": 300,
+            "coverage": 0.35333333333333333,
+            "charges": 17.061223846744323,
+            "fcr": 0.16095494195041815,
+            "possibly_best_size": 5,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.46275
+          },
+          "bootstrap": {
+            "certified": 144,
+            "pairs": 300,
+            "coverage": 0.48,
+            "charges": 27.103632509982646,
+            "fcr": 0.1882196702082128,
+            "possibly_best_size": 5,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.4765
+          },
+          "conformal": {
+            "certified": 0,
+            "pairs": 300,
+            "coverage": 0.0,
+            "charges": 0.0,
+            "fcr": null,
+            "possibly_best_size": 25,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "olmes_macro_error",
+        "window": "60M-150M",
+        "target": "1B",
+        "lever_arm": 1.7205654939958734,
+        "calibration_predictions": {
+          "loglog": 12,
+          "three": 12
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "olmes_macro_error|60M-150M|530M",
+        "lever_arm_median": 1.046422091752903,
+        "kappa": {
+          "loglog": 0.01165150908715679,
+          "three": 0.011110055983845688
+        },
+        "conformal_q": 0.2014535271689166,
+        "methods": {
+          "selector": {
+            "certified": 118,
+            "pairs": 300,
+            "coverage": 0.3933333333333333,
+            "charges": 8.812940614446289,
+            "fcr": 0.07468593741056177,
+            "possibly_best_size": 6,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.44275
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 32.91494697235944,
+            "fcr": 0.1097164899078648,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 56.56612280491078,
+            "fcr": 0.18855374268303596,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0
+          },
+          "seed_se": {
+            "certified": 135,
+            "pairs": 300,
+            "coverage": 0.45,
+            "charges": 10.757953506065427,
+            "fcr": 0.07968854448937353,
+            "possibly_best_size": 5,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.02625
+          },
+          "bootstrap": {
+            "certified": 160,
+            "pairs": 300,
+            "coverage": 0.5333333333333333,
+            "charges": 16.439484851550844,
+            "fcr": 0.10274678032219278,
+            "possibly_best_size": 5,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0365
+          },
+          "conformal": {
+            "certified": 0,
+            "pairs": 300,
+            "coverage": 0.0,
+            "charges": 0.0,
+            "fcr": null,
+            "possibly_best_size": 25,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "olmes_macro_error",
+        "window": "60M-150M",
+        "target": "530M",
+        "lever_arm": 1.046422091752903,
+        "calibration_predictions": {
+          "loglog": 7,
+          "three": 7
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "olmes_macro_error|60M-300M|1B",
+        "lever_arm_median": 1.0959664975989196,
+        "kappa": {
+          "loglog": 0.015285075085575816,
+          "three": 0.00601921287983852
+        },
+        "conformal_q": 0.22387188180967305,
+        "methods": {
+          "selector": {
+            "certified": 173,
+            "pairs": 300,
+            "coverage": 0.5766666666666667,
+            "charges": 7.749503949303287,
+            "fcr": 0.044794820516203974,
+            "possibly_best_size": 9,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.64225
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 44.586854092713125,
+            "fcr": 0.1486228469757104,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 44.70135875412659,
+            "fcr": 0.14900452918042195,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0005
+          },
+          "seed_se": {
+            "certified": 214,
+            "pairs": 300,
+            "coverage": 0.7133333333333334,
+            "charges": 12.231739022716372,
+            "fcr": 0.05715765898465595,
+            "possibly_best_size": 6,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.638
+          },
+          "bootstrap": {
+            "certified": 227,
+            "pairs": 300,
+            "coverage": 0.7566666666666667,
+            "charges": 16.93858570498587,
+            "fcr": 0.07461932028628136,
+            "possibly_best_size": 5,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.6195
+          },
+          "conformal": {
+            "certified": 0,
+            "pairs": 300,
+            "coverage": 0.0,
+            "charges": 0.0,
+            "fcr": null,
+            "possibly_best_size": 25,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "olmes_macro_error",
+        "window": "60M-300M",
+        "target": "1B",
+        "lever_arm": 1.0959664975989196,
+        "calibration_predictions": {
+          "loglog": 13,
+          "three": 13
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "olmes_macro_error|60M-300M|530M",
+        "lever_arm_median": 0.42182309535594925,
+        "kappa": {
+          "loglog": 0.014446387581053698,
+          "three": 0.004366711890562623
+        },
+        "conformal_q": 0.19763811003150475,
+        "methods": {
+          "selector": {
+            "certified": 219,
+            "pairs": 300,
+            "coverage": 0.73,
+            "charges": 5.431108494246009,
+            "fcr": 0.02479958216550689,
+            "possibly_best_size": 6,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.99675
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 27.861938492732722,
+            "fcr": 0.09287312830910907,
+            "possibly_best_size": 1,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.44225
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 29.518719022962024,
+            "fcr": 0.09839573007654008,
+            "possibly_best_size": 1,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.441
+          },
+          "seed_se": {
+            "certified": 235,
+            "pairs": 300,
+            "coverage": 0.7833333333333333,
+            "charges": 7.71856994926416,
+            "fcr": 0.03284497850750707,
+            "possibly_best_size": 6,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.998
+          },
+          "bootstrap": {
+            "certified": 246,
+            "pairs": 300,
+            "coverage": 0.82,
+            "charges": 9.643108064816149,
+            "fcr": 0.03919962627974044,
+            "possibly_best_size": 5,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.98475
+          },
+          "conformal": {
+            "certified": 0,
+            "pairs": 300,
+            "coverage": 0.0,
+            "charges": 0.0,
+            "fcr": null,
+            "possibly_best_size": 25,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "olmes_macro_error",
+        "window": "60M-300M",
+        "target": "530M",
+        "lever_arm": 0.42182309535594925,
+        "calibration_predictions": {
+          "loglog": 8,
+          "three": 8
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "olmes_macro_error|60M-530M|1B",
+        "lever_arm_median": 0.6741434022429703,
+        "kappa": {
+          "loglog": 0.015651205946284767,
+          "three": 0.0068097794093937795
+        },
+        "conformal_q": 0.21993684692948673,
+        "methods": {
+          "selector": {
+            "certified": 213,
+            "pairs": 300,
+            "coverage": 0.71,
+            "charges": 10.043719502212932,
+            "fcr": 0.04715361268644569,
+            "possibly_best_size": 5,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.62025
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 37.48339886905994,
+            "fcr": 0.12494466289686647,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.001
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 35.15661838366064,
+            "fcr": 0.11718872794553548,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0005
+          },
+          "seed_se": {
+            "certified": 237,
+            "pairs": 300,
+            "coverage": 0.79,
+            "charges": 15.536086694361558,
+            "fcr": 0.06555310841502766,
+            "possibly_best_size": 5,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.62075
+          },
+          "bootstrap": {
+            "certified": 247,
+            "pairs": 300,
+            "coverage": 0.8233333333333334,
+            "charges": 18.43402461042285,
+            "fcr": 0.07463167858470789,
+            "possibly_best_size": 4,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.5875
+          },
+          "conformal": {
+            "certified": 0,
+            "pairs": 300,
+            "coverage": 0.0,
+            "charges": 0.0,
+            "fcr": null,
+            "possibly_best_size": 25,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "olmes_macro_error",
+        "window": "60M-530M",
+        "target": "1B",
+        "lever_arm": 0.6741434022429703,
+        "calibration_predictions": {
+          "loglog": 15,
+          "three": 15
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "olmes_macro_correct_prob_per_char_deficit|4M-150M|1B",
+        "lever_arm_median": 1.7205654939958734,
+        "kappa": {
+          "loglog": 0.031445186805036184,
+          "three": 0.030537379384088
+        },
+        "conformal_q": 0.12832124913074672,
+        "methods": {
+          "selector": {
+            "certified": 91,
+            "pairs": 300,
+            "coverage": 0.30333333333333334,
+            "charges": 0.0069263321632447635,
+            "fcr": 7.611354025543697e-05,
+            "possibly_best_size": 19,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 57.811181269747735,
+            "fcr": 0.1927039375658258,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.31075
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 66.01596580711592,
+            "fcr": 0.22005321935705305,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0
+          },
+          "seed_se": {
+            "certified": 230,
+            "pairs": 300,
+            "coverage": 0.7666666666666667,
+            "charges": 27.718910908414188,
+            "fcr": 0.1205170039496269,
+            "possibly_best_size": 6,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.30875
+          },
+          "bootstrap": {
+            "certified": 262,
+            "pairs": 300,
+            "coverage": 0.8733333333333333,
+            "charges": 45.21625939279821,
+            "fcr": 0.17258114272060385,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0
+          },
+          "conformal": {
+            "certified": 0,
+            "pairs": 300,
+            "coverage": 0.0,
+            "charges": 0.0,
+            "fcr": null,
+            "possibly_best_size": 25,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "linearization_check": {
+          "draws": 400,
+          "pairs": 300,
+          "certified_gaussian": 91,
+          "certified_draws": 91,
+          "agree_all_ordered_pairs": 0.9966666666666667,
+          "agree_among_certified_by_either": 0.9782608695652174
+        },
+        "metric": "olmes_macro_correct_prob_per_char_deficit",
+        "window": "4M-150M",
+        "target": "1B",
+        "lever_arm": 1.7205654939958734,
+        "calibration_predictions": {
+          "loglog": 12,
+          "three": 12
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "olmes_macro_correct_prob_per_char_deficit|4M-150M|530M",
+        "lever_arm_median": 1.046422091752903,
+        "kappa": {
+          "loglog": 0.03560353539201973,
+          "three": 0.03457295636801694
+        },
+        "conformal_q": 0.1384822781396702,
+        "methods": {
+          "selector": {
+            "certified": 110,
+            "pairs": 300,
+            "coverage": 0.36666666666666664,
+            "charges": 0.0001196544844648553,
+            "fcr": 1.0877680405895937e-06,
+            "possibly_best_size": 17,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 39.57723454628026,
+            "fcr": 0.13192411515426752,
+            "possibly_best_size": 1,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.59275
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 46.2696107422241,
+            "fcr": 0.15423203580741368,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0
+          },
+          "seed_se": {
+            "certified": 237,
+            "pairs": 300,
+            "coverage": 0.79,
+            "charges": 16.41238943792178,
+            "fcr": 0.06925058834566153,
+            "possibly_best_size": 5,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.60725
+          },
+          "bootstrap": {
+            "certified": 261,
+            "pairs": 300,
+            "coverage": 0.87,
+            "charges": 30.570783956503014,
+            "fcr": 0.1171294404463717,
+            "possibly_best_size": 4,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.00025
+          },
+          "conformal": {
+            "certified": 3,
+            "pairs": 300,
+            "coverage": 0.01,
+            "charges": 3.111344919192161e-12,
+            "fcr": 1.0371149730640537e-12,
+            "possibly_best_size": 22,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "olmes_macro_correct_prob_per_char_deficit",
+        "window": "4M-150M",
+        "target": "530M",
+        "lever_arm": 1.046422091752903,
+        "calibration_predictions": {
+          "loglog": 7,
+          "three": 7
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "olmes_macro_correct_prob_per_char_deficit|4M-300M|1B",
+        "lever_arm_median": 1.0959664975989196,
+        "kappa": {
+          "loglog": 0.027847105371377287,
+          "three": 0.029013371202329854
+        },
+        "conformal_q": 0.11035067031693277,
+        "methods": {
+          "selector": {
+            "certified": 135,
+            "pairs": 300,
+            "coverage": 0.45,
+            "charges": 3.2526319841398634,
+            "fcr": 0.02409357025288788,
+            "possibly_best_size": 15,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 44.88419954441271,
+            "fcr": 0.1496139984813757,
+            "possibly_best_size": 1,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.611
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 58.31281764805297,
+            "fcr": 0.19437605882684322,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0
+          },
+          "seed_se": {
+            "certified": 229,
+            "pairs": 300,
+            "coverage": 0.7633333333333333,
+            "charges": 22.966845521813962,
+            "fcr": 0.10029190184198236,
+            "possibly_best_size": 7,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.92425
+          },
+          "bootstrap": {
+            "certified": 255,
+            "pairs": 300,
+            "coverage": 0.85,
+            "charges": 37.01658889777517,
+            "fcr": 0.1451630937167654,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0
+          },
+          "conformal": {
+            "certified": 61,
+            "pairs": 300,
+            "coverage": 0.20333333333333334,
+            "charges": 0.006260892654839703,
+            "fcr": 0.0001026375845055689,
+            "possibly_best_size": 21,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "olmes_macro_correct_prob_per_char_deficit",
+        "window": "4M-300M",
+        "target": "1B",
+        "lever_arm": 1.0959664975989196,
+        "calibration_predictions": {
+          "loglog": 13,
+          "three": 13
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "olmes_macro_correct_prob_per_char_deficit|4M-300M|530M",
+        "lever_arm_median": 0.42182309535594925,
+        "kappa": {
+          "loglog": 0.03089015263154267,
+          "three": 0.03198873261399383
+        },
+        "conformal_q": 0.11035067031693277,
+        "methods": {
+          "selector": {
+            "certified": 189,
+            "pairs": 300,
+            "coverage": 0.63,
+            "charges": 2.3552289710438927,
+            "fcr": 0.012461528947322184,
+            "possibly_best_size": 11,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 32.27340144521763,
+            "fcr": 0.1075780048173921,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.02675
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 39.85011460304409,
+            "fcr": 0.1328337153434803,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0
+          },
+          "seed_se": {
+            "certified": 242,
+            "pairs": 300,
+            "coverage": 0.8066666666666666,
+            "charges": 12.895106924017995,
+            "fcr": 0.053285565801727254,
+            "possibly_best_size": 7,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.99925
+          },
+          "bootstrap": {
+            "certified": 260,
+            "pairs": 300,
+            "coverage": 0.8666666666666667,
+            "charges": 20.543114231455245,
+            "fcr": 0.0790119778132894,
+            "possibly_best_size": 5,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.96775
+          },
+          "conformal": {
+            "certified": 116,
+            "pairs": 300,
+            "coverage": 0.38666666666666666,
+            "charges": 0.006482532261729299,
+            "fcr": 5.58838988080112e-05,
+            "possibly_best_size": 16,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "olmes_macro_correct_prob_per_char_deficit",
+        "window": "4M-300M",
+        "target": "530M",
+        "lever_arm": 0.42182309535594925,
+        "calibration_predictions": {
+          "loglog": 8,
+          "three": 8
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "olmes_macro_correct_prob_per_char_deficit|4M-530M|1B",
+        "lever_arm_median": 0.6741434022429703,
+        "kappa": {
+          "loglog": 0.029200222203087836,
+          "three": 0.03102246120742378
+        },
+        "conformal_q": 0.12317825624002209,
+        "methods": {
+          "selector": {
+            "certified": 170,
+            "pairs": 300,
+            "coverage": 0.5666666666666667,
+            "charges": 3.2584212543250644,
+            "fcr": 0.019167183848970967,
+            "possibly_best_size": 14,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 23.56380980996624,
+            "fcr": 0.07854603269988747,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.30475
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 45.099663557475985,
+            "fcr": 0.1503322118582533,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0
+          },
+          "seed_se": {
+            "certified": 239,
+            "pairs": 300,
+            "coverage": 0.7966666666666666,
+            "charges": 12.779079549752106,
+            "fcr": 0.053468952091012996,
+            "possibly_best_size": 6,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.92425
+          },
+          "bootstrap": {
+            "certified": 253,
+            "pairs": 300,
+            "coverage": 0.8433333333333334,
+            "charges": 20.000110365945567,
+            "fcr": 0.07905181962824334,
+            "possibly_best_size": 5,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.3085
+          },
+          "conformal": {
+            "certified": 87,
+            "pairs": 300,
+            "coverage": 0.29,
+            "charges": 0.006927829767796916,
+            "fcr": 7.963022721605651e-05,
+            "possibly_best_size": 20,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "olmes_macro_correct_prob_per_char_deficit",
+        "window": "4M-530M",
+        "target": "1B",
+        "lever_arm": 0.6741434022429703,
+        "calibration_predictions": {
+          "loglog": 15,
+          "three": 15
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "olmes_macro_correct_prob_per_char_deficit|14M-150M|1B",
+        "lever_arm_median": 1.7205654939958734,
+        "kappa": {
+          "loglog": 0.031105329120276293,
+          "three": 0.034367759012775764
+        },
+        "conformal_q": 0.12832124913074672,
+        "methods": {
+          "selector": {
+            "certified": 82,
+            "pairs": 300,
+            "coverage": 0.2733333333333333,
+            "charges": 0.008599076478068185,
+            "fcr": 0.00010486678631790469,
+            "possibly_best_size": 19,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 57.811181269747735,
+            "fcr": 0.1927039375658258,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.302
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 80.52504763651328,
+            "fcr": 0.26841682545504425,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0
+          },
+          "seed_se": {
+            "certified": 158,
+            "pairs": 300,
+            "coverage": 0.5266666666666666,
+            "charges": 15.540733054523185,
+            "fcr": 0.09835906996533662,
+            "possibly_best_size": 11,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "bootstrap": {
+            "certified": 189,
+            "pairs": 300,
+            "coverage": 0.63,
+            "charges": 29.20116891246692,
+            "fcr": 0.1545035392194017,
+            "possibly_best_size": 7,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.6145
+          },
+          "conformal": {
+            "certified": 0,
+            "pairs": 300,
+            "coverage": 0.0,
+            "charges": 0.0,
+            "fcr": null,
+            "possibly_best_size": 25,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "olmes_macro_correct_prob_per_char_deficit",
+        "window": "14M-150M",
+        "target": "1B",
+        "lever_arm": 1.7205654939958734,
+        "calibration_predictions": {
+          "loglog": 12,
+          "three": 12
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "olmes_macro_correct_prob_per_char_deficit|14M-150M|530M",
+        "lever_arm_median": 1.046422091752903,
+        "kappa": {
+          "loglog": 0.03481692635385458,
+          "three": 0.038731577878524236
+        },
+        "conformal_q": 0.1384822781396702,
+        "methods": {
+          "selector": {
+            "certified": 108,
+            "pairs": 300,
+            "coverage": 0.36,
+            "charges": 0.06668800679035901,
+            "fcr": 0.000617481544355176,
+            "possibly_best_size": 18,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 39.57723454628026,
+            "fcr": 0.13192411515426752,
+            "possibly_best_size": 1,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.60175
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 57.41242176359549,
+            "fcr": 0.19137473921198497,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0
+          },
+          "seed_se": {
+            "certified": 180,
+            "pairs": 300,
+            "coverage": 0.6,
+            "charges": 9.242116163313584,
+            "fcr": 0.05134508979618658,
+            "possibly_best_size": 11,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "bootstrap": {
+            "certified": 205,
+            "pairs": 300,
+            "coverage": 0.6833333333333333,
+            "charges": 19.806285232925827,
+            "fcr": 0.09661602552646745,
+            "possibly_best_size": 6,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.99975
+          },
+          "conformal": {
+            "certified": 0,
+            "pairs": 300,
+            "coverage": 0.0,
+            "charges": 0.0,
+            "fcr": null,
+            "possibly_best_size": 25,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "olmes_macro_correct_prob_per_char_deficit",
+        "window": "14M-150M",
+        "target": "530M",
+        "lever_arm": 1.046422091752903,
+        "calibration_predictions": {
+          "loglog": 7,
+          "three": 7
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "olmes_macro_correct_prob_per_char_deficit|14M-300M|1B",
+        "lever_arm_median": 1.0959664975989196,
+        "kappa": {
+          "loglog": 0.027191242040040246,
+          "three": 0.028691838102492262
+        },
+        "conformal_q": 0.11035067031693277,
+        "methods": {
+          "selector": {
+            "certified": 125,
+            "pairs": 300,
+            "coverage": 0.4166666666666667,
+            "charges": 2.1472008645913183,
+            "fcr": 0.017177606916730547,
+            "possibly_best_size": 16,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 44.88419954441271,
+            "fcr": 0.1496139984813757,
+            "possibly_best_size": 1,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.60475
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 50.00818004867173,
+            "fcr": 0.16669393349557243,
+            "possibly_best_size": 1,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.6065
+          },
+          "seed_se": {
+            "certified": 197,
+            "pairs": 300,
+            "coverage": 0.6566666666666666,
+            "charges": 13.545086986505446,
+            "fcr": 0.06875678673353018,
+            "possibly_best_size": 8,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "bootstrap": {
+            "certified": 224,
+            "pairs": 300,
+            "coverage": 0.7466666666666667,
+            "charges": 17.64665876444563,
+            "fcr": 0.07877972662698941,
+            "possibly_best_size": 6,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "conformal": {
+            "certified": 76,
+            "pairs": 300,
+            "coverage": 0.25333333333333335,
+            "charges": 0.0069263321632447635,
+            "fcr": 9.113594951637846e-05,
+            "possibly_best_size": 21,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "olmes_macro_correct_prob_per_char_deficit",
+        "window": "14M-300M",
+        "target": "1B",
+        "lever_arm": 1.0959664975989196,
+        "calibration_predictions": {
+          "loglog": 13,
+          "three": 13
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "olmes_macro_correct_prob_per_char_deficit|14M-300M|530M",
+        "lever_arm_median": 0.42182309535594925,
+        "kappa": {
+          "loglog": 0.029748329086767743,
+          "three": 0.03132393611728083
+        },
+        "conformal_q": 0.10540934118438228,
+        "methods": {
+          "selector": {
+            "certified": 176,
+            "pairs": 300,
+            "coverage": 0.5866666666666667,
+            "charges": 3.3523824366724404,
+            "fcr": 0.019047627481093413,
+            "possibly_best_size": 12,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 32.27340144521763,
+            "fcr": 0.1075780048173921,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0285
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 36.30781529372168,
+            "fcr": 0.12102605097907228,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0325
+          },
+          "seed_se": {
+            "certified": 230,
+            "pairs": 300,
+            "coverage": 0.7666666666666667,
+            "charges": 9.227834246933556,
+            "fcr": 0.04012101846492851,
+            "possibly_best_size": 8,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "bootstrap": {
+            "certified": 245,
+            "pairs": 300,
+            "coverage": 0.8166666666666667,
+            "charges": 11.1936894848088,
+            "fcr": 0.045688528509423676,
+            "possibly_best_size": 6,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "conformal": {
+            "certified": 112,
+            "pairs": 300,
+            "coverage": 0.37333333333333335,
+            "charges": 0.06668800679034062,
+            "fcr": 0.0005954286320566127,
+            "possibly_best_size": 19,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "olmes_macro_correct_prob_per_char_deficit",
+        "window": "14M-300M",
+        "target": "530M",
+        "lever_arm": 0.42182309535594925,
+        "calibration_predictions": {
+          "loglog": 8,
+          "three": 8
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "olmes_macro_correct_prob_per_char_deficit|14M-530M|1B",
+        "lever_arm_median": 0.6741434022429703,
+        "kappa": {
+          "loglog": 0.029200222203087836,
+          "three": 0.03102246120742378
+        },
+        "conformal_q": 0.12317825624002209,
+        "methods": {
+          "selector": {
+            "certified": 162,
+            "pairs": 300,
+            "coverage": 0.54,
+            "charges": 0.022976759954270325,
+            "fcr": 0.0001418318515695699,
+            "possibly_best_size": 14,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 23.56380980996624,
+            "fcr": 0.07854603269988747,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.30825
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 26.034972238327413,
+            "fcr": 0.0867832407944247,
+            "possibly_best_size": 1,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.637
+          },
+          "seed_se": {
+            "certified": 225,
+            "pairs": 300,
+            "coverage": 0.75,
+            "charges": 5.206491515314635,
+            "fcr": 0.023139962290287266,
+            "possibly_best_size": 6,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "bootstrap": {
+            "certified": 249,
+            "pairs": 300,
+            "coverage": 0.83,
+            "charges": 5.70043782371841,
+            "fcr": 0.022893324593246625,
+            "possibly_best_size": 4,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "conformal": {
+            "certified": 83,
+            "pairs": 300,
+            "coverage": 0.27666666666666667,
+            "charges": 0.009103370783125926,
+            "fcr": 0.00010967916606175815,
+            "possibly_best_size": 21,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "olmes_macro_correct_prob_per_char_deficit",
+        "window": "14M-530M",
+        "target": "1B",
+        "lever_arm": 0.6741434022429703,
+        "calibration_predictions": {
+          "loglog": 15,
+          "three": 15
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "olmes_macro_correct_prob_per_char_deficit|60M-150M|1B",
+        "lever_arm_median": 1.7205654939958734,
+        "kappa": {
+          "loglog": 0.03276399178066128,
+          "three": 0.03561690137193468
+        },
+        "conformal_q": 0.12832124913074672,
+        "methods": {
+          "selector": {
+            "certified": 74,
+            "pairs": 300,
+            "coverage": 0.24666666666666667,
+            "charges": 0.008445356537664676,
+            "fcr": 0.0001141264396981713,
+            "possibly_best_size": 18,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 57.811181269747735,
+            "fcr": 0.1927039375658258,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.32025
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 72.42425194627587,
+            "fcr": 0.24141417315425293,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.07175
+          },
+          "seed_se": {
+            "certified": 116,
+            "pairs": 300,
+            "coverage": 0.38666666666666666,
+            "charges": 2.3154569485085896,
+            "fcr": 0.019960835763005082,
+            "possibly_best_size": 12,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "bootstrap": {
+            "certified": 170,
+            "pairs": 300,
+            "coverage": 0.5666666666666667,
+            "charges": 21.29569480352024,
+            "fcr": 0.12526879296188378,
+            "possibly_best_size": 5,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0775
+          },
+          "conformal": {
+            "certified": 0,
+            "pairs": 300,
+            "coverage": 0.0,
+            "charges": 0.0,
+            "fcr": null,
+            "possibly_best_size": 25,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "olmes_macro_correct_prob_per_char_deficit",
+        "window": "60M-150M",
+        "target": "1B",
+        "lever_arm": 1.7205654939958734,
+        "calibration_predictions": {
+          "loglog": 12,
+          "three": 12
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "olmes_macro_correct_prob_per_char_deficit|60M-150M|530M",
+        "lever_arm_median": 1.046422091752903,
+        "kappa": {
+          "loglog": 0.036137225817093624,
+          "three": 0.04007982083630987
+        },
+        "conformal_q": 0.1384822781396702,
+        "methods": {
+          "selector": {
+            "certified": 96,
+            "pairs": 300,
+            "coverage": 0.32,
+            "charges": 0.00016029680663094632,
+            "fcr": 1.6697584024056908e-06,
+            "possibly_best_size": 17,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 39.57723454628026,
+            "fcr": 0.13192411515426752,
+            "possibly_best_size": 1,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.61725
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 60.91259856760158,
+            "fcr": 0.20304199522533858,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0
+          },
+          "seed_se": {
+            "certified": 140,
+            "pairs": 300,
+            "coverage": 0.4666666666666667,
+            "charges": 3.0508053095203693,
+            "fcr": 0.021791466496574066,
+            "possibly_best_size": 10,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "bootstrap": {
+            "certified": 187,
+            "pairs": 300,
+            "coverage": 0.6233333333333333,
+            "charges": 15.78375780978647,
+            "fcr": 0.08440512197746776,
+            "possibly_best_size": 3,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0005
+          },
+          "conformal": {
+            "certified": 2,
+            "pairs": 300,
+            "coverage": 0.006666666666666667,
+            "charges": 7.887774353457909e-16,
+            "fcr": 3.9438871767289545e-16,
+            "possibly_best_size": 23,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "olmes_macro_correct_prob_per_char_deficit",
+        "window": "60M-150M",
+        "target": "530M",
+        "lever_arm": 1.046422091752903,
+        "calibration_predictions": {
+          "loglog": 7,
+          "three": 7
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "olmes_macro_correct_prob_per_char_deficit|60M-300M|1B",
+        "lever_arm_median": 1.0959664975989196,
+        "kappa": {
+          "loglog": 0.026432911142953236,
+          "three": 0.02933963121061227
+        },
+        "conformal_q": 0.11035067031693277,
+        "methods": {
+          "selector": {
+            "certified": 110,
+            "pairs": 300,
+            "coverage": 0.36666666666666664,
+            "charges": 1.1472009288701708,
+            "fcr": 0.010429099353365189,
+            "possibly_best_size": 19,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 44.88419954441271,
+            "fcr": 0.1496139984813757,
+            "possibly_best_size": 1,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.61525
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 48.287983966808014,
+            "fcr": 0.16095994655602672,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.0
+          },
+          "seed_se": {
+            "certified": 168,
+            "pairs": 300,
+            "coverage": 0.56,
+            "charges": 8.711749779493422,
+            "fcr": 0.05185565344936561,
+            "possibly_best_size": 11,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "bootstrap": {
+            "certified": 204,
+            "pairs": 300,
+            "coverage": 0.68,
+            "charges": 12.928316529909896,
+            "fcr": 0.06337410063681322,
+            "possibly_best_size": 6,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.91775
+          },
+          "conformal": {
+            "certified": 78,
+            "pairs": 300,
+            "coverage": 0.26,
+            "charges": 0.006927829693170662,
+            "fcr": 8.881832939962387e-05,
+            "possibly_best_size": 21,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "olmes_macro_correct_prob_per_char_deficit",
+        "window": "60M-300M",
+        "target": "1B",
+        "lever_arm": 1.0959664975989196,
+        "calibration_predictions": {
+          "loglog": 13,
+          "three": 13
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "olmes_macro_correct_prob_per_char_deficit|60M-300M|530M",
+        "lever_arm_median": 0.42182309535594925,
+        "kappa": {
+          "loglog": 0.02841236729822605,
+          "three": 0.03184865315333613
+        },
+        "conformal_q": 0.10149159321399488,
+        "methods": {
+          "selector": {
+            "certified": 167,
+            "pairs": 300,
+            "coverage": 0.5566666666666666,
+            "charges": 3.352382436634846,
+            "fcr": 0.020074146327154766,
+            "possibly_best_size": 15,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 32.27340144521763,
+            "fcr": 0.1075780048173921,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.035
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 31.55106977304995,
+            "fcr": 0.10517023257683317,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.025
+          },
+          "seed_se": {
+            "certified": 210,
+            "pairs": 300,
+            "coverage": 0.7,
+            "charges": 6.352277559275025,
+            "fcr": 0.0302489407584525,
+            "possibly_best_size": 6,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "bootstrap": {
+            "certified": 231,
+            "pairs": 300,
+            "coverage": 0.77,
+            "charges": 8.306684407021109,
+            "fcr": 0.035959672757667135,
+            "possibly_best_size": 4,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.9995
+          },
+          "conformal": {
+            "certified": 107,
+            "pairs": 300,
+            "coverage": 0.3566666666666667,
+            "charges": 0.006482532258987519,
+            "fcr": 6.058441363539737e-05,
+            "possibly_best_size": 19,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "olmes_macro_correct_prob_per_char_deficit",
+        "window": "60M-300M",
+        "target": "530M",
+        "lever_arm": 0.42182309535594925,
+        "calibration_predictions": {
+          "loglog": 8,
+          "three": 8
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      },
+      {
+        "design": "olmes_macro_correct_prob_per_char_deficit|60M-530M|1B",
+        "lever_arm_median": 0.6741434022429703,
+        "kappa": {
+          "loglog": 0.029200222203087836,
+          "three": 0.03102246120742378
+        },
+        "conformal_q": 0.12317825624002209,
+        "methods": {
+          "selector": {
+            "certified": 156,
+            "pairs": 300,
+            "coverage": 0.52,
+            "charges": 0.023317042130575016,
+            "fcr": 0.0001494682187857373,
+            "possibly_best_size": 14,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "single_scale": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 23.56380980996624,
+            "fcr": 0.07854603269988747,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.3175
+          },
+          "projection": {
+            "certified": 300,
+            "pairs": 300,
+            "coverage": 1.0,
+            "charges": 21.082222675184468,
+            "fcr": 0.07027407558394823,
+            "possibly_best_size": 1,
+            "contains_observed_best": false,
+            "p_true_best_in_set": 0.00025
+          },
+          "seed_se": {
+            "certified": 227,
+            "pairs": 300,
+            "coverage": 0.7566666666666667,
+            "charges": 1.092250703481049,
+            "fcr": 0.00481167710784603,
+            "possibly_best_size": 4,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          },
+          "bootstrap": {
+            "certified": 243,
+            "pairs": 300,
+            "coverage": 0.81,
+            "charges": 3.011760310207745,
+            "fcr": 0.012394075350649156,
+            "possibly_best_size": 3,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 0.92225
+          },
+          "conformal": {
+            "certified": 84,
+            "pairs": 300,
+            "coverage": 0.28,
+            "charges": 0.022970892287417635,
+            "fcr": 0.0002734630034216385,
+            "possibly_best_size": 21,
+            "contains_observed_best": true,
+            "p_true_best_in_set": 1.0
+          }
+        },
+        "metric": "olmes_macro_correct_prob_per_char_deficit",
+        "window": "60M-530M",
+        "target": "1B",
+        "lever_arm": 0.6741434022429703,
+        "calibration_predictions": {
+          "loglog": 15,
+          "three": 15
+        },
+        "candidates": [
+          "C4",
+          "DCLM-Baseline",
+          "DCLM-Baseline (QC 10%)",
+          "DCLM-Baseline (QC 20%)",
+          "DCLM-Baseline (QC 7%, FW2)",
+          "DCLM-Baseline (QC 7%, FW3)",
+          "DCLM-Baseline (QC FW 10%)",
+          "DCLM-Baseline (QC FW 3%)",
+          "DCLM-Baseline 25% / Dolma 75%",
+          "DCLM-Baseline 50% / Dolma 50%",
+          "DCLM-Baseline 75% / Dolma 25%",
+          "Dolma1.6++",
+          "Dolma1.7",
+          "Dolma1.7 (no Flan)",
+          "Dolma1.7 (no Reddit)",
+          "Dolma1.7 (no code)",
+          "Dolma1.7 (no math, code)",
+          "Falcon",
+          "Falcon+CC",
+          "Falcon+CC (QC 10%)",
+          "Falcon+CC (QC 20%)",
+          "Falcon+CC (QC Orig 10%)",
+          "Falcon+CC (QC Tulu 10%)",
+          "FineWeb-Edu",
+          "FineWeb-Pro"
+        ]
+      }
+    ],
+    "pooled": {
+      "selector": {
+        "certified": 8150,
+        "pairs": 13500,
+        "coverage": 0.6037037037037037,
+        "fcr": 0.02286046453196067,
+        "excess_over_alpha_kernel": {
+          "mean": -0.016384238078853378,
+          "se": 0.008406345644177806,
+          "upper_at_calibrated_critical": 0.008743053383833587
+        },
+        "possibly_best_size_mean": 9.155555555555555,
+        "p_true_best_in_set_mean": 0.9258444444444444
+      },
+      "single_scale": {
+        "certified": 13500,
+        "pairs": 13500,
+        "coverage": 1.0,
+        "fcr": 0.09150288830986847,
+        "excess_over_alpha_kernel": {
+          "mean": 0.04150288830986848,
+          "se": 0.01882134315817048,
+          "upper_at_calibrated_critical": 0.09776150474948009
+        },
+        "possibly_best_size_mean": 1.0,
+        "p_true_best_in_set_mean": 0.48354444444444444
+      },
+      "projection": {
+        "certified": 13500,
+        "pairs": 13500,
+        "coverage": 1.0,
+        "fcr": 0.120340880455584,
+        "excess_over_alpha_kernel": {
+          "mean": 0.07034088045558397,
+          "se": 0.016559835880663107,
+          "upper_at_calibrated_critical": 0.11983965678009484
+        },
+        "possibly_best_size_mean": 1.0,
+        "p_true_best_in_set_mean": 0.1887611111111111
+      },
+      "seed_se": {
+        "certified": 10254,
+        "pairs": 13500,
+        "coverage": 0.7595555555555558,
+        "fcr": 0.04847969683469842,
+        "excess_over_alpha_kernel": {
+          "mean": -0.001154754715333523,
+          "se": 0.014033323134941609,
+          "upper_at_calibrated_critical": 0.040792057315405215
+        },
+        "possibly_best_size_mean": 5.2,
+        "p_true_best_in_set_mean": 0.753261111111111
+      },
+      "bootstrap": {
+        "certified": 10941,
+        "pairs": 13500,
+        "coverage": 0.8104444444444445,
+        "fcr": 0.06469022558073026,
+        "excess_over_alpha_kernel": {
+          "mean": 0.011905611709538482,
+          "se": 0.01535480776750684,
+          "upper_at_calibrated_critical": 0.05780245517265428
+        },
+        "possibly_best_size_mean": 3.6,
+        "p_true_best_in_set_mean": 0.5356444444444445
+      },
+      "conformal": {
+        "certified": 1330,
+        "pairs": 13500,
+        "coverage": 0.09851851851851852,
+        "fcr": 0.00010433851489627899,
+        "excess_over_alpha_kernel": {
+          "mean": -0.004915646650013922,
+          "se": 0.0011498605858599172,
+          "upper_at_calibrated_critical": -0.0014786142812141453
+        },
+        "possibly_best_size_mean": 22.622222222222224,
+        "p_true_best_in_set_mean": 1.0
+      }
+    },
+    "per_metric": {
+      "c4_en_bits_per_token": {
+        "selector": {
+          "certified": 3510,
+          "pairs": 4500,
+          "coverage": 0.7799999999999999,
+          "fcr": 1.669099570357219e-26,
+          "excess_over_alpha_kernel": {
+            "mean": -0.039,
+            "se": 0.0024339917049916015,
+            "upper_at_calibrated_critical": -0.03172458906903915
+          },
+          "possibly_best_size_mean": 5.2,
+          "p_true_best_in_set_mean": 1.0
+        },
+        "single_scale": {
+          "certified": 4500,
+          "pairs": 4500,
+          "coverage": 1.0,
+          "fcr": 0.011080644073215079,
+          "excess_over_alpha_kernel": {
+            "mean": -0.03891935592678492,
+            "se": 0.004430581788508922,
+            "upper_at_calibrated_critical": -0.02567596520013283
+          },
+          "possibly_best_size_mean": 1.0,
+          "p_true_best_in_set_mean": 0.9866333333333334
+        },
+        "projection": {
+          "certified": 4500,
+          "pairs": 4500,
+          "coverage": 1.0,
+          "fcr": 0.04862976719131588,
+          "excess_over_alpha_kernel": {
+            "mean": -0.0013702328086841323,
+            "se": 0.01482461340309495,
+            "upper_at_calibrated_critical": 0.042941814015040734
+          },
+          "possibly_best_size_mean": 1.0,
+          "p_true_best_in_set_mean": 0.33545
+        },
+        "seed_se": {
+          "certified": 3733,
+          "pairs": 4500,
+          "coverage": 0.8295555555555556,
+          "fcr": 0.0026099027471518754,
+          "excess_over_alpha_kernel": {
+            "mean": -0.039312718454418236,
+            "se": 0.0034943800734611777,
+            "upper_at_calibrated_critical": -0.028867715321805272
+          },
+          "possibly_best_size_mean": 4.2,
+          "p_true_best_in_set_mean": 0.9333333333333333
+        },
+        "bootstrap": {
+          "certified": 3840,
+          "pairs": 4500,
+          "coverage": 0.8533333333333333,
+          "fcr": 0.009379611023815406,
+          "excess_over_alpha_kernel": {
+            "mean": -0.03466273192634419,
+            "se": 0.004292535220326988,
+            "upper_at_calibrated_critical": -0.021831974286761695
+          },
+          "possibly_best_size_mean": 3.6,
+          "p_true_best_in_set_mean": 0.6713833333333333
+        },
+        "conformal": {
+          "certified": 502,
+          "pairs": 4500,
+          "coverage": 0.11155555555555557,
+          "fcr": 0.0,
+          "excess_over_alpha_kernel": {
+            "mean": -0.005577777777777778,
+            "se": 0.0018099326357632953,
+            "upper_at_calibrated_critical": -0.00016773317675046993
+          },
+          "possibly_best_size_mean": 21.666666666666668,
+          "p_true_best_in_set_mean": 1.0
+        }
+      },
+      "olmes_macro_error": {
+        "selector": {
+          "certified": 2689,
+          "pairs": 4500,
+          "coverage": 0.5975555555555556,
+          "fcr": 0.062220195066514154,
+          "excess_over_alpha_kernel": {
+            "mean": 0.007302245451968128,
+            "se": 0.023482174489778792,
+            "upper_at_calibrated_critical": 0.07749248834199318
+          },
+          "possibly_best_size_mean": 6.4,
+          "p_true_best_in_set_mean": 0.7775333333333333
+        },
+        "single_scale": {
+          "certified": 4500,
+          "pairs": 4500,
+          "coverage": 1.0,
+          "fcr": 0.13135480311264067,
+          "excess_over_alpha_kernel": {
+            "mean": 0.08135480311264066,
+            "se": 0.03618434341667954,
+            "upper_at_calibrated_critical": 0.18951292340675235
+          },
+          "possibly_best_size_mean": 1.0,
+          "p_true_best_in_set_mean": 0.0909
+        },
+        "projection": {
+          "certified": 4500,
+          "pairs": 4500,
+          "coverage": 1.0,
+          "fcr": 0.14792737722706664,
+          "excess_over_alpha_kernel": {
+            "mean": 0.09792737722706664,
+            "se": 0.039006224724287525,
+            "upper_at_calibrated_critical": 0.2145203438968426
+          },
+          "possibly_best_size_mean": 1.0,
+          "p_true_best_in_set_mean": 0.1393
+        },
+        "seed_se": {
+          "certified": 3493,
+          "pairs": 4500,
+          "coverage": 0.776222222222222,
+          "fcr": 0.09170080440283158,
+          "excess_over_alpha_kernel": {
+            "mean": 0.032369091062020156,
+            "se": 0.034274009732213055,
+            "upper_at_calibrated_critical": 0.13481705936948074
+          },
+          "possibly_best_size_mean": 3.533333333333333,
+          "p_true_best_in_set_mean": 0.40886666666666666
+        },
+        "bootstrap": {
+          "certified": 3663,
+          "pairs": 4500,
+          "coverage": 0.8140000000000001,
+          "fcr": 0.10197563222059249,
+          "excess_over_alpha_kernel": {
+            "mean": 0.042308164627562275,
+            "se": 0.0345701394641897,
+            "upper_at_calibrated_critical": 0.14564129021990063
+          },
+          "possibly_best_size_mean": 2.8,
+          "p_true_best_in_set_mean": 0.3483333333333334
+        },
+        "conformal": {
+          "certified": 19,
+          "pairs": 4500,
+          "coverage": 0.004222222222222223,
+          "fcr": 3.2359399424172155e-10,
+          "excess_over_alpha_kernel": {
+            "mean": -0.0002111111097448254,
+            "se": 0.0001124925100998127,
+            "upper_at_calibrated_critical": 0.00012513869585351596
+          },
+          "possibly_best_size_mean": 24.6,
+          "p_true_best_in_set_mean": 1.0
+        }
+      },
+      "olmes_macro_correct_prob_per_char_deficit": {
+        "selector": {
+          "certified": 1951,
+          "pairs": 4500,
+          "coverage": 0.4335555555555556,
+          "fcr": 0.009739969964952782,
+          "excess_over_alpha_kernel": {
+            "mean": -0.01745495968852825,
+            "se": 0.005371918624204718,
+            "upper_at_calibrated_critical": -0.0013978320497526515
+          },
+          "possibly_best_size_mean": 15.866666666666667,
+          "p_true_best_in_set_mean": 1.0
+        },
+        "single_scale": {
+          "certified": 4500,
+          "pairs": 4500,
+          "coverage": 1.0,
+          "fcr": 0.1320732177437497,
+          "excess_over_alpha_kernel": {
+            "mean": 0.08207321774374969,
+            "se": 0.025292649498723976,
+            "upper_at_calibrated_critical": 0.15767512643497628
+          },
+          "possibly_best_size_mean": 1.0,
+          "p_true_best_in_set_mean": 0.3731
+        },
+        "projection": {
+          "certified": 4500,
+          "pairs": 4500,
+          "coverage": 1.0,
+          "fcr": 0.16446549694836943,
+          "excess_over_alpha_kernel": {
+            "mean": 0.11446549694836944,
+            "se": 0.02676589170905921,
+            "upper_at_calibrated_critical": 0.19447105354810967
+          },
+          "possibly_best_size_mean": 1.0,
+          "p_true_best_in_set_mean": 0.09153333333333333
+        },
+        "seed_se": {
+          "certified": 3028,
+          "pairs": 4500,
+          "coverage": 0.6728888888888888,
+          "fcr": 0.05517078421690519,
+          "excess_over_alpha_kernel": {
+            "mean": 0.0034793632463975296,
+            "se": 0.014220439400057027,
+            "upper_at_calibrated_critical": 0.04598548191642737
+          },
+          "possibly_best_size_mean": 7.866666666666666,
+          "p_true_best_in_set_mean": 0.9175833333333333
+        },
+        "bootstrap": {
+          "certified": 3438,
+          "pairs": 4500,
+          "coverage": 0.7639999999999999,
+          "fcr": 0.0867426733342898,
+          "excess_over_alpha_kernel": {
+            "mean": 0.028071402427397387,
+            "se": 0.019275599267972086,
+            "upper_at_calibrated_critical": 0.08568782952015488
+          },
+          "possibly_best_size_mean": 4.4,
+          "p_true_best_in_set_mean": 0.5872166666666667
+        },
+        "conformal": {
+          "certified": 809,
+          "pairs": 4500,
+          "coverage": 0.17977777777777776,
+          "fcr": 0.00017153302677844892,
+          "excess_over_alpha_kernel": {
+            "mean": -0.008958051062519163,
+            "se": 0.0029607575174230376,
+            "upper_at_calibrated_critical": -0.00010809172945791361
+          },
+          "possibly_best_size_mean": 21.6,
+          "p_true_best_in_set_mean": 1.0
+        }
+      }
+    },
+    "by_lever_arm": {
+      "L<0.5": {
+        "designs": 9,
+        "selector": {
+          "coverage": 0.7566666666666667,
+          "fcr": 0.015077193662981906
+        },
+        "single_scale": {
+          "coverage": 1.0,
+          "fcr": 0.07111473370507107
+        },
+        "projection": {
+          "coverage": 1.0,
+          "fcr": 0.07900373798495733
+        },
+        "seed_se": {
+          "coverage": 0.8414814814814815,
+          "fcr": 0.02806700225035053
+        },
+        "bootstrap": {
+          "coverage": 0.8766666666666665,
+          "fcr": 0.03768075291892905
+        },
+        "conformal": {
+          "coverage": 0.2437037037037037,
+          "fcr": 0.00012105330920872847
+        }
+      },
+      "0.5<=L<1": {
+        "designs": 9,
+        "selector": {
+          "coverage": 0.7166666666666666,
+          "fcr": 0.025825059375435985
+        },
+        "single_scale": {
+          "coverage": 1.0,
+          "fcr": 0.07118390079625206
+        },
+        "projection": {
+          "coverage": 1.0,
+          "fcr": 0.08924666432138435
+        },
+        "seed_se": {
+          "coverage": 0.8488888888888888,
+          "fcr": 0.04348252266881198
+        },
+        "bootstrap": {
+          "coverage": 0.8825925925925926,
+          "fcr": 0.05041921652576635
+        },
+        "conformal": {
+          "coverage": 0.15185185185185185,
+          "fcr": 9.512705570326947e-05
+        }
+      },
+      "L>=1": {
+        "designs": 27,
+        "selector": {
+          "coverage": 0.5150617283950617,
+          "fcr": 0.02529688144547909
+        },
+        "single_scale": {
+          "coverage": 1.0,
+          "fcr": 0.1050719356826731
+        },
+        "projection": {
+          "coverage": 1.0,
+          "fcr": 0.14448466665719278
+        },
+        "seed_se": {
+          "coverage": 0.7024691358024691,
+          "fcr": 0.058643346269469966
+        },
+        "bootstrap": {
+          "coverage": 0.7643209876543211,
+          "fcr": 0.08050984056513705
+        },
+        "conformal": {
+          "coverage": 0.032345679012345675,
+          "fcr": 7.67750172304094e-05
+        }
+      }
+    },
+    "criterion": {
+      "S1_fcr_at_or_below_alpha": true,
+      "S2_higher_coverage_than_nominal_baselines": false,
+      "baselines_meeting_nominal": [
+        "seed_se",
+        "conformal"
+      ],
+      "confirmed": false,
+      "F3_degenerate_coverage_below_10pct": false
+    },
+    "per_metric_criterion": {
+      "c4_en_bits_per_token": {
+        "S1_fcr_at_or_below_alpha": true,
+        "S2_higher_coverage_than_nominal_baselines": false,
+        "baselines_meeting_nominal": [
+          "single_scale",
+          "projection",
+          "seed_se",
+          "bootstrap",
+          "conformal"
+        ],
+        "confirmed": false,
+        "F3_degenerate_coverage_below_10pct": false
+      },
+      "olmes_macro_error": {
+        "S1_fcr_at_or_below_alpha": false,
+        "S2_higher_coverage_than_nominal_baselines": true,
+        "baselines_meeting_nominal": [
+          "conformal"
+        ],
+        "confirmed": false,
+        "F3_degenerate_coverage_below_10pct": false
+      },
+      "olmes_macro_correct_prob_per_char_deficit": {
+        "S1_fcr_at_or_below_alpha": true,
+        "S2_higher_coverage_than_nominal_baselines": true,
+        "baselines_meeting_nominal": [
+          "conformal"
+        ],
+        "confirmed": true,
+        "F3_degenerate_coverage_below_10pct": false
+      }
+    }
+  },
+  "marin": {
+    "bound": {
+      "design": "marin",
+      "lever_arm_median": 0.7046451880228958,
+      "kappa": {
+        "loglog": 0.0,
+        "three": 0.0035591224197773193
+      },
+      "conformal_q": 0.050079384218140996,
+      "methods": {
+        "selector": {
+          "certified": 49,
+          "pairs": 231,
+          "coverage": 0.21212121212121213,
+          "charges": 12.268815505996514,
+          "fcr": 0.2503839899182962,
+          "possibly_best_size": 19,
+          "contains_observed_best": true,
+          "p_true_best_in_set": 1.0
+        },
+        "single_scale": {
+          "certified": 230,
+          "pairs": 231,
+          "coverage": 0.9956709956709957,
+          "charges": 56.47833748876268,
+          "fcr": 0.2455579890815769,
+          "possibly_best_size": 1,
+          "contains_observed_best": false,
+          "p_true_best_in_set": 0.03
+        },
+        "projection": {
+          "certified": 230,
+          "pairs": 231,
+          "coverage": 0.9956709956709957,
+          "charges": 101.4301013621531,
+          "fcr": 0.4410004407050135,
+          "possibly_best_size": 1,
+          "contains_observed_best": false,
+          "p_true_best_in_set": 0.0335
+        },
+        "seed_se": {
+          "certified": 49,
+          "pairs": 231,
+          "coverage": 0.21212121212121213,
+          "charges": 12.268815505996514,
+          "fcr": 0.2503839899182962,
+          "possibly_best_size": 19,
+          "contains_observed_best": true,
+          "p_true_best_in_set": 1.0
+        },
+        "bootstrap": {
+          "certified": 49,
+          "pairs": 231,
+          "coverage": 0.21212121212121213,
+          "charges": 12.268815505996514,
+          "fcr": 0.2503839899182962,
+          "possibly_best_size": 19,
+          "contains_observed_best": true,
+          "p_true_best_in_set": 1.0
+        },
+        "conformal": {
+          "certified": 0,
+          "pairs": 231,
+          "coverage": 0.0,
+          "charges": 0.0,
+          "fcr": null,
+          "possibly_best_size": 22,
+          "contains_observed_best": true,
+          "p_true_best_in_set": 1.0
+        }
+      },
+      "linearization_check": {
+        "draws": 400,
+        "pairs": 231,
+        "certified_gaussian": 49,
+        "certified_draws": 48,
+        "agree_all_ordered_pairs": 0.9978354978354979,
+        "agree_among_certified_by_either": 0.9795918367346939
+      },
+      "candidates": [
+        "adamc_llama_scaling",
+        "adamh_llama_scaling",
+        "adamw_llama_scaling",
+        "c-adamc_llama_scaling",
+        "cautious_llama_scaling",
+        "hackable_transformer_attn_gate/lr_x1",
+        "hackable_transformer_attn_gate/lr_x2",
+        "hackable_transformer_attn_gate/lr_x2_5",
+        "hackable_transformer_attn_sink/attnsink/jax",
+        "hackable_transformer_attn_sink/attnsink/splash",
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x4",
+        "hackable_transformer_attn_sink/std_attn",
+        "muon_llama_scaling",
+        "muon_qwen3_scaling",
+        "muonh_qwen3_scaling",
+        "muonremez_qwen3_scaling",
+        "parallel_llama",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      "noise": "Task-1 bound",
+      "deviations": [
+        "three-parameter kappa transferred from DataDecide C4 (not identified on two points)",
+        "conformal calibrated on log-log residuals at 520m (three-parameter not identified)",
+        "bootstrap: parametric draws at the seed noise (no seeds)"
+      ],
+      "kappa_transfer_variant": {
+        "loglog": 0.003936877079032995,
+        "three": 0.0035591224197773193
+      }
+    },
+    "low_end": {
+      "design": "marin",
+      "lever_arm_median": 0.7046451880228958,
+      "kappa": {
+        "loglog": 0.008681997893772463,
+        "three": 0.0035591224197773193
+      },
+      "conformal_q": 0.050079384218140996,
+      "methods": {
+        "selector": {
+          "certified": 53,
+          "pairs": 231,
+          "coverage": 0.22943722943722944,
+          "charges": 8.472768662470372,
+          "fcr": 0.1598635596692523,
+          "possibly_best_size": 15,
+          "contains_observed_best": true,
+          "p_true_best_in_set": 1.0
+        },
+        "single_scale": {
+          "certified": 230,
+          "pairs": 231,
+          "coverage": 0.9956709956709957,
+          "charges": 52.59690963015756,
+          "fcr": 0.22868221578329376,
+          "possibly_best_size": 1,
+          "contains_observed_best": false,
+          "p_true_best_in_set": 0.0
+        },
+        "projection": {
+          "certified": 230,
+          "pairs": 231,
+          "coverage": 0.9956709956709957,
+          "charges": 98.71284996347433,
+          "fcr": 0.4291863041890188,
+          "possibly_best_size": 1,
+          "contains_observed_best": false,
+          "p_true_best_in_set": 0.0
+        },
+        "seed_se": {
+          "certified": 125,
+          "pairs": 231,
+          "coverage": 0.5411255411255411,
+          "charges": 41.04868078230565,
+          "fcr": 0.32838944625844524,
+          "possibly_best_size": 10,
+          "contains_observed_best": false,
+          "p_true_best_in_set": 0.0
+        },
+        "bootstrap": {
+          "certified": 157,
+          "pairs": 231,
+          "coverage": 0.6796536796536796,
+          "charges": 69.67889346069732,
+          "fcr": 0.4438146080299193,
+          "possibly_best_size": 10,
+          "contains_observed_best": false,
+          "p_true_best_in_set": 0.0
+        },
+        "conformal": {
+          "certified": 0,
+          "pairs": 231,
+          "coverage": 0.0,
+          "charges": 0.0,
+          "fcr": null,
+          "possibly_best_size": 22,
+          "contains_observed_best": true,
+          "p_true_best_in_set": 1.0
+        }
+      },
+      "linearization_check": {
+        "draws": 400,
+        "pairs": 231,
+        "certified_gaussian": 53,
+        "certified_draws": 54,
+        "agree_all_ordered_pairs": 0.9978354978354979,
+        "agree_among_certified_by_either": 0.9814814814814815
+      },
+      "candidates": [
+        "adamc_llama_scaling",
+        "adamh_llama_scaling",
+        "adamw_llama_scaling",
+        "c-adamc_llama_scaling",
+        "cautious_llama_scaling",
+        "hackable_transformer_attn_gate/lr_x1",
+        "hackable_transformer_attn_gate/lr_x2",
+        "hackable_transformer_attn_gate/lr_x2_5",
+        "hackable_transformer_attn_sink/attnsink/jax",
+        "hackable_transformer_attn_sink/attnsink/splash",
+        "hackable_transformer_attn_sink/attnsink/splash/default_lr",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.25",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x0.5",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x2",
+        "hackable_transformer_attn_sink/attnsink/splash/default_x4",
+        "hackable_transformer_attn_sink/std_attn",
+        "muon_llama_scaling",
+        "muon_qwen3_scaling",
+        "muonh_qwen3_scaling",
+        "muonremez_qwen3_scaling",
+        "parallel_llama",
+        "prism_berkeley_qwen3_scaling"
+      ],
+      "noise": "low end (DataDecide 1B)",
+      "deviations": [
+        "three-parameter kappa transferred from DataDecide C4 (not identified on two points)",
+        "conformal calibrated on log-log residuals at 520m (three-parameter not identified)",
+        "bootstrap: parametric draws at the seed noise (no seeds)"
+      ],
+      "kappa_transfer_variant": {
+        "loglog": 0.003936877079032995,
+        "three": 0.0035591224197773193
+      }
+    }
+  }
+}
