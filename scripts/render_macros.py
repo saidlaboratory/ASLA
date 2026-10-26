@@ -766,6 +766,57 @@ def _marin_entries() -> list[tuple[str, str, str]]:
     ]
 
 
+def _marin_noise_entries() -> list[tuple[str, str, str]]:
+    """The noise bracket at both ends with its sources, the protocol details and the solver root cause."""
+
+    rig_json = Source.load("external/marin_rigour.json")
+    nb = Source.load("external/noise_bracket.json")
+    rc = Source.load("external/inclusion_recount.json")
+    bd = Source.load("external/break_diagnosis.json")
+    ties = Source.load("external/sign_ties.json")
+    borrowed = rig_json.get("task_4.borrowed")
+    bounds = nb.get("d_bounds.by_size")
+    batch = list(bd.get("task1a.flags.all_genuine_members.batch.changes").values())
+    fo = bd.get("task1c.reorder.300m->520m")
+    explore = ties.get("task3.exploratory_not_preregistered")
+    pct = 100
+    return [
+        ("noiseLowDataDecide", f"{pct * borrowed['datadecide_c4_1B']['cv']:.3f}", "marin_rigour.json"),
+        ("noiseLowDelphiA", f"{pct * borrowed['delphi_1e+21']['cv']:.3f}", "marin_rigour.json"),
+        ("noiseLowDelphiB", f"{pct * borrowed['delphi_1e+22']['cv']:.3f}", "marin_rigour.json"),
+        ("noiseLowMin", f"{pct * min(v['cv'] for v in borrowed.values()):.3f}", "marin_rigour.json"),
+        ("noiseLowMax", f"{pct * max(v['cv'] for v in borrowed.values()):.3f}", "marin_rigour.json"),
+        ("noiseHardware", f"{pct * nb.number('cross_hardware.pooled_relative_sd'):.3f}", "noise_bracket.json"),
+        ("noiseHardwareDf", f"{nb.integer('cross_hardware.df')}", "noise_bracket.json"),
+        (
+            "noiseHighDelphiMin",
+            f"{pct * min(v['sources']['delphi']['upper_95'] for v in bounds.values()):.2f}",
+            "noise_bracket.json",
+        ),
+        (
+            "noiseHighDelphiMax",
+            f"{pct * max(v['sources']['delphi']['upper_95'] for v in bounds.values()):.2f}",
+            "noise_bracket.json",
+        ),
+        (
+            "noiseSweepResidual",
+            f"{pct * rc.number('task1c.sweep_noise.residual_sd_relative'):.2f}",
+            "inclusion_recount.json",
+        ),
+        ("noiseSweepDf", f"{rc.integer('task1c.sweep_noise.df')}", "inclusion_recount.json"),
+        ("marinBatchDoubleAtMid", f"{sum(1 for v in batch if v == 2.0)}", "break_diagnosis.json"),
+        ("marinBatchSameAtMid", f"{sum(1 for v in batch if v == 1.0)}", "break_diagnosis.json"),
+        ("marinFoDetermined", f"{fo['determined']}", "break_diagnosis.json"),
+        ("marinFoReordered", f"{fo['reordered']}", "break_diagnosis.json"),
+        ("marinScaledOnlyShare", f"{pct * ties.number('task3.reach.share_reaching_optimum'):.0f}", "sign_ties.json"),
+        (
+            "marinUnscaledReached",
+            f"{explore['unscaled_error_tolerance_1e-15_cap_200']['fits_reaching_optimum']}",
+            "sign_ties.json",
+        ),
+    ]
+
+
 def _figure_entries() -> list[tuple[str, str, str]]:
     """Caption numbers for the specification-curve and flexibility figures."""
 
@@ -1399,6 +1450,7 @@ def build() -> str:
     entries.extend(_closeout_entries())
     entries.extend(_count_entries())
     entries.extend(_marin_entries())
+    entries.extend(_marin_noise_entries())
     entries.extend(_figure_entries())
     lines.extend(_macro(name, value, origin) for name, value, origin in entries)
     lines.append("")
