@@ -987,6 +987,218 @@ def _table_entries() -> list[tuple[str, str, str]]:
     ]
 
 
+
+LEVER_BINS = (("L<0.5", "short"), ("0.5<=L<1", "middle"), ("L>=1", "long"))
+CERT_METRICS = {
+    "c4_en_bits_per_token": ("C4", "CFour"),
+    "olmes_macro_error": ("OLMES error", "Err"),
+    "olmes_macro_correct_prob_per_char_deficit": ("correct prob.", "Cp"),
+}
+
+
+def _lever_bin(lever: float, keys: tuple[str, ...] = tuple(k for k, _ in LEVER_BINS)) -> str:
+    """The certify.json lever-arm group a design falls in; the edges are read from the group keys."""
+
+    low_edge = float(keys[0].split("<")[1])
+    high_edge = float(keys[2].split(">=")[1])
+    return keys[0] if lever < low_edge else (keys[1] if lever < high_edge else keys[2])
+
+
+def _review_entries() -> list[tuple[str, str, str]]:
+    """Values added in response to the Stage 4 review: scopes, denominators and the per-metric certification split."""
+
+    out: list[tuple[str, str, str]] = []
+    pct = 100
+    lever = Source.load("target_scoring/lever_arm_calibration.json")
+    wald = lever.get("real_data.ci_1_96")
+    assert lever.number("real_data.p_against_null_comparator") == lever.number("real_data.p_floor")
+    out += [
+        ("leverWaldLow", f"{wald[0]:.2f}", "lever_arm_calibration.json"),
+        ("leverWaldHigh", f"{wald[1]:.2f}", "lever_arm_calibration.json"),
+    ]
+    fit = Source.load("target_scoring/fit_structure.json")
+    out.append(
+        (
+            "cancelCFourRatio",
+            f"{fit.number('findings.amplitude_sharing.evidence.c4_cancellation_ratio'):.2f}",
+            "fit_structure.json",
+        )
+    )
+    arms = Source.load("target_scoring/lever_arm_arms.json")
+    out += [
+        ("attrRealVar", f"{pct * arms.number('attribution.share_of_real_slope.A_variance'):.0f}", "lever_arm_arms.json"),
+        ("attrRealTotal", f"{pct * arms.number('attribution.share_of_real_slope.B3_1_total'):.0f}", "lever_arm_arms.json"),
+        ("armMonotoneLambda", "held" if arms.get("predictions.P1b3_monotone_in_lambda") else "failed", "lever_arm_arms.json"),
+    ]
+    mech = Source.load("target_scoring/mechanism_record.json")
+    attr = mech.get("mechanism.attribution_depends_on_base_form")
+    out += [
+        ("attrPowerCommon", f"{pct * attr['power_law_base']['common_mode']:+.0f}", "mechanism_record.json"),
+        ("attrPowerInter", f"{pct * attr['power_law_base']['interaction']:+.0f}", "mechanism_record.json"),
+        ("attrChinCommon", f"{pct * attr['chinchilla_base']['common_mode']:+.0f}", "mechanism_record.json"),
+        ("attrChinInter", f"{pct * attr['chinchilla_base']['interaction']:+.0f}", "mechanism_record.json"),
+    ]
+    restated = Source.load("target_scoring/restated_claims.json")
+    head = next(
+        c
+        for c in restated.get("fixed_candidate_family.claims")
+        if c["claim"].startswith("projection vs single-scale, c4_en_bits_per_token")
+    )
+    out.append(
+        (
+            "headFixedFamilyVerdict",
+            "survives" if (head["holm_reject"] or head["by_reject"]) else "does not survive",
+            "restated_claims.json",
+        )
+    )
+    cal = Source.load("target_scoring/calibration.json")
+    procedures = cal.get("calibrated")
+    random_power = procedures[procedures["random_adopted"]]["power_at_critical_value"]
+    out += [
+        ("calHeadRandomPower", f"{random_power['projection']:.2f}", "calibration.json"),
+        ("calMaxRandomPower", f"{max(random_power.values()):.2f}", "calibration.json"),
+    ]
+    single = Source.load("external/datadecide_single_scale.json")
+    out.append(
+        (
+            "ddFindingDefaultBoth",
+            f"{single.number('comparisons_macro_750M.3_param-1_step.secondary_both_default_minus_their_ss'):+.2f}",
+            "datadecide_single_scale.json",
+        )
+    )
+    posthoc = Source.load("target_scoring/pattern_posthoc.json")
+    out += [
+        (
+            "statsTriedAll",
+            f"{posthoc.integer('statistics_tried.count_including_two_rounds_earlier')}",
+            "pattern_posthoc.json",
+        ),
+        (
+            "statsNearMissRho",
+            f"{posthoc.number('summary.top_rung_size_in_gaps.spearman_with_excess'):+.2f}",
+            "pattern_posthoc.json",
+        ),
+    ]
+    rc = Source.load("external/inclusion_recount.json")
+    cert_pairs = rc.get("task1b.certified_at_0_58pct.official_22.pairs")
+    last = max((p[1] for p in cert_pairs), key=lambda name: sum(q[1] == name for q in cert_pairs))
+    out.append(("marinCertifiedVsLast", f"{sum(p[1] == last for p in cert_pairs)}", "inclusion_recount.json"))
+    pr = Source.load("external/pr_numbers.json")
+    out.append(
+        (
+            "marinMultistartDepart",
+            _sci(pr.number("multistart_13_starts_cap_200.x_over_1e18_error_tolerance_1e-15.max_departure_bpb")),
+            "pr_numbers.json",
+        )
+    )
+    ties = Source.load("external/sign_ties.json")
+    out.append(("marinScaledOnlyFits", f"{ties.integer('task3.reach.fits')}", "sign_ties.json"))
+    task = Source.load("task_b/task_b.json")
+    out.append(("flexBoot", f"{task.integer('designs.primary_4M-300M_target1B.n_boot')}", "task_b.json"))
+    flex_key = "primary_4M-300M_target1B"
+    out += [
+        ("flexFitTop", flex_key.split("-")[1].split("_")[0], "task_b.json"),
+        ("flexTarget", flex_key.split("target")[1], "task_b.json"),
+    ]
+    scoring = Source.load("target_scoring/target_scoring.json")
+    out += [
+        ("primaryFitTop", str(scoring.get("max_fit_scale")), "target_scoring.json"),
+        ("primaryTarget", str(scoring.get("target_scale")), "target_scoring.json"),
+    ]
+
+    cert = Source.load("certify/certify.json")
+    per_metric = cert.get("datadecide.per_metric")
+    out.append(
+        (
+            "stageErrSelExcessUp",
+            f"{pct * per_metric['olmes_macro_error']['selector']['excess_over_alpha_kernel']['upper_at_calibrated_critical']:+.2f}",
+            "certify.json",
+        )
+    )
+    out.append(("stageCFourSeedFcr", f"{pct * per_metric['c4_en_bits_per_token']['seed_se']['fcr']:.2f}", "certify.json"))
+    designs = cert.get("datadecide.designs")
+    by_lever = cert.get("datadecide.by_lever_arm")
+    # Pooled-over-designs rates in each lever-arm bin, per metric: charges over certified pairs, as by_lever_arm pools.
+    for pooled_bin in LEVER_BINS:
+        check = [d for d in designs if _lever_bin(d["lever_arm_median"]) == pooled_bin[0]]
+        ch = sum(d["methods"]["seed_se"]["charges"] for d in check)
+        ce = sum(d["methods"]["seed_se"]["certified"] for d in check)
+        assert np.isclose(ch / ce, by_lever[pooled_bin[0]]["seed_se"]["fcr"])
+    rows = []
+    for metric, (label, tag) in CERT_METRICS.items():
+        ds = [d for d in designs if d["design"].split("|")[0] == metric]
+        for method, mlabel in (("seed_se", "seed error only"), ("bootstrap", "seed bootstrap"), ("selector", "misfit term")):
+            cells = []
+            for key, word in LEVER_BINS:
+                sel = [d for d in ds if _lever_bin(d["lever_arm_median"]) == key]
+                ch = sum(d["methods"][method]["charges"] for d in sel)
+                ce = sum(d["methods"][method]["certified"] for d in sel)
+                rate = pct * ch / ce
+                cells.append(f"{rate:.2f}")
+                mtag = {"seed_se": "Seed", "bootstrap": "Boot", "selector": "Sel"}[method]
+                out.append((f"certLev{tag}{mtag}{word.capitalize()}", f"{rate:.1f}", "certify.json"))
+            rows.append(f"{label} & {mlabel} & " + " & ".join(cells) + " \\\\")
+        for key, word in LEVER_BINS:
+            n = sum(_lever_bin(d["lever_arm_median"]) == key for d in ds)
+            out.append((f"certLev{tag}N{word.capitalize()}", f"{n}", "certify.json"))
+    out.append(("certLevRows", " ".join(rows), "certify.json"))
+    c4_seed = [m for m in out if m[0].startswith("certLevCFourSeed")]
+    out.append(("certLevCFourSeedMax", max(c4_seed, key=lambda m: float(m[1]))[1], "certify.json"))
+    out += _prediction_ledger()
+    return out
+
+
+def _prediction_verdict(value: object) -> bool | None:
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, dict) and isinstance(value.get("confirmed"), bool):
+        return value["confirmed"]
+    return None
+
+
+def _prediction_ledger() -> list[tuple[str, str, str]]:
+    """Every prediction recorded with a verdict in any results file, held and failed."""
+
+    import json
+
+    rows, held, failed = [], 0, 0
+    for path in sorted(RESULTS_DIR.rglob("*.json")):
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, UnicodeDecodeError):
+            continue
+        found: list[tuple[str, bool]] = []
+
+        def walk(node: object, prefix: str, depth: int) -> None:
+            if depth > 3 or not isinstance(node, dict):
+                return
+            for key, value in node.items():
+                if key.lower().startswith("prediction") and isinstance(value, dict):
+                    for name, verdict in value.items():
+                        v = _prediction_verdict(verdict)
+                        if v is not None:
+                            found.append((prefix + name, v))
+                else:
+                    walk(value, prefix + key + ".", depth + 1)
+
+        walk(data, "", 0)
+        if not found:
+            continue
+        ok = sum(v for _, v in found)
+        bad = [n for n, v in found if not v]
+        held += ok
+        failed += len(bad)
+        rel = path.relative_to(RESULTS_DIR).as_posix()
+        names = ", ".join(_tex(n) for n in bad) if bad else "---"
+        rows.append(f"\\texttt{{{_tex(rel)}}} & {ok} & {len(bad)} & {{\\raggedright {names}\\par}} \\\\")
+    return [
+        ("ledgerRows", " ".join(rows), "results/**/*.json"),
+        ("ledgerHeld", f"{held}", "results/**/*.json"),
+        ("ledgerFailed", f"{failed}", "results/**/*.json"),
+        ("ledgerFiles", f"{len(rows)}", "results/**/*.json"),
+    ]
+
+
 def _lever_by_metric_entries() -> list[tuple[str, str, str]]:
     lam = Source.load("target_scoring/lever_arm_by_metric.json")
     out = []
@@ -1636,6 +1848,7 @@ def build() -> str:
     entries.extend(_marin_noise_entries())
     entries.extend(_figure_entries())
     entries.extend(_analysis_entries())
+    entries.extend(_review_entries())
     lines.extend(_macro(name, value, origin) for name, value, origin in entries)
     lines.append("")
     return "\n".join(lines)

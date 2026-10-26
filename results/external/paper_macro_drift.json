@@ -2,11 +2,31 @@
   "reference_commit": "dfc4c4aaba",
   "reference": "the commit that first wrote results/external/prose_corrections.json",
   "latest_commit_touching_list": "acd56d83fa",
-  "macros_used_in_main_tex": 156,
-  "claims_with_changed_source": 77,
+  "macros_used_in_main_tex": 190,
+  "claims_with_changed_source": 94,
   "claims_whose_value_changed": 0,
-  "new_claims_since_reference": 73,
+  "new_claims_since_reference": 90,
   "rows": [
+    {
+      "macro": "attrChinCommon",
+      "sources_changed": {
+        "results/target_scoring/mechanism_record.json": "ba148cf 2026-10-12"
+      },
+      "old": null,
+      "new": "-2",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "attrChinInter",
+      "sources_changed": {
+        "results/target_scoring/mechanism_record.json": "ba148cf 2026-10-12"
+      },
+      "old": null,
+      "new": "-3",
+      "new_claim": true,
+      "value_changed": false
+    },
     {
       "macro": "attrChinSpecific",
       "sources_changed": {
@@ -24,6 +44,26 @@
       },
       "old": null,
       "new": "89",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "attrPowerCommon",
+      "sources_changed": {
+        "results/target_scoring/mechanism_record.json": "ba148cf 2026-10-12"
+      },
+      "old": null,
+      "new": "-9",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "attrPowerInter",
+      "sources_changed": {
+        "results/target_scoring/mechanism_record.json": "ba148cf 2026-10-12"
+      },
+      "old": null,
+      "new": "+4",
       "new_claim": true,
       "value_changed": false
     },
@@ -68,6 +108,86 @@
       "value_changed": false
     },
     {
+      "macro": "certLevCFourNLong",
+      "sources_changed": {
+        "results/certify/certify.json": "8d06132 2026-10-26"
+      },
+      "old": null,
+      "new": "9",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "certLevCFourNMiddle",
+      "sources_changed": {
+        "results/certify/certify.json": "8d06132 2026-10-26"
+      },
+      "old": null,
+      "new": "3",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "certLevCFourNShort",
+      "sources_changed": {
+        "results/certify/certify.json": "8d06132 2026-10-26"
+      },
+      "old": null,
+      "new": "3",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "certLevCFourSeedMax",
+      "sources_changed": {
+        "results/certify/certify.json": "8d06132 2026-10-26"
+      },
+      "old": null,
+      "new": "0.5",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "certLevErrSeedLong",
+      "sources_changed": {
+        "results/certify/certify.json": "8d06132 2026-10-26"
+      },
+      "old": null,
+      "new": "10.6",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "certLevErrSeedShort",
+      "sources_changed": {
+        "results/certify/certify.json": "8d06132 2026-10-26"
+      },
+      "old": null,
+      "new": "4.7",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "certLevErrSelLong",
+      "sources_changed": {
+        "results/certify/certify.json": "8d06132 2026-10-26"
+      },
+      "old": null,
+      "new": "7.4",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "certLevErrSelShort",
+      "sources_changed": {
+        "results/certify/certify.json": "8d06132 2026-10-26"
+      },
+      "old": null,
+      "new": "3.1",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
       "macro": "crnHigh",
       "sources_changed": {
         "results/crn/pilot_laptop_analysis.json": "c847253 2026-10-11"
@@ -104,6 +224,16 @@
       },
       "old": null,
       "new": "0.5",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "headFixedFamilyVerdict",
+      "sources_changed": {
+        "results/target_scoring/restated_claims.json": "acd56d8 2026-10-22"
+      },
+      "old": null,
+      "new": "does not survive",
       "new_claim": true,
       "value_changed": false
     },
@@ -238,6 +368,16 @@
       "value_changed": false
     },
     {
+      "macro": "marinCertifiedVsLast",
+      "sources_changed": {
+        "results/external/inclusion_recount.json": "0ff90cc 2026-10-22"
+      },
+      "old": null,
+      "new": "17",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
       "macro": "marinChangedPlace",
       "sources_changed": {
         "results/external/pr_numbers.json": "0ff90cc 2026-10-22"
@@ -264,16 +404,6 @@
       },
       "old": null,
       "new": "0.020",
-      "new_claim": true,
-      "value_changed": false
-    },
-    {
-      "macro": "marinFixedDepart",
-      "sources_changed": {
-        "results/external/pr_numbers.json": "0ff90cc 2026-10-22"
-      },
-      "old": null,
-      "new": "$5.4\\times 10^{-8}$",
       "new_claim": true,
       "value_changed": false
     },
@@ -348,6 +478,16 @@
       "value_changed": false
     },
     {
+      "macro": "marinMultistartDepart",
+      "sources_changed": {
+        "results/external/pr_numbers.json": "0ff90cc 2026-10-22"
+      },
+      "old": null,
+      "new": "$1.2\\times 10^{-7}$",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
       "macro": "marinMultistartFits",
       "sources_changed": {
         "results/external/pr_numbers.json": "0ff90cc 2026-10-22"
@@ -418,12 +558,32 @@
       "value_changed": false
     },
     {
+      "macro": "marinScaledOnlyFits",
+      "sources_changed": {
+        "results/external/sign_ties.json": "ae49be9 2026-10-12"
+      },
+      "old": null,
+      "new": "273",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
       "macro": "marinScaledOnlyShare",
       "sources_changed": {
         "results/external/sign_ties.json": "ae49be9 2026-10-12"
       },
       "old": null,
       "new": "59",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "marinSigmaStar",
+      "sources_changed": {
+        "results/external/certified_leaderboard.json": "8667dc3 2026-10-22"
+      },
+      "old": null,
+      "new": "0.58",
       "new_claim": true,
       "value_changed": false
     },
@@ -604,6 +764,16 @@
       },
       "old": null,
       "new": "9.2",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "stageErrSelExcessUp",
+      "sources_changed": {
+        "results/certify/certify.json": "8d06132 2026-10-26"
+      },
+      "old": null,
+      "new": "+7.75",
       "new_claim": true,
       "value_changed": false
     },

@@ -2,6 +2,8 @@
 \usepackage{microtype}
 \usepackage{graphicx}
 \usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{placeins}
 \usepackage{hyperref}
 \usepackage{icml2026}
 \usepackage{iftex}
@@ -44,20 +46,24 @@ Answering it needs a test whose unit is the candidate recipe rather than the
 pair, with critical values calibrated by simulation, because standard tests
 are anti-conservative at realistic seed and candidate counts. On DataDecide,
 projection's excess mis-selection over single-scale ranking on C4 is
-\headEstimate\ points: significant for these \nCandidates\ recipes
-($p=\headFixedP$) and not established for recipes in general
-($p=\headRandomP$). Of \restatedPrimaryM\ inferential claims, one survives
-Holm and Benjamini--Yekutieli correction: projection's excess grows with
-extrapolation distance (Spearman \leverRealRho, calibrated interval
-[\leverRealLow, \leverRealHigh]). Controlled experiments locate the cause in
-noise and recipe-specific misspecification; common-mode misspecification
-cancels. No tested alternative beats single-scale ranking. Uncertainty built
-from seed error alone under-covers more as extrapolation distance grows; a
-misfit term that scales with distance keeps the error rate flat at a coverage
-cost, although a pre-registered criterion for it as a selector was not met.
-On the Marin speedrun leaderboard, a solver defect, per-size protocol changes
-and single-run noise leave \marinHold\ of \marinPairs\ pairwise orders resolved
-at the forecast target.
+\headEstimate\ points: nominally significant for these \nCandidates\ recipes
+($p=\headFixedP$, not surviving correction within its family) and not
+established for recipes in general ($p=\headRandomP$). Of
+\restatedPrimaryM\ inferential claims, one survives Holm and
+Benjamini--Yekutieli correction: on C4, projection's excess rises with
+extrapolation distance (Spearman \leverRealRho, interval
+[\leverWaldLow, \leverWaldHigh] at the normal critical value). In semi-synthetic
+worlds built from the same curves, the rise appears with seed noise alone and
+with recipe-specific misspecification alone, while misspecification shared by
+all recipes largely cancels. No tested alternative is significantly better than
+single-scale ranking, at low power. Pooled over metrics, certification from
+seed error alone errs more often as extrapolation distance grows, as
+pre-registered; the rise comes from the OLMES metrics, not from C4. A misfit
+term that scales with distance keeps the pooled error rate flat at a coverage
+cost, but a pre-registered criterion for it as a selector was not met. On the
+Marin speedrun leaderboard, a solver defect and per-size protocol changes limit
+what the forecasts resolve, and at the upper end of a bracket on single-run
+noise \marinHold\ of \marinPairs\ pairwise orders hold.
 \end{abstract}
 
 \section{Introduction}
@@ -87,25 +93,28 @@ share candidates, so its unit of inference is the candidate. We give a
 candidate-level U-statistic test with critical values calibrated on a
 semi-synthetic benchmark, show how anti-conservative the standard alternatives
 are, and use it to re-examine DataDecide's comparisons (\cref{sec:test}).
-\item \emph{The lever-arm law.} Projection's excess error over single-scale
-ranking grows with the distance it extrapolates. This is the only general claim
-in the paper that survives family-wide correction. Controlled experiments and
-measurements of the error structure explain it, and on OLMES accuracy metrics
+\item \emph{The lever-arm law.} On C4, projection's excess error over
+single-scale ranking rises with the distance it extrapolates. This is the only
+claim in the paper that survives family-wide correction. Semi-synthetic
+experiments and measurements of the error structure are consistent with noise
+and recipe-specific misspecification as its sources; on OLMES accuracy metrics
 it is not established (\cref{sec:lever}).
-\item \emph{Consequences.} No tested alternative beats single-scale ranking.
-Uncertainty built from seed error alone, or from a seed bootstrap, under-covers
-more as the lever arm grows; a misfit term proportional to the lever arm keeps
-the error rate flat at a coverage cost (\cref{sec:consequences}).
+\item \emph{Consequences.} No tested alternative is significantly better than
+single-scale ranking. Pooled over metrics, certification from seed error alone,
+or from a seed bootstrap, errs more as the lever arm grows, though on C4 alone
+it does not; a misfit term proportional to the lever arm keeps the pooled error
+rate flat at a coverage cost (\cref{sec:consequences}).
 \item \emph{A case study.} The Marin speedrun leaderboard forecasts each
 submission's loss at a far target. A solver defect, single-run noise and
 protocol changes between rungs determine what it can resolve
 (\cref{sec:marin}).
 \end{enumerate}
 
-In summary, single-scale ranking is hard to beat on the data we could test,
-and how hard depends on how far the target is. The gap between the two rules is
-real for the recipes measured and too small to establish for recipes in
-general with the candidate counts public suites provide.
+In summary, no rule we tested was significantly better than single-scale
+ranking on the data we could test, and on C4 projection's deficit grows with how
+far the target is. The gap between the two rules is nominally significant for
+the recipes measured and too small to establish for recipes in general with the
+candidate counts public suites provide.
 
 \section{Setup}
 \label{sec:setup}
@@ -158,15 +167,16 @@ sets by a smoothed bootstrap. In \calRandomWorlds\ random-candidate and
 errors gave Wald intervals covering only \calUCovMin--\calUCovMax, because the
 standard errors are noisy at \nCandidates\ candidates (\cref{tab:calibration}).
 Calibrated critical
-values restore coverage: \calFixedK\ for the fixed-candidate estimand and
+values improve coverage: \calFixedK\ for the fixed-candidate estimand and
 \calJackK\ for the random-candidate one, with held-out coverage
-\calFixedCovMin--\calFixedCovMax\ and \calJackCovMin--\calJackCovMax. Two
+\calFixedCovMin--\calFixedCovMax\ and \calJackCovMin--\calJackCovMax, short of
+the pre-registered band for both (\cref{app:ledger}). Two
 standard tools fail on real few-seed data. A moderated $t$ test splitting
 PolyPythias' \ppSeeds\ seeds \ppNullSplit\ against \ppNullSplit, where the null
 is true, rejects at \nullModBonf\ times its nominal rate at a Bonferroni level
 \citep{vanderwal2025polypythias}. With per-pair Welch degrees of freedom, the
 normal quantile under Bonferroni correction is anti-conservative by a median
-factor of \tRatioMedian. Calibration on the benchmark was not pre-registered;
+factor of \tRatioMedian\ across pairs. Calibration on the benchmark was not pre-registered;
 it was adopted after intervals at the textbook value undercovered, and both
 versions are reported.
 
@@ -183,17 +193,25 @@ comparator & fixed & random & bias & fixed & random & fixed & random & fixed & r
 \end{tabular}
 \caption{End-to-end calibration on semi-synthetic DataDecide worlds (C4).
 Comparisons are against single-scale ranking at the top rung; positive means
-worse.}
+worse. True effect: the comparator's excess under each estimand; bias is the
+fixed-candidate bias. Shared exponent fits one exponent across recipes; EB
+shrinkage pulls exponents toward it by empirical Bayes; the ensemble averages
+functional families; checkpoint-augmented fits add intermediate checkpoints;
+planted rows rank at a lower top rung, a comparator with a known deficit.}
 \label{tab:calibration}
 \end{table*}
 
 \paragraph{The headline gap at the candidate level.} On DataDecide's primary
-C4 design, projection mis-selects \headEstimate\ points more pairs than
-single-scale ranking. For these \nCandidates\ recipes the difference is
-significant: the fixed-candidate interval is [\headFixedLow, \headFixedHigh]
-($p=\headFixedP$), with the caveat that this estimand covered at
+C4 design (fit rungs up to \primaryFitTop, target \primaryTarget), projection mis-selects
+\headEstimate\ points more pairs than single-scale ranking. For these
+\nCandidates\ recipes the difference is nominally significant: the
+fixed-candidate interval is [\headFixedLow, \headFixedHigh] ($p=\headFixedP$),
+but it \headFixedFamilyVerdict\ Holm or BY correction within the fixed-candidate
+family (\cref{tab:claims-fixed}), and this estimand covered at
 \calProjFixedCov\ for projection in the benchmark. For recipes in general it is
-not established: [\headRandomLow, \headRandomHigh] ($p=\headRandomP$).
+not established: [\headRandomLow, \headRandomHigh] ($p=\headRandomP$), and the
+calibrated random-candidate test has power \calHeadRandomPower\ for this
+comparison (\cref{tab:calibration}).
 Detecting a two-point difference at power 0.8 under the calibrated test needs  %% nolint: stated power level
 about \candShrunkTwo\ candidates, several times what public suites provide.
 
@@ -216,8 +234,11 @@ each scaling-law variant against the default seed. Under the mixed targets,
 \ddFindingVariantName\ scores \ddFindingVariantDefault\ against single-scale
 ranking's \ddFindingSingle. Scored against one consistent target, the seed
 mean, it reaches \ddFindingVariant: the point estimates reverse. The difference,
-\ddFindingDiff\ points, lies inside its candidate-level interval
-([\ddFindingLow, \ddFindingHigh]), so neither order is established. The
+\ddFindingDiff\ points, lies inside its uncalibrated candidate-level interval
+([\ddFindingLow, \ddFindingHigh]), so neither order is established. Against the
+other consistent target, the default seed for both rules, the variant stays
+behind (\ddFindingDefaultBoth\ points), so the direction depends on the
+target. The
 published conclusion that no variant exceeds single-scale ranking is consistent
 with the data; equivalence is not established.
 
@@ -233,34 +254,48 @@ under expected-error scoring, against the lever arm of each of
 \label{fig:lever}
 \end{figure}
 
-\paragraph{The regularity.} Across \doseDesigns\ designs, projection's excess
-over single-scale ranking rises with the lever arm (\cref{fig:lever}; Spearman
-\leverRealRho). The designs share recipes and rungs, so we test it with recipes
-as the unit: a leave-one-recipe-out jackknife of Fisher's $z$ gives
-[\leverRealLow, \leverRealHigh] at a calibrated critical value of \leverK. A
-null in which a comparator's true excess is zero at every design, while designs
-that share a rung share its noise, rejects in \leverNullRate\ of \leverNullN\
-draws; the real statistic exceeds all of them ($p=\leverRealP$). The benchmark
-population's true correlation (\leverRhoTrue) is lower than the estimate, so the
-test is shown not to be anti-conservative under design overlap; the size of
-the real effect is not certified. Without noise, on the real shrunk curves,
+\paragraph{The regularity.} On C4, across \doseDesigns\ designs, projection's
+excess over single-scale ranking rises with the lever arm (\cref{fig:lever};
+Spearman \leverRealRho). The designs share recipes and rungs, so we test it
+with recipes as the unit: a leave-one-recipe-out jackknife of Fisher's $z$ gives
+[\leverWaldLow, \leverWaldHigh] at the normal critical value and
+[\leverRealLow, \leverRealHigh] at a critical value of \leverK\ calibrated on
+benchmark worlds whose true correlation (\leverRhoTrue) is below the estimate,
+so neither interval certifies the size of the effect. A null in which a
+comparator's true excess is zero at every design, while designs that share a
+rung share its noise, rejects in \leverNullRate\ of \leverNullN\ draws at the
+test's level; no null draw reaches the real statistic ($p<\leverRealP$, the
+Monte Carlo floor). Because a rank correlation is unchanged by a constant
+shift, this null also stands for an excess that is positive but the same at
+every design. It does not stand for an excess that varies with the size of the
+top rung or the number of fitted rungs, which vary with the lever arm across
+these designs (\cref{sec:limitations}). Without noise, on the real shrunk curves,
 projection is wrong on \mechNoiselessProjWrong\ pairs against single-scale
 ranking's \mechNoiselessSingleWrong\ summed over the designs, and beats it at
 \mechNoiselessProjBeats\ of \mechNoiselessDesigns.
 
-\paragraph{Mechanism.} Fixed-candidate worlds that differ only in the truth
-isolate the causes (\cref{tab:arms}). With pure power-law truths and no
-noise, projection captures every crossover, and its excess falls as the lever
-arm grows (Spearman \noiselessRhoArmA): extrapolation is doing what it should.
-Adding seed noise alone reverses the sign (\rhoArmA). Recipe-specific
-misspecification alone, without noise, also reverses it (\noiselessRhoArmBTwo).
-Misspecification shared by all recipes barely moves the result (\rhoArmBOne\
-against \rhoArmA): common-mode error cancels in a pairwise order. Of the real
-slope, the variance arm accounts for \attrPowerVar\% and recipe-specific
-misspecification \attrPowerSpecific\% when a power law is the reference form;
-taking a Chinchilla-form truth instead moves these to \attrChinVar\% and
-\attrChinSpecific\%. The direction of the mechanism is robust; its variance
-attribution depends on which form counts as correctly specified.
+\paragraph{Mechanism.} Semi-synthetic fixed-candidate worlds that differ only
+in the truth separate candidate sources (\cref{tab:arms}). They are simulations
+built from the DataDecide curves, not interventions on training. With pure
+power-law truths and no noise, projection's form is correct by construction, so
+it captures every crossover and its excess falls as the lever arm grows
+(Spearman \noiselessRhoArmA); this arm checks the simulator. Adding seed noise
+alone reverses the sign (\rhoArmA). Recipe-specific misspecification alone,
+without noise, also reverses it (\noiselessRhoArmBTwo). Misspecification shared
+by all recipes changes the noisy result little (\rhoArmBOne\ against \rhoArmA),
+although without noise it moves the correlation from \noiselessRhoArmA\ to
+\noiselessRhoArmBOne: in a pairwise order it largely cancels, and on real C4
+its cancellation ratio is \cancelCFourRatio, partial rather than complete. The
+world with all misfit and noise reproduces \attrRealTotal\% of the real slope.
+Of that simulated slope, with a power law as the reference form, the variance
+arm accounts for \attrPowerVar\%, recipe-specific misspecification
+\attrPowerSpecific\%, common-mode misspecification \attrPowerCommon\% and their
+interaction \attrPowerInter\%; the variance arm alone is \attrRealVar\% of the
+real slope. With a Chinchilla-form reference the same shares are
+\attrChinVar\%, \attrChinSpecific\%, \attrChinCommon\% and \attrChinInter\%. The
+direction is the same under both references; the attribution depends on which
+form counts as correctly specified. The pre-registered prediction that the
+slope rises monotonically with the misfit scale \armMonotoneLambda.
 
 \begin{table}[t]
 \centering
@@ -274,7 +309,7 @@ arm (truth) & noiseless Spearman & Spearman with noise & slope (pp per decade) &
 \end{tabular}
 \caption{Fixed-candidate worlds on the full C4 ladder, differing only in the
 truth. Spearman is between projection's true excess and the lever arm across
-designs.}
+designs. The B3 rows scale all misfit by one half, one and two.}
 \label{tab:arms}
 \end{table}
 
@@ -286,7 +321,8 @@ adding that drift as a regressor reduces the absolute extrapolation error at
 the target by \tokensPerParamReduction\%. Whether misspecification cancels between two
 recipes is decided by whether its amplitude is shared. In a synthetic control,
 a shared amplitude leaves the cancellation residual at or below
-\cancelSharedMax\ across exponent spreads up to \cancelAlphaMax, and a
+\cancelSharedMax\ for coefficients of variation of the exponent up to
+\cancelAlphaMax, and a
 per-recipe amplitude destroys cancellation (at least \cancelPerMin) at every
 spread. Differences in curvature alone do not decide it, and no normalisation
 of the metric removes it.
@@ -309,17 +345,25 @@ the calibrated null), and on correct-answer probability it is
 (\lamMarginRho, $p=\lamMarginP$), outside the corrected family. Across
 \specN\ analysis specifications (\cref{fig:spec-curve}), projection is worse in
 \specPositive\ and nominally better in \specBelow, all of them on OLMES
-metrics. Reassigning
+metrics; the specifications share data and many give identical results, so these
+counts are not independent evidence. Reassigning
 C4's recipe-specific residuals among recipes never makes projection win at any
 of \mechSweepPoints\ points, while OLMES residuals placed into C4 can. What
 distinguishes the metrics is the shape of their recipe-specific residuals,
-which none of \statsTriedTwoRounds\ tested summary statistics captures.
+which none of \statsTriedAll\ summary statistics tried across the pre-registered
+rounds captures. One, the size of the top-rung residual, tracks the excess (Spearman
+\statsNearMissRho) but was chosen after seeing the data and has
+counterexamples.
 
 \section{Consequences for selection and uncertainty}
 \label{sec:consequences}
 
 \paragraph{Single-scale ranking is the baseline to beat.} No estimator we
-tested beats it. On the primary design, single-scale ranking mis-selects
+tested is significantly better, but the calibrated random-candidate test has
+power \calHeadRandomPower\ against projection's effect in the benchmark
+(\cref{tab:calibration}), so this is an absence of evidence, not evidence of
+equivalence. On the design that
+fits up to \flexFitTop\ and targets \flexTarget, single-scale ranking mis-selects
 \flexSingle\% of pairs; the shared-exponent fit \flexShared\%, plain projection
 \flexPlain\% and a multi-family ensemble \flexEnsemble\% (\cref{fig:flexibility}).
 Across the restated claims, every nominally significant comparison of an
@@ -329,20 +373,25 @@ share recipes. The ensemble's deficit is the one estimator comparison that
 survives correction in the fixed-candidate family ($p=\ensFixedP$). Allocating
 runs across budgets does not help either: under a least-squares projection, the
 design that minimises the variance of the target level minimises every pair's
-mis-selection probability at once (\cref{app:design}), and the optimised
+mis-selection probability at once if the model is well specified
+(\cref{app:design}), which on C4 it is not (\cref{sec:lever}), and the optimised
 allocation is nominally worse than single-scale ranking at small budget
 fractions and not significantly different elsewhere. Common random
-numbers, which would reduce gap variance if seed deviations were shared across
-recipes, did not: in a pre-registered pilot the median gap-variance ratio was
-\crnMedianRatio\ ([\crnLow, \crnHigh]) against a decision rule of at most
-\crnRule, and the programme was closed.
+numbers would reduce gap variance if seed deviations were shared across
+recipes. A pre-registered pilot on a laptop-scale model, comparing learning-rate
+multipliers rather than data recipes, found no large reduction: the median
+gap-variance ratio was \crnMedianRatio\ ([\crnLow, \crnHigh]) against a
+decision rule of at most \crnRule. The interval does not exclude a moderate
+reduction; the programme was closed.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{figures/fig_flexibility}
-\caption{Mis-selected pairs on DataDecide's primary design for estimators
-ordered from least to most flexible. Bars are \flexLevel\% percentile-bootstrap
-intervals; the band is single-scale ranking's.}
+\caption{Mis-selected pairs on DataDecide's C4 design fitting up to
+\flexFitTop\ with target \flexTarget, for estimators ordered from least to most
+flexible; ``shrink'' rankers pull each recipe's exponent toward the shared one
+with the given strength. Bars are \flexLevel\% percentile intervals from
+\flexBoot\ seed-bootstrap draws; the band is single-scale ranking's.}
 \label{fig:flexibility}
 \end{figure}
 
@@ -351,27 +400,37 @@ intervals; the band is single-scale ranking's.}
 \includegraphics[width=\columnwidth]{figures/fig_certify_lever}
 \caption{False-certification rate by lever arm on DataDecide, pooled over
 metrics, for certification from seed error only, from a seed bootstrap, and
-with a misfit term proportional to the lever arm. The dashed line is the
-nominal rate.}
+with a misfit term proportional to the lever arm. Each point pools the designs
+that share a lever arm; no intervals are shown. The dashed line is the nominal rate.
+\Cref{tab:cert-metric} splits the rates by metric.}
 \label{fig:certify}
 \end{figure}
 
-\paragraph{Uncertainty must grow with the lever arm.} If misfit grows with
-extrapolation distance, intervals built from seed error alone should
-under-cover more at longer lever arms. We pre-registered that prediction with a
+\paragraph{Pooled over metrics, seed-error certification errs more at long
+lever arms.} If misfit grows with extrapolation distance, intervals built from
+seed error alone should under-cover more at longer lever arms. We pre-registered that prediction with a
 certification rule: certify a pair's order only if it holds at level
 $1-\alpha$ under every form in a form set, with variance from propagated seed  %% nolint: algebra
 error plus a recipe-specific misfit term $\kappa L$, where $\kappa$ is estimated
 on held-out rungs below the target with leave-one-ladder-out cross-validation
 (\cref{alg:certify}). Over \stageDesigns\ DataDecide designs and
-$\alpha=\stageAlpha\%$, certification from seed error alone under-covers more as
-the lever arm grows, from \stageLevShortSeed\% false certification at short lever
-arms to \stageLevLongSeed\% at long ones, and the seed bootstrap from
+$\alpha=\stageAlpha\%$, pooled over metrics, false certification from seed
+error alone rises from \stageLevShortSeed\% at short lever arms to
+\stageLevLongSeed\% at long ones, and from the seed bootstrap from
 \stageLevShortBoot\% to \stageLevLongBoot\% (\cref{fig:certify}). With the
-misfit term the rate stays at \stageLevShortSel\% and \stageLevLongSel\%, and
+misfit term the pooled rate is \stageLevShortSel\% and \stageLevLongSel\%, and
 coverage falls from \stageLevShortSelCov\% to \stageLevLongSelCov\% of pairs.
-The predicted rise held; the companion prediction that seed-error
-certification would exceed nominal when pooled did not.
+The predicted pooled rise held; the companion prediction that seed-error
+certification would exceed nominal when pooled did not. Split by metric
+(\cref{tab:cert-metric}), the rise is on the OLMES metrics: on OLMES error
+seed-error certification goes from \certLevErrSeedShort\% to
+\certLevErrSeedLong\%. On C4, the one metric where the lever-arm regularity
+holds, it stays at or below \certLevCFourSeedMax\% in every group, so the
+consequence is not shown where the regularity is established. The misfit term
+does not keep OLMES error flat either (\certLevErrSelShort\% to
+\certLevErrSelLong\%). Each metric's groups hold \certLevCFourNShort,
+\certLevCFourNMiddle\ and \certLevCFourNLong\ designs, and we attach no test
+to these splits, which were not pre-registered.
 
 \begin{table*}[t]
 \centering
@@ -398,9 +457,10 @@ coverage); the second failed. Certification from seed error alone met nominal
 when pooled over metrics (\stageSeedFcr\%) with higher coverage
 (\stageSeedCov\%). It exceeds nominal on both OLMES metrics (\stageErrSeedFcr\%
 and \stageCpSeedFcr\%), but the pooled criterion was the pre-registered one. The
-misfit rule itself exceeds nominal on OLMES macro error (\stageErrSelFcr\%), and
-the candidate-level interval on its excess over nominal reaches
-\stageSelExcessUp\ points per pair. On C4, single-scale ranking meets nominal
+misfit rule itself exceeds nominal on OLMES macro error (\stageErrSelFcr\%),
+where the candidate-level upper bound on its excess over nominal is
+\stageErrSelExcessUp\ points per pair; pooled, that bound is
+\stageSelExcessUp. On C4, single-scale ranking meets nominal
 at full coverage (\stageCFourSingleFcr\%), so no certifying rule can improve on
 it there. We report the rule as evidence for the consequence of the lever-arm
 law, not as a proposed method, and we did not iterate on it after the
@@ -418,10 +478,12 @@ run. Each size is a single run. These results are specific to this leaderboard.
 \paragraph{A convergence defect and its fix.} The leaderboard's
 Levenberg--Marquardt fit runs on raw FLOPs and stops on an absolute error
 tolerance. Its forecasts depart from the least-squares optimum by up to
-\marinDepartMax\ BPB (median \marinDepartMedian). Rescaling FLOPs alone brings
-\marinScaledOnlyShare\% of fits to the optimum; rescaling together with a
+\marinDepartMax\ BPB (median \marinDepartMedian). On an earlier snapshot of the
+leaderboard, rescaling FLOPs alone brings \marinScaledOnlyShare\% of
+\marinScaledOnlyFits\ multi-start fits to the optimum; rescaling together with a
 relative tolerance brings \marinMultistartReached\ of \marinMultistartFits\
-multi-start fits there, within \marinFixedDepart\ BPB. The fix changes
+multi-start fits on the official set there, within
+\marinMultistartDepart\ BPB. The fix changes
 \marinPairsChanged\ of \marinPairs\ pairwise orders (Kendall $\tau$
 \marinKendall) and the submission in place \marinChangedPlace.
 
@@ -434,9 +496,12 @@ pairs keep their order and only the top submission, \marinFormTopOne, is
 invariant. Propagating noise at the upper bound, \marinHold\ pairs hold in at
 least \marinHoldLevel\% of draws, the leading submission is first in
 \marinTopOneShare\% of draws, and no top-$k$ set holds counting from the top
-(\cref{fig:marin}). Requiring both form agreement and noise robustness, at a
-noise level validated against held-out rungs, certifies \marinCertified\ pairs,
-none of them placing one submission above all others.
+(\cref{fig:marin}). Requiring both form agreement and noise robustness at
+\marinSigmaStar\% relative noise, the level at which certification against a
+held-out rung is calibrated and which exceeds the single-run bracket,
+certifies \marinCertified\ pairs. Of these, \marinCertifiedVsLast\ place a
+submission above the last-placed one, and none places one submission above all
+others.
 
 \paragraph{Protocol changes between rungs.} Every submission changes its batch
 size somewhere on the ladder: \marinBatchAtThird\ double it at the third rung
@@ -448,7 +513,8 @@ certifies \stageMarinCert\ pairs here with \stageMarinFcr\% false
 certification: misfit calibrated below the target cannot anticipate a protocol
 change at the target. Projection and single-scale ranking do not differ
 significantly here either (\marinProjMaxT\ against a critical value of
-\marinProjCrit); the shared exponent has \marinProjShared\ point errors against
+\marinProjCrit, calibrated on DataDecide and transferred, so this comparison is
+indicative); the shared exponent has \marinProjShared\ point errors against
 single-scale ranking's \marinProjSingle.
 
 \begin{figure*}[t]
@@ -468,7 +534,13 @@ The evidence is one public suite with seed replicates and one intervention
 class, data recipes, plus one leaderboard without replicates. The lever-arm law
 is established on C4 bits per token; on OLMES accuracy metrics it is
 inconclusive, and its attribution between variance and misspecification depends
-on the reference functional form. The calibration benchmark's truths are
+on the reference functional form. Across the designs, the lever arm varies with
+the size of the top rung, the number of fitted rungs and DataDecide's drift in
+tokens per parameter; we did not separate these, and the longest lever arms
+come from ladders topped by small models. Its consequence for certification is
+shown pooled over metrics and not on C4 alone. Of \ledgerHeld\ plus
+\ledgerFailed\ predictions recorded across the project, \ledgerFailed\ failed;
+\cref{app:ledger} lists them. The calibration benchmark's truths are
 shrunk seed-mean curves with Gaussian noise; the fixed-candidate procedure
 covers \calFlatFixedCov\ when the noise profile is flatter than DataDecide's,
 against \calControlFixedCov\ in the control (\cref{app:regime}).
@@ -483,7 +555,10 @@ every rung comparison. We ran no new training beyond a laptop-scale pilot.
 \citep{kaplan2020scaling,hoffmann2022training} are sensitive to fitting choices
 \citep{besiroglu2024chinchilla,choshen2024hitchhiker}, and extrapolation to
 downstream tasks needs care \citep{gadre2024language,bhagia2024establishing}.
-We study the decisions such fits support rather than their fit error.
+Small-scale forecasts of larger models \citep{ivgi2022scaling,ruan2024observational}
+and hyperparameter transfer across width \citep{yang2022tensor}, which bears on
+per-size protocol changes, are related. We study the decisions such fits
+support rather than their fit error.
 
 \paragraph{Small-to-large decisions.} DataDecide \citep{magnusson2025datadecide}
 and Signal and Noise \citep{heineman2025signal} measure how well small runs
@@ -497,7 +572,13 @@ decision is not resolved follows selective classification
 \citep{vovk2005algorithmic,angelopoulos2021gentle}. Variance in benchmarks
 \citep{bouthillier2021accounting,madaan2024quantifying} and label error in
 references \citep{northcutt2021pervasive} motivate treating the reference as
-uncertain. Family-wide correction uses Holm and Benjamini--Yekutieli.
+uncertain. Low statistical power in evaluation comparisons
+\citep{card2020little,dror2018hitchhiker} and seed variance in fine-tuning
+\citep{dodge2020fine} are documented for NLP. Selecting the best of several
+populations and inference on ranks have a long statistical literature
+\citep{gupta1965some,hsu1996multiple,mogstad2024inference}; the possibly-best
+set and the Marin rank intervals are instances. Family-wide correction uses
+Holm and Benjamini--Yekutieli.
 
 \section*{Impact Statement}
 This paper presents work whose goal is to advance the field of Machine

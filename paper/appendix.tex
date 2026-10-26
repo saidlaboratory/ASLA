@@ -1,3 +1,4 @@
+\FloatBarrier
 \section{Proofs}
 \label{app:design}
 
@@ -45,6 +46,7 @@ variance around the target correlates with the point objective at \thmCorr\ over
 \thmDesigns\ random designs; the design optimal for a region spanning
 \thmRegionDecades\ decades costs \thmExcessThree\% extra point variance.
 
+\FloatBarrier
 \section{Correcting a pair-resampled interval}
 \label{app:correction}
 
@@ -52,7 +54,9 @@ The pair-resampled variance of a pair mean over $n$ candidates is
 $\zeta_2/\binom{n}{2}$, and the candidate-level variance is  %% nolint: binomial coefficient notation
 $2\bigl(2(n-2)\zeta_1+\zeta_2\bigr)/\bigl(n(n-1)\bigr)$. Their standard-error  %% nolint: mathematical constant
 ratio is $R(n)=\sqrt{1+2(n-2)\zeta_1/\zeta_2}$. On the C4 comparison  %% nolint: mathematical constant
-$R(\nCandidates)=\curveCFour$. Across \curveComparisons\ comparisons in this
+$R(\nCandidates)=\curveCFour$ from the formula, against the ratio
+\dependenceFactor\ of the two standard errors computed directly
+(\cref{sec:test}). Across \curveComparisons\ comparisons in this
 paper and the published re-tests the median $\zeta_1/\zeta_2$ is
 \curveZetaMedian, giving $R=\curveMedTen$, \curveMedTwentyFive\ and
 \curveMedHundred\ at \curveMSmall, \curveMMid\ and \curveMLarge\ candidates.
@@ -61,6 +65,7 @@ Subsampling the real candidates reproduces $R(m)$ to within
 \curveCheckSmallestM\ it misses by \curveCheckSmallest\%, a pre-registered
 prediction that failed.
 
+\FloatBarrier
 \section{Every inferential claim, restated}
 \label{app:claims}
 
@@ -76,7 +81,12 @@ claim (random-candidate estimand) & estimate & calibrated interval & $p$ & verdi
 \end{tabular}
 \caption{The paper's inferential claims under the calibrated random-candidate
 procedure. Verdict: Holm or BY if the claim survives that correction across the
-family, nominal if only $p<0.05$, otherwise a dash.}  %% nolint: the stated significance level
+family, nominal if only $p<0.05$, otherwise a dash. Sign conventions differ by  %% nolint: the stated significance level
+row type: ranker and allocation rows are differences in mis-selection (positive
+means worse than single-scale ranking); rows re-testing DataDecide's published
+comparisons are differences in decision accuracy (negative means worse). Some
+rows repeat a comparison under a second setting and give identical values; the
+family counts each row once as listed.}  %% nolint: the stated significance level
 \label{tab:claims}
 \end{table}
 
@@ -97,6 +107,7 @@ recipes, corrected within their own family.}
 
 
 
+\FloatBarrier
 \section{Mechanism experiments}
 \label{app:mechanism}
 
@@ -105,10 +116,12 @@ recipes, corrected within their own family.}
 Arm A's noiseless truth is an exact power law for every recipe, so projection
 captures every crossover and its excess falls with the lever arm. Noise alone
 reverses the sign. Arm B2's recipe-specific misspecification reverses it without
-noise. Arm B1's common-mode misspecification leaves arm A almost unchanged. With
+noise. Arm B1's common-mode misspecification changes the noisy result little but moves
+the noiseless correlation (\cref{tab:arms}). With
 the noise removed from the real shrunk curves, projection is wrong on more pairs
 than single-scale ranking at every one of \mechNoiselessDesigns\ designs.
 
+\FloatBarrier
 \section{Certifying selection: full results}
 \label{app:stage}
 
@@ -161,6 +174,28 @@ its own seeded generator, and cold and cached runs are byte-identical.
 full-refit draws on \stageLinMin--\stageLinMax\% of ordered pairs on the checked
 designs.
 
+\paragraph{By metric and lever arm.} \Cref{tab:cert-metric} splits the pooled
+rates of \cref{fig:certify} by metric. It was not pre-registered and carries no
+test; each cell pools a handful of designs.
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{llrrr}
+\toprule
+metric & certification & short lever arm & middle & long \\
+\midrule
+\certLevRows
+\bottomrule
+\end{tabular}
+\caption{Realized false-certification rate (\%) by metric and lever-arm group
+(short below half a decade, long at least one decade) at
+$\alpha=\stageAlpha\%$. Each metric's groups hold \certLevCFourNShort,
+\certLevCFourNMiddle\ and \certLevCFourNLong\ designs.}
+\label{tab:cert-metric}
+\end{table}
+
+\FloatBarrier
 \section{The Marin leaderboard: details}
 \label{app:marin}
 
@@ -177,8 +212,9 @@ residual of one submission's learning-rate sweep is \noiseSweepResidual\%
 
 \paragraph{Solver.} Raw FLOPs make the fit's Jacobian columns nearly collinear,
 and an absolute error tolerance discards the final improvements when the sum of
-squares is small. Without rescaling, \marinUnscaledReached\ fits reach the
-optimum even at a tight tolerance.
+squares is small. On the earlier snapshot, without rescaling,
+\marinUnscaledReached\ multi-start fits reach the optimum even at a tight
+tolerance.
 
 \paragraph{The class comparison, inconclusive.} Restricted to pairs of
 genuinely different recipes trained at identical compute with identical
@@ -191,6 +227,7 @@ sweep \citep{wen2025fantastic}, on the same size ladder, reorder
 \marinFoReordered\ of \marinFoDetermined\ determined pairs across the rung step
 where most submissions change protocol.
 
+\FloatBarrier
 \section{Instability across metrics and the regime map}
 \label{app:regime}
 
@@ -205,13 +242,16 @@ descriptive of DataDecide; it does not transfer between metrics. Under a flatter
 fixed-candidate procedure covers \calFlatFixedCov\ against
 \calControlFixedCov\ in the control.
 
+\FloatBarrier
 \section{Reference uncertainty}
 \label{app:reference}
 
-\paragraph{Seeds are independent across scales.} Across \couplingPairs\ pairs
+\paragraph{No detected seed dependence across scales.} Across \couplingPairs\ pairs
 of scales the correlation between a seed's deviations has median
 \couplingMedianCFour\ on C4 and \couplingMedianErr\ on OLMES error; permutation
-tests reject at \couplingRejectCFour\% and \couplingRejectErr\% of pairs.
+tests reject at \couplingRejectCFour\% and \couplingRejectErr\% of pairs. With
+\ddSeeds\ seeds per recipe these tests have little power, so this is an
+absence of detected dependence, not a demonstration of independence.
 
 \paragraph{Moderation.} On PolyPythias \citep{vanderwal2025polypythias}, with
 tasks in the role of recipes, moderation reduces the error in log standard
@@ -219,11 +259,13 @@ deviation at \polyBetter\ of \polyCells\ cells (median \polyRmseRaw\ to
 \polyRmseMod) and only partly removes the low bias of a small-sample standard
 deviation (\polyRatioRaw\ to \polyRatioMod\ of the truth). The adopted weight
 scored the lowest Brier score of \ppWeights\ candidates (\brierAdopted, against
-\brierRaw); this choice was not pre-registered.
+\brierModT\ with prior degrees of freedom and \brierRaw\ with raw standard
+errors); this choice was not pre-registered.
 
 \paragraph{A published figure.} DataDecide's pairwise decision accuracy for
-ranking at one small scale is \knownAnswerPublished; reproduced here it is
-\publishedOverall. Only \pubDetFrac\% of its reference pairs are determined
+ranking at one small scale is \knownAnswerPublished; reproduced per seed, as
+published, it is \knownAnswerPerSeed, and against the seed mean, which the
+corrections below use, it is \publishedOverall. Only \pubDetFrac\% of its reference pairs are determined
 under Bonferroni. Posterior expected accuracy gives \pubPosterior;
 disattenuated accuracy, which assumes the rule's errors are independent of the
 reference's, gives \pubDisattenuated. Both err where true gaps are small
@@ -232,10 +274,39 @@ reference's, gives \pubDisattenuated. Both err where true gaps are small
 
 \paragraph{Resolvability.} With per-pair Welch degrees of freedom, a normal
 quantile under Bonferroni is anti-conservative by a median factor of
-\tRatioMedian\ (\tRatioPTen--\tRatioPNinety\ across pairs).
+\tRatioMedian\ (10th to 90th percentile across pairs:  %% nolint: percentile names
+\tRatioPTen--\tRatioPNinety).
 
 
 
+\FloatBarrier
+\section{Every recorded prediction}
+\label{app:ledger}
+
+Each analysis in this project wrote its predictions before running and
+recorded a verdict for each in its results file. \Cref{tab:ledger} lists every
+prediction with a verdict across \ledgerFiles\ results files: \ledgerHeld\ held
+and \ledgerFailed\ failed. Files that repeat an analysis on another metric
+repeat its predictions.
+
+{\small
+\begin{longtable}{p{6.2cm}rrp{7.6cm}}  %% nolint: column width
+\caption{Predictions with recorded verdicts, by results file, with the names
+of those that failed.}\label{tab:ledger}\\
+\toprule
+results file & held & failed & failed predictions \\
+\midrule
+\endfirsthead
+\toprule
+results file & held & failed & failed predictions \\
+\midrule
+\endhead
+\ledgerRows
+\bottomrule
+\end{longtable}
+}
+
+\FloatBarrier
 \section{The practice record}
 \label{app:practice}
 
@@ -253,6 +324,7 @@ rules that caught them are reconstructing every number from committed inputs,
 checking that a perturbation built to move an estimate moves it, and counting a
 population against its source.
 
+\FloatBarrier
 \section{Reproduction}
 \label{app:repro}
 

@@ -229,7 +229,7 @@ def test_paper_macros_are_all_defined() -> None:
         """documentclass usepackage input title author date begin end maketitle section
         label paragraph emph ref cdot textbf textit item cite footnote hyperref
         includegraphics caption centering toprule midrule bottomrule S Phi Delta
-        STATE FOR ENDFOR printAffiliationsAndNotice ifXeTeX""".split()
+        STATE FOR ENDFOR printAffiliationsAndNotice ifXeTeX Cref FloatBarrier""".split()
     )
     used = set(re.findall(r"\\([A-Za-z]+)", PAPER.read_text(encoding="utf-8")))
     appendix = REPO / "paper" / "appendix.tex"
