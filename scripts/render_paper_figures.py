@@ -98,7 +98,7 @@ def flexibility() -> None:
     lo = [100 * (rankers[k]["mis_selection"]["point"] - rankers[k]["mis_selection"]["lo"]) for k, _ in order]
     hi = [100 * (rankers[k]["mis_selection"]["hi"] - rankers[k]["mis_selection"]["point"]) for k, _ in order]
     single = rankers["single_scale"]["mis_selection"]
-    fig, ax = plt.subplots(figsize=(6.0, 2.5))
+    fig, ax = plt.subplots(figsize=(3.25, 2.4))
     ax.axhspan(100 * single["lo"], 100 * single["hi"], color=GRID, linewidth=0, label="single-scale (95% interval)")
     ax.axhline(100 * single["point"], color=MUTED, linewidth=0.8)
     ax.errorbar(
@@ -112,11 +112,11 @@ def flexibility() -> None:
         capsize=0,
         label="projection estimator (95% interval)",
     )
-    ax.set_xticks(range(len(order)), [lab for _, lab in order])
+    ax.set_xticks(range(len(order)), [lab for _, lab in order], fontsize=6.5, rotation=30, ha="right")
     ax.set_xlabel("less flexible  →  more flexible")
     ax.set_ylabel("mis-selected pairs (%)")
     _grid(ax)
-    ax.legend(frameon=False, loc="upper left")
+    ax.legend(frameon=False, loc="upper left", fontsize=6.5)
     fig.tight_layout()
     fig.savefig(OUT / "fig_flexibility.pdf")
     plt.close(fig)
@@ -177,11 +177,61 @@ def marin_rank_intervals() -> None:
     plt.close(fig)
 
 
+def lever_arm() -> None:
+    import numpy as np
+
+    designs = json.loads((RESULTS / "target_scoring" / "expected_error.json").read_text())["dose_response"]["designs"]
+    x = np.log10([d["lever_arm"] for d in designs])
+    y = [d["expected_excess_pp"] for d in designs]
+    fig, ax = plt.subplots(figsize=(3.25, 2.3))
+    ax.axhline(0, color=MUTED, linewidth=0.8)
+    ax.scatter(x, y, s=14, color=SERIES[0], linewidths=0)
+    ax.set_xlabel("lever arm, log10(target / largest fitted compute)")
+    ax.set_ylabel("projection minus single-scale\nmis-selection (points)")
+    _grid(ax)
+    fig.tight_layout()
+    fig.savefig(OUT / "fig_lever_arm.pdf")
+    plt.close(fig)
+
+
+def certify_lever() -> None:
+    import numpy as np
+
+    data = json.loads((RESULTS / "certify" / "certify.json").read_text())
+    designs = data["datadecide"]["designs"]
+    alpha = 100 * data["alpha"]
+    methods = (
+        ("selector", "lever-arm misfit term", "o"),
+        ("seed_se", "seed error only", "s"),
+        ("bootstrap", "seed bootstrap", "^"),
+    )
+    levers = sorted({round(d["lever_arm"], 2) for d in designs})
+    fig, ax = plt.subplots(figsize=(3.25, 2.3))
+    ax.axhline(alpha, color=MUTED, linewidth=0.8, linestyle="--", label="nominal")
+    for i, (key, label, marker) in enumerate(methods):
+        pts = []
+        for lv in levers:
+            ds = [d for d in designs if round(d["lever_arm"], 2) == lv]
+            cert = sum(d["methods"][key]["certified"] for d in ds)
+            charges = sum(d["methods"][key]["charges"] for d in ds)
+            pts.append(100 * charges / cert if cert else np.nan)
+        ax.plot(levers, pts, color=SERIES[i], marker=marker, markersize=4, linewidth=1.5, label=label)
+    ax.set_xlabel("lever arm (decades)")
+    ax.set_ylabel("false certification (%)")
+    _grid(ax)
+    ax.legend(frameon=False, loc="upper left", fontsize=6)
+    fig.tight_layout()
+    fig.savefig(OUT / "fig_certify_lever.pdf")
+    plt.close(fig)
+
+
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     spec_curve()
     flexibility()
     marin_rank_intervals()
+    lever_arm()
+    certify_lever()
     print("wrote", sorted(p.name for p in OUT.glob("*.pdf")))
 
 

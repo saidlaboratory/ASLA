@@ -228,9 +228,13 @@ def test_paper_macros_are_all_defined() -> None:
     latex_builtins = set(
         """documentclass usepackage input title author date begin end maketitle section
         label paragraph emph ref cdot textbf textit item cite footnote hyperref
-        includegraphics caption centering toprule midrule bottomrule S Phi Delta """.split()
+        includegraphics caption centering toprule midrule bottomrule S Phi Delta
+        STATE FOR ENDFOR printAffiliationsAndNotice ifXeTeX""".split()
     )
     used = set(re.findall(r"\\([A-Za-z]+)", PAPER.read_text(encoding="utf-8")))
+    appendix = REPO / "paper" / "appendix.tex"
+    if appendix.exists():
+        used |= set(re.findall(r"\\([A-Za-z]+)", appendix.read_text(encoding="utf-8")))
     missing = sorted((used - latex_builtins) & {u for u in used if u not in latex_builtins} - defined)
     # Only flag macros that look like ours: camelCase and not a known builtin.
     missing = [m for m in missing if any(c.isupper() for c in m)]
@@ -337,6 +341,25 @@ def test_spelled_numbers_lint_catches_disagreement() -> None:
     assert spelled_number_violations("rule of three  %% words: -", values)  # no reason
     assert spelled_number_violations("one or two forms", values) == []
     assert spelled_number_violations("twenty-five candidates  %% words: \\worlds", values)
+
+
+APPENDIX = REPO / "paper" / "appendix.tex"
+
+
+def test_appendix_has_no_hand_typed_numbers() -> None:
+    if not APPENDIX.exists():  # pragma: no cover
+        pytest.skip("appendix not present")
+    offenders = _paper_numeric_literals(APPENDIX.read_text(encoding="utf-8"))
+    assert not offenders, f"paper/appendix.tex contains hand-typed numbers {offenders[:10]}"
+
+
+def test_appendix_spelled_numbers_match_their_macros() -> None:
+    if not APPENDIX.exists() or not MACROS.exists():  # pragma: no cover
+        pytest.skip("appendix or macros not present")
+    problems = spelled_number_violations(
+        APPENDIX.read_text(encoding="utf-8"), _macro_values(MACROS.read_text(encoding="utf-8"))
+    )
+    assert not problems, "spelled-out numbers not bound to agreeing macros:\n" + "\n".join(problems)
 
 
 def test_paper_spelled_numbers_match_their_macros() -> None:

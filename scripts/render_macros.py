@@ -817,6 +817,189 @@ def _marin_noise_entries() -> list[tuple[str, str, str]]:
     ]
 
 
+def _analysis_entries() -> list[tuple[str, str, str]]:
+    """Stage 2 (certify.json), the mechanism record, the common-mode test and the CRN pilot."""
+
+    cert = Source.load("certify/certify.json")
+    pooled = cert.get("datadecide.pooled")
+    per = cert.get("datadecide.per_metric")
+    lev = cert.get("datadecide.by_lever_arm")
+    marin = cert.get("marin.bound")
+    designs = cert.get("datadecide.designs")
+    checks = [d["linearization_check"]["agree_all_ordered_pairs"] for d in designs if "linearization_check" in d]
+    checks.append(marin["linearization_check"]["agree_all_ordered_pairs"])
+    mech = Source.load("target_scoring/mechanism_record.json")
+    noiseless = mech.get("mechanism.primary_evidence.noiseless_counts_on_real_curves")
+    attr = mech.get("mechanism.attribution_depends_on_base_form")
+    hc = Source.load("common_mode/hnorm_hcurv_test.json").get("synthetic_control.grid")
+    crn = Source.load("crn/pilot_laptop_analysis.json")
+    pct = 100
+    c4, err, cp = (
+        per[k] for k in ("c4_en_bits_per_token", "olmes_macro_error", "olmes_macro_correct_prob_per_char_deficit")
+    )
+    short, long_ = lev["L<0.5"], lev["L>=1"]
+    o = "certify.json"
+    return (
+        [
+            ("stageDesigns", f"{len(designs)}", o),
+            ("stageAlpha", f"{pct * cert.number('alpha'):.0f}", o),
+            ("stageSelCov", f"{pct * pooled['selector']['coverage']:.0f}", o),
+            ("stageSelFcr", f"{pct * pooled['selector']['fcr']:.1f}", o),
+            (
+                "stageSelExcessUp",
+                f"{pct * pooled['selector']['excess_over_alpha_kernel']['upper_at_calibrated_critical']:+.2f}",
+                o,
+            ),
+            ("stageSelBest", f"{pooled['selector']['p_true_best_in_set_mean']:.2f}", o),
+            ("stageSelSetSize", f"{pooled['selector']['possibly_best_size_mean']:.1f}", o),
+            ("stageSeedCov", f"{pct * pooled['seed_se']['coverage']:.0f}", o),
+            ("stageSeedFcr", f"{pct * pooled['seed_se']['fcr']:.2f}", o),
+            ("stageSeedBest", f"{pooled['seed_se']['p_true_best_in_set_mean']:.2f}", o),
+            ("stageBootCov", f"{pct * pooled['bootstrap']['coverage']:.0f}", o),
+            ("stageBootFcr", f"{pct * pooled['bootstrap']['fcr']:.1f}", o),
+            ("stageConfCov", f"{pct * pooled['conformal']['coverage']:.0f}", o),
+            ("stageSingleFcr", f"{pct * pooled['single_scale']['fcr']:.1f}", o),
+            ("stageSingleBest", f"{pooled['single_scale']['p_true_best_in_set_mean']:.2f}", o),
+            ("stageProjFcr", f"{pct * pooled['projection']['fcr']:.1f}", o),
+            ("stageCFourSingleFcr", f"{pct * c4['single_scale']['fcr']:.1f}", o),
+            ("stageCFourSelFcr", f"{pct * c4['selector']['fcr']:.1f}", o),
+            ("stageCFourSelCov", f"{pct * c4['selector']['coverage']:.0f}", o),
+            ("stageErrSelFcr", f"{pct * err['selector']['fcr']:.1f}", o),
+            ("stageErrSeedFcr", f"{pct * err['seed_se']['fcr']:.1f}", o),
+            ("stageCpSelFcr", f"{pct * cp['selector']['fcr']:.1f}", o),
+            ("stageCpSelCov", f"{pct * cp['selector']['coverage']:.0f}", o),
+            ("stageCpSeedFcr", f"{pct * cp['seed_se']['fcr']:.1f}", o),
+            ("stageLevShortSel", f"{pct * short['selector']['fcr']:.1f}", o),
+            ("stageLevLongSel", f"{pct * long_['selector']['fcr']:.1f}", o),
+            ("stageLevShortSeed", f"{pct * short['seed_se']['fcr']:.1f}", o),
+            ("stageLevLongSeed", f"{pct * long_['seed_se']['fcr']:.1f}", o),
+            ("stageLevShortBoot", f"{pct * short['bootstrap']['fcr']:.1f}", o),
+            ("stageLevLongBoot", f"{pct * long_['bootstrap']['fcr']:.1f}", o),
+            ("stageLevShortSelCov", f"{pct * short['selector']['coverage']:.0f}", o),
+            ("stageLevLongSelCov", f"{pct * long_['selector']['coverage']:.0f}", o),
+            ("stageLinMin", f"{pct * min(checks):.1f}", o),
+            ("stageLinMax", f"{pct * max(checks):.1f}", o),
+            ("stageMarinCert", f"{marin['methods']['selector']['certified']}", o),
+            ("stageMarinFcr", f"{pct * marin['methods']['selector']['fcr']:.0f}", o),
+            ("stageMarinSingleFcr", f"{pct * marin['methods']['single_scale']['fcr']:.0f}", o),
+            ("stageMarinKappaLog", f"{marin['kappa']['loglog']:.0f}", o),
+            ("mechNoiselessProjWrong", f"{noiseless['projection_wrong_pairs']}", "mechanism_record.json"),
+            ("mechNoiselessSingleWrong", f"{noiseless['single_scale_wrong_pairs']}", "mechanism_record.json"),
+            ("mechNoiselessDesigns", f"{noiseless['designs']}", "mechanism_record.json"),
+            ("mechNoiselessProjBeats", f"{noiseless['designs_where_projection_beats_single']}", "mechanism_record.json"),
+            ("attrPowerVar", f"{pct * attr['power_law_base']['variance']:.0f}", "mechanism_record.json"),
+            ("attrPowerSpecific", f"{pct * attr['power_law_base']['recipe_specific']:.0f}", "mechanism_record.json"),
+            ("attrChinVar", f"{pct * attr['chinchilla_base']['variance']:.0f}", "mechanism_record.json"),
+            ("attrChinSpecific", f"{pct * attr['chinchilla_base']['recipe_specific']:.0f}", "mechanism_record.json"),
+            (
+                "cancelSharedMax",
+                f"{max(g['cancellation'] for g in hc if g['misspecification_amplitude'] == 'shared'):.3f}",
+                "hnorm_hcurv_test.json",
+            ),
+            (
+                "cancelPerMin",
+                f"{min(g['cancellation'] for g in hc if g['misspecification_amplitude'] == 'per_intervention'):.2f}",
+                "hnorm_hcurv_test.json",
+            ),
+            ("cancelAlphaMax", f"{max(g['true_alpha_cv'] for g in hc):.1f}", "hnorm_hcurv_test.json"),
+            ("crnMedianRatio", f"{crn.number('final.median_ratio'):.2f}", "pilot_laptop_analysis.json"),
+            ("crnLow", f"{crn.get('final.median_ratio_ci')[0]:.2f}", "pilot_laptop_analysis.json"),
+            ("crnHigh", f"{crn.get('final.median_ratio_ci')[1]:.2f}", "pilot_laptop_analysis.json"),
+            ("crnRule", crn.get("decision_rule").split("<=")[1].strip(), "pilot_laptop_analysis.json"),
+            ("crnSeeds", f"{len(crn.get('seed_indices'))}", "pilot_laptop_analysis.json"),
+        ]
+        + _lever_by_metric_entries()
+        + _extra_entries()
+        + _table_entries()
+    )
+
+
+def _extra_entries() -> list[tuple[str, str, str]]:
+    mis = Source.load("target_scoring/calibration_misspecified.json")
+    rc = Source.load("external/inclusion_recount.json")
+    rungs = [v["batch_change_rung"] for v in rc.get("task2c.by_submission").values()]
+    return [
+        (
+            "calFlatFixedCov",
+            f"{mis.number('conditions.profile_flat.fixed_candidate.coverage'):.2f}",
+            "calibration_misspecified.json",
+        ),
+        (
+            "calControlFixedCov",
+            f"{mis.number('conditions.control.fixed_candidate.coverage'):.2f}",
+            "calibration_misspecified.json",
+        ),
+        ("marinBatchAtThird", f"{rungs.count('520m')}", "inclusion_recount.json"),
+        ("marinBatchAtTop", f"{rungs.count('1_2b')}", "inclusion_recount.json"),
+    ]
+
+
+def _table_entries() -> list[tuple[str, str, str]]:
+    """Table bodies for the Stage 2 appendix and the mechanism arms."""
+
+    cert = Source.load("certify/certify.json")
+    per = cert.get("datadecide.per_metric")
+    pooled = cert.get("datadecide.pooled")
+    marin = cert.get("marin.bound.methods")
+    names = {
+        "selector": "misfit term",
+        "seed_se": "seed error only",
+        "bootstrap": "seed bootstrap",
+        "conformal": "conformal",
+        "single_scale": "single-scale (decides)",
+        "projection": "projection (decides)",
+    }
+    metrics = {
+        "c4_en_bits_per_token": "C4",
+        "olmes_macro_error": "OLMES error",
+        "olmes_macro_correct_prob_per_char_deficit": "correct prob.",
+    }
+
+    def cell(row: dict) -> str:
+        fcr = "---" if row["fcr"] is None else f"{100 * row['fcr']:.2f}"
+        return f"{100 * row['coverage']:.0f} & {fcr}"
+
+    rows = []
+    for m, label in names.items():
+        parts = [cell(per[k][m]) for k in metrics] + [cell(pooled[m]), cell(marin[m])]
+        rows.append(f"{label} & " + " & ".join(parts) + " \\\\")
+    arms = Source.load("target_scoring/lever_arm_arms.json").get("arms")
+    arm_names = {
+        "A": "A: noise only",
+        "B1": "B1: + common-mode misfit",
+        "B2": "B2: + recipe-specific misfit",
+        "B3_0.5": "B3: + all misfit, half scale",
+        "B3_1": "B3: + all misfit",
+        "B3_2": "B3: + all misfit, double scale",
+    }
+    arm_rows = []
+    for k, label in arm_names.items():
+        v = arms[k]
+        nl = v["noiseless"]
+        nl_rho = nl.get("rho") if isinstance(nl, dict) else None
+        arm_rows.append(
+            f"{label} & {'---' if nl_rho is None else f'{nl_rho:+.2f}'} & {v['true_rho']:+.2f} & "
+            f"{v['true_slope_pp_per_log']:.2f} & {v['candidates_for_2pp_power_0_8']} \\\\"
+        )
+    return [
+        ("stageTableRows", " ".join(rows), "certify.json"),
+        ("armTableRows", " ".join(arm_rows), "lever_arm_arms.json"),
+    ]
+
+
+def _lever_by_metric_entries() -> list[tuple[str, str, str]]:
+    lam = Source.load("target_scoring/lever_arm_by_metric.json")
+    out = []
+    for key, tag in (("olmes", "Olmes"), ("cp", "Cp"), ("margin", "Margin")):
+        row = lam.get(f"metrics.{key}.all")
+        out += [
+            (f"lam{tag}Rho", f"{row['real_rho']:+.2f}", "lever_arm_by_metric.json"),
+            (f"lam{tag}P", f"{row['real_p_against_null']:.2g}", "lever_arm_by_metric.json"),
+            (f"lam{tag}Verdict", str(row["verdict"]), "lever_arm_by_metric.json"),
+        ]
+    return out
+
+
 def _figure_entries() -> list[tuple[str, str, str]]:
     """Caption numbers for the specification-curve and flexibility figures."""
 
@@ -1452,6 +1635,7 @@ def build() -> str:
     entries.extend(_marin_entries())
     entries.extend(_marin_noise_entries())
     entries.extend(_figure_entries())
+    entries.extend(_analysis_entries())
     lines.extend(_macro(name, value, origin) for name, value, origin in entries)
     lines.append("")
     return "\n".join(lines)

@@ -1,0 +1,266 @@
+\section{Proofs}
+\label{app:design}
+
+\paragraph{Setting.} Candidates $i$ are fitted on one shared design: budgets
+$C_1,\dots,C_k$ with $n_j$ runs each. Write $x_j=(1,-\log C_j)^\top$ and  %% nolint: mathematical constant
+$A(n)=\sum_j n_j x_j x_j^\top$, assumed nonsingular. Observations are
+$y_{ijr}=x_j^\top\theta_i+\varepsilon_{ijr}$ in log space, with $\theta_i$
+estimated by least squares.
+
+\paragraph{Assumptions.} (A1) Every candidate uses the same design $n$.
+(A2) The errors have mean zero and variance $\sigma^2$, and are independent  %% nolint: mathematical constant
+across runs and across candidates. (A3) The model is well specified: there is
+no deviation $b(C)$ from the linear form.
+
+\begin{theorem}
+Under (A1)--(A3), for every pair $(i,i')$ and every design $n$,
+$\operatorname{Var}\bigl(x_*^\top(\hat\theta_i-\hat\theta_{i'})\bigr)
+ = 2\operatorname{Var}\bigl(x_*^\top\hat\theta_i\bigr) = 2\sigma^2 v(n)$ with  %% nolint: mathematical constant
+$v(n)=x_*^\top A(n)^{-1}x_*$. Over any feasible set of designs the variance of  %% nolint: mathematical constant
+the target gap and the variance of the target level have the same minimisers,
+for all pairs at once. If the errors are Gaussian, the probability that the
+estimated gap has the wrong sign is
+$\Phi\bigl(-|\Delta_{ii'}|/\sqrt{2\sigma^2 v(n)}\bigr)$, increasing in $v(n)$,  %% nolint: mathematical constant
+so the level-optimal design minimises every pair's mis-selection probability.
+\end{theorem}
+
+\paragraph{Proof.} Least squares gives
+$\hat\theta_i-\theta_i=A(n)^{-1}\sum_j x_j\sum_r\varepsilon_{ijr}$, so by (A2)  %% nolint: mathematical constant
+$\operatorname{Cov}(\hat\theta_i)=\sigma^2A(n)^{-1}$. Independence across  %% nolint: mathematical constant
+candidates gives $\operatorname{Cov}(\hat\theta_i-\hat\theta_{i'})=2\sigma^2A(n)^{-1}$.  %% nolint: mathematical constant
+The pair variance is twice the level variance, a factor that does not depend on
+$n$, so the minimisers coincide. By (A3) the estimated gap is unbiased; under
+Gaussian errors it is $\mathcal N(\Delta_{ii'},2\sigma^2v(n))$, and since $\Phi$  %% nolint: mathematical constant
+is increasing and $|\Delta_{ii'}|$ does not depend on $n$, the wrong-sign
+probability is increasing in $v(n)$. \hfill$\square$
+
+\paragraph{What the assumptions exclude.} Budget-dependent variance shared by
+all candidates is harmless. The conclusion fails when candidates use different
+designs, when the correlation between candidates' errors varies with budget,
+and when the model is misspecified: a deviation $b(C)$ adds a bias that depends
+on $n$. The measurements in \cref{sec:lever} show the last case holds in
+practice. The theorem is about design; it does not say whether projection
+should beat single-scale ranking. A region objective that averages prediction
+variance around the target correlates with the point objective at \thmCorr\ over
+\thmDesigns\ random designs; the design optimal for a region spanning
+\thmRegionDecades\ decades costs \thmExcessThree\% extra point variance.
+
+\section{Correcting a pair-resampled interval}
+\label{app:correction}
+
+The pair-resampled variance of a pair mean over $n$ candidates is
+$\zeta_2/\binom{n}{2}$, and the candidate-level variance is  %% nolint: binomial coefficient notation
+$2\bigl(2(n-2)\zeta_1+\zeta_2\bigr)/\bigl(n(n-1)\bigr)$. Their standard-error  %% nolint: mathematical constant
+ratio is $R(n)=\sqrt{1+2(n-2)\zeta_1/\zeta_2}$. On the C4 comparison  %% nolint: mathematical constant
+$R(\nCandidates)=\curveCFour$. Across \curveComparisons\ comparisons in this
+paper and the published re-tests the median $\zeta_1/\zeta_2$ is
+\curveZetaMedian, giving $R=\curveMedTen$, \curveMedTwentyFive\ and
+\curveMedHundred\ at \curveMSmall, \curveMMid\ and \curveMLarge\ candidates.
+Subsampling the real candidates reproduces $R(m)$ to within
+\curveCheckWorstLarge\% at \curveCheckLargeMinM\ or more candidates; at
+\curveCheckSmallestM\ it misses by \curveCheckSmallest\%, a pre-registered
+prediction that failed.
+
+\section{Every inferential claim, restated}
+\label{app:claims}
+
+\begin{table}[h]
+\centering
+\scriptsize
+\begin{tabular}{p{7.2cm}rrrl}  %% nolint: column width
+\toprule
+claim (random-candidate estimand) & estimate & calibrated interval & $p$ & verdict \\
+\midrule
+\restatedPrimaryRows
+\bottomrule
+\end{tabular}
+\caption{The paper's inferential claims under the calibrated random-candidate
+procedure. Verdict: Holm or BY if the claim survives that correction across the
+family, nominal if only $p<0.05$, otherwise a dash.}  %% nolint: the stated significance level
+\label{tab:claims}
+\end{table}
+
+\begin{table}[h]
+\centering
+\scriptsize
+\begin{tabular}{p{7.2cm}rrrl}  %% nolint: column width
+\toprule
+claim (fixed-candidate estimand) & estimate & calibrated interval & $p$ & verdict \\
+\midrule
+\restatedFixedRows
+\bottomrule
+\end{tabular}
+\caption{Ranker comparisons under the fixed-candidate estimand, scoped to these
+recipes, corrected within their own family.}
+\label{tab:claims-fixed}
+\end{table}
+
+
+
+\section{Mechanism experiments}
+\label{app:mechanism}
+
+
+
+Arm A's noiseless truth is an exact power law for every recipe, so projection
+captures every crossover and its excess falls with the lever arm. Noise alone
+reverses the sign. Arm B2's recipe-specific misspecification reverses it without
+noise. Arm B1's common-mode misspecification leaves arm A almost unchanged. With
+the noise removed from the real shrunk curves, projection is wrong on more pairs
+than single-scale ranking at every one of \mechNoiselessDesigns\ designs.
+
+\section{Certifying selection: full results}
+\label{app:stage}
+
+\begin{algorithm}[h]
+\caption{CERTIFY, as pre-registered.}
+\label{alg:certify}
+\begin{algorithmic}
+\STATE \textbf{input:} candidates $i$; fit rungs with compute $C_r$, values $y_{ir}$ and standard errors $s_{ir}$; target $C_T$; forms $F$; level $\alpha$; misfit coefficients $\kappa_f$
+\FOR{each form $f\in F$ and candidate $i$}
+\STATE $\hat y_{if}\gets$ the form-$f$ forecast at $C_T$; $g_{if}\gets\partial\hat y_{if}/\partial y_{ir}$ by finite differences
+\STATE $L_i\gets\log_{10}(C_T/\max_r C_r)$  %% nolint: the base of the logarithm
+\STATE $v_{if}\gets\sum_r g_{ifr}^2 s_{ir}^2+(\kappa_f L_i\hat y_{if})^2$  %% nolint: squares in a variance formula
+\ENDFOR
+\FOR{each pair $(i,j)$}
+\STATE certify ``$i$ before $j$'' iff for every $f$: $\hat y_{if}<\hat y_{jf}$ and $\Phi\bigl((\hat y_{jf}-\hat y_{if})/\sqrt{v_{if}+v_{jf}}\bigr)\ge 1-\alpha$  %% nolint: algebra
+\ENDFOR
+\STATE \textbf{output:} the certified partial order and its maximal elements
+\end{algorithmic}
+\end{algorithm}
+
+\paragraph{Fixed choices.} $\alpha=\stageAlpha\%$. The form set is log-log and an
+offset power law fitted by least squares from fixed starts. $\kappa_f$ is
+estimated by moment matching on held-out rungs strictly between a ladder's top
+and the evaluation target, with the common mode removed, leave-one-ladder-out.
+Seed error on DataDecide is the moderated standard error of the seed mean.
+Baselines: single-scale ranking and projection, which always decide; the same
+rule with $\kappa_f=0$; a seed bootstrap;  %% nolint: the misfit term switched off and split conformal intervals with
+scores normalised by the lever arm. Charges use the reference-uncertainty
+treatment of \cref{sec:setup}.
+
+
+
+\paragraph{The criterion.} Realized false certification at or below nominal
+(held, \stageSelFcr\%) and higher coverage than every baseline that also meets
+nominal (failed: seed error alone met nominal pooled at \stageSeedFcr\% with
+\stageSeedCov\% coverage). The possibly-best set averaged \stageSelSetSize\
+recipes and contained the true best with probability \stageSelBest, against
+\stageSeedBest\ for seed error alone and \stageSingleBest\ for single-scale
+ranking.
+
+\paragraph{Deviations.} There are three, all disclosed in the results file. On Marin the  %% words: - (a count of the deviations listed below)
+offset power law is not identified on the two calibration rungs, so its $\kappa$
+was transferred from DataDecide C4; the log-log $\kappa$ estimated there was
+\stageMarinKappaLog. Conformal intervals on Marin were calibrated on log-log
+residuals for the same reason. A first run drew all designs from one random
+stream, so results depended on which designs were cached; each design now has
+its own seeded generator, and cold and cached runs are byte-identical.
+
+\paragraph{Linearization check.} The Gaussian-limit decisions agree with
+full-refit draws on \stageLinMin--\stageLinMax\% of ordered pairs on the checked
+designs.
+
+\section{The Marin leaderboard: details}
+\label{app:marin}
+
+\paragraph{The noise bracket.} The low end comes from borrowed seed standard
+deviations: DataDecide at \targetScaleLabel\ (\noiseLowDataDecide\%) and Delphi's
+held-out runs (\noiseLowDelphiA\% and \noiseLowDelphiB\%). A cross-hardware pair
+of identical configurations differs by \noiseHardware\% (\noiseHardwareDf\ df),
+but shares its seed, so it measures hardware divergence, not seed noise. The
+high end comes from leave-one-out residuals of public hyperparameter sweeps and
+isoFLOP curves: \marinBoundLow--\marinBoundHigh\% by size, and
+\noiseHighDelphiMin--\noiseHighDelphiMax\% from the isoFLOP curves alone. The
+residual of one submission's learning-rate sweep is \noiseSweepResidual\%
+(\noiseSweepDf\ df). Every value includes lack of fit and is an upper bound.
+
+\paragraph{Solver.} Raw FLOPs make the fit's Jacobian columns nearly collinear,
+and an absolute error tolerance discards the final improvements when the sum of
+squares is small. Without rescaling, \marinUnscaledReached\ fits reach the
+optimum even at a tight tolerance.
+
+\paragraph{The class comparison, inconclusive.} Restricted to pairs of
+genuinely different recipes trained at identical compute with identical
+per-size protocol changes, \marinMatchedReordered\ of \marinMatchedDetermined\
+determined pairs reorder across rung steps. Detecting a \marinPowerDelta-point
+difference from DataDecide's rate at power 0.8 needs \marinPowerN\ determined  %% nolint: stated power level
+pairs (\marinPowerNHigh\ against a higher reference rate); one Marin design
+provides at most \marinMaxDetermined. Fitted optima from the Fantastic Optimizers
+sweep \citep{wen2025fantastic}, on the same size ladder, reorder
+\marinFoReordered\ of \marinFoDetermined\ determined pairs across the rung step
+where most submissions change protocol.
+
+\section{Instability across metrics and the regime map}
+\label{app:regime}
+
+A regime map relates noise, misspecification and candidate spread to
+projection's excess. At C4's coordinates it gives \mapExcessCFourPrimary\
+points on the primary design, close to the real \excessObserved. At OLMES's
+coordinates it gives \mapExcessOlmesPrimary, while worlds built at those
+coordinates give \worldExcessOlmesPrimary. Moving one metric's worlds to
+another's dimensionless coordinates predicted the sign of the other's excess in
+\transferMatchesBase\ of \transferTestsBase\ tests. We report the map as
+descriptive of DataDecide; it does not transfer between metrics. Under a flatter noise profile than DataDecide's, the
+fixed-candidate procedure covers \calFlatFixedCov\ against
+\calControlFixedCov\ in the control.
+
+\section{Reference uncertainty}
+\label{app:reference}
+
+\paragraph{Seeds are independent across scales.} Across \couplingPairs\ pairs
+of scales the correlation between a seed's deviations has median
+\couplingMedianCFour\ on C4 and \couplingMedianErr\ on OLMES error; permutation
+tests reject at \couplingRejectCFour\% and \couplingRejectErr\% of pairs.
+
+\paragraph{Moderation.} On PolyPythias \citep{vanderwal2025polypythias}, with
+tasks in the role of recipes, moderation reduces the error in log standard
+deviation at \polyBetter\ of \polyCells\ cells (median \polyRmseRaw\ to
+\polyRmseMod) and only partly removes the low bias of a small-sample standard
+deviation (\polyRatioRaw\ to \polyRatioMod\ of the truth). The adopted weight
+scored the lowest Brier score of \ppWeights\ candidates (\brierAdopted, against
+\brierRaw); this choice was not pre-registered.
+
+\paragraph{A published figure.} DataDecide's pairwise decision accuracy for
+ranking at one small scale is \knownAnswerPublished; reproduced here it is
+\publishedOverall. Only \pubDetFrac\% of its reference pairs are determined
+under Bonferroni. Posterior expected accuracy gives \pubPosterior;
+disattenuated accuracy, which assumes the rule's errors are independent of the
+reference's, gives \pubDisattenuated. Both err where true gaps are small
+(reference reliability \relSmallGaps\ on the smallest-gap third against
+\relLargeGaps\ on the largest), so the correction's direction is not identified.
+
+\paragraph{Resolvability.} With per-pair Welch degrees of freedom, a normal
+quantile under Bonferroni is anti-conservative by a median factor of
+\tRatioMedian\ (\tRatioPTen--\tRatioPNinety\ across pairs).
+
+
+
+\section{The practice record}
+\label{app:practice}
+
+Several results in this project were at first wrong because a measurement could
+not see the quantity it claimed to measure. The full record, with each case's
+detection path, is generated in \texttt{results/consolidated/METHODS\_PRACTICE.md}.
+The cases reported in this paper are: an earlier headline count that did not
+regenerate from committed code (\shippedProjFlips\ projection errors shipped,
+\recomputedProjFlips\ reproducible); a residual-scatter ratio first reported as
+\residRatioSuperseded\ and corrected to \residRatio\ after a pooling error; a
+perturbation that moved the simulated truth but not the simulated data;
+comparisons at a named model size that were not at equal compute; and an
+official leaderboard submission silently dropped by label parsing. The detection
+rules that caught them are reconstructing every number from committed inputs,
+checking that a perturbation built to move an estimate moves it, and counting a
+population against its source.
+
+\section{Reproduction}
+\label{app:repro}
+
+Every number in this paper is a macro generated from a committed results file
+by \texttt{scripts/render\_macros.py}; a lint fails on any numeral or
+spelled-out number in the prose that is not bound to a macro. Figures are
+rendered from the same files by \texttt{scripts/render\_paper\_figures.py}.
+\texttt{scripts/verify\_reproducibility.py} regenerates every generated document
+and compares it with the committed copy. The certifying-selection results are
+produced by \texttt{scripts/run\_certify.py} from the committed DataDecide
+tables; its pre-registration is \texttt{PREDICTIONS\_TASK\_CERTIFY.md}.

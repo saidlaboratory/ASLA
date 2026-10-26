@@ -1,340 +1,210 @@
 {
   "reference_commit": "dfc4c4aaba",
   "reference": "the commit that first wrote results/external/prose_corrections.json",
-  "latest_commit_touching_list": "dfc4c4aaba",
-  "macros_used_in_main_tex": 218,
-  "claims_with_changed_source": 47,
-  "claims_whose_value_changed": 1,
-  "new_claims_since_reference": 10,
+  "latest_commit_touching_list": "acd56d83fa",
+  "macros_used_in_main_tex": 156,
+  "claims_with_changed_source": 77,
+  "claims_whose_value_changed": 0,
+  "new_claims_since_reference": 73,
   "rows": [
     {
-      "macro": "curveCFour",
+      "macro": "attrChinSpecific",
       "sources_changed": {
-        "results/external/published_comparisons.json": "working tree"
-      },
-      "old": "1.62",
-      "new": "1.62",
-      "new_claim": false,
-      "value_changed": false
-    },
-    {
-      "macro": "curveCheckLargeMinM",
-      "sources_changed": {
-        "results/external/published_comparisons.json": "working tree"
+        "results/target_scoring/mechanism_record.json": "ba148cf 2026-10-12"
       },
       "old": null,
-      "new": "12",
+      "new": "15",
       "new_claim": true,
       "value_changed": false
     },
     {
-      "macro": "curveCheckSmallest",
+      "macro": "attrChinVar",
       "sources_changed": {
-        "results/external/published_comparisons.json": "working tree"
+        "results/target_scoring/mechanism_record.json": "ba148cf 2026-10-12"
       },
-      "old": "44",
+      "old": null,
+      "new": "89",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "attrPowerSpecific",
+      "sources_changed": {
+        "results/target_scoring/mechanism_record.json": "ba148cf 2026-10-12"
+      },
+      "old": null,
       "new": "44",
-      "new_claim": false,
-      "value_changed": false
-    },
-    {
-      "macro": "curveCheckSmallestM",
-      "sources_changed": {
-        "results/external/published_comparisons.json": "working tree"
-      },
-      "old": "8",
-      "new": "8",
-      "new_claim": false,
-      "value_changed": false
-    },
-    {
-      "macro": "curveCheckWorstLarge",
-      "sources_changed": {
-        "results/external/published_comparisons.json": "working tree"
-      },
-      "old": "11",
-      "new": "11",
-      "new_claim": false,
-      "value_changed": false
-    },
-    {
-      "macro": "curveComparisons",
-      "sources_changed": {
-        "results/external/published_comparisons.json": "working tree"
-      },
-      "old": "495",
-      "new": "495",
-      "new_claim": false,
-      "value_changed": false
-    },
-    {
-      "macro": "curveHighTwentyFive",
-      "sources_changed": {
-        "results/external/published_comparisons.json": "working tree"
-      },
-      "old": "2.55",
-      "new": "2.55",
-      "new_claim": false,
-      "value_changed": false
-    },
-    {
-      "macro": "curveLowTwentyFive",
-      "sources_changed": {
-        "results/external/published_comparisons.json": "working tree"
-      },
-      "old": "1.33",
-      "new": "1.33",
-      "new_claim": false,
-      "value_changed": false
-    },
-    {
-      "macro": "curveMLarge",
-      "sources_changed": {
-        "results/external/published_comparisons.json": "working tree"
-      },
-      "old": null,
-      "new": "100",
       "new_claim": true,
       "value_changed": false
     },
     {
-      "macro": "curveMMid",
+      "macro": "attrPowerVar",
       "sources_changed": {
-        "results/external/published_comparisons.json": "working tree"
+        "results/target_scoring/mechanism_record.json": "ba148cf 2026-10-12"
       },
       "old": null,
-      "new": "25",
+      "new": "61",
       "new_claim": true,
       "value_changed": false
     },
     {
-      "macro": "curveMSmall",
+      "macro": "calControlFixedCov",
       "sources_changed": {
-        "results/external/published_comparisons.json": "working tree"
+        "results/target_scoring/calibration_misspecified.json": "ba148cf 2026-10-12"
       },
       "old": null,
-      "new": "10",
+      "new": "0.95",
       "new_claim": true,
       "value_changed": false
     },
     {
-      "macro": "curveMedHundred",
+      "macro": "calFlatFixedCov",
       "sources_changed": {
-        "results/external/published_comparisons.json": "working tree"
+        "results/target_scoring/calibration_misspecified.json": "ba148cf 2026-10-12"
       },
-      "old": "3.79",
-      "new": "3.79",
-      "new_claim": false,
+      "old": null,
+      "new": "0.86",
+      "new_claim": true,
       "value_changed": false
     },
     {
-      "macro": "curveMedTen",
+      "macro": "crnHigh",
       "sources_changed": {
-        "results/external/published_comparisons.json": "working tree"
+        "results/crn/pilot_laptop_analysis.json": "c847253 2026-10-11"
       },
-      "old": "1.45",
-      "new": "1.45",
-      "new_claim": false,
+      "old": null,
+      "new": "2.81",
+      "new_claim": true,
       "value_changed": false
     },
     {
-      "macro": "curveMedTwentyFive",
+      "macro": "crnLow",
       "sources_changed": {
-        "results/external/published_comparisons.json": "working tree"
+        "results/crn/pilot_laptop_analysis.json": "c847253 2026-10-11"
       },
-      "old": "2.03",
-      "new": "2.03",
-      "new_claim": false,
+      "old": null,
+      "new": "0.29",
+      "new_claim": true,
       "value_changed": false
     },
     {
-      "macro": "curveZetaMedian",
+      "macro": "crnMedianRatio",
       "sources_changed": {
-        "results/external/published_comparisons.json": "working tree"
+        "results/crn/pilot_laptop_analysis.json": "c847253 2026-10-11"
       },
-      "old": "0.068",
-      "new": "0.068",
-      "new_claim": false,
+      "old": null,
+      "new": "1.04",
+      "new_claim": true,
       "value_changed": false
     },
     {
-      "macro": "dOneAll",
+      "macro": "crnRule",
       "sources_changed": {
-        "results/external/published_comparisons.json": "working tree"
+        "results/crn/pilot_laptop_analysis.json": "c847253 2026-10-11"
       },
-      "old": "176",
-      "new": "176",
-      "new_claim": false,
+      "old": null,
+      "new": "0.5",
+      "new_claim": true,
       "value_changed": false
     },
     {
-      "macro": "dOneAllBetter",
+      "macro": "lamCpP",
       "sources_changed": {
-        "results/external/published_comparisons.json": "working tree"
+        "results/target_scoring/lever_arm_by_metric.json": "0048c6b 2026-10-12"
       },
-      "old": "25",
-      "new": "25",
-      "new_claim": false,
+      "old": null,
+      "new": "0.17",
+      "new_claim": true,
       "value_changed": false
     },
     {
-      "macro": "dOneAllWorse",
+      "macro": "lamCpRho",
       "sources_changed": {
-        "results/external/published_comparisons.json": "working tree"
+        "results/target_scoring/lever_arm_by_metric.json": "0048c6b 2026-10-12"
       },
-      "old": "28",
-      "new": "28",
-      "new_claim": false,
+      "old": null,
+      "new": "-0.37",
+      "new_claim": true,
       "value_changed": false
     },
     {
-      "macro": "dOneMacroExcl",
+      "macro": "lamCpVerdict",
       "sources_changed": {
-        "results/external/published_comparisons.json": "working tree"
+        "results/target_scoring/lever_arm_by_metric.json": "0048c6b 2026-10-12"
       },
-      "old": "1",
-      "new": "1",
-      "new_claim": false,
+      "old": null,
+      "new": "inconclusive",
+      "new_claim": true,
       "value_changed": false
     },
     {
-      "macro": "dOneTypicalHalfWidth",
+      "macro": "lamMarginP",
       "sources_changed": {
-        "results/external/published_comparisons.json": "working tree"
+        "results/target_scoring/lever_arm_by_metric.json": "0048c6b 2026-10-12"
       },
-      "old": "8",
+      "old": null,
+      "new": "0.00087",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "lamMarginRho",
+      "sources_changed": {
+        "results/target_scoring/lever_arm_by_metric.json": "0048c6b 2026-10-12"
+      },
+      "old": null,
+      "new": "+0.69",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "lamOlmesP",
+      "sources_changed": {
+        "results/target_scoring/lever_arm_by_metric.json": "0048c6b 2026-10-12"
+      },
+      "old": null,
+      "new": "0.07",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "lamOlmesRho",
+      "sources_changed": {
+        "results/target_scoring/lever_arm_by_metric.json": "0048c6b 2026-10-12"
+      },
+      "old": null,
+      "new": "-0.42",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "lamOlmesVerdict",
+      "sources_changed": {
+        "results/target_scoring/lever_arm_by_metric.json": "0048c6b 2026-10-12"
+      },
+      "old": null,
+      "new": "inconclusive",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "marinBatchAtThird",
+      "sources_changed": {
+        "results/external/inclusion_recount.json": "0ff90cc 2026-10-22"
+      },
+      "old": null,
       "new": "8",
-      "new_claim": false,
+      "new_claim": true,
       "value_changed": false
     },
     {
-      "macro": "dOneVariants",
+      "macro": "marinBatchAtTop",
       "sources_changed": {
-        "results/external/published_comparisons.json": "working tree"
+        "results/external/inclusion_recount.json": "0ff90cc 2026-10-22"
       },
-      "old": "8",
-      "new": "8",
-      "new_claim": false,
-      "value_changed": false
-    },
-    {
-      "macro": "dOneWorstDiff",
-      "sources_changed": {
-        "results/external/published_comparisons.json": "working tree"
-      },
-      "old": "-15.2",
-      "new": "-15.2",
-      "new_claim": false,
-      "value_changed": false
-    },
-    {
-      "macro": "dOneWorstHigh",
-      "sources_changed": {
-        "results/external/published_comparisons.json": "working tree"
-      },
-      "old": "-2.3",
-      "new": "-2.3",
-      "new_claim": false,
-      "value_changed": false
-    },
-    {
-      "macro": "dOneWorstLow",
-      "sources_changed": {
-        "results/external/published_comparisons.json": "working tree"
-      },
-      "old": "-28.1",
-      "new": "-28.1",
-      "new_claim": false,
-      "value_changed": false
-    },
-    {
-      "macro": "dTwoAll",
-      "sources_changed": {
-        "results/external/published_comparisons.json": "working tree"
-      },
-      "old": "143",
-      "new": "143",
-      "new_claim": false,
-      "value_changed": false
-    },
-    {
-      "macro": "dTwoAllBetter",
-      "sources_changed": {
-        "results/external/published_comparisons.json": "working tree"
-      },
-      "old": "56",
-      "new": "56",
-      "new_claim": false,
-      "value_changed": false
-    },
-    {
-      "macro": "dTwoAllWorse",
-      "sources_changed": {
-        "results/external/published_comparisons.json": "working tree"
-      },
-      "old": "9",
-      "new": "9",
-      "new_claim": false,
-      "value_changed": false
-    },
-    {
-      "macro": "dTwoMacroBetter",
-      "sources_changed": {
-        "results/external/published_comparisons.json": "working tree"
-      },
-      "old": "1",
-      "new": "1",
-      "new_claim": false,
-      "value_changed": false
-    },
-    {
-      "macro": "dTwoMacroPointWorse",
-      "sources_changed": {
-        "results/external/published_comparisons.json": "working tree"
-      },
-      "old": "5",
-      "new": "5",
-      "new_claim": false,
-      "value_changed": false
-    },
-    {
-      "macro": "dTwoMacroWorse",
-      "sources_changed": {
-        "results/external/published_comparisons.json": "working tree"
-      },
-      "old": "1",
-      "new": "1",
-      "new_claim": false,
-      "value_changed": false
-    },
-    {
-      "macro": "dTwoScales",
-      "sources_changed": {
-        "results/external/published_comparisons.json": "working tree"
-      },
-      "old": "13",
-      "new": "13",
-      "new_claim": false,
-      "value_changed": false
-    },
-    {
-      "macro": "gateExact",
-      "sources_changed": {
-        "results/external/published_comparisons.json": "working tree"
-      },
-      "old": "30",
-      "new": "30",
-      "new_claim": false,
-      "value_changed": false
-    },
-    {
-      "macro": "gateRows",
-      "sources_changed": {
-        "results/external/published_comparisons.json": "working tree"
-      },
-      "old": "88",
-      "new": "88",
-      "new_claim": false,
+      "old": null,
+      "new": "14",
+      "new_claim": true,
       "value_changed": false
     },
     {
@@ -358,6 +228,86 @@
       "value_changed": false
     },
     {
+      "macro": "marinCertified",
+      "sources_changed": {
+        "results/external/inclusion_recount.json": "0ff90cc 2026-10-22"
+      },
+      "old": null,
+      "new": "19",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "marinChangedPlace",
+      "sources_changed": {
+        "results/external/pr_numbers.json": "0ff90cc 2026-10-22"
+      },
+      "old": null,
+      "new": "3",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "marinDepartMax",
+      "sources_changed": {
+        "results/external/pr_numbers.json": "0ff90cc 2026-10-22"
+      },
+      "old": null,
+      "new": "0.045",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "marinDepartMedian",
+      "sources_changed": {
+        "results/external/pr_numbers.json": "0ff90cc 2026-10-22"
+      },
+      "old": null,
+      "new": "0.020",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "marinFixedDepart",
+      "sources_changed": {
+        "results/external/pr_numbers.json": "0ff90cc 2026-10-22"
+      },
+      "old": null,
+      "new": "$5.4\\times 10^{-8}$",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "marinForecastX",
+      "sources_changed": {
+        "results/external/marin_rank_intervals.json": "acd56d8 2026-10-22"
+      },
+      "old": null,
+      "new": "$10^{22}$",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "marinFormCore",
+      "sources_changed": {
+        "results/external/inclusion_recount.json": "0ff90cc 2026-10-22"
+      },
+      "old": null,
+      "new": "194",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "marinFormTopOne",
+      "sources_changed": {
+        "results/external/inclusion_recount.json": "0ff90cc 2026-10-22"
+      },
+      "old": null,
+      "new": "\\texttt{muonh\\_qwen3\\_scaling}",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
       "macro": "marinHold",
       "sources_changed": {
         "results/external/inclusion_recount.json": "0ff90cc 2026-10-22"
@@ -368,12 +318,122 @@
       "value_changed": false
     },
     {
+      "macro": "marinHoldLevel",
+      "sources_changed": {
+        "results/external/marin_rank_intervals.json": "acd56d8 2026-10-22"
+      },
+      "old": null,
+      "new": "95",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "marinIntervalLevel",
+      "sources_changed": {
+        "results/external/marin_rank_intervals.json": "acd56d8 2026-10-22"
+      },
+      "old": null,
+      "new": "95",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "marinKendall",
+      "sources_changed": {
+        "results/external/pr_numbers.json": "0ff90cc 2026-10-22"
+      },
+      "old": null,
+      "new": "0.887",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "marinMultistartFits",
+      "sources_changed": {
+        "results/external/pr_numbers.json": "0ff90cc 2026-10-22"
+      },
+      "old": null,
+      "new": "286",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "marinMultistartReached",
+      "sources_changed": {
+        "results/external/pr_numbers.json": "0ff90cc 2026-10-22"
+      },
+      "old": null,
+      "new": "286",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
       "macro": "marinPairs",
       "sources_changed": {
         "results/external/pr_numbers.json": "0ff90cc 2026-10-22"
       },
       "old": null,
       "new": "231",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "marinPairsChanged",
+      "sources_changed": {
+        "results/external/pr_numbers.json": "0ff90cc 2026-10-22"
+      },
+      "old": null,
+      "new": "13",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "marinProjMaxT",
+      "sources_changed": {
+        "results/external/inclusion_recount.json": "0ff90cc 2026-10-22"
+      },
+      "old": null,
+      "new": "2.68",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "marinProjShared",
+      "sources_changed": {
+        "results/external/inclusion_recount.json": "0ff90cc 2026-10-22"
+      },
+      "old": null,
+      "new": "48",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "marinProjSingle",
+      "sources_changed": {
+        "results/external/inclusion_recount.json": "0ff90cc 2026-10-22"
+      },
+      "old": null,
+      "new": "52",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "marinScaledOnlyShare",
+      "sources_changed": {
+        "results/external/sign_ties.json": "ae49be9 2026-10-12"
+      },
+      "old": null,
+      "new": "59",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "marinStepMarked",
+      "sources_changed": {
+        "results/external/inclusion_recount.json": "0ff90cc 2026-10-22"
+      },
+      "old": null,
+      "new": "18",
       "new_claim": true,
       "value_changed": false
     },
@@ -398,49 +458,79 @@
       "value_changed": false
     },
     {
-      "macro": "restatedFixedBY",
+      "macro": "mechNoiselessDesigns",
       "sources_changed": {
-        "results/target_scoring/restated_claims.json": "working tree"
+        "results/target_scoring/mechanism_record.json": "ba148cf 2026-10-12"
       },
-      "old": "1",
-      "new": "1",
+      "old": null,
+      "new": "55",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "mechNoiselessProjBeats",
+      "sources_changed": {
+        "results/target_scoring/mechanism_record.json": "ba148cf 2026-10-12"
+      },
+      "old": null,
+      "new": "0",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "mechNoiselessProjWrong",
+      "sources_changed": {
+        "results/target_scoring/mechanism_record.json": "ba148cf 2026-10-12"
+      },
+      "old": null,
+      "new": "3888",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "mechNoiselessSingleWrong",
+      "sources_changed": {
+        "results/target_scoring/mechanism_record.json": "ba148cf 2026-10-12"
+      },
+      "old": null,
+      "new": "744",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "mechSweepPoints",
+      "sources_changed": {
+        "results/target_scoring/mechanism_record.json": "ba148cf 2026-10-12"
+      },
+      "old": "27",
+      "new": "27",
       "new_claim": false,
       "value_changed": false
     },
     {
-      "macro": "restatedFixedM",
+      "macro": "noiseLowMax",
       "sources_changed": {
-        "results/target_scoring/restated_claims.json": "working tree"
+        "results/external/marin_rigour.json": "ba148cf 2026-10-12"
       },
-      "old": "10",
-      "new": "10",
-      "new_claim": false,
+      "old": null,
+      "new": "0.075",
+      "new_claim": true,
       "value_changed": false
     },
     {
-      "macro": "restatedFixedRows",
+      "macro": "noiseLowMin",
       "sources_changed": {
-        "results/target_scoring/restated_claims.json": "working tree"
+        "results/external/marin_rigour.json": "ba148cf 2026-10-12"
       },
-      "old": "projection vs single-scale, c4\\_en\\_bits\\_per\\_token (these 25 recipes) & $+1.82$ & $[+0.2,\\ +3.5]$ & 0.03 & nominal \\\\ shared\\_exponent vs single-scale, c4\\_en\\_bits\\_per\\_token (these 25 recipes) & $-0.23$ & $[-1.8,\\ +1.3]$ & 0.75 & --- \\\\ eb\\_shrinkage vs single-scale, c4\\_en\\_bits\\_per\\_token (these 25 recipes) & $+1.49$ & $[+0.3,\\ +2.7]$ & 0.014 & nominal \\\\ ensemble vs single-scale, c4\\_en\\_bits\\_per\\_token (these 25 recipes) & $+8.53$ & $[+5.4,\\ +11.7]$ & 0.00074 & Holm \\\\ checkpoint\\_augmented vs single-scale, c4\\_en\\_bits\\_per\\_token (these 25 recipes) & $+1.44$ & $[+0.3,\\ +2.6]$ & 0.013 & nominal \\\\ projection vs single-scale, olmes\\_macro\\_error (these 25 recipes) & $+0.37$ & $[-2.1,\\ +2.8]$ & 0.77 & --- \\\\ shared\\_exponent vs single-scale, olmes\\_macro\\_error (these 25 recipes) & $+1.00$ & $[-1.5,\\ +3.5]$ & 0.4 & --- \\\\ eb\\_shrinkage vs single-scale, olmes\\_macro\\_error (these 25 recipes) & $+0.37$ & $[-2.1,\\ +2.8]$ & 0.77 & --- \\\\ ensemble vs single-scale, olmes\\_macro\\_error (these 25 recipes) & $-0.54$ & $[-3.7,\\ +2.6]$ & 0.72 & --- \\\\ checkpoint\\_augmented vs single-scale, olmes\\_macro\\_error (these 25 recipes) & $-0.01$ & $[-3.0,\\ +3.0]$ & 1 & --- \\\\",
-      "new": "projection vs single-scale, c4\\_en\\_bits\\_per\\_token (these 25 recipes) & $+1.82$ & $[+0.2,\\ +3.5]$ & 0.03 & nominal \\\\ shared\\_exponent vs single-scale, c4\\_en\\_bits\\_per\\_token (these 25 recipes) & $-0.23$ & $[-1.8,\\ +1.3]$ & 0.75 & --- \\\\ eb\\_shrinkage vs single-scale, c4\\_en\\_bits\\_per\\_token (these 25 recipes) & $+1.49$ & $[+0.3,\\ +2.7]$ & 0.014 & nominal \\\\ ensemble vs single-scale, c4\\_en\\_bits\\_per\\_token (these 25 recipes) & $+8.53$ & $[+5.4,\\ +11.7]$ & 0.00074 & Holm \\\\ checkpoint\\_augmented vs single-scale, c4\\_en\\_bits\\_per\\_token (these 25 recipes) & $+1.44$ & $[+0.3,\\ +2.6]$ & 0.013 & nominal \\\\ projection vs single-scale, olmes\\_macro\\_error (these 25 recipes) & $+0.37$ & $[-2.1,\\ +2.8]$ & 0.77 & --- \\\\ shared\\_exponent vs single-scale, olmes\\_macro\\_error (these 25 recipes) & $+1.00$ & $[-1.5,\\ +3.5]$ & 0.4 & --- \\\\ eb\\_shrinkage vs single-scale, olmes\\_macro\\_error (these 25 recipes) & $+0.37$ & $[-2.1,\\ +2.8]$ & 0.77 & --- \\\\ ensemble vs single-scale, olmes\\_macro\\_error (these 25 recipes) & $-0.54$ & $[-3.7,\\ +2.6]$ & 0.72 & --- \\\\ checkpoint\\_augmented vs single-scale, olmes\\_macro\\_error (these 25 recipes) & $-0.01$ & $[-3.0,\\ +3.0]$ & 1 & --- \\\\",
-      "new_claim": false,
+      "old": null,
+      "new": "0.044",
+      "new_claim": true,
       "value_changed": false
     },
     {
       "macro": "restatedPrimaryBY",
       "sources_changed": {
-        "results/target_scoring/restated_claims.json": "working tree"
-      },
-      "old": "1",
-      "new": "1",
-      "new_claim": false,
-      "value_changed": false
-    },
-    {
-      "macro": "restatedPrimaryHolm",
-      "sources_changed": {
-        "results/target_scoring/restated_claims.json": "working tree"
+        "results/target_scoring/restated_claims.json": "acd56d8 2026-10-22"
       },
       "old": "1",
       "new": "1",
@@ -450,7 +540,7 @@
     {
       "macro": "restatedPrimaryM",
       "sources_changed": {
-        "results/target_scoring/restated_claims.json": "working tree"
+        "results/target_scoring/restated_claims.json": "acd56d8 2026-10-22"
       },
       "old": "38",
       "new": "38",
@@ -460,7 +550,7 @@
     {
       "macro": "restatedPrimaryNominal",
       "sources_changed": {
-        "results/target_scoring/restated_claims.json": "working tree"
+        "results/target_scoring/restated_claims.json": "acd56d8 2026-10-22"
       },
       "old": "6",
       "new": "6",
@@ -468,14 +558,224 @@
       "value_changed": false
     },
     {
-      "macro": "restatedPrimaryRows",
+      "macro": "stageAlpha",
       "sources_changed": {
-        "results/target_scoring/restated_claims.json": "working tree"
+        "results/certify/certify.json": "8d06132 2026-10-26"
       },
-      "old": "projection vs single-scale, c4\\_en\\_bits\\_per\\_token & $+1.82$ & $[-2.3,\\ +6.0]$ & 0.26 & --- \\\\ shared\\_exponent vs single-scale, c4\\_en\\_bits\\_per\\_token & $-0.23$ & $[-1.3,\\ +0.8]$ & 0.57 & --- \\\\ eb\\_shrinkage vs single-scale, c4\\_en\\_bits\\_per\\_token & $+1.49$ & $[-2.8,\\ +5.7]$ & 0.36 & --- \\\\ ensemble vs single-scale, c4\\_en\\_bits\\_per\\_token & $+8.53$ & $[+0.1,\\ +17.0]$ & 0.048 & nominal \\\\ checkpoint\\_augmented vs single-scale, c4\\_en\\_bits\\_per\\_token & $+1.44$ & $[-1.2,\\ +4.0]$ & 0.17 & --- \\\\ projection vs single-scale, olmes\\_macro\\_error & $+0.37$ & $[-3.3,\\ +4.0]$ & 0.81 & --- \\\\ shared\\_exponent vs single-scale, olmes\\_macro\\_error & $+1.00$ & $[-3.8,\\ +5.8]$ & 0.61 & --- \\\\ eb\\_shrinkage vs single-scale, olmes\\_macro\\_error & $+0.37$ & $[-3.3,\\ +4.0]$ & 0.81 & --- \\\\ ensemble vs single-scale, olmes\\_macro\\_error & $-0.54$ & $[-3.9,\\ +2.9]$ & 0.7 & --- \\\\ checkpoint\\_augmented vs single-scale, olmes\\_macro\\_error & $-0.01$ & $[-3.9,\\ +3.9]$ & 0.99 & --- \\\\ optimised allocation at 0.01 of budget vs single-scale, c4 & $+9.72$ & $[+0.6,\\ +18.9]$ & 0.039 & nominal \\\\ optimised allocation at 0.03 of budget vs single-scale, c4 & $+9.50$ & $[-1.4,\\ +20.4]$ & 0.068 & --- \\\\ optimised allocation at 0.1 of budget vs single-scale, c4 & $+7.84$ & $[-2.8,\\ +18.5]$ & 0.099 & --- \\\\ optimised allocation at 0.3 of budget vs single-scale, c4 & $+4.18$ & $[-2.2,\\ +10.6]$ & 0.12 & --- \\\\ optimised allocation at 0.5 of budget vs single-scale, c4 & $+4.18$ & $[-2.2,\\ +10.6]$ & 0.12 & --- \\\\ optimised allocation at 1 of budget vs single-scale, c4 & $+1.96$ & $[-1.6,\\ +5.5]$ & 0.17 & --- \\\\ projection excess rises with log lever arm (expected-error scoring) & --- & $[+0.8,\\ +0.9]$ & 0.00012 & Holm \\\\ DataDecide 2\\_param-default vs single-scale at 750M (exploratory: open discrepancy) & $-8.22$ & $[-20.4,\\ +4.0]$ & 0.18 & --- \\\\ DataDecide 3\\_param-1\\_step vs single-scale at 750M (exploratory: open discrepancy) & $+1.11$ & $[-7.1,\\ +9.3]$ & 0.78 & --- \\\\ DataDecide 3\\_param-default-helper\\_points-step2=0.5 vs single-scale at 750M (exploratory: open discrepancy) & $-1.56$ & $[-10.4,\\ +7.3]$ & 0.72 & --- \\\\ DataDecide 3\\_param-default-helper\\_points vs single-scale at 750M (exploratory: open discrepancy) & $-0.89$ & $[-8.1,\\ +6.3]$ & 0.8 & --- \\\\ DataDecide 3\\_param-default-step2=0.5 vs single-scale at 750M (exploratory: open discrepancy) & $-1.89$ & $[-10.7,\\ +6.9]$ & 0.66 & --- \\\\ DataDecide 3\\_param-default vs single-scale at 750M (exploratory: open discrepancy) & $-1.89$ & $[-10.8,\\ +7.0]$ & 0.66 & --- \\\\ DataDecide 5\\_param-1\\_step-ai2 vs single-scale at 750M (exploratory: open discrepancy) & $-15.22$ & $[-28.6,\\ -1.8]$ & 0.028 & nominal \\\\ DataDecide 5\\_param-ai2 vs single-scale at 750M (exploratory: open discrepancy) & $-2.22$ & $[-11.6,\\ +7.2]$ & 0.62 & --- \\\\ Correct Prob vs accuracy at 10M, OLMES macro & $-5.44$ & $[-20.3,\\ +9.5]$ & 0.44 & --- \\\\ Correct Prob vs accuracy at 14M, OLMES macro & $+2.33$ & $[-10.8,\\ +15.5]$ & 0.69 & --- \\\\ Correct Prob vs accuracy at 150M, OLMES macro & $-1.67$ & $[-5.6,\\ +2.3]$ & 0.37 & --- \\\\ Correct Prob vs accuracy at 16M, OLMES macro & $+6.44$ & $[-5.3,\\ +18.2]$ & 0.25 & --- \\\\ Correct Prob vs accuracy at 20M, OLMES macro & $+4.44$ & $[-7.5,\\ +16.4]$ & 0.43 & --- \\\\ Correct Prob vs accuracy at 300M, OLMES macro & $+1.00$ & $[-5.7,\\ +7.7]$ & 0.74 & --- \\\\ Correct Prob vs accuracy at 4M, OLMES macro & $+29.11$ & $[+15.4,\\ +42.8]$ & 0.002 & nominal \\\\ Correct Prob vs accuracy at 530M, OLMES macro & $+0.56$ & $[-5.1,\\ +6.2]$ & 0.83 & --- \\\\ Correct Prob vs accuracy at 60M, OLMES macro & $+4.00$ & $[-4.2,\\ +12.2]$ & 0.3 & --- \\\\ Correct Prob vs accuracy at 6M, OLMES macro & $-5.11$ & $[-18.3,\\ +8.1]$ & 0.41 & --- \\\\ Correct Prob vs accuracy at 750M, OLMES macro & $+1.22$ & $[-4.5,\\ +6.9]$ & 0.64 & --- \\\\ Correct Prob vs accuracy at 8M, OLMES macro & $-13.78$ & $[-27.5,\\ -0.0]$ & 0.049 & nominal \\\\ Correct Prob vs accuracy at 90M, OLMES macro & $-1.56$ & $[-5.9,\\ +2.8]$ & 0.45 & --- \\\\",
-      "new": "projection vs single-scale, c4\\_en\\_bits\\_per\\_token & $+1.82$ & $[-2.3,\\ +6.0]$ & 0.26 & --- \\\\ shared\\_exponent vs single-scale, c4\\_en\\_bits\\_per\\_token & $-0.23$ & $[-1.3,\\ +0.8]$ & 0.57 & --- \\\\ eb\\_shrinkage vs single-scale, c4\\_en\\_bits\\_per\\_token & $+1.49$ & $[-2.8,\\ +5.7]$ & 0.36 & --- \\\\ ensemble vs single-scale, c4\\_en\\_bits\\_per\\_token & $+8.53$ & $[+0.1,\\ +17.0]$ & 0.048 & nominal \\\\ checkpoint\\_augmented vs single-scale, c4\\_en\\_bits\\_per\\_token & $+1.44$ & $[-1.2,\\ +4.0]$ & 0.17 & --- \\\\ projection vs single-scale, olmes\\_macro\\_error & $+0.37$ & $[-3.3,\\ +4.0]$ & 0.81 & --- \\\\ shared\\_exponent vs single-scale, olmes\\_macro\\_error & $+1.00$ & $[-3.8,\\ +5.8]$ & 0.61 & --- \\\\ eb\\_shrinkage vs single-scale, olmes\\_macro\\_error & $+0.37$ & $[-3.3,\\ +4.0]$ & 0.81 & --- \\\\ ensemble vs single-scale, olmes\\_macro\\_error & $-0.54$ & $[-3.9,\\ +2.9]$ & 0.7 & --- \\\\ checkpoint\\_augmented vs single-scale, olmes\\_macro\\_error & $-0.01$ & $[-3.9,\\ +3.9]$ & 0.99 & --- \\\\ optimised allocation at 0.01 of budget vs single-scale, c4 & $+9.72$ & $[+0.6,\\ +18.9]$ & 0.039 & nominal \\\\ optimised allocation at 0.03 of budget vs single-scale, c4 & $+9.50$ & $[-1.4,\\ +20.4]$ & 0.068 & --- \\\\ optimised allocation at 0.1 of budget vs single-scale, c4 & $+7.84$ & $[-2.8,\\ +18.5]$ & 0.099 & --- \\\\ optimised allocation at 0.3 of budget vs single-scale, c4 & $+4.18$ & $[-2.2,\\ +10.6]$ & 0.12 & --- \\\\ optimised allocation at 0.5 of budget vs single-scale, c4 & $+4.18$ & $[-2.2,\\ +10.6]$ & 0.12 & --- \\\\ optimised allocation at 1 of budget vs single-scale, c4 & $+1.96$ & $[-1.6,\\ +5.5]$ & 0.17 & --- \\\\ projection excess rises with log lever arm (expected-error scoring) & --- & $[+0.8,\\ +0.9]$ & 0.00012 & Holm \\\\ DataDecide 2\\_param-default vs single-scale at 750M (consistent three-seed target) & $-8.22$ & $[-20.4,\\ +4.0]$ & 0.18 & --- \\\\ DataDecide 3\\_param-1\\_step vs single-scale at 750M (consistent three-seed target) & $+1.11$ & $[-7.1,\\ +9.3]$ & 0.78 & --- \\\\ DataDecide 3\\_param-default-helper\\_points-step2=0.5 vs single-scale at 750M (consistent three-seed target) & $-1.56$ & $[-10.4,\\ +7.3]$ & 0.72 & --- \\\\ DataDecide 3\\_param-default-helper\\_points vs single-scale at 750M (consistent three-seed target) & $-0.89$ & $[-8.1,\\ +6.3]$ & 0.8 & --- \\\\ DataDecide 3\\_param-default-step2=0.5 vs single-scale at 750M (consistent three-seed target) & $-1.89$ & $[-10.7,\\ +6.9]$ & 0.66 & --- \\\\ DataDecide 3\\_param-default vs single-scale at 750M (consistent three-seed target) & $-1.89$ & $[-10.8,\\ +7.0]$ & 0.66 & --- \\\\ DataDecide 5\\_param-1\\_step-ai2 vs single-scale at 750M (consistent three-seed target) & $-15.22$ & $[-28.6,\\ -1.8]$ & 0.028 & nominal \\\\ DataDecide 5\\_param-ai2 vs single-scale at 750M (consistent three-seed target) & $-2.22$ & $[-11.6,\\ +7.2]$ & 0.62 & --- \\\\ Correct Prob vs accuracy at 10M, OLMES macro & $-5.44$ & $[-20.3,\\ +9.5]$ & 0.44 & --- \\\\ Correct Prob vs accuracy at 14M, OLMES macro & $+2.33$ & $[-10.8,\\ +15.5]$ & 0.69 & --- \\\\ Correct Prob vs accuracy at 150M, OLMES macro & $-1.67$ & $[-5.6,\\ +2.3]$ & 0.37 & --- \\\\ Correct Prob vs accuracy at 16M, OLMES macro & $+6.44$ & $[-5.3,\\ +18.2]$ & 0.25 & --- \\\\ Correct Prob vs accuracy at 20M, OLMES macro & $+4.44$ & $[-7.5,\\ +16.4]$ & 0.43 & --- \\\\ Correct Prob vs accuracy at 300M, OLMES macro & $+1.00$ & $[-5.7,\\ +7.7]$ & 0.74 & --- \\\\ Correct Prob vs accuracy at 4M, OLMES macro & $+29.11$ & $[+15.4,\\ +42.8]$ & 0.002 & nominal \\\\ Correct Prob vs accuracy at 530M, OLMES macro & $+0.56$ & $[-5.1,\\ +6.2]$ & 0.83 & --- \\\\ Correct Prob vs accuracy at 60M, OLMES macro & $+4.00$ & $[-4.2,\\ +12.2]$ & 0.3 & --- \\\\ Correct Prob vs accuracy at 6M, OLMES macro & $-5.11$ & $[-18.3,\\ +8.1]$ & 0.41 & --- \\\\ Correct Prob vs accuracy at 750M, OLMES macro & $+1.22$ & $[-4.5,\\ +6.9]$ & 0.64 & --- \\\\ Correct Prob vs accuracy at 8M, OLMES macro & $-13.78$ & $[-27.5,\\ -0.0]$ & 0.049 & nominal \\\\ Correct Prob vs accuracy at 90M, OLMES macro & $-1.56$ & $[-5.9,\\ +2.8]$ & 0.45 & --- \\\\",
-      "new_claim": false,
-      "value_changed": true
+      "old": null,
+      "new": "5",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "stageCFourSingleFcr",
+      "sources_changed": {
+        "results/certify/certify.json": "8d06132 2026-10-26"
+      },
+      "old": null,
+      "new": "1.1",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "stageCpSeedFcr",
+      "sources_changed": {
+        "results/certify/certify.json": "8d06132 2026-10-26"
+      },
+      "old": null,
+      "new": "5.5",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "stageDesigns",
+      "sources_changed": {
+        "results/certify/certify.json": "8d06132 2026-10-26"
+      },
+      "old": null,
+      "new": "45",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "stageErrSeedFcr",
+      "sources_changed": {
+        "results/certify/certify.json": "8d06132 2026-10-26"
+      },
+      "old": null,
+      "new": "9.2",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "stageErrSelFcr",
+      "sources_changed": {
+        "results/certify/certify.json": "8d06132 2026-10-26"
+      },
+      "old": null,
+      "new": "6.2",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "stageLevLongBoot",
+      "sources_changed": {
+        "results/certify/certify.json": "8d06132 2026-10-26"
+      },
+      "old": null,
+      "new": "8.1",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "stageLevLongSeed",
+      "sources_changed": {
+        "results/certify/certify.json": "8d06132 2026-10-26"
+      },
+      "old": null,
+      "new": "5.9",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "stageLevLongSel",
+      "sources_changed": {
+        "results/certify/certify.json": "8d06132 2026-10-26"
+      },
+      "old": null,
+      "new": "2.5",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "stageLevLongSelCov",
+      "sources_changed": {
+        "results/certify/certify.json": "8d06132 2026-10-26"
+      },
+      "old": null,
+      "new": "52",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "stageLevShortBoot",
+      "sources_changed": {
+        "results/certify/certify.json": "8d06132 2026-10-26"
+      },
+      "old": null,
+      "new": "3.8",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "stageLevShortSeed",
+      "sources_changed": {
+        "results/certify/certify.json": "8d06132 2026-10-26"
+      },
+      "old": null,
+      "new": "2.8",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "stageLevShortSel",
+      "sources_changed": {
+        "results/certify/certify.json": "8d06132 2026-10-26"
+      },
+      "old": null,
+      "new": "1.5",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "stageLevShortSelCov",
+      "sources_changed": {
+        "results/certify/certify.json": "8d06132 2026-10-26"
+      },
+      "old": null,
+      "new": "76",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "stageMarinCert",
+      "sources_changed": {
+        "results/certify/certify.json": "8d06132 2026-10-26"
+      },
+      "old": null,
+      "new": "49",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "stageMarinFcr",
+      "sources_changed": {
+        "results/certify/certify.json": "8d06132 2026-10-26"
+      },
+      "old": null,
+      "new": "25",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "stageSeedCov",
+      "sources_changed": {
+        "results/certify/certify.json": "8d06132 2026-10-26"
+      },
+      "old": null,
+      "new": "76",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "stageSeedFcr",
+      "sources_changed": {
+        "results/certify/certify.json": "8d06132 2026-10-26"
+      },
+      "old": null,
+      "new": "4.85",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "stageSelCov",
+      "sources_changed": {
+        "results/certify/certify.json": "8d06132 2026-10-26"
+      },
+      "old": null,
+      "new": "60",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "stageSelExcessUp",
+      "sources_changed": {
+        "results/certify/certify.json": "8d06132 2026-10-26"
+      },
+      "old": null,
+      "new": "+0.87",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "stageSelFcr",
+      "sources_changed": {
+        "results/certify/certify.json": "8d06132 2026-10-26"
+      },
+      "old": null,
+      "new": "2.3",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "stageTableRows",
+      "sources_changed": {
+        "results/certify/certify.json": "8d06132 2026-10-26"
+      },
+      "old": null,
+      "new": "misfit term & 78 & 0.00 & 60 & 6.22 & 43 & 0.97 & 60 & 2.29 & 21 & 25.04 \\\\ seed error only & 83 & 0.26 & 78 & 9.17 & 67 & 5.52 & 76 & 4.85 & 21 & 25.04 \\\\ seed bootstrap & 85 & 0.94 & 81 & 10.20 & 76 & 8.67 & 81 & 6.47 & 21 & 25.04 \\\\ conformal & 11 & 0.00 & 0 & 0.00 & 18 & 0.02 & 10 & 0.01 & 0 & --- \\\\ single-scale (decides) & 100 & 1.11 & 100 & 13.14 & 100 & 13.21 & 100 & 9.15 & 100 & 24.56 \\\\ projection (decides) & 100 & 4.86 & 100 & 14.79 & 100 & 16.45 & 100 & 12.03 & 100 & 44.10 \\\\",
+      "new_claim": true,
+      "value_changed": false
     }
   ]
 }
