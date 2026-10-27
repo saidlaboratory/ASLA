@@ -252,10 +252,23 @@ def correction_curve(kernel: dict[tuple[str, str], float], rng: np.random.Genera
         # Subsampling from the 25 observed candidates has variance V(m) - V(25);
         # adding back V(25) estimates the superpopulation V(m).
         candidate_sd = float(np.sqrt(np.var(statistics, ddof=1) + full_variance))
-        empirical = candidate_sd / float(np.mean(pair_ses))
+        # R(m) is a ratio of standard deviations, so its denominator is the root mean square of the
+        # pair-resampled standard errors. The first version divided by their mean, which the heavy-tailed C4
+        # kernel drags well below the root mean square at small m (practice record, instance 12); that ratio
+        # is kept as a description of the typical pair-resampled interval, not as the test of R(m).
+        pair_scale = float(np.sqrt(np.mean(np.square(pair_ses))))
+        empirical = candidate_sd / pair_scale
+        typical = candidate_sd / float(np.mean(pair_ses))
         predicted = float(np.sqrt(1 + 2 * (m - 2) * ratio))
         rows.append(
-            {"m": m, "empirical_ratio": empirical, "formula_ratio": predicted, "relative_error": empirical / predicted - 1}
+            {
+                "m": m,
+                "empirical_ratio": empirical,
+                "formula_ratio": predicted,
+                "relative_error": empirical / predicted - 1,
+                "mean_se_ratio": typical,
+                "mean_se_relative_error": typical / predicted - 1,
+            }
         )
     return {
         "formula": "R(n) = sqrt(1 + 2 (n - 2) zeta1 / zeta2)",
@@ -264,6 +277,7 @@ def correction_curve(kernel: dict[tuple[str, str], float], rng: np.random.Genera
         "at_observed_n": float(np.sqrt(1 + 2 * (n - 2) * ratio)),
         "subsampling_check": rows,
         "P5_confirmed": all(abs(r["relative_error"]) <= 0.15 for r in rows),
+        "P5_as_first_scored": all(abs(r["mean_se_relative_error"]) <= 0.15 for r in rows),
     }
 
 
@@ -311,7 +325,14 @@ def predictions(d1_out: dict[str, Any], d2_out: dict[str, Any], curve: dict[str,
             ),
             "confirmed": None,
         },
-        "P5_correction_curve": {"confirmed": curve["P5_confirmed"]},
+        "P5_correction_curve": {
+            "confirmed": curve["P5_confirmed"],
+            "first_scored": curve["P5_as_first_scored"],
+            "rescored": (
+                "first scored with the mean of the pair-resampled standard errors as the denominator of R(m), a "
+                "defect (practice record, instance 12); rescored with their root mean square"
+            ),
+        },
     }
 
 

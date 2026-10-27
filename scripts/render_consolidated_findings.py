@@ -33,8 +33,8 @@ def load(relative: str) -> Any:
 # The instance count is stated in four places in this section; deriving them
 # from one pair of constants is what stopped "five anecdotes" surviving the
 # addition of a sixth.
-N_INSTANCES = 11
-N_INSTANCES_WORD = "Eleven"
+N_INSTANCES = 12
+N_INSTANCES_WORD = "Twelve"
 N_FLATTERING = 6
 
 
@@ -74,6 +74,10 @@ def methods_practice() -> str:
     recount = load("external/inclusion_recount.json")
     rc = recount["task1b"]
     n_official = len(recount["official_set"])
+    published = load("external/published_comparisons.json")
+    curve_rows = published["correction_curve_c4"]["subsampling_check"]
+    smallest = curve_rows[0]
+    worst_fixed = max(abs(row["relative_error"]) for row in curve_rows)
     lines = [
         "# Methods practice: verify that the measurement can see what you think it sees",
         "",
@@ -305,9 +309,33 @@ def methods_practice() -> str:
         "(`scripts/marin_official.py`). The general form: a parser that skips what it does not recognise turns a "
         "naming inconsistency into a silent change of population; count the population against its source.",
         "",
+        "## Instance 12: a closed-form correction reported as failing, from a mean of standard errors",
+        "",
+        "The paper's candidate-level correction says a pair-resampled standard error understates the "
+        "candidate-level one by R(m) = sqrt(1 + 2(m - 2) zeta1/zeta2). A pre-registered check subsampled m of the "
+        "real candidates and compared the measured ratio with R(m). It divided the subsamples' candidate-level "
+        "standard deviation by the *mean* of their pair-resampled standard errors, and reported a "
+        f"{abs(smallest['mean_se_relative_error']):.0%} miss at m = {smallest['m']}, a failed prediction that "
+        "the paper's appendix cited.",
+        "",
+        "**How it was caught:** an independent review found a second committed result, a subsampling check of "
+        "the candidate-level variance alone, that matched its formula within 2% at the same m. The two could not "
+        "both describe the same formula, and tracing each to its code path showed the second had never computed "
+        "R(m) and the first had aggregated the denominator in the wrong space.",
+        "",
+        "**What was actually true:** R(m) is a ratio of standard deviations, so its denominator is the root mean "
+        "square of the pair-resampled standard errors. The C4 kernel is heavy-tailed, so a small subsample "
+        "usually misses the extreme pairs and its standard error is right-skewed; the mean falls well below the "
+        "root mean square. With the root mean square, on the same subsamples, R(m) is reproduced within "
+        f"{worst_fixed:.1%} at every m from {curve_rows[0]['m']} to {curve_rows[-1]['m']}.",
+        "",
+        "**Status:** this one left the repository. The failed prediction was in a pushed paper draft. The "
+        "general form is the fingerprint below, a fourth time: `mean(se)` used as the denominator of a ratio of "
+        "scales.",
+        "",
         "## A numerical fingerprint for this class",
         "",
-        f"Instances 3, 5 and 6 are one defect: a quantity aggregated in one space and consumed in another, "
+        f"Instances 3, 5, 6 and 12 are one defect: a quantity aggregated in one space and consumed in another, "
         f"where the transform between them is nonlinear. It has a detectable signature. When residual "
         f"standard errors have a coefficient of variation near 1 --- which is ordinary for seed noise across "
         f"a compute ladder --- squaring their mean understates the mean of their squares by about a factor of "
@@ -352,11 +380,14 @@ def methods_practice() -> str:
         f"independent recomputation |",
         "| 6 | the omitted third parameter explains the misses | half of it was our own pooling error | "
         "a sweep for the pattern, not for literals |",
+        "| 12 | the closed-form correction misses at small m | the check averaged standard errors, not variances | "
+        "two committed results that could not both be right |",
         "",
         "**Status is not uniform, and the uneven version is the stronger one.** Instances 1-4, 6, 9, 10 and 11 were "
         "caught before any claim built on them left the repository. Instance 5 was not: it propagated into "
         "five committed documents and a paper draft as the opening premise of a headline section, and it is "
-        "the reason this is a finding rather than a note on good hygiene. A defect class that is always "
+        "the reason this is a finding rather than a note on good hygiene. Instance 12 also reached a pushed "
+        "draft, in the unflattering direction: it reported the paper's own correction as failing. A defect class that is always "
         "caught in time is a story about diligence; one that reaches a draft is a story about why the "
         "controls have to be structural.",
         "",
@@ -366,7 +397,7 @@ def methods_practice() -> str:
         f"{superseded_inflation / real['variance_inflation']:.1f}x in variance. Only instance 3 was "
         "uncomfortable at the time, and it is the one that found a defect in work already reported. The "
         "asymmetry is the point: artifacts that flatter the hypothesis are the ones least likely to be "
-        "questioned. Instances 3, 5 and 6 are the same error in three places, which is the sharper lesson - "
+        "questioned. Instances 3, 5, 6 and 12 are the same error in four places, which is the sharper lesson - "
         "fixing an instance is not the same as fixing the habit, and the third recurrence was in the very "
         "file the second fix was compared against.",
         "",

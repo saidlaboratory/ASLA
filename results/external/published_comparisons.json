@@ -1,6 +1,7 @@
 {
   "correction_curve_c4": {
-    "P5_confirmed": false,
+    "P5_as_first_scored": false,
+    "P5_confirmed": true,
     "at_observed_n": 1.6223864520590794,
     "curve": {
       "10": 1.2520783139591962,
@@ -13,28 +14,36 @@
     "formula": "R(n) = sqrt(1 + 2 (n - 2) zeta1 / zeta2)",
     "subsampling_check": [
       {
-        "empirical_ratio": 1.7172941561705306,
+        "empirical_ratio": 1.2279461358051071,
         "formula_ratio": 1.1940582390382715,
         "m": 8,
-        "relative_error": 0.4381996623160427
+        "mean_se_ratio": 1.7172941561705306,
+        "mean_se_relative_error": 0.4381996623160427,
+        "relative_error": 0.028380438791771212
       },
       {
-        "empirical_ratio": 1.4509302781598719,
+        "empirical_ratio": 1.3108724215565515,
         "formula_ratio": 1.3075263402159931,
         "m": 12,
-        "relative_error": 0.10967575453982015
+        "mean_se_ratio": 1.4509302781598719,
+        "mean_se_relative_error": 0.10967575453982015,
+        "relative_error": 0.0025590928745693464
       },
       {
-        "empirical_ratio": 1.46819117871686,
+        "empirical_ratio": 1.4146198098947538,
         "formula_ratio": 1.4119048064590194,
         "m": 16,
-        "relative_error": 0.039865557508089955
+        "mean_se_ratio": 1.46819117871686,
+        "mean_se_relative_error": 0.039865557508089955,
+        "relative_error": 0.0019229366054382968
       },
       {
-        "empirical_ratio": 1.5321901393011015,
+        "empirical_ratio": 1.5112017252536663,
         "formula_ratio": 1.5090809238226863,
         "m": 20,
-        "relative_error": 0.015313436883077625
+        "mean_se_ratio": 1.5321901393011015,
+        "mean_se_relative_error": 0.015313436883077625,
+        "relative_error": 0.0014053596447349825
       }
     ],
     "zeta1_over_zeta2": 0.035481256517931464
@@ -6702,7 +6711,9 @@
       "status": "not reconstructed"
     },
     "P5_correction_curve": {
-      "confirmed": false
+      "confirmed": true,
+      "first_scored": false,
+      "rescored": "first scored with the mean of the pair-resampled standard errors as the denominator of R(m), a defect (practice record, instance 12); rescored with their root mean square"
     }
   },
   "sources": {
