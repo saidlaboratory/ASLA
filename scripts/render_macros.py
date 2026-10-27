@@ -200,8 +200,10 @@ def _published_entries() -> list[tuple[str, str, str]]:
         ("curveLowTwentyFive", f"{curve['10'][str(QUOTED_M[1])]:.2f}", origin),
         ("curveHighTwentyFive", f"{curve['90'][str(QUOTED_M[1])]:.2f}", origin),
         ("curveCFour", f"{out.number('correction_curve_c4.at_observed_n'):.2f}", origin),
-        ("curveCheckWorstLarge", f"{100 * max(abs(r['relative_error']) for r in checks[1:]):.0f}", origin),
-        ("curveCheckSmallest", f"{100 * abs(checks[0]['relative_error']):.0f}", origin),
+        ("curveCheckWorst", f"{100 * max(abs(r['relative_error']) for r in checks):.0f}", origin),
+        ("curveCheckMinM", f"{min(r['m'] for r in checks)}", origin),
+        ("curveCheckMaxM", f"{max(r['m'] for r in checks)}", origin),
+        ("curveCheckMeanSeSmallest", f"{100 * abs(checks[0]['mean_se_relative_error']):.0f}", origin),
         ("curveCheckSmallestM", f"{checks[0]['m']}", origin),
         ("pInvariantMin", f"{expected.number(invariance + '.p_min'):.2f}", "expected_error.json"),
         ("pInvariantMax", f"{expected.number(invariance + '.p_max'):.2f}", "expected_error.json"),
@@ -656,7 +658,6 @@ def _count_entries() -> list[tuple[str, str, str]]:
         ("curveMSmall", f"{ms[0]}", "published_comparisons.json"),
         ("curveMMid", f"{ms[1]}", "published_comparisons.json"),
         ("curveMLarge", f"{ms[2]}", "published_comparisons.json"),
-        ("curveCheckLargeMinM", f"{min(r['m'] for r in checks[1:])}", "published_comparisons.json"),
         ("powerDeltaLarge", f"{deltas[-1]}", "expected_error.json"),
         ("delphiSeeds", f"{delphi.integer('source.seeds_per_heldout_budget')}", "counterexample_delphi.json"),
         ("calibRandomWorlds", f"{worlds.pop()}", "calibration.json"),
@@ -1190,13 +1191,180 @@ def _prediction_ledger() -> list[tuple[str, str, str]]:
         failed += len(bad)
         rel = path.relative_to(RESULTS_DIR).as_posix()
         names = ", ".join(_tex(n) for n in bad) if bad else "---"
-        rows.append(f"\\texttt{{{_tex(rel)}}} & {ok} & {len(bad)} & {{\\raggedright {names}\\par}} \\\\")
+        breakable = _tex(rel).replace("/", "/\\allowbreak ").replace("\\_", "\\_\\allowbreak ")
+        rows.append(f"{{\\raggedright\\texttt{{{breakable}}}\\par}} & {ok} & {len(bad)} & {{\\raggedright {names}\\par}} \\\\")
     return [
         ("ledgerRows", " ".join(rows), "results/**/*.json"),
         ("ledgerHeld", f"{held}", "results/**/*.json"),
         ("ledgerFailed", f"{failed}", "results/**/*.json"),
         ("ledgerFiles", f"{len(rows)}", "results/**/*.json"),
     ]
+
+
+
+ADVANTAGE_LABELS = {
+    "projection": "projection",
+    "shared_exponent": "shared exponent",
+    "eb_shrinkage": "EB shrinkage",
+    "ensemble": "ensemble",
+    "checkpoint_augmented": "checkpoint-augmented",
+}
+
+
+def _advantage_entries() -> list[tuple[str, str, str]]:
+    """Each estimator and allocation against single-scale ranking: interval, largest advantage excluded, power."""
+
+    restated = Source.load("target_scoring/restated_claims.json").get("primary_family_random_candidate.claims")
+    power = {}
+    for metric, path in (
+        ("c4_en_bits_per_token", "target_scoring/calibration.json"),
+        ("olmes_macro_error", "target_scoring/calibration_olmes_macro_error.json"),
+    ):
+        procedures = Source.load(path).get("calibrated")
+        power[metric] = procedures[procedures["random_adopted"]]["power_at_critical_value"]
+    metric_labels = {"c4_en_bits_per_token": "C4", "olmes_macro_error": "OLMES error"}
+    rows, excluded, powers = [], {"c4_en_bits_per_token": [], "olmes_macro_error": []}, []
+    for claim in restated:
+        text = claim["claim"]
+        name, _, rest = text.partition(" vs single-scale, ")
+        if name in ADVANTAGE_LABELS and rest in metric_labels:
+            label, metric = ADVANTAGE_LABELS[name], rest
+            pw = power[metric][name]
+            powers.append(pw)
+            pw_text = f"{pw:.2f}"
+        elif text.startswith("optimised allocation at ") and text.endswith(", c4"):
+            fraction = text.removeprefix("optimised allocation at ").split(" of budget")[0]
+            label, metric, pw_text = f"allocation, {fraction} of budget", "c4_en_bits_per_token", "---"
+        else:
+            continue
+        lo, hi = claim["ci_pp"]
+        bound = f"{-lo:.2f}" if lo < 0 else "any"
+        if lo < 0:
+            excluded[metric].append(-lo)
+        rows.append(
+            f"{label} & {metric_labels[metric]} & ${claim['estimate_pp']:+.2f}$ & $[{lo:+.2f},\\ {hi:+.2f}]$ & "
+            f"{bound} & {pw_text} \\\\"
+        )
+    return [
+        ("advTableRows", " ".join(rows), "restated_claims.json"),
+        ("advExcludeCFourMax", f"{max(excluded['c4_en_bits_per_token']):.1f}", "restated_claims.json"),
+        ("advExcludeOlmesMax", f"{max(excluded['olmes_macro_error']):.1f}", "restated_claims.json"),
+        ("advPowerMax", f"{max(powers):.2f}", "calibration.json"),
+        ("advPowerMin", f"{min(powers):.2f}", "calibration.json"),
+    ]
+
+
+def _marin_advantage_entries() -> list[tuple[str, str, str]]:
+    """Marin: the shared exponent against single-scale, as an interval at the transferred critical value."""
+
+    rc = Source.load("external/inclusion_recount.json")
+    block = rc.get("task1b.heldout_projection.official_22")
+    procedures = Source.load("target_scoring/calibration.json").get("calibrated")
+    k = procedures["random_u"]["critical_value"]
+    shared = block["forms"]["iii_shared_exponent"]
+    diff = 100 * (shared["wrong"] - block["single_wrong"]) / block["pairs"]
+    se = abs(diff) / shared["u_abs_t"]
+    marin_form = block["forms"]["i_marin"]
+    return [
+        ("marinSharedDiff", f"{diff:+.1f}", "inclusion_recount.json"),
+        ("marinSharedLow", f"{diff - k * se:+.1f}", "inclusion_recount.json"),
+        ("marinSharedHigh", f"{diff + k * se:+.1f}", "inclusion_recount.json"),
+        ("marinSharedExclude", f"{-(diff - k * se):.0f}", "inclusion_recount.json"),
+        ("marinOwnFormWrong", f"{marin_form['wrong']}", "inclusion_recount.json"),
+        ("marinOwnFormT", f"{marin_form['u_abs_t']:.2f}", "inclusion_recount.json"),
+    ]
+
+
+
+CONFOUND_TAGS = {
+    "joint_lever": ("JointLever", "joint model: lever arm (per decade)"),
+    "joint_top": ("JointTop", "joint model: top-rung compute (per decade)"),
+    "joint_rungs": ("JointRungs", "joint model: rung count (per rung)"),
+    "slice_lever": ("SliceLever", "slice (i): lever arm only (per decade)"),
+    "slice_top": ("SliceTop", "slice (ii): top-rung compute only (per decade)"),
+    "slice_rungs": ("SliceRungs", "slice (iii): rung count only (per rung)"),
+}
+
+CONFOUND_SHORT = {
+    "joint_lever": "joint: lever arm",
+    "joint_top": "joint: top rung",
+    "joint_rungs": "joint: rung count",
+    "slice_lever": "slice: lever arm only",
+    "slice_top": "slice: top rung only",
+    "slice_rungs": "slice: rung count only",
+}
+
+
+def _confound_entries() -> list[tuple[str, str, str]]:
+    """PREDICTIONS_TASK_CONFOUND.md: lever arm against top-rung size and rung count."""
+
+    c = Source.load("target_scoring/confound.json")
+    o = "confound.json"
+    inference = c.get("inference")
+    out: list[tuple[str, str, str]] = []
+    rows, main_rows = [], []
+    for key, (tag, label) in CONFOUND_TAGS.items():
+        v = inference[key]
+        lo, hi = v["ci_calibrated"]
+        wl, wh = v["ci_1_96"]
+        out += [
+            (f"conf{tag}", f"{v['estimate']:+.1f}", o),
+            (f"conf{tag}Low", f"{lo:+.1f}", o),
+            (f"conf{tag}High", f"{hi:+.1f}", o),
+            (f"conf{tag}WaldLow", f"{wl:+.1f}", o),
+            (f"conf{tag}WaldHigh", f"{wh:+.1f}", o),
+            (f"conf{tag}K", f"{v['critical_value']:.2f}", o),
+        ]
+        main_rows.append(f"{CONFOUND_SHORT[key]} & ${v['estimate']:+.1f}$ & $[{lo:+.1f},\\ {hi:+.1f}]$ \\\\")
+        rows.append(
+            f"{label} & ${v['estimate']:+.2f}$ & {v['se']:.2f} & {v['critical_value']:.2f} & "
+            f"$[{lo:+.2f},\\ {hi:+.2f}]$ & $[{wl:+.2f},\\ {wh:+.2f}]$ & ${v['benchmark_true_value']:+.2f}$ \\\\"
+        )
+    ks = [v["critical_value"] for v in inference.values()]
+    real = c.get("real")
+    out += [
+        ("confTableRows", " ".join(rows), o),
+        ("confMainRows", " ".join(main_rows), o),
+        ("confKMin", f"{min(ks):.2f}", o),
+        ("confKMax", f"{max(ks):.2f}", o),
+        ("confWorlds", f"{c.integer('calibration.worlds')}", o),
+        ("confDesigns", f"{real['n_designs']}", o),
+        ("confSliceLeverN", f"{real['slice_counts']['lever']}", o),
+        ("confSliceLeverDesigns", f"{real['slice_designs']['lever']}", o),
+        ("confSliceTopN", f"{real['slice_counts']['top']}", o),
+        ("confSliceTopDesigns", f"{real['slice_designs']['top']}", o),
+        ("confSliceRungsN", f"{real['slice_counts']['rungs']}", o),
+        ("confSliceRungsDesigns", f"{real['slice_designs']['rungs']}", o),
+        ("confOutcome", {"lever_arm_survives": "lever arm survives",
+                         "top_rung_explains": "top-rung size explains it",
+                         "not_separable": "they cannot be separated"}[c.get("outcome")], o),
+    ]
+    preds = c.get("predictions")
+    failed = [k.split("_")[0] for k, v in preds.items() if not v]
+    out += [
+        ("confPredHeld", f"{sum(bool(v) for v in preds.values())}", o),
+        ("confPredTotal", f"{len(preds)}", o),
+        ("confPredFailed", ", ".join(failed), o),
+    ]
+    det = real["determined_share_by_target"]
+    out += [
+        ("confDetMinTarget", min(det, key=det.get), o),
+        ("confDetMin", f"{100 * min(det.values()):.0f}", o),
+        ("confDetTop", f"{100 * det['1B']:.0f}", o),
+        ("confDetRows", " ".join(f"{lab} & {100 * v:.0f} \\\\" for lab, v in det.items()), o),
+    ]
+    synth = c.get("synthetic")
+    for factor, tag in (("lever", "Lever"), ("top", "Top"), ("rungs", "Rungs")):
+        e = synth["effects"][factor]
+        out += [
+            (f"synth{tag}Slope", f"{e['slope']:+.2f}", o),
+            (f"synth{tag}Low", f"{e['slope_ci'][0]:+.2f}", o),
+            (f"synth{tag}High", f"{e['slope_ci'][1]:+.2f}", o),
+            (f"synth{tag}Noiseless", f"{e['noiseless_slope']:+.2f}", o),
+            (f"synth{tag}Range", f"{min(e['mean_true_excess']):.1f}--{max(e['mean_true_excess']):.1f}", o),
+        ]
+    out.append(("synthWorlds", f"{synth['worlds']}", o))
+    return out
 
 
 def _lever_by_metric_entries() -> list[tuple[str, str, str]]:
@@ -1849,6 +2017,9 @@ def build() -> str:
     entries.extend(_figure_entries())
     entries.extend(_analysis_entries())
     entries.extend(_review_entries())
+    entries.extend(_advantage_entries())
+    entries.extend(_marin_advantage_entries())
+    entries.extend(_confound_entries())
     lines.extend(_macro(name, value, origin) for name, value, origin in entries)
     lines.append("")
     return "\n".join(lines)

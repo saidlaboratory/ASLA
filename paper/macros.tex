@@ -7,8 +7,8 @@
 %
 % Regenerate with:  python scripts/render_macros.py
 %
-% generated:      2026-10-26T23:39:17Z
-% source commit:  89d3b14f834a7112b52448af10a67dee3b59cdb2-dirty
+% generated:      2026-10-27T00:22:36Z
+% source commit:  6b5602505fffa2545a04141dce9c5b2b6739a8dd-dirty
 
 \newcommand{\residRatio}{2.90}  % theory_v2.json
 \newcommand{\varInflation}{8.40}  % theory_v2.json
@@ -148,8 +148,10 @@
 \newcommand{\curveLowTwentyFive}{1.33}  % published_comparisons.json
 \newcommand{\curveHighTwentyFive}{2.55}  % published_comparisons.json
 \newcommand{\curveCFour}{1.62}  % published_comparisons.json
-\newcommand{\curveCheckWorstLarge}{11}  % published_comparisons.json
-\newcommand{\curveCheckSmallest}{44}  % published_comparisons.json
+\newcommand{\curveCheckWorst}{3}  % published_comparisons.json
+\newcommand{\curveCheckMinM}{8}  % published_comparisons.json
+\newcommand{\curveCheckMaxM}{20}  % published_comparisons.json
+\newcommand{\curveCheckMeanSeSmallest}{44}  % published_comparisons.json
 \newcommand{\curveCheckSmallestM}{8}  % published_comparisons.json
 \newcommand{\pInvariantMin}{0.14}  % expected_error.json
 \newcommand{\pInvariantMax}{0.27}  % expected_error.json
@@ -425,7 +427,6 @@
 \newcommand{\curveMSmall}{10}  % published_comparisons.json
 \newcommand{\curveMMid}{25}  % published_comparisons.json
 \newcommand{\curveMLarge}{100}  % published_comparisons.json
-\newcommand{\curveCheckLargeMinM}{12}  % published_comparisons.json
 \newcommand{\powerDeltaLarge}{5}  % expected_error.json
 \newcommand{\delphiSeeds}{3}  % counterexample_delphi.json
 \newcommand{\calibRandomWorlds}{300}  % calibration.json
@@ -630,7 +631,90 @@
 \newcommand{\certLevCpNLong}{9}  % certify.json
 \newcommand{\certLevRows}{C4 & seed error only & 0.00 & 0.47 & 0.28 \\ C4 & seed bootstrap & 0.93 & 0.47 & 1.13 \\ C4 & misfit term & 0.00 & 0.00 & 0.00 \\ OLMES error & seed error only & 4.66 & 10.05 & 10.56 \\ OLMES error & seed bootstrap & 5.29 & 11.10 & 11.69 \\ OLMES error & misfit term & 3.12 & 7.07 & 7.42 \\ correct prob. & seed error only & 4.18 & 2.76 & 7.22 \\ correct prob. & seed bootstrap & 5.44 & 3.85 & 11.73 \\ correct prob. & misfit term & 1.70 & 0.68 & 0.71 \\}  % certify.json
 \newcommand{\certLevCFourSeedMax}{0.5}  % certify.json
-\newcommand{\ledgerRows}{\texttt{adversarial/floor\_profile.json} & 3 & 1 & {\raggedright F4\_fix\_tightens\_c4\par} \\ \texttt{crn/pilot\_laptop\_analysis.json} & 0 & 4 & {\raggedright PP1\_first\_checkpoint\_at\_most\_0\_2, PP2\_rises\_over\_training\_spearman\_ge\_0\_6, PP3\_final\_in\_0\_2\_to\_0\_8, PP4\_more\_resolvable\_matched\par} \\ \texttt{crn/polypythias\_rho\_d.json} & 1 & 1 & {\raggedright P2\_rho\_d\_in\_0\_3\_to\_0\_7\par} \\ \texttt{external/break\_diagnosis.json} & 6 & 3 & {\raggedright PA3\_fo\_reorder\_at\_least\_15pct, PA4\_step\_preferred\_in\_most, PG2\_equal\_noise\_in\_0\_03\_to\_0\_2pct\par} \\ \texttt{external/certified\_leaderboard.json} & 3 & 1 & {\raggedright PC1\_dd\_sigma\_star\_in\_0\_05\_to\_0\_3pct\par} \\ \texttt{external/compute\_multipliers\_replication.json} & 1 & 1 & {\raggedright P2\_projection\_never\_better\_on\_either\_axis\par} \\ \texttt{external/datadecide\_sensitivity.json} & 3 & 4 & {\raggedright P4a2\_range\_within\_bound\_and\_4\_3, P4a3\_conclusions\_unchanged, P4b2\_C\_A\_holds, P4c\_all\_tied\_and\_reproducible\par} \\ \texttt{external/datadecide\_single\_scale.json} & 1 & 0 & {\raggedright ---\par} \\ \texttt{external/inclusion\_recount.json} & 11 & 4 & {\raggedright PI2\_projection\_no\_better, PS1\_bias\_negative\_in\_range, PS1\_no\_crossings, PV1\_sigma\_star\_below\_0\_58pct\par} \\ \texttt{external/leaderboard\_core.json} & 1 & 1 & {\raggedright PM4\_top1\_invariant\par} \\ \texttt{external/leaderboard\_resolution.json} & 2 & 2 & {\raggedright PL1\_top\_k\_0\_or\_1, PL2\_delphi\_1e22\_error\_over\_10\_gaps\par} \\ \texttt{external/marin\_noise.json} & 1 & 1 & {\raggedright PN2\_sign\_changes\_match\_noise\_null\par} \\ \texttt{external/marin\_reference.json} & 2 & 1 & {\raggedright PR3\_reordered\_larger\_delta\_slope\par} \\ \texttt{external/marin\_rigour.json} & 1 & 1 & {\raggedright PT2\_projection\_loses\_under\_every\_form\par} \\ \texttt{external/noise\_bracket.json} & 6 & 2 & {\raggedright PB2\_ratio\_in\_2\_to\_10, PB2\_calibrated\_in\_0\_02\_to\_0\_20\_pct\par} \\ \texttt{external/published\_comparisons.json} & 1 & 3 & {\raggedright P1\_gate, P2\_no\_variant\_differs, P5\_correction\_curve\par} \\ \texttt{external/sign\_ties.json} & 9 & 5 & {\raggedright task2.PF1\_form\_pairs\_at\_least\_140, task2.PF2\_deployed\_fewer\_pairs, task3.PR1\_all\_21\_from\_default, task3.PR1\_at\_least\_90pct\_fits, task3.PR1\_ranking\_equals\_optimum\par} \\ \texttt{external/speedrun\_scale\_noise.json} & 1 & 0 & {\raggedright ---\par} \\ \texttt{target\_scoring/calibration.json} & 2 & 2 & {\raggedright C1\_u\_statistic\_coverage, C3\_fixed\_candidate\_coverage\par} \\ \texttt{target\_scoring/calibration\_c4\_en\_bits\_per\_token\_observed\_truth.json} & 2 & 2 & {\raggedright C1\_u\_statistic\_coverage, C3\_fixed\_candidate\_coverage\par} \\ \texttt{target\_scoring/calibration\_olmes\_macro\_error.json} & 1 & 3 & {\raggedright C1\_u\_statistic\_coverage, C3\_fixed\_candidate\_coverage, C4\_expected\_error\_unbiased\par} \\ \texttt{target\_scoring/lever\_arm\_arms.json} & 6 & 2 & {\raggedright P1b3\_monotone\_in\_lambda, P1c1\_ensemble\_worse\_in\_A\_by\_2pp\par} \\ \texttt{target\_scoring/lever\_arm\_by\_metric.json} & 2 & 0 & {\raggedright ---\par} \\ \texttt{target\_scoring/lever\_arm\_calibration.json} & 2 & 1 & {\raggedright P1\_coverage\_0\_90\_to\_0\_97\par} \\ \texttt{target\_scoring/moderated\_variance.json} & 2 & 1 & {\raggedright M2\_moderation\_recovers\_ten\_seed\_sigma\par} \\ \texttt{target\_scoring/pattern.json} & 3 & 4 & {\raggedright P1\_own\_world\_80pct, P1\_swaps\_80pct, P2\_monotone\_decreasing\_each\_design, P2\_sign\_change\_in\_neutral\_band\_each\_design\par} \\ \texttt{target\_scoring/physicality.json} & 1 & 1 & {\raggedright P1\_2\_c4\_strict\_olmes\_tolerant\_only\par} \\ \texttt{target\_scoring/regime\_map.json} & 7 & 4 & {\raggedright P1b1\_wins\_only\_in\_low\_corner, P1b3\_noise\_free\_row\_does\_not\_shrink, P1c3\_olmes\_worlds\_match\_map\_sign, P3\_1\_monotone\_in\_lambda\par} \\ \texttt{target\_scoring/structure\_swap.json} & 0 & 5 & {\raggedright P2\_1\_i\_primary, P2\_2\_ii\_secondary, refutation\_neither\_i\_nor\_ii\_moves\_sign, P2\_3\_iii\_or\_v\_largest\_and\_i\_below\_half, P2\_4\_all\_swapped\_reproduces\par} \\}  % results/**/*.json
-\newcommand{\ledgerHeld}{81}  % results/**/*.json
-\newcommand{\ledgerFailed}{60}  % results/**/*.json
-\newcommand{\ledgerFiles}{29}  % results/**/*.json
+\newcommand{\ledgerRows}{{\raggedright\texttt{adversarial/\allowbreak floor\_\allowbreak profile.json}\par} & 3 & 1 & {\raggedright F4\_fix\_tightens\_c4\par} \\ {\raggedright\texttt{crn/\allowbreak pilot\_\allowbreak laptop\_\allowbreak analysis.json}\par} & 0 & 4 & {\raggedright PP1\_first\_checkpoint\_at\_most\_0\_2, PP2\_rises\_over\_training\_spearman\_ge\_0\_6, PP3\_final\_in\_0\_2\_to\_0\_8, PP4\_more\_resolvable\_matched\par} \\ {\raggedright\texttt{crn/\allowbreak polypythias\_\allowbreak rho\_\allowbreak d.json}\par} & 1 & 1 & {\raggedright P2\_rho\_d\_in\_0\_3\_to\_0\_7\par} \\ {\raggedright\texttt{external/\allowbreak break\_\allowbreak diagnosis.json}\par} & 6 & 3 & {\raggedright PA3\_fo\_reorder\_at\_least\_15pct, PA4\_step\_preferred\_in\_most, PG2\_equal\_noise\_in\_0\_03\_to\_0\_2pct\par} \\ {\raggedright\texttt{external/\allowbreak certified\_\allowbreak leaderboard.json}\par} & 3 & 1 & {\raggedright PC1\_dd\_sigma\_star\_in\_0\_05\_to\_0\_3pct\par} \\ {\raggedright\texttt{external/\allowbreak compute\_\allowbreak multipliers\_\allowbreak replication.json}\par} & 1 & 1 & {\raggedright P2\_projection\_never\_better\_on\_either\_axis\par} \\ {\raggedright\texttt{external/\allowbreak datadecide\_\allowbreak sensitivity.json}\par} & 3 & 4 & {\raggedright P4a2\_range\_within\_bound\_and\_4\_3, P4a3\_conclusions\_unchanged, P4b2\_C\_A\_holds, P4c\_all\_tied\_and\_reproducible\par} \\ {\raggedright\texttt{external/\allowbreak datadecide\_\allowbreak single\_\allowbreak scale.json}\par} & 1 & 0 & {\raggedright ---\par} \\ {\raggedright\texttt{external/\allowbreak inclusion\_\allowbreak recount.json}\par} & 11 & 4 & {\raggedright PI2\_projection\_no\_better, PS1\_bias\_negative\_in\_range, PS1\_no\_crossings, PV1\_sigma\_star\_below\_0\_58pct\par} \\ {\raggedright\texttt{external/\allowbreak leaderboard\_\allowbreak core.json}\par} & 1 & 1 & {\raggedright PM4\_top1\_invariant\par} \\ {\raggedright\texttt{external/\allowbreak leaderboard\_\allowbreak resolution.json}\par} & 2 & 2 & {\raggedright PL1\_top\_k\_0\_or\_1, PL2\_delphi\_1e22\_error\_over\_10\_gaps\par} \\ {\raggedright\texttt{external/\allowbreak marin\_\allowbreak noise.json}\par} & 1 & 1 & {\raggedright PN2\_sign\_changes\_match\_noise\_null\par} \\ {\raggedright\texttt{external/\allowbreak marin\_\allowbreak reference.json}\par} & 2 & 1 & {\raggedright PR3\_reordered\_larger\_delta\_slope\par} \\ {\raggedright\texttt{external/\allowbreak marin\_\allowbreak rigour.json}\par} & 1 & 1 & {\raggedright PT2\_projection\_loses\_under\_every\_form\par} \\ {\raggedright\texttt{external/\allowbreak noise\_\allowbreak bracket.json}\par} & 6 & 2 & {\raggedright PB2\_ratio\_in\_2\_to\_10, PB2\_calibrated\_in\_0\_02\_to\_0\_20\_pct\par} \\ {\raggedright\texttt{external/\allowbreak published\_\allowbreak comparisons.json}\par} & 2 & 2 & {\raggedright P1\_gate, P2\_no\_variant\_differs\par} \\ {\raggedright\texttt{external/\allowbreak sign\_\allowbreak ties.json}\par} & 9 & 5 & {\raggedright task2.PF1\_form\_pairs\_at\_least\_140, task2.PF2\_deployed\_fewer\_pairs, task3.PR1\_all\_21\_from\_default, task3.PR1\_at\_least\_90pct\_fits, task3.PR1\_ranking\_equals\_optimum\par} \\ {\raggedright\texttt{external/\allowbreak speedrun\_\allowbreak scale\_\allowbreak noise.json}\par} & 1 & 0 & {\raggedright ---\par} \\ {\raggedright\texttt{target\_\allowbreak scoring/\allowbreak calibration.json}\par} & 2 & 2 & {\raggedright C1\_u\_statistic\_coverage, C3\_fixed\_candidate\_coverage\par} \\ {\raggedright\texttt{target\_\allowbreak scoring/\allowbreak calibration\_\allowbreak c4\_\allowbreak en\_\allowbreak bits\_\allowbreak per\_\allowbreak token\_\allowbreak observed\_\allowbreak truth.json}\par} & 2 & 2 & {\raggedright C1\_u\_statistic\_coverage, C3\_fixed\_candidate\_coverage\par} \\ {\raggedright\texttt{target\_\allowbreak scoring/\allowbreak calibration\_\allowbreak olmes\_\allowbreak macro\_\allowbreak error.json}\par} & 1 & 3 & {\raggedright C1\_u\_statistic\_coverage, C3\_fixed\_candidate\_coverage, C4\_expected\_error\_unbiased\par} \\ {\raggedright\texttt{target\_\allowbreak scoring/\allowbreak confound.json}\par} & 8 & 2 & {\raggedright P3\_joint\_rungs\_includes\_zero, P6\_slice\_rungs\_includes\_zero\par} \\ {\raggedright\texttt{target\_\allowbreak scoring/\allowbreak lever\_\allowbreak arm\_\allowbreak arms.json}\par} & 6 & 2 & {\raggedright P1b3\_monotone\_in\_lambda, P1c1\_ensemble\_worse\_in\_A\_by\_2pp\par} \\ {\raggedright\texttt{target\_\allowbreak scoring/\allowbreak lever\_\allowbreak arm\_\allowbreak by\_\allowbreak metric.json}\par} & 2 & 0 & {\raggedright ---\par} \\ {\raggedright\texttt{target\_\allowbreak scoring/\allowbreak lever\_\allowbreak arm\_\allowbreak calibration.json}\par} & 2 & 1 & {\raggedright P1\_coverage\_0\_90\_to\_0\_97\par} \\ {\raggedright\texttt{target\_\allowbreak scoring/\allowbreak moderated\_\allowbreak variance.json}\par} & 2 & 1 & {\raggedright M2\_moderation\_recovers\_ten\_seed\_sigma\par} \\ {\raggedright\texttt{target\_\allowbreak scoring/\allowbreak pattern.json}\par} & 3 & 4 & {\raggedright P1\_own\_world\_80pct, P1\_swaps\_80pct, P2\_monotone\_decreasing\_each\_design, P2\_sign\_change\_in\_neutral\_band\_each\_design\par} \\ {\raggedright\texttt{target\_\allowbreak scoring/\allowbreak physicality.json}\par} & 1 & 1 & {\raggedright P1\_2\_c4\_strict\_olmes\_tolerant\_only\par} \\ {\raggedright\texttt{target\_\allowbreak scoring/\allowbreak regime\_\allowbreak map.json}\par} & 7 & 4 & {\raggedright P1b1\_wins\_only\_in\_low\_corner, P1b3\_noise\_free\_row\_does\_not\_shrink, P1c3\_olmes\_worlds\_match\_map\_sign, P3\_1\_monotone\_in\_lambda\par} \\ {\raggedright\texttt{target\_\allowbreak scoring/\allowbreak structure\_\allowbreak swap.json}\par} & 0 & 5 & {\raggedright P2\_1\_i\_primary, P2\_2\_ii\_secondary, refutation\_neither\_i\_nor\_ii\_moves\_sign, P2\_3\_iii\_or\_v\_largest\_and\_i\_below\_half, P2\_4\_all\_swapped\_reproduces\par} \\}  % results/**/*.json
+\newcommand{\ledgerHeld}{90}  % results/**/*.json
+\newcommand{\ledgerFailed}{61}  % results/**/*.json
+\newcommand{\ledgerFiles}{30}  % results/**/*.json
+\newcommand{\advTableRows}{projection & C4 & $+1.82$ & $[-2.35,\ +5.98]$ & 2.35 & 0.06 \\ shared exponent & C4 & $-0.23$ & $[-1.30,\ +0.84]$ & 1.30 & 0.03 \\ EB shrinkage & C4 & $+1.49$ & $[-2.76,\ +5.73]$ & 2.76 & 0.07 \\ ensemble & C4 & $+8.53$ & $[+0.09,\ +16.96]$ & any & 0.16 \\ checkpoint-augmented & C4 & $+1.44$ & $[-1.16,\ +4.04]$ & 1.16 & 0.46 \\ projection & OLMES error & $+0.37$ & $[-3.27,\ +4.00]$ & 3.27 & 0.03 \\ shared exponent & OLMES error & $+1.00$ & $[-3.81,\ +5.81]$ & 3.81 & 0.03 \\ EB shrinkage & OLMES error & $+0.37$ & $[-3.27,\ +4.00]$ & 3.27 & 0.02 \\ ensemble & OLMES error & $-0.54$ & $[-3.94,\ +2.85]$ & 3.94 & 0.02 \\ checkpoint-augmented & OLMES error & $-0.01$ & $[-3.91,\ +3.89]$ & 3.91 & 0.01 \\ allocation, 0.01 of budget & C4 & $+9.72$ & $[+0.56,\ +18.88]$ & any & --- \\ allocation, 0.03 of budget & C4 & $+9.50$ & $[-1.43,\ +20.43]$ & 1.43 & --- \\ allocation, 0.1 of budget & C4 & $+7.84$ & $[-2.84,\ +18.52]$ & 2.84 & --- \\ allocation, 0.3 of budget & C4 & $+4.18$ & $[-2.22,\ +10.58]$ & 2.22 & --- \\ allocation, 0.5 of budget & C4 & $+4.18$ & $[-2.22,\ +10.58]$ & 2.22 & --- \\ allocation, 1 of budget & C4 & $+1.96$ & $[-1.60,\ +5.53]$ & 1.60 & --- \\}  % restated_claims.json
+\newcommand{\advExcludeCFourMax}{2.8}  % restated_claims.json
+\newcommand{\advExcludeOlmesMax}{3.9}  % restated_claims.json
+\newcommand{\advPowerMax}{0.46}  % calibration.json
+\newcommand{\advPowerMin}{0.01}  % calibration.json
+\newcommand{\marinSharedDiff}{-1.7}  % inclusion_recount.json
+\newcommand{\marinSharedLow}{-20.2}  % inclusion_recount.json
+\newcommand{\marinSharedHigh}{+16.7}  % inclusion_recount.json
+\newcommand{\marinSharedExclude}{20}  % inclusion_recount.json
+\newcommand{\marinOwnFormWrong}{64}  % inclusion_recount.json
+\newcommand{\marinOwnFormT}{2.68}  % inclusion_recount.json
+\newcommand{\confJointLever}{+7.8}  % confound.json
+\newcommand{\confJointLeverLow}{+6.8}  % confound.json
+\newcommand{\confJointLeverHigh}{+8.9}  % confound.json
+\newcommand{\confJointLeverWaldLow}{+6.5}  % confound.json
+\newcommand{\confJointLeverWaldHigh}{+9.2}  % confound.json
+\newcommand{\confJointLeverK}{1.57}  % confound.json
+\newcommand{\confJointTop}{-4.0}  % confound.json
+\newcommand{\confJointTopLow}{-6.1}  % confound.json
+\newcommand{\confJointTopHigh}{-1.9}  % confound.json
+\newcommand{\confJointTopWaldLow}{-6.0}  % confound.json
+\newcommand{\confJointTopWaldHigh}{-1.9}  % confound.json
+\newcommand{\confJointTopK}{2.02}  % confound.json
+\newcommand{\confJointRungs}{-0.8}  % confound.json
+\newcommand{\confJointRungsLow}{-1.4}  % confound.json
+\newcommand{\confJointRungsHigh}{-0.2}  % confound.json
+\newcommand{\confJointRungsWaldLow}{-1.5}  % confound.json
+\newcommand{\confJointRungsWaldHigh}{-0.1}  % confound.json
+\newcommand{\confJointRungsK}{1.62}  % confound.json
+\newcommand{\confSliceLever}{+7.7}  % confound.json
+\newcommand{\confSliceLeverLow}{+6.5}  % confound.json
+\newcommand{\confSliceLeverHigh}{+8.9}  % confound.json
+\newcommand{\confSliceLeverWaldLow}{+6.3}  % confound.json
+\newcommand{\confSliceLeverWaldHigh}{+9.1}  % confound.json
+\newcommand{\confSliceLeverK}{1.70}  % confound.json
+\newcommand{\confSliceTop}{-5.3}  % confound.json
+\newcommand{\confSliceTopLow}{-7.6}  % confound.json
+\newcommand{\confSliceTopHigh}{-3.0}  % confound.json
+\newcommand{\confSliceTopWaldLow}{-8.1}  % confound.json
+\newcommand{\confSliceTopWaldHigh}{-2.4}  % confound.json
+\newcommand{\confSliceTopK}{1.59}  % confound.json
+\newcommand{\confSliceRungs}{-0.9}  % confound.json
+\newcommand{\confSliceRungsLow}{-1.6}  % confound.json
+\newcommand{\confSliceRungsHigh}{-0.2}  % confound.json
+\newcommand{\confSliceRungsWaldLow}{-1.7}  % confound.json
+\newcommand{\confSliceRungsWaldHigh}{-0.1}  % confound.json
+\newcommand{\confSliceRungsK}{1.75}  % confound.json
+\newcommand{\confTableRows}{joint model: lever arm (per decade) & $+7.83$ & 0.68 & 1.57 & $[+6.76,\ +8.90]$ & $[+6.50,\ +9.16]$ & $+3.06$ \\ joint model: top-rung compute (per decade) & $-3.99$ & 1.05 & 2.02 & $[-6.11,\ -1.88]$ & $[-6.04,\ -1.94]$ & $-2.59$ \\ joint model: rung count (per rung) & $-0.80$ & 0.34 & 1.62 & $[-1.35,\ -0.24]$ & $[-1.47,\ -0.12]$ & $-0.91$ \\ slice (i): lever arm only (per decade) & $+7.69$ & 0.70 & 1.70 & $[+6.50,\ +8.88]$ & $[+6.32,\ +9.06]$ & $+2.82$ \\ slice (ii): top-rung compute only (per decade) & $-5.27$ & 1.45 & 1.59 & $[-7.58,\ -2.97]$ & $[-8.12,\ -2.42]$ & $-3.95$ \\ slice (iii): rung count only (per rung) & $-0.90$ & 0.42 & 1.75 & $[-1.64,\ -0.16]$ & $[-1.73,\ -0.08]$ & $-1.03$ \\}  % confound.json
+\newcommand{\confMainRows}{joint: lever arm & $+7.8$ & $[+6.8,\ +8.9]$ \\ joint: top rung & $-4.0$ & $[-6.1,\ -1.9]$ \\ joint: rung count & $-0.8$ & $[-1.4,\ -0.2]$ \\ slice: lever arm only & $+7.7$ & $[+6.5,\ +8.9]$ \\ slice: top rung only & $-5.3$ & $[-7.6,\ -3.0]$ \\ slice: rung count only & $-0.9$ & $[-1.6,\ -0.2]$ \\}  % confound.json
+\newcommand{\confKMin}{1.57}  % confound.json
+\newcommand{\confKMax}{2.02}  % confound.json
+\newcommand{\confWorlds}{200}  % confound.json
+\newcommand{\confDesigns}{220}  % confound.json
+\newcommand{\confSliceLeverN}{36}  % confound.json
+\newcommand{\confSliceLeverDesigns}{192}  % confound.json
+\newcommand{\confSliceTopN}{29}  % confound.json
+\newcommand{\confSliceTopDesigns}{101}  % confound.json
+\newcommand{\confSliceRungsN}{36}  % confound.json
+\newcommand{\confSliceRungsDesigns}{192}  % confound.json
+\newcommand{\confOutcome}{lever arm survives}  % confound.json
+\newcommand{\confPredHeld}{8}  % confound.json
+\newcommand{\confPredTotal}{10}  % confound.json
+\newcommand{\confPredFailed}{P3, P6}  % confound.json
+\newcommand{\confDetMinTarget}{20M}  % confound.json
+\newcommand{\confDetMin}{4}  % confound.json
+\newcommand{\confDetTop}{86}  % confound.json
+\newcommand{\confDetRows}{10M & 29 \\ 14M & 45 \\ 16M & 27 \\ 20M & 4 \\ 60M & 20 \\ 90M & 36 \\ 150M & 60 \\ 300M & 54 \\ 530M & 82 \\ 1B & 86 \\}  % confound.json
+\newcommand{\synthLeverSlope}{+7.80}  % confound.json
+\newcommand{\synthLeverLow}{+7.61}  % confound.json
+\newcommand{\synthLeverHigh}{+7.99}  % confound.json
+\newcommand{\synthLeverNoiseless}{+3.89}  % confound.json
+\newcommand{\synthLeverRange}{1.5--11.2}  % confound.json
+\newcommand{\synthTopSlope}{-2.06}  % confound.json
+\newcommand{\synthTopLow}{-2.18}  % confound.json
+\newcommand{\synthTopHigh}{-1.94}  % confound.json
+\newcommand{\synthTopNoiseless}{-1.53}  % confound.json
+\newcommand{\synthTopRange}{3.2--10.7}  % confound.json
+\newcommand{\synthRungsSlope}{-0.70}  % confound.json
+\newcommand{\synthRungsLow}{-0.76}  % confound.json
+\newcommand{\synthRungsHigh}{-0.65}  % confound.json
+\newcommand{\synthRungsNoiseless}{+0.59}  % confound.json
+\newcommand{\synthRungsRange}{6.8--12.1}  % confound.json
+\newcommand{\synthWorlds}{300}  % confound.json

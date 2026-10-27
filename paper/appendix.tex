@@ -61,9 +61,14 @@ paper and the published re-tests the median $\zeta_1/\zeta_2$ is
 \curveZetaMedian, giving $R=\curveMedTen$, \curveMedTwentyFive\ and
 \curveMedHundred\ at \curveMSmall, \curveMMid\ and \curveMLarge\ candidates.
 Subsampling the real candidates reproduces $R(m)$ to within
-\curveCheckWorstLarge\% at \curveCheckLargeMinM\ or more candidates; at
-\curveCheckSmallestM\ it misses by \curveCheckSmallest\%, a pre-registered
-prediction that failed.
+\curveCheckWorst\% at every $m$ from \curveCheckMinM\ to \curveCheckMaxM. A
+first version of this check divided by the mean of the subsamples'
+pair-resampled standard errors instead of their root mean square; the
+heavy-tailed C4 kernel pulls the mean well below the root mean square at small
+$m$, and that version reported a \curveCheckMeanSeSmallest\% miss at
+$m=\curveCheckSmallestM$ and a failed pre-registered prediction
+(\cref{app:practice}). The mean-based ratio still describes a typical small
+study's pair-resampled interval, which understates more than $R(m)$ suggests.
 
 \FloatBarrier
 \section{Every inferential claim, restated}
@@ -105,6 +110,25 @@ recipes, corrected within their own family.}
 \label{tab:claims-fixed}
 \end{table}
 
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{llrrrr}
+\toprule
+comparator & metric & estimate & calibrated interval & excluded advantage & power \\
+\midrule
+\advTableRows
+\bottomrule
+\end{tabular}
+\caption{Each estimator and allocation against single-scale ranking on
+DataDecide, random-candidate estimand, in points of mis-selected pairs
+(positive means worse). Excluded advantage: the data exclude an advantage over
+single-scale ranking larger than this. Power: calibrated power against the
+comparator's effect in the benchmark of \cref{tab:calibration} (none was
+computed for allocations).}
+\label{tab:advantage}
+\end{table}
+
 
 
 \FloatBarrier
@@ -120,6 +144,68 @@ noise. Arm B1's common-mode misspecification changes the noisy result little but
 the noiseless correlation (\cref{tab:arms}). With
 the noise removed from the real shrunk curves, projection is wrong on more pairs
 than single-scale ranking at every one of \mechNoiselessDesigns\ designs.
+
+\FloatBarrier
+\section{The confound test}
+\label{app:confound}
+
+The pre-registration is \texttt{PREDICTIONS\_TASK\_CONFOUND.md}, committed before
+any code. Designs are fit windows of at least three consecutive rungs with a  %% words: - (the pre-registered minimum window)
+larger target, on the C4 ladder of \cref{sec:lever}. The kernel is the lever-arm
+test's, generalised to windows; on windows that start at the smallest model it
+reproduces the \doseDesigns\ designs of \cref{sec:lever} exactly. Slice (ii)
+holds \confSliceTopDesigns\ designs; the pre-registration counted one fewer,
+from log compute rounded to three decimals, under which one design fell in the  %% words: - (a rounding precision and a single design)
+neighbouring lever-arm bin. The rule was applied as written.
+
+\begin{table}[h]
+\centering
+\footnotesize
+\begin{tabular}{lrrrrrr}
+\toprule
+statistic & estimate & SE & \shortstack{critical\\ value} & \shortstack{calibrated\\ interval} & \shortstack{interval\\ at 1.96} & \shortstack{benchmark\\ truth} \\  %% nolint: the normal critical value
+\midrule
+\confTableRows
+\bottomrule
+\end{tabular}
+\caption{Every confound statistic on C4, in points. The critical value is the
+95\% quantile of the standardized error over \confWorlds\ random-candidate  %% nolint: the stated quantile
+worlds; benchmark truth is the statistic of those worlds' mean true excess.}
+\label{tab:confound-full}
+\end{table}
+
+\paragraph{Determined target pairs.} The share of target pairs whose
+three-seed reference order is determined, by target: \Cref{tab:determined}.  %% words: - (DataDecide's seed count)
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{lr}
+\toprule
+target & determined pairs (\%) \\
+\midrule
+\confDetRows
+\bottomrule
+\end{tabular}
+\caption{Determined share of the target's recipe pairs, the flag used by
+expected-error scoring.}
+\label{tab:determined}
+\end{table}
+
+\paragraph{Semi-synthetic factor isolation.} Truths are each recipe's power-law
+fit to its shrunk C4 curve plus the recipe-specific misspecification of arm B2,
+interpolated in log compute; noise is the recipes' moderated C4 noise, three  %% words: - (DataDecide's seed count)
+seeds per rung. Rungs are equally spaced, and each factor varies alone with the
+other two exactly fixed, over \synthWorlds\ worlds. The world-mean true excess
+spans \synthLeverRange\ points across lever arms, \synthTopRange\ across top
+rungs and \synthRungsRange\ across rung counts. Slopes, with Monte Carlo 95\%  %% nolint: the stated interval level
+intervals: lever arm \synthLeverSlope\ per decade
+([\synthLeverLow, \synthLeverHigh]), top rung \synthTopSlope\ per decade
+([\synthTopLow, \synthTopHigh]), rung count \synthRungsSlope\ per rung
+([\synthRungsLow, \synthRungsHigh]). Without noise the slopes are
+\synthLeverNoiseless, \synthTopNoiseless\ and \synthRungsNoiseless: without
+noise, more rungs no longer help. The top-rung and rung-count responses are not
+monotone, so their slopes summarise a trend, not a constant rate.
 
 \FloatBarrier
 \section{Certifying selection: full results}

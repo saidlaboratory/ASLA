@@ -58,7 +58,7 @@ ALLOWED_FLOATS: dict[str, frozenset[float]] = {
     # the section itself. Structural facts about the prose, not quantities read
     # off the data, and centralised precisely so the four places that state them
     # cannot drift apart.
-    "render_consolidated_findings.py": frozenset({5.0, 6.0, 11.0}),
+    "render_consolidated_findings.py": frozenset({5.0, 6.0, 12.0}),
     "render_curvature_results.py": frozenset(),
     # QUOTED_M and QUOTED_DELTAS: the grid points the prose quotes (a stated choice, checked against the JSON grid)
     "render_macros.py": frozenset({5.0, 10.0, 25.0}),

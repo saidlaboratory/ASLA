@@ -1,0 +1,92 @@
+{
+  "design": "primary_4M-300M_target1B",
+  "method": "normal-approximation standard error of a sample quantile; points are computed once and exact",
+  "step_points": 0.3333333333333333,
+  "rankers": {
+    "single_scale": {
+      "point": 0.013333333333333334,
+      "point_mc_se": 0.0,
+      "lo": 0.006666666666666667,
+      "hi": 0.01674999999999997,
+      "n_boot": 120,
+      "interval_end_mc_se": 0.0006272776951146402,
+      "interval_end_mc_se_points": 0.06272776951146403
+    },
+    "shared_exponent": {
+      "point": 0.02,
+      "point_mc_se": 0.0,
+      "lo": 0.013333333333333334,
+      "hi": 0.03666666666666667,
+      "n_boot": 120,
+      "interval_end_mc_se": 0.0014515516911743783,
+      "interval_end_mc_se_points": 0.14515516911743784
+    },
+    "shrinkage_1": {
+      "point": 0.02,
+      "point_mc_se": 0.0,
+      "lo": 0.013333333333333334,
+      "hi": 0.03666666666666667,
+      "n_boot": 120,
+      "interval_end_mc_se": 0.0014515516911743783,
+      "interval_end_mc_se_points": 0.14515516911743784
+    },
+    "shrinkage_0.8": {
+      "point": 0.016666666666666666,
+      "point_mc_se": 0.0,
+      "lo": 0.013333333333333334,
+      "hi": 0.03333333333333333,
+      "n_boot": 120,
+      "interval_end_mc_se": 0.0012441871638637528,
+      "interval_end_mc_se_points": 0.12441871638637528
+    },
+    "shrinkage_0.6": {
+      "point": 0.016666666666666666,
+      "point_mc_se": 0.0,
+      "lo": 0.016666666666666666,
+      "hi": 0.03666666666666667,
+      "n_boot": 120,
+      "interval_end_mc_se": 0.001244187163863753,
+      "interval_end_mc_se_points": 0.12441871638637529
+    },
+    "shrinkage_0.4": {
+      "point": 0.03666666666666667,
+      "point_mc_se": 0.0,
+      "lo": 0.023333333333333334,
+      "hi": 0.05,
+      "n_boot": 120,
+      "interval_end_mc_se": 0.001658916218485004,
+      "interval_end_mc_se_points": 0.1658916218485004
+    },
+    "shrinkage_0.2": {
+      "point": 0.05,
+      "point_mc_se": 0.0,
+      "lo": 0.03333333333333333,
+      "hi": 0.07341666666666664,
+      "n_boot": 120,
+      "interval_end_mc_se": 0.00249355844091027,
+      "interval_end_mc_se_points": 0.249355844091027
+    },
+    "plain_projection": {
+      "point": 0.05333333333333334,
+      "point_mc_se": 0.0,
+      "lo": 0.04,
+      "hi": 0.08666666666666667,
+      "n_boot": 120,
+      "interval_end_mc_se": 0.002903103382348757,
+      "interval_end_mc_se_points": 0.2903103382348757
+    },
+    "ensemble": {
+      "point": 0.18666666666666668,
+      "point_mc_se": 0.0,
+      "lo": 0.12666666666666668,
+      "hi": 0.21666666666666667,
+      "n_boot": 120,
+      "interval_end_mc_se": 0.0055988422373868885,
+      "interval_end_mc_se_points": 0.5598842237386888
+    }
+  },
+  "max_interval_end_mc_se_points": 0.5598842237386888,
+  "text_quotes_interval_ends": false,
+  "rerun": false,
+  "reason": "The text quotes only the points, which have no Monte Carlo error; the interval ends appear only in the figure and no sentence depends on them, so their Monte Carlo error cannot change a number or statement."
+}
