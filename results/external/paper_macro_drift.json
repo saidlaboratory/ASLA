@@ -2,10 +2,10 @@
   "reference_commit": "dfc4c4aaba",
   "reference": "the commit that first wrote results/external/prose_corrections.json",
   "latest_commit_touching_list": "acd56d83fa",
-  "macros_used_in_main_tex": 255,
-  "claims_with_changed_source": 163,
+  "macros_used_in_main_tex": 272,
+  "claims_with_changed_source": 174,
   "claims_whose_value_changed": 0,
-  "new_claims_since_reference": 154,
+  "new_claims_since_reference": 164,
   "rows": [
     {
       "macro": "advExcludeCFourMax",
@@ -13,7 +13,7 @@
         "results/target_scoring/restated_claims.json": "acd56d8 2026-10-22"
       },
       "old": null,
-      "new": "2.8",
+      "new": "2.9",
       "new_claim": true,
       "value_changed": false
     },
@@ -23,7 +23,7 @@
         "results/target_scoring/restated_claims.json": "acd56d8 2026-10-22"
       },
       "old": null,
-      "new": "3.9",
+      "new": "4.0",
       "new_claim": true,
       "value_changed": false
     },
@@ -44,6 +44,36 @@
       },
       "old": null,
       "new": "0.03",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "allocPowerNonnegMax",
+      "sources_changed": {
+        "results/target_scoring/allocation_power.json": "2621766 2026-10-26"
+      },
+      "old": null,
+      "new": "0.09",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "allocZetaNegMax",
+      "sources_changed": {
+        "results/target_scoring/allocation_power.json": "2621766 2026-10-26"
+      },
+      "old": null,
+      "new": "36",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "allocZetaNegMin",
+      "sources_changed": {
+        "results/target_scoring/allocation_power.json": "2621766 2026-10-26"
+      },
+      "old": null,
+      "new": "30",
       "new_claim": true,
       "value_changed": false
     },
@@ -808,6 +838,26 @@
       "value_changed": false
     },
     {
+      "macro": "lamCpHigh",
+      "sources_changed": {
+        "results/target_scoring/lever_arm_by_metric.json": "0048c6b 2026-10-12"
+      },
+      "old": null,
+      "new": "+0.37",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "lamCpLow",
+      "sources_changed": {
+        "results/target_scoring/lever_arm_by_metric.json": "0048c6b 2026-10-12"
+      },
+      "old": null,
+      "new": "-0.82",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
       "macro": "lamCpP",
       "sources_changed": {
         "results/target_scoring/lever_arm_by_metric.json": "0048c6b 2026-10-12"
@@ -838,6 +888,16 @@
       "value_changed": false
     },
     {
+      "macro": "lamMarginAllCov",
+      "sources_changed": {
+        "results/target_scoring/lever_arm_by_metric.json": "0048c6b 2026-10-12"
+      },
+      "old": null,
+      "new": "0.71",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
       "macro": "lamMarginP",
       "sources_changed": {
         "results/target_scoring/lever_arm_by_metric.json": "0048c6b 2026-10-12"
@@ -858,6 +918,26 @@
       "value_changed": false
     },
     {
+      "macro": "lamMarginSubHigh",
+      "sources_changed": {
+        "results/target_scoring/lever_arm_by_metric.json": "0048c6b 2026-10-12"
+      },
+      "old": null,
+      "new": "+0.76",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "lamMarginSubLow",
+      "sources_changed": {
+        "results/target_scoring/lever_arm_by_metric.json": "0048c6b 2026-10-12"
+      },
+      "old": null,
+      "new": "-0.98",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
       "macro": "lamMarginSubN",
       "sources_changed": {
         "results/target_scoring/lever_arm_by_metric.json": "0048c6b 2026-10-12"
@@ -868,22 +948,32 @@
       "value_changed": false
     },
     {
-      "macro": "lamMarginSubP",
-      "sources_changed": {
-        "results/target_scoring/lever_arm_by_metric.json": "0048c6b 2026-10-12"
-      },
-      "old": null,
-      "new": "0.03",
-      "new_claim": true,
-      "value_changed": false
-    },
-    {
       "macro": "lamMarginSubRho",
       "sources_changed": {
         "results/target_scoring/lever_arm_by_metric.json": "0048c6b 2026-10-12"
       },
       "old": null,
       "new": "-0.61",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "lamOlmesHigh",
+      "sources_changed": {
+        "results/target_scoring/lever_arm_by_metric.json": "0048c6b 2026-10-12"
+      },
+      "old": null,
+      "new": "+0.24",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "lamOlmesLow",
+      "sources_changed": {
+        "results/target_scoring/lever_arm_by_metric.json": "0048c6b 2026-10-12"
+      },
+      "old": null,
+      "new": "-0.81",
       "new_claim": true,
       "value_changed": false
     },
@@ -1368,6 +1458,16 @@
       "value_changed": false
     },
     {
+      "macro": "phNestedSlope",
+      "sources_changed": {
+        "results/target_scoring/confound.json": "be72b2a 2026-10-26"
+      },
+      "old": null,
+      "new": "+12.3",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
       "macro": "phPerTopMax",
       "sources_changed": {
         "results/target_scoring/confound.json": "be72b2a 2026-10-26"
@@ -1385,6 +1485,16 @@
       "old": null,
       "new": "+4.8",
       "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "restatedFixedM",
+      "sources_changed": {
+        "results/target_scoring/restated_claims.json": "acd56d8 2026-10-22"
+      },
+      "old": "10",
+      "new": "10",
+      "new_claim": false,
       "value_changed": false
     },
     {

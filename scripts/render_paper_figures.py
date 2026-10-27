@@ -90,8 +90,8 @@ def flexibility() -> None:
         ("shrinkage_0.6", "0.6"),
         ("shrinkage_0.4", "0.4"),
         ("shrinkage_0.2", "0.2"),
-        ("plain_projection", "plain\n(shrink 0)"),
-        ("ensemble", "three-family\nensemble"),
+        ("plain_projection", "plain"),
+        ("ensemble", "ensemble"),
     ]
     assert rankers["plain_projection"]["mis_selection"]["point"] == rankers["shrinkage_0"]["mis_selection"]["point"]
     pts = [100 * rankers[k]["mis_selection"]["point"] for k, _ in order]
@@ -110,7 +110,7 @@ def flexibility() -> None:
         markersize=4,
         elinewidth=1.2,
         capsize=0,
-        label="projection estimator (95% interval)",
+        label="estimator (95% interval)",
     )
     ax.set_xticks(range(len(order)), [lab for _, lab in order], fontsize=6.5, rotation=30, ha="right")
     ax.set_xlabel("less flexible  →  more flexible")

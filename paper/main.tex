@@ -48,20 +48,23 @@ are anti-conservative at realistic seed and candidate counts. On DataDecide,
 projection's excess mis-selection over single-scale ranking on C4 bits per
 token is \headEstimate\ points: nominally significant for these \nCandidates\
 recipes ($p=\headFixedP$, not surviving correction within its family) and not
-established for recipes in general ($p=\headRandomP$). The paper's main finding
-is a lever-arm effect on C4 bits per token. In a pre-registered analysis at a
-fixed target, where the reference and its determinacy do not change, the excess
-grows as the fitted range ends farther below the target: by \ftFixedTargetPooled\
-points per decade (interval [\ftFixedTargetPooledLow,
-\ftFixedTargetPooledHigh]), positive at each of the \ftTargets\ targets with
-well-determined references. Across targets the excess also rises with
-extrapolation distance (Spearman \leverRealRho, the one claim of
-\restatedPrimaryM\ in the primary family that survives Holm and
-Benjamini--Yekutieli correction), and scoring only pairs whose reference order
-is determined does not remove that rise. On OLMES metrics the effect is not
-established. No tested alternative is shown to be better than single-scale
-ranking: the intervals exclude advantages larger than \advExcludeCFourMax\
-points on C4 bits per token, and every test has power below one half. On the
+established for recipes in general ($p=\headRandomP$). The main finding is a
+lever-arm effect on C4 bits per token. At a fixed target, where the reference
+and its determinacy do not change, the excess grows as the fitted range ends
+farther below the target, by \ftFixedTargetPooled\ points per decade (interval
+[\ftFixedTargetPooledLow, \ftFixedTargetPooledHigh]), and it is positive at each
+of the \ftTargets\ targets. This analysis was pre-registered, but a model fitted
+to overlapping designs had already implied the slope, and it is not corrected
+for multiplicity; at a fixed target, distance and the size of the largest fitted
+model are one variable. Across targets the excess rises with distance (Spearman
+\leverRealRho); this is the one claim of \restatedPrimaryM\ in the primary
+family that survives Holm and Benjamini--Yekutieli correction, against a null
+of an excess that is zero or the same at every design. On OLMES metrics the
+effect is not established. No tested alternative is shown to be better than
+single-scale ranking: the intervals exclude advantages larger than
+\advExcludeCFourMax\ points on C4 bits per token, and every random-candidate
+test of an estimator or allocation has power below one half against its
+benchmark effect. On the
 Marin speedrun leaderboard, a solver defect and per-size protocol changes limit
 what the forecasts resolve, and at the upper end of a bracket on single-run
 noise \marinHold\ of \marinPairs\ pairwise orders hold.
@@ -121,22 +124,32 @@ candidate counts public suites provide.
 \section{Setup}
 \label{sec:setup}
 
-\paragraph{Ladders, candidates and targets.} A \emph{ladder} is a set of fit
-budgets; a \emph{design} is a ladder and a target budget above it. The
-\emph{lever arm} of a design is $\log_{10}$ of the ratio of target compute to  %% nolint: the base of the logarithm
-the largest fitted compute. Our main data are DataDecide's
+\paragraph{Ladders, candidates and targets.} A \emph{rung} is one training
+budget, a \emph{ladder} is a set of rungs that are fitted, and a \emph{design}
+is a ladder and a target budget above it. The \emph{lever arm} of a design is
+$\log_{10}$ of the ratio of target compute to the largest fitted compute, in  %% nolint: the base of the logarithm
+decades. Differences in decision error are in \emph{points}, percentage points
+of candidate pairs. Our main data are DataDecide's
 \citep{magnusson2025datadecide} \nCandidates\ pretraining-data recipes, each
 trained at fourteen sizes with \ddSeeds\ seeds, evaluated on C4 bits per token  %% words: - (the number of model sizes in DataDecide's release)
-and on OLMES macro error and correct-answer probability. The Marin speedrun
-\citep{marin2025speedrun} supplies a second, deployed setting.
+and on OLMES macro error and correct-answer probability. The \ddFindingScale\
+runs use less compute than the \primaryTarget\ runs, so they do not extend the
+compute ladder; every lever-arm analysis excludes them, and the analyses of
+DataDecide's own protocol use them as published. The Marin speedrun
+\citep{marin2025speedrun} supplies a second, deployed setting, scored in bits
+per byte (BPB).
 
 \paragraph{Scoring against an uncertain reference.} The target order is itself
 estimated from finitely many seeds. We charge each pair the probability that
 its true order differs from the predicted one, under a Gaussian approximation
 to the target gap with seed variances moderated across recipes by empirical
-Bayes \citep{smyth2004linear}. A pair whose reference is a coin flip then costs
-about one half whatever the rule predicts, instead of rewarding or punishing
-it by chance.
+Bayes \citep{smyth2004linear}; we call this \emph{expected-error scoring}, and
+its per-pair difference between two rules is the \emph{kernel}. A pair whose
+reference is a coin flip then costs about one half whatever the rule predicts,
+instead of rewarding or punishing it by chance. A pair is \emph{determined}
+when its reference order is significant under a Bonferroni correction across
+pairs. \emph{Hard} scoring instead counts a pair wrong when the predicted order
+differs from the observed target order.
 
 \paragraph{Two estimands.} A difference in decision accuracy between two rules
 answers one of two questions. The \emph{fixed-candidate} estimand asks whether
@@ -164,15 +177,17 @@ make pair resampling more anti-conservative, not less
 \paragraph{Calibration.} We built a semi-synthetic benchmark from DataDecide:
 truths are the recipes' seed-mean curves shrunk toward the across-recipe mean,
 noise follows the moderated model, and random-candidate worlds draw new recipe
-sets by a smoothed bootstrap. In \calRandomWorlds\ random-candidate and
-\calFixedWorlds\ fixed-candidate worlds, unbiased candidate-level standard
-errors gave Wald intervals covering only \calUCovMin--\calUCovMax, because the
-standard errors are noisy at \nCandidates\ candidates (\cref{tab:calibration}).
+sets by a smoothed bootstrap. In \calRandomWorlds\ random-candidate worlds,
+unbiased candidate-level standard errors gave Wald intervals covering only
+\calUCovMin--\calUCovMax, because the standard errors are noisy at
+\nCandidates\ candidates (\cref{tab:calibration}; \calFixedWorlds\
+fixed-candidate worlds give the fixed column).
 Calibrated critical
 values improve coverage: \calFixedK\ for the fixed-candidate estimand and
 \calJackK\ for the random-candidate one, with held-out coverage
-\calFixedCovMin--\calFixedCovMax\ and \calJackCovMin--\calJackCovMax, short of
-the pre-registered band for both (\cref{app:ledger}). Two
+\calFixedCovMin--\calFixedCovMax\ and \calJackCovMin--\calJackCovMax. Both
+miss the pre-registered band of \calBandLow--\calBandHigh\ for every comparator
+(\cref{app:ledger}), so the calibrated test is approximate. Two
 standard tools fail on real few-seed data. A moderated $t$ test splitting
 PolyPythias' \ppSeeds\ seeds \ppNullSplit\ against \ppNullSplit, where the null
 is true, rejects at \nullModBonf\ times its nominal rate at a Bonferroni level
@@ -187,7 +202,7 @@ versions are reported.
 \scriptsize
 \begin{tabular}{lrrrrrrrrr}
 \toprule
-& \multicolumn{2}{c}{true effect (pp)} & & \multicolumn{2}{c}{coverage, textbook} & \multicolumn{2}{c}{calibrated, held out} & \multicolumn{2}{c}{calibrated power} \\  %% nolint: column counts
+& \multicolumn{2}{c}{true effect (points)} & & \multicolumn{2}{c}{coverage, textbook} & \multicolumn{2}{c}{calibrated, held out} & \multicolumn{2}{c}{calibrated power} \\  %% nolint: column counts
 comparator & fixed & random & bias & fixed & random & fixed & random & fixed & random \\
 \midrule
 \calibrationRows
@@ -199,7 +214,10 @@ worse. True effect: the comparator's excess under each estimand; bias is the
 fixed-candidate bias. Shared exponent fits one exponent across recipes; EB
 shrinkage pulls exponents toward it by empirical Bayes; the ensemble averages
 functional families; checkpoint-augmented fits add intermediate checkpoints;
-planted rows rank at a lower top rung, a comparator with a known deficit.}
+planted rows rank at a lower top rung, a comparator expected to be worse,
+which the highest planted rung is not under the fixed-candidate estimand. Power is against
+each comparator's effect in the benchmark, so where that effect is near zero it
+is close to the test's size.}
 \label{tab:calibration}
 \end{table*}
 
@@ -217,22 +235,30 @@ comparison (\cref{tab:calibration}).
 Detecting a two-point difference at power 0.8 under the calibrated test needs  %% nolint: stated power level
 about \candShrunkTwo\ candidates, several times what public suites provide.
 
-\paragraph{The paper's claims under correction.} We restate every inferential
-claim in the paper, \restatedPrimaryM\ in all, under the random-candidate
-procedure and correct the family with Holm \citep{holm1979simple} and
-Benjamini--Yekutieli \citep{benjamini2001control}.
-\restatedPrimaryNominal\ are nominally significant and \restatedPrimaryBY\
-survives: the lever-arm association of \cref{sec:lever}. The full table is in
-\cref{app:claims}.
+\paragraph{The paper's claims under correction.} The primary family holds
+\restatedPrimaryM\ comparisons: the estimator and allocation comparisons, the
+across-target lever-arm association, and DataDecide's published comparisons,
+including its correct-probability-against-accuracy comparisons at each scale.
+Under the random-candidate procedure, corrected with Holm
+\citep{holm1979simple} and Benjamini--Yekutieli
+\citep{benjamini2001control}, \restatedPrimaryNominal\ are nominally
+significant and \restatedPrimaryBY\ survives: the across-target lever-arm
+association of \cref{sec:lever}. A second family of \restatedFixedM\
+fixed-candidate comparisons has one survivor, the ensemble's deficit. Other
+inferential statements in the paper, including the fixed-target analysis of
+\cref{sec:lever}, the confound test and the per-metric lever-arm tests, are
+outside both families and uncorrected. The tables are in \cref{app:claims}.
 
 \paragraph{DataDecide, re-examined.} DataDecide's own decision-accuracy
 function, run unmodified on its released predictions, reproduces
 \codeCheckTested\ of \codeCheckTestedN\ tested rows and \codeCheckAll\ of
 \codeCheckAllN\ overall. The remaining \ddRemainingRows\ depend on how its sort
-orders tied predictions: \tieGroups\ groups of tied values admit orderings that
-move a row by up to \tieMaxRange\ points. The protocol mixes targets: it scores
-single-scale ranking against the \ddSeeds-seed mean at \targetScaleLabel\ and
-each scaling-law variant against the default seed. Under the mixed targets,
+orders tied predictions, in \tiePredBlocks\ blocks of tied predictions;
+separately, \tieGroups\ groups of tied target values admit orderings that move a
+row by up to \tieMaxRange\ points. On OLMES macro accuracy, ranking at
+\ddFindingScale, the protocol mixes targets: it scores single-scale ranking
+against the \ddSeeds-seed mean at \targetScaleLabel\ and each scaling-law variant
+against the default seed. Under the mixed targets,
 \ddFindingVariantName\ scores \ddFindingVariantDefault\ against single-scale
 ranking's \ddFindingSingle. Scored against one consistent target, the seed
 mean, it reaches \ddFindingVariant: the point estimates reverse. The difference,
@@ -269,10 +295,13 @@ lies between \ftPerTargetMin\ and \ftPerTargetMax\ (\cref{tab:fixed-target}).
 At a fixed target, lever arm and top-rung compute are one variable, so this is
 the excess against how far below the target the fitted range ends, not lever arm
 separated from top-rung size. It agrees with the \ftImplied\ per decade that the
-confound test's joint model implies at a fixed target. Intervals are
-leave-one-recipe-out jackknifes; the calibrated critical values
-(\ftKMin--\ftKMax, \ftWorlds\ random-candidate worlds) are below the normal value,
-so the normal intervals are quoted. The pre-registered outcome is that the
+confound test's joint model implies at a fixed target; the pre-registration
+was written with that implied value in hand, and the fixed-target designs are a
+subset of the confound test's windows, so this is a pre-specified re-slice of
+data already modelled, not an independent test, and it lies outside the
+corrected family. Intervals are leave-one-recipe-out jackknifes at the larger of
+the calibrated critical value (\ftKMin--\ftKMax, \ftWorlds\ random-candidate
+worlds) and the normal value. The pre-registered outcome is that the
 fixed-target slope is \ftOutcome; \ftPredHeld\ of \ftPredTotal\ predictions held.
 
 \begin{table}[t]
@@ -295,7 +324,8 @@ jackknifes at the larger of the calibrated and normal critical values.}
 
 \paragraph{Across targets (secondary).} On C4 bits per token, across \doseDesigns\ designs, projection's
 excess over single-scale ranking rises with the lever arm (\cref{fig:lever};
-Spearman \leverRealRho). The designs share recipes and rungs, so we test it
+Spearman \leverRealRho; least-squares slope \phNestedSlope\ points per decade).
+The designs share recipes and rungs, so we test it
 with recipes as the unit: a leave-one-recipe-out jackknife of Fisher's $z$ gives
 [\leverWaldLow, \leverWaldHigh] at the normal critical value and
 [\leverRealLow, \leverRealHigh] at a critical value of \leverK\ calibrated on
@@ -335,8 +365,10 @@ determined at each target gives \ftTargetVariedDetermined\ per decade
 ([\ftTargetVariedDeterminedLow, \ftTargetVariedDeterminedHigh]) against
 \ftTargetVariedAllPairs\ on all pairs; the pre-registered prediction that it
 would be lower failed (\ftPredFailed), so weak references do not account for
-the across-target rise. The response is not linear: computed after review,
-without intervals, the slope within each top rung with at least three targets  %% words: - (a minimum number of targets)
+the across-target rise, though the determined subset also changes size with
+the target, so this does not separate determinacy from the composition of the
+pairs scored. The response is not linear: computed after the analysis, without
+intervals or pre-registration, the slope within each top rung with at least three targets  %% words: - (a minimum number of targets)
 ranges from \phPerTopMin\ to \phPerTopMax\ per decade, smaller at larger top
 rungs. Rung count here is the lower end of an unevenly spaced window, so it also
 changes the fitted span. In semi-synthetic worlds with C4's noise and
@@ -359,7 +391,8 @@ although without noise it moves the correlation from \noiselessRhoArmA\ to
 \noiselessRhoArmBOne: in a pairwise order it largely cancels, and on real C4
 its amplitude-sharing cancellation ratio is \cancelCFourRatio, partial rather
 than complete. The
-world with all misfit and noise reproduces \attrRealTotal\% of the real slope.
+world with all misfit and noise reproduces \attrRealTotal\% of the real slope
+over the nested designs (\phNestedSlope\ per decade).
 A sequential decomposition of that simulated slope, which depends on the order
 of the arms and is not identified, gives with a power law as the reference form
 \attrPowerVar\% to the variance arm, \attrPowerSpecific\% to recipe-specific
@@ -379,7 +412,7 @@ rise monotonically with the misfit scale \armMonotoneLambda, on the correlation.
 \setlength{\tabcolsep}{3pt}  %% nolint: layout
 \begin{tabular}{lrrrr}
 \toprule
-arm (truth) & \shortstack{noiseless\\ Spearman} & \shortstack{Spearman\\ with noise} & \shortstack{slope (pp\\ per decade)} & \shortstack{candidates\\ needed} \\
+arm (truth) & \shortstack{noiseless\\ Spearman} & \shortstack{Spearman\\ with noise} & \shortstack{slope (points\\ per decade)} & \shortstack{candidates\\ needed} \\
 \midrule
 \armTableRows
 \bottomrule
@@ -412,20 +445,26 @@ of the metric removes it.
 points, for each of \specN\ specifications, ordered by size. Projection is
 worse in \specPositive, ties in \specTies, and is nominally better in
 \specBelow, of which \specBelowCFour\ are on C4 bits per token; the rest are
-OLMES metrics.}
+OLMES metrics. Scored by hard mis-selection; \specSN\ specifications use Signal
+and Noise's C4 bits per byte, and \specZeroLever\ fit up to the target.}
 \label{fig:spec-curve}
 \end{figure*}
 
 \paragraph{Where the effect is inconclusive.} On OLMES macro error the
 association is \lamOlmesVerdict\ (Spearman \lamOlmesRho, $p=\lamOlmesP$ against
 the calibrated null), and on correct-answer probability it is
-\lamCpVerdict\ (\lamCpRho, $p=\lamCpP$); both point estimates have the
-opposite sign to C4's, so the association is metric-dependent. A margin-based
+\lamCpVerdict\ (\lamCpRho, $p=\lamCpP$). Neither is significant, but the C4
+estimate lies above both calibrated intervals ([\lamOlmesLow, \lamOlmesHigh] and
+[\lamCpLow, \lamCpHigh]), so the association differs by metric. A margin-based
 metric shows it over all designs (\lamMarginRho, $p\le\lamMarginP$, the Monte
-Carlo floor), outside the corrected family, but reverses on the
-\lamMarginSubN\ designs whose rungs are all above chance (\lamMarginSubRho,
-$p=\lamMarginSubP$). Across \specN\ analysis specifications
-(\cref{fig:spec-curve}), scored by hard mis-selection against the observed
+Carlo floor), outside the corrected family and with a procedure whose normal
+interval covered only \lamMarginAllCov; on the \lamMarginSubN\ designs whose
+rungs are all above chance its point estimate reverses (\lamMarginSubRho), but
+the result is inconclusive (calibrated interval
+[\lamMarginSubLow, \lamMarginSubHigh]). Across \specN\ analysis specifications
+(\cref{fig:spec-curve}), \specSN\ of them on Signal and Noise's C4 bits per
+byte \citep{heineman2025signal} and \specZeroLever\ fitting up to the target
+itself, scored by hard mis-selection against the observed
 target order rather than by expected error, projection is worse in \specPositive,
 ties in \specTies\ and is nominally better in \specBelow, all of them on OLMES
 metrics; the specifications share data and many give identical results, so these
@@ -446,10 +485,16 @@ gives each estimator's and allocation's difference from single-scale ranking wit
 its calibrated random-candidate interval. On C4 the intervals exclude an advantage
 over single-scale ranking larger than \advExcludeCFourMax\ points for every
 estimator and allocation, and on OLMES error larger than \advExcludeOlmesMax\
-points; smaller advantages are not excluded. The tests are weak: against each
-estimator's effect in the benchmark, calibrated power is \advPowerMin\ to
-\advPowerMax, below one half for every estimator, and for the allocations
-\allocPowerMin\ to \allocPowerMax\ (\cref{app:claims}). On the design that
+points; smaller advantages are not excluded, and these bounds come from
+intervals whose coverage missed its pre-registered band. The tests are weak:
+against each estimator's effect in the benchmark, calibrated random-candidate
+power is \advPowerMin\ to \advPowerMax, and for the allocations \allocPowerMin\
+to \allocPowerMax\ (\cref{app:claims}); several benchmark effects are near zero,
+so these powers are close to the test's size. In
+\allocZetaNegMin--\allocZetaNegMax\% of the allocation worlds the unbiased
+candidate-level variance component is negative, which shrinks the standard
+error; without those worlds, allocation power is at most
+\allocPowerNonnegMax. On the design that
 fits up to \flexFitTop\ and targets \flexTarget, single-scale ranking mis-selects
 \flexSingle\% of pairs; the shared-exponent fit \flexShared\%, plain projection
 \flexPlain\% and a multi-family ensemble \flexEnsemble\% (\cref{fig:flexibility}).
@@ -458,7 +503,7 @@ estimator or allocation with single-scale ranking has single-scale ranking
 ahead; we attach no test to that direction pattern, because the comparisons
 share recipes. The ensemble's deficit is the one estimator comparison that
 survives correction in the fixed-candidate family ($p=\ensFixedP$). Allocating
-runs across budgets does not help either: under a least-squares projection, the
+runs across budgets was not shown to help either: under a least-squares projection, the
 design that minimises the variance of the target level minimises every pair's
 mis-selection probability at once if the model is well specified
 (\cref{app:design}), which on C4 it is not (\cref{sec:lever}), and the optimised
@@ -466,10 +511,10 @@ allocation is nominally worse than single-scale ranking at the smallest budget
 fraction, and its intervals at larger fractions are in \cref{tab:advantage}. Common random
 numbers would reduce gap variance if seed deviations were shared across
 recipes. A pre-registered pilot on a laptop-scale model, comparing learning-rate
-multipliers rather than data recipes, found no large reduction: the median
-gap-variance ratio was \crnMedianRatio\ ([\crnLow, \crnHigh]) against a
-decision rule of at most \crnRule. The interval does not exclude a moderate
-reduction; the programme was closed.
+multipliers rather than data recipes, was uninformative: the median
+gap-variance ratio was \crnMedianRatio, missing the decision rule of at most
+\crnRule, but its interval ([\crnLow, \crnHigh]) includes reductions larger than
+the rule required. We did not pursue it further.
 
 \begin{figure}[t]
 \centering
@@ -513,8 +558,10 @@ group on. On correct-answer probability, seed error gives
 \certLevCpSeedShort\%, \certLevCpSeedMiddle\% and \certLevCpSeedLong\%, and the
 misfit term \certLevCpSelShort\%, \certLevCpSelMiddle\% and \certLevCpSelLong\%.
 Pooled over metrics (\cref{fig:certify}), seed-error certification rises from
-\stageLevShortSeed\% to \stageLevLongSeed\%, as a pre-registered prediction
-stated; the rise comes from the OLMES metrics, not from C4. Each metric's groups
+\stageLevShortSeed\% to \stageLevLongSeed\% across the three groups, as the  %% words: - (the three lever-arm groups)
+pre-registration's prediction PS4 stated, though not monotonically across
+individual lever arms (\cref{fig:certify}); the rise comes from the OLMES
+metrics, not from C4. Each metric's groups
 hold \certLevCFourNShort, \certLevCFourNMiddle\ and \certLevCFourNLong\ designs.
 
 \begin{table*}[t]
@@ -529,8 +576,11 @@ method & cov. & FCR & cov. & FCR & cov. & FCR & cov. & FCR & cov. & FCR \\
 \bottomrule
 \end{tabular}
 \caption{Coverage (\% of pairs certified) and realized false-certification rate
-(\%) over \stageDesigns\ DataDecide designs and the Marin design, at
-$\alpha=\stageAlpha\%$.}
+(FCR, \%) over \stageDesigns\ DataDecide designs and the Marin design, at
+$\alpha=\stageAlpha\%$. On Marin, which has no seeds, seed error is borrowed
+from DataDecide, the misfit coefficient estimated there is zero, and the three  %% words: - (the three certification rules)
+certification rules certify the same pairs; false certification is scored
+against a held-out rung.}
 \label{tab:stage}
 \end{table*}
 
@@ -545,8 +595,8 @@ when pooled over metrics (\stageSeedFcr\%) with higher coverage
 (\stageSeedCov\%). It exceeds nominal on both OLMES metrics (\stageErrSeedFcr\%
 and \stageCpSeedFcr\%), but the pooled criterion was the pre-registered one. The
 misfit rule itself exceeds nominal on OLMES macro error (\stageErrSelFcr\%),
-where the candidate-level upper bound on its excess over nominal is
-\stageErrSelExcessUp\ points per pair; pooled, that bound is
+where the candidate-level upper bound on its excess false-certification rate
+over nominal is \stageErrSelExcessUp\ percentage points; pooled, that bound is
 \stageSelExcessUp. On C4, single-scale ranking meets nominal
 at full coverage (\stageCFourSingleFcr\%), so no certifying rule can improve on
 it there. We do not propose the rule as a method, and we did not iterate on
@@ -566,9 +616,9 @@ Levenberg--Marquardt fit runs on raw FLOPs and stops on an absolute error
 tolerance. Its forecasts depart from the least-squares optimum by up to
 \marinDepartMax\ BPB (median \marinDepartMedian). On an earlier snapshot of the
 leaderboard, rescaling FLOPs alone brings \marinScaledOnlyShare\% of
-\marinScaledOnlyFits\ multi-start fits to the optimum; rescaling together with a
-relative tolerance brings \marinMultistartReached\ of \marinMultistartFits\
-multi-start fits on the official set there, within
+\marinScaledOnlyFits\ multi-start fits to the optimum. On the current official
+set, rescaling together with a tight error tolerance brings
+\marinMultistartReached\ of \marinMultistartFits\ multi-start fits to it, within
 \marinMultistartDepart\ BPB. The fix changes
 \marinPairsChanged\ of \marinPairs\ pairwise orders (Kendall $\tau$
 \marinKendall) and the submission in place \marinChangedPlace.
@@ -579,7 +629,8 @@ measured. Borrowed seed standard deviations put it at
 sweeps put it below \marinBoundLow--\marinBoundHigh\% by size
 (\cref{app:marin}). Across two converged forms, \marinFormCore\ of \marinPairs\
 pairs keep their order and only the top submission, \marinFormTopOne, is
-invariant. Propagating noise at the upper bound, \marinHold\ pairs hold in at
+invariant; the pre-registered prediction that it is invariant across every
+form and starting point, including unconverged fits, failed. Propagating noise at the upper bound, \marinHold\ pairs hold in at
 least \marinHoldLevel\% of draws, the leading submission is first in
 \marinTopOneShare\% of draws, and no top-$k$ set holds counting from the top
 (\cref{fig:marin}). Requiring both form agreement and noise robustness at
@@ -594,13 +645,13 @@ size somewhere on the ladder: \marinBatchAtThird\ double it at the third rung
 and \marinBatchAtTop\ at the top rung. For
 \marinStepMarked\ of \marinSubmissions\ submissions, allowing a step at the
 batch change moves the forecast by more than one gap between neighbouring
-submissions. The misfit-term rule, calibrated on the rung below the target,
-certifies \stageMarinCert\ pairs here with \stageMarinFcr\% false
-certification: misfit calibrated below the target cannot anticipate a protocol
-change at the target. Against single-scale ranking's \marinProjSingle\ point errors in
+submissions. All three certification rules certify the same \stageMarinCert\ pairs here,  %% words: - (the three certification rules)
+with \stageMarinFcr\% false certification against a held-out rung: the misfit
+coefficient estimated below the target is zero, so the misfit term adds nothing,
+and the failure cannot be attributed to it rather than to the protocol changes. Against single-scale ranking's \marinProjSingle\ point errors in
 \marinPairs\ pairs at a held-out rung, the leaderboard's own form makes
 \marinOwnFormWrong\ ($|t|=\marinOwnFormT$ against a critical value of
-\marinProjCrit\ calibrated on DataDecide and transferred, so indicative) and
+\marinProjCrit\ calibrated on DataDecide and transferred: not significant) and
 the shared exponent \marinProjShared: a difference of \marinSharedDiff\ points,
 interval [\marinSharedLow, \marinSharedHigh], which excludes only advantages
 larger than \marinSharedExclude\ points. No power calculation exists for this
@@ -611,8 +662,9 @@ design.
 \includegraphics[width=0.8\textwidth]{figures/fig_marin_rank_intervals}  %% nolint: figure width
 \caption{Rank of each official Marin speedrun submission at the
 \marinForecastX-FLOP forecast: the central \marinIntervalLevel\% of ranks over
-draws with noise at the upper bound (bars), the converged offset power law
-(circles) and log-log (diamonds).}
+draws with noise at the upper bound (bars), the converged three-parameter  %% words: - (the parameter count of the form)
+offset power law (circles, ``three-parameter optimum'' in the legend) and  %% words: - (the parameter count of the form)
+log-log (diamonds). Names are shortened.}
 \label{fig:marin}
 \end{figure*}
 
@@ -622,16 +674,15 @@ draws with noise at the upper bound (bars), the converged offset power law
 The evidence is one public suite with seed replicates and one intervention
 class, data recipes, plus one leaderboard without replicates. The lever-arm effect
 is established on C4 bits per token only; on OLMES accuracy metrics it is
-inconclusive, on a margin-based metric it reverses on the \lamMarginSubN\
-designs whose rungs are above chance, and its attribution between variance and misspecification depends
+inconclusive, on a margin-based metric its point estimate reverses on the
+\lamMarginSubN\ designs whose rungs are above chance (inconclusive), and its attribution between variance and misspecification depends
 on the reference functional form. At a fixed target, lever arm and top-rung
 compute cannot be separated, and DataDecide's drift in tokens per parameter
 moves with compute; across targets, the target's own properties may contribute.
 The fixed-target analysis uses the four targets with well-determined references.  %% words: - (the admitted targets)
 Benchmark true effects are smaller than the real estimates, and calibrated
-critical values below the normal value are not used. Of \ledgerHeld\ plus
-\ledgerFailed\ predictions recorded across the project, \ledgerFailed\ failed;
-\cref{app:ledger} lists them. The calibration benchmark's truths are
+critical values below the normal value are not used. Of the verdicts recorded across the project,
+\ledgerHeld\ held and \ledgerFailed\ failed (\cref{app:ledger}). The calibration benchmark's truths are
 shrunk seed-mean curves with Gaussian noise; the fixed-candidate procedure
 covers \calFlatFixedCov\ when the noise profile is flatter than DataDecide's,
 against \calControlFixedCov\ in the control (\cref{app:regime}).

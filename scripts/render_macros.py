@@ -17,6 +17,7 @@ Usage::
 from __future__ import annotations
 
 import argparse
+import re
 import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
@@ -1176,58 +1177,93 @@ def _review_entries() -> list[tuple[str, str, str]]:
     return out
 
 
-def _prediction_verdict(value: object) -> bool | None:
+VERDICT_KEYS = re.compile(r"^(predictions?|verdicts|criterion|power_predictions|gate)$", re.I)
+
+
+def _prediction_verdict(value: object) -> bool | str | None:
+    """True held, False failed, "other" recorded but not judged held or failed, None not a verdict."""
+
     if isinstance(value, bool):
         return value
-    if isinstance(value, dict) and isinstance(value.get("confirmed"), bool):
-        return value["confirmed"]
+    if isinstance(value, (int, float)) and value in (0, 1):
+        return bool(value)
+    if isinstance(value, str):
+        word = value.strip().upper()
+        if word.startswith("CONFIRMED"):
+            return True
+        if word.startswith("REFUTED"):
+            return False
+        if word in ("UNDERPOWERED", "NOT RECONSTRUCTED"):
+            return "other"
+        return None
+    if isinstance(value, dict):
+        for key in ("confirmed", "held"):
+            if isinstance(value.get(key), bool):
+                return value[key]
+        for key in ("verdict", "status"):
+            if isinstance(value.get(key), str):
+                return _prediction_verdict(value[key])
     return None
 
 
 def _prediction_ledger() -> list[tuple[str, str, str]]:
-    """Every prediction recorded with a verdict in any results file, held and failed."""
+    """Every verdict recorded in any results file: held, failed, and recorded but not judged.
+
+    Verdicts sit under keys named predictions, verdicts, criterion, power_predictions or gate, as booleans,
+    0/1, CONFIRMED/REFUTED strings, or dicts carrying confirmed/held/verdict. A dict of booleans (one per
+    design) counts each entry. In a criterion block, keys starting with F are failure-mode flags and the
+    aggregate "confirmed" repeats its parts, so both are skipped.
+    """
 
     import json
 
-    rows, held, failed = [], 0, 0
+    rows, held, failed, other = [], 0, 0, 0
     for path in sorted(RESULTS_DIR.rglob("*.json")):
         try:
             data = json.loads(path.read_text(encoding="utf-8"))
         except (json.JSONDecodeError, UnicodeDecodeError):
             continue
-        found: list[tuple[str, bool]] = []
+        found: list[tuple[str, bool | str]] = []
 
         def walk(node: object, prefix: str, depth: int) -> None:
-            if depth > 3 or not isinstance(node, dict):
+            if depth > 4 or not isinstance(node, dict):
                 return
             for key, value in node.items():
-                if key.lower().startswith("prediction") and isinstance(value, dict):
+                if VERDICT_KEYS.match(key) and isinstance(value, dict):
                     for name, verdict in value.items():
+                        if key.lower() == "criterion" and (name.startswith("F") or name == "confirmed"):
+                            continue
                         v = _prediction_verdict(verdict)
                         if v is not None:
                             found.append((prefix + name, v))
+                        elif isinstance(verdict, dict) and verdict and all(isinstance(x, bool) for x in verdict.values()):
+                            found.extend((f"{prefix}{name}[{sub}]", x) for sub, x in verdict.items())
                 else:
                     walk(value, prefix + key + ".", depth + 1)
 
         walk(data, "", 0)
         if not found:
             continue
-        ok = sum(v for _, v in found)
-        bad = [n for n, v in found if not v]
+        ok = sum(v is True for _, v in found)
+        bad = [n for n, v in found if v is False]
+        unjudged = sum(v == "other" for _, v in found)
         held += ok
         failed += len(bad)
+        other += unjudged
         rel = path.relative_to(RESULTS_DIR).as_posix()
         names = ", ".join(_tex(n) for n in bad) if bad else "---"
         breakable = _tex(rel).replace("/", "/\\allowbreak ").replace("\\_", "\\_\\allowbreak ")
-        rows.append(f"{{\\raggedright\\texttt{{{breakable}}}\\par}} & {ok} & {len(bad)} & {{\\raggedright {names}\\par}} \\\\")
+        rows.append(
+            f"{{\\raggedright\\texttt{{{breakable}}}\\par}} & {ok} & {len(bad)} & {unjudged} & "
+            f"{{\\raggedright {names}\\par}} \\\\"
+        )
     return [
         ("ledgerRows", " ".join(rows), "results/**/*.json"),
         ("ledgerHeld", f"{held}", "results/**/*.json"),
         ("ledgerFailed", f"{failed}", "results/**/*.json"),
+        ("ledgerOther", f"{other}", "results/**/*.json"),
         ("ledgerFiles", f"{len(rows)}", "results/**/*.json"),
     ]
-
-
 
 ADVANTAGE_LABELS = {
     "projection": "projection",
@@ -1277,8 +1313,9 @@ def _advantage_entries() -> list[tuple[str, str, str]]:
         )
     return [
         ("advTableRows", " ".join(rows), "restated_claims.json"),
-        ("advExcludeCFourMax", f"{max(excluded['c4_en_bits_per_token']):.1f}", "restated_claims.json"),
-        ("advExcludeOlmesMax", f"{max(excluded['olmes_macro_error']):.1f}", "restated_claims.json"),
+        # Rounded up: the data exclude advantages larger than the bound, so a rounded-down bound would overstate.
+        ("advExcludeCFourMax", f"{np.ceil(10 * max(excluded['c4_en_bits_per_token'])) / 10:.1f}", "restated_claims.json"),
+        ("advExcludeOlmesMax", f"{np.ceil(10 * max(excluded['olmes_macro_error'])) / 10:.1f}", "restated_claims.json"),
         ("advPowerMax", f"{max(powers):.2f}", "calibration.json"),
         ("advPowerMin", f"{min(powers):.2f}", "calibration.json"),
     ]
@@ -1550,6 +1587,43 @@ def _fixed_target_entries() -> list[tuple[str, str, str]]:
     return out
 
 
+
+def _review_three_entries() -> list[tuple[str, str, str]]:
+    """Values for the full-paper review: the coverage band, specification-curve composition, tie blocks."""
+
+    import pandas as pd
+
+    out: list[tuple[str, str, str]] = []
+    procedures = Source.load("target_scoring/calibration.json").get("calibrated")
+    band_key = next(k for k in procedures["random_u"] if k.startswith("cross_fit_within_"))
+    low, high = band_key.removeprefix("cross_fit_within_").split("_0_")
+    out += [
+        ("calBandLow", "0." + low.split("_")[1], "calibration.json key " + _tex(band_key)),
+        ("calBandHigh", "0." + high, "calibration.json key " + _tex(band_key)),
+    ]
+    df = pd.read_csv(RESULTS_DIR / "adversarial" / "a2_specification_curve.csv")
+    fit_end = df["fit_scales"].str.split("-").str[-1]
+    out += [
+        ("specZeroLever", f"{int((fit_end == df['target']).sum())}", "a2_specification_curve.csv"),
+        ("specSN", f"{int((df['metric'] == 'sn_c4_bits_per_byte').sum())}", "a2_specification_curve.csv"),
+    ]
+    sens = Source.load("external/datadecide_sensitivity.json")
+    blocks = sum(len(row["prediction_tie_blocks"]) for row in sens.get("task_4c.unmatched_rows"))
+    out.append(("tiePredBlocks", f"{blocks}", "datadecide_sensitivity.json"))
+    lam = Source.load("target_scoring/lever_arm_by_metric.json")
+    o = "lever_arm_by_metric.json"
+    for key, tag in (("olmes", "Olmes"), ("cp", "Cp")):
+        ci = lam.get(f"metrics.{key}.all.real_ci_calibrated")
+        out += [(f"lam{tag}Low", f"{ci[0]:+.2f}", o), (f"lam{tag}High", f"{ci[1]:+.2f}", o)]
+    sub = lam.get("metrics.margin.margin")
+    out += [
+        ("lamMarginSubLow", f"{sub['real_ci_calibrated'][0]:+.2f}", o),
+        ("lamMarginSubHigh", f"{sub['real_ci_calibrated'][1]:+.2f}", o),
+        ("lamMarginAllCov", f"{lam.number('metrics.margin.all.coverage_at_1_96'):.2f}", o),
+    ]
+    return out
+
+
 def _lever_by_metric_entries() -> list[tuple[str, str, str]]:
     lam = Source.load("target_scoring/lever_arm_by_metric.json")
     out = []
@@ -1660,15 +1734,27 @@ def _restated_entries() -> list[tuple[str, str, str]]:
     for key, macro in (("primary_family_random_candidate", "Primary"), ("fixed_candidate_family", "Fixed")):
         block = restated.get(key)
         rows = []
+        lever = Source.load("target_scoring/lever_arm_calibration.json")
         for claim in block["claims"]:
             ci = claim["ci_pp"]
             ci_text = f"$[{ci[0]:+.1f},\\ {ci[1]:+.1f}]$" if ci else "---"
             est = f"${claim['estimate_pp']:+.2f}$" if claim["estimate_pp"] is not None else "---"
+            if claim["family"] == "dose-response":
+                # A Spearman correlation, not points; its calibrated critical value is below the normal one, so the
+                # normal interval is shown, as the paper's policy states.
+                wald = lever.get("real_data.ci_1_96")
+                est = f"$\\rho={lever.number('real_data.rho'):.2f}$"
+                ci_text = f"$[{wald[0]:.2f},\\ {wald[1]:.2f}]$"
+            if claim["holm_reject"] and claim["by_reject"]:
+                verdict_both = "Holm, BY"
+            else:
+                verdict_both = None
             verdict = (
                 "Holm"
                 if claim["holm_reject"]
                 else ("BY" if claim["by_reject"] else ("nominal" if claim["nominal_reject"] else "---"))
             )
+            verdict = verdict_both or verdict
             rows.append(f"{_tex(claim['claim'])} & {est} & {ci_text} & {claim['p']:.2g} & {verdict} \\\\")
         out += [
             (f"restated{macro}Rows", " ".join(rows), origin),
@@ -2205,6 +2291,7 @@ def build() -> str:
     entries.extend(_confound_entries())
     entries.extend(_review_two_entries())
     entries.extend(_fixed_target_entries())
+    entries.extend(_review_three_entries())
     lines.extend(_macro(name, value, origin) for name, value, origin in entries)
     lines.append("")
     return "\n".join(lines)

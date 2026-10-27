@@ -66,8 +66,8 @@ first version of this check divided by the mean of the subsamples'
 pair-resampled standard errors instead of their root mean square; the
 heavy-tailed C4 kernel pulls the mean well below the root mean square at small
 $m$, and that version reported a \curveCheckMeanSeSmallest\% miss at
-$m=\curveCheckSmallestM$ and a failed pre-registered prediction
-(\cref{app:practice}). The mean-based ratio still describes a typical small
+$m=\curveCheckSmallestM$, so the pre-registered prediction was first scored as
+failed; on the corrected check it holds (\cref{app:practice}). The mean-based ratio still describes a typical small
 study's pair-resampled interval, which understates more than $R(m)$ suggests.
 
 \FloatBarrier
@@ -85,8 +85,12 @@ claim (random-candidate estimand) & estimate & calibrated interval & $p$ & verdi
 \bottomrule
 \end{tabular}
 \caption{The paper's inferential claims under the calibrated random-candidate
-procedure. Verdict: Holm or BY if the claim survives that correction across the
-family, nominal if only $p<0.05$, otherwise a dash. Sign conventions differ by  %% nolint: the stated significance level
+procedure. Verdict: Holm, BY or both if the claim survives that correction across
+the family, nominal if only $p<0.05$, otherwise a dash. Estimator and allocation  %% nolint: the stated significance level
+rows use the C4 random-candidate critical value of \cref{sec:test}; DataDecide's
+comparisons and the correct-probability rows use critical values calibrated on
+benchmarks built for those re-tests; the lever-arm row is a Spearman correlation
+with its normal-value interval and the correlated-design null's $p$. Sign conventions differ by  %% nolint: the stated significance level
 row type: ranker and allocation rows are differences in mis-selection (positive
 means worse than single-scale ranking); rows re-testing DataDecide's published
 comparisons are differences in decision accuracy (negative means worse). Some
@@ -159,10 +163,9 @@ test's, generalised to windows; on windows that start at the smallest model it
 reproduces the \doseDesigns\ designs of \cref{sec:lever} exactly. Slice (ii)
 holds \confSliceTopDesigns\ designs; the pre-registration counted one fewer,
 from log compute rounded to three decimals, under which one design fell in the  %% words: - (a rounding precision and a single design)
-neighbouring lever-arm bin. The rule was applied as written. The request that commissioned the test asked for leave-one-ladder-out
-inference; the pre-registration reads it as the leave-one-recipe-out jackknife
-the lever-arm test uses, since the ladder is not a unit of resampling anywhere
-in the paper. The joint model's lever-arm coefficient equals a coefficient on
+neighbouring lever-arm bin. The rule was applied as written. Standard errors
+use the leave-one-recipe-out jackknife of the lever-arm test; the ladder is not
+a unit of resampling anywhere in the paper. The joint model's lever-arm coefficient equals a coefficient on
 log target compute at fixed top rung, because lever arm is log target minus log
 top-rung compute.
 
@@ -267,13 +270,16 @@ recipes and contained the true best with probability \stageSelBest, against
 \stageSeedBest\ for seed error alone and \stageSingleBest\ for single-scale
 ranking.
 
-\paragraph{Deviations.} There are three, all disclosed in the results file. On Marin the  %% words: - (a count of the deviations listed below)
+\paragraph{Deviations.} The results file records three, all on Marin. The  %% words: - (a count of the deviations listed below)
 offset power law is not identified on the two calibration rungs, so its $\kappa$
 was transferred from DataDecide C4; the log-log $\kappa$ estimated there was
 \stageMarinKappaLog. Conformal intervals on Marin were calibrated on log-log
-residuals for the same reason. A first run drew all designs from one random
-stream, so results depended on which designs were cached; each design now has
-its own seeded generator, and cold and cached runs are byte-identical.
+residuals for the same reason. Marin has no seeds, so its bootstrap draws
+parametric noise at the borrowed seed level. A fourth, a defect rather than a
+change of plan, is recorded with the code: a first run drew all designs from
+one random stream, so results depended on which designs were cached; each
+design now has its own seeded generator, and cold and cached runs are
+byte-identical.
 
 \paragraph{Linearization check.} The Gaussian-limit decisions agree with
 full-refit draws on \stageLinMin--\stageLinMax\% of ordered pairs on the checked
@@ -338,7 +344,8 @@ where most submissions change protocol.
 
 A regime map relates noise, misspecification and candidate spread to
 projection's excess. At C4's coordinates it gives \mapExcessCFourPrimary\
-points on the primary design, close to the real \excessObserved. At OLMES's
+points on the primary design, close to the real hard-scored excess
+\excessObserved\ (the expected-error excess is \headEstimate). At OLMES's
 coordinates it gives \mapExcessOlmesPrimary, while worlds built at those
 coordinates give \worldExcessOlmesPrimary. Moving one metric's worlds to
 another's dimensionless coordinates predicted the sign of the other's excess in
@@ -385,25 +392,29 @@ quantile under Bonferroni is anti-conservative by a median factor of
 
 
 \FloatBarrier
-\section{Every recorded prediction}
+\section{Recorded predictions and verdicts}
 \label{app:ledger}
 
-Each analysis in this project wrote its predictions before running and
-recorded a verdict for each in its results file. \Cref{tab:ledger} lists every
-prediction with a verdict across \ledgerFiles\ results files: \ledgerHeld\ held
-and \ledgerFailed\ failed. Files that repeat an analysis on another metric
-repeat its predictions.
+Each analysis in this project wrote its predictions before running and recorded
+a verdict for each in its results file. \Cref{tab:ledger} lists every verdict
+stored under a key named for predictions, verdicts, criteria, power predictions
+or gates, across \ledgerFiles\ results files: \ledgerHeld\ held,
+\ledgerFailed\ failed and \ledgerOther\ were recorded as underpowered or not
+reconstructed. Verdicts written only as free text in a results file are not
+counted. Files that repeat an analysis on another metric repeat its
+predictions. A prediction rescored after a measurement defect is counted at its
+rescored verdict; the first verdict is kept in its file.
 
 {\small
-\begin{longtable}{p{6.2cm}rrp{7.6cm}}  %% nolint: column width
-\caption{Predictions with recorded verdicts, by results file, with the names
-of those that failed.}\label{tab:ledger}\\
+\begin{longtable}{p{5.6cm}rrrp{7.2cm}}  %% nolint: column width
+\caption{Recorded verdicts by results file: held, failed, not judged, and the
+names of those that failed.}\label{tab:ledger}\\
 \toprule
-results file & held & failed & failed predictions \\
+results file & held & failed & other & failed predictions \\
 \midrule
 \endfirsthead
 \toprule
-results file & held & failed & failed predictions \\
+results file & held & failed & other & failed predictions \\
 \midrule
 \endhead
 \ledgerRows
@@ -419,12 +430,15 @@ Several results in this project were at first wrong because a measurement could
 not see the quantity it claimed to measure. The full record, with each case's
 detection path, is generated in \texttt{results/consolidated/METHODS\_PRACTICE.md}.
 The cases reported in this paper are: an earlier headline count that did not
-regenerate from committed code (\shippedProjFlips\ projection errors shipped,
-\recomputedProjFlips\ reproducible); a residual-scatter ratio first reported as
+regenerate from committed code (\shippedProjFlips\ projection errors first
+reported, \recomputedProjFlips\ reproducible); a residual-scatter ratio first reported as
 \residRatioSuperseded\ and corrected to \residRatio\ after a pooling error; a
 perturbation that moved the simulated truth but not the simulated data;
 comparisons at a named model size that were not at equal compute; and an
-official leaderboard submission silently dropped by label parsing. The detection
+official leaderboard submission silently dropped by label parsing; a
+subsampling check of the candidate-level correction that averaged standard
+errors instead of variances (\cref{app:correction}); and simulated slopes per
+natural-log unit printed as per decade. The detection
 rules that caught them are reconstructing every number from committed inputs,
 checking that a perturbation built to move an estimate moves it, and counting a
 population against its source.
