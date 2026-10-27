@@ -45,27 +45,26 @@ measure the answer as decision accuracy against an ordering at a larger target.
 Answering it needs a test whose unit is the candidate recipe rather than the
 pair, with critical values calibrated by simulation, because standard tests
 are anti-conservative at realistic seed and candidate counts. On DataDecide,
-projection's excess mis-selection over single-scale ranking on C4 is
-\headEstimate\ points: nominally significant for these \nCandidates\ recipes
-($p=\headFixedP$, not surviving correction within its family) and not
-established for recipes in general ($p=\headRandomP$). Of the
-\restatedPrimaryM\ claims in the paper's primary family, one survives Holm and
-Benjamini--Yekutieli correction: on C4, projection's excess rises with
-extrapolation distance (Spearman \leverRealRho). A pre-registered confound
-test over \confDesigns\ fit windows, reported outside that family, adjusts for
-the size of the largest fitted model and the number of fitted sizes: in a linear
-model the excess rises by \confJointLever\ points per decade of distance
-(interval [\confJointLeverWaldLow, \confJointLeverWaldHigh]), and a smaller
-largest model and fewer fitted sizes are each associated with a larger excess.
-With those two fixed, distance varies only through the target, so the test
-cannot separate distance from target size, and the rise is not linear. No
-tested alternative is shown to be better than single-scale ranking; the
-intervals exclude an advantage larger than \advExcludeCFourMax\ points on C4,
-and the estimator tests have power below one half. On C4, certification from
-seed error alone has a false-certification rate of \stageCFourSeedFcr\%; pooled,
-it exceeds nominal on OLMES error (\stageErrSeedFcr\%). On the Marin speedrun leaderboard, a solver defect and per-size
-protocol changes limit what the forecasts resolve, and at the upper end of a
-bracket on single-run noise \marinHold\ of \marinPairs\ pairwise orders hold.
+projection's excess mis-selection over single-scale ranking on C4 bits per
+token is \headEstimate\ points: nominally significant for these \nCandidates\
+recipes ($p=\headFixedP$, not surviving correction within its family) and not
+established for recipes in general ($p=\headRandomP$). The paper's main finding
+is a lever-arm effect on C4 bits per token. In a pre-registered analysis at a
+fixed target, where the reference and its determinacy do not change, the excess
+grows as the fitted range ends farther below the target: by \ftFixedTargetPooled\
+points per decade (interval [\ftFixedTargetPooledLow,
+\ftFixedTargetPooledHigh]), positive at each of the \ftTargets\ targets with
+well-determined references. Across targets the excess also rises with
+extrapolation distance (Spearman \leverRealRho, the one claim of
+\restatedPrimaryM\ in the primary family that survives Holm and
+Benjamini--Yekutieli correction), and scoring only pairs whose reference order
+is determined does not remove that rise. On OLMES metrics the effect is not
+established. No tested alternative is shown to be better than single-scale
+ranking: the intervals exclude advantages larger than \advExcludeCFourMax\
+points on C4 bits per token, and every test has power below one half. On the
+Marin speedrun leaderboard, a solver defect and per-size protocol changes limit
+what the forecasts resolve, and at the upper end of a bracket on single-run
+noise \marinHold\ of \marinPairs\ pairwise orders hold.
 \end{abstract}
 
 \section{Introduction}
@@ -95,13 +94,12 @@ share candidates, so its unit of inference is the candidate. We give a
 candidate-level U-statistic test with critical values calibrated on a
 semi-synthetic benchmark, show how anti-conservative the standard alternatives
 are, and use it to re-examine DataDecide's comparisons (\cref{sec:test}).
-\item \emph{The lever-arm effect.} On C4, projection's excess error over
-single-scale ranking rises with the distance it extrapolates. This is the only
-claim in the paper that survives family-wide correction. A pre-registered
-confound test finds it after linear adjustment for the size of the largest
-fitted model and the number of fitted sizes, which are also associated with the
-excess; it cannot separate distance from the size of the target.
-Semi-synthetic experiments and measurements of the error structure are
+\item \emph{The lever-arm effect.} On C4 bits per token, at a fixed target,
+projection's excess error over single-scale ranking grows as the fitted range
+ends farther below the target (pre-registered). Across targets it rises with the
+distance projection extrapolates; that association is the only claim in the
+paper that survives family-wide correction, and it may include a component from
+the target itself. Semi-synthetic experiments and measurements of the error structure are
 consistent with noise and recipe-specific misspecification as its sources; on
 OLMES accuracy metrics it is not established (\cref{sec:lever}).
 \item \emph{Selection and uncertainty.} No tested alternative is shown to be
@@ -115,8 +113,8 @@ protocol changes between rungs determine what it can resolve
 \end{enumerate}
 
 In summary, no rule we tested was shown to be better than single-scale
-ranking on the data we could test, and on C4 projection's deficit grows with how
-far the target is. The gap between the two rules is nominally significant for
+ranking on the data we could test, and on C4 bits per token projection's deficit
+grows with how far below the target the fitted range ends. The gap between the two rules is nominally significant for
 the recipes measured and too small to establish for recipes in general with the
 candidate counts public suites provide.
 
@@ -252,13 +250,50 @@ with the data; equivalence is not established.
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{figures/fig_lever_arm}
-\caption{Projection's excess mis-selection over single-scale ranking on C4,
-under expected-error scoring, against the lever arm of each of
+\caption{Projection's excess mis-selection over single-scale ranking on C4 bits
+per token, under expected-error scoring, against the lever arm of each of
 \doseDesigns\ DataDecide designs (Spearman \leverRealRho).}
 \label{fig:lever}
 \end{figure}
 
-\paragraph{The regularity.} On C4, across \doseDesigns\ designs, projection's
+\paragraph{The effect at a fixed target.} At a fixed target the reference is
+the same for every design, so its size and determinacy cannot drive a slope. A
+pre-registered analysis fixes each target at which at least \ftAdmitShare\% of
+target pairs are determined (\ftTargets) and a rung count, and slides the fit
+window from the bottom of the ladder toward the target: \ftSlices\ slices,
+\ftDesigns\ designs, scored as before. On C4 bits per token, the pooled
+within-slice slope of the excess on lever arm, with slice fixed effects that
+absorb the target, is \ftFixedTargetPooled\ points per decade
+([\ftFixedTargetPooledLow, \ftFixedTargetPooledHigh]), and each target's slope
+lies between \ftPerTargetMin\ and \ftPerTargetMax\ (\cref{tab:fixed-target}).
+At a fixed target, lever arm and top-rung compute are one variable, so this is
+the excess against how far below the target the fitted range ends, not lever arm
+separated from top-rung size. It agrees with the \ftImplied\ per decade that the
+confound test's joint model implies at a fixed target. Intervals are
+leave-one-recipe-out jackknifes; the calibrated critical values
+(\ftKMin--\ftKMax, \ftWorlds\ random-candidate worlds) are below the normal value,
+so the normal intervals are quoted. The pre-registered outcome is that the
+fixed-target slope is \ftOutcome; \ftPredHeld\ of \ftPredTotal\ predictions held.
+
+\begin{table}[t]
+\centering
+\scriptsize
+\begin{tabular}{lrrr}
+\toprule
+slope & estimate & interval & critical value \\
+\midrule
+\ftTableRows
+\bottomrule
+\end{tabular}
+\caption{Projection's excess over single-scale ranking on C4 bits per token, in
+points per decade of lever arm: at each fixed target and pooled (slice fixed
+effects), and across targets with the fit window fixed, on all pairs and on the
+pairs determined at the target only. Intervals are leave-one-recipe-out
+jackknifes at the larger of the calibrated and normal critical values.}
+\label{tab:fixed-target}
+\end{table}
+
+\paragraph{Across targets (secondary).} On C4 bits per token, across \doseDesigns\ designs, projection's
 excess over single-scale ranking rises with the lever arm (\cref{fig:lever};
 Spearman \leverRealRho). The designs share recipes and rungs, so we test it
 with recipes as the unit: a leave-one-recipe-out jackknife of Fisher's $z$ gives
@@ -282,68 +317,34 @@ single-scale ranking's \mechNoiselessSingleWrong\ summed over the overlapping
 designs, and beats it at \mechNoiselessProjBeats\ of \mechNoiselessDesigns.
 
 \paragraph{Separating lever arm from ladder size.} A pre-registered confound
-test breaks that link with fit windows: any run of at least three consecutive  %% words: - (the pre-registered minimum window)
-rungs, and any larger target, which gives \confDesigns\ designs scored the same
-way. Three factorial slices each vary one factor with the other two fixed:  %% words: - (the three factors)
-in slice (i), \confSliceLeverN\ slices vary the target with the window fixed
-(lever arm only); in slice (ii), \confSliceTopN\ move top rung and target
-together at a fixed rung count and a lever arm matched within a fifth of a decade
-(top-rung size only, with the residual lever arm as a covariate); in slice
-(iii), \confSliceRungsN\ vary the window's lower end with top rung and target
-fixed (rung count only). A joint model regresses the excess linearly on lever
-arm, top-rung compute and rung count over all designs. Standard errors are
-leave-one-recipe-out jackknifes; critical values (\confKMin--\confKMax) are
-calibrated in \confWorlds\ random-candidate worlds built as for the lever-arm
-test, and \confKBelow\ of \confKTotal\ are below the normal value, so here
-calibration narrows the intervals; we quote the wider normal intervals. The
-pre-registered outcome is that the \confOutcome, and the other two factors also
-contribute (\cref{tab:confound}). In the joint model the excess rises by
+test uses fit windows, any run of at least three consecutive rungs with any  %% words: - (the pre-registered minimum window)
+larger target (\confDesigns\ designs), and fits the excess linearly on lever
+arm, top-rung compute and rung count. On C4 bits per token the excess rises by
 \confJointLever\ points per decade of lever arm
-([\confJointLeverWaldLow, \confJointLeverWaldHigh]), and in slice (i) by
-\confSliceLever\ ([\confSliceLeverWaldLow, \confSliceLeverWaldHigh]). It falls
-with top-rung compute (\confJointTop\ points per decade,
-[\confJointTopWaldLow, \confJointTopWaldHigh]) and with rung count
-(\confJointRungs\ per rung, [\confJointRungsWaldLow, \confJointRungsWaldHigh]);
-the slices agree in sign. The predictions that rung count would not matter
-failed (\confPredFailed); \confPredHeld\ of \confPredTotal\ held. These are
-associations within one ladder, outside the corrected family, and they have
-three limits. First, with the top rung fixed, lever arm changes only through the  %% words: - (an enumeration of limits)
-target, so the test cannot separate extrapolation distance from properties of
-the target. References at small targets are weak: at \confDetMinTarget\ only
-\confDetMin\% of target pairs are determined, against \confDetTop\% at
-\targetScaleLabel, which expected-error scoring charges for rather than ignores.
-Second, the response is not linear. The following summaries were computed after
-the review, without intervals or pre-registration: within each top rung with
-at least three targets the slope on lever arm ranges from \phPerTopMin\ to  %% words: - (a minimum number of targets)
-\phPerTopMax\ points per decade, smaller at larger top rungs; restricted to the
-\phStrongN\ designs with targets of \phStrongFrom\ or more, the joint lever-arm
-coefficient is \phStrongLever; on the \doseDesigns\ nested designs, without
-adjustment, the slope is \phNestedSlope. Third, rung count here is the lower end
-of an unevenly spaced window, so it also changes the fitted span. In
-semi-synthetic worlds with C4's noise and recipe-specific misspecification, each
-factor varied alone around one base design gives slopes of \synthLeverSlope\ per
-decade of lever arm, \synthTopSlope\ per decade of top rung and
-\synthRungsSlope\ per rung (Monte Carlo precision, not uncertainty about real
-data); the top-rung and rung-count responses are not monotone, and without
-noise the rung-count slope changes sign (\cref{app:confound}).
-
-\begin{table}[t]
-\centering
-\scriptsize
-\begin{tabular}{lrr}
-\toprule
-statistic & estimate & interval \\
-\midrule
-\confMainRows
-\bottomrule
-\end{tabular}
-\caption{Confound test on C4: projection's excess over single-scale ranking, in
-points, against lever arm and top-rung compute (per decade) and rung count (per
-rung), over \confDesigns\ fit-window designs. Intervals are leave-one-recipe-out
-jackknifes at the normal critical value; the calibrated ones, narrower for all
-but the top-rung term, are in \cref{tab:confound-full}.}
-\label{tab:confound}
-\end{table}
+([\confJointLeverWaldLow, \confJointLeverWaldHigh]) and falls with top-rung
+compute (\confJointTop\ per decade) and with rung count (\confJointRungs\ per
+rung); factorial slices that vary one factor at a time agree in sign, and the
+pre-registered outcome is that the \confOutcome\ with the other two factors also
+contributing (\cref{app:confound}). The predictions that rung count would not
+matter failed (\confPredFailed). With the top rung fixed, lever arm changes only
+through the target, so this slope may include a component from the target
+itself, including how well its reference is determined (from
+\confDetMin\% of pairs determined at \confDetMinTarget\ to \confDetTop\% at
+\targetScaleLabel). Rescoring the target-varied slice on only the pairs
+determined at each target gives \ftTargetVariedDetermined\ per decade
+([\ftTargetVariedDeterminedLow, \ftTargetVariedDeterminedHigh]) against
+\ftTargetVariedAllPairs\ on all pairs; the pre-registered prediction that it
+would be lower failed (\ftPredFailed), so weak references do not account for
+the across-target rise. The response is not linear: computed after review,
+without intervals, the slope within each top rung with at least three targets  %% words: - (a minimum number of targets)
+ranges from \phPerTopMin\ to \phPerTopMax\ per decade, smaller at larger top
+rungs. Rung count here is the lower end of an unevenly spaced window, so it also
+changes the fitted span. In semi-synthetic worlds with C4's noise and
+recipe-specific misspecification, scored against the noiseless truth at the
+target, each factor varied alone around one base design gives \synthLeverSlope\
+per decade of lever arm, \synthTopSlope\ per decade of top rung and
+\synthRungsSlope\ per rung; the last two responses are not monotone, and without
+noise the rung-count slope changes sign.
 
 \paragraph{Mechanism.} Semi-synthetic fixed-candidate worlds that differ only
 in the truth separate candidate sources (\cref{tab:arms}). They are simulations
@@ -369,12 +370,13 @@ is \attrRealVar\% of the real slope. With a Chinchilla-form reference the shares
 are \attrChinVar\%, \attrChinSpecific\%, \attrChinCommon\% and \attrChinInter\%.
 These are shares of the lever-arm slope in decision error, not of fit error, so
 they do not contradict the dominance of misspecification in the fit below. The
-pre-registered prediction that the Spearman correlation rises monotonically
-with the misfit scale \armMonotoneLambda.
+pre-registered prediction that both the Spearman correlation and the slope
+rise monotonically with the misfit scale \armMonotoneLambda, on the correlation.
 
 \begin{table}[t]
 \centering
 \scriptsize
+\setlength{\tabcolsep}{3pt}  %% nolint: layout
 \begin{tabular}{lrrrr}
 \toprule
 arm (truth) & \shortstack{noiseless\\ Spearman} & \shortstack{Spearman\\ with noise} & \shortstack{slope (pp\\ per decade)} & \shortstack{candidates\\ needed} \\
@@ -446,8 +448,8 @@ over single-scale ranking larger than \advExcludeCFourMax\ points for every
 estimator and allocation, and on OLMES error larger than \advExcludeOlmesMax\
 points; smaller advantages are not excluded. The tests are weak: against each
 estimator's effect in the benchmark, calibrated power is \advPowerMin\ to
-\advPowerMax, below one half for every estimator; none was computed for the
-allocations. On the design that
+\advPowerMax, below one half for every estimator, and for the allocations
+\allocPowerMin\ to \allocPowerMax\ (\cref{app:claims}). On the design that
 fits up to \flexFitTop\ and targets \flexTarget, single-scale ranking mis-selects
 \flexSingle\% of pairs; the shared-exponent fit \flexShared\%, plain projection
 \flexPlain\% and a multi-family ensemble \flexEnsemble\% (\cref{fig:flexibility}).
@@ -619,14 +621,15 @@ draws with noise at the upper bound (bars), the converged offset power law
 
 The evidence is one public suite with seed replicates and one intervention
 class, data recipes, plus one leaderboard without replicates. The lever-arm effect
-is established on C4 bits per token; on OLMES accuracy metrics it is
-inconclusive, and its attribution between variance and misspecification depends
-on the reference functional form. The confound test adjusts lever arm for
-top-rung size and rung count, but not for the target's size or DataDecide's
-drift in tokens per parameter, which moves with compute, and its linear model
-does not fit a response that saturates; its calibrated critical values come from a
-benchmark whose true effects are smaller than the real estimates, and
-references at small targets are weakly determined. Of \ledgerHeld\ plus
+is established on C4 bits per token only; on OLMES accuracy metrics it is
+inconclusive, on a margin-based metric it reverses on the \lamMarginSubN\
+designs whose rungs are above chance, and its attribution between variance and misspecification depends
+on the reference functional form. At a fixed target, lever arm and top-rung
+compute cannot be separated, and DataDecide's drift in tokens per parameter
+moves with compute; across targets, the target's own properties may contribute.
+The fixed-target analysis uses the four targets with well-determined references.  %% words: - (the admitted targets)
+Benchmark true effects are smaller than the real estimates, and calibrated
+critical values below the normal value are not used. Of \ledgerHeld\ plus
 \ledgerFailed\ predictions recorded across the project, \ledgerFailed\ failed;
 \cref{app:ledger} lists them. The calibration benchmark's truths are
 shrunk seed-mean curves with Gaussian noise; the fixed-candidate procedure

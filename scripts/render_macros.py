@@ -935,6 +935,32 @@ def _extra_entries() -> list[tuple[str, str, str]]:
     ]
 
 
+UNIT_PHRASES = ("per decade", "per natural log", "per rung")
+
+
+def _unit_phrase(json_unit: str) -> str:
+    """The table phrase for a results-file unit; anything unrecognised is an error, not a guess."""
+
+    if "per decade" in json_unit:
+        return "per decade"
+    if "natural-log" in json_unit:
+        return "per natural log"
+    if "per fitted rung" in json_unit:
+        return "per rung"
+    raise ValueError(f"unrecognised slope unit: {json_unit!r}")
+
+
+def _per_decade(value: float, json_unit: str) -> float:
+    """Convert a slope to per decade, refusing units it does not know."""
+
+    phrase = _unit_phrase(json_unit)
+    if phrase == "per decade":
+        return value
+    if phrase == "per natural log":
+        return value * float(np.log(10))
+    raise ValueError(f"cannot convert {json_unit!r} to per decade")
+
+
 def _table_entries() -> list[tuple[str, str, str]]:
     """Table bodies for the Stage 2 appendix and the mechanism arms."""
 
@@ -980,11 +1006,12 @@ def _table_entries() -> list[tuple[str, str, str]]:
         nl_rho = nl.get("rho") if isinstance(nl, dict) else None
         arm_rows.append(
             f"{label} & {'---' if nl_rho is None else f'{nl_rho:+.2f}'} & {v['true_rho']:+.2f} & "
-            f"{v['true_slope_pp_per_log'] * np.log(10):.2f} & {v['candidates_for_2pp_power_0_8']} \\\\"
+            f"{_per_decade(v['true_slope_pp_per_log'], v['slope_unit']):.2f} & {v['candidates_for_2pp_power_0_8']} \\\\"
         )
     return [
         ("stageTableRows", " ".join(rows), "certify.json"),
         ("armTableRows", " ".join(arm_rows), "lever_arm_arms.json"),
+        ("armTableRowsUnits", "per decade", "lever_arm_arms.json slope_unit, converted by _per_decade"),
     ]
 
 
@@ -1224,6 +1251,7 @@ def _advantage_entries() -> list[tuple[str, str, str]]:
         power[metric] = procedures[procedures["random_adopted"]]["power_at_critical_value"]
     metric_labels = {"c4_en_bits_per_token": "C4", "olmes_macro_error": "OLMES error"}
     rows, excluded, powers = [], {"c4_en_bits_per_token": [], "olmes_macro_error": []}, []
+    alloc_power = Source.load("target_scoring/allocation_power.json").get("by_budget_fraction")
     for claim in restated:
         text = claim["claim"]
         name, _, rest = text.partition(" vs single-scale, ")
@@ -1234,7 +1262,9 @@ def _advantage_entries() -> list[tuple[str, str, str]]:
             pw_text = f"{pw:.2f}"
         elif text.startswith("optimised allocation at ") and text.endswith(", c4"):
             fraction = text.removeprefix("optimised allocation at ").split(" of budget")[0]
-            label, metric, pw_text = f"allocation, {fraction} of budget", "c4_en_bits_per_token", "---"
+            pw = alloc_power[fraction]["power_at_critical_value"]
+            powers.append(pw)
+            label, metric, pw_text = f"allocation, {fraction} of budget", "c4_en_bits_per_token", f"{pw:.2f}"
         else:
             continue
         lo, hi = claim["ci_pp"]
@@ -1325,6 +1355,16 @@ def _confound_entries() -> list[tuple[str, str, str]]:
     out += [
         ("confTableRows", " ".join(rows), o),
         ("confMainRows", " ".join(main_rows), o),
+        (
+            "confTableRowsUnits",
+            "; ".join(sorted({_unit_phrase(v["unit"]) for v in inference.values()})),
+            o,
+        ),
+        (
+            "confMainRowsUnits",
+            "; ".join(sorted({_unit_phrase(v["unit"]) for v in inference.values()})),
+            o,
+        ),
         ("confKMin", f"{min(ks):.2f}", o),
         ("confKMax", f"{max(ks):.2f}", o),
         ("confWorlds", f"{c.integer('calibration.worlds')}", o),
@@ -1435,6 +1475,77 @@ def _review_two_entries() -> list[tuple[str, str, str]]:
         ("phStrongLever", f"{joint(strong):+.1f}", "confound.json"),
         ("phStrongFrom", strong_label, "confound.json"),
         ("phStrongN", f"{int(strong.sum())}", "confound.json"),
+    ]
+    return out
+
+
+
+FT_LABELS = {
+    "fixed_target_pooled": "fixed target, pooled",
+    "fixed_target_150M": "fixed target 150M",
+    "fixed_target_300M": "fixed target 300M",
+    "fixed_target_530M": "fixed target 530M",
+    "fixed_target_1B": "fixed target 1B",
+    "target_varied_all_pairs": "target varied, all pairs",
+    "target_varied_determined": "target varied, determined pairs",
+}
+
+
+def _fixed_target_entries() -> list[tuple[str, str, str]]:
+    """PREDICTIONS_TASK_FIXED_TARGET.md: the effect at a fixed target, and the determinacy check."""
+
+    ft = Source.load("target_scoring/fixed_target.json")
+    o = "fixed_target.json"
+    inference = ft.get("inference")
+    out: list[tuple[str, str, str]] = []
+    rows = []
+    for key, label in FT_LABELS.items():
+        v = inference[key]
+        est = _per_decade(v["estimate"], v["unit"])
+        lo, hi = (_per_decade(x, v["unit"]) for x in v["interval"])
+        tag = "".join(part.capitalize() for part in key.split("_"))
+        rows.append(f"{label} & ${est:+.1f}$ & $[{lo:+.1f},\\ {hi:+.1f}]$ & {v['critical_value_used']:.2f} \\\\")
+        if any(ch.isdigit() for ch in tag):  # per-target rows appear only in the table
+            continue
+        out += [
+            (f"ft{tag}", f"{est:+.1f}", o),
+            (f"ft{tag}Low", f"{lo:+.1f}", o),
+            (f"ft{tag}High", f"{hi:+.1f}", o),
+        ]
+    real = ft.get("real")
+    implied = ft.get("joint_model_implied_fixed_target_slope")
+    per_target = [inference[f"fixed_target_{t}"]["estimate"] for t in real["admitted_targets"]]
+    preds = ft.get("predictions")
+    ks = [v["critical_value_calibrated"] for v in inference.values()]
+    out += [
+        ("ftTableRows", " ".join(rows), o),
+        ("ftTableRowsUnits", "; ".join(sorted({_unit_phrase(v["unit"]) for v in inference.values()})), o),
+        ("ftImplied", f"{_per_decade(implied['value'], implied['unit']):+.1f}", o),
+        ("ftAdmitShare", f"{100 * real['admit_share']:.0f}", o),
+        ("ftTargets", ", ".join(real["admitted_targets"][:-1]) + " and " + real["admitted_targets"][-1], o),
+        ("ftSlices", f"{sum(real['fixed_target_slices'].values())}", o),
+        ("ftDesigns", f"{real['fixed_target_designs']}", o),
+        ("ftPerTargetMin", f"{min(per_target):+.1f}", o),
+        ("ftPerTargetMax", f"{max(per_target):+.1f}", o),
+        ("ftKMin", f"{min(ks):.2f}", o),
+        ("ftKMax", f"{max(ks):.2f}", o),
+        ("ftWorlds", f"{ft.integer('calibration.worlds')}", o),
+        ("ftPredHeld", f"{sum(bool(v) for v in preds.values())}", o),
+        ("ftPredTotal", f"{len(preds)}", o),
+        ("ftPredFailed", ", ".join(k.split("_")[0] for k, v in preds.items() if not v), o),
+        ("ftOutcome", {"fixed_target_positive": "positive with an interval excluding zero",
+                       "fixed_target_negative": "negative with an interval excluding zero",
+                       "fixed_target_indistinguishable": "indistinguishable from zero"}[ft.get("outcome")], o),
+        ("ftTrueMin", f"{min(v['benchmark_true_value'] for v in inference.values()):+.1f}", o),
+        ("ftTrueMax", f"{max(v['benchmark_true_value'] for v in inference.values()):+.1f}", o),
+    ]
+    power = Source.load("target_scoring/allocation_power.json").get("by_budget_fraction")
+    out += [
+        ("allocPowerMin", f"{min(v['power_at_critical_value'] for v in power.values()):.2f}", "allocation_power.json"),
+        ("allocPowerMax", f"{max(v['power_at_critical_value'] for v in power.values()):.2f}", "allocation_power.json"),
+        ("allocZetaNegMin", f"{100 * min(v['zeta1_negative_share'] for v in power.values()):.0f}", "allocation_power.json"),
+        ("allocZetaNegMax", f"{100 * max(v['zeta1_negative_share'] for v in power.values()):.0f}", "allocation_power.json"),
+        ("allocPowerNonnegMax", f"{max(v['power_if_zeta1_nonnegative'] for v in power.values()):.2f}", "allocation_power.json"),
     ]
     return out
 
@@ -2093,6 +2204,7 @@ def build() -> str:
     entries.extend(_marin_advantage_entries())
     entries.extend(_confound_entries())
     entries.extend(_review_two_entries())
+    entries.extend(_fixed_target_entries())
     lines.extend(_macro(name, value, origin) for name, value, origin in entries)
     lines.append("")
     return "\n".join(lines)

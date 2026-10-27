@@ -124,8 +124,11 @@ comparator & metric & estimate & calibrated interval & excluded advantage & powe
 DataDecide, random-candidate estimand, in points of mis-selected pairs
 (positive means worse). Excluded advantage: the data exclude an advantage over
 single-scale ranking larger than this. Power: calibrated power against the
-comparator's effect in the benchmark of \cref{tab:calibration} (none was
-computed for allocations).}
+comparator's effect in the benchmark of \cref{tab:calibration}; for
+allocations, in benchmark worlds built the same way with the
+\targetScaleLabel\ allocation design. In \allocZetaNegMin--\allocZetaNegMax\% of those worlds the unbiased
+candidate-level variance component is negative, which shrinks the standard
+error; without them, allocation power is at most \allocPowerNonnegMax.}
 \label{tab:advantage}
 \end{table}
 
@@ -173,11 +176,22 @@ statistic & estimate & SE & \shortstack{critical\\ value} & \shortstack{calibrat
 \confTableRows
 \bottomrule
 \end{tabular}
-\caption{Every confound statistic on C4, in points. The critical value is the
+\caption{Every confound statistic on C4, in points per decade (lever arm,
+top-rung compute) or per rung (rung count). The critical value is the
 95\% quantile of the standardized error over \confWorlds\ random-candidate  %% nolint: the stated quantile
 worlds; benchmark truth is the statistic of those worlds' mean true excess.}
 \label{tab:confound-full}
 \end{table}
+
+\paragraph{The fixed-target analysis.} Its pre-registration is
+\texttt{PREDICTIONS\_TASK\_FIXED\_TARGET.md}, committed before its code. The
+admitted targets (\ftTargets) are those with at least \ftAdmitShare\% of pairs
+determined; the slices fix target and rung count and slide the window, and the
+statistic is the pooled within-slice slope. The determined-pairs statistic uses,
+in each benchmark world, the pairs determined in that world's own target
+evidence. Benchmark true values are \ftTrueMin\ to \ftTrueMax\ per decade, below
+every real estimate. The semi-synthetic factor isolation below already scored
+against the noiseless truth at the target, so it was not rerun.
 
 \paragraph{Determined target pairs.} The share of target pairs whose
 three-seed reference order is determined, by target: \Cref{tab:determined}.  %% words: - (DataDecide's seed count)

@@ -2,10 +2,10 @@
   "reference_commit": "dfc4c4aaba",
   "reference": "the commit that first wrote results/external/prose_corrections.json",
   "latest_commit_touching_list": "acd56d83fa",
-  "macros_used_in_main_tex": 254,
-  "claims_with_changed_source": 151,
+  "macros_used_in_main_tex": 255,
+  "claims_with_changed_source": 163,
   "claims_whose_value_changed": 0,
-  "new_claims_since_reference": 147,
+  "new_claims_since_reference": 154,
   "rows": [
     {
       "macro": "advExcludeCFourMax",
@@ -24,6 +24,66 @@
       },
       "old": null,
       "new": "3.9",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "allocPowerMax",
+      "sources_changed": {
+        "results/target_scoring/allocation_power.json": "2621766 2026-10-26"
+      },
+      "old": null,
+      "new": "0.23",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "allocPowerMin",
+      "sources_changed": {
+        "results/target_scoring/allocation_power.json": "2621766 2026-10-26"
+      },
+      "old": null,
+      "new": "0.03",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "armMonotoneLambda",
+      "sources_changed": {
+        "results/target_scoring/lever_arm_arms.json": "be72b2a 2026-10-26"
+      },
+      "old": null,
+      "new": "failed",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "armTableRows",
+      "sources_changed": {
+        "results/target_scoring/lever_arm_arms.json": "be72b2a 2026-10-26"
+      },
+      "old": null,
+      "new": "A: noise only & -0.93 & +0.77 & 6.99 & 28 \\\\ B1: + common-mode misfit & -0.51 & +0.75 & 5.83 & 29 \\\\ B2: + recipe-specific misfit & +0.91 & +0.89 & 12.08 & 84 \\\\ B3: + all misfit, half scale & +0.80 & +0.82 & 9.67 & 55 \\\\ B3: + all misfit & +0.87 & +0.87 & 11.48 & 97 \\\\ B3: + all misfit, double scale & +0.85 & +0.86 & 11.60 & 501 \\\\",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "attrArmsCommon",
+      "sources_changed": {
+        "results/target_scoring/lever_arm_arms.json": "be72b2a 2026-10-26"
+      },
+      "old": null,
+      "new": "-10",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "attrArmsInter",
+      "sources_changed": {
+        "results/target_scoring/lever_arm_arms.json": "be72b2a 2026-10-26"
+      },
+      "old": null,
+      "new": "+5",
       "new_claim": true,
       "value_changed": false
     },
@@ -104,6 +164,26 @@
       },
       "old": null,
       "new": "61",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "attrRealTotal",
+      "sources_changed": {
+        "results/target_scoring/lever_arm_arms.json": "be72b2a 2026-10-26"
+      },
+      "old": null,
+      "new": "93",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "attrRealVar",
+      "sources_changed": {
+        "results/target_scoring/lever_arm_arms.json": "be72b2a 2026-10-26"
+      },
+      "old": null,
+      "new": "57",
       "new_claim": true,
       "value_changed": false
     },
@@ -350,7 +430,7 @@
     {
       "macro": "confDesigns",
       "sources_changed": {
-        "results/target_scoring/confound.json": "cbcca05 2026-10-26"
+        "results/target_scoring/confound.json": "be72b2a 2026-10-26"
       },
       "old": null,
       "new": "220",
@@ -360,7 +440,7 @@
     {
       "macro": "confDetMin",
       "sources_changed": {
-        "results/target_scoring/confound.json": "cbcca05 2026-10-26"
+        "results/target_scoring/confound.json": "be72b2a 2026-10-26"
       },
       "old": null,
       "new": "4",
@@ -370,7 +450,7 @@
     {
       "macro": "confDetMinTarget",
       "sources_changed": {
-        "results/target_scoring/confound.json": "cbcca05 2026-10-26"
+        "results/target_scoring/confound.json": "be72b2a 2026-10-26"
       },
       "old": null,
       "new": "20M",
@@ -380,7 +460,7 @@
     {
       "macro": "confDetTop",
       "sources_changed": {
-        "results/target_scoring/confound.json": "cbcca05 2026-10-26"
+        "results/target_scoring/confound.json": "be72b2a 2026-10-26"
       },
       "old": null,
       "new": "86",
@@ -390,7 +470,7 @@
     {
       "macro": "confJointLever",
       "sources_changed": {
-        "results/target_scoring/confound.json": "cbcca05 2026-10-26"
+        "results/target_scoring/confound.json": "be72b2a 2026-10-26"
       },
       "old": null,
       "new": "+7.8",
@@ -400,7 +480,7 @@
     {
       "macro": "confJointLeverWaldHigh",
       "sources_changed": {
-        "results/target_scoring/confound.json": "cbcca05 2026-10-26"
+        "results/target_scoring/confound.json": "be72b2a 2026-10-26"
       },
       "old": null,
       "new": "+9.2",
@@ -410,7 +490,7 @@
     {
       "macro": "confJointLeverWaldLow",
       "sources_changed": {
-        "results/target_scoring/confound.json": "cbcca05 2026-10-26"
+        "results/target_scoring/confound.json": "be72b2a 2026-10-26"
       },
       "old": null,
       "new": "+6.5",
@@ -420,7 +500,7 @@
     {
       "macro": "confJointRungs",
       "sources_changed": {
-        "results/target_scoring/confound.json": "cbcca05 2026-10-26"
+        "results/target_scoring/confound.json": "be72b2a 2026-10-26"
       },
       "old": null,
       "new": "-0.8",
@@ -428,29 +508,9 @@
       "value_changed": false
     },
     {
-      "macro": "confJointRungsWaldHigh",
-      "sources_changed": {
-        "results/target_scoring/confound.json": "cbcca05 2026-10-26"
-      },
-      "old": null,
-      "new": "-0.1",
-      "new_claim": true,
-      "value_changed": false
-    },
-    {
-      "macro": "confJointRungsWaldLow",
-      "sources_changed": {
-        "results/target_scoring/confound.json": "cbcca05 2026-10-26"
-      },
-      "old": null,
-      "new": "-1.5",
-      "new_claim": true,
-      "value_changed": false
-    },
-    {
       "macro": "confJointTop",
       "sources_changed": {
-        "results/target_scoring/confound.json": "cbcca05 2026-10-26"
+        "results/target_scoring/confound.json": "be72b2a 2026-10-26"
       },
       "old": null,
       "new": "-4.0",
@@ -458,79 +518,9 @@
       "value_changed": false
     },
     {
-      "macro": "confJointTopWaldHigh",
-      "sources_changed": {
-        "results/target_scoring/confound.json": "cbcca05 2026-10-26"
-      },
-      "old": null,
-      "new": "-1.9",
-      "new_claim": true,
-      "value_changed": false
-    },
-    {
-      "macro": "confJointTopWaldLow",
-      "sources_changed": {
-        "results/target_scoring/confound.json": "cbcca05 2026-10-26"
-      },
-      "old": null,
-      "new": "-6.0",
-      "new_claim": true,
-      "value_changed": false
-    },
-    {
-      "macro": "confKBelow",
-      "sources_changed": {
-        "results/target_scoring/confound.json": "cbcca05 2026-10-26"
-      },
-      "old": null,
-      "new": "5",
-      "new_claim": true,
-      "value_changed": false
-    },
-    {
-      "macro": "confKMax",
-      "sources_changed": {
-        "results/target_scoring/confound.json": "cbcca05 2026-10-26"
-      },
-      "old": null,
-      "new": "2.02",
-      "new_claim": true,
-      "value_changed": false
-    },
-    {
-      "macro": "confKMin",
-      "sources_changed": {
-        "results/target_scoring/confound.json": "cbcca05 2026-10-26"
-      },
-      "old": null,
-      "new": "1.57",
-      "new_claim": true,
-      "value_changed": false
-    },
-    {
-      "macro": "confKTotal",
-      "sources_changed": {
-        "results/target_scoring/confound.json": "cbcca05 2026-10-26"
-      },
-      "old": null,
-      "new": "6",
-      "new_claim": true,
-      "value_changed": false
-    },
-    {
-      "macro": "confMainRows",
-      "sources_changed": {
-        "results/target_scoring/confound.json": "cbcca05 2026-10-26"
-      },
-      "old": null,
-      "new": "joint: lever arm & $+7.8$ & $[+6.5,\\ +9.2]$ \\\\ joint: top rung & $-4.0$ & $[-6.0,\\ -1.9]$ \\\\ joint: rung count & $-0.8$ & $[-1.5,\\ -0.1]$ \\\\ slice: lever arm only & $+7.7$ & $[+6.3,\\ +9.1]$ \\\\ slice: top rung only & $-5.3$ & $[-8.1,\\ -2.4]$ \\\\ slice: rung count only & $-0.9$ & $[-1.7,\\ -0.1]$ \\\\",
-      "new_claim": true,
-      "value_changed": false
-    },
-    {
       "macro": "confOutcome",
       "sources_changed": {
-        "results/target_scoring/confound.json": "cbcca05 2026-10-26"
+        "results/target_scoring/confound.json": "be72b2a 2026-10-26"
       },
       "old": null,
       "new": "lever arm survives",
@@ -540,100 +530,10 @@
     {
       "macro": "confPredFailed",
       "sources_changed": {
-        "results/target_scoring/confound.json": "cbcca05 2026-10-26"
+        "results/target_scoring/confound.json": "be72b2a 2026-10-26"
       },
       "old": null,
       "new": "P3, P6",
-      "new_claim": true,
-      "value_changed": false
-    },
-    {
-      "macro": "confPredHeld",
-      "sources_changed": {
-        "results/target_scoring/confound.json": "cbcca05 2026-10-26"
-      },
-      "old": null,
-      "new": "8",
-      "new_claim": true,
-      "value_changed": false
-    },
-    {
-      "macro": "confPredTotal",
-      "sources_changed": {
-        "results/target_scoring/confound.json": "cbcca05 2026-10-26"
-      },
-      "old": null,
-      "new": "10",
-      "new_claim": true,
-      "value_changed": false
-    },
-    {
-      "macro": "confSliceLever",
-      "sources_changed": {
-        "results/target_scoring/confound.json": "cbcca05 2026-10-26"
-      },
-      "old": null,
-      "new": "+7.7",
-      "new_claim": true,
-      "value_changed": false
-    },
-    {
-      "macro": "confSliceLeverN",
-      "sources_changed": {
-        "results/target_scoring/confound.json": "cbcca05 2026-10-26"
-      },
-      "old": null,
-      "new": "36",
-      "new_claim": true,
-      "value_changed": false
-    },
-    {
-      "macro": "confSliceLeverWaldHigh",
-      "sources_changed": {
-        "results/target_scoring/confound.json": "cbcca05 2026-10-26"
-      },
-      "old": null,
-      "new": "+9.1",
-      "new_claim": true,
-      "value_changed": false
-    },
-    {
-      "macro": "confSliceLeverWaldLow",
-      "sources_changed": {
-        "results/target_scoring/confound.json": "cbcca05 2026-10-26"
-      },
-      "old": null,
-      "new": "+6.3",
-      "new_claim": true,
-      "value_changed": false
-    },
-    {
-      "macro": "confSliceRungsN",
-      "sources_changed": {
-        "results/target_scoring/confound.json": "cbcca05 2026-10-26"
-      },
-      "old": null,
-      "new": "36",
-      "new_claim": true,
-      "value_changed": false
-    },
-    {
-      "macro": "confSliceTopN",
-      "sources_changed": {
-        "results/target_scoring/confound.json": "cbcca05 2026-10-26"
-      },
-      "old": null,
-      "new": "29",
-      "new_claim": true,
-      "value_changed": false
-    },
-    {
-      "macro": "confWorlds",
-      "sources_changed": {
-        "results/target_scoring/confound.json": "cbcca05 2026-10-26"
-      },
-      "old": null,
-      "new": "200",
       "new_claim": true,
       "value_changed": false
     },
@@ -674,6 +574,226 @@
       },
       "old": null,
       "new": "0.5",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "ftAdmitShare",
+      "sources_changed": {
+        "results/target_scoring/fixed_target.json": "2621766 2026-10-26"
+      },
+      "old": null,
+      "new": "50",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "ftDesigns",
+      "sources_changed": {
+        "results/target_scoring/fixed_target.json": "2621766 2026-10-26"
+      },
+      "old": null,
+      "new": "152",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "ftFixedTargetPooled",
+      "sources_changed": {
+        "results/target_scoring/fixed_target.json": "2621766 2026-10-26"
+      },
+      "old": null,
+      "new": "+11.7",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "ftFixedTargetPooledHigh",
+      "sources_changed": {
+        "results/target_scoring/fixed_target.json": "2621766 2026-10-26"
+      },
+      "old": null,
+      "new": "+14.1",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "ftFixedTargetPooledLow",
+      "sources_changed": {
+        "results/target_scoring/fixed_target.json": "2621766 2026-10-26"
+      },
+      "old": null,
+      "new": "+9.2",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "ftImplied",
+      "sources_changed": {
+        "results/target_scoring/fixed_target.json": "2621766 2026-10-26"
+      },
+      "old": null,
+      "new": "+11.8",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "ftKMax",
+      "sources_changed": {
+        "results/target_scoring/fixed_target.json": "2621766 2026-10-26"
+      },
+      "old": null,
+      "new": "1.97",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "ftKMin",
+      "sources_changed": {
+        "results/target_scoring/fixed_target.json": "2621766 2026-10-26"
+      },
+      "old": null,
+      "new": "1.66",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "ftOutcome",
+      "sources_changed": {
+        "results/target_scoring/fixed_target.json": "2621766 2026-10-26"
+      },
+      "old": null,
+      "new": "positive with an interval excluding zero",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "ftPerTargetMax",
+      "sources_changed": {
+        "results/target_scoring/fixed_target.json": "2621766 2026-10-26"
+      },
+      "old": null,
+      "new": "+14.7",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "ftPerTargetMin",
+      "sources_changed": {
+        "results/target_scoring/fixed_target.json": "2621766 2026-10-26"
+      },
+      "old": null,
+      "new": "+10.3",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "ftPredFailed",
+      "sources_changed": {
+        "results/target_scoring/fixed_target.json": "2621766 2026-10-26"
+      },
+      "old": null,
+      "new": "F5",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "ftPredHeld",
+      "sources_changed": {
+        "results/target_scoring/fixed_target.json": "2621766 2026-10-26"
+      },
+      "old": null,
+      "new": "4",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "ftPredTotal",
+      "sources_changed": {
+        "results/target_scoring/fixed_target.json": "2621766 2026-10-26"
+      },
+      "old": null,
+      "new": "5",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "ftSlices",
+      "sources_changed": {
+        "results/target_scoring/fixed_target.json": "2621766 2026-10-26"
+      },
+      "old": null,
+      "new": "26",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "ftTableRows",
+      "sources_changed": {
+        "results/target_scoring/fixed_target.json": "2621766 2026-10-26"
+      },
+      "old": null,
+      "new": "fixed target, pooled & $+11.7$ & $[+9.2,\\ +14.1]$ & 1.96 \\\\ fixed target 150M & $+14.7$ & $[+10.1,\\ +19.2]$ & 1.96 \\\\ fixed target 300M & $+13.5$ & $[+10.1,\\ +17.0]$ & 1.96 \\\\ fixed target 530M & $+11.7$ & $[+9.3,\\ +14.0]$ & 1.96 \\\\ fixed target 1B & $+10.3$ & $[+8.3,\\ +12.4]$ & 1.96 \\\\ target varied, all pairs & $+7.7$ & $[+6.3,\\ +9.1]$ & 1.96 \\\\ target varied, determined pairs & $+8.9$ & $[+7.2,\\ +10.5]$ & 1.97 \\\\",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "ftTargetVariedAllPairs",
+      "sources_changed": {
+        "results/target_scoring/fixed_target.json": "2621766 2026-10-26"
+      },
+      "old": null,
+      "new": "+7.7",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "ftTargetVariedDetermined",
+      "sources_changed": {
+        "results/target_scoring/fixed_target.json": "2621766 2026-10-26"
+      },
+      "old": null,
+      "new": "+8.9",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "ftTargetVariedDeterminedHigh",
+      "sources_changed": {
+        "results/target_scoring/fixed_target.json": "2621766 2026-10-26"
+      },
+      "old": null,
+      "new": "+10.5",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "ftTargetVariedDeterminedLow",
+      "sources_changed": {
+        "results/target_scoring/fixed_target.json": "2621766 2026-10-26"
+      },
+      "old": null,
+      "new": "+7.2",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "ftTargets",
+      "sources_changed": {
+        "results/target_scoring/fixed_target.json": "2621766 2026-10-26"
+      },
+      "old": null,
+      "new": "150M, 300M, 530M and 1B",
+      "new_claim": true,
+      "value_changed": false
+    },
+    {
+      "macro": "ftWorlds",
+      "sources_changed": {
+        "results/target_scoring/fixed_target.json": "2621766 2026-10-26"
+      },
+      "old": null,
+      "new": "200",
       "new_claim": true,
       "value_changed": false
     },
@@ -1218,19 +1338,39 @@
       "value_changed": false
     },
     {
-      "macro": "phNestedSlope",
+      "macro": "noiselessRhoArmA",
       "sources_changed": {
-        "results/target_scoring/confound.json": "cbcca05 2026-10-26"
+        "results/target_scoring/lever_arm_arms.json": "be72b2a 2026-10-26"
       },
-      "old": null,
-      "new": "+12.3",
-      "new_claim": true,
+      "old": "-0.93",
+      "new": "-0.93",
+      "new_claim": false,
+      "value_changed": false
+    },
+    {
+      "macro": "noiselessRhoArmBOne",
+      "sources_changed": {
+        "results/target_scoring/lever_arm_arms.json": "be72b2a 2026-10-26"
+      },
+      "old": "-0.51",
+      "new": "-0.51",
+      "new_claim": false,
+      "value_changed": false
+    },
+    {
+      "macro": "noiselessRhoArmBTwo",
+      "sources_changed": {
+        "results/target_scoring/lever_arm_arms.json": "be72b2a 2026-10-26"
+      },
+      "old": "+0.91",
+      "new": "+0.91",
+      "new_claim": false,
       "value_changed": false
     },
     {
       "macro": "phPerTopMax",
       "sources_changed": {
-        "results/target_scoring/confound.json": "cbcca05 2026-10-26"
+        "results/target_scoring/confound.json": "be72b2a 2026-10-26"
       },
       "old": null,
       "new": "+11.7",
@@ -1240,40 +1380,10 @@
     {
       "macro": "phPerTopMin",
       "sources_changed": {
-        "results/target_scoring/confound.json": "cbcca05 2026-10-26"
+        "results/target_scoring/confound.json": "be72b2a 2026-10-26"
       },
       "old": null,
       "new": "+4.8",
-      "new_claim": true,
-      "value_changed": false
-    },
-    {
-      "macro": "phStrongFrom",
-      "sources_changed": {
-        "results/target_scoring/confound.json": "cbcca05 2026-10-26"
-      },
-      "old": null,
-      "new": "150M",
-      "new_claim": true,
-      "value_changed": false
-    },
-    {
-      "macro": "phStrongLever",
-      "sources_changed": {
-        "results/target_scoring/confound.json": "cbcca05 2026-10-26"
-      },
-      "old": null,
-      "new": "+5.3",
-      "new_claim": true,
-      "value_changed": false
-    },
-    {
-      "macro": "phStrongN",
-      "sources_changed": {
-        "results/target_scoring/confound.json": "cbcca05 2026-10-26"
-      },
-      "old": null,
-      "new": "164",
       "new_claim": true,
       "value_changed": false
     },
@@ -1308,22 +1418,32 @@
       "value_changed": false
     },
     {
+      "macro": "rhoArmA",
+      "sources_changed": {
+        "results/target_scoring/lever_arm_arms.json": "be72b2a 2026-10-26"
+      },
+      "old": "0.77",
+      "new": "0.77",
+      "new_claim": false,
+      "value_changed": false
+    },
+    {
+      "macro": "rhoArmBOne",
+      "sources_changed": {
+        "results/target_scoring/lever_arm_arms.json": "be72b2a 2026-10-26"
+      },
+      "old": "0.75",
+      "new": "0.75",
+      "new_claim": false,
+      "value_changed": false
+    },
+    {
       "macro": "stageAlpha",
       "sources_changed": {
         "results/certify/certify.json": "8d06132 2026-10-26"
       },
       "old": null,
       "new": "5",
-      "new_claim": true,
-      "value_changed": false
-    },
-    {
-      "macro": "stageCFourSeedFcr",
-      "sources_changed": {
-        "results/certify/certify.json": "8d06132 2026-10-26"
-      },
-      "old": null,
-      "new": "0.26",
       "new_claim": true,
       "value_changed": false
     },
@@ -1490,7 +1610,7 @@
     {
       "macro": "synthLeverSlope",
       "sources_changed": {
-        "results/target_scoring/confound.json": "cbcca05 2026-10-26"
+        "results/target_scoring/confound.json": "be72b2a 2026-10-26"
       },
       "old": null,
       "new": "+7.80",
@@ -1500,7 +1620,7 @@
     {
       "macro": "synthRungsSlope",
       "sources_changed": {
-        "results/target_scoring/confound.json": "cbcca05 2026-10-26"
+        "results/target_scoring/confound.json": "be72b2a 2026-10-26"
       },
       "old": null,
       "new": "-0.70",
@@ -1510,7 +1630,7 @@
     {
       "macro": "synthTopSlope",
       "sources_changed": {
-        "results/target_scoring/confound.json": "cbcca05 2026-10-26"
+        "results/target_scoring/confound.json": "be72b2a 2026-10-26"
       },
       "old": null,
       "new": "-2.06",
