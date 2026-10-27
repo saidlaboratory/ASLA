@@ -74,3 +74,61 @@ the text.
 18. **The moderated t test "fails" in Section 3, yet moderated variances are used
     in Section 2.** Unchanged. Appendix H states that the adopted variant uses
     raw degrees of freedom and was chosen by Brier score, not pre-registered.
+
+# Second review (abstract and Section 4 only): what was not changed, and why
+
+The reviewer again saw only `paper/main.pdf` and `results/`. Valid points not
+listed here were fixed in the text. The fixes were:
+
+- The lever-arm coefficient is described as a linear adjustment that cannot
+  separate distance from target size.
+- The normal-value intervals are quoted, because calibration narrowed five of
+  the six.
+- The post hoc point summaries are labelled as such: per-top-rung slopes, the
+  strong-reference restriction, and the unadjusted nested slope.
+- The Table 3 slopes are converted from per natural log to per decade.
+- The failed monotonicity prediction is correctly attributed to the Spearman
+  correlation.
+- Also fixed:
+  - the margin-subset reversal;
+  - the Figure 2 scoring and ties;
+  - the "primary family" wording;
+  - the power scope;
+  - the OLMES certification wording;
+  - the lever-arm calibration disclosures;
+  - the leave-one-recipe-out deviation.
+
+## New analyses (only the pre-registered confound analysis was allowed)
+
+1. **Further confound models.** The reviewer asked for an interaction or
+   nonparametric surface, target and tokens per parameter as covariates, a
+   pre-specified strong-reference sensitivity analysis, and recalibration in
+   worlds matched to the real slope with at least 1000 worlds.
+   - Not run as inference.
+   - Three post hoc point summaries of the committed design table are reported
+     and labelled as computed after the review, without intervals.
+   - The limits are stated in Section 4 and Limitations.
+
+## Reviewer points that do not hold
+
+2. **"p < 0.00012" and the 8300 null draws.** The reviewer said the 8300 draws
+   are not independent worlds. They are: 300 full worlds plus 8000 null-only
+   worlds, each with its own random-number stream. The text now says p is at
+   most 1/8300; the "8,000" in another file counts only the null-only worlds.
+3. **"Coefficients of variation of the exponent".** This is what the source key
+   is (`true_alpha_cv` in `hnorm_hcurv_test.json`), so it is unchanged.
+4. **The pre-registration being unverifiable.** It was outside the review
+   materials. In the repository it was committed (6b56025) before the analysis
+   code (cbcca05).
+5. **The per-metric certification cells not being in `certify.json`.** They are
+   computed by `scripts/render_macros.py` from that file's per-design records.
+   The pooled bins are asserted to reproduce the file's own lever-arm pooling.
+
+## Kept, with disclosure
+
+6. **Two attribution runs.** `mechanism_record.json` and `lever_arm_arms.json`
+   are separate simulation runs of the same arms, and they differ by Monte Carlo
+   error (−9%/+4% against −10%/+5%). Both are now quoted, with their sources
+   named, rather than merged after the fact.
+7. **Variance inflation 8.40 against 8.43.** Unchanged; see the first review,
+   item 12.

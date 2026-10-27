@@ -980,7 +980,7 @@ def _table_entries() -> list[tuple[str, str, str]]:
         nl_rho = nl.get("rho") if isinstance(nl, dict) else None
         arm_rows.append(
             f"{label} & {'---' if nl_rho is None else f'{nl_rho:+.2f}'} & {v['true_rho']:+.2f} & "
-            f"{v['true_slope_pp_per_log']:.2f} & {v['candidates_for_2pp_power_0_8']} \\\\"
+            f"{v['true_slope_pp_per_log'] * np.log(10):.2f} & {v['candidates_for_2pp_power_0_8']} \\\\"
         )
     return [
         ("stageTableRows", " ".join(rows), "certify.json"),
@@ -1315,7 +1315,7 @@ def _confound_entries() -> list[tuple[str, str, str]]:
             (f"conf{tag}WaldHigh", f"{wh:+.1f}", o),
             (f"conf{tag}K", f"{v['critical_value']:.2f}", o),
         ]
-        main_rows.append(f"{CONFOUND_SHORT[key]} & ${v['estimate']:+.1f}$ & $[{lo:+.1f},\\ {hi:+.1f}]$ \\\\")
+        main_rows.append(f"{CONFOUND_SHORT[key]} & ${v['estimate']:+.1f}$ & $[{wl:+.1f},\\ {wh:+.1f}]$ \\\\")
         rows.append(
             f"{label} & ${v['estimate']:+.2f}$ & {v['se']:.2f} & {v['critical_value']:.2f} & "
             f"$[{lo:+.2f},\\ {hi:+.2f}]$ & $[{wl:+.2f},\\ {wh:+.2f}]$ & ${v['benchmark_true_value']:+.2f}$ \\\\"
@@ -1364,6 +1364,78 @@ def _confound_entries() -> list[tuple[str, str, str]]:
             (f"synth{tag}Range", f"{min(e['mean_true_excess']):.1f}--{max(e['mean_true_excess']):.1f}", o),
         ]
     out.append(("synthWorlds", f"{synth['worlds']}", o))
+    return out
+
+
+
+def _review_two_entries() -> list[tuple[str, str, str]]:
+    """Values for the Section 4 review: calibration disclosures and post hoc summaries of the confound designs.
+
+    The confound summaries are point estimates computed after the review from the committed design table; they
+    are not pre-registered and carry no intervals.
+    """
+
+    out: list[tuple[str, str, str]] = []
+    lev = Source.load("target_scoring/lever_arm_calibration.json")
+    out += [
+        ("leverCalCovWald", f"{lev.number('summary.coverage_at_1_96'):.2f}", "lever_arm_calibration.json"),
+        ("leverCalMeanRhoHat", f"{lev.number('summary.mean_rho_hat'):.2f}", "lever_arm_calibration.json"),
+        ("leverCalCovPred", "held" if lev.get("predictions.P1_coverage_0_90_to_0_97") else "failed", "lever_arm_calibration.json"),
+        ("leverNullDraws", f"{lev.integer('summary.n_null_statistics')}", "lever_arm_calibration.json"),
+    ]
+    by_metric = Source.load("target_scoring/lever_arm_by_metric.json")
+    sub = by_metric.get("metrics.margin.margin")
+    out += [
+        ("lamMarginSubRho", f"{sub['real_rho']:+.2f}", "lever_arm_by_metric.json"),
+        ("lamMarginSubP", f"{sub['real_p_against_null']:.2g}", "lever_arm_by_metric.json"),
+        ("lamMarginSubN", f"{sub['n_designs']}", "lever_arm_by_metric.json"),
+    ]
+    arms = Source.load("target_scoring/lever_arm_arms.json")
+    share = arms.get("attribution.share_of_B3_1_slope")
+    out += [
+        ("attrArmsCommon", f"{100 * share['B1_common_mode_increment']:+.0f}", "lever_arm_arms.json"),
+        ("attrArmsInter", f"{100 * share['interaction_remainder']:+.0f}", "lever_arm_arms.json"),
+    ]
+    conf = Source.load("target_scoring/confound.json")
+    inference = conf.get("inference")
+    def narrower(v: dict) -> bool:  # calibrated critical value below the normal one
+        return v["ci_calibrated"][1] - v["ci_calibrated"][0] < v["ci_1_96"][1] - v["ci_1_96"][0]
+
+    below = sum(narrower(v) for v in inference.values())
+    out += [
+        ("confKBelow", f"{below}", "confound.json"),
+        ("confKTotal", f"{len(inference)}", "confound.json"),
+        ("confKAboveName", "top-rung" if not narrower(inference["joint_top"]) else "none", "confound.json"),
+    ]
+    rows = conf.get("real.designs")
+    lever = np.array([r["lever"] for r in rows])
+    top = np.array([r["log_top"] for r in rows])
+    rungs = np.array([r["rungs"] for r in rows], dtype=float)
+    excess = np.array([r["excess"] for r in rows])
+    target = lever + top
+    nested = np.array([r["start"] == rows[0]["start"] for r in rows])  # windows from the smallest rung
+
+    def joint(mask: np.ndarray) -> float:
+        x = np.column_stack([np.ones(mask.sum()), lever[mask], top[mask], rungs[mask]])
+        return float(np.linalg.lstsq(x, excess[mask], rcond=None)[0][1])
+
+    per_top = {}
+    for t in sorted(set(top)):
+        m = top == t
+        if len(set(lever[m])) >= 3:
+            per_top[t] = float(np.polyfit(lever[m], excess[m], 1)[0])
+    sorted_targets = sorted(set(target))
+    threshold = sorted_targets[-4]  # the four largest targets
+    strong = (target > threshold) | np.isclose(target, threshold)
+    strong_label = [r["target"] for r, t in zip(rows, target) if np.isclose(t, threshold)][0]
+    out += [
+        ("phNestedSlope", f"{float(np.polyfit(lever[nested], excess[nested], 1)[0]):+.1f}", "confound.json"),
+        ("phPerTopMin", f"{min(per_top.values()):+.1f}", "confound.json"),
+        ("phPerTopMax", f"{max(per_top.values()):+.1f}", "confound.json"),
+        ("phStrongLever", f"{joint(strong):+.1f}", "confound.json"),
+        ("phStrongFrom", strong_label, "confound.json"),
+        ("phStrongN", f"{int(strong.sum())}", "confound.json"),
+    ]
     return out
 
 
@@ -2020,6 +2092,7 @@ def build() -> str:
     entries.extend(_advantage_entries())
     entries.extend(_marin_advantage_entries())
     entries.extend(_confound_entries())
+    entries.extend(_review_two_entries())
     lines.extend(_macro(name, value, origin) for name, value, origin in entries)
     lines.append("")
     return "\n".join(lines)

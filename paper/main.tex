@@ -48,20 +48,22 @@ are anti-conservative at realistic seed and candidate counts. On DataDecide,
 projection's excess mis-selection over single-scale ranking on C4 is
 \headEstimate\ points: nominally significant for these \nCandidates\ recipes
 ($p=\headFixedP$, not surviving correction within its family) and not
-established for recipes in general ($p=\headRandomP$). Of
-\restatedPrimaryM\ inferential claims, one survives Holm and
+established for recipes in general ($p=\headRandomP$). Of the
+\restatedPrimaryM\ claims in the paper's primary family, one survives Holm and
 Benjamini--Yekutieli correction: on C4, projection's excess rises with
 extrapolation distance (Spearman \leverRealRho). A pre-registered confound
-test over \confDesigns\ fit windows separates distance from the size of the
-largest fitted model and the number of fitted sizes: holding both fixed, the
-excess rises by \confJointLever\ points per decade of distance (calibrated
-interval [\confJointLeverLow, \confJointLeverHigh]), and a smaller largest
-model and fewer fitted sizes each add to it. No tested alternative is shown to
-be better than single-scale ranking; the intervals exclude an advantage larger
-than \advExcludeCFourMax\ points on C4, and the tests have power below one half.
-Certification from seed error alone stays at or below \certLevCFourSeedMax\%
-false certification on C4 at every distance and exceeds nominal on the OLMES
-metrics. On the Marin speedrun leaderboard, a solver defect and per-size
+test over \confDesigns\ fit windows, reported outside that family, adjusts for
+the size of the largest fitted model and the number of fitted sizes: in a linear
+model the excess rises by \confJointLever\ points per decade of distance
+(interval [\confJointLeverWaldLow, \confJointLeverWaldHigh]), and a smaller
+largest model and fewer fitted sizes are each associated with a larger excess.
+With those two fixed, distance varies only through the target, so the test
+cannot separate distance from target size, and the rise is not linear. No
+tested alternative is shown to be better than single-scale ranking; the
+intervals exclude an advantage larger than \advExcludeCFourMax\ points on C4,
+and the estimator tests have power below one half. On C4, certification from
+seed error alone has a false-certification rate of \stageCFourSeedFcr\%; pooled,
+it exceeds nominal on OLMES error (\stageErrSeedFcr\%). On the Marin speedrun leaderboard, a solver defect and per-size
 protocol changes limit what the forecasts resolve, and at the upper end of a
 bracket on single-run noise \marinHold\ of \marinPairs\ pairwise orders hold.
 \end{abstract}
@@ -95,9 +97,10 @@ semi-synthetic benchmark, show how anti-conservative the standard alternatives
 are, and use it to re-examine DataDecide's comparisons (\cref{sec:test}).
 \item \emph{The lever-arm effect.} On C4, projection's excess error over
 single-scale ranking rises with the distance it extrapolates. This is the only
-claim in the paper that survives family-wide correction, and a pre-registered
-confound test shows it holds with the size of the largest fitted model and the
-number of fitted sizes held fixed, both of which also contribute.
+claim in the paper that survives family-wide correction. A pre-registered
+confound test finds it after linear adjustment for the size of the largest
+fitted model and the number of fitted sizes, which are also associated with the
+excess; it cannot separate distance from the size of the target.
 Semi-synthetic experiments and measurements of the error structure are
 consistent with noise and recipe-specific misspecification as its sources; on
 OLMES accuracy metrics it is not established (\cref{sec:lever}).
@@ -262,56 +265,74 @@ with recipes as the unit: a leave-one-recipe-out jackknife of Fisher's $z$ gives
 [\leverWaldLow, \leverWaldHigh] at the normal critical value and
 [\leverRealLow, \leverRealHigh] at a critical value of \leverK\ calibrated on
 benchmark worlds whose true correlation (\leverRhoTrue) is below the estimate,
-so neither interval certifies the size of the effect. A null in which a
-comparator's true excess is zero at every design, while designs that share a
-rung share its noise, rejects in \leverNullRate\ of \leverNullN\ draws at the
-test's level; no null draw reaches the real statistic ($p<\leverRealP$, the
-Monte Carlo floor). Because a rank correlation is unchanged by a constant
+so neither interval certifies the size of the effect. In those worlds the
+estimator is biased low (mean \leverCalMeanRhoHat\ against \leverRhoTrue), the
+normal interval covered at \leverCalCovWald, and the pre-registered coverage
+band \leverCalCovPred. A null in which a comparator's true excess is zero at
+every design, while designs that share a rung share its noise, rejects in
+\leverNullRate\ of \leverNullN\ independent draws at the test's level; none
+reaches the real statistic ($p\le\leverRealP$, one over the number of draws). Because a rank correlation is unchanged by a constant
 shift, this null also stands for an excess that is positive but the same at
 every design. It does not stand for an excess that varies with the size of the
 top rung or the number of fitted rungs: every one of these designs fits from the
 smallest model up, so long lever arms come only from small top rungs and the rung
-count is fixed by the top rung.
+count is fixed by the top rung. Without noise, on the shrinkage-estimated
+curves, projection is wrong on \mechNoiselessProjWrong\ pairs against
+single-scale ranking's \mechNoiselessSingleWrong\ summed over the overlapping
+designs, and beats it at \mechNoiselessProjBeats\ of \mechNoiselessDesigns.
 
 \paragraph{Separating lever arm from ladder size.} A pre-registered confound
 test breaks that link with fit windows: any run of at least three consecutive  %% words: - (the pre-registered minimum window)
 rungs, and any larger target, which gives \confDesigns\ designs scored the same
 way. Three factorial slices each vary one factor with the other two fixed:  %% words: - (the three factors)
-\confSliceLeverN\ slices vary the target with the window fixed (lever arm only);
-\confSliceRungsN\ vary the window's lower end with top rung and target fixed
-(rung count only); and \confSliceTopN\ move top rung and target together at a
-fixed rung count and a lever arm matched within a fifth of a decade (top-rung
-size only, with the residual lever arm as a covariate). A joint model regresses
-the excess on lever arm, top-rung compute and rung count over all designs.
-Standard errors are leave-one-recipe-out jackknifes, and critical values
-(\confKMin--\confKMax) are calibrated in \confWorlds\ random-candidate worlds
-built as for the lever-arm test. The pre-registered outcome is that the
-\confOutcome, and the other two factors also contribute
-(\cref{tab:confound}). With top-rung size and rung count held fixed, the excess
-rises by \confJointLever\ points per decade of lever arm
-([\confJointLeverLow, \confJointLeverHigh]); with only the target varied, by
-\confSliceLever\ ([\confSliceLeverLow, \confSliceLeverHigh]). A decade more
-top-rung compute lowers it by \confJointTop\ points
-([\confJointTopLow, \confJointTopHigh]) and each added rung by \confJointRungs\
-([\confJointRungsLow, \confJointRungsHigh]); the slices agree in sign. The
-calibrated critical values are below the normal value, and the intervals at the
-normal value also exclude zero (\cref{app:confound}). The predictions that
-rung count would not matter failed (\confPredFailed); \confPredHeld\ of
-\confPredTotal\ held. The references at small targets are weak: at
-\confDetMinTarget\ only \confDetMin\% of target pairs are determined, against
-\confDetTop\% at \targetScaleLabel, which expected-error scoring charges for rather than
-ignores. In semi-synthetic worlds with C4's noise and recipe-specific
-misspecification, each factor varied alone with the others exactly fixed gives
-slopes of \synthLeverSlope\ per decade of lever arm, \synthTopSlope\ per decade
-of top rung and \synthRungsSlope\ per rung, the same signs as the real data; the
-top-rung and rung-count responses are not monotone (\cref{app:confound}).
+in slice (i), \confSliceLeverN\ slices vary the target with the window fixed
+(lever arm only); in slice (ii), \confSliceTopN\ move top rung and target
+together at a fixed rung count and a lever arm matched within a fifth of a decade
+(top-rung size only, with the residual lever arm as a covariate); in slice
+(iii), \confSliceRungsN\ vary the window's lower end with top rung and target
+fixed (rung count only). A joint model regresses the excess linearly on lever
+arm, top-rung compute and rung count over all designs. Standard errors are
+leave-one-recipe-out jackknifes; critical values (\confKMin--\confKMax) are
+calibrated in \confWorlds\ random-candidate worlds built as for the lever-arm
+test, and \confKBelow\ of \confKTotal\ are below the normal value, so here
+calibration narrows the intervals; we quote the wider normal intervals. The
+pre-registered outcome is that the \confOutcome, and the other two factors also
+contribute (\cref{tab:confound}). In the joint model the excess rises by
+\confJointLever\ points per decade of lever arm
+([\confJointLeverWaldLow, \confJointLeverWaldHigh]), and in slice (i) by
+\confSliceLever\ ([\confSliceLeverWaldLow, \confSliceLeverWaldHigh]). It falls
+with top-rung compute (\confJointTop\ points per decade,
+[\confJointTopWaldLow, \confJointTopWaldHigh]) and with rung count
+(\confJointRungs\ per rung, [\confJointRungsWaldLow, \confJointRungsWaldHigh]);
+the slices agree in sign. The predictions that rung count would not matter
+failed (\confPredFailed); \confPredHeld\ of \confPredTotal\ held. These are
+associations within one ladder, outside the corrected family, and they have
+three limits. First, with the top rung fixed, lever arm changes only through the  %% words: - (an enumeration of limits)
+target, so the test cannot separate extrapolation distance from properties of
+the target. References at small targets are weak: at \confDetMinTarget\ only
+\confDetMin\% of target pairs are determined, against \confDetTop\% at
+\targetScaleLabel, which expected-error scoring charges for rather than ignores.
+Second, the response is not linear. The following summaries were computed after
+the review, without intervals or pre-registration: within each top rung with
+at least three targets the slope on lever arm ranges from \phPerTopMin\ to  %% words: - (a minimum number of targets)
+\phPerTopMax\ points per decade, smaller at larger top rungs; restricted to the
+\phStrongN\ designs with targets of \phStrongFrom\ or more, the joint lever-arm
+coefficient is \phStrongLever; on the \doseDesigns\ nested designs, without
+adjustment, the slope is \phNestedSlope. Third, rung count here is the lower end
+of an unevenly spaced window, so it also changes the fitted span. In
+semi-synthetic worlds with C4's noise and recipe-specific misspecification, each
+factor varied alone around one base design gives slopes of \synthLeverSlope\ per
+decade of lever arm, \synthTopSlope\ per decade of top rung and
+\synthRungsSlope\ per rung (Monte Carlo precision, not uncertainty about real
+data); the top-rung and rung-count responses are not monotone, and without
+noise the rung-count slope changes sign (\cref{app:confound}).
 
 \begin{table}[t]
 \centering
 \scriptsize
 \begin{tabular}{lrr}
 \toprule
-statistic & estimate & calibrated interval \\
+statistic & estimate & interval \\
 \midrule
 \confMainRows
 \bottomrule
@@ -319,13 +340,10 @@ statistic & estimate & calibrated interval \\
 \caption{Confound test on C4: projection's excess over single-scale ranking, in
 points, against lever arm and top-rung compute (per decade) and rung count (per
 rung), over \confDesigns\ fit-window designs. Intervals are leave-one-recipe-out
-jackknifes at calibrated critical values; \cref{tab:confound-full} adds the
-intervals at the normal value.}
+jackknifes at the normal critical value; the calibrated ones, narrower for all
+but the top-rung term, are in \cref{tab:confound-full}.}
 \label{tab:confound}
-\end{table} Without noise, on the real shrunk curves,
-projection is wrong on \mechNoiselessProjWrong\ pairs against single-scale
-ranking's \mechNoiselessSingleWrong\ summed over the designs, and beats it at
-\mechNoiselessProjBeats\ of \mechNoiselessDesigns.
+\end{table}
 
 \paragraph{Mechanism.} Semi-synthetic fixed-candidate worlds that differ only
 in the truth separate candidate sources (\cref{tab:arms}). They are simulations
@@ -338,17 +356,21 @@ without noise, also reverses it (\noiselessRhoArmBTwo). Misspecification shared
 by all recipes changes the noisy result little (\rhoArmBOne\ against \rhoArmA),
 although without noise it moves the correlation from \noiselessRhoArmA\ to
 \noiselessRhoArmBOne: in a pairwise order it largely cancels, and on real C4
-its cancellation ratio is \cancelCFourRatio, partial rather than complete. The
+its amplitude-sharing cancellation ratio is \cancelCFourRatio, partial rather
+than complete. The
 world with all misfit and noise reproduces \attrRealTotal\% of the real slope.
-Of that simulated slope, with a power law as the reference form, the variance
-arm accounts for \attrPowerVar\%, recipe-specific misspecification
-\attrPowerSpecific\%, common-mode misspecification \attrPowerCommon\% and their
-interaction \attrPowerInter\%; the variance arm alone is \attrRealVar\% of the
-real slope. With a Chinchilla-form reference the same shares are
-\attrChinVar\%, \attrChinSpecific\%, \attrChinCommon\% and \attrChinInter\%. The
-direction is the same under both references; the attribution depends on which
-form counts as correctly specified. The pre-registered prediction that the
-slope rises monotonically with the misfit scale \armMonotoneLambda.
+A sequential decomposition of that simulated slope, which depends on the order
+of the arms and is not identified, gives with a power law as the reference form
+\attrPowerVar\% to the variance arm, \attrPowerSpecific\% to recipe-specific
+misspecification, \attrPowerCommon\% to common-mode misspecification and
+\attrPowerInter\% to their interaction (the run of \cref{tab:arms} gives
+\attrArmsCommon\% and \attrArmsInter\% for the last two); the variance arm alone
+is \attrRealVar\% of the real slope. With a Chinchilla-form reference the shares
+are \attrChinVar\%, \attrChinSpecific\%, \attrChinCommon\% and \attrChinInter\%.
+These are shares of the lever-arm slope in decision error, not of fit error, so
+they do not contradict the dominance of misspecification in the fit below. The
+pre-registered prediction that the Spearman correlation rises monotonically
+with the misfit scale \armMonotoneLambda.
 
 \begin{table}[t]
 \centering
@@ -395,10 +417,15 @@ OLMES metrics.}
 \paragraph{Where the effect is inconclusive.} On OLMES macro error the
 association is \lamOlmesVerdict\ (Spearman \lamOlmesRho, $p=\lamOlmesP$ against
 the calibrated null), and on correct-answer probability it is
-\lamCpVerdict\ (\lamCpRho, $p=\lamCpP$). A margin-based metric shows it
-(\lamMarginRho, $p=\lamMarginP$), outside the corrected family. Across
-\specN\ analysis specifications (\cref{fig:spec-curve}), projection is worse in
-\specPositive\ and nominally better in \specBelow, all of them on OLMES
+\lamCpVerdict\ (\lamCpRho, $p=\lamCpP$); both point estimates have the
+opposite sign to C4's, so the association is metric-dependent. A margin-based
+metric shows it over all designs (\lamMarginRho, $p\le\lamMarginP$, the Monte
+Carlo floor), outside the corrected family, but reverses on the
+\lamMarginSubN\ designs whose rungs are all above chance (\lamMarginSubRho,
+$p=\lamMarginSubP$). Across \specN\ analysis specifications
+(\cref{fig:spec-curve}), scored by hard mis-selection against the observed
+target order rather than by expected error, projection is worse in \specPositive,
+ties in \specTies\ and is nominally better in \specBelow, all of them on OLMES
 metrics; the specifications share data and many give identical results, so these
 counts are not independent evidence. Reassigning
 C4's recipe-specific residuals among recipes never makes projection win at any
@@ -416,10 +443,11 @@ counterexamples.
 gives each estimator's and allocation's difference from single-scale ranking with
 its calibrated random-candidate interval. On C4 the intervals exclude an advantage
 over single-scale ranking larger than \advExcludeCFourMax\ points for every
-estimator, and on OLMES error larger than \advExcludeOlmesMax\ points; smaller
-advantages are not excluded. The tests are weak: against each comparator's
-effect in the benchmark, calibrated power is \advPowerMin\ to \advPowerMax, below
-one half for every comparator. On the design that
+estimator and allocation, and on OLMES error larger than \advExcludeOlmesMax\
+points; smaller advantages are not excluded. The tests are weak: against each
+estimator's effect in the benchmark, calibrated power is \advPowerMin\ to
+\advPowerMax, below one half for every estimator; none was computed for the
+allocations. On the design that
 fits up to \flexFitTop\ and targets \flexTarget, single-scale ranking mis-selects
 \flexSingle\% of pairs; the shared-exponent fit \flexShared\%, plain projection
 \flexPlain\% and a multi-family ensemble \flexEnsemble\% (\cref{fig:flexibility}).
@@ -593,9 +621,10 @@ The evidence is one public suite with seed replicates and one intervention
 class, data recipes, plus one leaderboard without replicates. The lever-arm effect
 is established on C4 bits per token; on OLMES accuracy metrics it is
 inconclusive, and its attribution between variance and misspecification depends
-on the reference functional form. The confound test separates lever arm from
-top-rung size and rung count, but not from DataDecide's drift in tokens per
-parameter, which moves with compute; its calibrated critical values come from a
+on the reference functional form. The confound test adjusts lever arm for
+top-rung size and rung count, but not for the target's size or DataDecide's
+drift in tokens per parameter, which moves with compute, and its linear model
+does not fit a response that saturates; its calibrated critical values come from a
 benchmark whose true effects are smaller than the real estimates, and
 references at small targets are weakly determined. Of \ledgerHeld\ plus
 \ledgerFailed\ predictions recorded across the project, \ledgerFailed\ failed;
