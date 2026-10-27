@@ -49,6 +49,8 @@ from asla.analysis.lever_arm import designs  # noqa: E402
 from asla.analysis.target_scoring import expected_charges, u_statistic_components, u_statistic_variance  # noqa: E402
 
 CACHE = REPO / "data" / "cache" / "regime_map.jsonl"
+# Slopes are fitted on np.log of the lever arm; per decade is this times ln(10).
+SLOPE_UNIT = "points of mis-selected pairs per natural-log unit of lever arm"
 OUT = REPO / "results" / "target_scoring" / "regime_map.json"
 FIGURE = REPO / "results" / "target_scoring" / "figures" / "regime_map.png"
 BASE_GRID = (0.0, 0.25, 0.5, 1.0, 2.0)
@@ -464,6 +466,7 @@ def summarise(
                 entry["slope_on_log_lever"] = float(np.polyfit(log_lever, exact_row[lam], 1)[0])
             else:
                 entry["slope_on_log_lever"] = float(np.polyfit(log_lever, cell_matrix("map", s, lam).mean(axis=0), 1)[0])
+            entry["slope_unit"] = SLOPE_UNIT
             cells[f"s={s:g},lambda={lam:g}"] = entry
 
     def contour(name: str, grid: np.ndarray) -> dict[str, Any]:
@@ -649,6 +652,7 @@ def summarise(
         "unexplained_share_of_real_slope": attribution["share_of_real_slope"]["unexplained"],
         "B3_1_model_slope_pp_per_log": arms["B3_1"]["true_slope_pp_per_log"],
         "real_slope_pp_per_log": attribution["real_slope_pp_per_log"],
+        "slope_unit": SLOPE_UNIT,
     }
 
     out = {

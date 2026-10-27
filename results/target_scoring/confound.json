@@ -2010,6 +2010,7 @@
   },
   "inference": {
     "joint_lever": {
+      "unit": "points of mis-selected pairs per decade (log10) of lever arm",
       "estimate": 7.8285667244236485,
       "se": 0.6800923156627615,
       "critical_value": 1.5705847354704445,
@@ -2026,6 +2027,7 @@
       "coverage_at_1_96": 0.98
     },
     "joint_top": {
+      "unit": "points of mis-selected pairs per decade (log10) of top-rung compute",
       "estimate": -3.994619085123896,
       "se": 1.0458539105787028,
       "critical_value": 2.018877586242208,
@@ -2042,6 +2044,7 @@
       "coverage_at_1_96": 0.945
     },
     "joint_rungs": {
+      "unit": "points of mis-selected pairs per fitted rung",
       "estimate": -0.796506581764025,
       "se": 0.34411223781636424,
       "critical_value": 1.6225548775891796,
@@ -2058,6 +2061,7 @@
       "coverage_at_1_96": 0.965
     },
     "slice_lever": {
+      "unit": "points of mis-selected pairs per decade (log10) of lever arm",
       "estimate": 7.68814981787175,
       "se": 0.6999871648638676,
       "critical_value": 1.6997130516488461,
@@ -2074,6 +2078,7 @@
       "coverage_at_1_96": 0.98
     },
     "slice_top": {
+      "unit": "points of mis-selected pairs per decade (log10) of top-rung compute",
       "estimate": -5.272612825447118,
       "se": 1.4534121696970925,
       "critical_value": 1.5875308013042888,
@@ -2090,6 +2095,7 @@
       "coverage_at_1_96": 0.965
     },
     "slice_rungs": {
+      "unit": "points of mis-selected pairs per fitted rung",
       "estimate": -0.9015066159306984,
       "se": 0.4210081834172463,
       "critical_value": 1.7504336744061022,
@@ -2122,6 +2128,7 @@
     "profile": "arm A power law plus arm B2 recipe-specific residual, C4 moderated noise, three seeds",
     "effects": {
       "lever": {
+        "slope_unit": "points of mis-selected pairs per decade (log10) of lever arm",
         "levels": [
           0.25,
           0.5,
@@ -2163,6 +2170,7 @@
         ]
       },
       "top": {
+        "slope_unit": "points of mis-selected pairs per decade (log10) of top-rung compute",
         "levels": [
           17.75,
           18.25,
@@ -2200,6 +2208,7 @@
         ]
       },
       "rungs": {
+        "slope_unit": "points of mis-selected pairs per fitted rung",
         "levels": [
           3.0,
           4.0,

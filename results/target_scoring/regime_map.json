@@ -754,7 +754,8 @@
           "excess_pp": 0.0,
           "sign": "unresolved"
         },
-        "slope_on_log_lever": -0.3363634326416658
+        "slope_on_log_lever": -0.33636343264166574,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=0,lambda=0.25": {
         "high_tercile": {
@@ -799,7 +800,8 @@
           "excess_pp": 0.33333333333333337,
           "sign": "loses"
         },
-        "slope_on_log_lever": 2.1715150757241695
+        "slope_on_log_lever": 2.17151507572417,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=0,lambda=0.5": {
         "high_tercile": {
@@ -844,7 +846,8 @@
           "excess_pp": 0.3333333333333332,
           "sign": "loses"
         },
-        "slope_on_log_lever": 3.9914704675527757
+        "slope_on_log_lever": 3.9914704675527766,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=0,lambda=1": {
         "high_tercile": {
@@ -889,7 +892,8 @@
           "excess_pp": 0.6666666666666667,
           "sign": "loses"
         },
-        "slope_on_log_lever": 5.302825118244225
+        "slope_on_log_lever": 5.302825118244226,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=0,lambda=2": {
         "high_tercile": {
@@ -934,7 +938,8 @@
           "excess_pp": 2.333333333333333,
           "sign": "loses"
         },
-        "slope_on_log_lever": 5.633915208458787
+        "slope_on_log_lever": 5.633915208458787,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=0,lambda=4": {
         "high_tercile": {
@@ -979,7 +984,8 @@
           "excess_pp": 2.0000000000000004,
           "sign": "loses"
         },
-        "slope_on_log_lever": 5.25255560714017
+        "slope_on_log_lever": 5.252555607140171,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=0,lambda=8": {
         "high_tercile": {
@@ -1024,7 +1030,8 @@
           "excess_pp": -1.6666666666666663,
           "sign": "wins"
         },
-        "slope_on_log_lever": 4.484529656795881
+        "slope_on_log_lever": 4.484529656795881,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=0.25,lambda=0": {
         "high_tercile": {
@@ -1069,7 +1076,8 @@
           "excess_pp": 0.30222222222222217,
           "sign": "loses"
         },
-        "slope_on_log_lever": 0.8412052288369941
+        "slope_on_log_lever": 0.8412052288369944,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=0.25,lambda=0.25": {
         "high_tercile": {
@@ -1114,7 +1122,8 @@
           "excess_pp": 0.16222222222222224,
           "sign": "loses"
         },
-        "slope_on_log_lever": 2.456213721102802
+        "slope_on_log_lever": 2.456213721102802,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=0.25,lambda=0.5": {
         "high_tercile": {
@@ -1159,7 +1168,8 @@
           "excess_pp": 0.6822222222222223,
           "sign": "loses"
         },
-        "slope_on_log_lever": 3.906230144756687
+        "slope_on_log_lever": 3.9062301447566865,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=0.25,lambda=1": {
         "high_tercile": {
@@ -1204,7 +1214,8 @@
           "excess_pp": 1.1044444444444441,
           "sign": "loses"
         },
-        "slope_on_log_lever": 5.2317412888971
+        "slope_on_log_lever": 5.231741288897101,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=0.25,lambda=2": {
         "high_tercile": {
@@ -1249,7 +1260,8 @@
           "excess_pp": 2.2311111111111113,
           "sign": "loses"
         },
-        "slope_on_log_lever": 5.6120396277690325
+        "slope_on_log_lever": 5.612039627769033,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=0.25,lambda=4": {
         "high_tercile": {
@@ -1294,7 +1306,8 @@
           "excess_pp": 1.7088888888888891,
           "sign": "loses"
         },
-        "slope_on_log_lever": 5.286307252627746
+        "slope_on_log_lever": 5.286307252627746,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=0.25,lambda=8": {
         "high_tercile": {
@@ -1339,7 +1352,8 @@
           "excess_pp": -1.8533333333333326,
           "sign": "wins"
         },
-        "slope_on_log_lever": 4.504999933105466
+        "slope_on_log_lever": 4.504999933105467,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=0.5,lambda=0": {
         "high_tercile": {
@@ -1384,7 +1398,8 @@
           "excess_pp": 0.3377777777777778,
           "sign": "loses"
         },
-        "slope_on_log_lever": 1.6993706165825033
+        "slope_on_log_lever": 1.6993706165825033,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=0.5,lambda=0.25": {
         "high_tercile": {
@@ -1429,7 +1444,8 @@
           "excess_pp": 0.24,
           "sign": "loses"
         },
-        "slope_on_log_lever": 2.7690649723343133
+        "slope_on_log_lever": 2.7690649723343137,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=0.5,lambda=0.5": {
         "high_tercile": {
@@ -1474,7 +1490,8 @@
           "excess_pp": 0.5644444444444444,
           "sign": "loses"
         },
-        "slope_on_log_lever": 3.873682431037496
+        "slope_on_log_lever": 3.873682431037497,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=0.5,lambda=1": {
         "high_tercile": {
@@ -1519,7 +1536,8 @@
           "excess_pp": 1.1,
           "sign": "loses"
         },
-        "slope_on_log_lever": 5.113127534172867
+        "slope_on_log_lever": 5.113127534172868,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=0.5,lambda=2": {
         "high_tercile": {
@@ -1564,7 +1582,8 @@
           "excess_pp": 2.2577777777777777,
           "sign": "loses"
         },
-        "slope_on_log_lever": 5.578982124320752
+        "slope_on_log_lever": 5.578982124320752,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=0.5,lambda=4": {
         "high_tercile": {
@@ -1609,7 +1628,8 @@
           "excess_pp": 1.5777777777777777,
           "sign": "loses"
         },
-        "slope_on_log_lever": 5.282272127990791
+        "slope_on_log_lever": 5.282272127990791,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=0.5,lambda=8": {
         "high_tercile": {
@@ -1654,7 +1674,8 @@
           "excess_pp": -1.6888888888888884,
           "sign": "wins"
         },
-        "slope_on_log_lever": 4.508237809242215
+        "slope_on_log_lever": 4.508237809242216,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=1,lambda=0": {
         "high_tercile": {
@@ -1699,7 +1720,8 @@
           "excess_pp": 0.6622222222222223,
           "sign": "loses"
         },
-        "slope_on_log_lever": 2.5770060859168895
+        "slope_on_log_lever": 2.5770060859168895,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=1,lambda=0.25": {
         "high_tercile": {
@@ -1744,7 +1766,8 @@
           "excess_pp": 0.43333333333333335,
           "sign": "loses"
         },
-        "slope_on_log_lever": 3.22810513020631
+        "slope_on_log_lever": 3.22810513020631,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=1,lambda=0.5": {
         "high_tercile": {
@@ -1789,7 +1812,8 @@
           "excess_pp": 0.4444444444444445,
           "sign": "loses"
         },
-        "slope_on_log_lever": 3.913015779568017
+        "slope_on_log_lever": 3.9130157795680174,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=1,lambda=1": {
         "high_tercile": {
@@ -1834,7 +1858,8 @@
           "excess_pp": 0.9866666666666667,
           "sign": "loses"
         },
-        "slope_on_log_lever": 4.92443722455295
+        "slope_on_log_lever": 4.924437224552949,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=1,lambda=2": {
         "high_tercile": {
@@ -1879,7 +1904,8 @@
           "excess_pp": 2.3799999999999994,
           "sign": "loses"
         },
-        "slope_on_log_lever": 5.482195742861765
+        "slope_on_log_lever": 5.482195742861768,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=1,lambda=4": {
         "high_tercile": {
@@ -1924,7 +1950,8 @@
           "excess_pp": 1.6844444444444442,
           "sign": "loses"
         },
-        "slope_on_log_lever": 5.23296654320158
+        "slope_on_log_lever": 5.232966543201581,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=1,lambda=8": {
         "high_tercile": {
@@ -1969,7 +1996,8 @@
           "excess_pp": -1.5133333333333334,
           "sign": "wins"
         },
-        "slope_on_log_lever": 4.484425550257544
+        "slope_on_log_lever": 4.484425550257544,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=2,lambda=0": {
         "high_tercile": {
@@ -2014,7 +2042,8 @@
           "excess_pp": 1.2088888888888887,
           "sign": "loses"
         },
-        "slope_on_log_lever": 3.196592622601686
+        "slope_on_log_lever": 3.1965926226016874,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=2,lambda=0.25": {
         "high_tercile": {
@@ -2059,7 +2088,8 @@
           "excess_pp": 0.9755555555555554,
           "sign": "loses"
         },
-        "slope_on_log_lever": 3.5559158735458873
+        "slope_on_log_lever": 3.5559158735458873,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=2,lambda=0.5": {
         "high_tercile": {
@@ -2104,7 +2134,8 @@
           "excess_pp": 0.9111111111111112,
           "sign": "loses"
         },
-        "slope_on_log_lever": 3.9397545643173664
+        "slope_on_log_lever": 3.9397545643173664,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=2,lambda=1": {
         "high_tercile": {
@@ -2149,7 +2180,8 @@
           "excess_pp": 0.9333333333333333,
           "sign": "loses"
         },
-        "slope_on_log_lever": 4.636897381829941
+        "slope_on_log_lever": 4.636897381829942,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=2,lambda=2": {
         "high_tercile": {
@@ -2194,7 +2226,8 @@
           "excess_pp": 2.36,
           "sign": "loses"
         },
-        "slope_on_log_lever": 5.22828590304093
+        "slope_on_log_lever": 5.228285903040932,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=2,lambda=4": {
         "high_tercile": {
@@ -2239,7 +2272,8 @@
           "excess_pp": 1.44,
           "sign": "loses"
         },
-        "slope_on_log_lever": 5.07357992539132
+        "slope_on_log_lever": 5.0735799253913205,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=2,lambda=8": {
         "high_tercile": {
@@ -2284,7 +2318,8 @@
           "excess_pp": -1.2,
           "sign": "wins"
         },
-        "slope_on_log_lever": 4.390488525885267
+        "slope_on_log_lever": 4.390488525885267,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=4,lambda=0": {
         "high_tercile": {
@@ -2329,7 +2364,8 @@
           "excess_pp": 2.1511111111111108,
           "sign": "loses"
         },
-        "slope_on_log_lever": 3.3132424912485954
+        "slope_on_log_lever": 3.313242491248596,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=4,lambda=0.25": {
         "high_tercile": {
@@ -2374,7 +2410,8 @@
           "excess_pp": 2.035555555555556,
           "sign": "loses"
         },
-        "slope_on_log_lever": 3.4934079547426693
+        "slope_on_log_lever": 3.4934079547426697,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=4,lambda=0.5": {
         "high_tercile": {
@@ -2419,7 +2456,8 @@
           "excess_pp": 2.1622222222222223,
           "sign": "loses"
         },
-        "slope_on_log_lever": 3.676718620315232
+        "slope_on_log_lever": 3.6767186203152327,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=4,lambda=1": {
         "high_tercile": {
@@ -2464,7 +2502,8 @@
           "excess_pp": 1.7866666666666666,
           "sign": "loses"
         },
-        "slope_on_log_lever": 4.096170615765349
+        "slope_on_log_lever": 4.096170615765349,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=4,lambda=2": {
         "high_tercile": {
@@ -2509,7 +2548,8 @@
           "excess_pp": 2.3688888888888893,
           "sign": "loses"
         },
-        "slope_on_log_lever": 4.559958467983434
+        "slope_on_log_lever": 4.559958467983433,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=4,lambda=4": {
         "high_tercile": {
@@ -2554,7 +2594,8 @@
           "excess_pp": 1.1666666666666667,
           "sign": "loses"
         },
-        "slope_on_log_lever": 4.70234497147249
+        "slope_on_log_lever": 4.702344971472488,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=4,lambda=8": {
         "high_tercile": {
@@ -2599,7 +2640,8 @@
           "excess_pp": -0.9533333333333334,
           "sign": "wins"
         },
-        "slope_on_log_lever": 4.199318884844549
+        "slope_on_log_lever": 4.199318884844549,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=8,lambda=0": {
         "high_tercile": {
@@ -2644,7 +2686,8 @@
           "excess_pp": 3.506666666666667,
           "sign": "loses"
         },
-        "slope_on_log_lever": 2.7966444775435324
+        "slope_on_log_lever": 2.7966444775435337,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=8,lambda=0.25": {
         "high_tercile": {
@@ -2689,7 +2732,8 @@
           "excess_pp": 3.5088888888888885,
           "sign": "loses"
         },
-        "slope_on_log_lever": 2.8805286540109525
+        "slope_on_log_lever": 2.8805286540109525,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=8,lambda=0.5": {
         "high_tercile": {
@@ -2734,7 +2778,8 @@
           "excess_pp": 3.6311111111111116,
           "sign": "loses"
         },
-        "slope_on_log_lever": 2.9709735355118543
+        "slope_on_log_lever": 2.9709735355118547,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=8,lambda=1": {
         "high_tercile": {
@@ -2779,7 +2824,8 @@
           "excess_pp": 2.904444444444444,
           "sign": "loses"
         },
-        "slope_on_log_lever": 3.2069042268699524
+        "slope_on_log_lever": 3.2069042268699532,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=8,lambda=2": {
         "high_tercile": {
@@ -2824,7 +2870,8 @@
           "excess_pp": 2.7022222222222223,
           "sign": "loses"
         },
-        "slope_on_log_lever": 3.5054143291280457
+        "slope_on_log_lever": 3.505414329128047,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=8,lambda=4": {
         "high_tercile": {
@@ -2869,7 +2916,8 @@
           "excess_pp": 1.131111111111111,
           "sign": "loses"
         },
-        "slope_on_log_lever": 3.8416314363093758
+        "slope_on_log_lever": 3.8416314363093758,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "s=8,lambda=8": {
         "high_tercile": {
@@ -2914,7 +2962,8 @@
           "excess_pp": -1.3311111111111111,
           "sign": "wins"
         },
-        "slope_on_log_lever": 3.802122728359593
+        "slope_on_log_lever": 3.8021227283595938,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       }
     },
     "contours": {
@@ -3257,7 +3306,7 @@
         "olmes": {
           "lambda_ratio_to_boundary": null,
           "lambda_star_at_metric_s": [],
-          "map_excess_pp": 38.98239351358235,
+          "map_excess_pp": 38.982393512752616,
           "map_sign": "loses",
           "noise_ratio_to_boundary": null,
           "s_star_at_metric_lambda": []
@@ -3283,7 +3332,7 @@
         "olmes": {
           "lambda_ratio_to_boundary": null,
           "lambda_star_at_metric_s": [],
-          "map_excess_pp": 7.545776604398643,
+          "map_excess_pp": 7.5457766049324775,
           "map_sign": "loses",
           "noise_ratio_to_boundary": null,
           "s_star_at_metric_lambda": []
@@ -3309,11 +3358,11 @@
           "s_star_at_metric_lambda": []
         },
         "olmes": {
-          "lambda_ratio_to_boundary": 0.6679434505576196,
+          "lambda_ratio_to_boundary": 0.6679434507733778,
           "lambda_star_at_metric_s": [
             6.104216110711178
           ],
-          "map_excess_pp": 1.1156531763660709,
+          "map_excess_pp": 1.1156531756411603,
           "map_sign": "loses",
           "noise_ratio_to_boundary": null,
           "s_star_at_metric_lambda": []
@@ -3330,16 +3379,16 @@
     },
     "c4": {
       "coordinates": {
-        "alt_cv_times_residual_rms": 0.05002331585768487,
-        "alt_specific_rms": 0.08701413919418466,
+        "alt_cv_times_residual_rms": 0.05002331584371523,
+        "alt_specific_rms": 0.08701413920989388,
         "between_recipe_spread_T": 0.16758456864331142,
-        "loading_cv": 0.2171571597681185,
-        "loading_sd": 0.027986461989308667,
-        "rank_one_share": 0.8961248475665361,
+        "loading_cv": 0.21715715970747212,
+        "loading_sd": 0.027986461980652227,
+        "rank_one_share": 0.8961248474910088,
         "seed_sd_rms": 0.016809240147375094,
-        "shape_rms": 0.2773500981126146,
+        "shape_rms": 0.2773500981126145,
         "x_noise": 0.10030303078293587,
-        "y_recipe_specific": 0.04631719997490063
+        "y_recipe_specific": 0.04631719996057434
       },
       "map_position": [
         1.0,
@@ -3348,20 +3397,20 @@
     },
     "olmes": {
       "coordinates": {
-        "alt_cv_times_residual_rms": 0.19358518540631509,
-        "alt_specific_rms": 0.35876045025906905,
+        "alt_cv_times_residual_rms": 0.19358518541006664,
+        "alt_specific_rms": 0.3587604502991028,
         "between_recipe_spread_T": 0.013168751239804636,
-        "loading_cv": 0.11864329092441477,
-        "loading_sd": 0.008966607582035869,
-        "rank_one_share": 0.9645149217175691,
+        "loading_cv": 0.11864329092671419,
+        "loading_sd": 0.008966607582158805,
+        "rank_one_share": 0.9645149217071324,
         "seed_sd_rms": 0.0065439507632410274,
-        "shape_rms": 0.2773500981126145,
+        "shape_rms": 0.27735009811261446,
         "x_noise": 0.49693024373191136,
-        "y_recipe_specific": 0.18884778422254223
+        "y_recipe_specific": 0.1888477842251314
       },
       "map_position": [
         4.9542894153149755,
-        4.077271171937837
+        4.077271173254871
       ]
     }
   },
@@ -3557,129 +3606,129 @@
         },
         "noiseless_weights": {
           "C4": {
-            "damped_power_law": 0.4014756793681113,
-            "power_law": 0.48829646425363127,
-            "saturating": 0.11022785637825736
+            "damped_power_law": 0.40147562287927824,
+            "power_law": 0.48829650234708866,
+            "saturating": 0.1102278747736332
           },
           "DCLM-Baseline": {
-            "damped_power_law": 0.31618196244154545,
-            "power_law": 0.5543749978644975,
-            "saturating": 0.12944303969395698
+            "damped_power_law": 0.31618212602622514,
+            "power_law": 0.5543749103546762,
+            "saturating": 0.12944296361909852
           },
           "DCLM-Baseline (QC 10%)": {
-            "damped_power_law": 0.3583857227917505,
-            "power_law": 0.5363170625995285,
-            "saturating": 0.10529721460872093
+            "damped_power_law": 0.35838547865005704,
+            "power_law": 0.5363172170154167,
+            "saturating": 0.10529730433452626
           },
           "DCLM-Baseline (QC 20%)": {
-            "damped_power_law": 0.34900161792959294,
-            "power_law": 0.5429821218919791,
-            "saturating": 0.10801626017842789
+            "damped_power_law": 0.34900163786479893,
+            "power_law": 0.5429821090387965,
+            "saturating": 0.10801625309640461
           },
           "DCLM-Baseline (QC 7%, FW2)": {
-            "damped_power_law": 0.3633464179543869,
-            "power_law": 0.5254658157926095,
-            "saturating": 0.1111877662530035
+            "damped_power_law": 0.3633464209262065,
+            "power_law": 0.5254658133354606,
+            "saturating": 0.111187765738333
           },
           "DCLM-Baseline (QC 7%, FW3)": {
-            "damped_power_law": 0.3320713560336583,
-            "power_law": 0.5542908301591007,
-            "saturating": 0.11363781380724094
+            "damped_power_law": 0.3320716206838554,
+            "power_law": 0.554290671288198,
+            "saturating": 0.1136377080279466
           },
           "DCLM-Baseline (QC FW 10%)": {
-            "damped_power_law": 0.3562754540390343,
-            "power_law": 0.5431788423230655,
-            "saturating": 0.10054570363790026
+            "damped_power_law": 0.35627511809853474,
+            "power_law": 0.5431790532130552,
+            "saturating": 0.1005458286884101
           },
           "DCLM-Baseline (QC FW 3%)": {
-            "damped_power_law": 0.3485288249953663,
-            "power_law": 0.5565570929759737,
-            "saturating": 0.09491408202866003
+            "damped_power_law": 0.34852882241472327,
+            "power_law": 0.5565570951860016,
+            "saturating": 0.09491408239927501
           },
           "DCLM-Baseline 25% / Dolma 75%": {
-            "damped_power_law": 0.3836243850349064,
-            "power_law": 0.5116759195032445,
-            "saturating": 0.10469969546184899
+            "damped_power_law": 0.3836245106524696,
+            "power_law": 0.5116758398155581,
+            "saturating": 0.10469964953197237
           },
           "DCLM-Baseline 50% / Dolma 50%": {
-            "damped_power_law": 0.3558357480585589,
-            "power_law": 0.5349847650783763,
-            "saturating": 0.1091794868630648
+            "damped_power_law": 0.3558356919018789,
+            "power_law": 0.5349847959225803,
+            "saturating": 0.10917951217554085
           },
           "DCLM-Baseline 75% / Dolma 25%": {
-            "damped_power_law": 0.3498605058673187,
-            "power_law": 0.542596673625461,
-            "saturating": 0.10754282050722036
+            "damped_power_law": 0.34986093538968127,
+            "power_law": 0.5425964177602332,
+            "saturating": 0.10754264685008563
           },
           "Dolma1.6++": {
-            "damped_power_law": 0.3891050421861327,
-            "power_law": 0.5266942804277325,
-            "saturating": 0.0842006773861348
+            "damped_power_law": 0.38910478498258183,
+            "power_law": 0.5266944511134999,
+            "saturating": 0.08420076390391833
           },
           "Dolma1.7": {
-            "damped_power_law": 0.38038063837385294,
-            "power_law": 0.5316367928386427,
-            "saturating": 0.0879825687875044
+            "damped_power_law": 0.3803798328994591,
+            "power_law": 0.5316373261715003,
+            "saturating": 0.08798284092904048
           },
           "Dolma1.7 (no Flan)": {
-            "damped_power_law": 0.35538438089630486,
-            "power_law": 0.5434795066489968,
-            "saturating": 0.1011361124546983
+            "damped_power_law": 0.3553847365795256,
+            "power_law": 0.5434792905453462,
+            "saturating": 0.10113597287512832
           },
           "Dolma1.7 (no Reddit)": {
-            "damped_power_law": 0.33082760373330145,
-            "power_law": 0.5601184349155163,
-            "saturating": 0.10905396135118234
+            "damped_power_law": 0.33082733478636744,
+            "power_law": 0.5601185980043577,
+            "saturating": 0.10905406720927487
           },
           "Dolma1.7 (no code)": {
-            "damped_power_law": 0.3702530129237523,
-            "power_law": 0.5205149356429605,
-            "saturating": 0.10923205143328726
+            "damped_power_law": 0.37025300544918,
+            "power_law": 0.5205149402822836,
+            "saturating": 0.1092320542685364
           },
           "Dolma1.7 (no math, code)": {
-            "damped_power_law": 0.3611850877884469,
-            "power_law": 0.5303171275948718,
-            "saturating": 0.10849778461668133
+            "damped_power_law": 0.3611847551138103,
+            "power_law": 0.5303173268324832,
+            "saturating": 0.10849791805370639
           },
           "Falcon": {
-            "damped_power_law": 0.3579985163005182,
-            "power_law": 0.5217343231341078,
-            "saturating": 0.12026716056537401
+            "damped_power_law": 0.3579987055603548,
+            "power_law": 0.52173420985113,
+            "saturating": 0.12026708458851515
           },
           "Falcon+CC": {
-            "damped_power_law": 0.3643203887814994,
-            "power_law": 0.5341522645982841,
-            "saturating": 0.10152734662021644
+            "damped_power_law": 0.36432007038235753,
+            "power_law": 0.5341524648004519,
+            "saturating": 0.10152746481719058
           },
           "Falcon+CC (QC 10%)": {
-            "damped_power_law": 0.38265372450474283,
-            "power_law": 0.5284985691673476,
-            "saturating": 0.0888477063279095
+            "damped_power_law": 0.38265309172217676,
+            "power_law": 0.5284989860738396,
+            "saturating": 0.0888479222039836
           },
           "Falcon+CC (QC 20%)": {
-            "damped_power_law": 0.34729098714233986,
-            "power_law": 0.5411956978004344,
-            "saturating": 0.11151331505722573
+            "damped_power_law": 0.3472911383465346,
+            "power_law": 0.5411956039013028,
+            "saturating": 0.11151325775216248
           },
           "Falcon+CC (QC Orig 10%)": {
-            "damped_power_law": 0.32658492486473906,
-            "power_law": 0.5570424193472191,
-            "saturating": 0.11637265578804186
+            "damped_power_law": 0.32658491461316425,
+            "power_law": 0.5570424268682083,
+            "saturating": 0.11637265851862753
           },
           "Falcon+CC (QC Tulu 10%)": {
-            "damped_power_law": 0.3657661086347335,
-            "power_law": 0.5196383888879672,
-            "saturating": 0.11459550247729919
+            "damped_power_law": 0.36576642082172844,
+            "power_law": 0.51963819846484,
+            "saturating": 0.11459538071343148
           },
           "FineWeb-Edu": {
-            "damped_power_law": 0.37633092919730904,
-            "power_law": 0.5102952136944495,
-            "saturating": 0.11337385710824154
+            "damped_power_law": 0.3763308631322979,
+            "power_law": 0.5102952568758804,
+            "saturating": 0.11337387999182176
           },
           "FineWeb-Pro": {
-            "damped_power_law": 0.3920583552636054,
-            "power_law": 0.5120849125185063,
-            "saturating": 0.09585673221788839
+            "damped_power_law": 0.39205851417624504,
+            "power_law": 0.5120848071098056,
+            "saturating": 0.09585667871394928
           }
         },
         "projection_excess_pp": 1.0666666666666667,
@@ -3880,129 +3929,129 @@
         },
         "noiseless_weights": {
           "C4": {
-            "damped_power_law": 0.47362702122076805,
-            "power_law": 0.4108308966755432,
-            "saturating": 0.11554208210368878
+            "damped_power_law": 0.47362701679546987,
+            "power_law": 0.41083090097217134,
+            "saturating": 0.11554208223235879
           },
           "DCLM-Baseline": {
-            "damped_power_law": 0.3070775586505682,
-            "power_law": 0.5276400079231128,
-            "saturating": 0.16528243342631893
+            "damped_power_law": 0.30707742614742156,
+            "power_law": 0.5276400764091665,
+            "saturating": 0.16528249744341197
           },
           "DCLM-Baseline (QC 10%)": {
-            "damped_power_law": 0.3776208902668221,
-            "power_law": 0.4978403037691779,
-            "saturating": 0.12453880596399998
+            "damped_power_law": 0.3776208975549076,
+            "power_law": 0.49784029520404954,
+            "saturating": 0.12453880724104292
           },
           "DCLM-Baseline (QC 20%)": {
-            "damped_power_law": 0.36838215005623204,
-            "power_law": 0.5043351655299728,
-            "saturating": 0.1272826844137952
+            "damped_power_law": 0.36838209472780553,
+            "power_law": 0.5043351996247164,
+            "saturating": 0.12728270564747807
           },
           "DCLM-Baseline (QC 7%, FW2)": {
-            "damped_power_law": 0.40721094177558775,
-            "power_law": 0.469009032403541,
-            "saturating": 0.12378002582087129
+            "damped_power_law": 0.4072109499063925,
+            "power_law": 0.46900903052664505,
+            "saturating": 0.12378001956696244
           },
           "DCLM-Baseline (QC 7%, FW3)": {
-            "damped_power_law": 0.3611843974848521,
-            "power_law": 0.5106309165581486,
-            "saturating": 0.12818468595699917
+            "damped_power_law": 0.361184403763397,
+            "power_law": 0.5106309117948351,
+            "saturating": 0.12818468444176792
           },
           "DCLM-Baseline (QC FW 10%)": {
-            "damped_power_law": 0.3645457206102988,
-            "power_law": 0.5134046249507361,
-            "saturating": 0.12204965443896515
+            "damped_power_law": 0.36454588266407284,
+            "power_law": 0.5134045254465409,
+            "saturating": 0.12204959188938624
           },
           "DCLM-Baseline (QC FW 3%)": {
-            "damped_power_law": 0.34403041095882647,
-            "power_law": 0.5384135656330491,
-            "saturating": 0.11755602340812436
+            "damped_power_law": 0.34403026003944376,
+            "power_law": 0.5384136547829124,
+            "saturating": 0.11755608517764378
           },
           "DCLM-Baseline 25% / Dolma 75%": {
-            "damped_power_law": 0.4199339263970159,
-            "power_law": 0.4606212807520319,
-            "saturating": 0.1194447928509523
+            "damped_power_law": 0.4199339131265042,
+            "power_law": 0.46062128909626504,
+            "saturating": 0.1194447977772309
           },
           "DCLM-Baseline 50% / Dolma 50%": {
-            "damped_power_law": 0.38109723547624913,
-            "power_law": 0.4920391204124032,
-            "saturating": 0.12686364411134754
+            "damped_power_law": 0.3810972522686719,
+            "power_law": 0.492039105990928,
+            "saturating": 0.12686364174040007
           },
           "DCLM-Baseline 75% / Dolma 25%": {
-            "damped_power_law": 0.364844969762436,
-            "power_law": 0.5071048089779389,
-            "saturating": 0.12805022125962515
+            "damped_power_law": 0.36484498383564223,
+            "power_law": 0.5071048006412355,
+            "saturating": 0.12805021552312223
           },
           "Dolma1.6++": {
-            "damped_power_law": 0.37887554383775296,
-            "power_law": 0.5119804057300922,
-            "saturating": 0.1091440504321548
+            "damped_power_law": 0.37887585311535144,
+            "power_law": 0.5119802125294379,
+            "saturating": 0.10914393435521068
           },
           "Dolma1.7": {
-            "damped_power_law": 0.3730822229625566,
-            "power_law": 0.51425090921682,
-            "saturating": 0.11266686782062332
+            "damped_power_law": 0.37308260015338285,
+            "power_law": 0.5142506826584378,
+            "saturating": 0.11266671718817933
           },
           "Dolma1.7 (no Flan)": {
-            "damped_power_law": 0.35822857340916836,
-            "power_law": 0.5170878304856489,
-            "saturating": 0.12468359610518269
+            "damped_power_law": 0.358228848818493,
+            "power_law": 0.5170876603513472,
+            "saturating": 0.12468349083015982
           },
           "Dolma1.7 (no Reddit)": {
-            "damped_power_law": 0.34080587929843453,
-            "power_law": 0.5294029967002842,
-            "saturating": 0.12979112400128123
+            "damped_power_law": 0.34080589042147,
+            "power_law": 0.5294029829364608,
+            "saturating": 0.12979112664206904
           },
           "Dolma1.7 (no code)": {
-            "damped_power_law": 0.4090512959438326,
-            "power_law": 0.4677791177942485,
-            "saturating": 0.12316958626191903
+            "damped_power_law": 0.4090512864739867,
+            "power_law": 0.4677791281800342,
+            "saturating": 0.12316958534597902
           },
           "Dolma1.7 (no math, code)": {
-            "damped_power_law": 0.3886152772898835,
-            "power_law": 0.48570689194895766,
-            "saturating": 0.12567783076115888
+            "damped_power_law": 0.38861521015834916,
+            "power_law": 0.4857069295827997,
+            "saturating": 0.1256778602588512
           },
           "Falcon": {
-            "damped_power_law": 0.47201028088446567,
-            "power_law": 0.4194458319470869,
-            "saturating": 0.10854388716844741
+            "damped_power_law": 0.4720110011289136,
+            "power_law": 0.4194453574935571,
+            "saturating": 0.10854364137752937
           },
           "Falcon+CC": {
-            "damped_power_law": 0.3756585277891479,
-            "power_law": 0.5011893043030706,
-            "saturating": 0.12315216790778143
+            "damped_power_law": 0.37565924562367053,
+            "power_law": 0.5011888731373849,
+            "saturating": 0.12315188123894452
           },
           "Falcon+CC (QC 10%)": {
-            "damped_power_law": 0.3811414674158202,
-            "power_law": 0.5067089677872879,
-            "saturating": 0.11214956479689181
+            "damped_power_law": 0.3811412361436768,
+            "power_law": 0.5067091117017021,
+            "saturating": 0.11214965215462108
           },
           "Falcon+CC (QC 20%)": {
-            "damped_power_law": 0.3734598511034906,
-            "power_law": 0.497780456464807,
-            "saturating": 0.12875969243170243
+            "damped_power_law": 0.37345987773844525,
+            "power_law": 0.4977804376474344,
+            "saturating": 0.12875968461412032
           },
           "Falcon+CC (QC Orig 10%)": {
-            "damped_power_law": 0.355899530906411,
-            "power_law": 0.5122844400711121,
-            "saturating": 0.13181602902247697
+            "damped_power_law": 0.3558995331133485,
+            "power_law": 0.5122844390760409,
+            "saturating": 0.13181602781061058
           },
           "Falcon+CC (QC Tulu 10%)": {
-            "damped_power_law": 0.4236047431369444,
-            "power_law": 0.45336074465059273,
-            "saturating": 0.12303451221246288
+            "damped_power_law": 0.4236047487903313,
+            "power_law": 0.45336074104266866,
+            "saturating": 0.12303451016700002
           },
           "FineWeb-Edu": {
-            "damped_power_law": 0.4429008917477164,
-            "power_law": 0.43797203665091766,
-            "saturating": 0.11912707160136589
+            "damped_power_law": 0.4429008910325171,
+            "power_law": 0.4379720354452601,
+            "saturating": 0.11912707352222285
           },
           "FineWeb-Pro": {
-            "damped_power_law": 0.4079648226652996,
-            "power_law": 0.47568612252092535,
-            "saturating": 0.11634905481377514
+            "damped_power_law": 0.4079652948083087,
+            "power_law": 0.4756858305191344,
+            "saturating": 0.11634887467255689
           }
         },
         "projection_excess_pp": 1.8622222222222224,
@@ -4203,129 +4252,129 @@
         },
         "noiseless_weights": {
           "C4": {
-            "damped_power_law": 0.6402664712039257,
-            "power_law": 0.27604117830389957,
-            "saturating": 0.08369235049217487
+            "damped_power_law": 0.6402672161493023,
+            "power_law": 0.27604066926550025,
+            "saturating": 0.08369211458519744
           },
           "DCLM-Baseline": {
-            "damped_power_law": 0.36421598315152237,
-            "power_law": 0.4688783743318017,
-            "saturating": 0.166905642516676
+            "damped_power_law": 0.3642162325374049,
+            "power_law": 0.4688782385887162,
+            "saturating": 0.16690552887387883
           },
           "DCLM-Baseline (QC 10%)": {
-            "damped_power_law": 0.45979162217851277,
-            "power_law": 0.42306063842657887,
-            "saturating": 0.11714773939490841
+            "damped_power_law": 0.45979163196042283,
+            "power_law": 0.42306063218689444,
+            "saturating": 0.11714773585268283
           },
           "DCLM-Baseline (QC 20%)": {
-            "damped_power_law": 0.45857828375604176,
-            "power_law": 0.424564605615848,
-            "saturating": 0.11685711062811026
+            "damped_power_law": 0.4585783752074696,
+            "power_law": 0.4245645489209083,
+            "saturating": 0.11685707587162211
           },
           "DCLM-Baseline (QC 7%, FW2)": {
-            "damped_power_law": 0.5475181627474691,
-            "power_law": 0.3535835208113563,
-            "saturating": 0.09889831644117467
+            "damped_power_law": 0.5475184676306558,
+            "power_law": 0.3535833165763429,
+            "saturating": 0.09889821579300123
           },
           "DCLM-Baseline (QC 7%, FW3)": {
-            "damped_power_law": 0.37988920553796246,
-            "power_law": 0.4756983955512073,
-            "saturating": 0.1444123989108303
+            "damped_power_law": 0.37988927308953685,
+            "power_law": 0.4756983537138664,
+            "saturating": 0.14441237319659683
           },
           "DCLM-Baseline (QC FW 10%)": {
-            "damped_power_law": 0.4294545888912231,
-            "power_law": 0.45108736871980776,
-            "saturating": 0.11945804238896905
+            "damped_power_law": 0.4294549022968006,
+            "power_law": 0.4510871733436266,
+            "saturating": 0.11945792435957278
           },
           "DCLM-Baseline (QC FW 3%)": {
-            "damped_power_law": 0.3697602944591226,
-            "power_law": 0.5037806943182527,
-            "saturating": 0.12645901122262476
+            "damped_power_law": 0.3697602600226396,
+            "power_law": 0.5037807148685133,
+            "saturating": 0.12645902510884718
           },
           "DCLM-Baseline 25% / Dolma 75%": {
-            "damped_power_law": 0.3045322436791773,
-            "power_law": 0.4993742422882068,
-            "saturating": 0.1960935140326159
+            "damped_power_law": 0.30453235799588596,
+            "power_law": 0.4993741937214821,
+            "saturating": 0.19609344828263187
           },
           "DCLM-Baseline 50% / Dolma 50%": {
-            "damped_power_law": 0.30060349685119464,
-            "power_law": 0.510306633805154,
-            "saturating": 0.1890898693436514
+            "damped_power_law": 0.3006033932683425,
+            "power_law": 0.5103066838933438,
+            "saturating": 0.18908992283831375
           },
           "DCLM-Baseline 75% / Dolma 25%": {
-            "damped_power_law": 0.29586334789042096,
-            "power_law": 0.5194116869078381,
-            "saturating": 0.184724965201741
+            "damped_power_law": 0.2958632474346942,
+            "power_law": 0.5194117363124492,
+            "saturating": 0.18472501625285662
           },
           "Dolma1.6++": {
-            "damped_power_law": 0.3967885909020346,
-            "power_law": 0.48074376291160364,
-            "saturating": 0.1224676461863618
+            "damped_power_law": 0.3967884857649988,
+            "power_law": 0.4807438277254185,
+            "saturating": 0.12246768650958259
           },
           "Dolma1.7": {
-            "damped_power_law": 0.3991401910627852,
-            "power_law": 0.47760989642155116,
-            "saturating": 0.12324991251566358
+            "damped_power_law": 0.3991400077728416,
+            "power_law": 0.47761001326021996,
+            "saturating": 0.12324997896693854
           },
           "Dolma1.7 (no Flan)": {
-            "damped_power_law": 0.27458681157939036,
-            "power_law": 0.5374357795996436,
-            "saturating": 0.18797740882096595
+            "damped_power_law": 0.27458683723763627,
+            "power_law": 0.5374357677909044,
+            "saturating": 0.1879773949714593
           },
           "Dolma1.7 (no Reddit)": {
-            "damped_power_law": 0.26426610961807856,
-            "power_law": 0.5445247441501568,
-            "saturating": 0.1912091462317645
+            "damped_power_law": 0.2642660348605475,
+            "power_law": 0.5445247771217934,
+            "saturating": 0.19120918801765904
           },
           "Dolma1.7 (no code)": {
-            "damped_power_law": 0.3151240978295088,
-            "power_law": 0.4942435387287977,
-            "saturating": 0.19063236344169338
+            "damped_power_law": 0.3151240928576029,
+            "power_law": 0.4942435422153448,
+            "saturating": 0.19063236492705243
           },
           "Dolma1.7 (no math, code)": {
-            "damped_power_law": 0.3086760133635172,
-            "power_law": 0.5041431384217776,
-            "saturating": 0.1871808482147052
+            "damped_power_law": 0.3086759871021121,
+            "power_law": 0.5041431536564968,
+            "saturating": 0.18718085924139116
           },
           "Falcon": {
-            "damped_power_law": 0.3448678445913404,
-            "power_law": 0.46771916523953444,
-            "saturating": 0.1874129901691252
+            "damped_power_law": 0.34486754139413184,
+            "power_law": 0.46771932793045046,
+            "saturating": 0.18741313067541773
           },
           "Falcon+CC": {
-            "damped_power_law": 0.47157491599788826,
-            "power_law": 0.4178709384388672,
-            "saturating": 0.11055414556324449
+            "damped_power_law": 0.4715743562437989,
+            "power_law": 0.4178713079086934,
+            "saturating": 0.1105543358475078
           },
           "Falcon+CC (QC 10%)": {
-            "damped_power_law": 0.40954002281527657,
-            "power_law": 0.46788787674495336,
-            "saturating": 0.12257210043977021
+            "damped_power_law": 0.40954017241909246,
+            "power_law": 0.46788779051360263,
+            "saturating": 0.12257203706730489
           },
           "Falcon+CC (QC 20%)": {
-            "damped_power_law": 0.5330696017302882,
-            "power_law": 0.3718127570187067,
-            "saturating": 0.09511764125100507
+            "damped_power_law": 0.5330694211324902,
+            "power_law": 0.37181288221124237,
+            "saturating": 0.09511769665626736
           },
           "Falcon+CC (QC Orig 10%)": {
-            "damped_power_law": 0.36102413091927404,
-            "power_law": 0.4837265115517819,
-            "saturating": 0.15524935752894403
+            "damped_power_law": 0.3610244337270166,
+            "power_law": 0.48372634036673406,
+            "saturating": 0.15524922590624932
           },
           "Falcon+CC (QC Tulu 10%)": {
-            "damped_power_law": 0.5078079616863455,
-            "power_law": 0.37430205313473225,
-            "saturating": 0.11788998517892228
+            "damped_power_law": 0.5078070313717653,
+            "power_law": 0.3743026562071572,
+            "saturating": 0.11789031242107753
           },
           "FineWeb-Edu": {
-            "damped_power_law": 0.5860790401925456,
-            "power_law": 0.3196175057806945,
-            "saturating": 0.09430345402675987
+            "damped_power_law": 0.5860782140341434,
+            "power_law": 0.31961806526231307,
+            "saturating": 0.09430372070354368
           },
           "FineWeb-Pro": {
-            "damped_power_law": 0.4788212839368741,
-            "power_law": 0.4074287683860525,
-            "saturating": 0.11374994767707337
+            "damped_power_law": 0.4788211776848948,
+            "power_law": 0.4074288370732399,
+            "saturating": 0.11374998524186535
           }
         },
         "projection_excess_pp": 2.2,
@@ -4526,129 +4575,129 @@
         },
         "noiseless_weights": {
           "C4": {
-            "damped_power_law": 0.49862949525738814,
-            "power_law": 0.34664366349503617,
-            "saturating": 0.15472684124757555
+            "damped_power_law": 0.4986293303508539,
+            "power_law": 0.3466437645865125,
+            "saturating": 0.15472690506263365
           },
           "DCLM-Baseline": {
-            "damped_power_law": 0.3886946716218856,
-            "power_law": 0.43053858965168423,
-            "saturating": 0.18076673872643018
+            "damped_power_law": 0.3886559370309454,
+            "power_law": 0.43056016329725527,
+            "saturating": 0.1807838996717993
           },
           "DCLM-Baseline (QC 10%)": {
-            "damped_power_law": 0.6359804435277265,
-            "power_law": 0.28610978067010645,
-            "saturating": 0.07790977580216706
+            "damped_power_law": 0.6359789077191367,
+            "power_law": 0.286110858384586,
+            "saturating": 0.07791023389627728
           },
           "DCLM-Baseline (QC 20%)": {
-            "damped_power_law": 0.6347367343208145,
-            "power_law": 0.2873162470175587,
-            "saturating": 0.07794701866162673
+            "damped_power_law": 0.6347345142008768,
+            "power_law": 0.28731781144305624,
+            "saturating": 0.0779476743560669
           },
           "DCLM-Baseline (QC 7%, FW2)": {
-            "damped_power_law": 0.5708510639823526,
-            "power_law": 0.3185730537748575,
-            "saturating": 0.11057588224278987
+            "damped_power_law": 0.5708506065226779,
+            "power_law": 0.31857335165267275,
+            "saturating": 0.11057604182464936
           },
           "DCLM-Baseline (QC 7%, FW3)": {
-            "damped_power_law": 0.43065782732088786,
-            "power_law": 0.4242870375545735,
-            "saturating": 0.14505513512453871
+            "damped_power_law": 0.43065937331409576,
+            "power_law": 0.4242861102450466,
+            "saturating": 0.1450545164408577
           },
           "DCLM-Baseline (QC FW 10%)": {
-            "damped_power_law": 0.5956222023174149,
-            "power_law": 0.3219450742671138,
-            "saturating": 0.08243272341547132
+            "damped_power_law": 0.5956247075407609,
+            "power_law": 0.3219433224068159,
+            "saturating": 0.08243197005242321
           },
           "DCLM-Baseline (QC FW 3%)": {
-            "damped_power_law": 0.4321636702814985,
-            "power_law": 0.44820403528341707,
-            "saturating": 0.11963229443508444
+            "damped_power_law": 0.432163782223788,
+            "power_law": 0.4482039681470312,
+            "saturating": 0.11963224962918076
           },
           "DCLM-Baseline 25% / Dolma 75%": {
-            "damped_power_law": 0.33285437072919044,
-            "power_law": 0.4613768520499079,
-            "saturating": 0.2057687772209016
+            "damped_power_law": 0.3328541329965838,
+            "power_law": 0.46137697469686323,
+            "saturating": 0.20576889230655296
           },
           "DCLM-Baseline 50% / Dolma 50%": {
-            "damped_power_law": 0.33207350062700264,
-            "power_law": 0.4708714371354444,
-            "saturating": 0.19705506223755315
+            "damped_power_law": 0.33207315830797113,
+            "power_law": 0.4708716267374201,
+            "saturating": 0.19705521495460865
           },
           "DCLM-Baseline 75% / Dolma 25%": {
-            "damped_power_law": 0.32800638019386397,
-            "power_law": 0.48039747037866004,
-            "saturating": 0.19159614942747602
+            "damped_power_law": 0.3280063542497737,
+            "power_law": 0.4803974796091718,
+            "saturating": 0.19159616614105443
           },
           "Dolma1.6++": {
-            "damped_power_law": 0.26600114858417123,
-            "power_law": 0.531119845076374,
-            "saturating": 0.20287900633945485
+            "damped_power_law": 0.266001103676364,
+            "power_law": 0.5311198742637941,
+            "saturating": 0.20287902205984173
           },
           "Dolma1.7": {
-            "damped_power_law": 0.2777975381470018,
-            "power_law": 0.523581331407579,
-            "saturating": 0.19862113044541918
+            "damped_power_law": 0.27779768866579563,
+            "power_law": 0.5235812620872505,
+            "saturating": 0.19862104924695387
           },
           "Dolma1.7 (no Flan)": {
-            "damped_power_law": 0.29938764364872605,
-            "power_law": 0.5037793968599971,
-            "saturating": 0.19683295949127694
+            "damped_power_law": 0.29938777957804985,
+            "power_law": 0.5037793251617048,
+            "saturating": 0.19683289526024542
           },
           "Dolma1.7 (no Reddit)": {
-            "damped_power_law": 0.28352948363276337,
-            "power_law": 0.5137042579949154,
-            "saturating": 0.2027662583723213
+            "damped_power_law": 0.2835292754687822,
+            "power_law": 0.5137043655746618,
+            "saturating": 0.20276635895655595
           },
           "Dolma1.7 (no code)": {
-            "damped_power_law": 0.34757282558037045,
-            "power_law": 0.45355603086361784,
-            "saturating": 0.19887114355601174
+            "damped_power_law": 0.3475727246288438,
+            "power_law": 0.4535560824250115,
+            "saturating": 0.1988711929461447
           },
           "Dolma1.7 (no math, code)": {
-            "damped_power_law": 0.3425361942020123,
-            "power_law": 0.46319491364808935,
-            "saturating": 0.1942688921498983
+            "damped_power_law": 0.3425361536282097,
+            "power_law": 0.4631949359146088,
+            "saturating": 0.1942689104571815
           },
           "Falcon": {
-            "damped_power_law": 0.36927221089608636,
-            "power_law": 0.4295353131893075,
-            "saturating": 0.2011924759146062
+            "damped_power_law": 0.36927218791729094,
+            "power_law": 0.4295353212935623,
+            "saturating": 0.20119249078914678
           },
           "Falcon+CC": {
-            "damped_power_law": 0.3337863826956601,
-            "power_law": 0.4778404237671215,
-            "saturating": 0.1883731935372183
+            "damped_power_law": 0.33378616688666535,
+            "power_law": 0.4778405364352921,
+            "saturating": 0.18837329667804265
           },
           "Falcon+CC (QC 10%)": {
-            "damped_power_law": 0.4822627942784864,
-            "power_law": 0.4030774643629821,
-            "saturating": 0.11465974135853167
+            "damped_power_law": 0.4822633885179749,
+            "power_law": 0.40307708361795413,
+            "saturating": 0.11465952786407092
           },
           "Falcon+CC (QC 20%)": {
-            "damped_power_law": 0.4456135635043329,
-            "power_law": 0.4079148754891907,
-            "saturating": 0.14647156100647632
+            "damped_power_law": 0.4456006264137331,
+            "power_law": 0.40792268022279105,
+            "saturating": 0.14647669336347582
           },
           "Falcon+CC (QC Orig 10%)": {
-            "damped_power_law": 0.4136130774757266,
-            "power_law": 0.43023932577821045,
-            "saturating": 0.15614759674606293
+            "damped_power_law": 0.4136126442778791,
+            "power_law": 0.4302395756564296,
+            "saturating": 0.15614778006569124
           },
           "Falcon+CC (QC Tulu 10%)": {
-            "damped_power_law": 0.44073575753177785,
-            "power_law": 0.39262868807231127,
-            "saturating": 0.16663555439591096
+            "damped_power_law": 0.4407356501837173,
+            "power_law": 0.39262875629321253,
+            "saturating": 0.1666355935230701
           },
           "FineWeb-Edu": {
-            "damped_power_law": 0.46141383676382586,
-            "power_law": 0.37739660170847683,
-            "saturating": 0.16118956152769737
+            "damped_power_law": 0.4614137343170523,
+            "power_law": 0.37739666073336636,
+            "saturating": 0.16118960494958132
           },
           "FineWeb-Pro": {
-            "damped_power_law": 0.37165041690092376,
-            "power_law": 0.45060094580694765,
-            "saturating": 0.1777486372921286
+            "damped_power_law": 0.3716504590399618,
+            "power_law": 0.4506009236381015,
+            "saturating": 0.17774861732193672
           }
         },
         "projection_excess_pp": 2.884444444444445,
@@ -4849,129 +4898,129 @@
         },
         "noiseless_weights": {
           "C4": {
-            "damped_power_law": 0.4467129299788658,
-            "power_law": 0.3565019700274046,
-            "saturating": 0.19678509999372962
+            "damped_power_law": 0.44671346310109067,
+            "power_law": 0.3565016727020437,
+            "saturating": 0.19678486419686564
           },
           "DCLM-Baseline": {
-            "damped_power_law": 0.39112324524500564,
-            "power_law": 0.4071432657660048,
-            "saturating": 0.20173348898898966
+            "damped_power_law": 0.3911199043725128,
+            "power_law": 0.4071450836256913,
+            "saturating": 0.20173501200179586
           },
           "DCLM-Baseline (QC 10%)": {
-            "damped_power_law": 0.537656251097191,
-            "power_law": 0.335971363901753,
-            "saturating": 0.12637238500105608
+            "damped_power_law": 0.5376565213843484,
+            "power_law": 0.3359711942218903,
+            "saturating": 0.12637228439376127
           },
           "DCLM-Baseline (QC 20%)": {
-            "damped_power_law": 0.5240320543237859,
-            "power_law": 0.34458814587530984,
-            "saturating": 0.13137979980090428
+            "damped_power_law": 0.5240330948932661,
+            "power_law": 0.3445874963542172,
+            "saturating": 0.1313794087525166
           },
           "DCLM-Baseline (QC 7%, FW2)": {
-            "damped_power_law": 0.4943895509580572,
-            "power_law": 0.3473115293998416,
-            "saturating": 0.15829891964210122
+            "damped_power_law": 0.4943914237935215,
+            "power_law": 0.3473104218109423,
+            "saturating": 0.1582981543955363
           },
           "DCLM-Baseline (QC 7%, FW3)": {
-            "damped_power_law": 0.4291009464235769,
-            "power_law": 0.4061751255414593,
-            "saturating": 0.16472392803496375
+            "damped_power_law": 0.429100273764196,
+            "power_law": 0.40617551453449063,
+            "saturating": 0.16472421170131327
           },
           "DCLM-Baseline (QC FW 10%)": {
-            "damped_power_law": 0.46626371149450424,
-            "power_law": 0.39061160557154456,
-            "saturating": 0.14312468293395106
+            "damped_power_law": 0.46626431552414926,
+            "power_law": 0.39061123952016974,
+            "saturating": 0.14312444495568102
           },
           "DCLM-Baseline (QC FW 3%)": {
-            "damped_power_law": 0.5356046744540384,
-            "power_law": 0.36603020960396887,
-            "saturating": 0.09836511594199278
+            "damped_power_law": 0.5356074139478101,
+            "power_law": 0.3660283548456501,
+            "saturating": 0.09836423120653982
           },
           "DCLM-Baseline 25% / Dolma 75%": {
-            "damped_power_law": 0.34956898478565407,
-            "power_law": 0.4322055244224528,
-            "saturating": 0.21822549079189307
+            "damped_power_law": 0.3495685057272811,
+            "power_law": 0.43220577359434753,
+            "saturating": 0.21822572067837123
           },
           "DCLM-Baseline 50% / Dolma 50%": {
-            "damped_power_law": 0.35177198188842873,
-            "power_law": 0.4398600554689467,
-            "saturating": 0.20836796264262467
+            "damped_power_law": 0.3517895720516267,
+            "power_law": 0.43985082051972757,
+            "saturating": 0.20835960742864576
           },
           "DCLM-Baseline 75% / Dolma 25%": {
-            "damped_power_law": 0.35050299260568657,
-            "power_law": 0.4483741053733965,
-            "saturating": 0.20112290202091682
+            "damped_power_law": 0.3505031876252963,
+            "power_law": 0.4483739955989685,
+            "saturating": 0.20112281677573512
           },
           "Dolma1.6++": {
-            "damped_power_law": 0.281001040988496,
-            "power_law": 0.5059195952626088,
-            "saturating": 0.21307936374889525
+            "damped_power_law": 0.28100100742084794,
+            "power_law": 0.5059196075608507,
+            "saturating": 0.21307938501830137
           },
           "Dolma1.7": {
-            "damped_power_law": 0.2961367179309333,
-            "power_law": 0.49627135002741984,
-            "saturating": 0.2075919320416468
+            "damped_power_law": 0.2961366775445051,
+            "power_law": 0.4962713658613227,
+            "saturating": 0.20759195659417223
           },
           "Dolma1.7 (no Flan)": {
-            "damped_power_law": 0.320026633536269,
-            "power_law": 0.4739129182702653,
-            "saturating": 0.20606044819346558
+            "damped_power_law": 0.32002292757101314,
+            "power_law": 0.4739147959631394,
+            "saturating": 0.20606227646584738
           },
           "Dolma1.7 (no Reddit)": {
-            "damped_power_law": 0.2990315147169863,
-            "power_law": 0.4863794582440279,
-            "saturating": 0.2145890270389858
+            "damped_power_law": 0.29903151819388557,
+            "power_law": 0.48637945587611386,
+            "saturating": 0.2145890259300006
           },
           "Dolma1.7 (no code)": {
-            "damped_power_law": 0.3632818998212721,
-            "power_law": 0.4244919929765678,
-            "saturating": 0.21222610720216012
+            "damped_power_law": 0.3632819505479639,
+            "power_law": 0.4244919627184905,
+            "saturating": 0.2122260867335456
           },
           "Dolma1.7 (no math, code)": {
-            "damped_power_law": 0.36169062687399334,
-            "power_law": 0.4324378030763226,
-            "saturating": 0.2058715700496839
+            "damped_power_law": 0.3616907248661996,
+            "power_law": 0.4324377558452714,
+            "saturating": 0.20587151928852898
           },
           "Falcon": {
-            "damped_power_law": 0.3732008865495477,
-            "power_law": 0.40563580644259684,
-            "saturating": 0.22116330700785544
+            "damped_power_law": 0.3732009485260223,
+            "power_law": 0.4056357706061501,
+            "saturating": 0.22116328086782766
           },
           "Falcon+CC": {
-            "damped_power_law": 0.36033119214545734,
-            "power_law": 0.44345797711084617,
-            "saturating": 0.1962108307436965
+            "damped_power_law": 0.3603304218027371,
+            "power_law": 0.44345838246915015,
+            "saturating": 0.19621119572811277
           },
           "Falcon+CC (QC 10%)": {
-            "damped_power_law": 0.6387419342300701,
-            "power_law": 0.28273370751659216,
-            "saturating": 0.07852435825333784
+            "damped_power_law": 0.6387465249661466,
+            "power_law": 0.2827304952212609,
+            "saturating": 0.07852297981259256
           },
           "Falcon+CC (QC 20%)": {
-            "damped_power_law": 0.43589659307188827,
-            "power_law": 0.39412031256954083,
-            "saturating": 0.1699830943585709
+            "damped_power_law": 0.43589639801848284,
+            "power_law": 0.3941204163850985,
+            "saturating": 0.16998318559641876
           },
           "Falcon+CC (QC Orig 10%)": {
-            "damped_power_law": 0.416294529364857,
-            "power_law": 0.40775139978258845,
-            "saturating": 0.17595407085255457
+            "damped_power_law": 0.41629500754810156,
+            "power_law": 0.4077511319930092,
+            "saturating": 0.1759538604588893
           },
           "Falcon+CC (QC Tulu 10%)": {
-            "damped_power_law": 0.41954628966770485,
-            "power_law": 0.38337811976671937,
-            "saturating": 0.1970755905655757
+            "damped_power_law": 0.41954645508771027,
+            "power_law": 0.3833780281838412,
+            "saturating": 0.19707551672844853
           },
           "FineWeb-Edu": {
-            "damped_power_law": 0.4303621829484375,
-            "power_law": 0.3745992457113618,
-            "saturating": 0.1950385713402007
+            "damped_power_law": 0.4303622785309047,
+            "power_law": 0.374599189767873,
+            "saturating": 0.19503853170122226
           },
           "FineWeb-Pro": {
-            "damped_power_law": 0.40571394436821484,
-            "power_law": 0.4118540219110332,
-            "saturating": 0.18243203372075195
+            "damped_power_law": 0.40571671982067686,
+            "power_law": 0.41185246232282163,
+            "saturating": 0.18243081785650145
           }
         },
         "projection_excess_pp": 3.9622222222222234,
@@ -5172,129 +5221,129 @@
         },
         "noiseless_weights": {
           "C4": {
-            "damped_power_law": 0.4174428980712012,
-            "power_law": 0.3545633551534326,
-            "saturating": 0.22799374677536613
+            "damped_power_law": 0.41744711289853464,
+            "power_law": 0.3545611106050782,
+            "saturating": 0.22799177649638724
           },
           "DCLM-Baseline": {
-            "damped_power_law": 0.38598139865939374,
-            "power_law": 0.3900817414468089,
-            "saturating": 0.22393685989379736
+            "damped_power_law": 0.3859813052374469,
+            "power_law": 0.3900817886278002,
+            "saturating": 0.223936906134753
           },
           "DCLM-Baseline (QC 10%)": {
-            "damped_power_law": 0.4851604775397227,
-            "power_law": 0.3516804427473358,
-            "saturating": 0.16315907971294155
+            "damped_power_law": 0.48516791965555595,
+            "power_law": 0.35167606938772966,
+            "saturating": 0.16315601095671445
           },
           "DCLM-Baseline (QC 20%)": {
-            "damped_power_law": 0.4774268529513794,
-            "power_law": 0.35585328132373567,
-            "saturating": 0.16671986572488498
+            "damped_power_law": 0.47742834814912616,
+            "power_law": 0.3558524064642584,
+            "saturating": 0.16671924538661542
           },
           "DCLM-Baseline (QC 7%, FW2)": {
-            "damped_power_law": 0.45453444184692654,
-            "power_law": 0.3520787394579529,
-            "saturating": 0.19338681869512067
+            "damped_power_law": 0.4545341319993364,
+            "power_law": 0.35207891218276127,
+            "saturating": 0.1933869558179023
           },
           "DCLM-Baseline (QC 7%, FW3)": {
-            "damped_power_law": 0.4202300020548626,
-            "power_law": 0.39377506093991643,
-            "saturating": 0.18599493700522104
+            "damped_power_law": 0.42022984890323795,
+            "power_law": 0.393775148271059,
+            "saturating": 0.18599500282570297
           },
           "DCLM-Baseline (QC FW 10%)": {
-            "damped_power_law": 0.44328807900796374,
-            "power_law": 0.3876674891601694,
-            "saturating": 0.1690444318318668
+            "damped_power_law": 0.44328875415478536,
+            "power_law": 0.387667101971427,
+            "saturating": 0.1690441438737877
           },
           "DCLM-Baseline (QC FW 3%)": {
-            "damped_power_law": 0.6457476165030246,
-            "power_law": 0.2787682072441559,
-            "saturating": 0.07548417625281939
+            "damped_power_law": 0.6457483251503945,
+            "power_law": 0.2787677079162328,
+            "saturating": 0.07548396693337268
           },
           "DCLM-Baseline 25% / Dolma 75%": {
-            "damped_power_law": 0.3556781111267224,
-            "power_law": 0.41113824680366573,
-            "saturating": 0.23318364206961192
+            "damped_power_law": 0.3556785065111515,
+            "power_law": 0.411138042100035,
+            "saturating": 0.2331834513888135
           },
           "DCLM-Baseline 50% / Dolma 50%": {
-            "damped_power_law": 0.35954068270424694,
-            "power_law": 0.4173901432752664,
-            "saturating": 0.2230691740204866
+            "damped_power_law": 0.3595406333811204,
+            "power_law": 0.4173901714899681,
+            "saturating": 0.22306919512891157
           },
           "DCLM-Baseline 75% / Dolma 25%": {
-            "damped_power_law": 0.36100250213670415,
-            "power_law": 0.4247431605305553,
-            "saturating": 0.21425433733274046
+            "damped_power_law": 0.36100243532309023,
+            "power_law": 0.42474320363517243,
+            "saturating": 0.21425436104173742
           },
           "Dolma1.6++": {
-            "damped_power_law": 0.2938132377847608,
-            "power_law": 0.4832550877416753,
-            "saturating": 0.22293167447356407
+            "damped_power_law": 0.2938133084407161,
+            "power_law": 0.4832550483374248,
+            "saturating": 0.2229316432218592
           },
           "Dolma1.7": {
-            "damped_power_law": 0.3115413537653476,
-            "power_law": 0.4718928713144007,
-            "saturating": 0.21656577492025184
+            "damped_power_law": 0.3115415393635698,
+            "power_law": 0.47189277951646985,
+            "saturating": 0.21656568111996025
           },
           "Dolma1.7 (no Flan)": {
-            "damped_power_law": 0.3343767716515238,
-            "power_law": 0.4489950837225803,
-            "saturating": 0.21662814462589605
+            "damped_power_law": 0.33441805779747397,
+            "power_law": 0.44897395036511256,
+            "saturating": 0.21660799183741347
           },
           "Dolma1.7 (no Reddit)": {
-            "damped_power_law": 0.3104889071947416,
-            "power_law": 0.4627067106281169,
-            "saturating": 0.22680438217714144
+            "damped_power_law": 0.3105524653915999,
+            "power_law": 0.4626754239438657,
+            "saturating": 0.22677211066453443
           },
           "Dolma1.7 (no code)": {
-            "damped_power_law": 0.36656183076291954,
-            "power_law": 0.40456055015521464,
-            "saturating": 0.2288776190818657
+            "damped_power_law": 0.3665620725598855,
+            "power_law": 0.4045604300594995,
+            "saturating": 0.22887749738061508
           },
           "Dolma1.7 (no math, code)": {
-            "damped_power_law": 0.36764950360679427,
-            "power_law": 0.4110559258574773,
-            "saturating": 0.22129457053572837
+            "damped_power_law": 0.3676497504674871,
+            "power_law": 0.4110558016607912,
+            "saturating": 0.22129444787172162
           },
           "Falcon": {
-            "damped_power_law": 0.3692673152108064,
-            "power_law": 0.38863039979969627,
-            "saturating": 0.24210228498949718
+            "damped_power_law": 0.3692679857640473,
+            "power_law": 0.3886300515602702,
+            "saturating": 0.2421019626756825
           },
           "Falcon+CC": {
-            "damped_power_law": 0.3707257699245649,
-            "power_law": 0.4197413140719274,
-            "saturating": 0.20953291600350776
+            "damped_power_law": 0.37072574583005063,
+            "power_law": 0.41974132686477067,
+            "saturating": 0.20953292730517858
           },
           "Falcon+CC (QC 10%)": {
-            "damped_power_law": 0.5140115748915235,
-            "power_law": 0.3519168054390231,
-            "saturating": 0.1340716196694534
+            "damped_power_law": 0.5140114273608997,
+            "power_law": 0.35191690332919073,
+            "saturating": 0.13407166930990963
           },
           "Falcon+CC (QC 20%)": {
-            "damped_power_law": 0.4222373650553323,
-            "power_law": 0.38400986983566854,
-            "saturating": 0.19375276510899905
+            "damped_power_law": 0.4222377593747629,
+            "power_law": 0.38400966149640525,
+            "saturating": 0.19375257912883198
           },
           "Falcon+CC (QC Orig 10%)": {
-            "damped_power_law": 0.4078672020617219,
-            "power_law": 0.39316510845382585,
-            "saturating": 0.19896768948445223
+            "damped_power_law": 0.4078670533926245,
+            "power_law": 0.39316518251723037,
+            "saturating": 0.19896776409014505
           },
           "Falcon+CC (QC Tulu 10%)": {
-            "damped_power_law": 0.4021025421298342,
-            "power_law": 0.3737688671757399,
-            "saturating": 0.22412859069442587
+            "damped_power_law": 0.40209500948439003,
+            "power_law": 0.3737728883799614,
+            "saturating": 0.2241321021356485
           },
           "FineWeb-Edu": {
-            "damped_power_law": 0.40953803377916426,
-            "power_law": 0.3675644838051662,
-            "saturating": 0.2228974824156696
+            "damped_power_law": 0.4095365333660581,
+            "power_law": 0.3675652898804323,
+            "saturating": 0.2228981767535095
           },
           "FineWeb-Pro": {
-            "damped_power_law": 0.4032779359327911,
-            "power_law": 0.39574405627461445,
-            "saturating": 0.20097800779259437
+            "damped_power_law": 0.4032783334511845,
+            "power_law": 0.3957438364752503,
+            "saturating": 0.20097783007356518
           }
         },
         "projection_excess_pp": 5.122222222222222,
@@ -5495,129 +5544,129 @@
         },
         "noiseless_weights": {
           "C4": {
-            "damped_power_law": 0.3968069216100839,
-            "power_law": 0.34978455452078533,
-            "saturating": 0.25340852386913076
+            "damped_power_law": 0.39680714882008794,
+            "power_law": 0.3497844347641062,
+            "saturating": 0.2534084164158059
           },
           "DCLM-Baseline": {
-            "damped_power_law": 0.3779809234937735,
-            "power_law": 0.3764529508932381,
-            "saturating": 0.24556612561298846
+            "damped_power_law": 0.37798066555906185,
+            "power_law": 0.3764530775330159,
+            "saturating": 0.2455662569079223
           },
           "DCLM-Baseline (QC 10%)": {
-            "damped_power_law": 0.45399058626937727,
-            "power_law": 0.3540539083149485,
-            "saturating": 0.19195550541567413
+            "damped_power_law": 0.45398920143284927,
+            "power_law": 0.3540546838135341,
+            "saturating": 0.19195611475361662
           },
           "DCLM-Baseline (QC 20%)": {
-            "damped_power_law": 0.44832376001850155,
-            "power_law": 0.3563771342404244,
-            "saturating": 0.19529910574107398
+            "damped_power_law": 0.44832824428925566,
+            "power_law": 0.3563746385372817,
+            "saturating": 0.19529711717346268
           },
           "DCLM-Baseline (QC 7%, FW2)": {
-            "damped_power_law": 0.42763115893250164,
-            "power_law": 0.3500833306971465,
-            "saturating": 0.22228551037035182
+            "damped_power_law": 0.4276421044670644,
+            "power_law": 0.35007744827238907,
+            "saturating": 0.2222804472605465
           },
           "DCLM-Baseline (QC 7%, FW3)": {
-            "damped_power_law": 0.4100976783950291,
-            "power_law": 0.38336544748249646,
-            "saturating": 0.20653687412247437
+            "damped_power_law": 0.41009771858672384,
+            "power_law": 0.3833654238448145,
+            "saturating": 0.2065368575684617
           },
           "DCLM-Baseline (QC FW 10%)": {
-            "damped_power_law": 0.42683629876757245,
-            "power_law": 0.38150410078625846,
-            "saturating": 0.191659600446169
+            "damped_power_law": 0.4268341881958482,
+            "power_law": 0.38150528004937023,
+            "saturating": 0.19166053175478157
           },
           "DCLM-Baseline (QC FW 3%)": {
-            "damped_power_law": 0.5813060982756393,
-            "power_law": 0.31260641160927966,
-            "saturating": 0.10608749011508102
+            "damped_power_law": 0.5813051428873569,
+            "power_law": 0.3126070425118936,
+            "saturating": 0.10608781460074942
           },
           "DCLM-Baseline 25% / Dolma 75%": {
-            "damped_power_law": 0.3559237395310723,
-            "power_law": 0.3953086756555987,
-            "saturating": 0.24876758481332892
+            "damped_power_law": 0.35592354233013446,
+            "power_law": 0.3953087769724904,
+            "saturating": 0.248767680697375
           },
           "DCLM-Baseline 50% / Dolma 50%": {
-            "damped_power_law": 0.36035521938294857,
-            "power_law": 0.4005529582155771,
-            "saturating": 0.23909182240147434
+            "damped_power_law": 0.3603548562098659,
+            "power_law": 0.40055314593618124,
+            "saturating": 0.23909199785395294
           },
           "DCLM-Baseline 75% / Dolma 25%": {
-            "damped_power_law": 0.3637408093126745,
-            "power_law": 0.40706662632468954,
-            "saturating": 0.229192564362636
+            "damped_power_law": 0.3637409170300503,
+            "power_law": 0.40706656053537216,
+            "saturating": 0.2291925224345774
           },
           "Dolma1.6++": {
-            "damped_power_law": 0.30417997627724025,
-            "power_law": 0.46318187402787137,
-            "saturating": 0.23263814969488833
+            "damped_power_law": 0.3041798928180329,
+            "power_law": 0.4631819136976862,
+            "saturating": 0.2326381934842809
           },
           "Dolma1.7": {
-            "damped_power_law": 0.32317180249615607,
-            "power_law": 0.45083534216873256,
-            "saturating": 0.22599285533511143
+            "damped_power_law": 0.3231724081921966,
+            "power_law": 0.45083503801355224,
+            "saturating": 0.2259925537942513
           },
           "Dolma1.7 (no Flan)": {
-            "damped_power_law": 0.3424406063546956,
-            "power_law": 0.4289737014316449,
-            "saturating": 0.22858569221365949
+            "damped_power_law": 0.342440946354273,
+            "power_law": 0.42897352186447674,
+            "saturating": 0.22858553178125024
           },
           "Dolma1.7 (no Reddit)": {
-            "damped_power_law": 0.3180577963353097,
-            "power_law": 0.44253646712035577,
-            "saturating": 0.2394057365443345
+            "damped_power_law": 0.3180581661017665,
+            "power_law": 0.44253627954906416,
+            "saturating": 0.23940555434916924
           },
           "Dolma1.7 (no code)": {
-            "damped_power_law": 0.36426561278682196,
-            "power_law": 0.38969910411734493,
-            "saturating": 0.24603528309583308
+            "damped_power_law": 0.3642650820976856,
+            "power_law": 0.38969937662583287,
+            "saturating": 0.2460355412764815
           },
           "Dolma1.7 (no math, code)": {
-            "damped_power_law": 0.36681127653152074,
-            "power_law": 0.39528941185738853,
-            "saturating": 0.2378993116110908
+            "damped_power_law": 0.3668111666259216,
+            "power_law": 0.3952894702745103,
+            "saturating": 0.23789936309956808
           },
           "Falcon": {
-            "damped_power_law": 0.3628886816580207,
-            "power_law": 0.37518498743585516,
-            "saturating": 0.2619263309061241
+            "damped_power_law": 0.3628884503032977,
+            "power_law": 0.375185105803507,
+            "saturating": 0.2619264438931953
           },
           "Falcon+CC": {
-            "damped_power_law": 0.371652911431526,
-            "power_law": 0.4029132317169168,
-            "saturating": 0.2254338568515571
+            "damped_power_law": 0.3716527566055934,
+            "power_law": 0.40291331401156616,
+            "saturating": 0.22543392938284043
           },
           "Falcon+CC (QC 10%)": {
-            "damped_power_law": 0.4665565042984128,
-            "power_law": 0.36656930454807735,
-            "saturating": 0.1668741911535099
+            "damped_power_law": 0.46656218974671215,
+            "power_law": 0.36656598872914253,
+            "saturating": 0.16687182152414543
           },
           "Falcon+CC (QC 20%)": {
-            "damped_power_law": 0.40899084228675553,
-            "power_law": 0.3750253423041616,
-            "saturating": 0.21598381540908274
+            "damped_power_law": 0.40899053579925354,
+            "power_law": 0.3750255020388734,
+            "saturating": 0.2159839621618731
           },
           "Falcon+CC (QC Orig 10%)": {
-            "damped_power_law": 0.3970148190731443,
-            "power_law": 0.3812780108837526,
-            "saturating": 0.22170717004310317
+            "damped_power_law": 0.3970143694303082,
+            "power_law": 0.3812782527875212,
+            "saturating": 0.22170737778217064
           },
           "Falcon+CC (QC Tulu 10%)": {
-            "damped_power_law": 0.3872702605776203,
-            "power_law": 0.3645713156319641,
-            "saturating": 0.24815842379041558
+            "damped_power_law": 0.38727013984454783,
+            "power_law": 0.36457137436162834,
+            "saturating": 0.2481584857938238
           },
           "FineWeb-Edu": {
-            "damped_power_law": 0.3931460134406196,
-            "power_law": 0.35994346757882784,
-            "saturating": 0.24691051898055247
+            "damped_power_law": 0.3931460783004987,
+            "power_law": 0.3599434341713023,
+            "saturating": 0.24691048752819894
           },
           "FineWeb-Pro": {
-            "damped_power_law": 0.3946567516083339,
-            "power_law": 0.384768263863071,
-            "saturating": 0.22057498452859522
+            "damped_power_law": 0.39465671182656215,
+            "power_law": 0.38476828237983285,
+            "saturating": 0.220575005793605
           }
         },
         "projection_excess_pp": 5.955555555555555,
@@ -5799,21 +5848,22 @@
     }
   },
   "task_5": {
-    "B3_1_model_slope_pp_per_log": 4.987458095910665,
+    "B3_1_model_slope_pp_per_log": 4.9874580959106645,
     "components_share_of_B3_1_model_slope": {
-      "A_variance": 0.6083580204733835,
-      "B1_common_mode_increment": -0.10075552073620965,
-      "B2_recipe_specific_increment": 0.4439221007956639,
-      "interaction_remainder": 0.04847539946716228
+      "A_variance": 0.6083580204733836,
+      "B1_common_mode_increment": -0.10075552073620948,
+      "B2_recipe_specific_increment": 0.44392210079566397,
+      "interaction_remainder": 0.04847539946716193
     },
     "components_share_of_real_slope": {
       "A_variance": 0.5671960879008504,
-      "B1_common_mode_increment": -0.09393833116808795,
+      "B1_common_mode_increment": -0.09393833116808778,
       "B2_recipe_specific_increment": 0.41388601847987594,
-      "interaction_remainder": 0.04519551976287023
+      "interaction_remainder": 0.045195519762869896
     },
-    "model_slope_share_of_real_slope": 0.9323392949755086,
+    "model_slope_share_of_real_slope": 0.9323392949755085,
     "real_slope_pp_per_log": 5.349402436203957,
-    "unexplained_share_of_real_slope": 0.0676607050244914
+    "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm",
+    "unexplained_share_of_real_slope": 0.06766070502449156
   }
 }

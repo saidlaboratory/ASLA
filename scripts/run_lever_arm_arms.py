@@ -47,6 +47,8 @@ N_BOOT = 2000
 PRIMARY_FIT, PRIMARY_TARGET = "300M", "530M"
 CALIBRATED_K = 2.99  # results/target_scoring/calibration.json, random-candidate U-statistic
 SEED = 20260926
+# Slopes here are fitted on the natural log of the lever arm (np.log); per decade is this times ln(10).
+SLOPE_UNIT = "points of mis-selected pairs per natural-log unit of lever arm"
 _CONTEXT: dict[str, Any] = {}
 
 
@@ -189,6 +191,7 @@ def noiseless(arm: str) -> dict[str, Any]:
     return {
         "rho": float(stats.spearmanr(np.log(lever), excess).statistic),
         "slope": float(np.polyfit(np.log(lever), excess, 1)[0]),
+        "slope_unit": SLOPE_UNIT,
     }
 
 
@@ -227,6 +230,7 @@ def summarise_arm(rows: list[dict[str, Any]], rng: np.random.Generator) -> dict[
         "true_rho": rho,
         "true_rho_ci": [float(np.percentile(rhos, 2.5)), float(np.percentile(rhos, 97.5))],
         "true_slope_pp_per_log": slope,
+        "slope_unit": SLOPE_UNIT,
         "true_slope_ci": [float(np.percentile(slopes, 2.5)), float(np.percentile(slopes, 97.5))],
         "mean_rho_hat": float(np.mean([r["rho_hat"] for r in rows])),
         "ensemble_true_excess_pp": float(ens.mean()),
@@ -270,6 +274,7 @@ def main() -> None:
     s = {arm: arms[arm]["true_slope_pp_per_log"] for arm in ARMS}
     attribution = {
         "real_slope_pp_per_log": real_slope,
+        "slope_unit": SLOPE_UNIT,
         "real_rho": float(stats.spearmanr(real_log, real_excess).statistic),
         "share_of_B3_1_slope": {
             "A_variance": s["A"] / s["B3_1"],

@@ -57,6 +57,18 @@ LEVERS = (0.25, 0.5, 0.75, 1.0, 1.25, 1.5)
 TOPS = (17.75, 18.25, 18.75, 19.25, 19.75)
 RUNGS = (3, 4, 5, 6, 7, 8)
 SEEDS = 3
+_DECADE_LEVER = "points of mis-selected pairs per decade (log10) of lever arm"
+_DECADE_TOP = "points of mis-selected pairs per decade (log10) of top-rung compute"
+_RUNG = "points of mis-selected pairs per fitted rung"
+STAT_UNITS = {
+    "joint_lever": _DECADE_LEVER,
+    "joint_top": _DECADE_TOP,
+    "joint_rungs": _RUNG,
+    "slice_lever": _DECADE_LEVER,
+    "slice_top": _DECADE_TOP,
+    "slice_rungs": _RUNG,
+}
+SYNTH_UNITS = {"lever": _DECADE_LEVER, "top": _DECADE_TOP, "rungs": _RUNG}
 
 
 def _load_frame() -> pd.DataFrame:
@@ -252,6 +264,7 @@ def summarise() -> dict[str, Any]:
         k = float(np.quantile(ratios, LEVEL))
         est, se = real["statistics"][key]["estimate"], real["statistics"][key]["se"]
         inference[key] = {
+            "unit": STAT_UNITS[key],
             "estimate": est,
             "se": se,
             "critical_value": k,
@@ -272,6 +285,7 @@ def summarise() -> dict[str, Any]:
         slopes = np.array([_slope(x, row[idx]) for row in per_world])
         mean = per_world[:, idx].mean(axis=0)
         effects[factor] = {
+            "slope_unit": SYNTH_UNITS[factor],
             "levels": x.tolist(),
             "mean_true_excess": mean.tolist(),
             "mc_se_by_level": (per_world[:, idx].std(axis=0, ddof=1) / np.sqrt(len(per_world))).tolist(),

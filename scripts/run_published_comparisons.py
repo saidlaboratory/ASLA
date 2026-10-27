@@ -258,7 +258,7 @@ def correction_curve(kernel: dict[tuple[str, str], float], rng: np.random.Genera
         # is kept as a description of the typical pair-resampled interval, not as the test of R(m).
         pair_scale = float(np.sqrt(np.mean(np.square(pair_ses))))
         empirical = candidate_sd / pair_scale
-        typical = candidate_sd / float(np.mean(pair_ses))
+        typical = candidate_sd / float(np.mean(pair_ses))  # lint: mean-se-intended (a typical study's SE, described)
         predicted = float(np.sqrt(1 + 2 * (m - 2) * ratio))
         rows.append(
             {

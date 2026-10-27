@@ -8,17 +8,19 @@
       "n_worlds": 150,
       "noiseless": {
         "rho": -0.9256265993491877,
-        "slope": -0.7158502142155131
+        "slope": -0.7158502142155129,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "projection_true_excess_primary_pp": 0.6222222222222222,
+      "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm",
       "true_rho": 0.7694083694083695,
       "true_rho_ci": [
         0.7649332611832613,
         0.7756132756132759
       ],
       "true_slope_ci": [
-        2.944996389654035,
-        3.125336891647844
+        2.944996389654036,
+        3.1253368916478443
       ],
       "true_slope_pp_per_log": 3.0341601344221627,
       "zeta1": 0.4931744707166297,
@@ -32,9 +34,11 @@
       "n_worlds": 150,
       "noiseless": {
         "rho": -0.5080541751886192,
-        "slope": -0.3363634326416658
+        "slope": -0.33636343264166574,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "projection_true_excess_primary_pp": 0.6311111111111112,
+      "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm",
       "true_rho": 0.7492784992784994,
       "true_rho_ci": [
         0.7410515873015875,
@@ -44,7 +48,7 @@
         2.4527795113951796,
         2.6029495351054543
       ],
-      "true_slope_pp_per_log": 2.531646196818659,
+      "true_slope_pp_per_log": 2.53164619681866,
       "zeta1": 0.5476812969668574,
       "zeta2": 78.34432806358069
     },
@@ -56,9 +60,11 @@
       "n_worlds": 150,
       "noiseless": {
         "rho": 0.9055385317847867,
-        "slope": 5.630073191173758
+        "slope": 5.630073191173758,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "projection_true_excess_primary_pp": 2.208888888888889,
+      "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm",
       "true_rho": 0.8945887445887448,
       "true_rho_ci": [
         0.8937229437229439,
@@ -66,7 +72,7 @@
       ],
       "true_slope_ci": [
         5.165764073645856,
-        5.334136334907579
+        5.334136334907578
       ],
       "true_slope_pp_per_log": 5.248203009989167,
       "zeta1": 4.312928012039301,
@@ -80,9 +86,11 @@
       "n_worlds": 150,
       "noiseless": {
         "rho": 0.8006639281587944,
-        "slope": 4.381948314472485
+        "slope": 4.381948314472485,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "projection_true_excess_primary_pp": 1.1444444444444444,
+      "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm",
       "true_rho": 0.8240259740259743,
       "true_rho_ci": [
         0.8173160173160174,
@@ -104,9 +112,11 @@
       "n_worlds": 150,
       "noiseless": {
         "rho": 0.8727856601256025,
-        "slope": 5.302825118244225
+        "slope": 5.302825118244226,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "projection_true_excess_primary_pp": 2.38,
+      "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm",
       "true_rho": 0.8673881673881676,
       "true_rho_ci": [
         0.8642857142857144,
@@ -116,7 +126,7 @@
         4.921525110541552,
         5.048878133613478
       ],
-      "true_slope_pp_per_log": 4.987458095910665,
+      "true_slope_pp_per_log": 4.9874580959106645,
       "zeta1": 5.334722663642408,
       "zeta2": 246.42491412486999
     },
@@ -128,17 +138,19 @@
       "n_worlds": 150,
       "noiseless": {
         "rho": 0.8516019716340038,
-        "slope": 5.305820077814794
+        "slope": 5.305820077814795,
+        "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
       },
       "projection_true_excess_primary_pp": 5.98,
+      "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm",
       "true_rho": 0.8565656565656568,
       "true_rho_ci": [
         0.8516594516594519,
         0.862123015873016
       ],
       "true_slope_ci": [
-        4.991243613859651,
-        5.083399961222627
+        4.991243613859652,
+        5.083399961222629
       ],
       "true_slope_pp_per_log": 5.036592024354596,
       "zeta1": 33.567320530205606,
@@ -149,20 +161,21 @@
     "real_rho": 0.8686147186147188,
     "real_slope_pp_per_log": 5.349402436203957,
     "share_of_B3_1_slope": {
-      "A_variance": 0.6083580204733835,
-      "B1_common_mode_increment": -0.10075552073620965,
-      "B2_recipe_specific_increment": 0.4439221007956639,
-      "interaction_remainder": 0.04847539946716228
+      "A_variance": 0.6083580204733836,
+      "B1_common_mode_increment": -0.10075552073620948,
+      "B2_recipe_specific_increment": 0.44392210079566397,
+      "interaction_remainder": 0.04847539946716193
     },
     "share_of_real_slope": {
       "A_variance": 0.5671960879008504,
-      "B3_1_total": 0.9323392949755086,
-      "unexplained": 0.0676607050244914
-    }
+      "B3_1_total": 0.9323392949755085,
+      "unexplained": 0.06766070502449156
+    },
+    "slope_unit": "points of mis-selected pairs per natural-log unit of lever arm"
   },
   "decomposition": {
-    "loading_cv": 0.2171571596280285,
-    "rank_one_share_of_residual_ss": 0.8961248474656641
+    "loading_cv": 0.21715715962918292,
+    "rank_one_share_of_residual_ss": 0.8961248475503364
   },
   "design": "fixed-candidate worlds, full C4 ladder (750M excluded), moderated noise; arms differ only in truth",
   "predictions": {

@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import sys
 from pathlib import Path
 from typing import Any
@@ -33,8 +34,8 @@ def load(relative: str) -> Any:
 # The instance count is stated in four places in this section; deriving them
 # from one pair of constants is what stopped "five anecdotes" surviving the
 # addition of a sixth.
-N_INSTANCES = 12
-N_INSTANCES_WORD = "Twelve"
+N_INSTANCES = 13
+N_INSTANCES_WORD = "Thirteen"
 N_FLATTERING = 6
 
 
@@ -78,6 +79,9 @@ def methods_practice() -> str:
     curve_rows = published["correction_curve_c4"]["subsampling_check"]
     smallest = curve_rows[0]
     worst_fixed = max(abs(row["relative_error"]) for row in curve_rows)
+    arms_json = load("target_scoring/lever_arm_arms.json")
+    natural = arms_json["attribution"]["real_slope_pp_per_log"]
+    per_decade = natural * math.log(10)
     lines = [
         "# Methods practice: verify that the measurement can see what you think it sees",
         "",
@@ -333,6 +337,24 @@ def methods_practice() -> str:
         "general form is the fingerprint below, a fourth time: `mean(se)` used as the denominator of a ratio of "
         "scales.",
         "",
+        "## Instance 13: slopes per natural log printed as per decade",
+        "",
+        "The mechanism table in the paper printed each simulated arm's slope of projection's excess on lever arm "
+        "under the header \"pp per decade\". The simulation fitted those slopes on `np.log` of the lever arm, so "
+        "they were per natural-log unit, smaller than per-decade slopes by a factor of ln 10. The real slope the "
+        f"arms were compared with is {natural:.2f} per natural-log unit, which is {per_decade:.1f} per decade, the "
+        "same quantity the confound test reports per decade.",
+        "",
+        "**How it was caught:** an independent reviewer recomputed the real slope from the committed design table "
+        "per decade and found it 2.30 times the printed one, which is ln 10.",
+        "",
+        "**What was actually true:** every number was right in its own unit; the unit lived only in a key name "
+        "(`true_slope_pp_per_log`) that did not say which logarithm, and the table header was typed by hand.",
+        "",
+        "**Status:** this reached a pushed paper draft. **The guards now in place:** every slope in a results file "
+        "carries a `slope_unit` or `unit` field, the table that renders it converts explicitly and emits its unit "
+        "as a macro, and the provenance lint fails if a rendered table's stated unit differs from that macro.",
+        "",
         "## A numerical fingerprint for this class",
         "",
         f"Instances 3, 5, 6 and 12 are one defect: a quantity aggregated in one space and consumed in another, "
@@ -382,6 +404,8 @@ def methods_practice() -> str:
         "a sweep for the pattern, not for literals |",
         "| 12 | the closed-form correction misses at small m | the check averaged standard errors, not variances | "
         "two committed results that could not both be right |",
+        "| 13 | the arms' slopes are per decade | they were per natural log, a factor of ln 10 | "
+        "recomputing a slope from the design table |",
         "",
         "**Status is not uniform, and the uneven version is the stronger one.** Instances 1-4, 6, 9, 10 and 11 were "
         "caught before any claim built on them left the repository. Instance 5 was not: it propagated into "

@@ -58,7 +58,7 @@ ALLOWED_FLOATS: dict[str, frozenset[float]] = {
     # the section itself. Structural facts about the prose, not quantities read
     # off the data, and centralised precisely so the four places that state them
     # cannot drift apart.
-    "render_consolidated_findings.py": frozenset({5.0, 6.0, 12.0}),
+    "render_consolidated_findings.py": frozenset({5.0, 6.0, 10.0, 13.0}),  # 10: the base for per-decade slopes
     "render_curvature_results.py": frozenset(),
     # QUOTED_M and QUOTED_DELTAS: the grid points the prose quotes (a stated choice, checked against the JSON grid)
     "render_macros.py": frozenset({5.0, 10.0, 25.0}),
@@ -400,3 +400,45 @@ def test_prose_correction_span_matches_across_line_breaks() -> None:
     assert out == "Before. Resolved. After." and line == 1
     deleted, _ = apply.apply_text(raw, dict(entry, action="delete"))
     assert deleted == "Before. After."
+
+
+UNIT_PHRASES = ("per decade", "per natural log", "per rung")
+_TABLE_ENVS = re.compile(r"\\begin\{(table\*?|longtable)\}(.*?)\\end\{\1\}", re.S)
+
+
+def _rendered_tables() -> list[tuple[str, str, set[str]]]:
+    """(file, table text, rows macros used) for every table in the paper."""
+
+    out = []
+    for path in (PAPER, REPO / "paper" / "appendix.tex"):
+        if not path.exists():
+            continue
+        for match in _TABLE_ENVS.finditer(path.read_text(encoding="utf-8")):
+            text = match.group(2)
+            out.append((path.name, text, set(re.findall(r"\\(\w+Rows)\b", text))))
+    return out
+
+
+def test_slope_tables_state_the_unit_their_values_carry() -> None:
+    """A table's stated slope unit must match the unit macro rendered from the results file.
+
+    Practice record, instance 13: per-natural-log slopes were printed under a hand-typed
+    "per decade" header. Every rows macro that renders slopes has a sibling ``...Units`` macro
+    derived from the JSON's unit field; the header and caption must state exactly those units.
+    """
+
+    macros = MACROS.read_text(encoding="utf-8")
+    units = dict(re.findall(r"\\newcommand\{\\(\w+Rows)Units\}\{([^}]*)\}", macros))
+    checked = 0
+    for name, text, rows in _rendered_tables():
+        prose = re.sub(r"\s+", " ", re.sub(r"\\\\\s*", " ", text))
+        stated = {u for u in UNIT_PHRASES if u in prose}
+        declared = set()
+        for row in rows:
+            if row in units:
+                declared |= {u.strip() for u in units[row].split(";")}
+        if stated or declared:
+            checked += 1
+            assert declared, f"{name}: table states {sorted(stated)} but its rows macro has no Units macro: {rows}"
+            assert stated == declared, f"{name}: table states {sorted(stated)}, results carry {sorted(declared)}"
+    assert checked >= 3
