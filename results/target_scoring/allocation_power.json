@@ -1,0 +1,57 @@
+{
+  "preregistration": "PREDICTIONS_TASK_FIXED_TARGET.md (Task 3: a power calculation, no prediction)",
+  "critical_value": 2.9890861649366043,
+  "critical_value_source": "calibration.json calibrated.random_u (C4, primary design), as the restated claims use",
+  "worlds": 300,
+  "by_budget_fraction": {
+    "0.01": {
+      "worlds": 298,
+      "zeta1_negative_share": 0.2953020134228188,
+      "power_if_zeta1_nonnegative": 0.09047619047619047,
+      "failed_fits": 2,
+      "benchmark_true_difference_pp": 3.651006711409396,
+      "power_at_critical_value": 0.22818791946308725
+    },
+    "0.03": {
+      "worlds": 295,
+      "zeta1_negative_share": 0.33220338983050846,
+      "power_if_zeta1_nonnegative": 0.015228426395939087,
+      "failed_fits": 5,
+      "benchmark_true_difference_pp": 1.5593220338983051,
+      "power_at_critical_value": 0.061016949152542375
+    },
+    "0.1": {
+      "worlds": 293,
+      "zeta1_negative_share": 0.36177474402730375,
+      "power_if_zeta1_nonnegative": 0.0053475935828877,
+      "failed_fits": 7,
+      "benchmark_true_difference_pp": 0.7178612059158135,
+      "power_at_critical_value": 0.034129692832764506
+    },
+    "0.3": {
+      "worlds": 294,
+      "zeta1_negative_share": 0.30272108843537415,
+      "power_if_zeta1_nonnegative": 0.0,
+      "failed_fits": 6,
+      "benchmark_true_difference_pp": -0.1530612244897959,
+      "power_at_critical_value": 0.030612244897959183
+    },
+    "0.5": {
+      "worlds": 294,
+      "zeta1_negative_share": 0.30272108843537415,
+      "power_if_zeta1_nonnegative": 0.0,
+      "failed_fits": 6,
+      "benchmark_true_difference_pp": -0.1530612244897959,
+      "power_at_critical_value": 0.030612244897959183
+    },
+    "1": {
+      "worlds": 299,
+      "zeta1_negative_share": 0.3110367892976589,
+      "power_if_zeta1_nonnegative": 0.0,
+      "failed_fits": 1,
+      "benchmark_true_difference_pp": -0.7246376811594202,
+      "power_at_critical_value": 0.043478260869565216
+    }
+  },
+  "diagnostic": "The allocation comparisons are scored against Bonferroni-calibrated target evidence, so most kernel entries are zero and the unbiased candidate-level component zeta1 can be negative, which shrinks the U-statistic standard error toward zero. Power is reported as pre-registered, with the share of worlds where zeta1 < 0 and the power over the remaining worlds alongside."
+}

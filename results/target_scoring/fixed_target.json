@@ -1,0 +1,192 @@
+{
+  "preregistration": "PREDICTIONS_TASK_FIXED_TARGET.md",
+  "metric": "c4_en_bits_per_token",
+  "real": {
+    "admit_share": 0.5,
+    "admitted_targets": [
+      "150M",
+      "300M",
+      "530M",
+      "1B"
+    ],
+    "fixed_target_slices": {
+      "150M": 5,
+      "300M": 6,
+      "530M": 7,
+      "1B": 8
+    },
+    "fixed_target_designs": 152,
+    "target_varied_slices": 36,
+    "target_varied_designs": 192,
+    "determined_pairs_by_target": {
+      "10M": 86,
+      "14M": 136,
+      "16M": 82,
+      "20M": 11,
+      "60M": 60,
+      "90M": 109,
+      "150M": 179,
+      "300M": 162,
+      "530M": 246,
+      "1B": 259
+    }
+  },
+  "inference": {
+    "fixed_target_pooled": {
+      "estimate": 11.667677058935945,
+      "se": 1.2379813907314972,
+      "unit": "points of mis-selected pairs per decade of lever arm (log10)",
+      "critical_value_calibrated": 1.8175031316293333,
+      "critical_value_used": 1.959963984540054,
+      "interval": [
+        9.241278119571403,
+        14.094075998300488
+      ],
+      "interval_calibrated": [
+        9.417642004382612,
+        13.917712113489278
+      ],
+      "excludes_zero": true,
+      "benchmark_true_value": 5.900386473617693,
+      "coverage_at_1_96": 0.97,
+      "worlds_used": 200
+    },
+    "fixed_target_150M": {
+      "estimate": 14.6675788428176,
+      "se": 2.3069097881309872,
+      "unit": "points of mis-selected pairs per decade of lever arm (log10)",
+      "critical_value_calibrated": 1.655031690998742,
+      "critical_value_used": 1.959963984540054,
+      "interval": [
+        10.146118742497938,
+        19.189038943137263
+      ],
+      "interval_calibrated": [
+        10.849570035185621,
+        18.485587650449578
+      ],
+      "excludes_zero": true,
+      "benchmark_true_value": 6.945355955909229,
+      "coverage_at_1_96": 0.975,
+      "worlds_used": 200
+    },
+    "fixed_target_300M": {
+      "estimate": 13.549732078565121,
+      "se": 1.776929244458709,
+      "unit": "points of mis-selected pairs per decade of lever arm (log10)",
+      "critical_value_calibrated": 1.6728866789234536,
+      "critical_value_used": 1.959963984540054,
+      "interval": [
+        10.067014756350082,
+        17.03244940078016
+      ],
+      "interval_calibrated": [
+        10.57713081612063,
+        16.522333341009613
+      ],
+      "excludes_zero": true,
+      "benchmark_true_value": 7.397708784920432,
+      "coverage_at_1_96": 0.98,
+      "worlds_used": 200
+    },
+    "fixed_target_530M": {
+      "estimate": 11.656672862769021,
+      "se": 1.1957022205284435,
+      "unit": "points of mis-selected pairs per decade of lever arm (log10)",
+      "critical_value_calibrated": 1.755732721607314,
+      "critical_value_used": 1.959963984540054,
+      "interval": [
+        9.313139574298702,
+        14.00020615123934
+      ],
+      "interval_calibrated": [
+        9.557339348888707,
+        13.756006376649335
+      ],
+      "excludes_zero": true,
+      "benchmark_true_value": 5.931483785899184,
+      "coverage_at_1_96": 0.975,
+      "worlds_used": 200
+    },
+    "fixed_target_1B": {
+      "estimate": 10.324628848646825,
+      "se": 1.0372685370703492,
+      "unit": "points of mis-selected pairs per decade of lever arm (log10)",
+      "critical_value_calibrated": 1.7045327457417374,
+      "critical_value_used": 1.959963984540054,
+      "interval": [
+        8.29161987369239,
+        12.357637823601259
+      ],
+      "interval_calibrated": [
+        8.556570661082787,
+        12.092687036210862
+      ],
+      "excludes_zero": true,
+      "benchmark_true_value": 5.096145030516955,
+      "coverage_at_1_96": 0.965,
+      "worlds_used": 200
+    },
+    "target_varied_all_pairs": {
+      "estimate": 7.68814981787175,
+      "se": 0.6999871648638676,
+      "unit": "points of mis-selected pairs per decade of lever arm (log10)",
+      "critical_value_calibrated": 1.9530834329706095,
+      "critical_value_used": 1.959963984540054,
+      "interval": [
+        6.3162001850982685,
+        9.060099450645232
+      ],
+      "interval_calibrated": [
+        6.321016482884064,
+        9.055283152859436
+      ],
+      "excludes_zero": true,
+      "benchmark_true_value": 2.8590296773090422,
+      "coverage_at_1_96": 0.95,
+      "worlds_used": 200
+    },
+    "target_varied_determined": {
+      "estimate": 8.854712061461138,
+      "se": 0.8496018148482478,
+      "unit": "points of mis-selected pairs per decade of lever arm (log10)",
+      "critical_value_calibrated": 1.9661658166205898,
+      "critical_value_used": 1.9661658166205898,
+      "interval": [
+        7.1842540153676975,
+        10.525170107554578
+      ],
+      "interval_calibrated": [
+        7.1842540153676975,
+        10.525170107554578
+      ],
+      "excludes_zero": true,
+      "benchmark_true_value": 3.626434785052491,
+      "coverage_at_1_96": 0.945,
+      "worlds_used": 200
+    }
+  },
+  "joint_model_implied_fixed_target_slope": {
+    "value": 11.823185809547544,
+    "unit": "points of mis-selected pairs per decade of lever arm (log10)",
+    "source": "confound.json joint model: lever coefficient minus top-rung coefficient"
+  },
+  "target_varied_all_pairs_confound": {
+    "value": 7.68814981787175,
+    "unit": "points of mis-selected pairs per decade of lever arm (log10)"
+  },
+  "calibration": {
+    "worlds": 200,
+    "bandwidth": 0.5,
+    "level": 0.95
+  },
+  "simulation_reference": "the confound test's semi-synthetic factor isolation scores against the noiseless truth at the target (scripts/run_confound.py synthetic_excess); no rerun needed",
+  "predictions": {
+    "F1_pooled_positive_excludes_zero": true,
+    "F2_pooled_below_joint_implied": true,
+    "F3_each_target_positive": true,
+    "F4_determined_positive_excludes_zero": true,
+    "F5_determined_below_all_pairs": false
+  },
+  "outcome": "fixed_target_positive"
+}

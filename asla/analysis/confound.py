@@ -45,6 +45,8 @@ class WindowDesign:
     kernel: dict[tuple[str, str], float] = field(default_factory=dict)
     true_excess: float | None = None
     determined_share: float | None = None
+    determined_pairs: frozenset[tuple[str, str]] = frozenset()
+    true_excess_determined: float | None = None  # true excess over the determined pairs only
 
 
 def enumerate_designs(n_scales: int) -> list[tuple[int, int, int]]:
@@ -109,10 +111,18 @@ def window_designs(
             rungs=f - s + 1,
             kernel={p: 100 * (left[p] - right[p]) for p in left if p in right},
             determined_share=float(np.mean([e.determined for e in evidence[t]])),
+            determined_pairs=frozenset((e.left, e.right) for e in evidence[t] if e.determined),
         )
         if truth_targets is not None:
             truth_gaps = _gaps(truth_targets[labels[t]].to_dict(), names)
             design.true_excess = 100 * (_mis(proj_gaps, truth_gaps) - _mis(single_gaps, truth_gaps))
+            keep = design.determined_pairs
+            if keep:
+                sub_truth = {p: v for p, v in truth_gaps.items() if p in keep}
+                design.true_excess_determined = 100 * (
+                    _mis({p: v for p, v in proj_gaps.items() if p in keep}, sub_truth)
+                    - _mis({p: v for p, v in single_gaps.items() if p in keep}, sub_truth)
+                )
         out.append(design)
     return out
 
