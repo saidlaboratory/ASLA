@@ -1,0 +1,209 @@
+{
+  "preregistration": "PREDICTIONS_TASK_RECIPE_DEPENDENCE.md",
+  "metric": "c4_en_bits_per_token",
+  "unit": "points of mis-selected pairs per decade (log10) of lever arm",
+  "targets": [
+    "150M",
+    "300M",
+    "530M",
+    "1B"
+  ],
+  "full_set": {
+    "n_recipes": 25,
+    "estimate": 11.667677058935945,
+    "se": 1.2379813907314972,
+    "interval": [
+      9.241278119571403,
+      14.094075998300488
+    ],
+    "positive_excludes_zero": true
+  },
+  "families": {
+    "DCLM-Baseline": [
+      "DCLM-Baseline",
+      "DCLM-Baseline (QC 10%)",
+      "DCLM-Baseline (QC 20%)",
+      "DCLM-Baseline (QC 7%, FW2)",
+      "DCLM-Baseline (QC 7%, FW3)",
+      "DCLM-Baseline (QC FW 10%)",
+      "DCLM-Baseline (QC FW 3%)"
+    ],
+    "Dolma": [
+      "Dolma1.6++",
+      "Dolma1.7",
+      "Dolma1.7 (no Flan)",
+      "Dolma1.7 (no Reddit)",
+      "Dolma1.7 (no code)",
+      "Dolma1.7 (no math, code)"
+    ],
+    "Falcon": [
+      "Falcon",
+      "Falcon+CC",
+      "Falcon+CC (QC 10%)",
+      "Falcon+CC (QC 20%)",
+      "Falcon+CC (QC Orig 10%)",
+      "Falcon+CC (QC Tulu 10%)"
+    ],
+    "DCLM/Dolma mixes": [
+      "DCLM-Baseline 25% / Dolma 75%",
+      "DCLM-Baseline 50% / Dolma 50%",
+      "DCLM-Baseline 75% / Dolma 25%"
+    ],
+    "Other": [
+      "C4",
+      "FineWeb-Edu",
+      "FineWeb-Pro"
+    ]
+  },
+  "within_family": {
+    "DCLM-Baseline": {
+      "n_recipes": 7,
+      "estimate": 9.492746581957062,
+      "se": 3.358848167458504,
+      "interval": [
+        2.9095251442000345,
+        16.07596801971409
+      ],
+      "positive_excludes_zero": true
+    },
+    "Dolma": {
+      "n_recipes": 6,
+      "estimate": 5.685675841938323,
+      "se": 4.191945899673206,
+      "interval": [
+        -2.530387146561514,
+        13.90173883043816
+      ],
+      "positive_excludes_zero": false
+    },
+    "Falcon": {
+      "n_recipes": 6,
+      "estimate": 12.508034461753638,
+      "se": 2.363829342040555,
+      "interval": [
+        7.875014085755138,
+        17.141054837752137
+      ],
+      "positive_excludes_zero": true
+    }
+  },
+  "leave_one_family_out": {
+    "DCLM-Baseline": {
+      "n_recipes": 18,
+      "estimate": 10.084827263144676,
+      "se": 1.7583254340914798,
+      "interval": [
+        6.638572739224619,
+        13.531081787064734
+      ],
+      "positive_excludes_zero": true
+    },
+    "Dolma": {
+      "n_recipes": 19,
+      "estimate": 11.859596553933981,
+      "se": 1.339050030650438,
+      "interval": [
+        9.235106720361866,
+        14.484086387506096
+      ],
+      "positive_excludes_zero": true
+    },
+    "Falcon": {
+      "n_recipes": 19,
+      "estimate": 12.15191847203085,
+      "se": 1.549317435270217,
+      "interval": [
+        9.115312098281258,
+        15.188524845780442
+      ],
+      "positive_excludes_zero": true
+    },
+    "DCLM/Dolma mixes": {
+      "n_recipes": 22,
+      "estimate": 11.570783242246678,
+      "se": 1.2930630883124674,
+      "interval": [
+        9.036426159416107,
+        14.10514032507725
+      ],
+      "positive_excludes_zero": true
+    },
+    "Other": {
+      "n_recipes": 22,
+      "estimate": 11.821374222508425,
+      "se": 1.3415253225516717,
+      "interval": [
+        9.19203290595867,
+        14.45071553905818
+      ],
+      "positive_excludes_zero": true
+    }
+  },
+  "random_subsets": {
+    "5": {
+      "n_subsets": 200,
+      "mean": 11.423381187426301,
+      "sd": 3.3055018953304103,
+      "share_positive_excluding_zero": 0.68,
+      "share_positive": 1.0,
+      "quantiles_5_50_95": [
+        6.564104185762357,
+        11.44678796986458,
+        16.745933952526116
+      ],
+      "median_se": 4.629170103544213
+    },
+    "10": {
+      "n_subsets": 200,
+      "mean": 11.611912486598987,
+      "sd": 1.7056586569654948,
+      "share_positive_excluding_zero": 0.995,
+      "share_positive": 1.0,
+      "quantiles_5_50_95": [
+        9.013846409868131,
+        11.619772813913801,
+        14.359924110321545
+      ],
+      "median_se": 2.4180720055044587
+    },
+    "15": {
+      "n_subsets": 200,
+      "mean": 11.715621916413689,
+      "sd": 0.971374939847854,
+      "share_positive_excluding_zero": 1.0,
+      "share_positive": 1.0,
+      "quantiles_5_50_95": [
+        10.306101039766519,
+        11.625160227419585,
+        13.273961693536856
+      ],
+      "median_se": 1.7681568419434044
+    },
+    "20": {
+      "n_subsets": 200,
+      "mean": 11.56622110740123,
+      "sd": 0.6164615270431936,
+      "share_positive_excluding_zero": 1.0,
+      "share_positive": 1.0,
+      "quantiles_5_50_95": [
+        10.637293942423685,
+        11.551244074252368,
+        12.612422104297831
+      ],
+      "median_se": 1.4527673131928052
+    }
+  },
+  "predictions": {
+    "F1_all_within_family_positive": true,
+    "F2_at_most_one_within_family_excludes_zero": false,
+    "F3_leave_one_family_out_in_8_15_and_excludes_zero": true,
+    "S1_mean_in_10_to_13_5_every_k": true,
+    "S2_sd_falls_with_k_and_in_bands": false,
+    "S3_share_rises_with_k_and_in_bands": false
+  },
+  "outcome": {
+    "holds_within_every_family": false,
+    "driven_by_family": [],
+    "too_variable_at_k10": false
+  }
+}
