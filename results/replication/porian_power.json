@@ -1,0 +1,102 @@
+{
+  "status": "power analysis before pre-registration (PREDICTIONS_TASK_PORIAN.md follows only if adequate)",
+  "unit": "points of mis-selected pairs per decade (log10) of lever arm",
+  "worlds": 1000,
+  "noise_sources": {
+    "rw": [
+      "porian_seed",
+      "porian_seed",
+      "porian_seed",
+      "datadecide_c4",
+      "datadecide_c4",
+      "datadecide_c4",
+      "datadecide_c4",
+      "datadecide_c4",
+      "datadecide_c4"
+    ],
+    "owt2": [
+      "porian_seed",
+      "porian_seed",
+      "porian_seed",
+      "porian_seed",
+      "datadecide_c4",
+      "datadecide_c4",
+      "datadecide_c4",
+      "datadecide_c4"
+    ]
+  },
+  "assumption": "location shift: the slope's sampling error does not depend on its true value",
+  "decision": "power at +11.7 below 0.8 under both framings: stop before pre-registration",
+  "pooled": {
+    "random_candidate": {
+      "description": "error against the population slope (mean true slope over worlds); recipes vary by world",
+      "power_at_11_7": 0.128,
+      "power_at_5_85": 0.09,
+      "false_positive_rate_positive_at_0": 0.046,
+      "false_positive_rate_two_sided_at_0": 0.084,
+      "min_slope_80pct_power": 50.5,
+      "sd_estimate_across_worlds": 13.870493903669443,
+      "sd_true_slope_across_worlds": 13.922465145472612
+    },
+    "fixed_candidate_description": "error against each world's own true slope (these recipes)",
+    "sd_error_fixed_candidate": 1.041816001857489,
+    "worlds_with_statistic": 1000,
+    "power_at_11_7": 0.018,
+    "power_at_5_85": 0.001,
+    "false_positive_rate_positive_at_0": 0.0,
+    "false_positive_rate_two_sided_at_0": 0.0,
+    "min_slope_80pct_power": 44.5,
+    "median_se": 16.81765986211109,
+    "median_designs": 62.0,
+    "median_targets": 7.0,
+    "mean_error": -0.049313513600504136
+  },
+  "rw": {
+    "random_candidate": {
+      "description": "error against the population slope (mean true slope over worlds); recipes vary by world",
+      "power_at_11_7": 0.102,
+      "power_at_5_85": 0.075,
+      "false_positive_rate_positive_at_0": 0.046,
+      "false_positive_rate_two_sided_at_0": 0.083,
+      "min_slope_80pct_power": 73.4,
+      "sd_estimate_across_worlds": 19.38760658577809,
+      "sd_true_slope_across_worlds": 19.47720306639799
+    },
+    "fixed_candidate_description": "error against each world's own true slope (these recipes)",
+    "sd_error_fixed_candidate": 1.7258449518208419,
+    "worlds_with_statistic": 1000,
+    "power_at_11_7": 0.005,
+    "power_at_5_85": 0.0,
+    "false_positive_rate_positive_at_0": 0.0,
+    "false_positive_rate_two_sided_at_0": 0.0,
+    "min_slope_80pct_power": null,
+    "median_se": 24.0383057654307,
+    "median_designs": 40.0,
+    "median_targets": 4.0,
+    "mean_error": -0.08242464043667429
+  },
+  "owt2": {
+    "random_candidate": {
+      "description": "error against the population slope (mean true slope over worlds); recipes vary by world",
+      "power_at_11_7": 0.11,
+      "power_at_5_85": 0.082,
+      "false_positive_rate_positive_at_0": 0.056,
+      "false_positive_rate_two_sided_at_0": 0.099,
+      "min_slope_80pct_power": 70.4,
+      "sd_estimate_across_worlds": 19.685868520851155,
+      "sd_true_slope_across_worlds": 19.7323300269237
+    },
+    "fixed_candidate_description": "error against each world's own true slope (these recipes)",
+    "sd_error_fixed_candidate": 1.206894536953194,
+    "worlds_with_statistic": 1000,
+    "power_at_11_7": 0.008,
+    "power_at_5_85": 0.0,
+    "false_positive_rate_positive_at_0": 0.0,
+    "false_positive_rate_two_sided_at_0": 0.0,
+    "min_slope_80pct_power": null,
+    "median_se": 23.194453907578048,
+    "median_designs": 22.0,
+    "median_targets": 3.0,
+    "mean_error": -0.02352280244608028
+  }
+}

@@ -122,3 +122,13 @@ One row per run: recipe (training corpus), parameters, tokens, Chinchilla
 multiplier, 6ND compute, and the loss on the 174M-token `c4_val` held-out set
 with its lower 95% bound. Built by `scripts/run_replication_gadre.py` from
 `data/raw/gadre_scaling/` (git-ignored).
+
+## porian_runs.csv, porian_ladder.csv, porian_seed_noise.csv
+
+Derived from `data/experiment_results.pickle.xz` of Porian et al. 2024, "Resolving Discrepancies in
+Compute-Optimal Scaling of Language Models"
+(https://github.com/formll/resolving-scaling-law-discrepancies, MIT licence, copyright the authors).
+The pickle was disassembled first and loaded only with an allow-list of its referenced globals in a
+no-network sandbox; the commit, hashes and global list are in
+`results/replication/porian_provenance.json`. `scripts/build_porian_ladder.py` builds the three tables
+from the exported CSV and JSON (git-ignored under `data/raw/porian/export/`).

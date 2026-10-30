@@ -1,0 +1,55 @@
+{
+  "source": "https://github.com/formll/resolving-scaling-law-discrepancies (MIT)",
+  "commit": "0dc60d91b8a525858a3067fc9e4a46ff5374cc6f",
+  "file": "data/experiment_results.pickle.xz",
+  "sha256_compressed": "eae02848c22e72f90d1a08fb4d3f9782941563fd70636a33ce30692ec709bc34",
+  "sha256_decompressed": "28b449435ee1745e1028dac821fe474a4a456dcb8d16525a79917fbb6270c701",
+  "decompressed_bytes": 66686849,
+  "disassembly": "pickletools.genops over the decompressed bytes (opcodes read, nothing executed)",
+  "globals_referenced": {
+    "builtins slice": 1,
+    "numpy dtype": 1,
+    "numpy ndarray": 1,
+    "numpy.core.multiarray _reconstruct": 1,
+    "numpy.core.numeric _frombuffer": 1,
+    "pandas._libs.internals _unpickle_block": 1,
+    "pandas.core.frame DataFrame": 1,
+    "pandas.core.indexes.base Index": 1,
+    "pandas.core.indexes.base _new_Index": 1,
+    "pandas.core.indexes.numeric Int64Index": 1,
+    "pandas.core.internals.managers BlockManager": 1,
+    "pandas.core.internals.managers SingleBlockManager": 1,
+    "pandas.core.series Series": 1
+  },
+  "extension_or_persistent_id_opcodes": [],
+  "unresolved_stack_globals": 0,
+  "loader": {
+    "allow_list": [
+      "builtins slice",
+      "numpy dtype",
+      "numpy ndarray",
+      "numpy.core.multiarray _reconstruct",
+      "numpy.core.numeric _frombuffer",
+      "pandas._libs.internals _unpickle_block",
+      "pandas.core.frame DataFrame",
+      "pandas.core.indexes.base Index",
+      "pandas.core.indexes.base _new_Index",
+      "pandas.core.indexes.numeric Int64Index",
+      "pandas.core.internals.managers BlockManager",
+      "pandas.core.internals.managers SingleBlockManager",
+      "pandas.core.series Series"
+    ],
+    "note": "pickle.Unpickler subclass whose find_class permits exactly these (module, name) pairs and raises otherwise; persistent_load raises. builtins.slice is a builtin value type, not a container; pandas uses it to rebuild block placement, and it was admitted for that reason.",
+    "environment": "separate venv with pandas 1.5.3 and numpy 1.26.4 (the pickle uses pandas 1.x classes such as Int64Index)",
+    "sandbox": "sandbox-exec -p '(version 1)(allow default)(deny network*)'"
+  },
+  "exported": [
+    "data/raw/porian/export/porian_runs.csv (git-ignored)",
+    "data/raw/porian/export/porian_val_curves.json (git-ignored)"
+  ],
+  "committed_derived": [
+    "data/porian_runs.csv",
+    "data/porian_ladder.csv",
+    "data/porian_seed_noise.csv"
+  ]
+}
