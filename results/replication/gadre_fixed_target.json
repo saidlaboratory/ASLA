@@ -1,0 +1,235 @@
+{
+  "preregistration": "PREDICTIONS_TASK_REPLICATION.md",
+  "suite": "Gadre et al. 2024 (github.com/mlfoundations/scaling, MIT)",
+  "recipes": [
+    "c4_original",
+    "rpj",
+    "rw_original"
+  ],
+  "metric": "c4_val loss, nats per token, 174M held-out tokens",
+  "ladder": "Chinchilla multiplier 1",
+  "primary": {
+    "noise_scale": 1.0,
+    "target_params": 6889410560,
+    "target_noise_sd": {
+      "c4_original": 0.001915744542207619,
+      "rpj": 0.0019023212590248094,
+      "rw_original": 0.0017844218756443682
+    },
+    "determined_share": 1.0,
+    "admitted": true,
+    "n_designs": 3,
+    "designs": [
+      {
+        "window": [
+          10569312,
+          153677376
+        ],
+        "lever": 3.303144259877494,
+        "kernel": {
+          "c4_original|rpj": 0.0,
+          "c4_original|rw_original": 0.0,
+          "rpj|rw_original": -100.0
+        },
+        "excess": -33.333333333333336,
+        "fits_failed": []
+      },
+      {
+        "window": [
+          78914048,
+          411616256
+        ],
+        "lever": 2.4473790966628126,
+        "kernel": {
+          "c4_original|rpj": 0.0,
+          "c4_original|rw_original": 0.0,
+          "rpj|rw_original": 0.0
+        },
+        "excess": 0.0,
+        "fits_failed": []
+      },
+      {
+        "window": [
+          153677376,
+          1439795200
+        ],
+        "lever": 1.3597626900351714,
+        "kernel": {
+          "c4_original|rpj": 0.0,
+          "c4_original|rw_original": 0.0,
+          "rpj|rw_original": -100.0
+        },
+        "excess": -33.333333333333336,
+        "fits_failed": []
+      }
+    ],
+    "slope": 1.3577667247106489,
+    "unit": "points of mis-selected pairs per decade (log10) of lever arm",
+    "se_jackknife": 2.715533449421293,
+    "leave_one_recipe_out": {
+      "c4_original": 4.07330017413194,
+      "rpj": 0.0,
+      "rw_original": 0.0
+    },
+    "interval_1_96": [
+      -3.964581034968906,
+      6.680114484390203
+    ],
+    "interval_t2": [
+      -10.326230684167848,
+      13.041764133589146
+    ]
+  },
+  "sensitivity_noise_scale": {
+    "0.5": {
+      "noise_scale": 0.5,
+      "target_params": 6889410560,
+      "target_noise_sd": {
+        "c4_original": 0.0015926459681173716,
+        "rpj": 0.0015633933787298894,
+        "rw_original": 0.0014073228528681955
+      },
+      "determined_share": 1.0,
+      "admitted": true,
+      "n_designs": 3,
+      "designs": [
+        {
+          "window": [
+            10569312,
+            153677376
+          ],
+          "lever": 3.303144259877494,
+          "kernel": {
+            "c4_original|rpj": 0.0,
+            "c4_original|rw_original": 0.0,
+            "rpj|rw_original": -100.0
+          },
+          "excess": -33.333333333333336,
+          "fits_failed": []
+        },
+        {
+          "window": [
+            78914048,
+            411616256
+          ],
+          "lever": 2.4473790966628126,
+          "kernel": {
+            "c4_original|rpj": 0.0,
+            "c4_original|rw_original": 0.0,
+            "rpj|rw_original": 0.0
+          },
+          "excess": 0.0,
+          "fits_failed": []
+        },
+        {
+          "window": [
+            153677376,
+            1439795200
+          ],
+          "lever": 1.3597626900351714,
+          "kernel": {
+            "c4_original|rpj": 0.0,
+            "c4_original|rw_original": 0.0,
+            "rpj|rw_original": -100.0
+          },
+          "excess": -33.333333333333336,
+          "fits_failed": []
+        }
+      ],
+      "slope": 1.3577667247106489,
+      "unit": "points of mis-selected pairs per decade (log10) of lever arm",
+      "se_jackknife": 2.715533449421293,
+      "leave_one_recipe_out": {
+        "c4_original": 4.07330017413194,
+        "rpj": 0.0,
+        "rw_original": 0.0
+      },
+      "interval_1_96": [
+        -3.964581034968906,
+        6.680114484390203
+      ],
+      "interval_t2": [
+        -10.326230684167848,
+        13.041764133589146
+      ]
+    },
+    "2.0": {
+      "noise_scale": 2.0,
+      "target_params": 6889410560,
+      "target_noise_sd": {
+        "c4_original": 0.002864315107656509,
+        "rpj": 0.0028839790977160085,
+        "rw_original": 0.0028281755077382517
+      },
+      "determined_share": 1.0,
+      "admitted": true,
+      "n_designs": 3,
+      "designs": [
+        {
+          "window": [
+            10569312,
+            153677376
+          ],
+          "lever": 3.303144259877494,
+          "kernel": {
+            "c4_original|rpj": 0.0,
+            "c4_original|rw_original": 0.0,
+            "rpj|rw_original": -99.9999999999816
+          },
+          "excess": -33.3333333333272,
+          "fits_failed": []
+        },
+        {
+          "window": [
+            78914048,
+            411616256
+          ],
+          "lever": 2.4473790966628126,
+          "kernel": {
+            "c4_original|rpj": 0.0,
+            "c4_original|rw_original": 0.0,
+            "rpj|rw_original": 0.0
+          },
+          "excess": 0.0,
+          "fits_failed": []
+        },
+        {
+          "window": [
+            153677376,
+            1439795200
+          ],
+          "lever": 1.3597626900351714,
+          "kernel": {
+            "c4_original|rpj": 0.0,
+            "c4_original|rw_original": 0.0,
+            "rpj|rw_original": -99.9999999999816
+          },
+          "excess": -33.3333333333272,
+          "fits_failed": []
+        }
+      ],
+      "slope": 1.357766724710398,
+      "unit": "points of mis-selected pairs per decade (log10) of lever arm",
+      "se_jackknife": 2.7155334494208,
+      "leave_one_recipe_out": {
+        "c4_original": 4.0733001741312,
+        "rpj": 0.0,
+        "rw_original": 0.0
+      },
+      "interval_1_96": [
+        -3.96458103496819,
+        6.680114484388986
+      ],
+      "interval_t2": [
+        -10.326230684165978,
+        13.041764133586774
+      ]
+    }
+  },
+  "outcome": "indistinguishable",
+  "robust_to_t2": null,
+  "predictions": {
+    "R1_slope_within_minus_10_to_10": true,
+    "R2_does_not_replicate": true
+  }
+}

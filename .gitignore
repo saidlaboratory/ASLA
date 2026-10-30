@@ -32,6 +32,7 @@ results/*
 !results/resolution/
 !results/signal_and_noise/
 !results/target_scoring/
+!results/replication/
 !results/task_b/
 !results/theory/
 !results/theory_v2/

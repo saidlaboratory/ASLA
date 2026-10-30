@@ -112,3 +112,13 @@ asla audit --runs runs.parquet --target YOUR_TARGET_COMPUTE --budgets YOUR_FIT_B
 ```
 
 The finalizer refuses pending rows and blank BPB values.
+
+## gadre_scaling_runs.csv
+
+Derived from the per-run files `exp_data/models/*.json` of Gadre et al. 2024,
+"Language models scale reliably with over-training and on downstream tasks"
+(https://github.com/mlfoundations/scaling, MIT licence, copyright the authors).
+One row per run: recipe (training corpus), parameters, tokens, Chinchilla
+multiplier, 6ND compute, and the loss on the 174M-token `c4_val` held-out set
+with its lower 95% bound. Built by `scripts/run_replication_gadre.py` from
+`data/raw/gadre_scaling/` (git-ignored).
