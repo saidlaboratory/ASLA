@@ -59,6 +59,7 @@ def designs(
     target_sds: Mapping[int, Mapping[str, float]],
     targets: Sequence[int],
     truth: Mapping[str, Sequence[float]] | None = None,
+    evidence_by_target: Mapping[int, list[PairEvidence]] | None = None,
 ) -> list[WindowDesign]:
     """Every window design (>= MIN_RUNGS consecutive rungs, target above) for the given target indices.
 
@@ -68,10 +69,24 @@ def designs(
 
     names = sorted(loss)
     compute = 10.0 ** np.asarray(log10_flops, dtype=float)
+    fits: dict[tuple[int, int, str], tuple[float, ...] | None] = {}
+
+    def fitted(s: int, f: int, r: str):
+        key = (s, f, r)
+        if key not in fits:
+            try:
+                fits[key] = tuple(fit_power_law(compute[s : f + 1], np.asarray(loss[r][s : f + 1], dtype=float)))
+            except (FitError, RuntimeError, ValueError):
+                fits[key] = None
+        return fits[key]
+
     out = []
     for t in targets:
         target = {r: float(loss[r][t]) for r in names}
-        ev = known_variance_evidence(target, target_sds[t])
+        if evidence_by_target is not None and t in evidence_by_target:
+            ev = evidence_by_target[t]
+        else:
+            ev = known_variance_evidence(target, target_sds[t])
         determined = frozenset((e.left, e.right) for e in ev if e.determined)
         truth_gaps = None
         if truth is not None:
@@ -81,11 +96,8 @@ def designs(
             for s in range(0, f - MIN_RUNGS + 2):
                 projected, single = {}, {}
                 for r in names:
-                    y = np.asarray(loss[r][s : f + 1], dtype=float)
-                    try:
-                        projected[r] = float(bpb_power_law(compute[t], *fit_power_law(compute[s : f + 1], y)))
-                    except (FitError, RuntimeError, ValueError):
-                        projected[r] = float("nan")
+                    params = fitted(s, f, r)
+                    projected[r] = float(bpb_power_law(compute[t], *params)) if params is not None else float("nan")
                     single[r] = float(loss[r][f])
                 pg = {(a, b): projected[a] - projected[b] for a, b in combinations(names, 2)}
                 sg = {(a, b): single[a] - single[b] for a, b in combinations(names, 2)}

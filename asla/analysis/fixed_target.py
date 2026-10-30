@@ -68,6 +68,8 @@ def excess_determined(all_designs: Sequence[WindowDesign], drop: str | None = No
 def _slope(excess: np.ndarray, lever: np.ndarray, groups: list[list[int]]) -> float:
     kept = [[i for i in g if np.isfinite(excess[i])] for g in groups]
     kept = [g for g in kept if len(g) >= 2]
+    if not kept:  # a short ladder can have no slice of this kind
+        return float("nan")
     return _within(np.nan_to_num(excess), lever, kept)
 
 
