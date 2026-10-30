@@ -1,0 +1,467 @@
+{
+  "unit": "points of mis-selected pairs per decade (log10) of lever arm",
+  "reference": {
+    "confound_lever_only": 7.8,
+    "datadecide_fixed_target_real": 11.67,
+    "grid_mean_true_slopes": "2 to 4"
+  },
+  "worlds_per_step": 200,
+  "steps": [
+    {
+      "step": "R0",
+      "change": "confound benchmark's lever-arm-only variation (reference +7.80)",
+      "worlds": 200,
+      "jobs_timed_out": 0,
+      "mean_true_slope": 8.080952380952382,
+      "mc_se": 0.12968500238173714,
+      "sd_true_slope": 1.8340228920463981,
+      "mean_estimate": null,
+      "lever_range_median": null,
+      "spec": {
+        "statistic": "lever_only",
+        "candidates": "fixed",
+        "truth": "specific",
+        "noise": "per_recipe",
+        "tpp": "datadecide",
+        "seeds": 3,
+        "levers": [
+          0.25,
+          0.5,
+          0.75,
+          1.0,
+          1.25,
+          1.5
+        ],
+        "ladder_rungs": 6
+      }
+    },
+    {
+      "step": "R1",
+      "change": "fixed-target statistic on DataDecide's exact ladder and targets (150M to 1B), same truth and noise",
+      "worlds": 200,
+      "jobs_timed_out": 0,
+      "mean_true_slope": 11.70538222290435,
+      "mc_se": 0.05941720475150792,
+      "sd_true_slope": 0.8402861679788161,
+      "mean_estimate": 11.692923842065248,
+      "lever_range_median": [
+        0.36799999999999855,
+        4.208000000000002
+      ],
+      "spec": {
+        "statistic": "fixed_target",
+        "candidates": "fixed",
+        "truth": "specific",
+        "noise": "per_recipe",
+        "tpp": "datadecide",
+        "seeds": 3,
+        "targets": [
+          9,
+          10,
+          11,
+          12
+        ],
+        "admit": "all",
+        "ladder_rungs": 13
+      }
+    },
+    {
+      "step": "R2",
+      "change": "truth: add the common-mode residual (full residual, as the grid)",
+      "worlds": 200,
+      "jobs_timed_out": 0,
+      "mean_true_slope": 11.677122442986397,
+      "mc_se": 0.05884970221502368,
+      "sd_true_slope": 0.8322604701410447,
+      "mean_estimate": 11.663487796900531,
+      "lever_range_median": [
+        0.36799999999999855,
+        4.208000000000002
+      ],
+      "spec": {
+        "statistic": "fixed_target",
+        "candidates": "fixed",
+        "truth": "full",
+        "noise": "per_recipe",
+        "tpp": "datadecide",
+        "seeds": 3,
+        "targets": [
+          9,
+          10,
+          11,
+          12
+        ],
+        "admit": "all",
+        "ladder_rungs": 13
+      }
+    },
+    {
+      "step": "R3",
+      "change": "candidates: 25 random perturbed draws (as the grid)",
+      "worlds": 200,
+      "jobs_timed_out": 0,
+      "mean_true_slope": 5.769590175829446,
+      "mc_se": 0.08638882302471966,
+      "sd_true_slope": 1.2217224515900764,
+      "mean_estimate": 5.767340764361717,
+      "lever_range_median": [
+        0.36799999999999855,
+        4.208000000000002
+      ],
+      "spec": {
+        "statistic": "fixed_target",
+        "candidates": "random",
+        "truth": "full",
+        "noise": "per_recipe",
+        "tpp": "datadecide",
+        "seeds": 3,
+        "targets": [
+          9,
+          10,
+          11,
+          12
+        ],
+        "admit": "all",
+        "n": 25,
+        "ladder_rungs": 13
+      }
+    },
+    {
+      "step": "R4",
+      "change": "noise: median relative SD by model size (as the grid)",
+      "worlds": 200,
+      "jobs_timed_out": 0,
+      "mean_true_slope": 5.56330397848616,
+      "mc_se": 0.07315421592839307,
+      "sd_true_slope": 1.0345568431070338,
+      "mean_estimate": 5.556328575709797,
+      "lever_range_median": [
+        0.36799999999999855,
+        4.208000000000002
+      ],
+      "spec": {
+        "statistic": "fixed_target",
+        "candidates": "random",
+        "truth": "full",
+        "noise": "by_size",
+        "tpp": "datadecide",
+        "seeds": 3,
+        "targets": [
+          9,
+          10,
+          11,
+          12
+        ],
+        "admit": "all",
+        "n": 25,
+        "ladder_rungs": 13
+      }
+    },
+    {
+      "step": "R5",
+      "change": "targets admitted by world determinacy (as the grid)",
+      "worlds": 200,
+      "jobs_timed_out": 0,
+      "mean_true_slope": 5.648551757829848,
+      "mc_se": 0.07955327569899878,
+      "sd_true_slope": 1.1250532142473004,
+      "mean_estimate": 5.642172847544474,
+      "lever_range_median": [
+        0.36799999999999855,
+        4.208000000000002
+      ],
+      "spec": {
+        "statistic": "fixed_target",
+        "candidates": "random",
+        "truth": "full",
+        "noise": "by_size",
+        "tpp": "datadecide",
+        "seeds": 3,
+        "targets": [
+          9,
+          10,
+          11,
+          12
+        ],
+        "admit": "determinacy",
+        "n": 25,
+        "ladder_rungs": 13
+      }
+    },
+    {
+      "step": "G1",
+      "change": "geometry: size spacing even in log compute (13 rungs, same range, top four targets)",
+      "worlds": 200,
+      "jobs_timed_out": 0,
+      "mean_true_slope": 2.7719744918767164,
+      "mc_se": 0.07928393218890628,
+      "sd_true_slope": 1.1212441217982005,
+      "mean_estimate": 2.763209361005904,
+      "lever_range_median": [
+        0.4102499999999978,
+        4.102499999999999
+      ],
+      "spec": {
+        "statistic": "fixed_target",
+        "candidates": "random",
+        "truth": "full",
+        "noise": "by_size",
+        "tpp": "datadecide",
+        "seeds": 3,
+        "targets": [
+          9,
+          10,
+          11,
+          12
+        ],
+        "admit": "determinacy",
+        "n": 25,
+        "ladder_rungs": 13
+      }
+    },
+    {
+      "step": "G2",
+      "change": "geometry: compute range covered (the grid spans DataDecide's 4M to 1B range: unchanged)",
+      "worlds": 200,
+      "jobs_timed_out": 0,
+      "mean_true_slope": 2.994674600779401,
+      "mc_se": 0.07895363473452417,
+      "sd_true_slope": 1.1165730104021556,
+      "mean_estimate": 2.9890378104151374,
+      "lever_range_median": [
+        0.4102499999999978,
+        4.102499999999999
+      ],
+      "spec": {
+        "statistic": "fixed_target",
+        "candidates": "random",
+        "truth": "full",
+        "noise": "by_size",
+        "tpp": "datadecide",
+        "seeds": 3,
+        "targets": [
+          9,
+          10,
+          11,
+          12
+        ],
+        "admit": "determinacy",
+        "n": 25,
+        "ladder_rungs": 13
+      }
+    },
+    {
+      "step": "G3",
+      "change": "geometry: tokens per parameter constant at 100 (DataDecide drifts to 85)",
+      "worlds": 200,
+      "jobs_timed_out": 0,
+      "mean_true_slope": 2.9988881497621716,
+      "mc_se": 0.07806987716714255,
+      "sd_true_slope": 1.1040747910257462,
+      "mean_estimate": 2.9934308767370736,
+      "lever_range_median": [
+        0.4102499999999978,
+        4.102499999999999
+      ],
+      "spec": {
+        "statistic": "fixed_target",
+        "candidates": "random",
+        "truth": "full",
+        "noise": "by_size",
+        "tpp": 100,
+        "seeds": 3,
+        "targets": [
+          9,
+          10,
+          11,
+          12
+        ],
+        "admit": "determinacy",
+        "n": 25,
+        "ladder_rungs": 13
+      }
+    },
+    {
+      "step": "G4",
+      "change": "geometry: target rule of the grid (every rung with five or more below)",
+      "worlds": 200,
+      "jobs_timed_out": 0,
+      "mean_true_slope": 3.0954358026900035,
+      "mc_se": 0.07898718146863981,
+      "sd_true_slope": 1.1170474328657523,
+      "mean_estimate": 3.0859570159494867,
+      "lever_range_median": [
+        0.4102499999999978,
+        4.102499999999999
+      ],
+      "spec": {
+        "statistic": "fixed_target",
+        "candidates": "random",
+        "truth": "full",
+        "noise": "by_size",
+        "tpp": 100,
+        "seeds": 3,
+        "targets": "auto",
+        "admit": "determinacy",
+        "n": 25,
+        "ladder_rungs": 13
+      }
+    },
+    {
+      "step": "G5_S10",
+      "change": "geometry: rung count 10 (evenly spaced over the same range)",
+      "worlds": 200,
+      "jobs_timed_out": 0,
+      "mean_true_slope": 2.626521603424446,
+      "mc_se": 0.08623596574294554,
+      "sd_true_slope": 1.219560723180152,
+      "mean_estimate": 2.6212602281198407,
+      "lever_range_median": [
+        0.546999999999997,
+        3.8290000000000006
+      ],
+      "spec": {
+        "statistic": "fixed_target",
+        "candidates": "random",
+        "truth": "full",
+        "noise": "by_size",
+        "tpp": 100,
+        "seeds": 3,
+        "targets": "auto",
+        "admit": "determinacy",
+        "n": 25,
+        "ladder_rungs": 10
+      }
+    },
+    {
+      "step": "G5_S8",
+      "change": "geometry: rung count 8 (evenly spaced over the same range)",
+      "worlds": 200,
+      "jobs_timed_out": 0,
+      "mean_true_slope": 2.851450803918814,
+      "mc_se": 0.09698450023640853,
+      "sd_true_slope": 1.371567955743056,
+      "mean_estimate": 2.843688295649107,
+      "lever_range_median": [
+        0.7032857142857125,
+        3.5164285714285732
+      ],
+      "spec": {
+        "statistic": "fixed_target",
+        "candidates": "random",
+        "truth": "full",
+        "noise": "by_size",
+        "tpp": 100,
+        "seeds": 3,
+        "targets": "auto",
+        "admit": "determinacy",
+        "n": 25,
+        "ladder_rungs": 8
+      }
+    },
+    {
+      "step": "G5_S7",
+      "change": "geometry: rung count 7 (evenly spaced over the same range)",
+      "worlds": 200,
+      "jobs_timed_out": 0,
+      "mean_true_slope": 1.2860270386169226,
+      "mc_se": 0.09228006878517338,
+      "sd_true_slope": 1.305037248127143,
+      "mean_estimate": 1.2805665783893323,
+      "lever_range_median": [
+        0.8204999999999991,
+        3.282
+      ],
+      "spec": {
+        "statistic": "fixed_target",
+        "candidates": "random",
+        "truth": "full",
+        "noise": "by_size",
+        "tpp": 100,
+        "seeds": 3,
+        "targets": "auto",
+        "admit": "determinacy",
+        "n": 25,
+        "ladder_rungs": 7
+      }
+    },
+    {
+      "step": "G5_S6",
+      "change": "geometry: rung count 6 (evenly spaced over the same range)",
+      "worlds": 200,
+      "jobs_timed_out": 0,
+      "mean_true_slope": -0.8345182476809532,
+      "mc_se": 0.10084210852871878,
+      "sd_true_slope": 1.4261227753961365,
+      "mean_estimate": -0.8435237573192144,
+      "lever_range_median": [
+        0.9846000000000005,
+        2.953800000000001
+      ],
+      "spec": {
+        "statistic": "fixed_target",
+        "candidates": "random",
+        "truth": "full",
+        "noise": "by_size",
+        "tpp": 100,
+        "seeds": 3,
+        "targets": "auto",
+        "admit": "determinacy",
+        "n": 25,
+        "ladder_rungs": 6
+      }
+    },
+    {
+      "step": "N1",
+      "change": "grid cell n=10, S=7, 3 seeds (recipes 25 to 10)",
+      "worlds": 200,
+      "jobs_timed_out": 0,
+      "mean_true_slope": 0.8155220017905368,
+      "mc_se": 0.1905055575033775,
+      "sd_true_slope": 2.69415543128724,
+      "mean_estimate": 0.8111973979389819,
+      "lever_range_median": [
+        0.8204999999999991,
+        3.282
+      ],
+      "spec": {
+        "statistic": "fixed_target",
+        "candidates": "random",
+        "truth": "full",
+        "noise": "by_size",
+        "tpp": 100,
+        "seeds": 3,
+        "targets": "auto",
+        "admit": "determinacy",
+        "n": 10,
+        "ladder_rungs": 7
+      }
+    },
+    {
+      "step": "N2",
+      "change": "grid cell n=10, S=7, 1 seed (seeds 3 to 1)",
+      "worlds": 200,
+      "jobs_timed_out": 0,
+      "mean_true_slope": 2.4179775957147474,
+      "mc_se": 0.21985710115018525,
+      "sd_true_slope": 3.109248942306254,
+      "mean_estimate": 2.430773169371176,
+      "lever_range_median": [
+        0.8204999999999991,
+        3.282
+      ],
+      "spec": {
+        "statistic": "fixed_target",
+        "candidates": "random",
+        "truth": "full",
+        "noise": "by_size",
+        "tpp": 100,
+        "seeds": 1,
+        "targets": "auto",
+        "admit": "determinacy",
+        "n": 10,
+        "ladder_rungs": 7
+      }
+    }
+  ]
+}
