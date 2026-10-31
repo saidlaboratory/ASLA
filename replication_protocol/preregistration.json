@@ -68,7 +68,7 @@
     "source": "results/replication/protocol_dry_run.json: the corrected recipe model at multiplier 1 on the exact 6ND grid, 150 worlds"
   },
   "analysis_entry_point": "scripts/analyze_replication.py (refuses to run if the pinned SHA-256 of the frozen modules differs)",
-  "protocol_version": "v2.1, frozen 2026-10-31",
+  "protocol_version": "v2.2, frozen 2026-10-31",
   "within_regime_secondary": {
     "added": false,
     "reason": "PREDICTIONS_TASK_CONFIG_STEPS.md found that config steps do not contribute (outcome O1; step-term share interval includes zero), so the conditional secondary is not added; it would not be estimable on this ladder anyway (2 within-regime windows per target, below the 3-window slice rule)",
@@ -77,7 +77,8 @@
   "evaluation_set": {
     "file": "replication_protocol/eval_set.jsonl",
     "definition": "DataDecide's in-loop c4_en-validation file (sha256 c37d6b11...), 2,099 documents by id and text hash",
-    "decontamination": "scripts/decontaminate.py removes training documents whose NFC text hash matches the evaluation set"
+    "decontamination": "two passes before tokenization (scripts/decontaminate.py): (1) exact: remove a training document whose SHA-256 of NFC-normalized text equals a sha256_nfc in replication_protocol/eval_set.jsonl; (2) 13-gram: remove a remaining training document that shares at least one 13-gram with any evaluation document, over text normalized by NFC, casefolding and replacing every non-letter, non-digit character with a space, then split on whitespace; 13-grams are matched by 64-bit blake2b hash against replication_protocol/eval_13grams.npz. Per corpus, the report gives the documents removed by each pass and the evaluation ids each pass hit",
+    "index": "replication_protocol/eval_13grams.npz"
   },
   "numerical_stability_diagnostic": {
     "draws": 20,

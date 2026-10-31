@@ -48,7 +48,7 @@
     "metric": "c4_en_bits_per_token: mean next-token cross-entropy on held-out C4-en validation, in nats divided by ln 2, at the final checkpoint",
     "data": "DataDecide's in-loop c4_en-validation file: OLMo eval-data/perplexity/v3_small_gptneox20b/c4_en/val/part-0-00000.npy (https://olmo-data.org/eval-data/perplexity/v3_small_gptneox20b/c4_en/val/part-0-00000.npy, sha256 c37d6b115de9120bfaefe9ca6a20a310eb6738c20bc26abf469dcada66100ab4) with its part-0-00000.csv.gz metadata; 2,099 documents, 1,021,899 tokens, listed by id and text hash in replication_protocol/eval_set.jsonl",
     "unverified": "none for the evaluation set itself, which is the in-loop file pinned by sha256; its document-for-document relation to other releases is provenance only (see in_loop_file_check)",
-    "decontamination": "before tokenization, every training document whose SHA-256 of NFC-normalized text equals a sha256_nfc in replication_protocol/eval_set.jsonl is removed (scripts/decontaminate.py), and the matched evaluation ids are reported per corpus",
+    "decontamination": "two passes before tokenization (scripts/decontaminate.py): (1) exact: remove a training document whose SHA-256 of NFC-normalized text equals a sha256_nfc in replication_protocol/eval_set.jsonl; (2) 13-gram: remove a remaining training document that shares at least one 13-gram with any evaluation document, over text normalized by NFC, casefolding and replacing every non-letter, non-digit character with a space, then split on whitespace; 13-grams are matched by 64-bit blake2b hash against replication_protocol/eval_13grams.npz. Per corpus, the report gives the documents removed by each pass and the evaluation ids each pass hit",
     "in_loop_file_check": {
       "result": "all 2,099 documents of DataDecide's in-loop c4_en-validation file are C4-en validation documents (allenai/c4 revision 1588ec45): 2,097 byte-identical and 2 identical after Unicode NFC normalization; 1,021,899 tokens; its metadata names Paloma v3_small c4_en/val source files",
       "paloma_identity": "provenance only, not used by the protocol: the file's metadata names Paloma v3_small source files; identity with the gated HF Paloma release is unverified",
@@ -57,9 +57,16 @@
     },
     "eval_set": {
       "file": "replication_protocol/eval_set.jsonl",
-      "sha256": "102e8b05ab291f5dc0eb9354efdc682b751f466e343e0eebc94ada2bb7e3c0be",
+      "sha256": "a1b7131c058e0358d5983a08524c85c4c159b74c7bc08d73e5d21b0c7531a916",
       "documents": 2099,
-      "fields": "id, token_start, token_end, sha256_text, sha256_nfc",
+      "fields": "id, token_start, token_end, sha256_text, sha256_nfc, normalized_tokens",
+      "built_by": "scripts/build_eval_set_manifest.py"
+    },
+    "eval_13gram_index": {
+      "file": "replication_protocol/eval_13grams.npz",
+      "sha256": "59cedcc670ba66af5490e859d835aedeb620d5d98050f5e6b98b2a49a041d611",
+      "distinct_13grams": 748892,
+      "documents_under_13_tokens": 2,
       "built_by": "scripts/build_eval_set_manifest.py"
     }
   },

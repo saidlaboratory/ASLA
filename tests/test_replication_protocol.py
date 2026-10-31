@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import numpy as np
 import pytest
 
 REPO = Path(__file__).resolve().parents[1]
@@ -70,22 +71,59 @@ def test_evaluation_and_decontamination_reference_the_in_loop_file():
         assert cfg["eval"]["eval_set_sha256"] == es["sha256"] == cfg["decontamination"]["eval_set_sha256"]
 
 
-def test_decontaminate_removes_eval_documents_by_nfc_hash(tmp_path):
-    import io
+def _planted():
     import sys
-    import unicodedata
 
     sys.path.insert(0, str(REPO))
-    from scripts import decontaminate
+    from scripts.decontaminate import Decontaminator
 
-    hashes = decontaminate.eval_hashes()
-    target_hash, target_id = next(iter(hashes.items()))
-    # a synthetic document whose NFC hash is forced to match, plus an ordinary one
-    fake = {target_hash: target_id, decontaminate.nfc_hash(unicodedata.normalize("NFD", "café")): "x"}
-    removed: dict = {}
-    lines = [json.dumps({"text": "café"}), json.dumps({"text": "kept"})]
-    out = list(decontaminate.filter_lines(lines, fake, removed))
-    assert removed == {"x": 1} and len(out) == 1 and "kept" in out[0]
+    eval_a = (
+        "The committee met on Tuesday to review the proposed budget for the regional library system, "
+        "and members agreed that the reading room renovation should be completed before the winter term begins."
+    )
+    eval_b = "Short note."  # under 13 tokens: only the exact pass can catch it
+    dc = Decontaminator.from_texts(["eval-a", "eval-b"], [eval_a, eval_b])
+    return dc, eval_a, eval_b
+
+
+def test_planted_contamination_is_removed():
+    dc, eval_a, eval_b = _planted()
+    passage = " ".join(eval_a.split()[3:22])  # a 19-word passage from inside the evaluation document
+    embedded = (
+        "Local news roundup. Several events took place across the county this week, including a bake sale. "
+        + passage
+        + " In other news, the football team won its third straight match on Friday night."
+    )
+    near_dup = (
+        "the  committee met on tuesday -- to review the proposed budget, for the regional\nlibrary system; "
+        "and members agreed that the reading-room renovation should be completed before the winter term begins!!"
+    )
+    clean = "An unrelated document about gardening: water tomatoes early in the morning and mulch the beds well."
+    lines = [json.dumps({"text": t}) for t in (eval_a, embedded, near_dup, clean, eval_b)]
+    kept = list(dc.filter(lines))
+    assert [json.loads(l)["text"] for l in kept] == [clean]
+    rep = dc.report("planted")
+    assert rep["removed_exact"] == 2 and rep["removed_13gram"] == 2 and rep["kept"] == 1
+    assert rep["eval_ids_hit_exact"] == {"eval-a": 1, "eval-b": 1}
+    assert rep["eval_ids_hit_13gram"] == {"eval-a": 2}
+
+
+def test_twelve_shared_words_are_not_enough():
+    dc, eval_a, _ = _planted()
+    twelve = " ".join(eval_a.split()[3:15])
+    assert dc.check("Prefix words here. " + twelve + " but then something else entirely.") is None
+
+
+def test_protocol_index_matches_eval_set():
+    import sys
+
+    sys.path.insert(0, str(REPO))
+    from scripts.decontaminate import Decontaminator
+
+    dc = Decontaminator.from_protocol()
+    assert len(dc.ids) == 2099 and len(dc.exact) == 2099
+    assert dc.grams.size == dc.gram_doc.size > 0 and np.all(np.diff(dc.grams.astype(np.float64)) >= 0)
+    assert dc.gram_doc.min() >= 0 and dc.gram_doc.max() < 2099
 
 
 def test_stability_diagnostic_is_output_only():

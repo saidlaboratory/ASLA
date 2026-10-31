@@ -1,4 +1,4 @@
-# Replication protocol (v2.1, frozen 2026-10-31)
+# Replication protocol (v2.2, frozen 2026-10-31)
 
 Pre-registration: `../PREDICTIONS_REPLICATION_PROTOCOL.md` (machine-readable: `preregistration.json`).
 
@@ -8,6 +8,7 @@ Pre-registration: `../PREDICTIONS_REPLICATION_PROTOCOL.md` (machine-readable: `p
 | `ladder.json` | DataDecide's setup at the 8 sizes, with sources |
 | `configs/` | One config per run (240), written by `scripts/make_replication_configs.py` |
 | `eval_set.jsonl` | The evaluation set (DataDecide's in-loop c4_en-validation file): 2,099 document ids with text hashes, used for decontamination |
+| `eval_13grams.npz` | 64-bit hashes of the evaluation set's normalized 13-grams, each with its evaluation document, used by the 13-gram decontamination pass |
 | `budget.json` | Runs, total tokens and FLOPs, GPU-hours |
 | `MANIFEST.sha256` | SHA-256 of every protocol file at the freeze |
 
@@ -21,7 +22,7 @@ Then run:
 
     .venv/bin/python scripts/analyze_replication.py runs.csv --out verdict.json
 
-Before tokenizing each corpus, run `scripts/decontaminate.py` on it.
+Before tokenizing each corpus, run `scripts/decontaminate.py --corpus <id> --report <file>` on it. It applies the exact-hash pass, then the 13-gram pass, and reports removals per pass with the evaluation ids hit.
 
 The analysis script reports a numerical-stability diagnostic alongside the verdict. It refuses to run if any frozen analysis module or protocol file has changed. Check the whole protocol
 with `shasum -a 256 -c replication_protocol/MANIFEST.sha256`.

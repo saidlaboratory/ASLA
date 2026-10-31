@@ -36,11 +36,11 @@ PINNED = {
     "asla/analysis/target_scoring.py": "5b4edb56df30c5c1daf1e7291376dd46b7b76d15f42564705e1ed9f01f6c9dae",
     "asla/models.py": "52b913d526615728d343418fd5cad9f6ad01f309051e48466d2a73a1991f17e0",
 }
-# protocol v2.1 (2026-10-31): the frozen protocol files; any edit after the freeze is refused like a code change
+# protocol v2.2 (2026-10-31): the frozen protocol files; any edit after the freeze is refused like a code change
 PROTOCOL_PINS = {
-    "replication_protocol/recipes.json": "4131ee41f04f7af8972c6641debebc2a8a61c0907078df4ed81b80b92f127e13",
-    "replication_protocol/ladder.json": "78f07fea21b13fe2a6d02371c70d57058b52c6b66be2c2104dcef86757f0c2c0",
-    "replication_protocol/preregistration.json": "2d1b027ce2e06bb04dd115c61365cd35f781bd0e18bea1e75cff5bac2e95b1fb",
+    "replication_protocol/recipes.json": "aec1b7ec06b89e942faa685028e4fb5101e86e02ab4822921795de8b69d62199",
+    "replication_protocol/ladder.json": "2eb643dfa710cc556b54059747318489d5bbdc981d2182007cd8328a5e2ffcc0",
+    "replication_protocol/preregistration.json": "fab555315bb23f3c38705eb44ea5ea1f24e41761a80a4dbf72c15115d75c4bad",
 }
 PROTOCOL = REPO / "replication_protocol"
 RUN_COLUMNS = ("recipe", "size", "seed", "params_n", "tokens_d", "c4_en_bits_per_token")
@@ -198,7 +198,7 @@ def main(argv: list[str] | None = None) -> dict:
         res["numerical_stability"] = stability(frame, res)
     res["pinned_sha256"] = pins
     res["preregistration"] = "PREDICTIONS_REPLICATION_PROTOCOL.md"
-    res["protocol_version"] = "v2.1"
+    res["protocol_version"] = "v2.2"
     text = json.dumps(res, indent=2) + "\n"
     if a.out:
         a.out.write_text(text, encoding="utf-8")

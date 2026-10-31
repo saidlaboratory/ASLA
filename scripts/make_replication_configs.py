@@ -59,6 +59,8 @@ def configs() -> list[dict]:
                         "decontamination": {
                             "eval_set": ev["eval_set"]["file"],
                             "eval_set_sha256": ev["eval_set"]["sha256"],
+                            "eval_13gram_index": ev["eval_13gram_index"]["file"],
+                            "eval_13gram_index_sha256": ev["eval_13gram_index"]["sha256"],
                             "rule": ev["decontamination"],
                         },
                         "eval": {

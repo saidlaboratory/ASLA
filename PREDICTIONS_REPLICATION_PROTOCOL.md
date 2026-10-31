@@ -1,6 +1,6 @@
 # Pre-registration: the replication protocol
 
-Protocol v2.1, frozen on 2026-10-31, before any training. Nothing has been trained. The v2 and v2.1 changes are listed at the
+Protocol v2.2, frozen on 2026-10-31, before any training. Nothing has been trained. The v2, v2.1 and v2.2 changes are listed at the
 end of this file. The machine-readable copy is
 `replication_protocol/preregistration.json`. If it and this file disagree, the JSON governs.
 
@@ -41,8 +41,20 @@ The settings are:
 
 The evaluation metric is C4-en bits per token at the final checkpoint, on DataDecide's in-loop `c4_en` validation
 file (SHA-256 c37d6b11...). It is the same set for every run. Its 2,099 documents are listed by id and text hash
-in `replication_protocol/eval_set.jsonl`. Every training document whose NFC-normalized text hash matches one of
-them is removed before tokenization (`scripts/decontaminate.py`), and the matched ids are reported per corpus.
+in `replication_protocol/eval_set.jsonl`.
+
+**Decontamination (v2.2)** runs before tokenization, in `scripts/decontaminate.py`, as two passes:
+
+1. **Exact.** A training document whose NFC-normalized text hash equals an evaluation document's is removed.
+2. **13-gram.** A remaining training document that shares at least one 13-gram with any evaluation document is
+   removed.
+   - Text is normalized first: NFC, casefold, and every character that is not a letter or digit becomes a
+     space. It is then split on whitespace.
+   - 13-grams are matched by 64-bit hash against `replication_protocol/eval_13grams.npz`, which holds 748,892
+     distinct 13-grams.
+   - The two evaluation documents shorter than 13 tokens are covered by the exact pass only.
+
+Per corpus, the report gives the number of documents each pass removes and the evaluation ids each pass hit.
 
 **C4 file check (v2):**
 
@@ -234,3 +246,16 @@ outputs. It writes `results/replication/protocol_dry_run.json`. Dry runs train n
   whose verdict differs. It never changes the verdict, which uses the unperturbed inputs.
 - **Pins.** The pins for `recipes.json`, `ladder.json` and `preregistration.json` are updated, and
   `MANIFEST.sha256` is regenerated.
+
+## v2.2 changes (2026-10-31)
+
+- **Decontamination.** The whole-document hash rule is replaced by two passes: an exact NFC-hash pass first, then
+  removal of any training document sharing a 13-gram (over normalized whitespace tokens) with an evaluation
+  document. This catches evaluation text embedded in longer documents, and near-duplicates that differ in
+  whitespace, punctuation or case.
+  - `replication_protocol/eval_13grams.npz` is the 13-gram index, built from the in-loop file by
+    `scripts/build_eval_set_manifest.py`.
+  - The per-corpus report counts removals by pass and lists the evaluation ids hit.
+- **Updated files.** `ladder.json`, `recipes.json`, `preregistration.json` and every run config now name the new
+  rule and the index's hash.
+- **Pins.** The pins and `MANIFEST.sha256` are updated.
