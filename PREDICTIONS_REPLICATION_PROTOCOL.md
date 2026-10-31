@@ -1,6 +1,6 @@
 # Pre-registration: the replication protocol
 
-Protocol v2.2, frozen on 2026-10-31, before any training. Nothing has been trained. The v2, v2.1 and v2.2 changes are listed at the
+Protocol v2.3, frozen on 2026-10-31, before any training. Nothing has been trained. The v2, v2.1, v2.2 and v2.3 changes are listed at the
 end of this file. The machine-readable copy is
 `replication_protocol/preregistration.json`. If it and this file disagree, the JSON governs.
 
@@ -259,3 +259,45 @@ outputs. It writes `results/replication/protocol_dry_run.json`. Dry runs train n
 - **Updated files.** `ladder.json`, `recipes.json`, `preregistration.json` and every run config now name the new
   rule and the index's hash.
 - **Pins.** The pins and `MANIFEST.sha256` are updated.
+
+## v2.3 amendment (2026-10-31): decontamination sensitivity
+
+This amendment adds a reporting rule and a sensitivity check. Nothing else changes.
+
+### Trigger
+
+A selected corpus triggers the check if either holds:
+
+- it loses more than 3% of its documents to the 13-gram pass;
+- it loses more than twice the median 13-gram loss share across the ten selected corpora.
+
+The loss share is `removed_13gram / documents_in`, taken from `scripts/decontaminate.py`'s report.
+
+### Report
+
+Each triggering corpus is reported with its 13-gram loss share, the median, and the evaluation ids hit.
+
+### Excluded documents
+
+For each triggering corpus, the excluded documents are the smallest set of evaluation ids that accounts for more
+than half of that corpus's 13-gram removals. The ids are taken in descending order of that corpus's removal
+counts, with ties broken by id.
+
+### Sensitivity analysis
+
+- The primary analysis (`scripts/analyze_replication.py`, unchanged) is rerun with those documents excluded from
+  scoring.
+- Every run's `c4_en_bits_per_token` is recomputed on the evaluation set minus those documents, applying the same
+  exclusion to all runs.
+- There is one rerun per triggering corpus. If more than one corpus triggers, there is also one rerun with the
+  union of the excluded documents.
+
+### Logging requirement
+
+So that this rescore is possible, every run records its summed token loss and token count for each evaluation
+document at the final checkpoint.
+
+### Primary verdict
+
+The primary verdict still comes from the full evaluation set. The sensitivity results are reported beside it and
+do not replace it.

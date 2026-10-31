@@ -68,7 +68,7 @@
     "source": "results/replication/protocol_dry_run.json: the corrected recipe model at multiplier 1 on the exact 6ND grid, 150 worlds"
   },
   "analysis_entry_point": "scripts/analyze_replication.py (refuses to run if the pinned SHA-256 of the frozen modules differs)",
-  "protocol_version": "v2.2, frozen 2026-10-31",
+  "protocol_version": "v2.3, frozen 2026-10-31",
   "within_regime_secondary": {
     "added": false,
     "reason": "PREDICTIONS_TASK_CONFIG_STEPS.md found that config steps do not contribute (outcome O1; step-term share interval includes zero), so the conditional secondary is not added; it would not be estimable on this ladder anyway (2 within-regime windows per target, below the 3-window slice rule)",
@@ -87,5 +87,13 @@
     "inputs": "every bpb value and each size's compute",
     "reported": "slope min, max, SD, largest deviation from the reported slope, and the number of draws whose verdict differs",
     "role": "output only; the verdict rule is unchanged and uses the unperturbed inputs"
+  },
+  "decontamination_sensitivity": {
+    "trigger": "a selected corpus loses more than 3% of its documents to the 13-gram decontamination pass, or more than twice the median 13-gram loss share across the ten selected corpora (loss share = removed_13gram / documents_in, from scripts/decontaminate.py's report)",
+    "report": "every triggering corpus is reported with its 13-gram loss share, the median, and the evaluation ids hit",
+    "excluded_documents": "for each triggering corpus, the smallest set of evaluation ids, taken in descending order of that corpus's 13-gram removal counts (ties broken by id), whose removals sum to more than half of the corpus's 13-gram removals",
+    "sensitivity_analysis": "the primary analysis (scripts/analyze_replication.py, unchanged) is rerun on every run's c4_en_bits_per_token recomputed on the evaluation set minus those documents, the same exclusion applied to all runs; one rerun per triggering corpus, plus one with the union of excluded documents if more than one corpus triggers",
+    "logging_requirement": "so that the rescore is possible, every run records its summed token loss and token count per evaluation document at the final checkpoint",
+    "primary_verdict": "unchanged: the primary verdict comes from the full evaluation set; the sensitivity results are reported beside it and do not replace it"
   }
 }
