@@ -68,7 +68,7 @@
     "source": "results/replication/protocol_dry_run.json: the corrected recipe model at multiplier 1 on the exact 6ND grid, 150 worlds"
   },
   "analysis_entry_point": "scripts/analyze_replication.py (refuses to run if the pinned SHA-256 of the frozen modules differs)",
-  "protocol_version": "v2.3, frozen 2026-10-31",
+  "protocol_version": "v2.4, frozen 2026-10-31",
   "within_regime_secondary": {
     "added": false,
     "reason": "PREDICTIONS_TASK_CONFIG_STEPS.md found that config steps do not contribute (outcome O1; step-term share interval includes zero), so the conditional secondary is not added; it would not be estimable on this ladder anyway (2 within-regime windows per target, below the 3-window slice rule)",
@@ -94,6 +94,13 @@
     "excluded_documents": "for each triggering corpus, the smallest set of evaluation ids, taken in descending order of that corpus's 13-gram removal counts (ties broken by id), whose removals sum to more than half of the corpus's 13-gram removals",
     "sensitivity_analysis": "the primary analysis (scripts/analyze_replication.py, unchanged) is rerun on every run's c4_en_bits_per_token recomputed on the evaluation set minus those documents, the same exclusion applied to all runs; one rerun per triggering corpus, plus one with the union of excluded documents if more than one corpus triggers",
     "logging_requirement": "so that the rescore is possible, every run records its summed token loss and token count per evaluation document at the final checkpoint",
-    "primary_verdict": "unchanged: the primary verdict comes from the full evaluation set; the sensitivity results are reported beside it and do not replace it"
+    "primary_verdict": "unchanged: the primary verdict comes from the full evaluation set; the sensitivity results are reported beside it and do not replace it",
+    "logging_enforcement": {
+      "evaluator_patch": "replication_protocol/olmo_patch/olmo_per_document.patch (pinned; applies to allenai/OLMo@7094aab), required by every run config",
+      "primary_metric": "the runs table's c4_en_bits_per_token is built from the per-document logs with no exclusion (scripts/rescore_replication.py build)",
+      "rescore": "scripts/rescore_replication.py: final-step logs, chunks deduplicated across ranks, documents in the exclusion list dropped, bits per token recomputed; exclusions derives the v2.3 exclusion lists from decontamination reports",
+      "refusal": "scripts/analyze_replication.py --sensitivity-exclude refuses to run if any run in the runs table lacks final-checkpoint per-document logs",
+      "dry_run": "results/replication/rescore_dry_run.json"
+    }
   }
 }

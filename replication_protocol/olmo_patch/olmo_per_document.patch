@@ -1,0 +1,216 @@
+--- a/olmo/eval/per_document.py
++++ b/olmo/eval/per_document.py
+@@ -0,0 +1,79 @@
++"""Per-document loss logging for OLMo's in-loop perplexity evaluator (ASLA replication protocol v2.4).
++
++Shipped as olmo/eval/per_document.py by olmo_per_document.patch. Evaluation instances are fixed chunks of
++``chunk_size`` tokens of the evaluation memmap; the loss at position j of a chunk (j = 0 .. chunk_size - 2)
++predicts the token at file position chunk_index * chunk_size + j + 1. Each predicted token is attributed to
++the document whose [start, end) token span (from the evaluation file's part-0-00000.csv.gz metadata) contains
++that position. Rows are (chunk, document): the chunk index, the document id, the summed natural-log loss and
++the token count, so a rescore can drop chunks scored twice (across ranks) and any excluded documents.
++Depends on numpy only.
++"""
++
++from __future__ import annotations
++
++import csv
++import gzip
++import io
++import json
++from pathlib import Path
++from typing import Dict, List, Sequence, Tuple, Union
++
++import numpy as np
++
++SCHEMA = "asla-per-document-v1"
++
++
++def load_doc_spans(metadata_csv_gz: Union[str, Path, bytes]) -> Tuple[np.ndarray, np.ndarray, List[str]]:
++    """(starts, ends, ids) from an OLMo memmap metadata file (start,end,id,source,...)."""
++
++    raw = metadata_csv_gz if isinstance(metadata_csv_gz, bytes) else Path(metadata_csv_gz).read_bytes()
++    starts, ends, ids = [], [], []
++    for row in csv.reader(io.TextIOWrapper(io.BytesIO(gzip.decompress(raw)), encoding="utf-8")):
++        starts.append(int(row[0]))
++        ends.append(int(row[1]))
++        ids.append(row[2])
++    order = np.argsort(starts, kind="stable")
++    return np.asarray(starts)[order], np.asarray(ends)[order], [ids[i] for i in order]
++
++
++class PerDocumentLog:
++    def __init__(self, starts: np.ndarray, ends: np.ndarray, ids: Sequence[str], chunk_size: int):
++        self.starts = np.asarray(starts, dtype=np.int64)
++        self.ends = np.asarray(ends, dtype=np.int64)
++        self.ids = list(ids)
++        self.chunk_size = int(chunk_size)
++        self.rows: Dict[Tuple[int, int], List[float]] = {}
++
++    def reset(self) -> None:
++        self.rows = {}
++
++    def add(self, chunk_index: int, token_losses: np.ndarray, valid: np.ndarray) -> None:
++        """token_losses[j] is the loss predicting file position chunk_index * chunk_size + j + 1."""
++
++        loss = np.asarray(token_losses, dtype=np.float64).reshape(-1)
++        ok = np.asarray(valid, dtype=bool).reshape(-1)
++        pos = int(chunk_index) * self.chunk_size + 1 + np.arange(loss.size, dtype=np.int64)
++        doc = np.searchsorted(self.starts, pos, side="right") - 1
++        inside = ok & (doc >= 0) & (pos < self.ends[np.clip(doc, 0, None)])
++        for d in np.unique(doc[inside]):
++            m = inside & (doc == d)
++            key = (int(chunk_index), int(d))
++            cur = self.rows.setdefault(key, [0.0, 0])
++            cur[0] += float(loss[m].sum())
++            cur[1] += int(m.sum())
++
++    def records(self) -> List[dict]:
++        return [
++            {"chunk": c, "doc": self.ids[d], "loss_sum": v[0], "tokens": v[1]}
++            for (c, d), v in sorted(self.rows.items())
++        ]
++
++    def write(self, path: Union[str, Path], label: str, step: int, rank: int) -> None:
++        header = {"schema": SCHEMA, "label": label, "step": int(step), "rank": int(rank), "chunk_size": self.chunk_size}
++        lines = [json.dumps(header)] + [json.dumps(r) for r in self.records()]
++        Path(path).parent.mkdir(parents=True, exist_ok=True)
++        with gzip.open(path, "wt", encoding="utf-8") as fh:
++            fh.write("\n".join(lines) + "\n")
++
++
++__all__ = ["SCHEMA", "PerDocumentLog", "load_doc_spans"]
+--- a/olmo/config.py
++++ b/olmo/config.py
+@@ -619,6 +619,10 @@
+     data: DataConfig = field(default_factory=DataConfig)
+     device_eval_batch_size: Optional[int] = None
+     subset_num_batches: Optional[int] = None
++    per_document_log_dir: Optional[str] = None
++    """ASLA v2.4: if set, write per-document summed loss and token counts for the labels in per_document_metadata."""
++    per_document_metadata: Optional[Dict[str, str]] = None
++    """ASLA v2.4: dataset label -> path of that memmap's document-span metadata (part-0-00000.csv.gz)."""
+ 
+ 
+ class TruncationDirection(StrEnum):
+--- a/olmo/data/memmap_dataset.py
++++ b/olmo/data/memmap_dataset.py
+@@ -200,6 +200,8 @@
+         if self._include_instance_metadata:
+             metadata = self._metadata[memmap_index]
+             out["metadata"] = deepcopy(metadata)
++            # ASLA v2.4: the chunk's index within its own memmap file, for per-document evaluation logs
++            out["metadata"]["chunk_index"] = memmap_local_index
+ 
+         if self._generate_attention_mask:
+             assert self._pad_token_id is not None
+--- a/olmo/eval/__init__.py
++++ b/olmo/eval/__init__.py
+@@ -95,12 +95,24 @@
+         else:
+             raise OLMoConfigurationError("One of DataConfig.paths or DataConfig.datasets is required")
+ 
++        per_document = None
++        if eval_config.per_document_log_dir and eval_config.per_document_metadata:
++            from ..util import file_size, get_bytes_range
++            from .per_document import PerDocumentLog, load_doc_spans
++
++            per_document = {}
++            for label, meta_path in eval_config.per_document_metadata.items():
++                starts, ends, ids = load_doc_spans(get_bytes_range(meta_path, 0, file_size(meta_path)))
++                per_document[label] = PerDocumentLog(starts, ends, ids, train_config.model.max_sequence_length)
++
+         return Evaluator(
+             label=eval_config.label,
+             type=eval_config.type,
+             eval_loader=eval_loader,
+             eval_metric=eval_metric,
+             subset_num_batches=eval_config.subset_num_batches,
++            per_document=per_document,
++            per_document_log_dir=eval_config.per_document_log_dir,
+         )
+     else:
+         raise ValueError(f"Unexpected evaluator type '{eval_config.type}'")
+--- a/olmo/eval/evaluator.py
++++ b/olmo/eval/evaluator.py
+@@ -18,8 +18,18 @@
+     eval_loader: DataLoader
+     eval_metric: Union[Metric, Dict[str, Metric]]
+     subset_num_batches: Optional[int] = None
++    per_document: Optional[Dict[str, Any]] = None  # ASLA v2.4: label -> PerDocumentLog
++    per_document_log_dir: Optional[str] = None
+ 
++    def write_per_document_logs(self, step: int, rank: int) -> None:
++        if not self.per_document or not self.per_document_log_dir:
++            return
++        for label, log in self.per_document.items():
++            log.write(f"{self.per_document_log_dir}/{label}_step{step}_rank{rank}.jsonl.gz", label, step, rank)
++
+     def reset_metrics(self) -> None:
++        for log in (self.per_document or {}).values():
++            log.reset()
+         if isinstance(self.eval_metric, Metric):
+             self.eval_metric.reset()
+         else:
+@@ -75,11 +85,19 @@
+             self.eval_metric.update(batch, logits)  # type: ignore
+         elif self.type == EvaluatorType.lm:
+             # Metric(s) = cross entropy loss
+-            for metadata, instance_loss in zip(batch["metadata"], ce_loss):
++            token_loss, token_valid = batch.get("token_ce_loss"), batch.get("token_valid")
++            for i, (metadata, instance_loss) in enumerate(zip(batch["metadata"], ce_loss)):
+                 if isinstance(self.eval_metric, dict):
+                     metric = self.eval_metric[metadata["label"]]
+                 else:
+                     metric = self.eval_metric
+                 metric.update(instance_loss)
++                log = (self.per_document or {}).get(metadata.get("label"))
++                if log is not None and token_loss is not None:
++                    log.add(
++                        metadata["chunk_index"],
++                        token_loss[i].detach().float().cpu().numpy(),
++                        token_valid[i].detach().cpu().numpy(),
++                    )
+         else:
+             raise ValueError(f"Unexpected evaluator type '{self.type}'")
+--- a/olmo/train.py
++++ b/olmo/train.py
+@@ -815,6 +815,9 @@
+     def eval_batch(self, batch: Dict[str, Any]) -> Tuple[torch.Tensor, torch.Tensor]:
+         with torch.autocast("cuda", enabled=True, dtype=self.cfg.autocast_precision):
+             ce_loss, _, logits = self.model_forward(batch, loss_reduction="none")
++        # ASLA v2.4: keep per-token losses for per-document evaluation logs; the reported metric is unchanged
++        batch["token_ce_loss"] = ce_loss.detach()
++        batch["token_valid"] = self.get_labels(batch) != -100
+         return ce_loss.mean(dim=-1), logits
+ 
+     def eval_step(self, batch: Dict[str, Any], evaluator: Evaluator) -> None:
+@@ -944,6 +947,7 @@
+ 
+             # Get final metrics.
+             metrics = evaluator.compute_metrics()
++            evaluator.write_per_document_logs(self.global_step, get_global_rank())
+             eval_metrics.update(metrics)
+             self.log_metrics_to_console(f"{evaluator.label}", metrics)
+ 
+--- a/scripts/ladder.py
++++ b/scripts/ladder.py
+@@ -270,6 +270,18 @@
+         evaluators=[
+             EvaluatorConfig(
+                 label="all-small-ppl-validation",
++                # ASLA v2.4: per-document c4_en logs when ASLA_PER_DOCUMENT_LOG_DIR is set
++                per_document_log_dir=os.environ.get("ASLA_PER_DOCUMENT_LOG_DIR"),
++                per_document_metadata=(
++                    {
++                        "c4_en-validation": os.environ.get(
++                            "ASLA_C4_EVAL_METADATA",
++                            f"{permanent_data_prefix}/eval-data/perplexity/v3_small_gptneox20b/c4_en/val/part-0-00000.csv.gz",
++                        )
++                    }
++                    if os.environ.get("ASLA_PER_DOCUMENT_LOG_DIR")
++                    else None
++                ),
+                 data=DataConfig(
+                     drop_last=True,
+                     datasets={

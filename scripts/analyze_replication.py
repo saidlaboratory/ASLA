@@ -8,6 +8,12 @@ leave-one-recipe-out jackknife). Before computing, the script checks the SHA-256
 PINNED and refuses to run on a mismatch, so a later edit to the analysis cannot silently change the verdict.
 
 Usage: .venv/bin/python scripts/analyze_replication.py RUNS.csv [--out verdict.json] [--allow-incomplete] [--no-stability]
+           [--per-document-logs DIR --sensitivity-exclude EXCL.json]
+
+Decontamination sensitivity (protocol v2.3, enforced in v2.4): with --sensitivity-exclude, every run in RUNS.csv
+must have final-checkpoint per-document logs under --per-document-logs, or the script refuses; each exclusion
+set is rescored by scripts/rescore_replication.py and passed through the same analyse(). The primary verdict
+is always the one from RUNS.csv.
 
 Output-only numerical stability diagnostic (protocol v2.1): after the verdict is fixed, the analysis is refitted
 under STABILITY_DRAWS independent relative perturbations of STABILITY_REL to every bpb value and to each size's
@@ -36,13 +42,19 @@ PINNED = {
     "asla/analysis/target_scoring.py": "5b4edb56df30c5c1daf1e7291376dd46b7b76d15f42564705e1ed9f01f6c9dae",
     "asla/models.py": "52b913d526615728d343418fd5cad9f6ad01f309051e48466d2a73a1991f17e0",
 }
-# protocol v2.3 (2026-10-31): the frozen protocol files; any edit after the freeze is refused like a code change
+# protocol v2.4 (2026-10-31): the frozen protocol files; any edit after the freeze is refused like a code change
 PROTOCOL_PINS = {
     "replication_protocol/recipes.json": "aec1b7ec06b89e942faa685028e4fb5101e86e02ab4822921795de8b69d62199",
-    "replication_protocol/ladder.json": "2eb643dfa710cc556b54059747318489d5bbdc981d2182007cd8328a5e2ffcc0",
-    "replication_protocol/preregistration.json": "27acd6ec3393696ab54df159ddfd37ab47bcb42f20764fa4b6bab662867666b7",
+    "replication_protocol/ladder.json": "3dc16ad942f997b5da698f4cca589347bba4b437332b2856740d852ba3659de4",
+    "replication_protocol/preregistration.json": "0ff05826528364d8175bbca7ee62faa5022d456bb25ba75a61ed76a65f5fb661",
 }
 PROTOCOL = REPO / "replication_protocol"
+# protocol v2.4: the rescore and the evaluator patch are frozen with the protocol
+PROTOCOL_PINS.update({
+    "scripts/rescore_replication.py": "5edfb7cc45ac1f2f3bc3704c5d3d212ae59605db4a68addc6961cbc5f6d956ca",
+    "replication_protocol/olmo_patch/olmo_per_document.patch": "4d71d612a0834752c7cf4f9cfd9670a5a688a34cfd9b64a891a63c971a21a74f",
+    "replication_protocol/olmo_patch/per_document.py": "7bd9ff72334303246267da9d7595a7b24fc0fc1dedb438719ca2f177eafd5287",
+})
 RUN_COLUMNS = ("recipe", "size", "seed", "params_n", "tokens_d", "c4_en_bits_per_token")
 Z = 1.959963984540054
 MIN_BELOW = 5
@@ -69,7 +81,7 @@ def load_runs(path: Path, allow_incomplete: bool = False) -> tuple[pd.DataFrame,
     recipes = [r["id"] for r in json.loads((PROTOCOL / "recipes.json").read_text(encoding="utf-8"))["selected"]]
     sizes = [s["size"] for s in ladder["sizes"]]
     seeds = list(ladder["seeds"])
-    runs = pd.read_csv(path)
+    runs = pd.read_csv(path, float_precision="round_trip")
     missing_cols = [c for c in RUN_COLUMNS if c not in runs.columns]
     if missing_cols:
         raise SystemExit(f"runs file lacks columns {missing_cols}")
@@ -87,6 +99,12 @@ def load_runs(path: Path, allow_incomplete: bool = False) -> tuple[pd.DataFrame,
             if any(counts.get((r, s), 0) < 2 for s in sizes):
                 dropped.append(r)
         runs = runs[~runs["recipe"].isin(dropped)]
+    frame = to_frame(runs)
+    return frame, {"runs_used": int(len(frame)), "runs_missing": len(absent), "recipes_dropped": dropped}
+
+
+def to_frame(runs: pd.DataFrame) -> pd.DataFrame:
+    ladder = json.loads((PROTOCOL / "ladder.json").read_text(encoding="utf-8"))
     frame = pd.DataFrame(
         {
             "intervention": runs["recipe"].astype(str),
@@ -99,7 +117,7 @@ def load_runs(path: Path, allow_incomplete: bool = False) -> tuple[pd.DataFrame,
     # one compute per size, as on DataDecide (the ladder's nominal N and D, not per-run token counts)
     nominal = {s["size"]: 6.0 * s["params_n"] * s["tokens_d"] for s in ladder["sizes"]}
     frame["compute"] = frame["scale_label"].map(nominal)
-    return frame, {"runs_used": int(len(frame)), "runs_missing": len(absent), "recipes_dropped": dropped}
+    return frame
 
 
 def analyse(frame: pd.DataFrame) -> dict:
@@ -182,23 +200,71 @@ def secondary(est: float | None) -> dict:
     return {"predicted": pre["predicted_slope"], "recipe_draw_range": [lo, hi], "within_recipe_draw_range": bool(lo <= est <= hi)}
 
 
+def run_ids_of(runs: pd.DataFrame) -> list[str]:
+    return [f"{r}__{s}__seed{k}" for r, s, k in zip(runs["recipe"], runs["size"], runs["seed"])]
+
+
+def exclusion_sets(path: Path) -> dict[str, set[str]]:
+    """A list of ids, {"exclude_eval_ids": [...]}, or the output of rescore_replication.py exclusions."""
+
+    d = json.loads(Path(path).read_text(encoding="utf-8"))
+    if isinstance(d, list):
+        return {"exclusion": set(d)}
+    if "exclude_eval_ids" in d:
+        return {"exclusion": set(d["exclude_eval_ids"])}
+    sets = {f"corpus:{c}": set(v["exclude_eval_ids"]) for c, v in d["corpora"].items()}
+    if d.get("union"):
+        sets["union"] = set(d["union"])
+    return sets
+
+
+def sensitivity(runs_path: Path, logs: Path, exclude_path: Path) -> dict:
+    """Rescore every run without each exclusion set and rerun the unchanged analysis; refuse on missing logs."""
+
+    from scripts import rescore_replication as rs
+
+    runs = pd.read_csv(runs_path, float_precision="round_trip")
+    ids = run_ids_of(runs)
+    gone = rs.missing_logs(logs, ids)
+    if gone:
+        raise SystemExit(f"refusing the sensitivity analysis: {len(gone)} runs lack per-document logs, e.g. {gone[:3]}")
+    full = rs.build_table(logs, ids)
+    out = {
+        "primary_runs_match_logs_exactly": bool((full["c4_en_bits_per_token"].to_numpy() == runs["c4_en_bits_per_token"].to_numpy()).all()),
+        "sets": {},
+    }
+    for name, ex in exclusion_sets(exclude_path).items():
+        res = analyse(to_frame(rs.build_table(logs, ids, ex)))
+        res["excluded_eval_ids"] = sorted(ex)
+        res["secondary"] = secondary(res["estimate"])
+        out["sets"][name] = res
+    out["note"] = "sensitivity only; the primary verdict comes from the full evaluation set"
+    return out
+
+
 def main(argv: list[str] | None = None) -> dict:
     ap = argparse.ArgumentParser()
     ap.add_argument("runs", type=Path)
     ap.add_argument("--out", type=Path)
     ap.add_argument("--allow-incomplete", action="store_true")
     ap.add_argument("--no-stability", action="store_true")
+    ap.add_argument("--per-document-logs", type=Path)
+    ap.add_argument("--sensitivity-exclude", type=Path)
     a = ap.parse_args(argv)
     pins = check_pins()
+    if a.sensitivity_exclude is not None and a.per_document_logs is None:
+        raise SystemExit("--sensitivity-exclude needs --per-document-logs")
     frame, completeness = load_runs(a.runs, a.allow_incomplete)
     res = analyse(frame)
     res["secondary"] = secondary(res["estimate"])
     res["completeness"] = completeness
+    if a.sensitivity_exclude is not None:
+        res["decontamination_sensitivity"] = sensitivity(a.runs, a.per_document_logs, a.sensitivity_exclude)
     if not a.no_stability:
         res["numerical_stability"] = stability(frame, res)
     res["pinned_sha256"] = pins
     res["preregistration"] = "PREDICTIONS_REPLICATION_PROTOCOL.md"
-    res["protocol_version"] = "v2.3"
+    res["protocol_version"] = "v2.4"
     text = json.dumps(res, indent=2) + "\n"
     if a.out:
         a.out.write_text(text, encoding="utf-8")

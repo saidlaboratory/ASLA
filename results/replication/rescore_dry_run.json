@@ -1,0 +1,45 @@
+{
+  "note": "synthetic per-document logs through the evaluator patch's accumulator; nothing trained",
+  "runs": 240,
+  "scored_chunks_per_run": [
+    490,
+    498
+  ],
+  "empty_exclusion_reproduces_primary_bitwise": true,
+  "csv_round_trip_bitwise": true,
+  "max_rel_diff_vs_evaluator_mean_of_chunk_means": 3.774758283725532e-15,
+  "planted": {
+    "chunk": 24,
+    "eval_ids": [
+      "d317d4f5-2971-4b3f-98d2-649a7699a700",
+      "b7d320e7-58bf-45ed-a85d-52b64674ba80"
+    ],
+    "runs_that_scored_them": 216,
+    "runs_changed": 216,
+    "changed_exactly_the_runs_that_scored_them": true,
+    "unchanged_runs_bitwise_identical": true,
+    "max_rel_diff_vs_independent_recomputation": 3.3306690738754696e-15,
+    "mean_shift_contaminated_recipe": 0.0012298783635128485,
+    "mean_shift_other_scoring_runs": -0.00025329102585641694
+  },
+  "v2_3_rule": {
+    "triggered": [
+      "cc100_en"
+    ],
+    "median_13gram_share": 0.005,
+    "recovered_planted_ids": true
+  },
+  "entry_point": {
+    "primary_verdict": "replicates: positive, interval excludes zero",
+    "primary_estimate": 30.3174408740751,
+    "primary_runs_match_logs_exactly": true,
+    "sensitivity": {
+      "corpus:cc100_en": {
+        "estimate": 30.307516770020158,
+        "verdict": "replicates: positive, interval excludes zero"
+      }
+    },
+    "refused_when_one_run_lacks_logs": true,
+    "refusal_message": "refusing the sensitivity analysis: 1 runs lack per-document logs, e.g. ['cc100_en__14M__seed14']"
+  }
+}

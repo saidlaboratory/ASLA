@@ -1,6 +1,6 @@
 # Pre-registration: the replication protocol
 
-Protocol v2.3, frozen on 2026-10-31, before any training. Nothing has been trained. The v2, v2.1, v2.2 and v2.3 changes are listed at the
+Protocol v2.4, frozen on 2026-10-31, before any training. Nothing has been trained. The v2 to v2.4 changes are listed at the
 end of this file. The machine-readable copy is
 `replication_protocol/preregistration.json`. If it and this file disagree, the JSON governs.
 
@@ -301,3 +301,63 @@ document at the final checkpoint.
 
 The primary verdict still comes from the full evaluation set. The sensitivity results are reported beside it and
 do not replace it.
+
+## v2.4 changes (2026-10-31): per-document logging enforced where runs are produced
+
+### Finding
+
+The OLMo DataDecide branch (commit 7094aab) cannot log per-document loss. There is no config option for it, for
+three reasons:
+
+- `Trainer.eval_batch` reduces the per-token loss to a per-instance mean.
+- The `Evaluator` keeps only a running mean per dataset label.
+- Evaluation instances are fixed 2048-token chunks of the concatenated file, with no document boundaries.
+
+### Evaluator patch
+
+`replication_protocol/olmo_patch/olmo_per_document.patch` is pinned in the protocol, and every run config
+requires it by SHA-256. It applies cleanly to 7094aab (checked with `git apply`), and the patched files compile.
+It changes four things:
+
+- **Chunk index.** The dataset adds each instance's chunk index to its metadata.
+- **Per-token loss.** `eval_batch` keeps the per-token loss and label mask on the batch. The reported metric is
+  unchanged.
+- **Per-document rows.** The evaluator attributes each predicted token to its evaluation document, using the
+  c4_en metadata spans. After every evaluation it writes one row per chunk and document: summed loss and token
+  count, one file per rank.
+- **Ladder hook.** `scripts/ladder.py` turns this on when `ASLA_PER_DOCUMENT_LOG_DIR` is set. Each config sets
+  that variable to the run's own log directory and names the final-step log file.
+
+### Rescore
+
+`scripts/rescore_replication.py` works as follows:
+
+1. It reads the final-step logs.
+2. It keeps each chunk once across ranks, taking the lowest rank that scored it. This matters because which
+   chunks get scored depends on world size, through `drop_last`.
+3. It drops the excluded documents.
+4. It computes bits per token as summed loss over summed tokens, divided by ln 2.
+
+With no exclusion, this is the primary `c4_en_bits_per_token`: the runs table is built from the logs. Its
+`exclusions` command applies the v2.3 rule to decontamination reports.
+
+### Refusal
+
+`scripts/analyze_replication.py --per-document-logs DIR --sensitivity-exclude FILE` refuses to run the
+sensitivity analysis if any run in the runs table lacks final-checkpoint logs. The analysis itself, `analyse()`,
+and the primary verdict are unchanged.
+
+### Dry run
+
+The dry run (`scripts/dry_run_rescore.py`, recorded in `results/replication/rescore_dry_run.json`) uses
+synthetic logs for all 240 runs.
+
+- **Empty exclusion.** It reproduces the primary bits per token bitwise.
+- **Planted exclusion.** It changes exactly the runs that scored the planted documents, and leaves the others
+  bitwise identical.
+- **v2.3 rule.** It recovers the planted documents.
+- **Missing logs.** The entry point refuses when one run's logs are missing.
+
+### Pins
+
+The entry point now also pins the rescore script and both patch files.

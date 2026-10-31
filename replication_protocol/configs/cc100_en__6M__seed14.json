@@ -52,6 +52,17 @@
     "eval_13gram_index_sha256": "59cedcc670ba66af5490e859d835aedeb620d5d98050f5e6b98b2a49a041d611",
     "rule": "two passes before tokenization (scripts/decontaminate.py): (1) exact: remove a training document whose SHA-256 of NFC-normalized text equals a sha256_nfc in replication_protocol/eval_set.jsonl; (2) 13-gram: remove a remaining training document that shares at least one 13-gram with any evaluation document, over text normalized by NFC, casefolding and replacing every non-letter, non-digit character with a space, then split on whitespace; 13-grams are matched by 64-bit blake2b hash against replication_protocol/eval_13grams.npz. Per corpus, the report gives the documents removed by each pass and the evaluation ids each pass hit"
   },
+  "per_document_logging": {
+    "required": true,
+    "patch": "replication_protocol/olmo_patch/olmo_per_document.patch",
+    "patch_sha256": "4d71d612a0834752c7cf4f9cfd9670a5a688a34cfd9b64a891a63c971a21a74f",
+    "patch_module_sha256": "7bd9ff72334303246267da9d7595a7b24fc0fc1dedb438719ca2f177eafd5287",
+    "applies_to": "allenai/OLMo@7094aab0448096f4994cae881edbd629d6c2f3de (git apply)",
+    "env": {
+      "ASLA_PER_DOCUMENT_LOG_DIR": "<per_document_logs>/cc100_en__6M__seed14"
+    },
+    "final_log": "<per_document_logs>/cc100_en__6M__seed14/c4_en-validation_step9182_rank<rank>.jsonl.gz"
+  },
   "eval": {
     "metric": "c4_en_bits_per_token",
     "definition": "c4_en_bits_per_token: mean next-token cross-entropy on held-out C4-en validation, in nats divided by ln 2, at the final checkpoint",

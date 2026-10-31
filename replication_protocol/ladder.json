@@ -31,7 +31,19 @@
     "batch_rule": "round(160 (N/108e6)^(2/3) / 32) x 32 sequences",
     "lr_rule": "0.0047 (N/108e6)^(-1/3); the table's published value is used",
     "tokens": "5xC = 100 N (nominal N for 150M and 300M; D as released)",
-    "flops_per_run": "6 N D (DataDecide's compute column)"
+    "flops_per_run": "6 N D (DataDecide's compute column)",
+    "per_document_logging": {
+      "finding": "the OLMo DataDecide branch (commit 7094aab0448096f4994cae881edbd629d6c2f3de) cannot log per-document loss: Trainer.eval_batch reduces the per-token loss to a per-instance mean, the Evaluator keeps only a torchmetrics MeanMetric per dataset label, and evaluation instances are fixed chunks of the concatenated memmap with no document boundaries in their metadata; there is no config option for it",
+      "patch": "replication_protocol/olmo_patch/olmo_per_document.patch",
+      "patch_sha256": "4d71d612a0834752c7cf4f9cfd9670a5a688a34cfd9b64a891a63c971a21a74f",
+      "patch_module": "replication_protocol/olmo_patch/per_document.py (added as olmo/eval/per_document.py)",
+      "patch_module_sha256": "7bd9ff72334303246267da9d7595a7b24fc0fc1dedb438719ca2f177eafd5287",
+      "applies_to": "allenai/OLMo@7094aab0448096f4994cae881edbd629d6c2f3de (git apply)",
+      "what_it_changes": "MemMapDataset adds each instance's chunk index to its metadata; Trainer.eval_batch keeps the per-token loss and label mask on the batch (the reported metric is unchanged); the Evaluator attributes each predicted token to its evaluation document by the c4_en metadata spans and writes (chunk, document, summed loss, token count) rows per rank after every evaluation; EvaluatorConfig gains per_document_log_dir and per_document_metadata; scripts/ladder.py enables it for c4_en-validation when ASLA_PER_DOCUMENT_LOG_DIR is set",
+      "log_files": "<ASLA_PER_DOCUMENT_LOG_DIR>/c4_en-validation_step<step>_rank<rank>.jsonl.gz; the rescore reads step = the run's final step",
+      "metadata": "eval-data/perplexity/v3_small_gptneox20b/c4_en/val/part-0-00000.csv.gz next to the evaluation file (override with ASLA_C4_EVAL_METADATA)",
+      "primary_metric_from_logs": "the runs table's c4_en_bits_per_token is built from these logs by scripts/rescore_replication.py build with no exclusion (sum of loss over sum of tokens over all scored documents, / ln 2); the in-loop eval/c4_en-validation/CrossEntropyLoss is a cross-check"
+    }
   },
   "seeds": [
     6198,

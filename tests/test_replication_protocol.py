@@ -138,3 +138,76 @@ def test_stability_diagnostic_is_output_only():
     assert body.index("res = analyse(frame)") < body.index("stability(frame, res)")
     assert 'res["numerical_stability"] = stability(frame, res)' in body
     assert entry.STABILITY_DRAWS == 20 and entry.STABILITY_REL == 1e-12
+
+
+def _per_document_module():
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("per_document", PROTOCOL / "olmo_patch" / "per_document.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def test_per_document_log_attributes_predicted_tokens_to_documents(tmp_path):
+    mod = _per_document_module()
+    # three documents over two 8-token chunks; position 0 is never predicted
+    log = mod.PerDocumentLog(np.array([0, 5, 11]), np.array([5, 11, 16]), ["a", "b", "c"], 8)
+    log.add(0, np.arange(1.0, 8.0), np.ones(7, bool))  # predicts positions 1..7
+    log.add(1, np.full(7, 10.0), np.array([1, 1, 1, 0, 1, 1, 1], bool))  # positions 9..15, one masked
+    rec = {(r["chunk"], r["doc"]): (r["loss_sum"], r["tokens"]) for r in log.records()}
+    assert rec == {(0, "a"): (1 + 2 + 3 + 4, 4), (0, "b"): (5 + 6 + 7, 3), (1, "b"): (20.0, 2), (1, "c"): (40.0, 4)}
+    log.write(tmp_path / "x.jsonl.gz", "c4_en-validation", 5, 0)
+
+
+def test_rescore_dedupes_ranks_and_excludes(tmp_path):
+    import sys
+
+    sys.path.insert(0, str(REPO))
+    from scripts import rescore_replication as rs
+
+    mod = _per_document_module()
+    for rank, chunks in ((0, [0]), (1, [1, 0])):  # chunk 0 scored twice
+        log = mod.PerDocumentLog(np.array([0, 5, 11]), np.array([5, 11, 16]), ["a", "b", "c"], 8)
+        for c in chunks:
+            log.add(c, np.full(7, 2.0 + c), np.ones(7, bool))
+        log.write(tmp_path / "run" / f"{rs.LABEL}_step9_rank{rank}.jsonl.gz", rs.LABEL, 9, rank)
+    files = rs.log_files(tmp_path, "run", 9)
+    tot = rs.doc_totals(rs.read_rows(files, 9))
+    # chunk 0 (loss 2.0) predicts positions 1..7: a gets 1..4, b gets 5..7; chunk 1 (loss 3.0) predicts 9..15:
+    # b gets 9..10, c gets 11..15; the second copy of chunk 0 (rank 1) is ignored
+    assert tot == {"a": (8.0, 4), "b": (6.0 + 6.0, 5), "c": (15.0, 5)}
+    import math
+
+    assert rs.bits_per_token(tot) == (8.0 + 12.0 + 15.0) / 14 / math.log(2)
+    assert rs.bits_per_token(tot, {"b"}) == (8.0 + 15.0) / 9 / math.log(2)
+
+
+def test_configs_require_the_pinned_evaluator_patch():
+    import hashlib
+
+    ladder = json.loads((PROTOCOL / "ladder.json").read_text(encoding="utf-8"))
+    pdl = ladder["shared"]["per_document_logging"]
+    assert hashlib.sha256((REPO / pdl["patch"]).read_bytes()).hexdigest() == pdl["patch_sha256"]
+    patch = (REPO / pdl["patch"]).read_text(encoding="utf-8")
+    for f in ("olmo/eval/per_document.py", "olmo/eval/evaluator.py", "olmo/train.py", "olmo/data/memmap_dataset.py", "olmo/config.py", "olmo/eval/__init__.py", "scripts/ladder.py"):
+        assert f"+++ b/{f}" in patch
+    for f in (PROTOCOL / "configs").glob("*.json"):
+        c = json.loads(f.read_text(encoding="utf-8"))
+        p = c["per_document_logging"]
+        assert p["required"] and p["patch_sha256"] == pdl["patch_sha256"]
+        assert p["env"]["ASLA_PER_DOCUMENT_LOG_DIR"].endswith(c["run_id"])
+        assert f"step{c['train']['steps']}_" in p["final_log"]
+
+
+def test_sensitivity_refuses_without_logs(tmp_path):
+    import sys
+
+    sys.path.insert(0, str(REPO))
+    from scripts import analyze_replication as entry
+
+    runs = tmp_path / "runs.csv"
+    runs.write_text("recipe,size,seed,params_n,tokens_d,c4_en_bits_per_token\ncc100_en,4M,6198,3744832,375193600,1.5\n", encoding="utf-8")
+    (tmp_path / "ex.json").write_text("[]", encoding="utf-8")
+    with pytest.raises(SystemExit, match="refusing the sensitivity analysis"):
+        entry.sensitivity(runs, tmp_path / "no_logs", tmp_path / "ex.json")
