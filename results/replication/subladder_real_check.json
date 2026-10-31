@@ -1,0 +1,106 @@
+{
+  "status": "diagnostic after the pre-registered spec run; not pre-registered",
+  "by_geometry": {
+    "300MS6": {
+      "real_slope": 14.532005633488131,
+      "real_se": 4.424461781545271,
+      "targets": [
+        "300M"
+      ],
+      "sim_pred_n10": 16.405371683767868,
+      "sim_pred_n25": null,
+      "curve_implied": 9.871473494191312
+    },
+    "300MS8": {
+      "real_slope": 21.80816942985422,
+      "real_se": 3.5128045856310663,
+      "targets": [
+        "150M",
+        "300M"
+      ],
+      "sim_pred_n10": 21.810278514411536,
+      "sim_pred_n25": null,
+      "curve_implied": 10.954763726638994
+    },
+    "300MS10": {
+      "real_slope": 15.511303292953293,
+      "real_se": 2.299635925074046,
+      "targets": [
+        "150M",
+        "300M"
+      ],
+      "sim_pred_n10": 15.4571324246927,
+      "sim_pred_n25": null,
+      "curve_implied": 10.937141145747285
+    },
+    "530MS6": {
+      "real_slope": 11.676888732516646,
+      "real_se": 4.226122586500328,
+      "targets": [
+        "530M"
+      ],
+      "sim_pred_n10": 12.717381801522997,
+      "sim_pred_n25": 13.235785945042279,
+      "curve_implied": 8.822810654712752
+    },
+    "530MS8": {
+      "real_slope": 12.220735601507169,
+      "real_se": 2.52758680786155,
+      "targets": [
+        "150M",
+        "300M",
+        "530M"
+      ],
+      "sim_pred_n10": 13.268163679023386,
+      "sim_pred_n25": null,
+      "curve_implied": 9.419323658340804
+    },
+    "530MS10": {
+      "real_slope": 14.355778558689094,
+      "real_se": 1.9362538852042983,
+      "targets": [
+        "150M",
+        "300M",
+        "530M"
+      ],
+      "sim_pred_n10": 14.1960720534135,
+      "sim_pred_n25": null,
+      "curve_implied": 9.850080652163994
+    },
+    "1BS6": {
+      "real_slope": 3.842160334424941,
+      "real_se": 1.6537994316174247,
+      "targets": [
+        "1B"
+      ],
+      "sim_pred_n10": 3.830605072434625,
+      "sim_pred_n25": 3.6848407531718825,
+      "curve_implied": 7.280590973719045
+    },
+    "1BS8": {
+      "real_slope": 11.026580566453305,
+      "real_se": 1.9963811314011184,
+      "targets": [
+        "300M",
+        "530M",
+        "1B"
+      ],
+      "sim_pred_n10": 10.705777355525738,
+      "sim_pred_n25": null,
+      "curve_implied": 7.98616505232033
+    },
+    "1BS10": {
+      "real_slope": 15.738213866475807,
+      "real_se": 1.9581419171105852,
+      "targets": [
+        "150M",
+        "300M",
+        "530M",
+        "1B"
+      ],
+      "sim_pred_n10": 15.92236775221425,
+      "sim_pred_n25": null,
+      "curve_implied": 8.562722476895594
+    }
+  }
+}

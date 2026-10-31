@@ -1,0 +1,1405 @@
+{
+  "preregistration": "PREDICTIONS_TASK_CURVE.md",
+  "unit": "points per decade (log10) of lever arm",
+  "hardware_assumptions": {
+    "H100 SXM": {
+      "peak_flops": 989400000000000.0,
+      "mfu": 0.4
+    },
+    "RTX 3090": {
+      "peak_flops": 71000000000000.0,
+      "mfu": 0.3
+    }
+  },
+  "designs": {
+    "300MS6|n5": {
+      "worlds": 150,
+      "tested_share": 0.9933333333333333,
+      "predicted_slope": 15.9673860438117,
+      "predicted_slope_mc_interval": [
+        13.958394646939407,
+        17.976377440683994
+      ],
+      "predicted_slope_spread_2_5_97_5": [
+        -5.941909391927929,
+        39.77931123054235
+      ],
+      "random_candidate": 0.17333333333333334,
+      "random_candidate_mc_se": 0.030907268712379928,
+      "fixed_candidate": 0.3,
+      "fixed_candidate_worlds": 20,
+      "fixed_candidate_mc_se": 0.10246950765959598,
+      "valid_random": true,
+      "valid_fixed": false,
+      "top": "300M",
+      "sizes": 6,
+      "recipes": 5,
+      "seeds": 3,
+      "ladder_sizes": [
+        "4M",
+        "8M",
+        "20M",
+        "60M",
+        "150M",
+        "300M"
+      ],
+      "targets": [
+        "300M"
+      ],
+      "curve_implied_slope": 9.871473494191312,
+      "training_flops": 1.0841607603391183e+21,
+      "gpu_hours": {
+        "H100 SXM": 760.9555456864417,
+        "RTX 3090": 14138.76839252893
+      }
+    },
+    "300MS6|n10": {
+      "worlds": 150,
+      "tested_share": 1.0,
+      "predicted_slope": 16.405371683767868,
+      "predicted_slope_mc_interval": [
+        15.256333682096475,
+        17.55440968543926
+      ],
+      "predicted_slope_spread_2_5_97_5": [
+        1.764666010716937,
+        29.67197278017102
+      ],
+      "random_candidate": 0.44666666666666666,
+      "random_candidate_mc_se": 0.04059191672862596,
+      "fixed_candidate": 0.36538461538461536,
+      "fixed_candidate_worlds": 52,
+      "fixed_candidate_mc_se": 0.06677728457412227,
+      "valid_random": true,
+      "valid_fixed": true,
+      "top": "300M",
+      "sizes": 6,
+      "recipes": 10,
+      "seeds": 3,
+      "ladder_sizes": [
+        "4M",
+        "8M",
+        "20M",
+        "60M",
+        "150M",
+        "300M"
+      ],
+      "targets": [
+        "300M"
+      ],
+      "curve_implied_slope": 9.871473494191312,
+      "training_flops": 2.1683215206782366e+21,
+      "gpu_hours": {
+        "H100 SXM": 1521.9110913728834,
+        "RTX 3090": 28277.53678505786
+      }
+    },
+    "300MS6|n15": {
+      "worlds": 150,
+      "tested_share": 1.0,
+      "predicted_slope": 15.626673013175258,
+      "predicted_slope_mc_interval": [
+        14.86663309571931,
+        16.386712930631205
+      ],
+      "predicted_slope_spread_2_5_97_5": [
+        7.020323752552967,
+        24.92811183155978
+      ],
+      "random_candidate": 0.72,
+      "random_candidate_mc_se": 0.03666060555964672,
+      "fixed_candidate": 0.8918918918918919,
+      "fixed_candidate_worlds": 74,
+      "fixed_candidate_mc_se": 0.03609685639329682,
+      "valid_random": true,
+      "valid_fixed": true,
+      "top": "300M",
+      "sizes": 6,
+      "recipes": 15,
+      "seeds": 3,
+      "ladder_sizes": [
+        "4M",
+        "8M",
+        "20M",
+        "60M",
+        "150M",
+        "300M"
+      ],
+      "targets": [
+        "300M"
+      ],
+      "curve_implied_slope": 9.871473494191312,
+      "training_flops": 3.252482281017355e+21,
+      "gpu_hours": {
+        "H100 SXM": 2282.866637059325,
+        "RTX 3090": 42416.30517758678
+      }
+    },
+    "300MS6|n20": {
+      "worlds": 150,
+      "tested_share": 1.0,
+      "predicted_slope": 15.488577148292139,
+      "predicted_slope_mc_interval": [
+        14.961263436103403,
+        16.015890860480877
+      ],
+      "predicted_slope_spread_2_5_97_5": [
+        9.837898127955093,
+        22.269198298272272
+      ],
+      "random_candidate": 0.92,
+      "random_candidate_mc_se": 0.022150996967781528,
+      "fixed_candidate": 1.0,
+      "fixed_candidate_worlds": 97,
+      "fixed_candidate_mc_se": 0.0,
+      "valid_random": true,
+      "valid_fixed": true,
+      "top": "300M",
+      "sizes": 6,
+      "recipes": 20,
+      "seeds": 3,
+      "ladder_sizes": [
+        "4M",
+        "8M",
+        "20M",
+        "60M",
+        "150M",
+        "300M"
+      ],
+      "targets": [
+        "300M"
+      ],
+      "curve_implied_slope": 9.871473494191312,
+      "training_flops": 4.336643041356473e+21,
+      "gpu_hours": {
+        "H100 SXM": 3043.822182745767,
+        "RTX 3090": 56555.07357011572
+      }
+    },
+    "300MS8|n5": {
+      "worlds": 150,
+      "tested_share": 1.0,
+      "predicted_slope": 22.176683542868904,
+      "predicted_slope_mc_interval": [
+        20.550994291569456,
+        23.802372794168352
+      ],
+      "predicted_slope_spread_2_5_97_5": [
+        3.1453783819550702,
+        40.98409099175679
+      ],
+      "random_candidate": 0.43333333333333335,
+      "random_candidate_mc_se": 0.04046031434674028,
+      "fixed_candidate": 0.28,
+      "fixed_candidate_worlds": 50,
+      "fixed_candidate_mc_se": 0.06349803146555018,
+      "valid_random": true,
+      "valid_fixed": true,
+      "top": "300M",
+      "sizes": 8,
+      "recipes": 5,
+      "seeds": 3,
+      "ladder_sizes": [
+        "4M",
+        "6M",
+        "14M",
+        "20M",
+        "60M",
+        "90M",
+        "150M",
+        "300M"
+      ],
+      "targets": [
+        "150M",
+        "300M"
+      ],
+      "curve_implied_slope": 10.954763726638994,
+      "training_flops": 1.1720081018590664e+21,
+      "gpu_hours": {
+        "H100 SXM": 822.6142259752447,
+        "RTX 3090": 15284.404040937225
+      }
+    },
+    "300MS8|n10": {
+      "worlds": 150,
+      "tested_share": 1.0,
+      "predicted_slope": 21.810278514411536,
+      "predicted_slope_mc_interval": [
+        20.965957460907724,
+        22.654599567915348
+      ],
+      "predicted_slope_spread_2_5_97_5": [
+        10.8047331680037,
+        31.696418241290402
+      ],
+      "random_candidate": 0.9066666666666666,
+      "random_candidate_mc_se": 0.023751803050466473,
+      "fixed_candidate": 0.96875,
+      "fixed_candidate_worlds": 96,
+      "fixed_candidate_mc_se": 0.017758049084617,
+      "valid_random": true,
+      "valid_fixed": true,
+      "top": "300M",
+      "sizes": 8,
+      "recipes": 10,
+      "seeds": 3,
+      "ladder_sizes": [
+        "4M",
+        "6M",
+        "14M",
+        "20M",
+        "60M",
+        "90M",
+        "150M",
+        "300M"
+      ],
+      "targets": [
+        "150M",
+        "300M"
+      ],
+      "curve_implied_slope": 10.954763726638994,
+      "training_flops": 2.3440162037181328e+21,
+      "gpu_hours": {
+        "H100 SXM": 1645.2284519504894,
+        "RTX 3090": 30568.80808187445
+      }
+    },
+    "300MS10|n5": {
+      "worlds": 150,
+      "tested_share": 1.0,
+      "predicted_slope": 15.805309316628833,
+      "predicted_slope_mc_interval": [
+        14.790895530037822,
+        16.819723103219843
+      ],
+      "predicted_slope_spread_2_5_97_5": [
+        5.353336994130423,
+        28.370170092552286
+      ],
+      "random_candidate": 0.4,
+      "random_candidate_mc_se": 0.04,
+      "fixed_candidate": 0.41935483870967744,
+      "fixed_candidate_worlds": 62,
+      "fixed_candidate_mc_se": 0.06266865733574838,
+      "valid_random": true,
+      "valid_fixed": true,
+      "top": "300M",
+      "sizes": 10,
+      "recipes": 5,
+      "seeds": 3,
+      "ladder_sizes": [
+        "4M",
+        "6M",
+        "10M",
+        "14M",
+        "16M",
+        "20M",
+        "60M",
+        "90M",
+        "150M",
+        "300M"
+      ],
+      "targets": [
+        "150M",
+        "300M"
+      ],
+      "curve_implied_slope": 10.937141145747285,
+      "training_flops": 1.1751985993025545e+21,
+      "gpu_hours": {
+        "H100 SXM": 824.8535864206102,
+        "RTX 3090": 15326.01198881787
+      }
+    },
+    "300MS10|n10": {
+      "worlds": 150,
+      "tested_share": 1.0,
+      "predicted_slope": 15.4571324246927,
+      "predicted_slope_mc_interval": [
+        14.883340473757038,
+        16.030924375628363
+      ],
+      "predicted_slope_spread_2_5_97_5": [
+        8.505096531108602,
+        22.044474832236038
+      ],
+      "random_candidate": 0.88,
+      "random_candidate_mc_se": 0.0265329983228432,
+      "fixed_candidate": 0.967032967032967,
+      "fixed_candidate_worlds": 91,
+      "fixed_candidate_mc_se": 0.018717156642915168,
+      "valid_random": true,
+      "valid_fixed": true,
+      "top": "300M",
+      "sizes": 10,
+      "recipes": 10,
+      "seeds": 3,
+      "ladder_sizes": [
+        "4M",
+        "6M",
+        "10M",
+        "14M",
+        "16M",
+        "20M",
+        "60M",
+        "90M",
+        "150M",
+        "300M"
+      ],
+      "targets": [
+        "150M",
+        "300M"
+      ],
+      "curve_implied_slope": 10.937141145747285,
+      "training_flops": 2.350397198605109e+21,
+      "gpu_hours": {
+        "H100 SXM": 1649.7071728412204,
+        "RTX 3090": 30652.02397763574
+      }
+    },
+    "530MS6|n5": {
+      "worlds": 150,
+      "tested_share": 1.0,
+      "predicted_slope": 14.204707743538025,
+      "predicted_slope_mc_interval": [
+        12.332164485924439,
+        16.077251001151613
+      ],
+      "predicted_slope_spread_2_5_97_5": [
+        -5.941909391927929,
+        39.36702611396209
+      ],
+      "random_candidate": 0.12666666666666668,
+      "random_candidate_mc_se": 0.027156610272298005,
+      "fixed_candidate": 0.15,
+      "fixed_candidate_worlds": 20,
+      "fixed_candidate_mc_se": 0.07984359711335656,
+      "valid_random": true,
+      "valid_fixed": false,
+      "top": "530M",
+      "sizes": 6,
+      "recipes": 5,
+      "seeds": 3,
+      "ladder_sizes": [
+        "4M",
+        "10M",
+        "20M",
+        "60M",
+        "150M",
+        "530M"
+      ],
+      "targets": [
+        "530M"
+      ],
+      "curve_implied_slope": 8.822810654712752,
+      "training_flops": 2.479382293248688e+21,
+      "gpu_hours": {
+        "H100 SXM": 1740.2398010920538,
+        "RTX 3090": 32334.14571268503
+      }
+    },
+    "530MS6|n10": {
+      "worlds": 150,
+      "tested_share": 1.0,
+      "predicted_slope": 12.717381801522997,
+      "predicted_slope_mc_interval": [
+        11.619279402051228,
+        13.815484200994765
+      ],
+      "predicted_slope_spread_2_5_97_5": [
+        -1.4395288985516155,
+        25.728456084378553
+      ],
+      "random_candidate": 0.22,
+      "random_candidate_mc_se": 0.03382306905057553,
+      "fixed_candidate": 0.08888888888888889,
+      "fixed_candidate_worlds": 45,
+      "fixed_candidate_mc_se": 0.04242317352081883,
+      "valid_random": true,
+      "valid_fixed": true,
+      "top": "530M",
+      "sizes": 6,
+      "recipes": 10,
+      "seeds": 3,
+      "ladder_sizes": [
+        "4M",
+        "10M",
+        "20M",
+        "60M",
+        "150M",
+        "530M"
+      ],
+      "targets": [
+        "530M"
+      ],
+      "curve_implied_slope": 8.822810654712752,
+      "training_flops": 4.958764586497376e+21,
+      "gpu_hours": {
+        "H100 SXM": 3480.4796021841075,
+        "RTX 3090": 64668.29142537006
+      }
+    },
+    "530MS6|n15": {
+      "worlds": 150,
+      "tested_share": 1.0,
+      "predicted_slope": 14.088339642678099,
+      "predicted_slope_mc_interval": [
+        13.265597399885145,
+        14.911081885471052
+      ],
+      "predicted_slope_spread_2_5_97_5": [
+        3.984186757319656,
+        23.497988060544706
+      ],
+      "random_candidate": 0.5733333333333334,
+      "random_candidate_mc_se": 0.040383348236801946,
+      "fixed_candidate": 0.6666666666666666,
+      "fixed_candidate_worlds": 66,
+      "fixed_candidate_mc_se": 0.05802588531856595,
+      "valid_random": true,
+      "valid_fixed": true,
+      "top": "530M",
+      "sizes": 6,
+      "recipes": 15,
+      "seeds": 3,
+      "ladder_sizes": [
+        "4M",
+        "10M",
+        "20M",
+        "60M",
+        "150M",
+        "530M"
+      ],
+      "targets": [
+        "530M"
+      ],
+      "curve_implied_slope": 8.822810654712752,
+      "training_flops": 7.438146879746064e+21,
+      "gpu_hours": {
+        "H100 SXM": 5220.719403276161,
+        "RTX 3090": 97002.43713805509
+      }
+    },
+    "530MS6|n20": {
+      "worlds": 150,
+      "tested_share": 1.0,
+      "predicted_slope": 13.106832355996232,
+      "predicted_slope_mc_interval": [
+        12.522121322523196,
+        13.691543389469269
+      ],
+      "predicted_slope_spread_2_5_97_5": [
+        6.484998813044622,
+        20.294544892645238
+      ],
+      "random_candidate": 0.6866666666666666,
+      "random_candidate_mc_se": 0.037873082398589775,
+      "fixed_candidate": 0.7974683544303798,
+      "fixed_candidate_worlds": 79,
+      "fixed_candidate_mc_se": 0.04521573856614586,
+      "valid_random": true,
+      "valid_fixed": true,
+      "top": "530M",
+      "sizes": 6,
+      "recipes": 20,
+      "seeds": 3,
+      "ladder_sizes": [
+        "4M",
+        "10M",
+        "20M",
+        "60M",
+        "150M",
+        "530M"
+      ],
+      "targets": [
+        "530M"
+      ],
+      "curve_implied_slope": 8.822810654712752,
+      "training_flops": 9.917529172994752e+21,
+      "gpu_hours": {
+        "H100 SXM": 6960.959204368215,
+        "RTX 3090": 129336.58285074012
+      }
+    },
+    "530MS6|n25": {
+      "worlds": 150,
+      "tested_share": 1.0,
+      "predicted_slope": 13.235785945042279,
+      "predicted_slope_mc_interval": [
+        12.811781453019151,
+        13.659790437065407
+      ],
+      "predicted_slope_spread_2_5_97_5": [
+        8.204741379609901,
+        18.44156364924694
+      ],
+      "random_candidate": 0.96,
+      "random_candidate_mc_se": 0.016000000000000007,
+      "fixed_candidate": 1.0,
+      "fixed_candidate_worlds": 100,
+      "fixed_candidate_mc_se": 0.0,
+      "valid_random": true,
+      "valid_fixed": true,
+      "top": "530M",
+      "sizes": 6,
+      "recipes": 25,
+      "seeds": 3,
+      "ladder_sizes": [
+        "4M",
+        "10M",
+        "20M",
+        "60M",
+        "150M",
+        "530M"
+      ],
+      "targets": [
+        "530M"
+      ],
+      "curve_implied_slope": 8.822810654712752,
+      "training_flops": 1.239691146624344e+22,
+      "gpu_hours": {
+        "H100 SXM": 8701.199005460268,
+        "RTX 3090": 161670.72856342513
+      },
+      "note": "25 recipes drawn without replacement is always DataDecide's 25: no recipe variation"
+    },
+    "530MS8|n5": {
+      "worlds": 150,
+      "tested_share": 1.0,
+      "predicted_slope": 12.371359856724405,
+      "predicted_slope_mc_interval": [
+        11.333648600905253,
+        13.409071112543558
+      ],
+      "predicted_slope_spread_2_5_97_5": [
+        0.1392724007648934,
+        24.84938316294267
+      ],
+      "random_candidate": 0.26666666666666666,
+      "random_candidate_mc_se": 0.036106837353937604,
+      "fixed_candidate": 0.23529411764705882,
+      "fixed_candidate_worlds": 51,
+      "fixed_candidate_mc_se": 0.05939743109381191,
+      "valid_random": true,
+      "valid_fixed": true,
+      "top": "530M",
+      "sizes": 8,
+      "recipes": 5,
+      "seeds": 3,
+      "ladder_sizes": [
+        "4M",
+        "8M",
+        "14M",
+        "20M",
+        "60M",
+        "150M",
+        "300M",
+        "530M"
+      ],
+      "targets": [
+        "150M",
+        "300M",
+        "530M"
+      ],
+      "curve_implied_slope": 9.419323658340804,
+      "training_flops": 3.330376722942161e+21,
+      "gpu_hours": {
+        "H100 SXM": 2337.539532195551,
+        "RTX 3090": 43432.1429700334
+      }
+    },
+    "530MS8|n10": {
+      "worlds": 150,
+      "tested_share": 1.0,
+      "predicted_slope": 13.268163679023386,
+      "predicted_slope_mc_interval": [
+        12.546430500495232,
+        13.98989685755154
+      ],
+      "predicted_slope_spread_2_5_97_5": [
+        5.39308427782003,
+        21.59486543176557
+      ],
+      "random_candidate": 0.78,
+      "random_candidate_mc_se": 0.03382306905057552,
+      "fixed_candidate": 0.875,
+      "fixed_candidate_worlds": 56,
+      "fixed_candidate_mc_se": 0.04419417382415922,
+      "valid_random": true,
+      "valid_fixed": true,
+      "top": "530M",
+      "sizes": 8,
+      "recipes": 10,
+      "seeds": 3,
+      "ladder_sizes": [
+        "4M",
+        "8M",
+        "14M",
+        "20M",
+        "60M",
+        "150M",
+        "300M",
+        "530M"
+      ],
+      "targets": [
+        "150M",
+        "300M",
+        "530M"
+      ],
+      "curve_implied_slope": 9.419323658340804,
+      "training_flops": 6.660753445884322e+21,
+      "gpu_hours": {
+        "H100 SXM": 4675.079064391102,
+        "RTX 3090": 86864.2859400668
+      }
+    },
+    "530MS8|n15": {
+      "worlds": 150,
+      "tested_share": 1.0,
+      "predicted_slope": 12.818493303057823,
+      "predicted_slope_mc_interval": [
+        12.37107271062604,
+        13.265913895489605
+      ],
+      "predicted_slope_spread_2_5_97_5": [
+        7.688274575249036,
+        18.58042989470457
+      ],
+      "random_candidate": 0.9733333333333334,
+      "random_candidate_mc_se": 0.013154354299509981,
+      "fixed_candidate": 1.0,
+      "fixed_candidate_worlds": 95,
+      "fixed_candidate_mc_se": 0.0,
+      "valid_random": true,
+      "valid_fixed": true,
+      "top": "530M",
+      "sizes": 8,
+      "recipes": 15,
+      "seeds": 3,
+      "ladder_sizes": [
+        "4M",
+        "8M",
+        "14M",
+        "20M",
+        "60M",
+        "150M",
+        "300M",
+        "530M"
+      ],
+      "targets": [
+        "150M",
+        "300M",
+        "530M"
+      ],
+      "curve_implied_slope": 9.419323658340804,
+      "training_flops": 9.991130168826484e+21,
+      "gpu_hours": {
+        "H100 SXM": 7012.618596586654,
+        "RTX 3090": 130296.4289101002
+      }
+    },
+    "530MS10|n5": {
+      "worlds": 150,
+      "tested_share": 1.0,
+      "predicted_slope": 15.015573801764216,
+      "predicted_slope_mc_interval": [
+        14.002790311240055,
+        16.028357292288376
+      ],
+      "predicted_slope_spread_2_5_97_5": [
+        3.578443484697634,
+        26.478335293001848
+      ],
+      "random_candidate": 0.4533333333333333,
+      "random_candidate_mc_se": 0.04064662529839529,
+      "fixed_candidate": 0.4444444444444444,
+      "fixed_candidate_worlds": 63,
+      "fixed_candidate_mc_se": 0.062604018868779,
+      "valid_random": true,
+      "valid_fixed": true,
+      "top": "530M",
+      "sizes": 10,
+      "recipes": 5,
+      "seeds": 3,
+      "ladder_sizes": [
+        "4M",
+        "6M",
+        "10M",
+        "16M",
+        "20M",
+        "60M",
+        "90M",
+        "150M",
+        "300M",
+        "530M"
+      ],
+      "targets": [
+        "150M",
+        "300M",
+        "530M"
+      ],
+      "curve_implied_slope": 9.850080652163994,
+      "training_flops": 3.4176896049828195e+21,
+      "gpu_hours": {
+        "H100 SXM": 2398.8230837030997,
+        "RTX 3090": 44570.8086200159
+      }
+    },
+    "530MS10|n10": {
+      "worlds": 150,
+      "tested_share": 1.0,
+      "predicted_slope": 14.1960720534135,
+      "predicted_slope_mc_interval": [
+        13.65941319979668,
+        14.732730907030321
+      ],
+      "predicted_slope_spread_2_5_97_5": [
+        7.804595058849931,
+        21.12396653429876
+      ],
+      "random_candidate": 0.92,
+      "random_candidate_mc_se": 0.022150996967781528,
+      "fixed_candidate": 0.9795918367346939,
+      "fixed_candidate_worlds": 98,
+      "fixed_candidate_mc_se": 0.014282739024974808,
+      "valid_random": true,
+      "valid_fixed": true,
+      "top": "530M",
+      "sizes": 10,
+      "recipes": 10,
+      "seeds": 3,
+      "ladder_sizes": [
+        "4M",
+        "6M",
+        "10M",
+        "16M",
+        "20M",
+        "60M",
+        "90M",
+        "150M",
+        "300M",
+        "530M"
+      ],
+      "targets": [
+        "150M",
+        "300M",
+        "530M"
+      ],
+      "curve_implied_slope": 9.850080652163994,
+      "training_flops": 6.835379209965639e+21,
+      "gpu_hours": {
+        "H100 SXM": 4797.646167406199,
+        "RTX 3090": 89141.6172400318
+      }
+    },
+    "1BS6|n5": {
+      "worlds": 150,
+      "tested_share": 1.0,
+      "predicted_slope": 4.463687352460454,
+      "predicted_slope_mc_interval": [
+        3.2764102453103767,
+        5.650964459610531
+      ],
+      "predicted_slope_spread_2_5_97_5": [
+        -10.77246763377034,
+        18.893635144972844
+      ],
+      "random_candidate": 0.03333333333333333,
+      "random_candidate_mc_se": 0.0146565621758588,
+      "fixed_candidate": 0.0,
+      "fixed_candidate_worlds": 8,
+      "fixed_candidate_mc_se": 0.0,
+      "valid_random": true,
+      "valid_fixed": false,
+      "top": "1B",
+      "sizes": 6,
+      "recipes": 5,
+      "seeds": 3,
+      "ladder_sizes": [
+        "4M",
+        "10M",
+        "60M",
+        "90M",
+        "300M",
+        "1B"
+      ],
+      "targets": [
+        "1B"
+      ],
+      "curve_implied_slope": 7.280590973719045,
+      "training_flops": 1.1560763095635718e+22,
+      "gpu_hours": {
+        "H100 SXM": 8114.319491916901,
+        "RTX 3090": 150766.34188361655
+      }
+    },
+    "1BS6|n10": {
+      "worlds": 150,
+      "tested_share": 1.0,
+      "predicted_slope": 3.830605072434625,
+      "predicted_slope_mc_interval": [
+        3.2292369932414537,
+        4.431973151627796
+      ],
+      "predicted_slope_spread_2_5_97_5": [
+        -3.56765123066679,
+        10.407317967852675
+      ],
+      "random_candidate": 0.07333333333333333,
+      "random_candidate_mc_se": 0.021284666711908765,
+      "fixed_candidate": 0.0,
+      "fixed_candidate_worlds": 26,
+      "fixed_candidate_mc_se": 0.0,
+      "valid_random": true,
+      "valid_fixed": false,
+      "top": "1B",
+      "sizes": 6,
+      "recipes": 10,
+      "seeds": 3,
+      "ladder_sizes": [
+        "4M",
+        "10M",
+        "60M",
+        "90M",
+        "300M",
+        "1B"
+      ],
+      "targets": [
+        "1B"
+      ],
+      "curve_implied_slope": 7.280590973719045,
+      "training_flops": 2.3121526191271436e+22,
+      "gpu_hours": {
+        "H100 SXM": 16228.638983833802,
+        "RTX 3090": 301532.6837672331
+      }
+    },
+    "1BS6|n15": {
+      "worlds": 150,
+      "tested_share": 1.0,
+      "predicted_slope": 3.6119116092102073,
+      "predicted_slope_mc_interval": [
+        3.2198879277227914,
+        4.0039352906976236
+      ],
+      "predicted_slope_spread_2_5_97_5": [
+        -0.7413704795215101,
+        8.070702874788708
+      ],
+      "random_candidate": 0.12666666666666668,
+      "random_candidate_mc_se": 0.027156610272298005,
+      "fixed_candidate": 0.03125,
+      "fixed_candidate_worlds": 32,
+      "fixed_candidate_mc_se": 0.030757843257858637,
+      "valid_random": true,
+      "valid_fixed": false,
+      "top": "1B",
+      "sizes": 6,
+      "recipes": 15,
+      "seeds": 3,
+      "ladder_sizes": [
+        "4M",
+        "10M",
+        "60M",
+        "90M",
+        "300M",
+        "1B"
+      ],
+      "targets": [
+        "1B"
+      ],
+      "curve_implied_slope": 7.280590973719045,
+      "training_flops": 3.468228928690715e+22,
+      "gpu_hours": {
+        "H100 SXM": 24342.9584757507,
+        "RTX 3090": 452299.0256508496
+      }
+    },
+    "1BS6|n20": {
+      "worlds": 150,
+      "tested_share": 1.0,
+      "predicted_slope": 3.5033714845512334,
+      "predicted_slope_mc_interval": [
+        3.214950425740901,
+        3.7917925433615656
+      ],
+      "predicted_slope_spread_2_5_97_5": [
+        0.08121132092424475,
+        7.087391787370972
+      ],
+      "random_candidate": 0.21333333333333335,
+      "random_candidate_mc_se": 0.03344868928395872,
+      "fixed_candidate": 0.05,
+      "fixed_candidate_worlds": 40,
+      "fixed_candidate_mc_se": 0.034460121880225555,
+      "valid_random": true,
+      "valid_fixed": true,
+      "top": "1B",
+      "sizes": 6,
+      "recipes": 20,
+      "seeds": 3,
+      "ladder_sizes": [
+        "4M",
+        "10M",
+        "60M",
+        "90M",
+        "300M",
+        "1B"
+      ],
+      "targets": [
+        "1B"
+      ],
+      "curve_implied_slope": 7.280590973719045,
+      "training_flops": 4.624305238254287e+22,
+      "gpu_hours": {
+        "H100 SXM": 32457.277967667604,
+        "RTX 3090": 603065.3675344662
+      }
+    },
+    "1BS6|n25": {
+      "worlds": 150,
+      "tested_share": 1.0,
+      "predicted_slope": 3.6848407531718825,
+      "predicted_slope_mc_interval": [
+        3.4864093414343635,
+        3.8832721649094015
+      ],
+      "predicted_slope_spread_2_5_97_5": [
+        0.94774744919475,
+        6.02511903359021
+      ],
+      "random_candidate": 0.4,
+      "random_candidate_mc_se": 0.04,
+      "fixed_candidate": 0.2647058823529412,
+      "fixed_candidate_worlds": 68,
+      "fixed_candidate_mc_se": 0.05350050552272051,
+      "valid_random": true,
+      "valid_fixed": true,
+      "top": "1B",
+      "sizes": 6,
+      "recipes": 25,
+      "seeds": 3,
+      "ladder_sizes": [
+        "4M",
+        "10M",
+        "60M",
+        "90M",
+        "300M",
+        "1B"
+      ],
+      "targets": [
+        "1B"
+      ],
+      "curve_implied_slope": 7.280590973719045,
+      "training_flops": 5.780381547817859e+22,
+      "gpu_hours": {
+        "H100 SXM": 40571.5974595845,
+        "RTX 3090": 753831.7094180827
+      },
+      "note": "25 recipes drawn without replacement is always DataDecide's 25: no recipe variation"
+    },
+    "1BS6|n30": {
+      "worlds": 150,
+      "tested_share": 1.0,
+      "predicted_slope": 5.149061591609346,
+      "predicted_slope_mc_interval": [
+        4.823975383546546,
+        5.474147799672146
+      ],
+      "predicted_slope_spread_2_5_97_5": [
+        1.9035927255597551,
+        9.801791524710604
+      ],
+      "random_candidate": 0.6733333333333333,
+      "random_candidate_mc_se": 0.038293215722505866,
+      "fixed_candidate": 0.8703703703703703,
+      "fixed_candidate_worlds": 54,
+      "fixed_candidate_mc_se": 0.04570958825416268,
+      "valid_random": true,
+      "valid_fixed": true,
+      "top": "1B",
+      "sizes": 6,
+      "recipes": 30,
+      "seeds": 3,
+      "ladder_sizes": [
+        "4M",
+        "10M",
+        "60M",
+        "90M",
+        "300M",
+        "1B"
+      ],
+      "targets": [
+        "1B"
+      ],
+      "curve_implied_slope": 7.280590973719045,
+      "training_flops": 6.93645785738143e+22,
+      "gpu_hours": {
+        "H100 SXM": 48685.9169515014,
+        "RTX 3090": 904598.0513016992
+      }
+    },
+    "1BS6|n40": {
+      "worlds": 150,
+      "tested_share": 1.0,
+      "predicted_slope": 4.785350973783651,
+      "predicted_slope_mc_interval": [
+        4.557437965708584,
+        5.013263981858718
+      ],
+      "predicted_slope_spread_2_5_97_5": [
+        2.378162116489604,
+        7.819778741630814
+      ],
+      "random_candidate": 0.86,
+      "random_candidate_mc_se": 0.028331372481167703,
+      "fixed_candidate": 0.9759036144578314,
+      "fixed_candidate_worlds": 83,
+      "fixed_candidate_mc_se": 0.016832180075559013,
+      "valid_random": true,
+      "valid_fixed": true,
+      "top": "1B",
+      "sizes": 6,
+      "recipes": 40,
+      "seeds": 3,
+      "ladder_sizes": [
+        "4M",
+        "10M",
+        "60M",
+        "90M",
+        "300M",
+        "1B"
+      ],
+      "targets": [
+        "1B"
+      ],
+      "curve_implied_slope": 7.280590973719045,
+      "training_flops": 9.248610476508574e+22,
+      "gpu_hours": {
+        "H100 SXM": 64914.55593533521,
+        "RTX 3090": 1206130.7350689324
+      }
+    },
+    "1BS8|n5": {
+      "worlds": 150,
+      "tested_share": 1.0,
+      "predicted_slope": 10.45040906518148,
+      "predicted_slope_mc_interval": [
+        9.58703519184655,
+        11.313782938516411
+      ],
+      "predicted_slope_spread_2_5_97_5": [
+        -0.9297711230492102,
+        20.394456266843235
+      ],
+      "random_candidate": 0.2733333333333333,
+      "random_candidate_mc_se": 0.03638884648004314,
+      "fixed_candidate": 0.22916666666666666,
+      "fixed_candidate_worlds": 48,
+      "fixed_candidate_mc_se": 0.06066460142241718,
+      "valid_random": true,
+      "valid_fixed": true,
+      "top": "1B",
+      "sizes": 8,
+      "recipes": 5,
+      "seeds": 3,
+      "ladder_sizes": [
+        "4M",
+        "8M",
+        "20M",
+        "60M",
+        "90M",
+        "300M",
+        "530M",
+        "1B"
+      ],
+      "targets": [
+        "300M",
+        "530M",
+        "1B"
+      ],
+      "curve_implied_slope": 7.98616505232033,
+      "training_flops": 1.3808178804855103e+22,
+      "gpu_hours": {
+        "H100 SXM": 9691.745561883115,
+        "RTX 3090": 180075.36260896063
+      }
+    },
+    "1BS8|n10": {
+      "worlds": 150,
+      "tested_share": 1.0,
+      "predicted_slope": 10.705777355525738,
+      "predicted_slope_mc_interval": [
+        10.218838338133896,
+        11.19271637291758
+      ],
+      "predicted_slope_spread_2_5_97_5": [
+        5.417935678572846,
+        16.630359875379565
+      ],
+      "random_candidate": 0.7866666666666666,
+      "random_candidate_mc_se": 0.03344868928395872,
+      "fixed_candidate": 0.8783783783783784,
+      "fixed_candidate_worlds": 74,
+      "fixed_candidate_mc_se": 0.03799534160204463,
+      "valid_random": true,
+      "valid_fixed": true,
+      "top": "1B",
+      "sizes": 8,
+      "recipes": 10,
+      "seeds": 3,
+      "ladder_sizes": [
+        "4M",
+        "8M",
+        "20M",
+        "60M",
+        "90M",
+        "300M",
+        "530M",
+        "1B"
+      ],
+      "targets": [
+        "300M",
+        "530M",
+        "1B"
+      ],
+      "curve_implied_slope": 7.98616505232033,
+      "training_flops": 2.7616357609710205e+22,
+      "gpu_hours": {
+        "H100 SXM": 19383.49112376623,
+        "RTX 3090": 360150.72521792125
+      }
+    },
+    "1BS8|n15": {
+      "worlds": 150,
+      "tested_share": 1.0,
+      "predicted_slope": 10.827566341713531,
+      "predicted_slope_mc_interval": [
+        10.506508460887991,
+        11.148624222539071
+      ],
+      "predicted_slope_spread_2_5_97_5": [
+        7.354500493350845,
+        15.18091377259
+      ],
+      "random_candidate": 1.0,
+      "random_candidate_mc_se": 0.0,
+      "fixed_candidate": 1.0,
+      "fixed_candidate_worlds": 105,
+      "fixed_candidate_mc_se": 0.0,
+      "valid_random": true,
+      "valid_fixed": true,
+      "top": "1B",
+      "sizes": 8,
+      "recipes": 15,
+      "seeds": 3,
+      "ladder_sizes": [
+        "4M",
+        "8M",
+        "20M",
+        "60M",
+        "90M",
+        "300M",
+        "530M",
+        "1B"
+      ],
+      "targets": [
+        "300M",
+        "530M",
+        "1B"
+      ],
+      "curve_implied_slope": 7.98616505232033,
+      "training_flops": 4.142453641456531e+22,
+      "gpu_hours": {
+        "H100 SXM": 29075.23668564935,
+        "RTX 3090": 540226.087826882
+      }
+    },
+    "1BS10|n5": {
+      "worlds": 150,
+      "tested_share": 1.0,
+      "predicted_slope": 15.8809792429208,
+      "predicted_slope_mc_interval": [
+        14.942850259807372,
+        16.819108226034228
+      ],
+      "predicted_slope_spread_2_5_97_5": [
+        3.340062954156939,
+        25.7146956200598
+      ],
+      "random_candidate": 0.5466666666666666,
+      "random_candidate_mc_se": 0.04064662529839529,
+      "fixed_candidate": 0.5471698113207547,
+      "fixed_candidate_worlds": 53,
+      "fixed_candidate_mc_se": 0.06837397288386757,
+      "valid_random": true,
+      "valid_fixed": true,
+      "top": "1B",
+      "sizes": 10,
+      "recipes": 5,
+      "seeds": 3,
+      "ladder_sizes": [
+        "4M",
+        "6M",
+        "14M",
+        "20M",
+        "60M",
+        "90M",
+        "150M",
+        "300M",
+        "530M",
+        "1B"
+      ],
+      "targets": [
+        "150M",
+        "300M",
+        "530M",
+        "1B"
+      ],
+      "curve_implied_slope": 8.562722476895594,
+      "training_flops": 1.4011124899945155e+22,
+      "gpu_hours": {
+        "H100 SXM": 9834.19026398235,
+        "RTX 3090": 182722.0252992326
+      }
+    },
+    "1BS10|n10": {
+      "worlds": 150,
+      "tested_share": 1.0,
+      "predicted_slope": 15.92236775221425,
+      "predicted_slope_mc_interval": [
+        15.42839379949984,
+        16.41634170492866
+      ],
+      "predicted_slope_spread_2_5_97_5": [
+        10.063419793255319,
+        21.858517208551294
+      ],
+      "random_candidate": 0.98,
+      "random_candidate_mc_se": 0.01143095213298817,
+      "fixed_candidate": 1.0,
+      "fixed_candidate_worlds": 107,
+      "fixed_candidate_mc_se": 0.0,
+      "valid_random": true,
+      "valid_fixed": true,
+      "top": "1B",
+      "sizes": 10,
+      "recipes": 10,
+      "seeds": 3,
+      "ladder_sizes": [
+        "4M",
+        "6M",
+        "14M",
+        "20M",
+        "60M",
+        "90M",
+        "150M",
+        "300M",
+        "530M",
+        "1B"
+      ],
+      "targets": [
+        "150M",
+        "300M",
+        "530M",
+        "1B"
+      ],
+      "curve_implied_slope": 8.562722476895594,
+      "training_flops": 2.802224979989031e+22,
+      "gpu_hours": {
+        "H100 SXM": 19668.3805279647,
+        "RTX 3090": 365444.0505984652
+      }
+    }
+  },
+  "cheapest": {
+    "random_candidate": {
+      "worlds": 150,
+      "tested_share": 1.0,
+      "predicted_slope": 21.810278514411536,
+      "predicted_slope_mc_interval": [
+        20.965957460907724,
+        22.654599567915348
+      ],
+      "predicted_slope_spread_2_5_97_5": [
+        10.8047331680037,
+        31.696418241290402
+      ],
+      "random_candidate": 0.9066666666666666,
+      "random_candidate_mc_se": 0.023751803050466473,
+      "fixed_candidate": 0.96875,
+      "fixed_candidate_worlds": 96,
+      "fixed_candidate_mc_se": 0.017758049084617,
+      "valid_random": true,
+      "valid_fixed": true,
+      "top": "300M",
+      "sizes": 8,
+      "recipes": 10,
+      "seeds": 3,
+      "ladder_sizes": [
+        "4M",
+        "6M",
+        "14M",
+        "20M",
+        "60M",
+        "90M",
+        "150M",
+        "300M"
+      ],
+      "targets": [
+        "150M",
+        "300M"
+      ],
+      "curve_implied_slope": 10.954763726638994,
+      "training_flops": 2.3440162037181328e+21,
+      "gpu_hours": {
+        "H100 SXM": 1645.2284519504894,
+        "RTX 3090": 30568.80808187445
+      }
+    },
+    "fixed_candidate": {
+      "worlds": 150,
+      "tested_share": 1.0,
+      "predicted_slope": 21.810278514411536,
+      "predicted_slope_mc_interval": [
+        20.965957460907724,
+        22.654599567915348
+      ],
+      "predicted_slope_spread_2_5_97_5": [
+        10.8047331680037,
+        31.696418241290402
+      ],
+      "random_candidate": 0.9066666666666666,
+      "random_candidate_mc_se": 0.023751803050466473,
+      "fixed_candidate": 0.96875,
+      "fixed_candidate_worlds": 96,
+      "fixed_candidate_mc_se": 0.017758049084617,
+      "valid_random": true,
+      "valid_fixed": true,
+      "top": "300M",
+      "sizes": 8,
+      "recipes": 10,
+      "seeds": 3,
+      "ladder_sizes": [
+        "4M",
+        "6M",
+        "14M",
+        "20M",
+        "60M",
+        "90M",
+        "150M",
+        "300M"
+      ],
+      "targets": [
+        "150M",
+        "300M"
+      ],
+      "curve_implied_slope": 10.954763726638994,
+      "training_flops": 2.3440162037181328e+21,
+      "gpu_hours": {
+        "H100 SXM": 1645.2284519504894,
+        "RTX 3090": 30568.80808187445
+      }
+    }
+  },
+  "prediction_D1_valid_random_0_8_within_25_with_300M": true
+}
