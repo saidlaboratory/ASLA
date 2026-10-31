@@ -1,0 +1,36 @@
+{
+  "runs": 240,
+  "recipes": 10,
+  "sizes": [
+    "4M",
+    "6M",
+    "14M",
+    "20M",
+    "60M",
+    "90M",
+    "150M",
+    "300M"
+  ],
+  "seeds": [
+    14,
+    15,
+    6198
+  ],
+  "total_tokens": 1922155806720,
+  "total_flops": 2.3443672685855795e+21,
+  "gpu_hours": {
+    "H100 SXM": 1645.4748589111102,
+    "RTX 3090": 30573.38639261319
+  },
+  "hardware_assumptions": {
+    "H100 SXM": {
+      "peak_flops": 989400000000000.0,
+      "mfu": 0.4
+    },
+    "RTX 3090": {
+      "peak_flops": 71000000000000.0,
+      "mfu": 0.3
+    }
+  },
+  "tokens_per_corpus_largest_run": 29491200000
+}

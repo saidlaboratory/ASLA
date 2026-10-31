@@ -1,0 +1,25 @@
+{
+  "document": "PREDICTIONS_REPLICATION_PROTOCOL.md",
+  "fixed_on": "2026-10-31, before any training",
+  "design": {"recipes": 10, "sizes": ["4M", "6M", "14M", "20M", "60M", "90M", "150M", "300M"], "seeds": [6198, 14, 15], "runs": 240},
+  "statistic": "fixed-target pooled slope of the expected-error excess of projection over single-scale ranking on log10 lever arm, points per decade; slices (target, rung count) with at least 3 windows; leave-one-recipe-out jackknife SE",
+  "targets": "sizes at or above 150M with at least 5 sizes below (150M and 300M); a target is admitted when at least half its recipe pairs are determined by its own three-seed evidence",
+  "primary": {
+    "criterion": "estimate - 1.96 SE > 0",
+    "outcomes": {
+      "replicates": "estimate - 1.96 SE > 0",
+      "inconclusive": "interval includes zero",
+      "contradicts": "estimate + 1.96 SE < 0",
+      "no_test": "no target admitted"
+    },
+    "power_under_simulator": {"random_candidate": 0.9066666666666666, "fixed_candidate": 0.96875, "source": "results/replication/untuned_spec.json"}
+  },
+  "secondary": {
+    "predicted_slope": 21.810278514411536,
+    "predicted_slope_mc_interval": [20.965957460907724, 22.654599567915348],
+    "recipe_draw_range": [10.8047331680037, 31.696418241290402],
+    "curve_implied_slope": 10.954763726638994,
+    "assumption": "the predicted magnitude assumes the new recipes resemble DataDecide's 25 (drawn from the same distribution of power-law parameters and recipe-specific misfit); it is not part of the pass criterion"
+  },
+  "analysis_entry_point": "scripts/analyze_replication.py (refuses to run if the pinned SHA-256 of the frozen modules differs)"
+}

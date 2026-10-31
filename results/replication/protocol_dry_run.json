@@ -1,0 +1,46 @@
+{
+  "preregistration": "PREDICTIONS_REPLICATION_PROTOCOL.md",
+  "note": "simulated outputs only; nothing trained",
+  "worlds": 150,
+  "spec": {
+    "statistic": "fixed_target",
+    "candidates": "corrected",
+    "n": 10,
+    "truth": "full",
+    "noise": "by_size",
+    "tpp": "datadecide",
+    "seeds": 3,
+    "ladder": [
+      15.926,
+      16.336,
+      17.094,
+      17.341,
+      18.291,
+      18.76,
+      19.128,
+      19.753
+    ],
+    "targets": [
+      6,
+      7
+    ],
+    "admit": "determinacy",
+    "lam": 1.0
+  },
+  "codepath_matches_simulator_all_worlds": true,
+  "nominal_compute_vs_simulator_grid_max_abs_estimate_diff": 0.5573500903607211,
+  "verdict_disagreements_nominal_vs_simulator_grid": [
+    38,
+    105
+  ],
+  "grid_note": "the simulator's ladder is DataDecide's log10 compute rounded to 3 decimals; the entry point uses exact 6ND from ladder.json",
+  "verdict_shares": {
+    "inconclusive": 0.14,
+    "replicates": 0.86
+  },
+  "replicates_share_mc_se": 0.028331372481167703,
+  "mean_estimate": 21.090731253180994,
+  "mean_true": 21.200993509204217,
+  "share_within_recipe_draw_range": 0.9333333333333333,
+  "untuned_spec_random_candidate_power": 0.9066666666666666
+}

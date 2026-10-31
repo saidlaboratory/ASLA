@@ -1,0 +1,41 @@
+{
+  "description": "DataDecide's training setup at the eight replication sizes. N, D and steps are DataDecide's released values (data/datadecide_runs.parquet: params_n, tokens_d, final step; D = steps x batch x 2048 exactly); architecture, batch and peak LR from the DataDecide paper's Table 2 (arXiv 2504.11393, App. A) and the OLMo ladder code on the DataDecide branch; shared settings from that code.",
+  "sources": {
+    "paper_table": "arXiv 2504.11393, Appendix A, Table 2 (also on the allenai/DataDecide-* model cards)",
+    "ladder_code": "https://raw.githubusercontent.com/allenai/OLMo/DataDecide/scripts/ladder.py (branch DataDecide, commit 7094aab, 2025-03-14)",
+    "seed_map": "github.com/allenai/DataDecide checkpoints/README.md"
+  },
+  "shared": {
+    "framework": "OLMo (allenai/OLMo, branch DataDecide), scripts/ladder.py with --length 5xC",
+    "architecture": "decoder-only, SwiGLU, mlp_ratio 8, RoPE, RMSNorm with affine eps 1e-6, no biases, untied embeddings, init normal std 0.02 truncated at 3 std",
+    "tokenizer": "allenai_gpt-neox-olmo-dolma-v1_5 (vocab 50280, embedding size 50304)",
+    "sequence_length": 2048,
+    "optimizer": {"name": "AdamW", "betas": [0.9, 0.95], "eps": 1e-8, "weight_decay": 0.05, "decay_norms_and_biases_and_embeddings": true},
+    "schedule": {"name": "cosine_with_warmup", "alpha_f": 0.01, "warmup_min_lr": 0.0, "warmup_tokens": "N (warmup steps = round(N / (batch x 2048)))"},
+    "grad_clip": 1.0,
+    "precision": "amp_bf16",
+    "batch_rule": "round(160 (N/108e6)^(2/3) / 32) x 32 sequences",
+    "lr_rule": "0.0047 (N/108e6)^(-1/3); the table's published value is used",
+    "tokens": "5xC = 100 N (nominal N for 150M and 300M; D as released)",
+    "flops_per_run": "6 N D (DataDecide's compute column)"
+  },
+  "seeds": [6198, 14, 15],
+  "seed_labels": {"6198": "default", "14": "small aux 2", "15": "small aux 3"},
+  "seed_controls": "initialisation and data order (TrainConfig.seed, data.seed unset). Use the DataDecide branch: at commit 55d4871 the seed is hard-coded to 6198.",
+  "evaluation": {
+    "metric": "c4_en_bits_per_token: mean next-token cross-entropy on held-out C4-en validation, in nats divided by ln 2, at the final checkpoint",
+    "data": "the OLMo in-loop evaluator c4_en-validation (v3_small_gptneox20b/c4_en/val); public counterpart allenai/paloma subset c4_en, validation split (gated)",
+    "unverified": "whether the in-loop file equals Paloma's c4_en validation split or a subsample; the replication uses Paloma c4_en validation for every run, so all recipes share one evaluation set",
+    "decontamination": "documents in any training corpus exactly matching a Paloma c4_en validation or test document are removed before training"
+  },
+  "sizes": [
+    {"size": "4M",   "d_model": 64,   "n_layers": 8,  "n_heads": 8,  "params_n": 3744832,   "tokens_d": 375193600,   "batch_seqs": 32,  "peak_lr": 0.014,  "steps": 5725},
+    {"size": "6M",   "d_model": 96,   "n_layers": 8,  "n_heads": 8,  "params_n": 6010464,   "tokens_d": 601751552,   "batch_seqs": 32,  "peak_lr": 0.012,  "steps": 9182},
+    {"size": "14M",  "d_model": 192,  "n_layers": 8,  "n_heads": 8,  "params_n": 14380224,  "tokens_d": 1438711808,  "batch_seqs": 32,  "peak_lr": 0.0092, "steps": 21953},
+    {"size": "20M",  "d_model": 192,  "n_layers": 16, "n_heads": 8,  "params_n": 19101888,  "tokens_d": 1911554048,  "batch_seqs": 64,  "peak_lr": 0.0084, "steps": 14584},
+    {"size": "60M",  "d_model": 384,  "n_layers": 16, "n_heads": 12, "params_n": 57078144,  "tokens_d": 5709889536,  "batch_seqs": 96,  "peak_lr": 0.0058, "steps": 29042},
+    {"size": "90M",  "d_model": 528,  "n_layers": 16, "n_heads": 12, "params_n": 97946640,  "tokens_d": 9797959680,  "batch_seqs": 160, "peak_lr": 0.0049, "steps": 29901},
+    {"size": "150M", "d_model": 768,  "n_layers": 12, "n_heads": 12, "params_n": 151898880, "tokens_d": 14745600000, "batch_seqs": 192, "peak_lr": 0.0042, "steps": 37500, "nominal_n_for_rules": 150000000},
+    {"size": "300M", "d_model": 1024, "n_layers": 16, "n_heads": 16, "params_n": 319980544, "tokens_d": 29491200000, "batch_seqs": 320, "peak_lr": 0.0033, "steps": 45000, "nominal_n_for_rules": 300000000}
+  ]
+}

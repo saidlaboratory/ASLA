@@ -1,0 +1,497 @@
+{
+  "rule": {
+    "fixed_on": "2026-10-31, before any training",
+    "eligibility": {
+      "E1_licence": "the Hugging Face dataset card carries an open licence tag (odc-by, cc0-1.0, cc-by-4.0, apache-2.0, mit) or its text states that all content is openly licensed or public domain, or defers to Common Crawl terms of use for crawled text; 'other' with no such statement fails",
+      "E2_access": "the canonical repository is public and downloadable without manual approval (ungated or auto-gated); unofficial mirrors do not count",
+      "E3_english_and_size": "an English portion is selectable from released metadata (a language field or a file/config split) and holds at least 30B tokens by the card's own figures, enough for the 300M run's 29.5B tokens without repetition",
+      "E4_distinct_from_datadecide": "not one of DataDecide's corpora (C4, DCLM-Baseline, Dolma 1.6++/1.7, Falcon RefinedWeb, FineWeb-Edu, FineWeb-Pro) and at most 20% of its documents drawn from them or from the pools they were filtered from (DCLM-Pool, FineWeb, RefinedWeb, mC4/C4 family); judged from the card's stated composition; a card that does not state composition fails",
+      "E5_general_domain": "a general-domain corpus (web or a multi-source mixture), not restricted to one domain (code, mathematics, scientific papers) or one source (a single encyclopedia or book collection) and not synthetic-only",
+      "E6_one_per_family": "at most one corpus per release family (e.g. SlimPajama is a deduplicated RedPajama-1T)"
+    },
+    "selection": "if more than 10 candidates are eligible, take the 10 with the smallest crc32('ASLA-replication-2026-10-31:' + hf_id); the rest are ordered reserves. If 10 or fewer are eligible, all are selected.",
+    "salt": "ASLA-replication-2026-10-31",
+    "per_corpus_processing": "use the English portion as released, with no additional quality filtering; remove exact-duplicate documents of the Paloma C4-en evaluation split; shuffle once with the run's data-order seed; tokenize with the ladder tokenizer; never repeat a document within a run",
+    "verified_with": "https://huggingface.co/api/datasets/<id> (cardData.license, gated, sha) and the dataset card README, fetched 2026-10-31"
+  },
+  "n_considered": 27,
+  "n_eligible": 10,
+  "selected": [
+    {
+      "id": "madlad_400_en",
+      "hf_id": "allenai/MADLAD-400",
+      "revision_sha": "9d886a76bd8fa69b294f2dd3843dacb8388ee5a5",
+      "licence": "odc-by tag; card text CC-BY-4.0",
+      "processing": "en clean split"
+    },
+    {
+      "id": "comma_v0_1",
+      "hf_id": "common-pile/comma_v0.1_training_dataset",
+      "revision_sha": "5afc546db324e7f39f297ba757c9a60547151e7c",
+      "licence": "no tag; Common Pile is openly licensed text by construction (each source carries an open licence)",
+      "processing": "main-stage sources at released proportions, without the card's repeat factors"
+    },
+    {
+      "id": "open_license_corpus",
+      "hf_id": "kernelmachine/open-license-corpus",
+      "revision_sha": "384d5e19d19361803630ce4d382604267d3951d2",
+      "licence": "apache-2.0",
+      "processing": "all domains at released proportions"
+    },
+    {
+      "id": "finepdfs",
+      "hf_id": "HuggingFaceFW/finepdfs",
+      "revision_sha": "220bac3acbf07789502c621d2d33952f51ac7f86",
+      "licence": "odc-by",
+      "processing": "eng_Latn config"
+    },
+    {
+      "id": "redpajama_v2",
+      "hf_id": "togethercomputer/RedPajama-Data-V2",
+      "revision_sha": "aa033f6b6480c445557e9118283993403f069f6a",
+      "licence": "Common Crawl Foundation terms of use (card); code Apache-2.0",
+      "processing": "head_middle English partitions with the released exact-duplicate ids removed; quality signals not used"
+    },
+    {
+      "id": "hplt_v2_en",
+      "hf_id": "HPLT/HPLT2.0_cleaned",
+      "revision_sha": "d1324a5283f762ee62c2a5c81de08fc6450ea540",
+      "licence": "cc0-1.0 (packaging); underlying text under source terms",
+      "processing": "eng_Latn config"
+    },
+    {
+      "id": "txt360",
+      "hf_id": "LLM360/TxT360",
+      "revision_sha": "3337c47e3c09726092745da02aac0b6a7da055ed",
+      "licence": "odc-by",
+      "processing": "released mixture (the card's weighting recipe is not applied)"
+    },
+    {
+      "id": "matrix_cc_en",
+      "hf_id": "m-a-p/Matrix",
+      "revision_sha": "c13c43bc3232816543751a61a46e9a23503361bd",
+      "licence": "apache-2.0",
+      "processing": "cc_en shards only (the other components do not mark language)"
+    },
+    {
+      "id": "redpajama_1t",
+      "hf_id": "togethercomputer/RedPajama-Data-1T",
+      "revision_sha": "398f92572e94f4793e41c22ab7ea2a788d9e7de4",
+      "licence": "per subset: CC terms of use, C4 ODC-BY, GitHub MIT/BSD/Apache, others per card",
+      "processing": "all subsets at released proportions"
+    },
+    {
+      "id": "common_corpus",
+      "hf_id": "PleIAs/common_corpus",
+      "revision_sha": "307910e4c5d040d6f318e6edf2a2b97849155771",
+      "licence": "no tag; card: all data uncopyrighted or freely licensed",
+      "processing": "documents whose language field is English"
+    }
+  ],
+  "reserves": [],
+  "note": "exactly ten candidates were eligible, so all are selected and there are no reserves; if a selected corpus becomes unavailable before training, the replication runs with the rest and power is recomputed with the frozen simulator first, and both are recorded",
+  "resemblance_caveat": "comma_v0_1, common_corpus and open_license_corpus are openly licensed multi-domain mixtures that differ from DataDecide's web-heavy recipes more than the others do; the predicted magnitude assumes resemblance and is weakest for them",
+  "candidates": [
+    {
+      "id": "redpajama_v2",
+      "hf_id": "togethercomputer/RedPajama-Data-V2",
+      "revision_sha": "aa033f6b6480c445557e9118283993403f069f6a",
+      "licence": "Common Crawl Foundation terms of use (card); code Apache-2.0",
+      "gated": "no",
+      "english_portion": "'en' config/partitions",
+      "size_evidence": "card: 30T+ deduplicated tokens, English the largest language",
+      "composition": "own CCNet processing of 84 CC snapshots",
+      "fails": [],
+      "eligible": true,
+      "processing": "head_middle English partitions with the released exact-duplicate ids removed; quality signals not used",
+      "crc32_rank_key": 1569377134
+    },
+    {
+      "id": "redpajama_1t",
+      "hf_id": "togethercomputer/RedPajama-Data-1T",
+      "revision_sha": "398f92572e94f4793e41c22ab7ea2a788d9e7de4",
+      "licence": "per subset: CC terms of use, C4 ODC-BY, GitHub MIT/BSD/Apache, others per card",
+      "gated": "no",
+      "english_portion": "English corpus",
+      "size_evidence": "card: 1.2T tokens",
+      "composition": "CC (CCNet) about 878B, C4 about 175B (about 15%, under the 20% limit), GitHub, books, arXiv, Wikipedia, StackExchange",
+      "fails": [],
+      "eligible": true,
+      "processing": "all subsets at released proportions",
+      "crc32_rank_key": 3555193443
+    },
+    {
+      "id": "txt360",
+      "hf_id": "LLM360/TxT360",
+      "revision_sha": "3337c47e3c09726092745da02aac0b6a7da055ed",
+      "licence": "odc-by",
+      "gated": "no",
+      "english_portion": "English",
+      "size_evidence": "card: about 5T deduplicated tokens",
+      "composition": "own filtering of 99 CC snapshots plus 14 curated sources; card mentions FineWeb, Dolma, RedPajama only as comparisons",
+      "fails": [],
+      "eligible": true,
+      "processing": "released mixture (the card's weighting recipe is not applied)",
+      "crc32_rank_key": 2518081678
+    },
+    {
+      "id": "comma_v0_1",
+      "hf_id": "common-pile/comma_v0.1_training_dataset",
+      "revision_sha": "5afc546db324e7f39f297ba757c9a60547151e7c",
+      "licence": "no tag; Common Pile is openly licensed text by construction (each source carries an open licence)",
+      "gated": "no",
+      "english_portion": "English",
+      "size_evidence": "card: 463.6B tokens main stage",
+      "composition": "openly licensed sources; peS2o (a Dolma component) is 43.3B of 463.6B, about 9%",
+      "fails": [],
+      "eligible": true,
+      "processing": "main-stage sources at released proportions, without the card's repeat factors",
+      "crc32_rank_key": 379739919
+    },
+    {
+      "id": "common_corpus",
+      "hf_id": "PleIAs/common_corpus",
+      "revision_sha": "307910e4c5d040d6f318e6edf2a2b97849155771",
+      "licence": "no tag; card: all data uncopyrighted or freely licensed",
+      "gated": "no",
+      "english_portion": "per-document language field",
+      "size_evidence": "card: 2.27T tokens, mostly English and French",
+      "composition": "books, newspapers, scientific, government and legal documents, code; no DataDecide source",
+      "fails": [],
+      "eligible": true,
+      "processing": "documents whose language field is English",
+      "crc32_rank_key": 4065961814
+    },
+    {
+      "id": "finepdfs",
+      "hf_id": "HuggingFaceFW/finepdfs",
+      "revision_sha": "220bac3acbf07789502c621d2d33952f51ac7f86",
+      "licence": "odc-by",
+      "gated": "no",
+      "english_portion": "eng_Latn config",
+      "size_evidence": "card: English is the largest config (over 1T tokens)",
+      "composition": "text extracted from PDFs in Common Crawl; disjoint from FineWeb's HTML extraction",
+      "fails": [],
+      "eligible": true,
+      "processing": "eng_Latn config",
+      "crc32_rank_key": 1490007824
+    },
+    {
+      "id": "matrix_cc_en",
+      "hf_id": "m-a-p/Matrix",
+      "revision_sha": "c13c43bc3232816543751a61a46e9a23503361bd",
+      "licence": "apache-2.0",
+      "gated": "no",
+      "english_portion": "cc_en files (200 shards)",
+      "size_evidence": "card: 4.69T tokens bilingual; cc_en is 200 of 496 shards",
+      "composition": "MAP-Neo's own CC processing",
+      "fails": [],
+      "eligible": true,
+      "processing": "cc_en shards only (the other components do not mark language)",
+      "crc32_rank_key": 3325048519
+    },
+    {
+      "id": "hplt_v2_en",
+      "hf_id": "HPLT/HPLT2.0_cleaned",
+      "revision_sha": "d1324a5283f762ee62c2a5c81de08fc6450ea540",
+      "licence": "cc0-1.0 (packaging); underlying text under source terms",
+      "gated": "no",
+      "english_portion": "eng_Latn config",
+      "size_evidence": "card: 8T tokens over 193 languages; the card's ablation samples 100B English tokens",
+      "composition": "Internet Archive and CC crawls, own pipeline",
+      "fails": [],
+      "eligible": true,
+      "processing": "eng_Latn config",
+      "crc32_rank_key": 2404951738
+    },
+    {
+      "id": "open_license_corpus",
+      "hf_id": "kernelmachine/open-license-corpus",
+      "revision_sha": "384d5e19d19361803630ce4d382604267d3951d2",
+      "licence": "apache-2.0",
+      "gated": "no",
+      "english_portion": "primarily English",
+      "size_evidence": "card: 228B tokens",
+      "composition": "public-domain and permissively licensed legal, code, science, conversation, books, news, encyclopedic text; uses RedPajama's GitHub/StackExchange/Wikipedia subsets, not DataDecide sources",
+      "fails": [],
+      "eligible": true,
+      "processing": "all domains at released proportions",
+      "crc32_rank_key": 534372484
+    },
+    {
+      "id": "madlad_400_en",
+      "hf_id": "allenai/MADLAD-400",
+      "revision_sha": "9d886a76bd8fa69b294f2dd3843dacb8388ee5a5",
+      "licence": "odc-by tag; card text CC-BY-4.0",
+      "gated": "no",
+      "english_portion": "en config",
+      "size_evidence": "card: 1.84B English documents",
+      "composition": "Google's own document-level CC audit and filtering",
+      "fails": [],
+      "eligible": true,
+      "processing": "en clean split",
+      "crc32_rank_key": 368733390
+    },
+    {
+      "id": "slimpajama",
+      "hf_id": "cerebras/SlimPajama-627B",
+      "revision_sha": null,
+      "licence": null,
+      "gated": "repository not accessible (API 401 on 2026-10-31)",
+      "english_portion": "English",
+      "size_evidence": "627B",
+      "composition": "deduplicated RedPajama-1T",
+      "fails": [
+        "E2_access",
+        "E6_one_per_family"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 1517954165
+    },
+    {
+      "id": "essential_web_v1",
+      "hf_id": "EssentialAI/essential-web-v1.0",
+      "revision_sha": "ce4eccc7e9604667b6d7f32cb6274b8b41f3113d",
+      "licence": "odc-by",
+      "gated": "no",
+      "english_portion": "English",
+      "size_evidence": "24T",
+      "composition": "the whole DCLM-Pool, annotated (card: 'DCLM Pool: 89 resiliparse-extracted CC snapshots')",
+      "fails": [
+        "E4_distinct_from_datadecide"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 1992368517
+    },
+    {
+      "id": "zyda_2",
+      "hf_id": "Zyphra/Zyda-2",
+      "revision_sha": "bc389cd62969a275b2e3c3e11db826ba1918411a",
+      "licence": "odc-by",
+      "gated": "no",
+      "english_portion": "English",
+      "size_evidence": "5T",
+      "composition": "mostly DCLM and FineWeb-Edu",
+      "fails": [
+        "E4_distinct_from_datadecide"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 1774707299
+    },
+    {
+      "id": "zyda_1",
+      "hf_id": "Zyphra/Zyda",
+      "revision_sha": "d42bc68cfb537710a580e8d4b13ec536fcc151a6",
+      "licence": "odc-by",
+      "gated": "no",
+      "english_portion": "English",
+      "size_evidence": "1.3T",
+      "composition": "RefinedWeb, C4, peS2o and others",
+      "fails": [
+        "E4_distinct_from_datadecide"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 610494588
+    },
+    {
+      "id": "smollm_corpus",
+      "hf_id": "HuggingFaceTB/smollm-corpus",
+      "revision_sha": "3ba9d605774198c5868892d7a8deda78031a781f",
+      "licence": "odc-by",
+      "gated": "no",
+      "english_portion": "English",
+      "size_evidence": "about 250B",
+      "composition": "mostly deduplicated FineWeb-Edu",
+      "fails": [
+        "E4_distinct_from_datadecide"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 1252078752
+    },
+    {
+      "id": "fineweb",
+      "hf_id": "HuggingFaceFW/fineweb",
+      "revision_sha": "9bb295ddab0e05d785b879661af7260fed5140fc",
+      "licence": "odc-by",
+      "gated": "no",
+      "english_portion": "English",
+      "size_evidence": "15T",
+      "composition": "the pool FineWeb-Edu was filtered from",
+      "fails": [
+        "E4_distinct_from_datadecide"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 3014169269
+    },
+    {
+      "id": "culturax",
+      "hf_id": "uonlp/CulturaX",
+      "revision_sha": "6a8734bc69fefcbb7735f4f9250f43e4cd7a442e",
+      "licence": "no tag; card hidden behind auto gate",
+      "gated": "auto",
+      "english_portion": "en",
+      "size_evidence": "large",
+      "composition": "mC4 plus OSCAR (C4 family)",
+      "fails": [
+        "E4_distinct_from_datadecide"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 257977939
+    },
+    {
+      "id": "nemotron_cc_v2",
+      "hf_id": "nvidia/Nemotron-CC-v2",
+      "revision_sha": "2669787c66d18601c0e91167fd520be6c1245865",
+      "licence": "other (NVIDIA data agreement)",
+      "gated": "manual",
+      "english_portion": "English",
+      "size_evidence": "multi-trillion",
+      "composition": "own CC processing",
+      "fails": [
+        "E1_licence",
+        "E2_access"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 2375412257
+    },
+    {
+      "id": "oscar_2301",
+      "hf_id": "oscar-corpus/OSCAR-2301",
+      "revision_sha": "c2930464071faebadfb5491e2b4f99666da7a1e6",
+      "licence": "cc0-1.0",
+      "gated": "manual",
+      "english_portion": "en",
+      "size_evidence": "large",
+      "composition": "own CC processing",
+      "fails": [
+        "E2_access"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 263039623
+    },
+    {
+      "id": "pile_uncopyrighted",
+      "hf_id": "monology/pile-uncopyrighted",
+      "revision_sha": "3be90335b66f24456a5d6659d9c8d208c0357119",
+      "licence": "other, no licence statement",
+      "gated": "no",
+      "english_portion": "English",
+      "size_evidence": "under 300B",
+      "composition": "The Pile minus Books3, BookCorpus2, OpenSubtitles, YTSubtitles, OWT2",
+      "fails": [
+        "E1_licence"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 2347457327
+    },
+    {
+      "id": "openwebtext",
+      "hf_id": "Skylion007/openwebtext",
+      "revision_sha": "79d93d786212f7344586290adb811d4ae6a1762c",
+      "licence": "cc0-1.0",
+      "gated": "no",
+      "english_portion": "English",
+      "size_evidence": "about 9B tokens",
+      "composition": "Reddit-linked web pages",
+      "fails": [
+        "E3_english_and_size"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 2389923830
+    },
+    {
+      "id": "cosmopedia",
+      "hf_id": "HuggingFaceTB/cosmopedia",
+      "revision_sha": "0ae6ec63f91742bd2d1eaef4f02232c55d719385",
+      "licence": "apache-2.0",
+      "gated": "no",
+      "english_portion": "English",
+      "size_evidence": "about 25B tokens",
+      "composition": "synthetic textbooks",
+      "fails": [
+        "E3_english_and_size",
+        "E5_general_domain"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 3173659991
+    },
+    {
+      "id": "wikipedia",
+      "hf_id": "wikimedia/wikipedia",
+      "revision_sha": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "licence": "cc-by-sa-3.0, gfdl",
+      "gated": "no",
+      "english_portion": "20231101.en",
+      "size_evidence": "under 10B tokens",
+      "composition": "a single encyclopedia",
+      "fails": [
+        "E3_english_and_size",
+        "E5_general_domain"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 1871317225
+    },
+    {
+      "id": "synth",
+      "hf_id": "PleIAs/SYNTH",
+      "revision_sha": "0d6813a2966662c39f22f0b9af28a0c1c9f7a437",
+      "licence": "cc-by-4.0",
+      "gated": "no",
+      "english_portion": "English",
+      "size_evidence": "",
+      "composition": "synthetic, from Wikipedia",
+      "fails": [
+        "E5_general_domain"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 1405301058
+    },
+    {
+      "id": "institutional_books",
+      "hf_id": "institutional/institutional-books-1.0",
+      "revision_sha": "1f12e87e317077474679899a8f78feaeb8a995ff",
+      "licence": "no tag",
+      "gated": "auto",
+      "english_portion": "multilingual",
+      "size_evidence": "242B",
+      "composition": "a single library's books",
+      "fails": [
+        "E1_licence",
+        "E5_general_domain"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 2832121455
+    },
+    {
+      "id": "industry_corpus_2",
+      "hf_id": "BAAI/IndustryCorpus2",
+      "revision_sha": "249ea52f1ee412303e9741ae69fdd2109c0f8e1c",
+      "licence": "apache-2.0",
+      "gated": "auto",
+      "english_portion": "en and zh",
+      "size_evidence": "",
+      "composition": "composition sources not stated in the public card",
+      "fails": [
+        "E4_distinct_from_datadecide"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 3537117346
+    },
+    {
+      "id": "tiger_pretrain_en",
+      "hf_id": "TigerResearch/pretrain_en",
+      "revision_sha": "916f8042e26f138ba73a12ec0a13cc043a2ef720",
+      "licence": "apache-2.0",
+      "gated": "no",
+      "english_portion": "English",
+      "size_evidence": "token count not stated",
+      "composition": "composition not stated",
+      "fails": [
+        "E3_english_and_size",
+        "E4_distinct_from_datadecide"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 576450056
+    }
+  ]
+}

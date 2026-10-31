@@ -1,0 +1,54 @@
+{
+  "run_id": "matrix_cc_en__300M__seed6198",
+  "recipe": "matrix_cc_en",
+  "corpus": {
+    "hf_id": "m-a-p/Matrix",
+    "revision_sha": "c13c43bc3232816543751a61a46e9a23503361bd",
+    "processing": "cc_en shards only (the other components do not mark language)"
+  },
+  "size": "300M",
+  "seed": 6198,
+  "seed_label": "default",
+  "model": {
+    "d_model": 1024,
+    "n_layers": 16,
+    "n_heads": 16,
+    "architecture": "decoder-only, SwiGLU, mlp_ratio 8, RoPE, RMSNorm with affine eps 1e-6, no biases, untied embeddings, init normal std 0.02 truncated at 3 std",
+    "tokenizer": "allenai_gpt-neox-olmo-dolma-v1_5 (vocab 50280, embedding size 50304)",
+    "sequence_length": 2048
+  },
+  "params_n": 319980544,
+  "tokens_d": 29491200000,
+  "flops": 5.66196613152768e+19,
+  "train": {
+    "batch_seqs": 320,
+    "steps": 45000,
+    "peak_lr": 0.0033,
+    "warmup_steps": 458,
+    "optimizer": {
+      "name": "AdamW",
+      "betas": [
+        0.9,
+        0.95
+      ],
+      "eps": 1e-08,
+      "weight_decay": 0.05,
+      "decay_norms_and_biases_and_embeddings": true
+    },
+    "schedule": {
+      "name": "cosine_with_warmup",
+      "alpha_f": 0.01,
+      "warmup_min_lr": 0.0,
+      "warmup_tokens": "N (warmup steps = round(N / (batch x 2048)))"
+    },
+    "grad_clip": 1.0,
+    "precision": "amp_bf16",
+    "framework": "OLMo (allenai/OLMo, branch DataDecide), scripts/ladder.py with --length 5xC"
+  },
+  "eval": {
+    "metric": "c4_en_bits_per_token: mean next-token cross-entropy on held-out C4-en validation, in nats divided by ln 2, at the final checkpoint",
+    "data": "the OLMo in-loop evaluator c4_en-validation (v3_small_gptneox20b/c4_en/val); public counterpart allenai/paloma subset c4_en, validation split (gated)",
+    "unverified": "whether the in-loop file equals Paloma's c4_en validation split or a subsample; the replication uses Paloma c4_en validation for every run, so all recipes share one evaluation set",
+    "decontamination": "documents in any training corpus exactly matching a Paloma c4_en validation or test document are removed before training"
+  }
+}
