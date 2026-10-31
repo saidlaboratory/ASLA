@@ -55,8 +55,10 @@
   "per_document_logging": {
     "required": true,
     "patch": "replication_protocol/olmo_patch/olmo_per_document.patch",
-    "patch_sha256": "4d71d612a0834752c7cf4f9cfd9670a5a688a34cfd9b64a891a63c971a21a74f",
-    "patch_module_sha256": "7bd9ff72334303246267da9d7595a7b24fc0fc1dedb438719ca2f177eafd5287",
+    "patch_sha256": "eed487a46a6448b7f4476625448a582bf0d27d6a4ae36daa3e24d3c2063a878d",
+    "patch_module_sha256": "3821b216004cdc1fb2e18d33439d24586ad40bb7ed2ad83908fa50c4b0ff21f1",
+    "patch_complete_eval_sha256": "570f29a489abca7c84dd7d388f1539619ee23fa7fa712e6b7958c86c575eda75",
+    "evaluator": "asla-c4_en-complete (complete_eval=True: fixed order, no shuffling, nothing dropped, padding masked)",
     "applies_to": "allenai/OLMo@7094aab0448096f4994cae881edbd629d6c2f3de (git apply)",
     "env": {
       "ASLA_PER_DOCUMENT_LOG_DIR": "<per_document_logs>/finepdfs__300M__seed14"
@@ -65,7 +67,7 @@
   },
   "eval": {
     "metric": "c4_en_bits_per_token",
-    "definition": "c4_en_bits_per_token: mean next-token cross-entropy on held-out C4-en validation, in nats divided by ln 2, at the final checkpoint",
+    "definition": "c4_en_bits_per_token: summed next-token cross-entropy (nats) over every token of the 2,099 evaluation documents, each predicted exactly once by the complete deterministic evaluator (windows of 2048, stride 2047, over [EOS] + file), divided by the token count (1,021,899) and by ln 2, at the final checkpoint; computed from the per-document logs by scripts/rescore_replication.py build. OLMo's own reported metric is not used.",
     "file": "DataDecide's in-loop c4_en-validation file: OLMo eval-data/perplexity/v3_small_gptneox20b/c4_en/val/part-0-00000.npy (https://olmo-data.org/eval-data/perplexity/v3_small_gptneox20b/c4_en/val/part-0-00000.npy, sha256 c37d6b115de9120bfaefe9ca6a20a310eb6738c20bc26abf469dcada66100ab4) with its part-0-00000.csv.gz metadata; 2,099 documents, 1,021,899 tokens, listed by id and text hash in replication_protocol/eval_set.jsonl",
     "eval_set": "replication_protocol/eval_set.jsonl",
     "eval_set_sha256": "a1b7131c058e0358d5983a08524c85c4c159b74c7bc08d73e5d21b0c7531a916"

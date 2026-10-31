@@ -1,15 +1,15 @@
 --- a/olmo/eval/per_document.py
 +++ b/olmo/eval/per_document.py
-@@ -0,0 +1,79 @@
-+"""Per-document loss logging for OLMo's in-loop perplexity evaluator (ASLA replication protocol v2.4).
+@@ -0,0 +1,86 @@
++"""Per-document loss logging for a complete, deterministic evaluation (ASLA replication protocol v2.5).
 +
-+Shipped as olmo/eval/per_document.py by olmo_per_document.patch. Evaluation instances are fixed chunks of
-+``chunk_size`` tokens of the evaluation memmap; the loss at position j of a chunk (j = 0 .. chunk_size - 2)
-+predicts the token at file position chunk_index * chunk_size + j + 1. Each predicted token is attributed to
-+the document whose [start, end) token span (from the evaluation file's part-0-00000.csv.gz metadata) contains
-+that position. Rows are (chunk, document): the chunk index, the document id, the summed natural-log loss and
-+the token count, so a rescore can drop chunks scored twice (across ranks) and any excluded documents.
-+Depends on numpy only.
++Shipped as olmo/eval/per_document.py by olmo_per_document.patch. The evaluation file (N tokens) is read as the
++virtual stream [EOS] + file, in windows of ``chunk_size`` tokens with stride ``chunk_size - 1``; window k starts
++at virtual position k * stride, and its loss at position j predicts file token ``offset + j`` with
++``offset = k * stride``, for j < min(stride, N - offset). So every file token is predicted exactly once, each
++with up to chunk_size - 1 tokens of preceding context. Each predicted token is attributed to the document whose
++[start, end) span (from the file's part-0-00000.csv.gz metadata) contains it; rows are (instance, document,
++summed natural-log loss, token count). Depends on numpy only.
 +"""
 +
 +from __future__ import annotations
@@ -23,7 +23,14 @@
 +
 +import numpy as np
 +
-+SCHEMA = "asla-per-document-v1"
++SCHEMA = "asla-per-document-v2"
++
++
++def complete_layout(n_tokens: int, chunk_size: int) -> List[Tuple[int, int]]:
++    """(offset, number of predicted tokens) for every window covering an n_tokens file."""
++
++    stride = chunk_size - 1
++    return [(k * stride, min(stride, n_tokens - k * stride)) for k in range(-(-n_tokens // stride))]
 +
 +
 +def load_doc_spans(metadata_csv_gz: Union[str, Path, bytes]) -> Tuple[np.ndarray, np.ndarray, List[str]]:
@@ -50,24 +57,24 @@
 +    def reset(self) -> None:
 +        self.rows = {}
 +
-+    def add(self, chunk_index: int, token_losses: np.ndarray, valid: np.ndarray) -> None:
-+        """token_losses[j] is the loss predicting file position chunk_index * chunk_size + j + 1."""
++    def add(self, instance: int, offset: int, token_losses: np.ndarray, valid: np.ndarray) -> None:
++        """token_losses[j] is the loss predicting file position offset + j; only valid positions are kept."""
 +
 +        loss = np.asarray(token_losses, dtype=np.float64).reshape(-1)
 +        ok = np.asarray(valid, dtype=bool).reshape(-1)
-+        pos = int(chunk_index) * self.chunk_size + 1 + np.arange(loss.size, dtype=np.int64)
++        pos = int(offset) + np.arange(loss.size, dtype=np.int64)
 +        doc = np.searchsorted(self.starts, pos, side="right") - 1
 +        inside = ok & (doc >= 0) & (pos < self.ends[np.clip(doc, 0, None)])
 +        for d in np.unique(doc[inside]):
 +            m = inside & (doc == d)
-+            key = (int(chunk_index), int(d))
-+            cur = self.rows.setdefault(key, [0.0, 0])
-+            cur[0] += float(loss[m].sum())
-+            cur[1] += int(m.sum())
++            key = (int(instance), int(d))
++            if key in self.rows:
++                raise ValueError(f"instance {instance} logged twice")
++            self.rows[key] = [float(loss[m].sum()), int(m.sum())]
 +
 +    def records(self) -> List[dict]:
 +        return [
-+            {"chunk": c, "doc": self.ids[d], "loss_sum": v[0], "tokens": v[1]}
++            {"instance": c, "doc": self.ids[d], "loss_sum": v[0], "tokens": v[1]}
 +            for (c, d), v in sorted(self.rows.items())
 +        ]
 +
@@ -79,39 +86,180 @@
 +            fh.write("\n".join(lines) + "\n")
 +
 +
-+__all__ = ["SCHEMA", "PerDocumentLog", "load_doc_spans"]
++__all__ = ["SCHEMA", "PerDocumentLog", "complete_layout", "load_doc_spans"]
+--- a/olmo/eval/complete_eval.py
++++ b/olmo/eval/complete_eval.py
+@@ -0,0 +1,118 @@
++"""Deterministic, complete perplexity evaluation for OLMo (ASLA replication protocol v2.5).
++
++Shipped as olmo/eval/complete_eval.py by olmo_per_document.patch. Each evaluation file is read in fixed order
++as overlapping windows (olmo/eval/per_document.py, complete_layout): no shuffling, no dropped chunks, and the
++trailing partial window is padded, with the padding masked out of the labels. The sampler gives rank r the
++instances r, r + W, r + 2W, ... of a list padded with fully masked dummy instances to a multiple of
++W x batch size, so every rank runs the same number of batches and every evaluation token is scored exactly
++once whatever the world size W.
++"""
++
++from __future__ import annotations
++
++from typing import Any, Dict, Iterator, List, Tuple
++
++import numpy as np
++import torch
++from torch.utils.data import DataLoader, Dataset, Sampler
++
++from ..config import DataConfig, TrainConfig
++from ..data.collator import DataCollator
++from ..torch_util import get_global_rank, get_world_size
++from ..util import file_size, get_bytes_range
++from .per_document import complete_layout
++
++
++class CompleteEvalDataset(Dataset):
++    def __init__(self, label_paths: List[Tuple[str, str]], chunk_size: int, pad_token_id: int, eos_token_id: int, dtype=np.uint16):
++        self.chunk_size, self.pad, self.eos, self.dtype = int(chunk_size), int(pad_token_id), int(eos_token_id), dtype
++        self.item_size = np.dtype(dtype).itemsize
++        self.items: List[Tuple[str, str, int, int, int, int]] = []
++        for label, path in label_paths:
++            n = file_size(path) // self.item_size
++            for k, (offset, n_pred) in enumerate(complete_layout(n, self.chunk_size)):
++                self.items.append((label, str(path), n, k, offset, n_pred))
++        self.first_label = label_paths[0][0]
++
++    def __len__(self) -> int:
++        return len(self.items)
++
++    def _read(self, path: str, start: int, stop: int) -> np.ndarray:
++        if stop <= start:
++            return np.zeros(0, dtype=self.dtype)
++        buf = get_bytes_range(path, start * self.item_size, (stop - start) * self.item_size)
++        return np.frombuffer(buf, dtype=self.dtype)
++
++    def instance(self, i: int) -> Dict[str, Any]:
++        label, path, n, k, offset, n_pred = self.items[i]
++        # the window is virtual positions [offset, offset + chunk) of [EOS] + file
++        if offset == 0:
++            toks = np.concatenate([[self.eos], self._read(path, 0, min(n, self.chunk_size - 1))])
++        else:
++            toks = self._read(path, offset - 1, min(n, offset - 1 + self.chunk_size))
++        ids = np.full(self.chunk_size, self.pad, dtype=np.int64)
++        ids[: toks.size] = toks
++        label_mask = np.zeros(self.chunk_size, dtype=bool)
++        label_mask[1 : 1 + n_pred] = True  # label position t is predicted by loss index t - 1 = file offset + t - 1
++        return {
++            "input_ids": torch.tensor(ids),
++            "label_mask": torch.tensor(label_mask),
++            "metadata": {"label": label, "instance": k, "predict_offset": offset, "dummy": False},
++        }
++
++    def dummy(self) -> Dict[str, Any]:
++        return {
++            "input_ids": torch.full((self.chunk_size,), self.pad, dtype=torch.long),
++            "label_mask": torch.zeros(self.chunk_size, dtype=torch.bool),
++            "metadata": {"label": self.first_label, "instance": -1, "predict_offset": -1, "dummy": True},
++        }
++
++
++class _Padded(Dataset):
++    def __init__(self, base: CompleteEvalDataset, total: int):
++        self.base, self.total = base, total
++
++    def __len__(self) -> int:
++        return self.total
++
++    def __getitem__(self, i: int) -> Dict[str, Any]:
++        return self.base.instance(i) if i < len(self.base) else self.base.dummy()
++
++
++class PaddedRankSampler(Sampler):
++    def __init__(self, n: int, world_size: int, rank: int, batch_size: int):
++        per_round = world_size * batch_size
++        self.total = -(-n // per_round) * per_round
++        self.world_size, self.rank = world_size, rank
++
++    def __iter__(self) -> Iterator[int]:
++        return iter(range(self.rank, self.total, self.world_size))
++
++    def __len__(self) -> int:
++        return self.total // self.world_size
++
++
++def build_complete_eval_dataloader(train_config: TrainConfig, data_config: DataConfig, batch_size: int) -> DataLoader:
++    if data_config.datasets:
++        label_paths = [(label, str(p)) for label in sorted(data_config.datasets) for p in data_config.datasets[label]]
++    else:
++        label_paths = [(str(p), str(p)) for p in (data_config.paths or [])]
++    base = CompleteEvalDataset(
++        label_paths,
++        train_config.model.max_sequence_length,
++        train_config.model.pad_token_id,
++        train_config.model.eos_token_id,
++        dtype=data_config.effective_memmap_dtype,
++    )
++    sampler = PaddedRankSampler(len(base), get_world_size(), get_global_rank(), batch_size)
++    return DataLoader(
++        _Padded(base, sampler.total),
++        batch_size=batch_size,
++        sampler=sampler,
++        collate_fn=DataCollator(pad_direction=data_config.pad_direction, pad_token_id=train_config.model.pad_token_id),
++        num_workers=data_config.num_workers,
++        drop_last=False,
++    )
++
++
++__all__ = ["CompleteEvalDataset", "PaddedRankSampler", "build_complete_eval_dataloader"]
 --- a/olmo/config.py
 +++ b/olmo/config.py
-@@ -619,6 +619,10 @@
+@@ -619,6 +619,12 @@
      data: DataConfig = field(default_factory=DataConfig)
      device_eval_batch_size: Optional[int] = None
      subset_num_batches: Optional[int] = None
++    complete_eval: bool = False
++    """ASLA v2.5: read the files in fixed order as overlapping windows, unshuffled, nothing dropped, padding masked."""
 +    per_document_log_dir: Optional[str] = None
-+    """ASLA v2.4: if set, write per-document summed loss and token counts for the labels in per_document_metadata."""
++    """ASLA v2.5: if set, write per-document summed loss and token counts for the labels in per_document_metadata."""
 +    per_document_metadata: Optional[Dict[str, str]] = None
-+    """ASLA v2.4: dataset label -> path of that memmap's document-span metadata (part-0-00000.csv.gz)."""
++    """ASLA v2.5: dataset label -> path of that memmap's document-span metadata (part-0-00000.csv.gz)."""
  
  
  class TruncationDirection(StrEnum):
---- a/olmo/data/memmap_dataset.py
-+++ b/olmo/data/memmap_dataset.py
-@@ -200,6 +200,8 @@
-         if self._include_instance_metadata:
-             metadata = self._metadata[memmap_index]
-             out["metadata"] = deepcopy(metadata)
-+            # ASLA v2.4: the chunk's index within its own memmap file, for per-document evaluation logs
-+            out["metadata"]["chunk_index"] = memmap_local_index
- 
-         if self._generate_attention_mask:
-             assert self._pad_token_id is not None
 --- a/olmo/eval/__init__.py
 +++ b/olmo/eval/__init__.py
-@@ -95,12 +95,24 @@
+@@ -78,12 +78,21 @@
+         return build_downstream_evaluator(train_config, eval_config, tokenizer, device)
+     elif eval_config.type == EvaluatorType.lm:
+         # Language modeling evaluation.
+-        eval_loader = build_eval_dataloader(
+-            train_config,
+-            eval_config.data,
+-            eval_config.device_eval_batch_size or train_config.device_eval_batch_size,
+-        )
++        if eval_config.complete_eval:
++            from .complete_eval import build_complete_eval_dataloader
+ 
++            eval_loader = build_complete_eval_dataloader(
++                train_config,
++                eval_config.data,
++                eval_config.device_eval_batch_size or train_config.device_eval_batch_size,
++            )
++        else:
++            eval_loader = build_eval_dataloader(
++                train_config,
++                eval_config.data,
++                eval_config.device_eval_batch_size or train_config.device_eval_batch_size,
++            )
++
+         def make_metric():
+             return MeanMetric(nan_strategy="error").to(device)
+ 
+@@ -95,12 +104,26 @@
          else:
              raise OLMoConfigurationError("One of DataConfig.paths or DataConfig.datasets is required")
  
 +        per_document = None
 +        if eval_config.per_document_log_dir and eval_config.per_document_metadata:
++            if not eval_config.complete_eval:
++                raise OLMoConfigurationError("per-document logging needs complete_eval=True")
 +            from ..util import file_size, get_bytes_range
 +            from .per_document import PerDocumentLog, load_doc_spans
 +
@@ -137,7 +285,7 @@
      eval_loader: DataLoader
      eval_metric: Union[Metric, Dict[str, Metric]]
      subset_num_batches: Optional[int] = None
-+    per_document: Optional[Dict[str, Any]] = None  # ASLA v2.4: label -> PerDocumentLog
++    per_document: Optional[Dict[str, Any]] = None  # ASLA v2.5: label -> PerDocumentLog
 +    per_document_log_dir: Optional[str] = None
  
 +    def write_per_document_logs(self, step: int, rank: int) -> None:
@@ -152,22 +300,25 @@
          if isinstance(self.eval_metric, Metric):
              self.eval_metric.reset()
          else:
-@@ -75,11 +85,19 @@
+@@ -75,11 +85,22 @@
              self.eval_metric.update(batch, logits)  # type: ignore
          elif self.type == EvaluatorType.lm:
              # Metric(s) = cross entropy loss
 -            for metadata, instance_loss in zip(batch["metadata"], ce_loss):
 +            token_loss, token_valid = batch.get("token_ce_loss"), batch.get("token_valid")
 +            for i, (metadata, instance_loss) in enumerate(zip(batch["metadata"], ce_loss)):
++                if metadata.get("dummy"):
++                    continue  # ASLA v2.5: padding instances are not part of the evaluation set
                  if isinstance(self.eval_metric, dict):
                      metric = self.eval_metric[metadata["label"]]
                  else:
                      metric = self.eval_metric
                  metric.update(instance_loss)
 +                log = (self.per_document or {}).get(metadata.get("label"))
-+                if log is not None and token_loss is not None:
++                if log is not None and token_loss is not None and "predict_offset" in metadata:
 +                    log.add(
-+                        metadata["chunk_index"],
++                        metadata["instance"],
++                        metadata["predict_offset"],
 +                        token_loss[i].detach().float().cpu().numpy(),
 +                        token_valid[i].detach().cpu().numpy(),
 +                    )
@@ -179,7 +330,7 @@
      def eval_batch(self, batch: Dict[str, Any]) -> Tuple[torch.Tensor, torch.Tensor]:
          with torch.autocast("cuda", enabled=True, dtype=self.cfg.autocast_precision):
              ce_loss, _, logits = self.model_forward(batch, loss_reduction="none")
-+        # ASLA v2.4: keep per-token losses for per-document evaluation logs; the reported metric is unchanged
++        # ASLA v2.5: keep per-token losses for per-document evaluation logs; the reported metric is unchanged
 +        batch["token_ce_loss"] = ce_loss.detach()
 +        batch["token_valid"] = self.get_labels(batch) != -100
          return ce_loss.mean(dim=-1), logits
@@ -195,22 +346,37 @@
  
 --- a/scripts/ladder.py
 +++ b/scripts/ladder.py
-@@ -270,6 +270,18 @@
+@@ -268,6 +268,33 @@
+         eval_interval=save_interval,
+         device_eval_batch_size=device_batch_size,
          evaluators=[
++            # ASLA v2.5: complete, deterministic c4_en evaluation with per-document logs, when ASLA_PER_DOCUMENT_LOG_DIR is set
++            *(
++                [
++                    EvaluatorConfig(
++                        label="asla-c4_en-complete",
++                        complete_eval=True,
++                        subset_num_batches=-1,
++                        per_document_log_dir=os.environ["ASLA_PER_DOCUMENT_LOG_DIR"],
++                        per_document_metadata={
++                            "c4_en-validation": os.environ.get(
++                                "ASLA_C4_EVAL_METADATA",
++                                f"{permanent_data_prefix}/eval-data/perplexity/v3_small_gptneox20b/c4_en/val/part-0-00000.csv.gz",
++                            )
++                        },
++                        data=DataConfig(
++                            drop_last=False,
++                            datasets={
++                                "c4_en-validation": [
++                                    f"{permanent_data_prefix}/eval-data/perplexity/v3_small_gptneox20b/c4_en/val/part-0-00000.npy"
++                                ]
++                            },
++                        ),
++                    )
++                ]
++                if os.environ.get("ASLA_PER_DOCUMENT_LOG_DIR")
++                else []
++            ),
              EvaluatorConfig(
                  label="all-small-ppl-validation",
-+                # ASLA v2.4: per-document c4_en logs when ASLA_PER_DOCUMENT_LOG_DIR is set
-+                per_document_log_dir=os.environ.get("ASLA_PER_DOCUMENT_LOG_DIR"),
-+                per_document_metadata=(
-+                    {
-+                        "c4_en-validation": os.environ.get(
-+                            "ASLA_C4_EVAL_METADATA",
-+                            f"{permanent_data_prefix}/eval-data/perplexity/v3_small_gptneox20b/c4_en/val/part-0-00000.csv.gz",
-+                        )
-+                    }
-+                    if os.environ.get("ASLA_PER_DOCUMENT_LOG_DIR")
-+                    else None
-+                ),
                  data=DataConfig(
-                     drop_last=True,
-                     datasets={

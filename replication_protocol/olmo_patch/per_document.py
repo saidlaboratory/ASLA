@@ -1,12 +1,12 @@
-"""Per-document loss logging for OLMo's in-loop perplexity evaluator (ASLA replication protocol v2.4).
+"""Per-document loss logging for a complete, deterministic evaluation (ASLA replication protocol v2.5).
 
-Shipped as olmo/eval/per_document.py by olmo_per_document.patch. Evaluation instances are fixed chunks of
-``chunk_size`` tokens of the evaluation memmap; the loss at position j of a chunk (j = 0 .. chunk_size - 2)
-predicts the token at file position chunk_index * chunk_size + j + 1. Each predicted token is attributed to
-the document whose [start, end) token span (from the evaluation file's part-0-00000.csv.gz metadata) contains
-that position. Rows are (chunk, document): the chunk index, the document id, the summed natural-log loss and
-the token count, so a rescore can drop chunks scored twice (across ranks) and any excluded documents.
-Depends on numpy only.
+Shipped as olmo/eval/per_document.py by olmo_per_document.patch. The evaluation file (N tokens) is read as the
+virtual stream [EOS] + file, in windows of ``chunk_size`` tokens with stride ``chunk_size - 1``; window k starts
+at virtual position k * stride, and its loss at position j predicts file token ``offset + j`` with
+``offset = k * stride``, for j < min(stride, N - offset). So every file token is predicted exactly once, each
+with up to chunk_size - 1 tokens of preceding context. Each predicted token is attributed to the document whose
+[start, end) span (from the file's part-0-00000.csv.gz metadata) contains it; rows are (instance, document,
+summed natural-log loss, token count). Depends on numpy only.
 """
 
 from __future__ import annotations
@@ -20,7 +20,14 @@ from typing import Dict, List, Sequence, Tuple, Union
 
 import numpy as np
 
-SCHEMA = "asla-per-document-v1"
+SCHEMA = "asla-per-document-v2"
+
+
+def complete_layout(n_tokens: int, chunk_size: int) -> List[Tuple[int, int]]:
+    """(offset, number of predicted tokens) for every window covering an n_tokens file."""
+
+    stride = chunk_size - 1
+    return [(k * stride, min(stride, n_tokens - k * stride)) for k in range(-(-n_tokens // stride))]
 
 
 def load_doc_spans(metadata_csv_gz: Union[str, Path, bytes]) -> Tuple[np.ndarray, np.ndarray, List[str]]:
@@ -47,24 +54,24 @@ class PerDocumentLog:
     def reset(self) -> None:
         self.rows = {}
 
-    def add(self, chunk_index: int, token_losses: np.ndarray, valid: np.ndarray) -> None:
-        """token_losses[j] is the loss predicting file position chunk_index * chunk_size + j + 1."""
+    def add(self, instance: int, offset: int, token_losses: np.ndarray, valid: np.ndarray) -> None:
+        """token_losses[j] is the loss predicting file position offset + j; only valid positions are kept."""
 
         loss = np.asarray(token_losses, dtype=np.float64).reshape(-1)
         ok = np.asarray(valid, dtype=bool).reshape(-1)
-        pos = int(chunk_index) * self.chunk_size + 1 + np.arange(loss.size, dtype=np.int64)
+        pos = int(offset) + np.arange(loss.size, dtype=np.int64)
         doc = np.searchsorted(self.starts, pos, side="right") - 1
         inside = ok & (doc >= 0) & (pos < self.ends[np.clip(doc, 0, None)])
         for d in np.unique(doc[inside]):
             m = inside & (doc == d)
-            key = (int(chunk_index), int(d))
-            cur = self.rows.setdefault(key, [0.0, 0])
-            cur[0] += float(loss[m].sum())
-            cur[1] += int(m.sum())
+            key = (int(instance), int(d))
+            if key in self.rows:
+                raise ValueError(f"instance {instance} logged twice")
+            self.rows[key] = [float(loss[m].sum()), int(m.sum())]
 
     def records(self) -> List[dict]:
         return [
-            {"chunk": c, "doc": self.ids[d], "loss_sum": v[0], "tokens": v[1]}
+            {"instance": c, "doc": self.ids[d], "loss_sum": v[0], "tokens": v[1]}
             for (c, d), v in sorted(self.rows.items())
         ]
 
@@ -76,4 +83,4 @@ class PerDocumentLog:
             fh.write("\n".join(lines) + "\n")
 
 
-__all__ = ["SCHEMA", "PerDocumentLog", "load_doc_spans"]
+__all__ = ["SCHEMA", "PerDocumentLog", "complete_layout", "load_doc_spans"]

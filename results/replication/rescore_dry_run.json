@@ -1,27 +1,33 @@
 {
   "note": "synthetic per-document logs through the evaluator patch's accumulator; nothing trained",
   "runs": 240,
-  "scored_chunks_per_run": [
-    490,
-    498
+  "windows_per_run": 500,
+  "simulated_world_sizes": [
+    1,
+    2,
+    4,
+    8,
+    16
   ],
+  "runs_with_masked_dummies": 164,
+  "every_run_complete": true,
   "empty_exclusion_reproduces_primary_bitwise": true,
   "csv_round_trip_bitwise": true,
-  "max_rel_diff_vs_evaluator_mean_of_chunk_means": 3.774758283725532e-15,
+  "max_rel_diff_vs_independent_full_set": 4.773959005888173e-15,
   "planted": {
-    "chunk": 24,
     "eval_ids": [
-      "d317d4f5-2971-4b3f-98d2-649a7699a700",
-      "b7d320e7-58bf-45ed-a85d-52b64674ba80"
+      "6d6abc45-8179-4b06-ad7f-52cdc4f56621",
+      "bbab0f13-c08c-46ed-ade8-3ac21aa99261"
     ],
-    "runs_that_scored_them": 216,
-    "runs_changed": 216,
-    "changed_exactly_the_runs_that_scored_them": true,
-    "unchanged_runs_bitwise_identical": true,
-    "max_rel_diff_vs_independent_recomputation": 3.3306690738754696e-15,
-    "mean_shift_contaminated_recipe": 0.0012298783635128485,
-    "mean_shift_other_scoring_runs": -0.00025329102585641694
+    "runs_that_scored_them": 240,
+    "runs_changed": 240,
+    "all_runs_changed_since_all_score_every_document": true,
+    "max_rel_diff_vs_independent_recomputation": 4.9960036108132044e-15,
+    "mean_shift_contaminated_recipe": 0.059820948244388106,
+    "mean_shift_other_runs": 0.01244009786830144
   },
+  "rescore_refuses_missing_window": "incomplete evaluation: 1 of 500 windows missing, e.g. [0]",
+  "rescore_refuses_window_on_two_ranks": "instance 0 logged on more than one rank",
   "v2_3_rule": {
     "triggered": [
       "cc100_en"
@@ -31,11 +37,11 @@
   },
   "entry_point": {
     "primary_verdict": "replicates: positive, interval excludes zero",
-    "primary_estimate": 30.3174408740751,
+    "primary_estimate": 30.3260033218997,
     "primary_runs_match_logs_exactly": true,
     "sensitivity": {
       "corpus:cc100_en": {
-        "estimate": 30.307516770020158,
+        "estimate": 30.39179601078904,
         "verdict": "replicates: positive, interval excludes zero"
       }
     },

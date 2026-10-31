@@ -35,14 +35,18 @@
     "per_document_logging": {
       "finding": "the OLMo DataDecide branch (commit 7094aab0448096f4994cae881edbd629d6c2f3de) cannot log per-document loss: Trainer.eval_batch reduces the per-token loss to a per-instance mean, the Evaluator keeps only a torchmetrics MeanMetric per dataset label, and evaluation instances are fixed chunks of the concatenated memmap with no document boundaries in their metadata; there is no config option for it",
       "patch": "replication_protocol/olmo_patch/olmo_per_document.patch",
-      "patch_sha256": "4d71d612a0834752c7cf4f9cfd9670a5a688a34cfd9b64a891a63c971a21a74f",
+      "patch_sha256": "eed487a46a6448b7f4476625448a582bf0d27d6a4ae36daa3e24d3c2063a878d",
       "patch_module": "replication_protocol/olmo_patch/per_document.py (added as olmo/eval/per_document.py)",
-      "patch_module_sha256": "7bd9ff72334303246267da9d7595a7b24fc0fc1dedb438719ca2f177eafd5287",
+      "patch_module_sha256": "3821b216004cdc1fb2e18d33439d24586ad40bb7ed2ad83908fa50c4b0ff21f1",
       "applies_to": "allenai/OLMo@7094aab0448096f4994cae881edbd629d6c2f3de (git apply)",
-      "what_it_changes": "MemMapDataset adds each instance's chunk index to its metadata; Trainer.eval_batch keeps the per-token loss and label mask on the batch (the reported metric is unchanged); the Evaluator attributes each predicted token to its evaluation document by the c4_en metadata spans and writes (chunk, document, summed loss, token count) rows per rank after every evaluation; EvaluatorConfig gains per_document_log_dir and per_document_metadata; scripts/ladder.py enables it for c4_en-validation when ASLA_PER_DOCUMENT_LOG_DIR is set",
+      "what_it_changes": "adds a separate evaluator, asla-c4_en-complete, when ASLA_PER_DOCUMENT_LOG_DIR is set (the existing evaluators are unchanged): it reads the c4_en file in fixed order as windows of 2048 tokens with stride 2047 over [EOS] + file, unshuffled and with nothing dropped, so every file token is predicted exactly once; the trailing partial window is padded with masked positions, and the instance list is padded with fully masked dummy instances to a multiple of world size x batch size, dealt rank r the instances r, r + W, ...; Trainer.eval_batch keeps the per-token loss and label mask on the batch; the evaluator skips dummies and writes (instance, document, summed loss, token count) rows per rank after every evaluation; EvaluatorConfig gains complete_eval, per_document_log_dir and per_document_metadata",
       "log_files": "<ASLA_PER_DOCUMENT_LOG_DIR>/c4_en-validation_step<step>_rank<rank>.jsonl.gz; the rescore reads step = the run's final step",
       "metadata": "eval-data/perplexity/v3_small_gptneox20b/c4_en/val/part-0-00000.csv.gz next to the evaluation file (override with ASLA_C4_EVAL_METADATA)",
-      "primary_metric_from_logs": "the runs table's c4_en_bits_per_token is built from these logs by scripts/rescore_replication.py build with no exclusion (sum of loss over sum of tokens over all scored documents, / ln 2); the in-loop eval/c4_en-validation/CrossEntropyLoss is a cross-check"
+      "primary_metric_from_logs": "the primary c4_en_bits_per_token is built from these logs over the full evaluation set by scripts/rescore_replication.py build (sum of loss over sum of tokens over all 2,099 documents, / ln 2), which refuses unless every evaluation token was scored exactly once; OLMo's own reported eval/*/CrossEntropyLoss metrics are not used",
+      "patch_complete_eval": "replication_protocol/olmo_patch/complete_eval.py (added as olmo/eval/complete_eval.py)",
+      "patch_complete_eval_sha256": "570f29a489abca7c84dd7d388f1539619ee23fa7fa712e6b7958c86c575eda75",
+      "finding_v2_5": "OLMo's eval loader shuffles (DistributedSampler shuffle=True, seeded) and drops instances (drop_last=True over the 11 concatenated perplexity sets), and it reads non-overlapping 2048-token chunks, so each chunk's first token and the file's trailing 1,995 tokens are never predicted: OLMo's own c4_en metric covers a run- and world-size-dependent subset of the evaluation file",
+      "smoke_test": "replication_protocol/smoke_test/olmo_eval_smoke.py and compare_smoke.py; result in results/replication/olmo_smoke_test.json"
     }
   },
   "seeds": [
@@ -57,7 +61,7 @@
   },
   "seed_controls": "initialisation and data order (TrainConfig.seed, data.seed unset). Use the DataDecide branch: at commit 55d4871 the seed is hard-coded to 6198.",
   "evaluation": {
-    "metric": "c4_en_bits_per_token: mean next-token cross-entropy on held-out C4-en validation, in nats divided by ln 2, at the final checkpoint",
+    "metric": "c4_en_bits_per_token: summed next-token cross-entropy (nats) over every token of the 2,099 evaluation documents, each predicted exactly once by the complete deterministic evaluator (windows of 2048, stride 2047, over [EOS] + file), divided by the token count (1,021,899) and by ln 2, at the final checkpoint; computed from the per-document logs by scripts/rescore_replication.py build. OLMo's own reported metric is not used.",
     "data": "DataDecide's in-loop c4_en-validation file: OLMo eval-data/perplexity/v3_small_gptneox20b/c4_en/val/part-0-00000.npy (https://olmo-data.org/eval-data/perplexity/v3_small_gptneox20b/c4_en/val/part-0-00000.npy, sha256 c37d6b115de9120bfaefe9ca6a20a310eb6738c20bc26abf469dcada66100ab4) with its part-0-00000.csv.gz metadata; 2,099 documents, 1,021,899 tokens, listed by id and text hash in replication_protocol/eval_set.jsonl",
     "unverified": "none for the evaluation set itself, which is the in-loop file pinned by sha256; its document-for-document relation to other releases is provenance only (see in_loop_file_check)",
     "decontamination": "two passes before tokenization (scripts/decontaminate.py): (1) exact: remove a training document whose SHA-256 of NFC-normalized text equals a sha256_nfc in replication_protocol/eval_set.jsonl; (2) 13-gram: remove a remaining training document that shares at least one 13-gram with any evaluation document, over text normalized by NFC, casefolding and replacing every non-letter, non-digit character with a space, then split on whitespace; 13-grams are matched by 64-bit blake2b hash against replication_protocol/eval_13grams.npz. Per corpus, the report gives the documents removed by each pass and the evaluation ids each pass hit",

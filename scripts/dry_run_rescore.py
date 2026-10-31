@@ -1,19 +1,20 @@
-"""Dry run of per-document logging and the decontamination-sensitivity rescore (protocol v2.4). Trains nothing.
+"""Dry run of per-document logging and the decontamination-sensitivity rescore (protocol v2.5). Trains nothing.
 
 Synthetic per-document logs for all 240 protocol runs are written through the evaluator patch's own
-accumulator (replication_protocol/olmo_patch/per_document.py), on the real evaluation file's layout: the 2,099
-document spans of replication_protocol/eval_set.jsonl, 2048-token chunks, 498 scored chunks. Run-level losses
-follow one simulated world of the frozen design (scripts/dry_run_replication.py, world 0). Each run is scored on
-a simulated world size, drops a few chunks (DistributedSampler drop_last) and scores one chunk on two ranks.
+accumulator (replication_protocol/olmo_patch/per_document.py) on the deterministic, complete loader's layout:
+the 2,099 document spans of replication_protocol/eval_set.jsonl, windows of 2048 tokens with stride 2047 over
+[EOS] + file (500 windows, every token predicted once), dealt to ranks as the padded rank sampler does (rank r
+gets r, r + W, ...; masked dummies never logged), at a simulated world size per run. Run-level losses follow one
+simulated world of the frozen design (scripts/dry_run_replication.py, world 0).
 
 Checks:
 1. rescoring with an empty exclusion list reproduces the primary bits per token exactly (bitwise, also after the
-   CSV round trip), and agrees with the evaluator's mean of per-chunk means to rounding;
-2. a planted exclusion (documents wholly inside one chunk, which one recipe's runs never score, and which one
-   contaminated recipe's runs find easy) changes exactly the runs that scored those documents, by the amount an
-   independent recomputation from the raw token losses gives, and leaves the others bitwise unchanged;
-3. the v2.3 exclusion rule, applied to synthetic decontamination reports, recovers the planted documents;
-4. the entry point's sensitivity mode runs, and refuses when one run's logs are missing.
+   CSV round trip), and equals an independent computation from the raw token losses to rounding;
+2. a planted exclusion (two documents, which one contaminated recipe's runs find easy) changes every run, since
+   every run scores every document, by the amount an independent recomputation gives;
+3. the rescore refuses logs with a window missing and logs with a window on two ranks;
+4. the v2.3 exclusion rule, applied to synthetic decontamination reports, recovers the planted documents;
+5. the entry point's sensitivity mode runs, and refuses when one run's logs are missing.
 
 Run: nice -n 19 .venv/bin/python scripts/dry_run_rescore.py LOG_DIR
 """
@@ -42,7 +43,6 @@ OUT = REPO / "results" / "replication" / "rescore_dry_run.json"
 CHUNK = 2048
 SEED = 20261031
 CONTAMINATED = "cc100_en"  # its runs find the planted documents easy
-NEVER_SCORES = "txt360"  # its runs drop the planted chunk
 
 
 def per_document_module():
@@ -57,19 +57,7 @@ def eval_layout():
     starts = np.array([r["token_start"] for r in rows])
     ends = np.array([r["token_end"] for r in rows])
     ids = [r["id"] for r in rows]
-    n_chunks = int(ends.max()) // CHUNK
-    return starts, ends, ids, n_chunks
-
-
-def planted_chunk(starts, ends, n_chunks) -> tuple[int, list[int]]:
-    """The first chunk holding at least two documents wholly inside its predicted positions."""
-
-    for c in range(n_chunks):
-        lo, hi = c * CHUNK + 1, (c + 1) * CHUNK
-        inside = [i for i in range(len(starts)) if starts[i] >= lo and ends[i] <= hi]
-        if len(inside) >= 2:
-            return c, inside
-    raise RuntimeError("no chunk with two whole documents")
+    return starts, ends, ids, int(ends.max())
 
 
 def run_bpb_targets() -> dict[str, float]:
@@ -79,41 +67,36 @@ def run_bpb_targets() -> dict[str, float]:
     return {f"{r}__{s}__seed{k}": float(b) for r, s, k, b in zip(table["recipe"], table["size"], table["seed"], table["c4_en_bits_per_token"])}
 
 
-def synth_logs(logs: Path, pd_mod, starts, ends, ids, n_chunks, planted_c, planted_docs) -> dict:
+def synth_logs(logs: Path, pd_mod, starts, ends, ids, n_tokens, planted_docs) -> dict:
     runs = rs.protocol_runs()
     target = run_bpb_targets()
     rng = np.random.default_rng(SEED)
     doc_effect = rng.normal(0.0, 0.15, len(ids))
-    pos_all = np.arange(1, n_chunks * CHUNK, dtype=np.int64)
-    doc_of = np.searchsorted(starts, pos_all, side="right") - 1
+    doc_of = np.searchsorted(starts, np.arange(n_tokens, dtype=np.int64), side="right") - 1
+    layout = pd_mod.complete_layout(n_tokens, CHUNK)
     raw = {}
     for rid, cfg in runs.items():
         b = target[rid] * math.log(2)
-        tok = b * (1.0 + doc_effect[doc_of]) * np.exp(0.1 * rng.standard_normal(doc_of.size))
+        tok = b * (1.0 + doc_effect[doc_of]) * np.exp(0.1 * rng.standard_normal(n_tokens))
         if cfg["recipe"] == CONTAMINATED:
             tok[np.isin(doc_of, planted_docs)] *= 0.3  # memorized evaluation text
-        losses = np.zeros((n_chunks, CHUNK - 1))
-        for c in range(n_chunks):
-            losses[c] = tok[c * CHUNK : (c + 1) * CHUNK - 1]  # position c*CHUNK+1+j -> index c*CHUNK+j
         world = int(rng.choice([1, 2, 4, 8, 16]))
-        dropped = set(rng.choice(n_chunks, size=int(rng.integers(0, 8)), replace=False).tolist())
-        if cfg["recipe"] == NEVER_SCORES:
-            dropped.add(planted_c)
-        else:
-            dropped.discard(planted_c)
-        scored = [c for c in range(n_chunks) if c not in dropped]
-        dup = int(rng.choice(scored))
-        per_rank = {k: [] for k in range(world + 1)}
-        for i, c in enumerate(scored):
-            per_rank[i % world].append(c)
-        per_rank[world].append(dup)  # the same chunk scored again on an extra rank
+        batch = int(rng.choice([1, 2, 3]))
+        total = -(-len(layout) // (world * batch)) * world * batch  # the padded rank sampler's length
         step = cfg["train"]["steps"]
-        for rank, chunks in per_rank.items():
+        for rank in range(world):
             log = pd_mod.PerDocumentLog(starts, ends, ids, CHUNK)
-            for c in chunks:
-                log.add(c, losses[c], np.ones(CHUNK - 1, dtype=bool))
+            for k in range(rank, total, world):
+                if k >= len(layout):
+                    continue  # a masked dummy instance: never logged
+                off, n_pred = layout[k]
+                loss = np.zeros(CHUNK - 1)
+                valid = np.zeros(CHUNK - 1, dtype=bool)
+                loss[:n_pred] = tok[off : off + n_pred]
+                valid[:n_pred] = True
+                log.add(k, off, loss, valid)
             log.write(logs / rid / f"{rs.LABEL}_step{step}_rank{rank}.jsonl.gz", rs.LABEL, step, rank)
-        raw[rid] = {"losses": losses, "scored": scored}
+        raw[rid] = {"tok": tok, "world": world, "batch": batch, "dummies": total - len(layout)}
     return raw
 
 
@@ -122,10 +105,10 @@ def main(log_dir: str) -> dict:
     if logs.exists():
         shutil.rmtree(logs)
     pd_mod = per_document_module()
-    starts, ends, ids, n_chunks = eval_layout()
-    pc, pdocs = planted_chunk(starts, ends, n_chunks)
+    starts, ends, ids, n_tokens = eval_layout()
+    pdocs = [10, 11]
     planted_ids = [ids[i] for i in pdocs]
-    raw = synth_logs(logs, pd_mod, starts, ends, ids, n_chunks, pc, pdocs)
+    raw = synth_logs(logs, pd_mod, starts, ends, ids, n_tokens, pdocs)
     runs = rs.protocol_runs()
     run_ids = list(runs)
 
@@ -135,32 +118,59 @@ def main(log_dir: str) -> dict:
     csv_path = logs / "runs.csv"
     primary.to_csv(csv_path, index=False, float_format="%.17g")
     reread = pd.read_csv(csv_path, float_precision="round_trip")
-    evaluator_style = np.array(
-        [np.mean([raw[r]["losses"][c].mean() for c in raw[r]["scored"]]) / math.log(2) for r in run_ids]
-    )
-    rel = np.abs(primary["c4_en_bits_per_token"].to_numpy() / evaluator_style - 1)
+    independent_full = np.array([raw[r]["tok"].sum() / n_tokens / math.log(2) for r in run_ids])
+    rel = np.abs(primary["c4_en_bits_per_token"].to_numpy() / independent_full - 1)
 
     # 2. planted exclusion
     excl = set(planted_ids)
     sens = rs.build_table(logs, run_ids, excl)
     changed = primary["c4_en_bits_per_token"].to_numpy() != sens["c4_en_bits_per_token"].to_numpy()
-    scored_planted = np.array([pc in raw[r]["scored"] for r in run_ids])
-    pos_all = np.arange(1, n_chunks * CHUNK, dtype=np.int64)
-    doc_of = np.searchsorted(starts, pos_all, side="right") - 1
+    doc_of = np.searchsorted(starts, np.arange(n_tokens, dtype=np.int64), side="right") - 1
     keep_tok = ~np.isin(doc_of, pdocs)
-    indep = []
-    for r in run_ids:
-        tot = n = 0.0
-        for c in raw[r]["scored"]:
-            m = keep_tok[c * CHUNK : (c + 1) * CHUNK - 1]
-            tot += raw[r]["losses"][c][m].sum()
-            n += m.sum()
-        indep.append(tot / n / math.log(2))
+    indep = [raw[r]["tok"][keep_tok].sum() / keep_tok.sum() / math.log(2) for r in run_ids]
     indep_rel = np.abs(sens["c4_en_bits_per_token"].to_numpy() / np.array(indep) - 1)
     contaminated = np.array([runs[r]["recipe"] == CONTAMINATED for r in run_ids])
     shift = sens["c4_en_bits_per_token"].to_numpy() - primary["c4_en_bits_per_token"].to_numpy()
 
-    # 3. the v2.3 rule on synthetic decontamination reports
+    # 3. the rescore refuses incomplete or double-scored logs
+    victim = run_ids[1]
+    step_v = runs[victim]["train"]["steps"]
+    files_v = rs.log_files(logs, victim, step_v)
+    import gzip as _gz
+
+    def refuses(edit) -> str | None:
+        tmp = logs.parent / (logs.name + "_edit")
+        if tmp.exists():
+            shutil.rmtree(tmp)
+        shutil.copytree(logs / victim, tmp)
+        edit(tmp)
+        try:
+            rs.score_dir(tmp, step_v)
+        except ValueError as e:
+            return str(e)
+        finally:
+            shutil.rmtree(tmp)
+        return None
+
+    def drop_window(d: Path) -> None:
+        f = d / files_v[0].name
+        lines = _gz.open(f, "rt", encoding="utf-8").read().splitlines()
+        first = json.loads(lines[1])["instance"]
+        keep = [lines[0]] + [l for l in lines[1:] if json.loads(l)["instance"] != first]
+        with _gz.open(f, "wt", encoding="utf-8") as fh:
+            fh.write("\n".join(keep) + "\n")
+
+    def duplicate_window(d: Path) -> None:
+        lines = _gz.open(d / files_v[0].name, "rt", encoding="utf-8").read().splitlines()
+        hdr = json.loads(lines[0])
+        hdr["rank"] = 99
+        with _gz.open(d / f"{rs.LABEL}_step{step_v}_rank99.jsonl.gz", "wt", encoding="utf-8") as fh:
+            fh.write("\n".join([json.dumps(hdr), lines[1]]) + "\n")
+
+    refuse_missing = refuses(drop_window)
+    refuse_duplicate = refuses(duplicate_window)
+
+    # 4. the v2.3 rule on synthetic decontamination reports
     reps = []
     for j, rec in enumerate(sorted({c["recipe"] for c in runs.values()})):
         if rec == CONTAMINATED:
@@ -174,7 +184,7 @@ def main(log_dir: str) -> dict:
     excl_path = logs / "exclusions.json"
     excl_path.write_text(json.dumps(rule, indent=2), encoding="utf-8")
 
-    # 4. entry point: sensitivity mode, and refusal on missing logs
+    # 5. entry point: sensitivity mode, and refusal on missing logs
     entry = importlib.import_module("scripts.analyze_replication")
     with contextlib.redirect_stdout(io.StringIO()):
         res = entry.main([str(csv_path), "--no-stability", "--per-document-logs", str(logs), "--sensitivity-exclude", str(excl_path)])
@@ -195,21 +205,24 @@ def main(log_dir: str) -> dict:
     out = {
         "note": "synthetic per-document logs through the evaluator patch's accumulator; nothing trained",
         "runs": len(run_ids),
-        "scored_chunks_per_run": [int(min(len(raw[r]["scored"]) for r in run_ids)), int(max(len(raw[r]["scored"]) for r in run_ids))],
+        "windows_per_run": len(pd_mod.complete_layout(n_tokens, CHUNK)),
+        "simulated_world_sizes": sorted({raw[r]["world"] for r in run_ids}),
+        "runs_with_masked_dummies": int(sum(raw[r]["dummies"] > 0 for r in run_ids)),
+        "every_run_complete": True,  # build_table ran check_complete on every run without error
         "empty_exclusion_reproduces_primary_bitwise": bool((primary["c4_en_bits_per_token"].to_numpy() == again["c4_en_bits_per_token"].to_numpy()).all()),
         "csv_round_trip_bitwise": bool((reread["c4_en_bits_per_token"].to_numpy() == primary["c4_en_bits_per_token"].to_numpy()).all()),
-        "max_rel_diff_vs_evaluator_mean_of_chunk_means": float(rel.max()),
+        "max_rel_diff_vs_independent_full_set": float(rel.max()),
         "planted": {
-            "chunk": pc,
             "eval_ids": planted_ids,
-            "runs_that_scored_them": int(scored_planted.sum()),
+            "runs_that_scored_them": len(run_ids),
             "runs_changed": int(changed.sum()),
-            "changed_exactly_the_runs_that_scored_them": bool((changed == scored_planted).all()),
-            "unchanged_runs_bitwise_identical": bool((~changed[~scored_planted]).all()),
+            "all_runs_changed_since_all_score_every_document": bool(changed.all()),
             "max_rel_diff_vs_independent_recomputation": float(indep_rel.max()),
-            "mean_shift_contaminated_recipe": float(shift[contaminated & scored_planted].mean()),
-            "mean_shift_other_scoring_runs": float(shift[~contaminated & scored_planted].mean()),
+            "mean_shift_contaminated_recipe": float(shift[contaminated].mean()),
+            "mean_shift_other_runs": float(shift[~contaminated].mean()),
         },
+        "rescore_refuses_missing_window": refuse_missing,
+        "rescore_refuses_window_on_two_ranks": refuse_duplicate,
         "v2_3_rule": {
             "triggered": sorted(rule["corpora"]),
             "median_13gram_share": rule["median_13gram_share"],

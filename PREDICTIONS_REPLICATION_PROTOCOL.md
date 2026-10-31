@@ -1,6 +1,6 @@
 # Pre-registration: the replication protocol
 
-Protocol v2.4, frozen on 2026-10-31, before any training. Nothing has been trained. The v2 to v2.4 changes are listed at the
+Protocol v2.5, frozen on 2026-10-31, before any training. Nothing has been trained. The v2 to v2.5 changes are listed at the
 end of this file. The machine-readable copy is
 `replication_protocol/preregistration.json`. If it and this file disagree, the JSON governs.
 
@@ -361,3 +361,75 @@ synthetic logs for all 240 runs.
 ### Pins
 
 The entry point now also pins the rescore script and both patch files.
+
+## v2.5 changes (2026-10-31): deterministic, complete evaluation, tested against OLMo
+
+### Primary metric (redefined)
+
+The primary `c4_en_bits_per_token` is the summed next-token cross-entropy over every token of the 2,099
+evaluation documents (1,021,899 tokens). Each token is predicted exactly once, by the complete deterministic
+evaluator below, at the final checkpoint. The sum is divided by the token count and by ln 2.
+
+- It is computed from the per-document logs over the full set by `scripts/rescore_replication.py build`.
+- That script refuses unless every window is present exactly once and every document's full token count is
+  logged.
+- **OLMo's own reported metric is not used.** OLMo's eval loader shuffles and drops instances
+  (`DistributedSampler`, `drop_last=True`, over the 11 concatenated perplexity sets). It also reads
+  non-overlapping chunks, so each chunk's first token and the file's trailing 1,995 tokens are never predicted.
+  Its metric therefore covers a subset of the file that depends on the run and the world size.
+
+### Loader change (in the pinned patch)
+
+The patch adds a separate evaluator, `asla-c4_en-complete`, enabled by `ASLA_PER_DOCUMENT_LOG_DIR`. The existing
+evaluators are untouched.
+
+- **Windows.** It reads the file in fixed order, as windows of 2048 tokens with stride 2047 over [EOS] + file.
+  There is no shuffling and nothing is dropped. Every token is predicted exactly once, with up to 2047 tokens of
+  context. There are 500 windows.
+- **Padding.** The trailing partial window is padded with masked positions. The instance list is padded with
+  fully masked dummy instances to a multiple of world size × batch size.
+- **Ranks.** Rank r gets instances r, r + W, ... . Every rank therefore runs the same number of batches, as
+  FSDP requires, and the scored token set does not depend on world size.
+- **Logs.** Rows are now (instance, document, summed loss, token count), in schema v2.
+
+New file: `replication_protocol/olmo_patch/complete_eval.py`.
+
+### Smoke test against OLMo
+
+The smoke test (`replication_protocol/smoke_test/`, result in `results/replication/olmo_smoke_test.json`) was
+set up as follows:
+
+- **Code.** allenai/OLMo@7094aab, with the patch applied cleanly, in a separate environment with torch 2.3.1 on
+  CPU.
+- **Run.** Evaluation only, with no training, on a tiny randomly initialized model (2 layers, width 64), using the
+  gloo backend at world sizes 1 and 2.
+- **Data.** The real evaluation file.
+- **Configurations.** Two:
+  - window 2048, batch 1;
+  - window 256, batch 5, which exercises the masked dummies at both world sizes.
+
+Results, in both configurations:
+
+- Both world sizes scored the identical set of (instance, document, token count) rows.
+- Every evaluation token was scored exactly once.
+- The per-document logs agree exactly.
+- `scripts/rescore_replication.py`'s `score_dir` on those logs reproduces, exactly, the bits per token computed
+  independently from the raw per-token losses.
+- A one-row change of 1e-6 is detected, so the agreement is not a comparison artifact.
+
+Because OLMo runs on CPU, the conditional GPU gating step is not added.
+
+### Dry run
+
+`scripts/dry_run_rescore.py` now uses the deterministic loader's layout and rank dealing. Results:
+
+- Every run is complete, and 164 of the 240 have masked dummies.
+- An empty exclusion reproduces the primary bitwise.
+- The planted exclusion changes all 240 runs, since every run scores every document, by the independently
+  recomputed amount.
+- The rescore refuses a missing window, and a window logged on two ranks.
+- The entry point refuses when logs are missing.
+
+### Pins
+
+The entry point also pins `complete_eval.py` and the two smoke-test scripts.

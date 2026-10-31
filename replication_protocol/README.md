@@ -1,4 +1,4 @@
-# Replication protocol (v2.4, frozen 2026-10-31)
+# Replication protocol (v2.5, frozen 2026-10-31)
 
 Pre-registration: `../PREDICTIONS_REPLICATION_PROTOCOL.md` (machine-readable: `preregistration.json`).
 
@@ -9,13 +9,14 @@ Pre-registration: `../PREDICTIONS_REPLICATION_PROTOCOL.md` (machine-readable: `p
 | `configs/` | One config per run (240), written by `scripts/make_replication_configs.py` |
 | `eval_set.jsonl` | The evaluation set (DataDecide's in-loop c4_en-validation file): 2,099 document ids with text hashes, used for decontamination |
 | `eval_13grams.npz` | 64-bit hashes of the evaluation set's normalized 13-grams, each with its evaluation document, used by the 13-gram decontamination pass |
-| `olmo_patch/` | The pinned OLMo evaluator patch (`olmo_per_document.patch`, applies to allenai/OLMo@7094aab) and the module it adds (`per_document.py`), which log per-document summed loss and token counts |
+| `olmo_patch/` | The pinned OLMo evaluator patch (`olmo_per_document.patch`, applies to allenai/OLMo@7094aab) and the modules it adds: `complete_eval.py` (a complete, deterministic c4_en evaluator) and `per_document.py` (per-document summed loss and token counts) |
+| `smoke_test/` | `olmo_eval_smoke.py`, which runs the patched evaluator on a tiny model on CPU with gloo, and `compare_smoke.py`, which checks the result across world sizes and against an independent reference (result: `results/replication/olmo_smoke_test.json`) |
 | `budget.json` | Runs, total tokens and FLOPs, GPU-hours |
 | `MANIFEST.sha256` | SHA-256 of every protocol file at the freeze |
 
 ## After training
 
-Apply `olmo_patch/olmo_per_document.patch` to OLMo@7094aab and set each run's `ASLA_PER_DOCUMENT_LOG_DIR` as its config says. Build the runs table from the logs with `scripts/rescore_replication.py build --logs DIR --out runs.csv`. Otherwise, collect one row per run into a CSV with the columns `recipe, size, seed, params_n, tokens_d, c4_en_bits_per_token`.
+Apply `olmo_patch/olmo_per_document.patch` to OLMo@7094aab and set each run's `ASLA_PER_DOCUMENT_LOG_DIR` as its config says. The primary bits per token comes from those logs over the full evaluation set. OLMo's own reported metric is not used. Build the runs table from the logs with `scripts/rescore_replication.py build --logs DIR --out runs.csv`. Otherwise, collect one row per run into a CSV with the columns `recipe, size, seed, params_n, tokens_d, c4_en_bits_per_token`.
 Use the recipe ids from `recipes.json`, the size labels and seeds from `ladder.json`, and bits per token on the
 evaluation set in `ladder.json` at the final checkpoint.
 

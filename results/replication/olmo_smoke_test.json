@@ -1,0 +1,142 @@
+{
+  "note": "evaluation only on CPU, no training; a tiny randomly initialized OLMo (2 layers, d_model 64, 4 heads, vocab 50280/50304, RoPE) with fixed weights shared by all runs; torch.distributed gloo backend; the real in-loop c4_en-validation file (1,021,899 tokens, 2,099 documents)",
+  "olmo": "allenai/OLMo@7094aab0448096f4994cae881edbd629d6c2f3de, with replication_protocol/olmo_patch/olmo_per_document.patch applied (git apply, clean)",
+  "patch_sha256": "eed487a46a6448b7f4476625448a582bf0d27d6a4ae36daa3e24d3c2063a878d",
+  "environment": {
+    "python": "3.11.14 (separate venv)",
+    "packages": [
+      "torch==2.3.1",
+      "numpy==1.26.4",
+      "ai2-olmo-core==0.1.0",
+      "torchmetrics==1.4.3",
+      "datasets==2.21.0",
+      "pyarrow==16.1.0",
+      "transformers==4.45.2",
+      "tokenizers==0.20.3",
+      "wandb==0.31.0"
+    ],
+    "undeclared_dependencies_found": "olmo.util imports datasets and olmo.eval imports torchmetrics, which are only in OLMo's optional 'train' extra; the latest datasets/pyarrow need NumPy 2, incompatible with torch<2.4, so datasets<3 and pyarrow<17 were pinned"
+  },
+  "path_exercised": "olmo.eval.build_evaluators (patched) -> CompleteEvalDataset + PaddedRankSampler -> DataCollator -> olmo.train.Trainer.eval() (patched eval_batch, Evaluator.update_metrics, write_per_document_logs) under DDP",
+  "configurations": {
+    "A": {
+      "reference": {
+        "tokens": 1021899,
+        "every_token_predicted_once": true,
+        "bits_per_token": 15.631210796157696
+      },
+      "world_size_1": {
+        "rank_files": 1,
+        "chunk_size": 2048,
+        "instances_logged": 500,
+        "padded_total": 500,
+        "real_instances": 500,
+        "masked_dummy_instances": 0,
+        "batches_per_rank": [
+          500
+        ],
+        "every_token_scored_once": true,
+        "completeness_error": null,
+        "rescore_bits_per_token": 15.631210796157696,
+        "rescore_rel_diff_vs_reference": 0.0,
+        "max_rel_diff_per_document_vs_reference": 0.0,
+        "per_document_token_counts_match_reference": true,
+        "olmo_reported_metrics": {
+          "eval/c4_en-validation/CrossEntropyLoss": 10.817781448364258,
+          "eval/c4_en-validation/Perplexity": 49900.2578125
+        },
+        "wall_seconds": 39.55,
+        "max_rss_bytes_launcher": 1323499520
+      },
+      "world_size_2": {
+        "rank_files": 2,
+        "chunk_size": 2048,
+        "instances_logged": 500,
+        "padded_total": 500,
+        "real_instances": 500,
+        "masked_dummy_instances": 0,
+        "batches_per_rank": [
+          250,
+          250
+        ],
+        "every_token_scored_once": true,
+        "completeness_error": null,
+        "rescore_bits_per_token": 15.631210796157696,
+        "rescore_rel_diff_vs_reference": 0.0,
+        "max_rel_diff_per_document_vs_reference": 0.0,
+        "per_document_token_counts_match_reference": true,
+        "olmo_reported_metrics": {
+          "eval/c4_en-validation/CrossEntropyLoss": 10.817782402038574,
+          "eval/c4_en-validation/Perplexity": 49900.3046875
+        },
+        "wall_seconds": 35.48,
+        "max_rss_bytes_launcher": 1260421120
+      },
+      "identical_token_set_across_world_sizes": true,
+      "max_rel_diff_per_row_ws1_vs_ws2": 0.0,
+      "max_abs_diff_bits_per_token_ws1_vs_ws2": 0.0,
+      "description": "protocol window: chunk 2048, batch 1"
+    },
+    "B": {
+      "reference": {
+        "tokens": 1021899,
+        "every_token_predicted_once": true,
+        "bits_per_token": 15.631009967661813
+      },
+      "world_size_1": {
+        "rank_files": 1,
+        "chunk_size": 256,
+        "instances_logged": 4008,
+        "padded_total": 4010,
+        "real_instances": 4008,
+        "masked_dummy_instances": 2,
+        "batches_per_rank": [
+          802
+        ],
+        "every_token_scored_once": true,
+        "completeness_error": null,
+        "rescore_bits_per_token": 15.631009967661813,
+        "rescore_rel_diff_vs_reference": 0.0,
+        "max_rel_diff_per_document_vs_reference": 0.0,
+        "per_document_token_counts_match_reference": true,
+        "olmo_reported_metrics": {
+          "eval/c4_en-validation/CrossEntropyLoss": 10.833101272583008,
+          "eval/c4_en-validation/Perplexity": 50670.60546875
+        },
+        "wall_seconds": 36.83,
+        "max_rss_bytes_launcher": 1362640896
+      },
+      "world_size_2": {
+        "rank_files": 2,
+        "chunk_size": 256,
+        "instances_logged": 4008,
+        "padded_total": 4010,
+        "real_instances": 4008,
+        "masked_dummy_instances": 2,
+        "batches_per_rank": [
+          401,
+          401
+        ],
+        "every_token_scored_once": true,
+        "completeness_error": null,
+        "rescore_bits_per_token": 15.631009967661813,
+        "rescore_rel_diff_vs_reference": 0.0,
+        "max_rel_diff_per_document_vs_reference": 0.0,
+        "per_document_token_counts_match_reference": true,
+        "olmo_reported_metrics": {
+          "eval/c4_en-validation/CrossEntropyLoss": 10.833100318908691,
+          "eval/c4_en-validation/Perplexity": 50670.55859375
+        },
+        "wall_seconds": 35.22,
+        "max_rss_bytes_launcher": 1197228032
+      },
+      "identical_token_set_across_world_sizes": true,
+      "max_rel_diff_per_row_ws1_vs_ws2": 0.0,
+      "max_abs_diff_bits_per_token_ws1_vs_ws2": 0.0,
+      "description": "chunk 256, batch 5: exercises the masked trailing window and masked dummy instances at both world sizes"
+    }
+  },
+  "comparison_sensitivity_check": "altering one logged row by 1e-6 relative changes the rescored bits per token (by 5.2e-11 relative), so the exact agreements above are not a comparison artifact; per-document mean losses vary with SD 0.014 nats under the random-init model",
+  "olmo_reported_metric_note": "OLMo's own eval/c4_en-validation/CrossEntropyLoss for this evaluator averages per-instance means, counting masked padding as zero loss, and differs between world sizes at the 1e-7 level (A: 10.817781 vs 10.817782 nats); the full-set value from the logs is 15.631211 bits = 10.834730 nats per token; the protocol does not use OLMo's metric",
+  "passed": true
+}

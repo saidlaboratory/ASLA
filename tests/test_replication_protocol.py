@@ -149,38 +149,63 @@ def _per_document_module():
     return mod
 
 
+def test_complete_layout_predicts_every_token_once():
+    mod = _per_document_module()
+    for n, chunk in ((1021899, 2048), (1021899, 256), (10, 4), (9, 4), (1, 4)):
+        layout = mod.complete_layout(n, chunk)
+        seen = np.zeros(n, dtype=int)
+        for off, k in layout:
+            assert 0 < k <= chunk - 1
+            seen[off : off + k] += 1
+        assert (seen == 1).all()
+    assert len(mod.complete_layout(1021899, 2048)) == 500
+
+
 def test_per_document_log_attributes_predicted_tokens_to_documents(tmp_path):
     mod = _per_document_module()
-    # three documents over two 8-token chunks; position 0 is never predicted
+    # three documents tiling 16 tokens; windows of 8 tokens, stride 7: offsets 0, 7, 14
     log = mod.PerDocumentLog(np.array([0, 5, 11]), np.array([5, 11, 16]), ["a", "b", "c"], 8)
-    log.add(0, np.arange(1.0, 8.0), np.ones(7, bool))  # predicts positions 1..7
-    log.add(1, np.full(7, 10.0), np.array([1, 1, 1, 0, 1, 1, 1], bool))  # positions 9..15, one masked
-    rec = {(r["chunk"], r["doc"]): (r["loss_sum"], r["tokens"]) for r in log.records()}
-    assert rec == {(0, "a"): (1 + 2 + 3 + 4, 4), (0, "b"): (5 + 6 + 7, 3), (1, "b"): (20.0, 2), (1, "c"): (40.0, 4)}
+    log.add(0, 0, np.arange(1.0, 8.0), np.ones(7, bool))  # predicts file positions 0..6
+    log.add(1, 7, np.full(7, 10.0), np.array([1, 1, 1, 0, 1, 1, 1], bool))  # positions 7..13, one masked
+    log.add(2, 14, np.array([5.0, 5.0, 0, 0, 0, 0, 0]), np.array([1, 1, 0, 0, 0, 0, 0], bool))  # 14..15, padding masked
+    rec = {(r["instance"], r["doc"]): (r["loss_sum"], r["tokens"]) for r in log.records()}
+    assert rec == {
+        (0, "a"): (1 + 2 + 3 + 4 + 5, 5),
+        (0, "b"): (6 + 7, 2),
+        (1, "b"): (30.0, 3),
+        (1, "c"): (30.0, 3),
+        (2, "c"): (10.0, 2),
+    }
+    with pytest.raises(ValueError, match="logged twice"):
+        log.add(0, 0, np.ones(7), np.ones(7, bool))
     log.write(tmp_path / "x.jsonl.gz", "c4_en-validation", 5, 0)
 
 
-def test_rescore_dedupes_ranks_and_excludes(tmp_path):
+def test_rescore_requires_complete_single_scoring(tmp_path):
+    import math
     import sys
 
     sys.path.insert(0, str(REPO))
     from scripts import rescore_replication as rs
 
     mod = _per_document_module()
-    for rank, chunks in ((0, [0]), (1, [1, 0])):  # chunk 0 scored twice
-        log = mod.PerDocumentLog(np.array([0, 5, 11]), np.array([5, 11, 16]), ["a", "b", "c"], 8)
-        for c in chunks:
-            log.add(c, np.full(7, 2.0 + c), np.ones(7, bool))
+    starts, ends, ids = np.array([0, 5, 11]), np.array([5, 11, 16]), ["a", "b", "c"]
+    spans = {"a": 5, "b": 6, "c": 5}
+    layout = mod.complete_layout(16, 8)  # offsets 0, 7, 14
+    for rank in (0, 1):  # world size 2: rank 0 gets windows 0 and 2, rank 1 gets window 1
+        log = mod.PerDocumentLog(starts, ends, ids, 8)
+        for k in range(rank, len(layout), 2):
+            off, n = layout[k]
+            loss, valid = np.zeros(7), np.zeros(7, bool)
+            loss[:n], valid[:n] = 2.0 + k, True
+            log.add(k, off, loss, valid)
         log.write(tmp_path / "run" / f"{rs.LABEL}_step9_rank{rank}.jsonl.gz", rs.LABEL, 9, rank)
-    files = rs.log_files(tmp_path, "run", 9)
-    tot = rs.doc_totals(rs.read_rows(files, 9))
-    # chunk 0 (loss 2.0) predicts positions 1..7: a gets 1..4, b gets 5..7; chunk 1 (loss 3.0) predicts 9..15:
-    # b gets 9..10, c gets 11..15; the second copy of chunk 0 (rank 1) is ignored
-    assert tot == {"a": (8.0, 4), "b": (6.0 + 6.0, 5), "c": (15.0, 5)}
-    import math
-
-    assert rs.bits_per_token(tot) == (8.0 + 12.0 + 15.0) / 14 / math.log(2)
-    assert rs.bits_per_token(tot, {"b"}) == (8.0 + 15.0) / 9 / math.log(2)
+    bits = rs.score_dir(tmp_path / "run", 9, spans=spans)
+    want = (2.0 * 7 + 3.0 * 7 + 4.0 * 2) / 16 / math.log(2)
+    assert bits == pytest.approx(want, rel=1e-15)
+    assert rs.score_dir(tmp_path / "run", 9, {"b"}, spans=spans) == pytest.approx((2.0 * 5 + 3.0 * 3 + 4.0 * 2) / 10 / math.log(2), rel=1e-15)
+    with pytest.raises(ValueError, match="incomplete evaluation"):
+        rs.score_dir(tmp_path / "run", 9, spans={**spans, "d": 3})
 
 
 def test_configs_require_the_pinned_evaluator_patch():
@@ -190,12 +215,13 @@ def test_configs_require_the_pinned_evaluator_patch():
     pdl = ladder["shared"]["per_document_logging"]
     assert hashlib.sha256((REPO / pdl["patch"]).read_bytes()).hexdigest() == pdl["patch_sha256"]
     patch = (REPO / pdl["patch"]).read_text(encoding="utf-8")
-    for f in ("olmo/eval/per_document.py", "olmo/eval/evaluator.py", "olmo/train.py", "olmo/data/memmap_dataset.py", "olmo/config.py", "olmo/eval/__init__.py", "scripts/ladder.py"):
+    for f in ("olmo/eval/per_document.py", "olmo/eval/complete_eval.py", "olmo/eval/evaluator.py", "olmo/train.py", "olmo/config.py", "olmo/eval/__init__.py", "scripts/ladder.py"):
         assert f"+++ b/{f}" in patch
     for f in (PROTOCOL / "configs").glob("*.json"):
         c = json.loads(f.read_text(encoding="utf-8"))
         p = c["per_document_logging"]
         assert p["required"] and p["patch_sha256"] == pdl["patch_sha256"]
+        assert p["patch_complete_eval_sha256"] == pdl["patch_complete_eval_sha256"] and "complete_eval=True" in p["evaluator"]
         assert p["env"]["ASLA_PER_DOCUMENT_LOG_DIR"].endswith(c["run_id"])
         assert f"step{c['train']['steps']}_" in p["final_log"]
 
@@ -211,3 +237,13 @@ def test_sensitivity_refuses_without_logs(tmp_path):
     (tmp_path / "ex.json").write_text("[]", encoding="utf-8")
     with pytest.raises(SystemExit, match="refusing the sensitivity analysis"):
         entry.sensitivity(runs, tmp_path / "no_logs", tmp_path / "ex.json")
+
+
+def test_smoke_test_passed_against_olmo():
+    r = json.loads((REPO / "results" / "replication" / "olmo_smoke_test.json").read_text(encoding="utf-8"))
+    assert r["passed"]
+    for c in r["configurations"].values():
+        assert c["identical_token_set_across_world_sizes"]
+        for ws in (1, 2):
+            assert c[f"world_size_{ws}"]["every_token_scored_once"]
+            assert c[f"world_size_{ws}"]["rescore_rel_diff_vs_reference"] == 0.0

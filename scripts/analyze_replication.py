@@ -42,18 +42,21 @@ PINNED = {
     "asla/analysis/target_scoring.py": "5b4edb56df30c5c1daf1e7291376dd46b7b76d15f42564705e1ed9f01f6c9dae",
     "asla/models.py": "52b913d526615728d343418fd5cad9f6ad01f309051e48466d2a73a1991f17e0",
 }
-# protocol v2.4 (2026-10-31): the frozen protocol files; any edit after the freeze is refused like a code change
+# protocol v2.5 (2026-10-31): the frozen protocol files; any edit after the freeze is refused like a code change
 PROTOCOL_PINS = {
     "replication_protocol/recipes.json": "aec1b7ec06b89e942faa685028e4fb5101e86e02ab4822921795de8b69d62199",
-    "replication_protocol/ladder.json": "3dc16ad942f997b5da698f4cca589347bba4b437332b2856740d852ba3659de4",
-    "replication_protocol/preregistration.json": "0ff05826528364d8175bbca7ee62faa5022d456bb25ba75a61ed76a65f5fb661",
+    "replication_protocol/ladder.json": "78a2bb7993db9acf5758b12c6527a322b5c45913c680c465e9f3dfc165ce8e37",
+    "replication_protocol/preregistration.json": "3dd91b6c3e0a467a70ae6b64a79ea8a3eff7945a1e7b8688fb45d1d5940327f7",
 }
 PROTOCOL = REPO / "replication_protocol"
-# protocol v2.4: the rescore and the evaluator patch are frozen with the protocol
+# protocol v2.4/v2.5: the rescore, the evaluator patch and its smoke test are frozen with the protocol
 PROTOCOL_PINS.update({
-    "scripts/rescore_replication.py": "5edfb7cc45ac1f2f3bc3704c5d3d212ae59605db4a68addc6961cbc5f6d956ca",
-    "replication_protocol/olmo_patch/olmo_per_document.patch": "4d71d612a0834752c7cf4f9cfd9670a5a688a34cfd9b64a891a63c971a21a74f",
-    "replication_protocol/olmo_patch/per_document.py": "7bd9ff72334303246267da9d7595a7b24fc0fc1dedb438719ca2f177eafd5287",
+    "scripts/rescore_replication.py": "2063798c03a31e9d26ac17ee7b7a25bbb9d49baecb059da217110684d247181f",
+    "replication_protocol/olmo_patch/olmo_per_document.patch": "eed487a46a6448b7f4476625448a582bf0d27d6a4ae36daa3e24d3c2063a878d",
+    "replication_protocol/olmo_patch/per_document.py": "3821b216004cdc1fb2e18d33439d24586ad40bb7ed2ad83908fa50c4b0ff21f1",
+    "replication_protocol/olmo_patch/complete_eval.py": "570f29a489abca7c84dd7d388f1539619ee23fa7fa712e6b7958c86c575eda75",
+    "replication_protocol/smoke_test/olmo_eval_smoke.py": "438652af6d2acf9cce0556e559e035b8256618df3b108f1d7687d79d3305a462",
+    "replication_protocol/smoke_test/compare_smoke.py": "5a6cf6ecf731b87b81fc5e403b5e205680da990970afc7dd7468f4f83d78e06b",
 })
 RUN_COLUMNS = ("recipe", "size", "seed", "params_n", "tokens_d", "c4_en_bits_per_token")
 Z = 1.959963984540054
@@ -264,7 +267,7 @@ def main(argv: list[str] | None = None) -> dict:
         res["numerical_stability"] = stability(frame, res)
     res["pinned_sha256"] = pins
     res["preregistration"] = "PREDICTIONS_REPLICATION_PROTOCOL.md"
-    res["protocol_version"] = "v2.4"
+    res["protocol_version"] = "v2.5"
     text = json.dumps(res, indent=2) + "\n"
     if a.out:
         a.out.write_text(text, encoding="utf-8")

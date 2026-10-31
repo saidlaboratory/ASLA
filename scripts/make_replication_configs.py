@@ -68,6 +68,8 @@ def configs() -> list[dict]:
                             "patch": sh["per_document_logging"]["patch"],
                             "patch_sha256": sh["per_document_logging"]["patch_sha256"],
                             "patch_module_sha256": sh["per_document_logging"]["patch_module_sha256"],
+                            "patch_complete_eval_sha256": sh["per_document_logging"]["patch_complete_eval_sha256"],
+                            "evaluator": "asla-c4_en-complete (complete_eval=True: fixed order, no shuffling, nothing dropped, padding masked)",
                             "applies_to": sh["per_document_logging"]["applies_to"],
                             "env": {"ASLA_PER_DOCUMENT_LOG_DIR": f"<per_document_logs>/{r['id']}__{s['size']}__seed{seed}"},
                             "final_log": f"<per_document_logs>/{r['id']}__{s['size']}__seed{seed}/c4_en-validation_step{s['steps']}_rank<rank>.jsonl.gz",
