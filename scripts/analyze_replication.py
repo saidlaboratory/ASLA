@@ -31,6 +31,12 @@ PINNED = {
     "asla/analysis/target_scoring.py": "5b4edb56df30c5c1daf1e7291376dd46b7b76d15f42564705e1ed9f01f6c9dae",
     "asla/models.py": "52b913d526615728d343418fd5cad9f6ad01f309051e48466d2a73a1991f17e0",
 }
+# protocol v2 (2026-10-31): the frozen protocol files; any edit after the freeze is refused like a code change
+PROTOCOL_PINS = {
+    "replication_protocol/recipes.json": "c64f1599a84306f93317fff493cbab86a77f3158547e2df03674eedec2e83d3d",
+    "replication_protocol/ladder.json": "0d4956521d51d9461a01b54cce765459dcf585b5e17923c75edece8f7b367f9b",
+    "replication_protocol/preregistration.json": "6c0c482d8e7de3276e43d474558b4451dcefd9ba14b58d43818359db77ff1f53",
+}
 PROTOCOL = REPO / "replication_protocol"
 RUN_COLUMNS = ("recipe", "size", "seed", "params_n", "tokens_d", "c4_en_bits_per_token")
 Z = 1.959963984540054
@@ -41,13 +47,13 @@ ADMIT_SHARE = 0.5
 
 def check_pins() -> dict[str, str]:
     bad = {}
-    for rel, want in PINNED.items():
+    for rel, want in {**PINNED, **PROTOCOL_PINS}.items():
         got = hashlib.sha256((REPO / rel).read_bytes()).hexdigest()
         if got != want:
             bad[rel] = got
     if bad:
-        raise SystemExit(f"frozen analysis code changed; refusing to run: {sorted(bad)}")
-    return dict(PINNED)
+        raise SystemExit(f"frozen analysis code or protocol changed; refusing to run: {sorted(bad)}")
+    return {**PINNED, **PROTOCOL_PINS}
 
 
 def load_runs(path: Path, allow_incomplete: bool = False) -> tuple[pd.DataFrame, dict]:
@@ -143,6 +149,7 @@ def main(argv: list[str] | None = None) -> dict:
     res["completeness"] = completeness
     res["pinned_sha256"] = pins
     res["preregistration"] = "PREDICTIONS_REPLICATION_PROTOCOL.md"
+    res["protocol_version"] = "v2"
     text = json.dumps(res, indent=2) + "\n"
     if a.out:
         a.out.write_text(text, encoding="utf-8")

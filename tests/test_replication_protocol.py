@@ -19,6 +19,11 @@ def test_selection_is_ten_eligible_corpora_none_from_datadecide():
     banned = {"allenai/c4", "mlfoundations/dclm-baseline-1.0", "allenai/dolma", "tiiuae/falcon-refinedweb", "HuggingFaceFW/fineweb-edu"}
     assert not banned & {s["hf_id"] for s in rec["selected"]}
     assert all(s["revision_sha"] for s in rec["selected"])
+    # v2: one RedPajama family member, at least three ordered reserves, all eligible and not selected
+    assert sum("RedPajama" in s["hf_id"] for s in rec["selected"]) <= 1
+    assert len(rec["reserves"]) >= 3
+    assert {r["hf_id"] for r in rec["reserves"]} <= eligible
+    assert not {r["hf_id"] for r in rec["reserves"]} & {s["hf_id"] for s in rec["selected"]}
 
 
 def test_configs_cover_the_design_and_match_datadecide_compute():

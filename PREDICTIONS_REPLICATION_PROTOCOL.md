@@ -1,6 +1,7 @@
 # Pre-registration: the replication protocol
 
-Fixed on 2026-10-31, before any training. Nothing has been trained. The machine-readable copy is
+Protocol v2, frozen on 2026-10-31, before any training. Nothing has been trained. The v2 changes are listed at the
+end of this file. The machine-readable copy is
 `replication_protocol/preregistration.json`. If it and this file disagree, the JSON governs.
 
 ## Design
@@ -38,12 +39,18 @@ The settings are:
 
 ### Evaluation
 
-The evaluation metric is C4-en bits per token at the final checkpoint, on Paloma's `c4_en` validation split.
-It is the same set for every run. Exact duplicates of Paloma `c4_en` documents are removed from every training
-corpus.
+The evaluation metric is C4-en bits per token at the final checkpoint, on DataDecide's in-loop `c4_en` validation
+file. It is the same set for every run. Exact duplicates of its documents, and of Paloma `c4_en`, are removed from
+every training corpus.
 
-One point is unverified: whether DataDecide's in-loop C4 file is exactly this split. Every replication run uses
-Paloma, so the comparison within the replication does not depend on it.
+**C4 file check (v2):**
+
+- All 2,099 documents of DataDecide's in-loop `c4_en-validation` file (public at olmo-data.org, SHA-256
+  c37d6b11...) are C4-en validation documents: 2,097 byte-identical and 2 identical after Unicode NFC.
+- Its metadata names Paloma `v3_small` c4_en/val source files.
+- Document-for-document identity with HF Paloma is unverified, because Paloma is gated.
+- Either set may be used once identity is confirmed. Otherwise the in-loop file is used, so that every run shares
+  DataDecide's own evaluation set.
 
 ## Recipe selection rule
 
@@ -70,26 +77,33 @@ are taken.
 
 ### Candidates
 
-Twenty-seven candidates were checked against the HF API on 2026-10-31. Ten are eligible, so all ten are selected
-and there are no reserves:
+Fifty-five candidates were checked against the HF API and dataset cards on 2026-10-31. The search covered:
+
+- corpora known as public LM-pretraining corpora;
+- the HF API listing of English text-generation datasets in each size category above 100M rows, top 100 by
+  downloads.
+
+Thirteen are eligible. The ten with the smallest keys are selected:
 
 | Recipe | Corpus |
 |---|---|
 | madlad_400_en | MADLAD-400 en |
 | comma_v0_1 | Comma v0.1 training set |
 | open_license_corpus | Open License Corpus |
+| txt360 | TxT360 (IFM/TxT360) |
 | finepdfs | FinePDFs eng_Latn |
 | redpajama_v2 | RedPajama-V2 en |
+| mint_1t_html | MINT-1T HTML, text only |
 | hplt_v2_en | HPLT 2.0 eng_Latn |
-| txt360 | TxT360 |
-| matrix_cc_en | Matrix cc_en |
-| redpajama_1t | RedPajama-1T |
-| common_corpus | Common Corpus English |
+| omnicorpus_cc | OmniCorpus-CC, text only |
+| cc100_en | CC-100 en |
 
-Each corpus is pinned to its HF revision SHA.
+The reserves, in replacement order, are matrix_cc_en, obelics and common_corpus. Each corpus is pinned to its HF
+revision SHA.
 
-If a selected corpus becomes unavailable before training, the replication runs with the rest. Power is then
-recomputed with the frozen simulator before training, and both facts are recorded.
+If a selected corpus is unavailable or fails processing before training, it is replaced by the first unused
+reserve. The replacement is recorded as a deviation, and power is recomputed with the frozen simulator before
+training.
 
 ## Analysis (frozen)
 
@@ -123,21 +137,28 @@ The slope is positive and its interval, estimate ± 1.96 SE, excludes zero. The 
 - **contradicts:** the interval lies below zero;
 - **no test:** no target is admitted.
 
-Power under the validated simulator is 0.91 for random candidates and 0.97 for fixed candidates.
+Power under the validated simulator, on the exact 6ND grid (v2 dry run, 150 worlds), is 0.85 ± 0.03 for random
+candidates. v1 reported 0.91 random and 0.97 fixed on a rounded grid.
 
 ## Secondary: magnitude
 
 | Quantity | Value |
 |---|---|
-| Predicted slope | +21.8 points per decade |
-| Monte Carlo interval | 21.0 to 22.7 |
-| Range across recipe draws | +10.8 to +31.7 |
+| Predicted slope | +21.2 points per decade |
+| Monte Carlo interval | 20.3 to 22.1 |
+| Range across recipe draws | +8.2 to +31.9 |
 | Curve-implied value | +11.0 (not the prediction) |
 
+These are v2 values: the simulator on the exact 6ND grid, 150 worlds. v1 had +21.8, 21.0 to 22.7, and +10.8 to
++31.7.
+
 This prediction assumes the new recipes resemble DataDecide's 25. That means they are drawn from the same
-distribution of power-law parameters and recipe-specific misfit as the 25. Three selected corpora are
-openly licensed multi-domain mixtures and differ most from DataDecide's web-heavy recipes: Comma, Common Corpus
-and the Open License Corpus. A magnitude outside the range is reported as evidence against that assumption, not
+distribution of power-law parameters and recipe-specific misfit as the 25. Four selected corpora fit
+that assumption least:
+
+- Comma and the Open License Corpus are openly licensed multi-domain mixtures, which differ most from
+  DataDecide's web-heavy recipes;
+- MINT-1T HTML and OmniCorpus-CC are interleaved multimodal web corpora, of which only the text is used. A magnitude outside the range is reported as evidence against that assumption, not
 against the sign. Magnitude is not part of the pass criterion.
 
 ## What the outcomes would mean
@@ -150,10 +171,10 @@ training setup.
 
 ### Inconclusive
 
-The simulator expects this in 9% (the spec's 150 worlds) to 14% (the dry run's 150 worlds) of cases even when the effect is real at the predicted size. On its own,
+The v2 dry run expects this in 15% of cases (150 worlds) even when the effect is real at the predicted size. On its own,
 an inconclusive result does not refute the claim. Two follow-ups apply:
 
-- If the estimate is positive but small, below +10.8, it suggests the effect is weaker on these recipes than on
+- If the estimate is positive but small, below +8.2, it suggests the effect is weaker on these recipes than on
   DataDecide's.
 - Before any follow-up design is chosen, power is recomputed at the observed magnitude, and that recomputation is
   reported.
@@ -179,3 +200,21 @@ be pre-registered separately.
 
 `scripts/dry_run_replication.py` runs the full pipeline (configs, runs table, analysis entry) on simulator
 outputs. It writes `results/replication/protocol_dry_run.json`. Dry runs train nothing.
+
+## v2 changes (2026-10-31)
+
+- **Simulator compute.** The simulator uses exact log10(6ND) compute, matching the entry point. The dry run was
+  rerun, and the power and magnitude figures above are its values.
+- **Release families.** RedPajama-V2 and RedPajama-1T are one release family under E6. The salted crc32 rule keeps
+  RedPajama-V2. The same within-family rule is applied to every family found.
+- **Candidate search.** The search was extended under the same six conditions, from 27 to 55 candidates. There
+  are 13 eligible and 3 reserves, and the replacement order is fixed above. The selection changes accordingly:
+  - in: MINT-1T HTML, OmniCorpus-CC, CC-100;
+  - moved to reserves: Matrix, Common Corpus;
+  - dropped: RedPajama-1T.
+- **C4 evaluation file.** It was checked by content against C4-en validation, as recorded above.
+- **Within-regime secondary.** The conditional within-regime secondary is not added. Config steps do not
+  contribute (PREDICTIONS_TASK_CONFIG_STEPS.md, outcome O1), and the slope would not be estimable on this ladder
+  anyway.
+- **Pins.** The analysis entry point pins the five frozen modules (unchanged) and, new in v2, `recipes.json`,
+  `ladder.json` and `preregistration.json`. `replication_protocol/MANIFEST.sha256` lists every protocol file.

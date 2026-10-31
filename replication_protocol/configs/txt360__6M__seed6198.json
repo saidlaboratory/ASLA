@@ -2,7 +2,7 @@
   "run_id": "txt360__6M__seed6198",
   "recipe": "txt360",
   "corpus": {
-    "hf_id": "LLM360/TxT360",
+    "hf_id": "IFM/TxT360",
     "revision_sha": "3337c47e3c09726092745da02aac0b6a7da055ed",
     "processing": "released mixture (the card's weighting recipe is not applied)"
   },
@@ -47,8 +47,14 @@
   },
   "eval": {
     "metric": "c4_en_bits_per_token: mean next-token cross-entropy on held-out C4-en validation, in nats divided by ln 2, at the final checkpoint",
-    "data": "the OLMo in-loop evaluator c4_en-validation (v3_small_gptneox20b/c4_en/val); public counterpart allenai/paloma subset c4_en, validation split (gated)",
-    "unverified": "whether the in-loop file equals Paloma's c4_en validation split or a subsample; the replication uses Paloma c4_en validation for every run, so all recipes share one evaluation set",
-    "decontamination": "documents in any training corpus exactly matching a Paloma c4_en validation or test document are removed before training"
+    "data": "the OLMo in-loop evaluator file eval-data/perplexity/v3_small_gptneox20b/c4_en/val/part-0-00000.npy (public at olmo-data.org; sha256 c37d6b11...), decoded or re-tokenized with the ladder tokenizer; if Paloma's c4_en validation split is confirmed identical, either may be used",
+    "unverified": "whether the in-loop file equals Paloma's c4_en validation split document for document (it is drawn from C4-en validation; see in_loop_file_check)",
+    "decontamination": "documents in any training corpus exactly matching a Paloma c4_en validation or test document are removed before training",
+    "in_loop_file_check": {
+      "result": "all 2,099 documents of DataDecide's in-loop c4_en-validation file are C4-en validation documents (allenai/c4 revision 1588ec45): 2,097 byte-identical and 2 identical after Unicode NFC normalization; 1,021,899 tokens; its metadata names Paloma v3_small c4_en/val source files",
+      "paloma_identity": "unverified: allenai/paloma is gated and no Hugging Face credential is available on this machine; scripts/check_c4_eval_file.py compares by document id and text hash once Paloma's c4_en/val files are supplied",
+      "file_sha256": "c37d6b115de9120bfaefe9ca6a20a310eb6738c20bc26abf469dcada66100ab4",
+      "record": "results/replication/c4_eval_check.json"
+    }
   }
 }

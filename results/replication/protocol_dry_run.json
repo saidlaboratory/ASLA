@@ -11,14 +11,14 @@
     "tpp": "datadecide",
     "seeds": 3,
     "ladder": [
-      15.926,
-      16.336,
-      17.094,
-      17.341,
-      18.291,
-      18.76,
-      19.128,
-      19.753
+      15.92583901124847,
+      16.33647646970317,
+      17.09389070948844,
+      17.34061412665808,
+      18.29124879960812,
+      18.76027644070181,
+      19.12836827079839,
+      19.752967267195345
     ],
     "targets": [
       6,
@@ -28,19 +28,31 @@
     "lam": 1.0
   },
   "codepath_matches_simulator_all_worlds": true,
-  "nominal_compute_vs_simulator_grid_max_abs_estimate_diff": 0.5573500903607211,
-  "verdict_disagreements_nominal_vs_simulator_grid": [
-    38,
-    105
+  "nominal_compute_vs_simulator_grid_max_abs_estimate_diff": 0.1964174808682646,
+  "worlds_entry_differs_from_simulator_beyond_1e-9": [
+    {
+      "world": 124,
+      "difference": 0.1964174808682646
+    }
   ],
-  "grid_note": "the simulator's ladder is DataDecide's log10 compute rounded to 3 decimals; the entry point uses exact 6ND from ladder.json",
+  "fp_note": "the entry point computes compute as 6ND and the simulator as 10**log10(6ND); they differ by at most 3.6e-15 relative, and in a rare world the frozen power-law fit lands differently under that perturbation",
+  "verdict_disagreements_nominal_vs_simulator_grid": [],
+  "grid_note": "protocol v2: the simulator's ladder is exact log10(6ND) from ladder.json, the same compute the entry point uses (v1 used log10 compute rounded to 3 decimals)",
+  "true_slope_spread_2_5_97_5": [
+    8.214427583615068,
+    31.879282889209247
+  ],
+  "true_slope_mc_interval": [
+    20.274370486227113,
+    22.13539346167802
+  ],
   "verdict_shares": {
-    "inconclusive": 0.14,
-    "replicates": 0.86
+    "inconclusive": 0.14666666666666667,
+    "replicates": 0.8533333333333334
   },
-  "replicates_share_mc_se": 0.028331372481167703,
-  "mean_estimate": 21.090731253180994,
-  "mean_true": 21.200993509204217,
-  "share_within_recipe_draw_range": 0.9333333333333333,
+  "replicates_share_mc_se": 0.028885469883150078,
+  "mean_estimate": 21.070125779326286,
+  "mean_true": 21.204881973952567,
+  "share_within_recipe_draw_range": 0.9466666666666667,
   "untuned_spec_random_candidate_power": 0.9066666666666666
 }

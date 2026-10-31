@@ -1,0 +1,34 @@
+{
+  "inloop_file": "https://olmo-data.org/eval-data/perplexity/v3_small_gptneox20b/c4_en/val/part-0-00000.npy",
+  "inloop_sha256": "c37d6b115de9120bfaefe9ca6a20a310eb6738c20bc26abf469dcada66100ab4",
+  "inloop_tokens": 1021899,
+  "inloop_documents": 2099,
+  "inloop_metadata_sources": [
+    "s3://ai2-llm/eval-data/perplexity/v3_small/c4_en/val/c4_en_00000000.jsonl.gz",
+    "s3://ai2-llm/eval-data/perplexity/v3_small/c4_en/val/c4_en_00000001.jsonl.gz",
+    "s3://ai2-llm/eval-data/perplexity/v3_small/c4_en/val/c4_en_00000002.jsonl.gz"
+  ],
+  "tokens_in_spans": 1021899,
+  "ids_outside_neox_vocab": 2099,
+  "c4_validation_shards": [
+    "c4-validation.00000-of-00008.json.gz",
+    "c4-validation.00001-of-00008.json.gz",
+    "c4-validation.00002-of-00008.json.gz",
+    "c4-validation.00003-of-00008.json.gz",
+    "c4-validation.00004-of-00008.json.gz",
+    "c4-validation.00005-of-00008.json.gz",
+    "c4-validation.00006-of-00008.json.gz",
+    "c4-validation.00007-of-00008.json.gz"
+  ],
+  "c4_validation_documents": 364608,
+  "matched_exact": 2097,
+  "matched_after_strip": 2097,
+  "matched_after_nfc_both_sides": 2099,
+  "matched_first_200_chars": 2099,
+  "eos_note": "the one id per document outside the GPT-NeoX-20B vocabulary is 50279, the OLMo tokenizer's EOS appended to each document",
+  "unmatched_examples": [],
+  "paloma": {
+    "status": "not checked: allenai/paloma is gated (auto) and no Hugging Face credential is available on this machine",
+    "to_complete": "accept Paloma's terms, download c4_en/val/val-*.jsonl.gz, rerun with PALOMA_C4_VAL_DIR"
+  }
+}

@@ -37,10 +37,18 @@ CHECKPOINT = REPO / "results" / "replication" / "protocol_dry_run_worlds.jsonl"
 Z = 1.959963984540054
 
 
+def exact_ladder() -> list[float]:
+    """log10 of 6 N D at the protocol's sizes, exactly as the entry point computes compute (protocol v2)."""
+
+    ladder = json.loads((REPO / "replication_protocol" / "ladder.json").read_text(encoding="utf-8"))
+    return [float(np.log10(6.0 * s["params_n"] * s["tokens_d"])) for s in ladder["sizes"]]
+
+
 def spec() -> dict:
     cr = importlib.import_module("scripts.run_curve_round")
-    lad = cr.node_ladder("300M", 8)
-    targets = [t for t in range(5, 8) if lad[t] >= cr.NODES[9] - 1e-9]
+    lad = exact_ladder()
+    floor = float(np.log10(6.0 * 151898880 * 14745600000))  # 150M, the target floor
+    targets = [t for t in range(5, len(lad)) if lad[t] >= floor - 1e-12]
     return cr.base(n=10, ladder=lad, targets=targets, admit="determinacy")
 
 
@@ -60,6 +68,8 @@ def runs_table(cells: dict[str, np.ndarray]) -> pd.DataFrame:
     ladder = json.loads((REPO / "replication_protocol" / "ladder.json").read_text(encoding="utf-8"))
     ids = [r["id"] for r in json.loads((REPO / "replication_protocol" / "recipes.json").read_text(encoding="utf-8"))["selected"]]
     rows = []
+    if len(ids) != len(cells):
+        raise ValueError("recipe count differs from the protocol's selection")
     for rid, (name, c) in zip(ids, sorted(cells.items())):
         for j, s in enumerate(ladder["sizes"]):
             for k, seed in enumerate(ladder["seeds"]):
@@ -150,12 +160,23 @@ def main() -> dict:
         "spec": sp,
         "codepath_matches_simulator_all_worlds": bool(all(match)),
         "nominal_compute_vs_simulator_grid_max_abs_estimate_diff": float(np.max(np.abs(diff))) if diff.size else None,
+        "worlds_entry_differs_from_simulator_beyond_1e-9": [
+            {"world": r["world"], "difference": float(r["entry_estimate"] - r["sim_estimate"])}
+            for r in rows
+            if r["entry_estimate"] is not None and r["sim_estimate"] is not None and abs(r["entry_estimate"] - r["sim_estimate"]) > 1e-9
+        ],
+        "fp_note": "the entry point computes compute as 6ND and the simulator as 10**log10(6ND); they differ by at most 3.6e-15 relative, and in a rare world the frozen power-law fit lands differently under that perturbation",
         "verdict_disagreements_nominal_vs_simulator_grid": [
             r["world"] for r in rows
             if r["sim_estimate"] is not None and r["entry_estimate"] is not None
             and (r["sim_estimate"] - Z * r["sim_se"] > 0) != (r["entry_estimate"] - Z * r["entry_se"] > 0)
         ],
-        "grid_note": "the simulator's ladder is DataDecide's log10 compute rounded to 3 decimals; the entry point uses exact 6ND from ladder.json",
+        "grid_note": "protocol v2: the simulator's ladder is exact log10(6ND) from ladder.json, the same compute the entry point uses (v1 used log10 compute rounded to 3 decimals)",
+        "true_slope_spread_2_5_97_5": [float(np.quantile([r["sim_true"] for r in rows if r["sim_true"] is not None], q)) for q in (0.025, 0.975)],
+        "true_slope_mc_interval": [
+            float(np.mean(t := [r["sim_true"] for r in rows if r["sim_true"] is not None]) - Z * np.std(t, ddof=1) / np.sqrt(len(t))),
+            float(np.mean(t) + Z * np.std(t, ddof=1) / np.sqrt(len(t))),
+        ],
         "verdict_shares": {v: verdicts.count(v) / WORLDS for v in sorted(set(verdicts))},
         "replicates_share_mc_se": float(np.sqrt((verdicts.count("replicates") / WORLDS) * (1 - verdicts.count("replicates") / WORLDS) / WORLDS)),
         "mean_estimate": float(est.mean()) if est.size else None,

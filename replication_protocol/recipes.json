@@ -7,15 +7,17 @@
       "E3_english_and_size": "an English portion is selectable from released metadata (a language field or a file/config split) and holds at least 30B tokens by the card's own figures, enough for the 300M run's 29.5B tokens without repetition",
       "E4_distinct_from_datadecide": "not one of DataDecide's corpora (C4, DCLM-Baseline, Dolma 1.6++/1.7, Falcon RefinedWeb, FineWeb-Edu, FineWeb-Pro) and at most 20% of its documents drawn from them or from the pools they were filtered from (DCLM-Pool, FineWeb, RefinedWeb, mC4/C4 family); judged from the card's stated composition; a card that does not state composition fails",
       "E5_general_domain": "a general-domain corpus (web or a multi-source mixture), not restricted to one domain (code, mathematics, scientific papers) or one source (a single encyclopedia or book collection) and not synthetic-only",
-      "E6_one_per_family": "at most one corpus per release family (e.g. SlimPajama is a deduplicated RedPajama-1T)"
+      "E6_one_per_family": "at most one corpus per release family (e.g. RedPajama-V2, RedPajama-1T and SlimPajama are one family; so are a corpus and its filtered or re-released variants); within a family, the member that meets E1 to E5 with the smallest salted crc32 key is kept"
     },
     "selection": "if more than 10 candidates are eligible, take the 10 with the smallest crc32('ASLA-replication-2026-10-31:' + hf_id); the rest are ordered reserves. If 10 or fewer are eligible, all are selected.",
     "salt": "ASLA-replication-2026-10-31",
     "per_corpus_processing": "use the English portion as released, with no additional quality filtering; remove exact-duplicate documents of the Paloma C4-en evaluation split; shuffle once with the run's data-order seed; tokenize with the ladder tokenizer; never repeat a document within a run",
+    "search": "candidates: (1) corpora known to the authors as public LM-pretraining corpora; (2) every dataset returned by the HF API listing filter=language:en, filter=task_categories:text-generation, sorted by downloads, top 100 for each size_categories value n>1T, 100B<n<1T, 10B<n<100B, 1B<n<10B, 100M<n<1B (322 datasets, 2026-10-31); listed datasets that are evidently mirrors, tokenized copies, subsets or filtered derivatives of FineWeb, FineWeb-Edu, DCLM, Dolma, RefinedWeb or C4, or that are not text-pretraining corpora (code, math, single-domain, synthetic, instruction, multimodal captions, personal uploads with no card), were screened out by name and card and are not listed individually; every other one is listed below with its outcome",
+    "replacement_order": "if a selected corpus is unavailable or fails processing before training, it is replaced by the first unused reserve in the order given in 'reserves'; each replacement is recorded as a deviation and power is recomputed with the frozen simulator before training",
     "verified_with": "https://huggingface.co/api/datasets/<id> (cardData.license, gated, sha) and the dataset card README, fetched 2026-10-31"
   },
-  "n_considered": 27,
-  "n_eligible": 10,
+  "n_considered": 55,
+  "n_eligible": 13,
   "selected": [
     {
       "id": "madlad_400_en",
@@ -39,6 +41,13 @@
       "processing": "all domains at released proportions"
     },
     {
+      "id": "txt360",
+      "hf_id": "IFM/TxT360",
+      "revision_sha": "3337c47e3c09726092745da02aac0b6a7da055ed",
+      "licence": "odc-by",
+      "processing": "released mixture (the card's weighting recipe is not applied)"
+    },
+    {
       "id": "finepdfs",
       "hf_id": "HuggingFaceFW/finepdfs",
       "revision_sha": "220bac3acbf07789502c621d2d33952f51ac7f86",
@@ -53,6 +62,13 @@
       "processing": "head_middle English partitions with the released exact-duplicate ids removed; quality signals not used"
     },
     {
+      "id": "mint_1t_html",
+      "hf_id": "mlfoundations/MINT-1T-HTML",
+      "revision_sha": "906a8b85cea61198ff7339c4dd711ad0b5361847",
+      "licence": "cc-by-4.0",
+      "processing": "data_v1_1 text segments concatenated in document order, images dropped"
+    },
+    {
       "id": "hplt_v2_en",
       "hf_id": "HPLT/HPLT2.0_cleaned",
       "revision_sha": "d1324a5283f762ee62c2a5c81de08fc6450ea540",
@@ -60,12 +76,21 @@
       "processing": "eng_Latn config"
     },
     {
-      "id": "txt360",
-      "hf_id": "LLM360/TxT360",
-      "revision_sha": "3337c47e3c09726092745da02aac0b6a7da055ed",
-      "licence": "odc-by",
-      "processing": "released mixture (the card's weighting recipe is not applied)"
+      "id": "omnicorpus_cc",
+      "hf_id": "OpenGVLab/OmniCorpus-CC",
+      "revision_sha": "8038991c62db064e5469a8a509261d8f4e85fd61",
+      "licence": "cc-by-4.0",
+      "processing": "text segments concatenated in document order, images dropped"
     },
+    {
+      "id": "cc100_en",
+      "hf_id": "statmt/cc100",
+      "revision_sha": "8c658c983d32eab9170d77d416252cfaa0c23e96",
+      "licence": "no tag ('unknown'); card: no IP claim, Common Crawl terms of use apply",
+      "processing": "en config"
+    }
+  ],
+  "reserves": [
     {
       "id": "matrix_cc_en",
       "hf_id": "m-a-p/Matrix",
@@ -74,11 +99,11 @@
       "processing": "cc_en shards only (the other components do not mark language)"
     },
     {
-      "id": "redpajama_1t",
-      "hf_id": "togethercomputer/RedPajama-Data-1T",
-      "revision_sha": "398f92572e94f4793e41c22ab7ea2a788d9e7de4",
-      "licence": "per subset: CC terms of use, C4 ODC-BY, GitHub MIT/BSD/Apache, others per card",
-      "processing": "all subsets at released proportions"
+      "id": "obelics",
+      "hf_id": "HuggingFaceM4/OBELICS",
+      "revision_sha": "08b7dca61ec09bacd68234ba6c388209b126d31c",
+      "licence": "cc-by-4.0",
+      "processing": "text segments concatenated in document order, images dropped"
     },
     {
       "id": "common_corpus",
@@ -88,9 +113,8 @@
       "processing": "documents whose language field is English"
     }
   ],
-  "reserves": [],
-  "note": "exactly ten candidates were eligible, so all are selected and there are no reserves; if a selected corpus becomes unavailable before training, the replication runs with the rest and power is recomputed with the frozen simulator first, and both are recorded",
-  "resemblance_caveat": "comma_v0_1, common_corpus and open_license_corpus are openly licensed multi-domain mixtures that differ from DataDecide's web-heavy recipes more than the others do; the predicted magnitude assumes resemblance and is weakest for them",
+  "protocol_version": "v2 (2026-10-31): RedPajama-1T dropped under E6 (RedPajama family, RedPajama-V2 kept by crc32); search extended to the HF listing; TxT360 recorded under its canonical id IFM/TxT360",
+  "resemblance_caveat": "among the selected, comma_v0_1 and open_license_corpus are openly licensed multi-domain mixtures that differ from DataDecide's web-heavy recipes more than the others do, and mint_1t_html and omnicorpus_cc are interleaved multimodal web corpora used for their text only; the predicted magnitude assumes resemblance and is weakest for these",
   "candidates": [
     {
       "id": "redpajama_v2",
@@ -115,24 +139,25 @@
       "english_portion": "English corpus",
       "size_evidence": "card: 1.2T tokens",
       "composition": "CC (CCNet) about 878B, C4 about 175B (about 15%, under the 20% limit), GitHub, books, arXiv, Wikipedia, StackExchange",
-      "fails": [],
-      "eligible": true,
-      "processing": "all subsets at released proportions",
+      "fails": [
+        "E6_one_per_family"
+      ],
+      "eligible": false,
       "crc32_rank_key": 3555193443
     },
     {
       "id": "txt360",
-      "hf_id": "LLM360/TxT360",
+      "hf_id": "IFM/TxT360",
       "revision_sha": "3337c47e3c09726092745da02aac0b6a7da055ed",
       "licence": "odc-by",
       "gated": "no",
       "english_portion": "English",
       "size_evidence": "card: about 5T deduplicated tokens",
-      "composition": "own filtering of 99 CC snapshots plus 14 curated sources; card mentions FineWeb, Dolma, RedPajama only as comparisons",
+      "composition": "own filtering of 99 CC snapshots plus 14 curated sources; card mentions FineWeb, Dolma, RedPajama only as comparisons; LLM360/TxT360 now redirects here",
       "fails": [],
       "eligible": true,
       "processing": "released mixture (the card's weighting recipe is not applied)",
-      "crc32_rank_key": 2518081678
+      "crc32_rank_key": 638488778
     },
     {
       "id": "comma_v0_1",
@@ -492,6 +517,427 @@
       ],
       "eligible": false,
       "crc32_rank_key": 576450056
+    },
+    {
+      "id": "mint_1t_html",
+      "hf_id": "mlfoundations/MINT-1T-HTML",
+      "revision_sha": "906a8b85cea61198ff7339c4dd711ad0b5361847",
+      "licence": "cc-by-4.0",
+      "gated": "no",
+      "english_portion": "English (fastText language ID)",
+      "size_evidence": "card: 742B text tokens (data_v1_1)",
+      "composition": "HTML from CC WARC dumps 2017 to 2024, own pipeline",
+      "fails": [],
+      "eligible": true,
+      "processing": "data_v1_1 text segments concatenated in document order, images dropped",
+      "crc32_rank_key": 2102589661
+    },
+    {
+      "id": "cc100_en",
+      "hf_id": "statmt/cc100",
+      "revision_sha": "8c658c983d32eab9170d77d416252cfaa0c23e96",
+      "licence": "no tag ('unknown'); card: no IP claim, Common Crawl terms of use apply",
+      "gated": "no",
+      "english_portion": "en config",
+      "size_evidence": "card: English 82G compressed; the XLM-R paper (Conneau et al. 2020) reports 55.6B English tokens",
+      "composition": "CCNet processing of 2018 CC snapshots (not the 2019 snapshot C4 was built from)",
+      "fails": [],
+      "eligible": true,
+      "processing": "en config",
+      "crc32_rank_key": 2884045615
+    },
+    {
+      "id": "obelics",
+      "hf_id": "HuggingFaceM4/OBELICS",
+      "revision_sha": "08b7dca61ec09bacd68234ba6c388209b126d31c",
+      "licence": "cc-by-4.0",
+      "gated": "no",
+      "english_portion": "English",
+      "size_evidence": "card: 141M English documents, 115B text tokens",
+      "composition": "interleaved web documents from CC dumps, own pipeline",
+      "fails": [],
+      "eligible": true,
+      "processing": "text segments concatenated in document order, images dropped",
+      "crc32_rank_key": 3459705020
+    },
+    {
+      "id": "omnicorpus_cc",
+      "hf_id": "OpenGVLab/OmniCorpus-CC",
+      "revision_sha": "8038991c62db064e5469a8a509261d8f4e85fd61",
+      "licence": "cc-by-4.0",
+      "gated": "no",
+      "english_portion": "English (card language en)",
+      "size_evidence": "card: 988M documents, about 1.7T text tokens over the corpus",
+      "composition": "interleaved documents from CC dumps 2013 to 2023, own pipeline",
+      "fails": [],
+      "eligible": true,
+      "processing": "text segments concatenated in document order, images dropped",
+      "crc32_rank_key": 2804510558
+    },
+    {
+      "id": "mint_1t_pdf_2023_06",
+      "hf_id": "mlfoundations/MINT-1T-PDF-CC-2023-06",
+      "revision_sha": "",
+      "licence": "cc-by-4.0",
+      "gated": "no",
+      "english_portion": "English",
+      "size_evidence": "card gives no token count for this subset",
+      "composition": "PDFs from CC WAT, MINT-1T family",
+      "fails": [
+        "E3_english_and_size"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 765635691
+    },
+    {
+      "id": "omnicorpus_cc_210m",
+      "hf_id": "OpenGVLab/OmniCorpus-CC-210M",
+      "revision_sha": "39c856327b0c18a89915fa4c94ae870d94e18601",
+      "licence": "cc-by-4.0",
+      "gated": "auto",
+      "english_portion": "en",
+      "size_evidence": "card hidden behind the gate",
+      "composition": "OmniCorpus family",
+      "fails": [
+        "E3_english_and_size",
+        "E4_distinct_from_datadecide"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 1701800261
+    },
+    {
+      "id": "cc100_documents_mirror",
+      "hf_id": "singletongue/cc100-documents",
+      "revision_sha": "",
+      "licence": "no tag",
+      "gated": "no",
+      "english_portion": "multilingual",
+      "size_evidence": "",
+      "composition": "unofficial document-level re-release of CC-100",
+      "fails": [
+        "E2_access"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 1043801003
+    },
+    {
+      "id": "txt360_3efforts",
+      "hf_id": "LLM360/TxT360-3efforts",
+      "revision_sha": "bfc4a082d11967cd7810fe0b773be87bf54fb32e",
+      "licence": "cc-by-4.0",
+      "gated": "no",
+      "english_portion": "English",
+      "size_evidence": "",
+      "composition": "TxT360 family; larger crc32 key than IFM/TxT360",
+      "fails": [
+        "E6_one_per_family"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 3686616357
+    },
+    {
+      "id": "finepdfs_edu",
+      "hf_id": "HuggingFaceFW/finepdfs-edu",
+      "revision_sha": "9cfabe2127faca99b3d5c4dc6d1fcb397399ebde",
+      "licence": "odc-by",
+      "gated": "no",
+      "english_portion": "eng_Latn",
+      "size_evidence": "",
+      "composition": "FinePDFs family; larger crc32 key",
+      "fails": [
+        "E6_one_per_family"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 2770610025
+    },
+    {
+      "id": "hplt_v1_2",
+      "hf_id": "HPLT/hplt_monolingual_v1_2",
+      "revision_sha": "",
+      "licence": "cc0-1.0",
+      "gated": "no",
+      "english_portion": "en",
+      "size_evidence": "",
+      "composition": "HPLT family; larger crc32 key",
+      "fails": [
+        "E6_one_per_family"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 3573555289
+    },
+    {
+      "id": "culturay",
+      "hf_id": "Viet-Mistral/CulturaY",
+      "revision_sha": "",
+      "licence": "cc-by-4.0",
+      "gated": "no",
+      "english_portion": "multilingual",
+      "size_evidence": "",
+      "composition": "built from HPLT; HPLT family",
+      "fails": [
+        "E6_one_per_family"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 3478094811
+    },
+    {
+      "id": "common_pile_raw",
+      "hf_id": "common-pile/raw_v0.1_parquet",
+      "revision_sha": "",
+      "licence": "no tag",
+      "gated": "no",
+      "english_portion": "English",
+      "size_evidence": "",
+      "composition": "Common Pile family; larger crc32 key than Comma",
+      "fails": [
+        "E6_one_per_family"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 2090538262
+    },
+    {
+      "id": "cccc_all_domains",
+      "hf_id": "nkandpa2/cccc_all_domains",
+      "revision_sha": "930b8e9b46b55730b12675e643e9778fa87f58af",
+      "licence": "odc-by",
+      "gated": "auto",
+      "english_portion": "English",
+      "size_evidence": "",
+      "composition": "Common Pile's CC Creative Commons component; Common Pile family",
+      "fails": [
+        "E6_one_per_family"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 2820286652
+    },
+    {
+      "id": "colossal_oscar_1",
+      "hf_id": "oscar-corpus/colossal-oscar-1.0",
+      "revision_sha": "6e7659d7b54f899942841fd046251ce8d9564882",
+      "licence": "cc0-1.0",
+      "gated": "auto",
+      "english_portion": "multilingual",
+      "size_evidence": "card hidden behind the gate",
+      "composition": "OSCAR family",
+      "fails": [
+        "E3_english_and_size",
+        "E4_distinct_from_datadecide"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 9670521
+    },
+    {
+      "id": "oscar_2019",
+      "hf_id": "oscar-corpus/oscar",
+      "revision_sha": "65dd1dc9b23d5f2aa283e055e5edff5abbed995a",
+      "licence": "cc0-1.0",
+      "gated": "manual",
+      "english_portion": "en",
+      "size_evidence": "",
+      "composition": "OSCAR family",
+      "fails": [
+        "E2_access"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 3302970727
+    },
+    {
+      "id": "c5_creative_commons",
+      "hf_id": "BramVanroy/CommonCrawl-CreativeCommons",
+      "revision_sha": "fa6453d0f267675babb06b1968928b81b47e712c",
+      "licence": "cc (mixed Creative Commons licences, including NC)",
+      "gated": "no",
+      "english_portion": "eng config",
+      "size_evidence": "card states no token count",
+      "composition": "CC pages linking a Creative Commons licence",
+      "fails": [
+        "E1_licence",
+        "E3_english_and_size"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 1543386277
+    },
+    {
+      "id": "cc_news",
+      "hf_id": "stanford-oval/ccnews",
+      "revision_sha": "d733e654c9a506df519e1a166a86c118c7657ce4",
+      "licence": "no tag",
+      "gated": "no",
+      "english_portion": "multilingual",
+      "size_evidence": "",
+      "composition": "news articles only",
+      "fails": [
+        "E5_general_domain"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 2494885336
+    },
+    {
+      "id": "croissant",
+      "hf_id": "croissantllm/croissant_dataset",
+      "revision_sha": "4309f6cd724528be5ae590dd3552f82d834ad00e",
+      "licence": "no tag; per-source licences in the technical report",
+      "gated": "no",
+      "english_portion": "en and fr",
+      "size_evidence": "",
+      "composition": "English composition not stated in the card",
+      "fails": [
+        "E4_distinct_from_datadecide"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 4492430
+    },
+    {
+      "id": "luciole",
+      "hf_id": "OpenLLM-France/Luciole-Training-Dataset",
+      "revision_sha": "dc89cbe9b500eb934f198e7b4718926132238117",
+      "licence": "cc-by-sa-4.0",
+      "gated": "no",
+      "english_portion": "multilingual",
+      "size_evidence": "",
+      "composition": "includes Dolma 3 and FineWeb2 subsets",
+      "fails": [
+        "E4_distinct_from_datadecide"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 2088796560
+    },
+    {
+      "id": "eaglex",
+      "hf_id": "RWKV/EagleX-WorldContinued",
+      "revision_sha": "b3c23a3c57f5902c0abb65470a34d68820e45416",
+      "licence": "cc-by-sa-4.0",
+      "gated": "no",
+      "english_portion": "multilingual",
+      "size_evidence": "",
+      "composition": "a mixture citing FineWeb among its sources",
+      "fails": [
+        "E4_distinct_from_datadecide"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 540670959
+    },
+    {
+      "id": "crisp_165b",
+      "hf_id": "juliannunezb/crisp-165b",
+      "revision_sha": "c90ea4ecdda5421c6452303d2e76aadda10dcf1b",
+      "licence": "odc-by",
+      "gated": "no",
+      "english_portion": "English",
+      "size_evidence": "165B",
+      "composition": "DCLM-baseline is a co-equal web source",
+      "fails": [
+        "E4_distinct_from_datadecide"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 3261941689
+    },
+    {
+      "id": "domyn_edge_mix",
+      "hf_id": "domyn/Domyn-Edge-Pretraining-Mix-8.4T",
+      "revision_sha": "b0eb2e99ae817ecd40959c92692f71a0e0911162",
+      "licence": "apache-2.0",
+      "gated": "no",
+      "english_portion": "multilingual",
+      "size_evidence": "",
+      "composition": "web crawl portion is FineWeb",
+      "fails": [
+        "E4_distinct_from_datadecide"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 161562964
+    },
+    {
+      "id": "tnsa_pt_hf500b",
+      "hf_id": "TNSA/PT-HF500B",
+      "revision_sha": "cd72cef5badec2ffdd8d33e52d4c08c0e65321fe",
+      "licence": "odc-by",
+      "gated": "no",
+      "english_portion": "English",
+      "size_evidence": "about 486B generated tokens",
+      "composition": "synthetic",
+      "fails": [
+        "E5_general_domain"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 104392366
+    },
+    {
+      "id": "opentransformer_crawl",
+      "hf_id": "OpenTransformer/web-crawl-2026",
+      "revision_sha": "f24960eda224cb2a2d176b1f4279639bf0bd4801",
+      "licence": "apache-2.0",
+      "gated": "no",
+      "english_portion": "not stated",
+      "size_evidence": "card states no token count",
+      "composition": "own crawler seeded from the CC URL index",
+      "fails": [
+        "E3_english_and_size"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 3028751125
+    },
+    {
+      "id": "plm_pretrain",
+      "hf_id": "PLM-Team/Pretrain-Dataset",
+      "revision_sha": "3a7d4c175e8bfcf0cd17f78860a8d6056a7b02ab",
+      "licence": "mit",
+      "gated": "no",
+      "english_portion": "not stated",
+      "size_evidence": "",
+      "composition": "composition not stated",
+      "fails": [
+        "E4_distinct_from_datadecide"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 211281356
+    },
+    {
+      "id": "climblab",
+      "hf_id": "OptimalScale/ClimbLab",
+      "revision_sha": "",
+      "licence": "apache-2.0 (mirror); NVIDIA original cc-by-nc-4.0",
+      "gated": "no",
+      "english_portion": "English",
+      "size_evidence": "",
+      "composition": "re-release of NVIDIA ClimbLab, built from Nemotron-CC and SmolLM-Corpus (FineWeb-Edu)",
+      "fails": [
+        "E1_licence",
+        "E2_access",
+        "E4_distinct_from_datadecide"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 886142011
+    },
+    {
+      "id": "bcai_cci4",
+      "hf_id": "BAAI/CCI4.0-M2-Base-v1",
+      "revision_sha": "f8d5c95fb101c0d1d4e49a43d75182a71bdca3ff",
+      "licence": "no tag",
+      "gated": "auto",
+      "english_portion": "zh and en",
+      "size_evidence": "",
+      "composition": "English composition not stated in the public card",
+      "fails": [
+        "E4_distinct_from_datadecide"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 3158700878
+    },
+    {
+      "id": "the_pile",
+      "hf_id": "EleutherAI/pile",
+      "revision_sha": "",
+      "licence": "other",
+      "gated": "no",
+      "english_portion": "English",
+      "size_evidence": "",
+      "composition": "includes Books3; no open licence statement",
+      "fails": [
+        "E1_licence"
+      ],
+      "eligible": false,
+      "crc32_rank_key": 2542115412
     }
   ]
 }
