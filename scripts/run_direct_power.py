@@ -54,8 +54,30 @@ S3, SEEDS3 = (6, 8, 10), (2, 3)
 HARDWARE = {"H100 SXM": {"peak_flops": 989.4e12, "mfu": 0.40}, "RTX 3090": {"peak_flops": 71.0e12, "mfu": 0.30}}
 
 
-def spec(n: int, sizes: int, seeds: int, top: float, lam: float, restrict: bool) -> dict:
-    ladder = np.linspace(LOW, top, sizes).tolist()
+DD_NODES = [15.926, 16.336, 16.641, 16.77, 17.094, 17.187, 17.341, 18.291, 18.76, 19.128, 19.753, 20.175, 20.849]
+TOP_INDEX = {"300M": 10, "530M": 11, "1B": 12}
+T3_CAL_WORLDS, T3_POWER_WORLDS = 30, 150
+T3_LAMS = (0.5, 1.0, 2.0, 3.0, 4.0, 6.0)
+
+
+def node_ladder(top: str, sizes: int) -> list[float]:
+    """S of DataDecide's own sizes (750M excluded) ending at the top target, spread as evenly as the sizes allow.
+
+    Using DataDecide's sizes keeps the truth at the compute points where its misfit is measured (an evenly
+    spaced ladder interpolates it and loses about 15% of the recipe-specific spread).
+    """
+
+    t = TOP_INDEX[top]
+    wanted = np.linspace(DD_NODES[0], DD_NODES[t], sizes)
+    chosen: list[int] = []
+    for w in wanted:
+        free = [i for i in range(t + 1) if i not in chosen]
+        chosen.append(min(free, key=lambda i: abs(DD_NODES[i] - w)))
+    return [DD_NODES[i] for i in sorted(chosen)]
+
+
+def spec(n: int, sizes: int, seeds: int, top: float, lam: float, restrict: bool, ladder: list[float] | None = None) -> dict:
+    ladder = ladder if ladder is not None else np.linspace(LOW, top, sizes).tolist()
     targets = [t for t in range(5, sizes) if (not restrict) or ladder[t] >= MIN_TARGET - 1e-9]
     return {
         "statistic": "fixed_target",
@@ -86,15 +108,16 @@ def collect(cache: dict, key: str, worlds: int) -> list[dict]:
 
 
 def lam_for(cache: dict, base_key: str, beta: float) -> tuple[float | None, list[float]]:
+    lams, worlds = (T3_LAMS, T3_CAL_WORLDS) if base_key.startswith("t3|") else (LAMS, CAL_WORLDS)
     means = []
-    for lam in LAMS:
-        rows = [r for r in collect(cache, f"{base_key}|lam{lam:g}", CAL_WORLDS) if r.get("true") is not None]
+    for lam in lams:
+        rows = [r for r in collect(cache, f"{base_key}|lam{lam:g}", worlds) if r.get("true") is not None]
         means.append(float(np.mean([r["true"] for r in rows])) if rows else np.nan)
     m = np.array(means)
-    for i in range(len(LAMS) - 1):
+    for i in range(len(lams) - 1):
         a, b = m[i], m[i + 1]
         if np.isfinite(a) and np.isfinite(b) and (a - beta) * (b - beta) <= 0 and a != b:
-            return float(LAMS[i] + (beta - a) * (LAMS[i + 1] - LAMS[i]) / (b - a)), means
+            return float(lams[i] + (beta - a) * (lams[i + 1] - lams[i]) / (b - a)), means
     return None, means
 
 
@@ -108,6 +131,7 @@ def power_of(rows: list[dict], beta: float) -> dict:
     p_fc = float(rej_fc.mean()) if near else None
     return {
         "worlds": n_all,
+        "tested_share": len(ok) / n_all if n_all else None,
         "random_candidate": p_rc,
         "random_candidate_mc_se": float(np.sqrt(p_rc * (1 - p_rc) / n_all)) if n_all else None,
         "fixed_candidate": p_fc,
@@ -116,7 +140,43 @@ def power_of(rows: list[dict], beta: float) -> dict:
         "mean_true_slope": float(np.mean([r["true"] for r in ok])) if ok else None,
         "median_se": float(np.median([r["se"] for r in ok])) if ok else None,
         "median_determined_share_top": float(np.median([max(map(float, r["determined_share"].values())) for r in ok if r.get("determined_share")])) if ok else None,
+        "fixed_candidate_by_window": fixed_by_window(ok, beta),
     }
+
+
+def fixed_by_window(ok: list[dict], beta: float) -> dict:
+    """Fixed-candidate power conditions on worlds whose own slope lands near beta; show how the window moves it."""
+
+    out = {}
+    for w in (0.1, 0.2, 0.3):
+        near = [r for r in ok if abs(r["true"] - beta) <= w * beta]
+        p = float(np.mean([r["se"] > 0 and r["estimate"] - Z * r["se"] > 0 for r in near])) if near else None
+        out[f"{int(w * 100)}pct"] = {
+            "power": p,
+            "worlds": len(near),
+            "mc_se": float(np.sqrt(p * (1 - p) / len(near))) if near else None,
+        }
+    return out
+
+
+REAL_SCATTER_OVER_SEED_SE = 2.898  # results/target_scoring/fit_structure.json residual_scatter_over_seed_se
+
+
+def implied_scatter(lam: float | None) -> float | None:
+    """Residual scatter implied by a misfit multiplier, scaled from DataDecide's measured 2.90 x seed SE.
+
+    The simulator's residual is common + lam x recipe-specific; at lam = 1 it is DataDecide's measured residual,
+    whose scatter is 2.90 seed SEs. The implied scatter scales the RMS of that residual over recipes and sizes.
+    """
+
+    if lam is None:
+        return None
+    import importlib
+
+    actx = importlib.import_module("scripts.run_lever_arm_arms")._context()
+    common, specific = actx["arm_residual"]["B1"], actx["arm_residual"]["B2"]
+    rms = lambda m: float(np.sqrt(np.mean(np.square(m))))  # noqa: E731
+    return REAL_SCATTER_OVER_SEED_SE * rms(common + lam * specific) / rms(common + specific)
 
 
 def compute_cost(n: int, sizes: int, seeds: int, top: float) -> dict:
@@ -151,8 +211,8 @@ def geometries():
 def task3_cal_jobs() -> list[dict]:
     jobs = []
     for top, s, k in geometries():
-        for lam in LAMS:
-            jobs += chunked(f"t3|{top}S{s}k{k}|lam{lam:g}", spec(15, s, k, TOPS[top], lam, restrict=True), CAL_WORLDS)
+        for lam in T3_LAMS:
+            jobs += chunked(f"t3|{top}S{s}k{k}|lam{lam:g}", spec(15, s, k, TOPS[top], lam, True, node_ladder(top, s)), T3_CAL_WORLDS)
     return jobs
 
 
@@ -170,12 +230,12 @@ def task3_power_jobs(cache: dict, n: int) -> list[dict]:
             for smaller in N_GRID:
                 if smaller >= n:
                     break
-                p = power_of(collect(cache, f"{base}|beta{beta:g}|n{smaller}", POWER_WORLDS), beta)
-                if p["worlds"] == POWER_WORLDS and (p["random_candidate"] or 0) >= 0.8 and (p["fixed_candidate"] or 0) >= 0.8:
+                p = power_of(collect(cache, f"{base}|beta{beta:g}|n{smaller}", T3_POWER_WORLDS), beta)
+                if p["worlds"] == T3_POWER_WORLDS and (p["random_candidate"] or 0) >= 0.8 and (p["fixed_candidate"] or 0) >= 0.8:
                     done = True
                     break
             if not done:
-                jobs += chunked(key, spec(n, s, k, TOPS[top], lam, restrict=True), POWER_WORLDS)
+                jobs += chunked(key, spec(n, s, k, TOPS[top], lam, True, node_ladder(top, s)), T3_POWER_WORLDS)
     return jobs
 
 
@@ -221,21 +281,68 @@ def summarise() -> dict:
         for beta in BETAS:
             lam, means = lam_for(cache, base, beta)
             for n in N_GRID:
-                rows = collect(cache, f"{base}|beta{beta:g}|n{n}", POWER_WORLDS)
+                rows = collect(cache, f"{base}|beta{beta:g}|n{n}", T3_POWER_WORLDS)
                 if not rows:
                     continue
+                ladder = node_ladder(top, s)
+                flops = float(n * k * np.sum(10.0 ** np.asarray(ladder)))
                 t3[f"{top}_S{s}_seeds{k}_beta{beta:g}_n{n}"] = {
                     "top": top, "sizes": s, "seeds": k, "beta": beta, "recipes": n, "lambda": lam,
-                    **power_of(rows, beta), **compute_cost(n, s, k, TOPS[top]),
+                    "ladder_log10_flops": ladder,
+                    **power_of(rows, beta),
+                    "training_flops": flops,
+                    "gpu_hours": {name: flops / (h["peak_flops"] * h["mfu"]) / 3600 for name, h in HARDWARE.items()},
                 }
+            t3_cal = t3.setdefault("_calibration", {})
+            t3_cal[f"{top}_S{s}_seeds{k}"] = dict(zip(map(str, T3_LAMS), means))
+        realism = t3.setdefault("_realism", {})
+        lam_hi, means_hi = lam_for(cache, base, 11.7)
+        lam_lo, _ = lam_for(cache, base, 5.85)
+        m = np.array(means_hi, dtype=float)
+        peak = int(np.nanargmax(m)) if np.isfinite(m).any() else None
+        realism[f"{top}_S{s}_seeds{k}"] = {
+            "slope_at_lambda_1": float(m[list(T3_LAMS).index(1.0)]) if np.isfinite(m[list(T3_LAMS).index(1.0)]) else None,
+            "lambda_for_11_7": lam_hi,
+            "lambda_for_5_85": lam_lo,
+            "implied_scatter_over_seed_se_for_11_7": implied_scatter(lam_hi),
+            "implied_scatter_over_seed_se_for_5_85": implied_scatter(lam_lo),
+            "datadecide_scatter_over_seed_se": REAL_SCATTER_OVER_SEED_SE,
+            "max_mean_slope": float(m[peak]) if peak is not None else None,
+            "lambda_at_max": T3_LAMS[peak] if peak is not None else None,
+            "plateau": bool(peak is not None and peak < len(T3_LAMS) - 1),
+        }
     out["task3"] = t3
     cheapest = {}
     for beta in BETAS:
         for framing in ("random_candidate", "fixed_candidate"):
-            ok = [v for v in t3.values() if v["beta"] == beta and (v[framing] or 0) >= 0.8 and v["worlds"] == POWER_WORLDS]
+            ok = [v for k2, v in t3.items() if not k2.startswith("_") and v["beta"] == beta and (v[framing] or 0) >= 0.8 and v["worlds"] == T3_POWER_WORLDS]
             ok.sort(key=lambda v: v["training_flops"])
             cheapest[f"{framing}_at_{beta:g}"] = ok[0] if ok else None
-    out["task3_cheapest"] = cheapest
+    out["task3_cheapest_unfiltered"] = cheapest
+    # A design counts only if its worlds actually test and generate the tested slope, and a fixed-candidate
+    # figure rests on enough worlds: at least 90% of worlds admit a target, the mean true slope is within 15%
+    # of beta, and at least 40 worlds fall in the 20% window.
+    valid_rule = "tested_share >= 0.9; |mean true slope - beta| <= 0.15 beta; fixed-candidate needs >= 40 worlds in the 20% window"
+    cheapest_valid = {}
+    for beta in BETAS:
+        valid = [
+            v for k2, v in t3.items()
+            if not k2.startswith("_") and v["beta"] == beta and v["worlds"] == T3_POWER_WORLDS
+            and (v["tested_share"] or 0) >= 0.9 and v["mean_true_slope"] is not None
+            and abs(v["mean_true_slope"] - beta) <= 0.15 * beta
+        ]
+        rc = sorted([v for v in valid if (v["random_candidate"] or 0) >= 0.8], key=lambda v: v["training_flops"])
+        fc = sorted(
+            [v for v in valid if v["fixed_candidate"] is not None and v["fixed_candidate_worlds"] >= 40 and v["fixed_candidate"] >= 0.8],
+            key=lambda v: v["training_flops"],
+        )
+        for framing, lst in (("random_candidate", rc), ("fixed_candidate", fc)):
+            v = lst[0] if lst else None
+            cheapest_valid[f"{framing}_at_{beta:g}"] = None if v is None else v | {
+                "implied_scatter_over_seed_se": implied_scatter(v["lambda"]),
+                "datadecide_scatter_over_seed_se": REAL_SCATTER_OVER_SEED_SE,
+            }
+    out["task3_cheapest"] = {"rule": valid_rule, **cheapest_valid}
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(out, indent=2) + "\n", encoding="utf-8")
     return out
