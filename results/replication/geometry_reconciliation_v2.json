@@ -1,0 +1,352 @@
+{
+  "unit": "points of mis-selected pairs per decade (log10) of lever arm",
+  "note": "+7.80 is the lever-arm-only statistic (target varied on one synthetic window), not the fixed-target slope",
+  "steps": [
+    {
+      "step": "B0",
+      "change": "all 13 DataDecide sizes, targets 150M to 1B (the reference)",
+      "rungs": 13,
+      "ladder_log10_flops": [
+        15.926,
+        16.336,
+        16.641,
+        16.77,
+        17.094,
+        17.187,
+        17.341,
+        18.291,
+        18.76,
+        19.128,
+        19.753,
+        20.175,
+        20.849
+      ],
+      "worlds": 160,
+      "mean_true_slope": 5.674147494122659,
+      "mc_se": 0.08113263603982176,
+      "lever_range_median": [
+        0.36799999999999855,
+        4.208000000000002
+      ]
+    },
+    {
+      "step": "B0_fixed",
+      "change": "the same with DataDecide's 25 recipes unperturbed (candidates fixed)",
+      "rungs": 13,
+      "ladder_log10_flops": [
+        15.926,
+        16.336,
+        16.641,
+        16.77,
+        17.094,
+        17.187,
+        17.341,
+        18.291,
+        18.76,
+        19.128,
+        19.753,
+        20.175,
+        20.849
+      ],
+      "worlds": 160,
+      "mean_true_slope": 11.957528428725547,
+      "mc_se": 0.05450950655218395,
+      "lever_range_median": [
+        0.36799999999999855,
+        4.208000000000002
+      ]
+    },
+    {
+      "step": "TPP",
+      "change": "tokens per parameter constant at 100 in the noise model",
+      "rungs": 13,
+      "ladder_log10_flops": [
+        15.926,
+        16.336,
+        16.641,
+        16.77,
+        17.094,
+        17.187,
+        17.341,
+        18.291,
+        18.76,
+        19.128,
+        19.753,
+        20.175,
+        20.849
+      ],
+      "worlds": 160,
+      "mean_true_slope": 5.767413551427643,
+      "mc_se": 0.09066937225145304,
+      "lever_range_median": [
+        0.36799999999999855,
+        4.208000000000002
+      ]
+    },
+    {
+      "step": "RUNGS_10",
+      "change": "rung count 10: DataDecide sizes spread evenly up to 1B",
+      "rungs": 10,
+      "ladder_log10_flops": [
+        15.926,
+        16.336,
+        17.094,
+        17.341,
+        18.291,
+        18.76,
+        19.128,
+        19.753,
+        20.175,
+        20.849
+      ],
+      "worlds": 160,
+      "mean_true_slope": 5.8563010590335995,
+      "mc_se": 0.11925090944168668,
+      "lever_range_median": [
+        0.36799999999999855,
+        3.754999999999999
+      ]
+    },
+    {
+      "step": "RUNGS_8",
+      "change": "rung count 8: DataDecide sizes spread evenly up to 1B",
+      "rungs": 8,
+      "ladder_log10_flops": [
+        15.926,
+        16.641,
+        17.341,
+        18.291,
+        18.76,
+        19.753,
+        20.175,
+        20.849
+      ],
+      "worlds": 160,
+      "mean_true_slope": 2.6857846419783735,
+      "mc_se": 0.11519267640451386,
+      "lever_range_median": [
+        0.42200000000000065,
+        3.507999999999999
+      ]
+    },
+    {
+      "step": "RUNGS_7",
+      "change": "rung count 7: DataDecide sizes spread evenly up to 1B",
+      "rungs": 7,
+      "ladder_log10_flops": [
+        15.926,
+        16.77,
+        17.341,
+        18.291,
+        19.128,
+        20.175,
+        20.849
+      ],
+      "worlds": 160,
+      "mean_true_slope": 3.410226156648913,
+      "mc_se": 0.12879757794572103,
+      "lever_range_median": [
+        0.6739999999999995,
+        3.507999999999999
+      ]
+    },
+    {
+      "step": "RUNGS_6",
+      "change": "rung count 6: DataDecide sizes spread evenly up to 1B",
+      "rungs": 6,
+      "ladder_log10_flops": [
+        15.926,
+        16.77,
+        18.291,
+        18.76,
+        19.753,
+        20.849
+      ],
+      "worlds": 160,
+      "mean_true_slope": -1.6484381371280556,
+      "mc_se": 0.13669901940441181,
+      "lever_range_median": [
+        1.096,
+        2.558
+      ]
+    },
+    {
+      "step": "SPACING_7_top",
+      "change": "spacing at 7 rungs: the 7 largest consecutive DataDecide sizes (20M to 1B)",
+      "rungs": 7,
+      "ladder_log10_flops": [
+        17.341,
+        18.291,
+        18.76,
+        19.128,
+        19.753,
+        20.175,
+        20.849
+      ],
+      "worlds": 160,
+      "mean_true_slope": 2.3673890693496125,
+      "mc_se": 0.1636934731319804,
+      "lever_range_median": [
+        0.42200000000000065,
+        2.0889999999999986
+      ]
+    },
+    {
+      "step": "RANGE_7_from14M",
+      "change": "compute range at 7 rungs: DataDecide sizes from 14M (not 4M) to 1B",
+      "rungs": 7,
+      "ladder_log10_flops": [
+        17.094,
+        17.341,
+        18.291,
+        19.128,
+        19.753,
+        20.175,
+        20.849
+      ],
+      "worlds": 160,
+      "mean_true_slope": 1.6923758912887539,
+      "mc_se": 0.21590201112886473,
+      "lever_range_median": [
+        0.42200000000000065,
+        2.558
+      ]
+    },
+    {
+      "step": "TARGET_8_530M",
+      "change": "target size: 8 DataDecide sizes up to 530M",
+      "rungs": 8,
+      "ladder_log10_flops": [
+        15.926,
+        16.641,
+        17.094,
+        17.341,
+        18.291,
+        19.128,
+        19.753,
+        20.175
+      ],
+      "worlds": 160,
+      "mean_true_slope": 5.641855985522794,
+      "mc_se": 0.12452274031821561,
+      "lever_range_median": [
+        0.42200000000000065,
+        3.0809999999999995
+      ]
+    },
+    {
+      "step": "TARGET_8_300M",
+      "change": "target size: 8 DataDecide sizes up to 300M",
+      "rungs": 8,
+      "ladder_log10_flops": [
+        15.926,
+        16.336,
+        17.094,
+        17.341,
+        18.291,
+        18.76,
+        19.128,
+        19.753
+      ],
+      "worlds": 160,
+      "mean_true_slope": 8.04960712077841,
+      "mc_se": 0.16181302345084023,
+      "lever_range_median": [
+        0.36799999999999855,
+        2.658999999999999
+      ]
+    },
+    {
+      "step": "INTERP_13",
+      "change": "interpolation: 13 evenly spaced rungs, truth interpolated between sizes (same count and range)",
+      "rungs": 13,
+      "ladder_log10_flops": [
+        15.926,
+        16.336,
+        16.747,
+        17.157,
+        17.567,
+        17.977,
+        18.387,
+        18.798,
+        19.208,
+        19.618,
+        20.029,
+        20.439,
+        20.849
+      ],
+      "worlds": 160,
+      "mean_true_slope": 2.9268320730432764,
+      "mc_se": 0.09216560617081038,
+      "lever_range_median": [
+        0.4102499999999978,
+        4.102499999999999
+      ]
+    },
+    {
+      "step": "INTERP_10",
+      "change": "interpolation: 10 evenly spaced rungs, truth interpolated between sizes (same count and range)",
+      "rungs": 10,
+      "ladder_log10_flops": [
+        15.926,
+        16.473,
+        17.02,
+        17.567,
+        18.114,
+        18.661,
+        19.208,
+        19.755,
+        20.302,
+        20.849
+      ],
+      "worlds": 160,
+      "mean_true_slope": 2.9214731241281036,
+      "mc_se": 0.09300752545798423,
+      "lever_range_median": [
+        0.546999999999997,
+        3.8290000000000006
+      ]
+    },
+    {
+      "step": "INTERP_7",
+      "change": "interpolation: 7 evenly spaced rungs, truth interpolated between sizes (same count and range)",
+      "rungs": 7,
+      "ladder_log10_flops": [
+        15.926,
+        16.747,
+        17.567,
+        18.387,
+        19.208,
+        20.029,
+        20.849
+      ],
+      "worlds": 160,
+      "mean_true_slope": 0.9150642110727422,
+      "mc_se": 0.12287363828518857,
+      "lever_range_median": [
+        0.8204999999999991,
+        3.282
+      ]
+    }
+  ],
+  "interpolation_effect_by_rung_count": {
+    "13": {
+      "on_datadecide_sizes": 5.674147494122659,
+      "interpolated_even": 2.9268320730432764,
+      "difference": -2.7473154210793824,
+      "difference_mc_se": 0.12278845056275897
+    },
+    "10": {
+      "on_datadecide_sizes": 5.8563010590335995,
+      "interpolated_even": 2.9214731241281036,
+      "difference": -2.934827934905496,
+      "difference_mc_se": 0.15123220290165365
+    },
+    "7": {
+      "on_datadecide_sizes": 3.410226156648913,
+      "interpolated_even": 0.9150642110727422,
+      "difference": -2.495161945576171,
+      "difference_mc_se": 0.17800771632185905
+    }
+  }
+}
