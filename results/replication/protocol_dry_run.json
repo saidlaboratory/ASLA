@@ -46,6 +46,18 @@
     20.274370486227113,
     22.13539346167802
   ],
+  "numerical_stability": {
+    "draws_per_world": 20,
+    "relative_perturbation": 1e-12,
+    "worlds_with_any_verdict_change": [],
+    "worlds_with_slope_spread_above_1e-6": [
+      {
+        "world": 124,
+        "max_abs_deviation": 0.19641748092533717
+      }
+    ],
+    "median_slope_sd": 1.651429792143011e-10
+  },
   "verdict_shares": {
     "inconclusive": 0.14666666666666667,
     "replicates": 0.8533333333333334

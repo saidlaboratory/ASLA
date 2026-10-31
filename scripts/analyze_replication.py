@@ -7,7 +7,12 @@ target's own seed evidence) and asla.analysis.fixed_target (the pooled fixed-tar
 leave-one-recipe-out jackknife). Before computing, the script checks the SHA-256 of every frozen module against
 PINNED and refuses to run on a mismatch, so a later edit to the analysis cannot silently change the verdict.
 
-Usage: .venv/bin/python scripts/analyze_replication.py RUNS.csv [--out verdict.json] [--allow-incomplete]
+Usage: .venv/bin/python scripts/analyze_replication.py RUNS.csv [--out verdict.json] [--allow-incomplete] [--no-stability]
+
+Output-only numerical stability diagnostic (protocol v2.1): after the verdict is fixed, the analysis is refitted
+under STABILITY_DRAWS independent relative perturbations of STABILITY_REL to every bpb value and to each size's
+compute, and the spread of the slope and any verdict change are reported under "numerical_stability". The
+diagnostic never feeds back into the verdict.
 """
 
 from __future__ import annotations
@@ -31,11 +36,11 @@ PINNED = {
     "asla/analysis/target_scoring.py": "5b4edb56df30c5c1daf1e7291376dd46b7b76d15f42564705e1ed9f01f6c9dae",
     "asla/models.py": "52b913d526615728d343418fd5cad9f6ad01f309051e48466d2a73a1991f17e0",
 }
-# protocol v2 (2026-10-31): the frozen protocol files; any edit after the freeze is refused like a code change
+# protocol v2.1 (2026-10-31): the frozen protocol files; any edit after the freeze is refused like a code change
 PROTOCOL_PINS = {
-    "replication_protocol/recipes.json": "c64f1599a84306f93317fff493cbab86a77f3158547e2df03674eedec2e83d3d",
-    "replication_protocol/ladder.json": "0d4956521d51d9461a01b54cce765459dcf585b5e17923c75edece8f7b367f9b",
-    "replication_protocol/preregistration.json": "6c0c482d8e7de3276e43d474558b4451dcefd9ba14b58d43818359db77ff1f53",
+    "replication_protocol/recipes.json": "4131ee41f04f7af8972c6641debebc2a8a61c0907078df4ed81b80b92f127e13",
+    "replication_protocol/ladder.json": "78f07fea21b13fe2a6d02371c70d57058b52c6b66be2c2104dcef86757f0c2c0",
+    "replication_protocol/preregistration.json": "2d1b027ce2e06bb04dd115c61365cd35f781bd0e18bea1e75cff5bac2e95b1fb",
 }
 PROTOCOL = REPO / "replication_protocol"
 RUN_COLUMNS = ("recipe", "size", "seed", "params_n", "tokens_d", "c4_en_bits_per_token")
@@ -43,6 +48,9 @@ Z = 1.959963984540054
 MIN_BELOW = 5
 TARGET_FLOOR = "150M"
 ADMIT_SHARE = 0.5
+STABILITY_DRAWS = 20
+STABILITY_REL = 1e-12
+STABILITY_SEED = 20261031
 
 
 def check_pins() -> dict[str, str]:
@@ -128,6 +136,44 @@ def analyse(frame: pd.DataFrame) -> dict:
     return out
 
 
+def perturbed(frame: pd.DataFrame, rng: np.random.Generator, rel: float = STABILITY_REL) -> pd.DataFrame:
+    """A copy with each bpb value and each size's compute multiplied by (1 + rel z), z standard normal."""
+
+    out = frame.copy()
+    out["bpb"] = out["bpb"].to_numpy(dtype=float) * (1.0 + rel * rng.standard_normal(len(out)))
+    sizes = sorted(out["scale_label"].unique())
+    factor = dict(zip(sizes, 1.0 + rel * rng.standard_normal(len(sizes))))
+    out["compute"] = out["compute"].to_numpy(dtype=float) * out["scale_label"].map(factor).to_numpy(dtype=float)
+    return out
+
+
+def stability(frame: pd.DataFrame, base: dict, draws: int = STABILITY_DRAWS, rel: float = STABILITY_REL) -> dict:
+    """Output-only: refit under tiny input perturbations; report the slope spread and verdict changes."""
+
+    rng = np.random.default_rng(STABILITY_SEED)
+    ests, verdicts = [], []
+    for _ in range(draws):
+        r = analyse(perturbed(frame, rng, rel))
+        ests.append(r["estimate"])
+        verdicts.append(r["verdict"].split(":")[0])
+    finite = np.array([e for e in ests if e is not None], dtype=float)
+    base_v = base["verdict"].split(":")[0]
+    dev = finite - base["estimate"] if base["estimate"] is not None and finite.size else np.array([])
+    return {
+        "draws": draws,
+        "relative_perturbation": rel,
+        "seed": STABILITY_SEED,
+        "slope_min": float(finite.min()) if finite.size else None,
+        "slope_max": float(finite.max()) if finite.size else None,
+        "slope_sd": float(finite.std(ddof=1)) if finite.size > 1 else None,
+        "max_abs_deviation_from_reported": float(np.max(np.abs(dev))) if dev.size else None,
+        "verdicts": {v: verdicts.count(v) for v in sorted(set(verdicts))},
+        "verdict_changes": int(sum(v != base_v for v in verdicts)),
+        "verdict_unstable": bool(any(v != base_v for v in verdicts)),
+        "note": "diagnostic only; the reported verdict is the unperturbed one",
+    }
+
+
 def secondary(est: float | None) -> dict:
     pre = json.loads((PROTOCOL / "preregistration.json").read_text(encoding="utf-8"))["secondary"]
     lo, hi = pre["recipe_draw_range"]
@@ -141,15 +187,18 @@ def main(argv: list[str] | None = None) -> dict:
     ap.add_argument("runs", type=Path)
     ap.add_argument("--out", type=Path)
     ap.add_argument("--allow-incomplete", action="store_true")
+    ap.add_argument("--no-stability", action="store_true")
     a = ap.parse_args(argv)
     pins = check_pins()
     frame, completeness = load_runs(a.runs, a.allow_incomplete)
     res = analyse(frame)
     res["secondary"] = secondary(res["estimate"])
     res["completeness"] = completeness
+    if not a.no_stability:
+        res["numerical_stability"] = stability(frame, res)
     res["pinned_sha256"] = pins
     res["preregistration"] = "PREDICTIONS_REPLICATION_PROTOCOL.md"
-    res["protocol_version"] = "v2"
+    res["protocol_version"] = "v2.1"
     text = json.dumps(res, indent=2) + "\n"
     if a.out:
         a.out.write_text(text, encoding="utf-8")

@@ -122,6 +122,7 @@ def one_world(sp: dict, w: int, entry) -> dict:
         "sim_estimate": sim.get("estimate"),
         "sim_se": sim.get("se"),
         "sim_true": sim.get("true"),
+        "stability": {k: res["numerical_stability"][k] for k in ("slope_min", "slope_max", "slope_sd", "max_abs_deviation_from_reported", "verdict_changes", "verdict_unstable")},
         "codepath_estimate_at_sim_grid": same["estimate"],
         "codepath_se_at_sim_grid": same["se"],
     }
@@ -177,6 +178,17 @@ def main() -> dict:
             float(np.mean(t := [r["sim_true"] for r in rows if r["sim_true"] is not None]) - Z * np.std(t, ddof=1) / np.sqrt(len(t))),
             float(np.mean(t) + Z * np.std(t, ddof=1) / np.sqrt(len(t))),
         ],
+        "numerical_stability": {
+            "draws_per_world": 20,
+            "relative_perturbation": 1e-12,
+            "worlds_with_any_verdict_change": [r["world"] for r in rows if r["stability"]["verdict_unstable"]],
+            "worlds_with_slope_spread_above_1e-6": [
+                {"world": r["world"], "max_abs_deviation": r["stability"]["max_abs_deviation_from_reported"]}
+                for r in rows
+                if (r["stability"]["max_abs_deviation_from_reported"] or 0) > 1e-6
+            ],
+            "median_slope_sd": float(np.median([r["stability"]["slope_sd"] for r in rows if r["stability"]["slope_sd"] is not None])),
+        },
         "verdict_shares": {v: verdicts.count(v) / WORLDS for v in sorted(set(verdicts))},
         "replicates_share_mc_se": float(np.sqrt((verdicts.count("replicates") / WORLDS) * (1 - verdicts.count("replicates") / WORLDS) / WORLDS)),
         "mean_estimate": float(est.mean()) if est.size else None,

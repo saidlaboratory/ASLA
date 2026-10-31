@@ -50,3 +50,53 @@ def test_entry_point_pins_match_and_refuses_incomplete(tmp_path):
     (tmp_path / "runs.csv").write_text(",".join(entry.RUN_COLUMNS) + "\n", encoding="utf-8")
     with pytest.raises(SystemExit):
         entry.load_runs(tmp_path / "runs.csv")
+
+
+def test_evaluation_and_decontamination_reference_the_in_loop_file():
+    import hashlib
+
+    ladder = json.loads((PROTOCOL / "ladder.json").read_text(encoding="utf-8"))
+    es = ladder["evaluation"]["eval_set"]
+    assert hashlib.sha256((REPO / es["file"]).read_bytes()).hexdigest() == es["sha256"]
+    rows = [json.loads(l) for l in (REPO / es["file"]).read_text(encoding="utf-8").splitlines()]
+    assert len(rows) == es["documents"] == 2099 and len({r["sha256_nfc"] for r in rows}) == 2099
+    assert "eval_set.jsonl" in ladder["evaluation"]["decontamination"]
+    rec = json.loads((PROTOCOL / "recipes.json").read_text(encoding="utf-8"))
+    assert "eval_set.jsonl" in rec["rule"]["per_corpus_processing"]
+    for f in (PROTOCOL / "configs").glob("*.json"):
+        text = f.read_text(encoding="utf-8")
+        cfg = json.loads(text)
+        assert "paloma" not in text.lower()
+        assert cfg["eval"]["eval_set_sha256"] == es["sha256"] == cfg["decontamination"]["eval_set_sha256"]
+
+
+def test_decontaminate_removes_eval_documents_by_nfc_hash(tmp_path):
+    import io
+    import sys
+    import unicodedata
+
+    sys.path.insert(0, str(REPO))
+    from scripts import decontaminate
+
+    hashes = decontaminate.eval_hashes()
+    target_hash, target_id = next(iter(hashes.items()))
+    # a synthetic document whose NFC hash is forced to match, plus an ordinary one
+    fake = {target_hash: target_id, decontaminate.nfc_hash(unicodedata.normalize("NFD", "café")): "x"}
+    removed: dict = {}
+    lines = [json.dumps({"text": "café"}), json.dumps({"text": "kept"})]
+    out = list(decontaminate.filter_lines(lines, fake, removed))
+    assert removed == {"x": 1} and len(out) == 1 and "kept" in out[0]
+
+
+def test_stability_diagnostic_is_output_only():
+    import sys
+
+    sys.path.insert(0, str(REPO))
+    from scripts import analyze_replication as entry
+
+    src = (REPO / "scripts" / "analyze_replication.py").read_text(encoding="utf-8")
+    body = src.split("def main(")[1]
+    # the verdict is set by analyse() before stability() runs, and stability's result is only stored
+    assert body.index("res = analyse(frame)") < body.index("stability(frame, res)")
+    assert 'res["numerical_stability"] = stability(frame, res)' in body
+    assert entry.STABILITY_DRAWS == 20 and entry.STABILITY_REL == 1e-12

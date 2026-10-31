@@ -20,6 +20,7 @@ def configs() -> list[dict]:
     ladder = json.loads((PROTOCOL / "ladder.json").read_text(encoding="utf-8"))
     recipes = json.loads((PROTOCOL / "recipes.json").read_text(encoding="utf-8"))["selected"]
     sh = ladder["shared"]
+    ev = ladder["evaluation"]
     out = []
     for r in recipes:
         for s in ladder["sizes"]:
@@ -55,7 +56,18 @@ def configs() -> list[dict]:
                             "precision": sh["precision"],
                             "framework": sh["framework"],
                         },
-                        "eval": {"metric": "c4_en_bits_per_token", **ladder["evaluation"]},
+                        "decontamination": {
+                            "eval_set": ev["eval_set"]["file"],
+                            "eval_set_sha256": ev["eval_set"]["sha256"],
+                            "rule": ev["decontamination"],
+                        },
+                        "eval": {
+                            "metric": "c4_en_bits_per_token",
+                            "definition": ev["metric"],
+                            "file": ev["data"],
+                            "eval_set": ev["eval_set"]["file"],
+                            "eval_set_sha256": ev["eval_set"]["sha256"],
+                        },
                     }
                 )
     return out

@@ -1,6 +1,6 @@
 # Pre-registration: the replication protocol
 
-Protocol v2, frozen on 2026-10-31, before any training. Nothing has been trained. The v2 changes are listed at the
+Protocol v2.1, frozen on 2026-10-31, before any training. Nothing has been trained. The v2 and v2.1 changes are listed at the
 end of this file. The machine-readable copy is
 `replication_protocol/preregistration.json`. If it and this file disagree, the JSON governs.
 
@@ -40,17 +40,17 @@ The settings are:
 ### Evaluation
 
 The evaluation metric is C4-en bits per token at the final checkpoint, on DataDecide's in-loop `c4_en` validation
-file. It is the same set for every run. Exact duplicates of its documents, and of Paloma `c4_en`, are removed from
-every training corpus.
+file (SHA-256 c37d6b11...). It is the same set for every run. Its 2,099 documents are listed by id and text hash
+in `replication_protocol/eval_set.jsonl`. Every training document whose NFC-normalized text hash matches one of
+them is removed before tokenization (`scripts/decontaminate.py`), and the matched ids are reported per corpus.
 
 **C4 file check (v2):**
 
 - All 2,099 documents of DataDecide's in-loop `c4_en-validation` file (public at olmo-data.org, SHA-256
   c37d6b11...) are C4-en validation documents: 2,097 byte-identical and 2 identical after Unicode NFC.
 - Its metadata names Paloma `v3_small` c4_en/val source files.
-- Document-for-document identity with HF Paloma is unverified, because Paloma is gated.
-- Either set may be used once identity is confirmed. Otherwise the in-loop file is used, so that every run shares
-  DataDecide's own evaluation set.
+- Document-for-document identity with HF Paloma is unverified, because Paloma is gated. This is provenance only:
+  the evaluation set is the in-loop file, so every run shares DataDecide's own evaluation set.
 
 ## Recipe selection rule
 
@@ -218,3 +218,19 @@ outputs. It writes `results/replication/protocol_dry_run.json`. Dry runs train n
   anyway.
 - **Pins.** The analysis entry point pins the five frozen modules (unchanged) and, new in v2, `recipes.json`,
   `ladder.json` and `preregistration.json`. `replication_protocol/MANIFEST.sha256` lists every protocol file.
+
+## v2.1 changes (2026-10-31)
+
+- **Evaluation and decontamination target.** Both now name only DataDecide's in-loop `c4_en-validation` file.
+  - `replication_protocol/eval_set.jsonl` lists its 2,099 documents by id, token span and SHA-256 of the exact and
+    NFC text (`scripts/build_eval_set_manifest.py`, which checks the file's SHA-256).
+  - `scripts/decontaminate.py` removes every training document whose NFC text hash matches the list, and reports
+    the matched ids per corpus.
+  - Every run config carries the eval-set path and hash in its `eval` and `decontamination` blocks.
+  - Paloma appears only as provenance.
+- **Numerical stability diagnostic (output only).** After the verdict is fixed, the entry point refits under 20
+  independent relative perturbations of 1e-12 to every bpb value and each size's compute (seed 20261031). It
+  reports the slope's min, max and SD, the largest deviation from the reported slope, and the number of draws
+  whose verdict differs. It never changes the verdict, which uses the unperturbed inputs.
+- **Pins.** The pins for `recipes.json`, `ladder.json` and `preregistration.json` are updated, and
+  `MANIFEST.sha256` is regenerated.
