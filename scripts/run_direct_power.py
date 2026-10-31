@@ -144,13 +144,19 @@ def power_of(rows: list[dict], beta: float) -> dict:
     }
 
 
+def rejects(rows: list[dict]) -> list[bool]:
+    """Whether each world's frozen test rejects in the positive direction (interval above zero)."""
+
+    return [bool(r["se"] > 0 and r["estimate"] - Z * r["se"] > 0) for r in rows]
+
+
 def fixed_by_window(ok: list[dict], beta: float) -> dict:
     """Fixed-candidate power conditions on worlds whose own slope lands near beta; show how the window moves it."""
 
     out = {}
     for w in (0.1, 0.2, 0.3):
         near = [r for r in ok if abs(r["true"] - beta) <= w * beta]
-        p = float(np.mean([r["se"] > 0 and r["estimate"] - Z * r["se"] > 0 for r in near])) if near else None
+        p = float(np.mean(rejects(near))) if near else None
         out[f"{int(w * 100)}pct"] = {
             "power": p,
             "worlds": len(near),
@@ -257,7 +263,7 @@ def summarise() -> dict:
         row["natural"] = {"predicted_slope": nat["mean_true_slope"], "median_se": nat["median_se"], "median_determined_share_top": nat["median_determined_share_top"]}
         nat_rows = collect(cache, f"{base}|natural", POWER_WORLDS)
         ok = [r for r in nat_rows if r.get("estimate") is not None]
-        p = float(np.mean([r["se"] > 0 and r["estimate"] - Z * r["se"] > 0 for r in ok])) * len(ok) / max(len(nat_rows), 1) if nat_rows else None
+        p = float(np.sum(rejects(ok))) / len(nat_rows) if nat_rows else None
         row["natural"]["power_at_predicted_slope"] = p
         row["natural"]["power_mc_se"] = float(np.sqrt(p * (1 - p) / len(nat_rows))) if nat_rows else None
         sh = shift.get(f"n{n}_S{s}_seeds{k}", {})
