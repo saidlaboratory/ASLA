@@ -1,0 +1,82 @@
+{
+  "preregistration": "PREDICTIONS_TASK_CURVE.md",
+  "unit": "points per decade (log10) of lever arm",
+  "V1": {
+    "mean_true_slope": 11.974888668009816,
+    "mc_se": 0.038891467702510465,
+    "worlds": 200,
+    "reference": 11.96,
+    "within_2_combined_se": true,
+    "combined_se": 0.06334466244329837
+  },
+  "V2_k10": {
+    "mean_estimate": 11.933127950740806,
+    "sd_estimate": 1.9840913635891388,
+    "mc_se": 0.14029644576875439,
+    "worlds": 200,
+    "real_mean": 11.61,
+    "real_sd": 1.71,
+    "mean_within_1": true,
+    "sd_ratio": 1.1602873471281514,
+    "sd_ratio_in_0_67_to_1_5": true
+  },
+  "V2_k15": {
+    "mean_estimate": 11.895376097394314,
+    "sd_estimate": 1.322194942204586,
+    "mc_se": 0.0934933009683418,
+    "worlds": 200,
+    "real_mean": 11.72,
+    "real_sd": 0.97,
+    "mean_within_1": true,
+    "sd_ratio": 1.3630875692830784,
+    "sd_ratio_in_0_67_to_1_5": true
+  },
+  "generative_sanity_25": {
+    "mean_true_slope": 11.973948806087792,
+    "mc_se": 0.1268679421773066,
+    "worlds": 100,
+    "reference": 11.96
+  },
+  "plateau": {
+    "full": {
+      "mean_true_by_lambda": {
+        "0.5": 10.186981983656512,
+        "1": 11.937470629295339,
+        "2": 12.882848755998284,
+        "3": 11.788581177090794,
+        "4": 10.565410512493804,
+        "6": 7.829142036157874
+      },
+      "max": 12.882848755998284,
+      "lambda_at_max": "2",
+      "plateau_before_6": true
+    },
+    "300M_S8": {
+      "mean_true_by_lambda": {
+        "0.5": 14.977631403234168,
+        "1": 22.082706945515664,
+        "2": 24.053972066132726,
+        "3": 20.48708041125781,
+        "4": 16.140027393187,
+        "6": 11.391891360318562
+      },
+      "max": 24.053972066132726,
+      "lambda_at_max": "2",
+      "plateau_before_6": true
+    },
+    "1B_S8": {
+      "mean_true_by_lambda": {
+        "0.5": 6.496965477683498,
+        "1": 10.632919321673489,
+        "2": 13.560653081878664,
+        "3": 13.228613084098722,
+        "4": 12.545971182337432,
+        "6": 10.756013950932747
+      },
+      "max": 13.560653081878664,
+      "lambda_at_max": "2",
+      "plateau_before_6": true
+    }
+  },
+  "pass": true
+}

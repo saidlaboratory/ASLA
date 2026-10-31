@@ -76,10 +76,52 @@ def context() -> dict:
     return _CTX
 
 
+_GENERATED: dict[str, tuple[float, float, float, np.ndarray]] = {}
+
+
+def generative_model() -> dict:
+    """A Gaussian over each recipe's (E, log A, alpha, recipe-specific residual at the 13 sizes), fitted to the 25.
+
+    Mean and sample covariance (ddof 1) of the 16-vector across DataDecide's 25 recipes; draws are independent
+    recipes with the same first two moments, so misfit keeps its correlation across sizes and with the power law.
+    """
+
+    c = context()
+    if "gen" in c:
+        return c["gen"]
+    rows = np.array(
+        [[c["params"][r][0], np.log(c["params"][r][1]), c["params"][r][2], *c["specific"][r]] for r in c["recipes"]]
+    )
+    mean = rows.mean(axis=0)
+    cov = np.cov(rows, rowvar=False, ddof=1)
+    vals, vecs = np.linalg.eigh(cov)
+    root = vecs * np.sqrt(np.clip(vals, 0.0, None))
+    c["gen"] = {"mean": mean, "root": root, "dim": rows.shape[1]}
+    return c["gen"]
+
+
 def _recipes(spec: dict, rng: np.random.Generator) -> list[tuple[str, str, float, float]]:
     c = context()
     if spec["candidates"] == "fixed":
         return [(r, r, 0.0, 0.0) for r in c["recipes"]]
+    if spec["candidates"] == "without_replacement":
+        n = int(spec["n"])
+        if n > len(c["recipes"]):
+            raise ValueError("without_replacement needs n <= 25; use 'corrected'")
+        return [(r, r, 0.0, 0.0) for r in sorted(rng.choice(c["recipes"], size=n, replace=False).tolist())]
+    if spec["candidates"] in ("generative", "corrected"):
+        n = int(spec["n"])
+        if spec["candidates"] == "corrected" and n <= len(c["recipes"]):
+            return [(r, r, 0.0, 0.0) for r in sorted(rng.choice(c["recipes"], size=n, replace=False).tolist())]
+        g = generative_model()
+        _GENERATED.clear()
+        out = []
+        for j in range(n):
+            v = g["mean"] + g["root"] @ rng.standard_normal(g["dim"])
+            key = f"gen:{j:03d}"
+            _GENERATED[key] = (float(v[0]), float(np.exp(v[1])), float(v[2]), np.asarray(v[3:], dtype=float))
+            out.append((key, key, 0.0, 0.0))
+        return out
     out = []
     for j, src in enumerate(rng.choice(c["recipes"], size=int(spec["n"]), replace=True)):
         out.append((f"r{j:02d}", str(src), float(rng.normal(0.0, c["e_sd"])), float(rng.normal(0.0, c["loga_sd"]))))
@@ -88,18 +130,25 @@ def _recipes(spec: dict, rng: np.random.Generator) -> list[tuple[str, str, float
 
 def truth_curve(spec: dict, src: str, de: float, dloga: float, x: np.ndarray) -> np.ndarray:
     c = context()
-    e, a, alpha = c["params"][src]
+    if src.startswith("gen:"):
+        e, a, alpha, specific = _GENERATED[src]
+        common = c["common"][c["recipes"][0]]  # the common-mode residual is the same for every recipe
+    else:
+        e, a, alpha = c["params"][src]
+        specific, common = c["specific"][src], c["common"][src]
     compute = 10.0**x
     lam = float(spec.get("lam", 1.0))
-    resid = lam * np.interp(x, c["log_c"], c["specific"][src])
+    resid = lam * np.interp(x, c["log_c"], specific)
     if spec["truth"] == "full":
-        resid = resid + np.interp(x, c["log_c"], c["common"][src])
+        resid = resid + np.interp(x, c["log_c"], common)
     return e + a * compute ** (-alpha) + resid + de + a * (np.exp(dloga) - 1) * compute ** (-alpha)
 
 
 def noise_sd(spec: dict, src: str, x: np.ndarray, truth: np.ndarray) -> np.ndarray:
     c = context()
     if spec["noise"] == "per_recipe":
+        if src.startswith("gen:"):
+            raise ValueError("generated recipes have no per-recipe noise; use noise='by_size'")
         return np.interp(x, c["log_c"], c["sigma"][src])
     tpp = np.interp(x, c["tpp_logc"], c["tpp"]) if spec["tpp"] == "datadecide" else np.full_like(x, float(spec["tpp"]))
     n_params = np.sqrt(10.0**x / (6.0 * tpp))
@@ -161,6 +210,12 @@ def world(spec: dict, rng: np.random.Generator) -> dict:
     if seeds >= 2:
         evidence = {t: evidence_from_cells({n: samples[n][2][:, t].tolist() for n in samples}) for t in targets}
     ds = designs(obs, x, sds, targets, truth=truth, evidence_by_target=evidence)
+    if spec["statistic"] == "curve":
+        from asla.analysis import excess_curve
+
+        jk = excess_curve.jackknife(ds, targets)
+        true_vec = np.array([d.true_excess for d in ds], dtype=float)
+        return {"estimate": jk["estimate"], "se": jk["se"], "true": excess_curve.statistics(ds, true_vec, targets)}
     shares = {d.target: d.determined_share for d in ds}
     admitted = targets if spec.get("admit", "determinacy") == "all" else [t for t in targets if shares.get(t, 0.0) >= ADMIT_SHARE]
     ft = {t: gs for t, gs in fixed_target_slices(ds, admitted).items() if gs}
